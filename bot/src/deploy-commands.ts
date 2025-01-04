@@ -1,3 +1,4 @@
+/* eslint-disable SleepAPILogger/no-console */
 import { REST, Routes } from 'discord.js';
 import { commands } from './commands';
 import { config } from './config';
@@ -8,14 +9,14 @@ const rest = new REST({ version: '10' }).setToken(config.DISCORD_TOKEN);
 
 export async function deployCommands() {
   try {
-    logger.log('Started refreshing application (/) commands.');
+    console.log('Started refreshing application (/) commands.');
 
     await rest.put(Routes.applicationCommands(config.DISCORD_CLIENT_ID), {
       body: commandsData
     });
 
-    logger.log('Successfully reloaded application (/) commands.');
+    console.log('Successfully reloaded application (/) commands.');
   } catch (error) {
-    logger.error(error);
+    console.error(error);
   }
 }

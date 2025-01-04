@@ -6,12 +6,14 @@
   "type": "module",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc && tsc-alias && tsoa spec",
+    "build": "tsc --project tsconfig.build.json && tsc-alias && tsoa spec",
     "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* dist/",
-    "compile": "bun x tsc --noEmit",
+
+    "test": "bun test",
     "test-watch": "bun test --watch",
+    "compile": "bun x tsc --noEmit",
     "start": "npm run build && node ./dist/app.js",
-    "dev": "bun --watch src/app.ts"
+    "dev": "bun i && bun --watch src/app.ts"
   },
   "files": ["dist"],
   "devDependencies": {
@@ -22,7 +24,7 @@
     "@types/swagger-jsdoc": "^6.0.2",
     "@types/swagger-ui-express": "^4.1.5",
     "bun-types": "^1.1.42",
-    "bunboozle": "^1.3.1",
+    "bunboozle": "^1.3.2",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "sleepapi-common": "file:../common",
@@ -32,7 +34,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@sinclair/typebox": "^0.31.22",
+    "@sinclair/typebox": "^0.34.11",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -42,7 +44,7 @@
     "morgan": "~1.9.1",
     "mysql2": "~3.9.7",
     "swagger-ui-express": "^5.0.0",
-    "tsoa": "^6.0.1",
+    "tsoa": "^6.6.0",
     "workerpool": "^9.2.0"
   },
   "bundleDependencies": ["sleepapi-common"]

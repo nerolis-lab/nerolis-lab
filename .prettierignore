@@ -11,6 +11,7 @@
 .releaserc
 package-lock.json
 swagger.json
+CHANGELOG.md
 
 # directories
 dist

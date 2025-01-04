@@ -1,0 +1,40 @@
+import { mocks } from '@src/bun/index.js';
+import { SolveService } from '@src/services/solve/solve-service.js';
+import type { SolveRecipeInput } from '@src/services/solve/types/solution-types.js';
+import * as solveUtils from '@src/services/solve/utils/solve-utils.js';
+import { describe, expect, it } from 'bun:test';
+import { boozle } from 'bunboozle';
+import { mainskill, mockIngredient, mockIngredientSet, mockPokemon, type Recipe } from 'sleepapi-common';
+
+describe('SolveService', () => {
+  it('should return the user team if it solves the recipe alone', () => {
+    const ingredientList = [mockIngredientSet({ amount: 1, ingredient: mockIngredient({ name: 'ingredient1' }) })];
+    const recipe: Recipe = mocks.recipe({
+      ingredients: ingredientList
+    });
+    const member = mocks.teamMemberExt({
+      pokemonWithIngredients: mocks.pokemonWithIngredients({
+        ingredientList,
+        pokemon: mockPokemon({ skill: mainskill.BERRY_BURST })
+      })
+    });
+    boozle(solveUtils, 'calculateProductionAll', () => ({
+      userProduction: [mocks.setCoverPokemonWithSettings()],
+      nonSupportProduction: [],
+      supportProduction: []
+    }));
+
+    const input: SolveRecipeInput = {
+      solveSettings: mocks.solveSettingsExt(),
+      includedMembers: [member],
+      maxTeamSize: 5
+    };
+
+    const result = SolveService.solveRecipe(recipe, input);
+
+    expect(result.exhaustive).toBe(true);
+    expect(result.teams).toHaveLength(1);
+    expect(result.teams[0].members).toHaveLength(1);
+    expect(result.teams[0].members[0].pokemonSet.pokemon).toEqual(member.pokemonWithIngredients.pokemon.name);
+  });
+});

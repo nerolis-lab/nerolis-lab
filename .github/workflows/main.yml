@@ -10,29 +10,29 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Node.js for Common and Frontend
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Cache common dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/node_modules
           key: common-${{ hashFiles('common/package-lock.json') }}
           restore-keys: common-
 
       - name: Cache backend dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: backend/bun.lockb
           key: backend-${{ hashFiles('backend/bun.lockb') }}
           restore-keys: backend-
 
       - name: Cache frontend dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: frontend/node_modules
           key: frontend2-${{ hashFiles('frontend/package-lock.json') }}
@@ -42,7 +42,7 @@ jobs:
         run: |
           cd common
           npm ci
-          npm run build
+          npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
           npm run test
 
       - name: Install and Test Backend
@@ -59,7 +59,7 @@ jobs:
         run: |
           cd frontend
           npm ci
-          npm run build
+          npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
           npm run test
 
       - name: Lint
@@ -81,13 +81,13 @@ jobs:
     needs: build-and-test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 22
 

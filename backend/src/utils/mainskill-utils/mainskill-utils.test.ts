@@ -34,8 +34,8 @@ describe('getMainskillNames', () => {
 });
 
 describe('getMainskill', () => {
-  it.each(MAINSKILLS)('finds mainskill "%s"', (ms: Mainskill) => {
-    const result = getMainskill(ms.name);
+  it.each(MAINSKILLS.map((ms) => [ms.name, ms]))('finds mainskill %s', (name: string, ms: Mainskill) => {
+    const result = getMainskill(name);
     expect(result).toEqual(ms);
   });
 

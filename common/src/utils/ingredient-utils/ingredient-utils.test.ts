@@ -1,12 +1,26 @@
 import { describe, expect, it } from 'vitest';
-import { FANCY_APPLE, HONEY, INGREDIENTS, SOOTHING_CACAO } from '../../domain/ingredient';
-import type { IngredientSet } from '../../domain/types/ingredient-set';
+import type { IngredientSet } from '../../domain/ingredient/ingredient';
 import {
+  FANCY_APPLE,
+  FANCY_EGG,
+  HONEY,
+  INGREDIENTS,
+  MOOMOO_MILK,
+  SOOTHING_CACAO
+} from '../../domain/ingredient/ingredients';
+import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
+import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
+import {
+  calculateAveragePokemonIngredientSet,
   combineSameIngredientsInDrop,
   emptyIngredientInventory,
+  flatToIngredientSet,
+  getAllIngredientLists,
   getIngredient,
   getIngredientNames,
-  multiplyIngredients,
+  includesMagnet,
+  ingredientSetToFloatFlat,
+  ingredientSetToIntFlat,
   prettifyIngredientDrop,
   shortPrettifyIngredientDrop
 } from './ingredient-utils';
@@ -21,23 +35,6 @@ describe('getIngredient', () => {
         "value": 101,
       }
     `);
-  });
-
-  it('shall lookup ingredient case-insensitive', () => {
-    expect(getIngredient('hOneY')).toMatchInlineSnapshot(`
-      {
-        "longName": "Honey",
-        "name": "Honey",
-        "taxedValue": 29.8,
-        "value": 101,
-      }
-    `);
-  });
-
-  it('shall throw programmer error if ingredient is missing', () => {
-    expect(() => getIngredient('missing')).toThrowErrorMatchingInlineSnapshot(
-      `[Error: Ingredient with name [missing] does not exist]`
-    );
   });
 });
 
@@ -70,20 +67,6 @@ describe('getIngredientNames', () => {
 describe('emptyIngredientInventory', () => {
   it('shall return an empty ingredient inventory', () => {
     expect(emptyIngredientInventory()).toEqual([]);
-  });
-});
-
-describe('multiplyIngredients', () => {
-  it('shall multiply the amount of each ingredient by the given factor', () => {
-    const ingredients: IngredientSet[] = [
-      { ingredient: HONEY, amount: 2 },
-      { ingredient: FANCY_APPLE, amount: 3 }
-    ];
-    const result = multiplyIngredients(ingredients, 2);
-    expect(result).toEqual([
-      { ingredient: HONEY, amount: 4 },
-      { ingredient: FANCY_APPLE, amount: 6 }
-    ]);
   });
 });
 
@@ -177,11 +160,497 @@ describe('prettifyIngredientDrop', () => {
   });
 
   it('shall support custom separator', () => {
-    const rawCombination = [
+    const rawCombination: IngredientSet[] = [
       { amount: 2, ingredient: HONEY },
       { amount: 5, ingredient: FANCY_APPLE },
       { amount: 7, ingredient: HONEY }
     ];
     expect(prettifyIngredientDrop(rawCombination, '/')).toMatchInlineSnapshot(`"2 Honey/5 Apple/7 Honey"`);
+  });
+
+  it('shall prettify an ingredient list from Float32Array', () => {
+    const floatArray = new Float32Array([0, 0, 0, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(prettifyIngredientDrop(floatArray)).toMatchInlineSnapshot(`"2 Honey, 5 Egg"`);
+  });
+
+  it('shall prettify an ingredient drop + ingredient magnet proc from Float32Array', () => {
+    const floatArray = new Float32Array(INGREDIENTS.length).fill(0.83761);
+    expect(prettifyIngredientDrop(floatArray)).toMatchInlineSnapshot(`"0.84 of all 17 ingredients"`);
+  });
+
+  it('shall support custom separator with Float32Array', () => {
+    const floatArray = new Float32Array([0, 0, 0, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(prettifyIngredientDrop(floatArray, '/')).toMatchInlineSnapshot(`"2 Honey/5 Egg"`);
+  });
+
+  it('shall prettify an ingredient list from Int16Array', () => {
+    const intArray = new Int16Array([0, 0, 0, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(prettifyIngredientDrop(intArray)).toMatchInlineSnapshot(`"2 Honey, 5 Egg"`);
+  });
+
+  it('shall prettify an ingredient drop + ingredient magnet proc from Int16Array', () => {
+    const intArray = new Int16Array(INGREDIENTS.length).fill(1);
+    expect(prettifyIngredientDrop(intArray)).toMatchInlineSnapshot(`"1 of all 17 ingredients"`);
+  });
+
+  it('shall support custom separator with Int16Array', () => {
+    const intArray = new Int16Array([0, 0, 0, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(prettifyIngredientDrop(intArray, '/')).toMatchInlineSnapshot(`"2 Honey/5 Egg"`);
+  });
+});
+
+describe('getAllIngredientCombinationsFor', () => {
+  it('shall find all combinations for given pokemon at level 60', () => {
+    expect(getAllIngredientLists(PINSIR, 60)).toMatchInlineSnapshot(`
+[
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 8,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 8,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+]
+`);
+  });
+
+  it('shall find all combinations for given pokemon at level 30', () => {
+    expect(getAllIngredientLists(PINSIR, 30)).toMatchInlineSnapshot(`
+[
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+]
+`);
+  });
+});
+
+describe('calculateAveragePokemonIngredientSet', () => {
+  it('shall average an ingredient set for level 100', () => {
+    const pokemonSet: PokemonWithIngredients = {
+      pokemon: PINSIR,
+      ingredientList: [
+        {
+          amount: 3,
+          ingredient: FANCY_APPLE
+        },
+        {
+          amount: 3,
+          ingredient: FANCY_EGG
+        },
+        {
+          amount: 3,
+          ingredient: MOOMOO_MILK
+        }
+      ]
+    };
+    const averagedResult = calculateAveragePokemonIngredientSet(ingredientSetToIntFlat(pokemonSet.ingredientList), 100);
+    expect(averagedResult).toMatchInlineSnapshot(`
+Float32Array [
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+]
+`);
+  });
+  it('shall average an ingredient set for level 60', () => {
+    const pokemonSet: PokemonWithIngredients = {
+      pokemon: PINSIR,
+      ingredientList: [
+        {
+          amount: 3,
+          ingredient: FANCY_APPLE
+        },
+        {
+          amount: 3,
+          ingredient: FANCY_EGG
+        },
+        {
+          amount: 3,
+          ingredient: MOOMOO_MILK
+        }
+      ]
+    };
+    const averagedResult = calculateAveragePokemonIngredientSet(ingredientSetToIntFlat(pokemonSet.ingredientList), 60);
+    expect(averagedResult).toMatchInlineSnapshot(`
+Float32Array [
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+]
+`);
+  });
+
+  it('shall average an ingredient set for level 30', () => {
+    const pokemonSet: PokemonWithIngredients = {
+      pokemon: PINSIR,
+      ingredientList: [
+        {
+          amount: 4,
+          ingredient: FANCY_APPLE
+        },
+        {
+          amount: 4,
+          ingredient: FANCY_EGG
+        }
+      ]
+    };
+
+    const averagedResult = calculateAveragePokemonIngredientSet(ingredientSetToIntFlat(pokemonSet.ingredientList), 30);
+    expect(averagedResult).toMatchInlineSnapshot(`
+Float32Array [
+  2,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  2,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+]
+`);
+  });
+});
+describe('ingredientSetToFloatFlat', () => {
+  it('shall convert ingredient set to float flat array', () => {
+    const ingredientSet: IngredientSet[] = [
+      { amount: 2, ingredient: HONEY },
+      { amount: 5, ingredient: FANCY_EGG }
+    ];
+    expect(ingredientSetToFloatFlat(ingredientSet)).toMatchInlineSnapshot(`
+Float32Array [
+  0,
+  0,
+  0,
+  2,
+  0,
+  0,
+  0,
+  5,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+]
+`);
+  });
+});
+
+describe('ingredientSetToIntFlat', () => {
+  it('shall convert ingredient set to int flat array', () => {
+    const ingredientSet: IngredientSet[] = [
+      { amount: 2, ingredient: HONEY },
+      { amount: 5, ingredient: FANCY_EGG }
+    ];
+    expect(ingredientSetToIntFlat(ingredientSet)).toMatchInlineSnapshot(`
+Int16Array [
+  0,
+  0,
+  0,
+  2,
+  0,
+  0,
+  0,
+  5,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+]
+`);
+  });
+});
+
+describe('flatToIngredientSet', () => {
+  it('shall convert flat array to ingredient set', () => {
+    const flatArray = new Float32Array([0, 0, 0, 2, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(flatToIngredientSet(flatArray)).toMatchInlineSnapshot(`
+      [
+        {
+          "amount": 2,
+          "ingredient": {
+            "longName": "Honey",
+            "name": "Honey",
+            "taxedValue": 29.8,
+            "value": 101,
+          },
+        },
+        {
+          "amount": 5,
+          "ingredient": {
+            "longName": "Fancy Egg",
+            "name": "Egg",
+            "taxedValue": 38.7,
+            "value": 115,
+          },
+        },
+      ]
+    `);
+  });
+});
+
+describe('includesMagnet', () => {
+  it('shall return true if ingredients include magnet ingredients', () => {
+    const ingredients: IngredientSet[] = INGREDIENTS.map((ingredient) => ({ amount: 0.83761, ingredient }));
+    expect(includesMagnet(ingredients)).toBe(true);
+  });
+
+  it('shall return false if ingredients do not include magnet ingredients', () => {
+    const ingredients: IngredientSet[] = [
+      { amount: 2, ingredient: HONEY },
+      { amount: 5, ingredient: FANCY_APPLE }
+    ];
+    expect(includesMagnet(ingredients)).toBe(false);
   });
 });

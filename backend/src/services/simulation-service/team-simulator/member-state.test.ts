@@ -1,14 +1,13 @@
-import type { TeamMember, TeamSettingsExt } from '@src/domain/combination/team.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { describe, expect, it } from 'bun:test';
-import type { PokemonIngredientSet } from 'sleepapi-common';
-import { BALANCED_GENDER, berry, ingredient, mainskill, nature, subskill } from 'sleepapi-common';
+import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import { BALANCED_GENDER, berry, ingredient, mainskill, mockPokemon, nature, subskill } from 'sleepapi-common';
 
-const mockPokemonSet: PokemonIngredientSet = {
+const mockPokemonSet: PokemonWithIngredients = {
   pokemon: {
     name: 'Mockemon',
     berry: berry.BELUE,
@@ -32,15 +31,30 @@ const mockPokemonSet: PokemonIngredientSet = {
   ]
 };
 
-const member: TeamMember = {
-  pokemonSet: mockPokemonSet,
-  carrySize: 10,
-  level: 60,
-  ribbon: 0,
-  nature: nature.BASHFUL,
-  skillLevel: 6,
-  subskills: [],
-  externalId: 'some id'
+const guaranteedSkillProcMember: TeamMemberExt = {
+  pokemonWithIngredients: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100 } },
+  settings: {
+    carrySize: 10,
+    level: 60,
+    ribbon: 0,
+    nature: nature.BASHFUL,
+    skillLevel: 6,
+    subskills: new Set(),
+    externalId: 'some id'
+  }
+};
+
+const member: TeamMemberExt = {
+  pokemonWithIngredients: mockPokemonSet,
+  settings: {
+    carrySize: 10,
+    level: 60,
+    ribbon: 0,
+    nature: nature.BASHFUL,
+    skillLevel: 6,
+    subskills: new Set(),
+    externalId: 'some id'
+  }
 };
 
 const settings: TeamSettingsExt = {
@@ -50,6 +64,98 @@ const settings: TeamSettingsExt = {
 };
 
 const cookingState: CookingState = new CookingState(settings.camp);
+
+describe('results', () => {
+  it('should return correct results after multiple iterations', () => {
+    const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const results = memberState.results(10);
+
+    expect(results.produceTotal.berries.length).toBeGreaterThan(0);
+    expect(results.produceTotal.ingredients.length).toBeGreaterThan(0);
+    expect(results.skillProcs).toBe(0.1);
+  });
+
+  it('should return zero results if no helps or skills are added', () => {
+    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const results = memberState.results(10);
+
+    expect(results.produceTotal.berries.length).toBe(0);
+    expect(results.produceTotal.ingredients.length).toBe(0);
+    expect(results.skillAmount).toBe(0);
+    expect(results.skillProcs).toBe(0);
+  });
+});
+
+describe('simpleResults', () => {
+  it('should return correct simple results', () => {
+    const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const simpleResults = memberState.simpleResults(10);
+
+    expect(simpleResults.skillProcs).toBe(0.1);
+    expect(simpleResults.totalHelps).toBe(0.1);
+  });
+
+  it('should return zero simple results if no helps or skills are added', () => {
+    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+
+    const simpleResults = memberState.simpleResults(10);
+
+    expect(simpleResults.skillProcs).toBe(0);
+    expect(simpleResults.totalHelps).toBe(0);
+  });
+});
+
+describe('ivResults', () => {
+  it('should return correct iv results', () => {
+    const ingredientList: IngredientSet[] = [{ amount: 10, ingredient: ingredient.FANCY_APPLE }];
+
+    // this member has 2 berries per drop and 10 apples per drop, 50% ing% gives average of 1 berry and 5 apples
+    const memberState = new MemberState({
+      member: {
+        ...guaranteedSkillProcMember,
+        pokemonWithIngredients: {
+          pokemon: mockPokemon({
+            specialty: 'berry',
+            ingredientPercentage: 50,
+            skillPercentage: 100,
+            skill: mainskill.CHARGE_STRENGTH_M
+          }),
+          ingredientList
+        },
+        settings: { ...guaranteedSkillProcMember.settings, level: 1 }
+      },
+      settings,
+      team: [member],
+      cookingState
+    });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const ivResults = memberState.ivResults(10);
+
+    // we have had 1 help so total should be 1 berry and 5 apples
+    // we then divide by 10 since we ran result for 10 days
+    expect(ivResults.produceTotal.berries).toHaveLength(1);
+    expect(ivResults.produceTotal.berries[0].amount).toBeCloseTo(0.1);
+
+    expect(ivResults.produceTotal.ingredients).toHaveLength(1);
+    expect(ivResults.produceTotal.ingredients[0].amount).toBe(0.5);
+
+    expect(ivResults.skillProcs).toBeGreaterThan(0);
+  });
+
+  it('should return zero iv results if no helps or skills are added', () => {
+    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const ivResults = memberState.ivResults(10);
+
+    expect(ivResults.produceTotal.berries.length).toBe(0);
+    expect(ivResults.produceTotal.ingredients.length).toBe(0);
+    expect(ivResults.skillProcs).toBe(0);
+  });
+});
 
 describe('MemberState init', () => {
   const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -85,15 +191,17 @@ describe('startDay', () => {
   });
 
   it('shall recover less than full sleep if energy- nature', () => {
-    const member: TeamMember = {
-      pokemonSet: mockPokemonSet,
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.MILD,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: mockPokemonSet,
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.MILD,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
     };
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -104,15 +212,17 @@ describe('startDay', () => {
   });
 
   it('shall recover less than full sleep if sleeping short', () => {
-    const member: TeamMember = {
-      pokemonSet: mockPokemonSet,
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.MILD,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: mockPokemonSet,
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.MILD,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
     };
 
     const settings: TeamSettingsExt = {
@@ -139,15 +249,17 @@ describe('startDay', () => {
   });
 
   it('shall recover to 100 despite energy- nature if team has erb', () => {
-    const member: TeamMember = {
-      pokemonSet: mockPokemonSet,
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.MILD,
-      skillLevel: 6,
-      subskills: [subskill.ENERGY_RECOVERY_BONUS],
-      externalId: 'some id'
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: mockPokemonSet,
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.MILD,
+        skillLevel: 6,
+        subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
+        externalId: 'some id'
+      }
     };
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -169,15 +281,17 @@ describe('recoverEnergy', () => {
   });
 
   it('shall recover less energy with energy- nature', () => {
-    const member: TeamMember = {
-      pokemonSet: mockPokemonSet,
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.MILD,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: mockPokemonSet,
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.MILD,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
     };
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -205,6 +319,7 @@ describe('addHelps', () => {
     expect(memberState.results(1)).toMatchInlineSnapshot(`
 {
   "advanced": {
+    "averageHelps": 2,
     "carrySize": 10,
     "dayHelps": 0,
     "ingredientPercentage": 0.2,
@@ -215,21 +330,35 @@ describe('addHelps', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0.02,
-    "sneakySnack": {
-      "amount": 0,
-      "berry": {
-        "name": "BELUE",
-        "type": "steel",
-        "value": 33,
-      },
-      "level": 60,
-    },
+    "sneakySnack": undefined,
     "spilledIngredients": [],
     "totalHelps": 0,
     "totalRecovery": 0,
     "wastedEnergy": 0,
   },
   "externalId": "some id",
+  "pokemonWithIngredients": {
+    "ingredients": Int16Array [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+    ],
+    "pokemon": "Mockemon",
+  },
   "produceFromSkill": {
     "berries": [],
     "ingredients": [],
@@ -237,7 +366,7 @@ describe('addHelps', () => {
   "produceTotal": {
     "berries": [
       {
-        "amount": 1.6,
+        "amount": 1.600000023841858,
         "berry": {
           "name": "BELUE",
           "type": "steel",
@@ -248,7 +377,7 @@ describe('addHelps', () => {
     ],
     "ingredients": [
       {
-        "amount": 0.4,
+        "amount": 0.4000000059604645,
         "ingredient": {
           "longName": "Slowpoke Tail",
           "name": "Tail",
@@ -261,7 +390,7 @@ describe('addHelps', () => {
   "produceWithoutSkill": {
     "berries": [
       {
-        "amount": 1.6,
+        "amount": 1.600000023841858,
         "berry": {
           "name": "BELUE",
           "type": "steel",
@@ -272,7 +401,7 @@ describe('addHelps', () => {
     ],
     "ingredients": [
       {
-        "amount": 0.4,
+        "amount": 0.4000000059604645,
         "ingredient": {
           "longName": "Slowpoke Tail",
           "name": "Tail",
@@ -296,6 +425,7 @@ describe('addHelps', () => {
     expect(memberState.results(1)).toMatchInlineSnapshot(`
 {
   "advanced": {
+    "averageHelps": 0,
     "carrySize": 10,
     "dayHelps": 0,
     "ingredientPercentage": 0.2,
@@ -306,21 +436,35 @@ describe('addHelps', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0.02,
-    "sneakySnack": {
-      "amount": 0,
-      "berry": {
-        "name": "BELUE",
-        "type": "steel",
-        "value": 33,
-      },
-      "level": 60,
-    },
+    "sneakySnack": undefined,
     "spilledIngredients": [],
     "totalHelps": 0,
     "totalRecovery": 0,
     "wastedEnergy": 0,
   },
   "externalId": "some id",
+  "pokemonWithIngredients": {
+    "ingredients": Int16Array [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+    ],
+    "pokemon": "Mockemon",
+  },
   "produceFromSkill": {
     "berries": [],
     "ingredients": [],
@@ -366,15 +510,17 @@ describe('attemptDayHelp', () => {
       camp: false
     };
 
-    const member: TeamMember = {
-      pokemonSet: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 0 } },
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.BASHFUL,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 0 } },
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
     };
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -386,6 +532,7 @@ describe('attemptDayHelp', () => {
     expect(memberState.results(1)).toMatchInlineSnapshot(`
 {
   "advanced": {
+    "averageHelps": 1,
     "carrySize": 10,
     "dayHelps": 1,
     "ingredientPercentage": 0.2,
@@ -396,21 +543,35 @@ describe('attemptDayHelp', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0,
-    "sneakySnack": {
-      "amount": 0,
-      "berry": {
-        "name": "BELUE",
-        "type": "steel",
-        "value": 33,
-      },
-      "level": 60,
-    },
+    "sneakySnack": undefined,
     "spilledIngredients": [],
     "totalHelps": 1,
     "totalRecovery": 0,
     "wastedEnergy": 0,
   },
   "externalId": "some id",
+  "pokemonWithIngredients": {
+    "ingredients": Int16Array [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+    ],
+    "pokemon": "Mockemon",
+  },
   "produceFromSkill": {
     "berries": [],
     "ingredients": [],
@@ -418,7 +579,7 @@ describe('attemptDayHelp', () => {
   "produceTotal": {
     "berries": [
       {
-        "amount": 0.8,
+        "amount": 0.800000011920929,
         "berry": {
           "name": "BELUE",
           "type": "steel",
@@ -429,7 +590,7 @@ describe('attemptDayHelp', () => {
     ],
     "ingredients": [
       {
-        "amount": 0.2,
+        "amount": 0.20000000298023224,
         "ingredient": {
           "longName": "Slowpoke Tail",
           "name": "Tail",
@@ -442,7 +603,7 @@ describe('attemptDayHelp', () => {
   "produceWithoutSkill": {
     "berries": [
       {
-        "amount": 0.8,
+        "amount": 0.800000011920929,
         "berry": {
           "name": "BELUE",
           "type": "steel",
@@ -453,7 +614,7 @@ describe('attemptDayHelp', () => {
     ],
     "ingredients": [
       {
-        "amount": 0.2,
+        "amount": 0.20000000298023224,
         "ingredient": {
           "longName": "Slowpoke Tail",
           "name": "Tail",
@@ -485,6 +646,7 @@ describe('attemptDayHelp', () => {
     expect(memberState.results(1)).toMatchInlineSnapshot(`
 {
   "advanced": {
+    "averageHelps": 0,
     "carrySize": 10,
     "dayHelps": 0,
     "ingredientPercentage": 0.2,
@@ -495,21 +657,35 @@ describe('attemptDayHelp', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0.02,
-    "sneakySnack": {
-      "amount": 0,
-      "berry": {
-        "name": "BELUE",
-        "type": "steel",
-        "value": 33,
-      },
-      "level": 60,
-    },
+    "sneakySnack": undefined,
     "spilledIngredients": [],
     "totalHelps": 0,
     "totalRecovery": 0,
     "wastedEnergy": 0,
   },
   "externalId": "some id",
+  "pokemonWithIngredients": {
+    "ingredients": Int16Array [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+    ],
+    "pokemon": "Mockemon",
+  },
   "produceFromSkill": {
     "berries": [],
     "ingredients": [],
@@ -561,17 +737,12 @@ describe('attemptDayHelp', () => {
   });
 
   it('shall attempt and proc skill', () => {
-    const member: TeamMember = {
-      pokemonSet: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100 } },
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.BASHFUL,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
-    };
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      member: guaranteedSkillProcMember,
+      settings,
+      team: [guaranteedSkillProcMember],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(0);
@@ -580,18 +751,20 @@ describe('attemptDayHelp', () => {
   });
 
   it('shall still count metronome proc as 1 proc', () => {
-    const member: TeamMember = {
-      pokemonSet: {
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: {
         ...mockPokemonSet,
         pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100, skill: mainskill.METRONOME }
       },
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.BASHFUL,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     memberState.wakeUp();
@@ -624,7 +797,7 @@ describe('attemptNightHelp', () => {
   });
 
   it('shall add any excess helps to sneaky snacking, and shall not roll skill proc on those', () => {
-    const noCarryMember: TeamMember = { ...member, carrySize: 0 };
+    const noCarryMember: TeamMemberExt = { ...member, settings: { ...member.settings, carrySize: 0 } };
     const memberState = new MemberState({ member: noCarryMember, settings, team: [noCarryMember], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
@@ -638,15 +811,17 @@ describe('attemptNightHelp', () => {
   });
 
   it('shall roll skill proc on helps before inventory full at night, upon collecting in the morning', () => {
-    const member: TeamMember = {
-      pokemonSet: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100 } },
-      carrySize: 10,
-      level: 60,
-      ribbon: 0,
-      nature: nature.BASHFUL,
-      skillLevel: 6,
-      subskills: [],
-      externalId: 'some id'
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100 } },
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     memberState.wakeUp();
@@ -657,6 +832,7 @@ describe('attemptNightHelp', () => {
     expect(memberState.results(1)).toMatchInlineSnapshot(`
 {
   "advanced": {
+    "averageHelps": 1,
     "carrySize": 10,
     "dayHelps": 0,
     "ingredientPercentage": 0.2,
@@ -667,21 +843,35 @@ describe('attemptNightHelp', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 1,
-    "sneakySnack": {
-      "amount": 0,
-      "berry": {
-        "name": "BELUE",
-        "type": "steel",
-        "value": 33,
-      },
-      "level": 60,
-    },
+    "sneakySnack": undefined,
     "spilledIngredients": [],
     "totalHelps": 1,
     "totalRecovery": 0,
     "wastedEnergy": 0,
   },
   "externalId": "some id",
+  "pokemonWithIngredients": {
+    "ingredients": Int16Array [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3,
+    ],
+    "pokemon": "Mockemon",
+  },
   "produceFromSkill": {
     "berries": [],
     "ingredients": [],
@@ -689,7 +879,7 @@ describe('attemptNightHelp', () => {
   "produceTotal": {
     "berries": [
       {
-        "amount": 0.8,
+        "amount": 0.800000011920929,
         "berry": {
           "name": "BELUE",
           "type": "steel",
@@ -700,7 +890,7 @@ describe('attemptNightHelp', () => {
     ],
     "ingredients": [
       {
-        "amount": 0.2,
+        "amount": 0.20000000298023224,
         "ingredient": {
           "longName": "Slowpoke Tail",
           "name": "Tail",
@@ -713,7 +903,7 @@ describe('attemptNightHelp', () => {
   "produceWithoutSkill": {
     "berries": [
       {
-        "amount": 0.8,
+        "amount": 0.800000011920929,
         "berry": {
           "name": "BELUE",
           "type": "steel",
@@ -724,7 +914,7 @@ describe('attemptNightHelp', () => {
     ],
     "ingredients": [
       {
-        "amount": 0.2,
+        "amount": 0.20000000298023224,
         "ingredient": {
           "longName": "Slowpoke Tail",
           "name": "Tail",
