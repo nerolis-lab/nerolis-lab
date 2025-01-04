@@ -1,7 +1,7 @@
+import { getDirname, joinPath, relativePath } from '@src/utils/file-utils/file-utils.js';
+import { describe, expect, it } from 'bun:test';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { describe, expect, it } from 'vitest';
-import { getDirname, joinPath, relativePath } from './file-utils';
 
 describe('file-utils', () => {
   const importMetaUrl = import.meta.url;

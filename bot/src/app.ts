@@ -1,3 +1,4 @@
+/* eslint-disable SleepAPILogger/no-console */
 import { Client, GatewayIntentBits } from 'discord.js';
 import type { Application, Request, Response } from 'express';
 import express from 'express';
@@ -15,7 +16,7 @@ app.get('/', (req: Request, res: Response) => {
   try {
     res.send('Sleep API Bot is a Discord bot for Sleep API');
   } catch (err) {
-    logger.error(err as Error);
+    console.error(err as Error);
     res.status(500).send('Something went wrong');
   }
 });
@@ -23,13 +24,13 @@ app.get('/health', (req: Request, res: Response) => {
   try {
     res.header('Content-Type', 'application/json').send(JSON.stringify({ status: 'healthy' }, null, 4));
   } catch (err) {
-    logger.error(err as Error);
+    console.error(err as Error);
     res.status(500).send('Something went wrong');
   }
 });
-logger.info('⚡️[info]: starting API');
+console.info('⚡️[info]: starting API');
 app.listen(port, async () => {
-  logger.log(`API is running at ${port}`);
+  console.log(`API is running at ${port}`);
 });
 
 // DISCORD
@@ -45,11 +46,12 @@ const client = new Client({
 
 // At startup register commands
 client.once('ready', async () => {
-  logger.log('Discord bot is ready! 🤖');
+  console.log('Discord bot is ready! 🤖');
   await deployCommands();
 });
 
-client.on('interactionCreate', async (interaction) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+client.on('interactionCreate', async (interaction: any) => {
   if (!interaction.isCommand()) {
     return;
   }
