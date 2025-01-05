@@ -64,7 +64,6 @@
     <v-row no-gutters class="mt-2">
       <v-col cols="4" class="mr-2 flex-center">
         <v-card rounded="pill" class="w-100 h-50 text-center responsive-text flex-center">Ingredients</v-card>
-        <v-card rounded="pill" class="w-100 h-50 text-center responsive-text flex-center">Ingredients</v-card>
       </v-col>
       <v-col class="flex-center">
         <IngredientButton

@@ -158,7 +158,7 @@ export class CookingState {
       }
 
       if (canCook) {
-        currentIngredients._mapCombine(recipe.ingredients, (a, b) => a - b);
+        currentIngredients._mutateCombine(recipe.ingredients, (a, b) => a - b);
         return recipe;
       } else {
         existingEntry.totalCount += 1;
