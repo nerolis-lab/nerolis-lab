@@ -171,8 +171,7 @@ export default defineComponent({
       this.teamMenu = false
     },
     teamDisabled(members: (string | undefined)[]) {
-      const count = members.filter(Boolean).length
-      return count < 1 || count > 4
+      return members.filter(Boolean).length > 4
     },
     memberImage(externalId?: string) {
       if (externalId) {
