@@ -1,3 +1,10 @@
+## [1.7.6](https://github.com/SleepAPI/SleepAPI/compare/v1.7.5...v1.7.6) (2025-01-05)
+
+
+### Bug Fixes
+
+* allows user to select empty team in compare ([3e12de0](https://github.com/SleepAPI/SleepAPI/commit/3e12de06261b022a75c1da9571ed7b29c7ee8732))
+
 ## [1.7.5](https://github.com/SleepAPI/SleepAPI/compare/v1.7.4...v1.7.5) (2025-01-05)
 
 
