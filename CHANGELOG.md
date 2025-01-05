@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/SleepAPI/SleepAPI/compare/v1.7.1...v1.7.2) (2025-01-05)
+
+
+### Bug Fixes
+
+* cooking sim deducts ingredients as expected ([e9de545](https://github.com/SleepAPI/SleepAPI/commit/e9de54596551741acceb285689ff2ad41cc14adc))
+
 ## [1.7.1](https://github.com/SleepAPI/SleepAPI/compare/v1.7.0...v1.7.1) (2025-01-05)
 
 
