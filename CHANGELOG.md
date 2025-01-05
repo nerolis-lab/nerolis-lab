@@ -1,3 +1,10 @@
+## [1.7.5](https://github.com/SleepAPI/SleepAPI/compare/v1.7.4...v1.7.5) (2025-01-05)
+
+
+### Bug Fixes
+
+* highlight only current index team slot ([c4ec025](https://github.com/SleepAPI/SleepAPI/commit/c4ec025d26f16cd5da0c7a4c0e3a1098d25fd60a))
+
 ## [1.7.4](https://github.com/SleepAPI/SleepAPI/compare/v1.7.3...v1.7.4) (2025-01-05)
 
 
