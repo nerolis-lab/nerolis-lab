@@ -136,7 +136,6 @@ export class MemberState {
 
     // list already filtered for level
     const nrOfHelpingBonus = team.filter((member) => member.settings.subskills.has(subskill.HELPING_BONUS.name)).length;
-    member.settings.subskills.delete(subskill.HELPING_BONUS.name); // now that helping bonus is accounted for we delete it from the array
 
     const nightPeriod = {
       start: settings.bedtime,
