@@ -43,11 +43,11 @@ describe('CompareSettings', () => {
     expect(comparisonStore.team).not.toBeUndefined()
   })
 
-  it('disables teams with less than 1 or more than 4 members', () => {
+  it('disables teams with more than 4 members', () => {
     let result = wrapper.vm.teamDisabled(['member1', 'member2', 'member3', 'member4', 'member5'])
     expect(result).toBe(true)
     result = wrapper.vm.teamDisabled([])
-    expect(result).toBe(true)
+    expect(result).toBe(false)
     result = wrapper.vm.teamDisabled(['member1', 'member2', 'member3', 'member4', undefined])
     expect(result).toBe(false)
   })
