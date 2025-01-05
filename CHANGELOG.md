@@ -1,3 +1,10 @@
+## [1.7.4](https://github.com/SleepAPI/SleepAPI/compare/v1.7.3...v1.7.4) (2025-01-05)
+
+
+### Bug Fixes
+
+* correct member is highlighted on member remove ([e7ff15a](https://github.com/SleepAPI/SleepAPI/commit/e7ff15a3ebced60309a9c43f305a0d55839e88e1))
+
 ## [1.7.3](https://github.com/SleepAPI/SleepAPI/compare/v1.7.2...v1.7.3) (2025-01-05)
 
 
