@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/SleepAPI/SleepAPI/compare/v1.7.0...v1.7.1) (2025-01-05)
+
+
+### Bug Fixes
+
+* replace __dirname with path dirname ([994bf77](https://github.com/SleepAPI/SleepAPI/commit/994bf7760e7bcba91c8b3f12b2b137400efc57ac))
+
 # [1.7.0](https://github.com/SleepAPI/SleepAPI/compare/v1.6.3...v1.7.0) (2025-01-05)
 
 ## [1.6.3](https://github.com/SleepAPI/SleepAPI/compare/v1.6.2...v1.6.3) (2025-01-03)
