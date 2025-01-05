@@ -2,7 +2,7 @@ import MemberProductionSkill from '@/components/calculator/results/member-result
 import { StrengthService } from '@/services/strength/strength-service'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { MathUtils, VAPOREON, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -14,13 +14,15 @@ const mockMember = createMockMemberProductionExt({
 describe('MemberProductionSkill', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
 
-  beforeEach(() => {
+  beforeEach(async () => {
     setActivePinia(createPinia())
     wrapper = mount(MemberProductionSkill, {
       props: {
         memberWithProduction: mockMember
       }
     })
+    await flushPromises()
+    await vi.dynamicImportSettled()
   })
 
   afterEach(() => {
