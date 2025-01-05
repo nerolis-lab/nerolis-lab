@@ -82,10 +82,13 @@ describe('Logger in Node.js mode', () => {
 describe('Logger in browser mode', () => {
   beforeAll(() => {
     globalThis.window = { document: {} } as unknown as Window & typeof globalThis;
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2025-01-05T11:18:36.730Z'));
   });
 
   afterAll(() => {
     delete globalThis.window;
+    vi.useRealTimers();
   });
 
   it('applies browser-specific styles for log messages', () => {
@@ -93,7 +96,7 @@ describe('Logger in browser mode', () => {
     logger.log('Hello from the browser!');
     expect(consoleLogMock).toHaveBeenCalledWith(
       expect.stringMatching(/\[LOG\] \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z: Hello from the browser!/),
-      'color: gray;'
+      'color: #E0E0E0;'
     );
   });
 
@@ -101,11 +104,11 @@ describe('Logger in browser mode', () => {
     const consoleInfoMock = vi.spyOn(console, 'info').mockImplementation(() => {});
     const obj = { user: 'Ash', pokemon: 'Pikachu' };
     logger.info(obj);
+
     expect(consoleInfoMock).toHaveBeenCalledWith(
-      expect.stringMatching(/\[INFO\] \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z: /),
-      'color: blue;'
+      `%c[INFO] 2025-01-05T11:18:36.730Z: {\n  "user": "Ash",\n  "pokemon": "Pikachu"\n}`,
+      'color: #2196F3;'
     );
-    expect(consoleInfoMock).toHaveBeenCalledWith(expect.stringMatching(/"user": "Ash"/), 'color: blue;');
   });
 
   it('applies browser-specific styles for arrays', () => {
@@ -113,7 +116,7 @@ describe('Logger in browser mode', () => {
     logger.log(['Bulbasaur', 'Charmander', 'Squirtle']);
     expect(consoleLogMock).toHaveBeenCalledWith(
       expect.stringMatching(/\[LOG\] \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z: /),
-      'color: gray;'
+      'color: #E0E0E0;'
     );
   });
 
@@ -122,7 +125,22 @@ describe('Logger in browser mode', () => {
     logger.log(42);
     expect(consoleLogMock).toHaveBeenCalledWith(
       expect.stringMatching(/\[LOG\] \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z: /),
-      'color: gray;'
+      'color: #E0E0E0;'
+    );
+  });
+
+  it('logs a warning with color in browser mode', () => {
+    const consoleWarnMock = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    logger.warn('This is a warning!');
+    expect(consoleWarnMock).toHaveBeenCalledWith(expect.stringContaining('This is a warning!'), 'color: #FF9800;');
+  });
+
+  it('logs an error with bold red color in browser mode', () => {
+    const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(() => {});
+    logger.error(new Error('Fatal error!'));
+    expect(consoleErrorMock).toHaveBeenCalledWith(
+      expect.stringContaining('Fatal error!'),
+      'color: #F44336; font-weight: bold;'
     );
   });
 });

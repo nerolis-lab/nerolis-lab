@@ -338,10 +338,16 @@ export function convertAAAToAllIngredientSets(
   return result;
 }
 
-export function groupProducersByIngredientIndex(producers: SetCoverPokemonSetup[]): ProducersByIngredientIndex {
+export function groupProducersByIngredientIndex(
+  producers: SetCoverPokemonSetupWithSettings[]
+): ProducersByIngredientIndex {
   const result: ProducersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
   for (let producerIndex = 0; producerIndex < producers.length; ++producerIndex) {
-    const producer = producers[producerIndex];
+    const producerWithSettings = producers[producerIndex];
+    const producer: SetCoverPokemonSetup = {
+      pokemonSet: producerWithSettings.pokemonSet,
+      totalIngredients: producerWithSettings.totalIngredients
+    };
     for (let ingredientIndex = 0; ingredientIndex < ingredient.TOTAL_NUMBER_OF_INGREDIENTS; ++ingredientIndex) {
       const producedIngredient = producer.totalIngredients[ingredientIndex];
       if (producedIngredient > 0) {

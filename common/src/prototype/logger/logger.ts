@@ -33,11 +33,11 @@ export class Logger {
 
     if (this.isBrowser) {
       const styles: Record<LogLevel, string> = {
-        debug: 'color: green;',
-        log: 'color: gray;',
-        info: 'color: blue;',
-        warn: 'color: orange;',
-        error: 'color: red; font-weight: bold;'
+        debug: 'color: #00E676;',
+        log: 'color: #E0E0E0;',
+        info: 'color: #2196F3;',
+        warn: 'color: #FF9800;',
+        error: 'color: #F44336; font-weight: bold;'
       };
 
       console[level](`%c${formattedMessage}`, styles[level]);

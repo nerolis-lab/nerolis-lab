@@ -151,7 +151,7 @@ export default {
       const existingIngredients =
         this.pokemonInstance.ingredients.filter((ing) => ing.ingredient !== undefined).length === 3
 
-      return oldPokemon.name === mockPokemon.name && existingIngredients
+      return oldPokemon.name === mockPokemon().name && existingIngredients
     }
   }
 }
