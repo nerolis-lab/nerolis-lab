@@ -12,6 +12,7 @@ import {
   hashPokemonSetIndexed,
   pokedexToMembers
 } from '@src/services/solve/utils/solve-utils.js';
+import { joinPath } from '@src/utils/file-utils/file-utils.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import type { Pokemon, Recipe, TierlistSettings } from 'sleepapi-common';
@@ -87,7 +88,7 @@ class CookingTierlistImpl {
       throw new BadRequestError('No tier list exists for level ' + level);
     }
 
-    const dirName = join(__dirname, `../../data/tierlist/${version}/level${level}`);
+    const dirName = joinPath(`../../data/tierlist/${version}/level${level}`, import.meta.url);
     const filePath = join(dirName, `${camp ? 'camp' : 'regular'}.json`);
 
     try {
@@ -110,7 +111,7 @@ class CookingTierlistImpl {
       throw new BadRequestError('Cannot write tier list for level ' + level);
     }
 
-    const dirName = join(__dirname, `../../data/tierlist/current/level${level}`);
+    const dirName = joinPath(`../../data/tierlist/current/level${level}`, import.meta.url);
     const filePath = join(dirName, `${camp ? 'camp' : 'regular'}.json`);
     await fs.mkdir(dirName, { recursive: true });
 
