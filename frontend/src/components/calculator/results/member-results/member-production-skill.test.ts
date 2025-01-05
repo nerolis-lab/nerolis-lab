@@ -2,7 +2,7 @@ import ChargeEnergySDetails from '@/components/calculator/results/member-results
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-skill.vue'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { TYRANITAR, VAPOREON } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -14,7 +14,7 @@ const mockMember = createMockMemberProductionExt({
 describe('MemberProductionSkill', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
 
-  beforeEach(() => {
+  beforeEach(async () => {
     setActivePinia(createPinia())
     wrapper = mount(MemberProductionSkill, {
       props: {
@@ -26,6 +26,8 @@ describe('MemberProductionSkill', () => {
         }
       }
     })
+    await flushPromises()
+    await vi.dynamicImportSettled()
   })
 
   afterEach(() => {
@@ -54,6 +56,12 @@ describe('MemberProductionSkill', () => {
       }
     })
 
-    expect(wrapper.vm.skillComponent).toBe('IngredientMagnetSDetails')
+    // Wait for the dynamic component to be fully resolved
+    await flushPromises()
+    await vi.dynamicImportSettled()
+
+    // Access the resolved component's name
+    const skillComponent = wrapper.vm.skillComponent
+    expect(skillComponent.__asyncResolved.name).toBe('IngredientMagnetSDetails')
   })
 })

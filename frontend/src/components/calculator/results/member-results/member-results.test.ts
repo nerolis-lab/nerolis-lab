@@ -50,9 +50,10 @@ describe('MemberResults', () => {
   it('displays member production when data is available', () => {
     const members = wrapper.vm.membersWithProduction
     expect(members).toBeDefined()
-    expect(members!.length).toBe(1)
-    expect(members![0].production.externalId).toEqual(mockPokemon.externalId)
-    expect(members![0].production.produceTotal.berries[0].amount).toBe(10)
+    expect(members).toHaveLength(5)
+    expect(members.filter((m) => m != null)).toHaveLength(1)
+    expect(members![0]?.production.externalId).toEqual(mockPokemon.externalId)
+    expect(members![0]?.production.produceTotal.berries[0].amount).toBe(10)
   })
 
   it('changes window item correctly', async () => {
