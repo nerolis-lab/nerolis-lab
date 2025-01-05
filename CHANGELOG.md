@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/SleepAPI/SleepAPI/compare/v1.7.2...v1.7.3) (2025-01-05)
+
+
+### Bug Fixes
+
+* helping bonus to affect later team members ([1f6e520](https://github.com/SleepAPI/SleepAPI/commit/1f6e5205fba9f59456b63dee3f6ee7a93a6406ae))
+
 ## [1.7.2](https://github.com/SleepAPI/SleepAPI/compare/v1.7.1...v1.7.2) (2025-01-05)
 
 
