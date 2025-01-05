@@ -1,6 +1,6 @@
 {
   "name": "sleepapi",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "private": true,
   "type": "module",
   "scripts": {
