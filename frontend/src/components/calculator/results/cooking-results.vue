@@ -24,7 +24,7 @@
               >
 
               <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}`">
-                <v-img src="/images/misc/strength.png" width="20" height="20" contain />
+                <v-img src="/images/misc/strength_black.png" width="20" height="20" contain />
               </div>
             </v-col>
             <v-col cols="auto" class="flex-right pt-0">
@@ -43,7 +43,7 @@
               </span>
 
               <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}-dark`">
-                <v-img src="/images/misc/strength.png" width="20" height="20" contain />
+                <v-img src="/images/misc/strength_black.png" width="20" height="20" contain />
               </div>
             </v-col>
           </v-row>

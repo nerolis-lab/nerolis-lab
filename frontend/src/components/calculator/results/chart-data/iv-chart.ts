@@ -2,58 +2,70 @@ import type { Chart, RadialLinearScale } from 'chart.js'
 import { type ChartData, type Plugin } from 'chart.js'
 import type { Ref } from 'vue'
 import { onMounted, ref } from 'vue'
+import { useTheme } from 'vuetify'
 
-export const ivData: Ref<ChartData<'radar'>> = ref<ChartData<'radar'>>({
-  labels: ['Skill', 'Ingredient', 'Berry'],
-  datasets: [
-    {
-      data: [0, 0, 0],
-      borderColor: '#767d98',
-      backgroundColor: '#5f6782AA',
-      pointBorderColor: ['#ff616e', '#fbe346', '#b297e7'], // Will get updated with theme colors
-      pointBackgroundColor: ['#ff616e', '#fbe346', '#b297e7'] // Will get updated with theme colors
-    }
-  ]
-})
+export function generateIvData(themeVariables: { [x: string]: string }): Ref<ChartData<'radar'>> {
+  const berry = themeVariables['berry']
+  const skill = themeVariables['skill']
+  const ingredient = themeVariables['ingredient']
 
-export const ivTextPlugin: Plugin<'radar'> = {
-  id: 'customPlugin',
-  afterDraw(chart: Chart) {
-    const ctx = chart.ctx
-    const scale = chart.scales.r as RadialLinearScale
-    const data = chart.config.data.datasets[0].data as number[]
-    const labels = chart.config.data.labels as string[]
-
-    if (!chart) return
-
-    ctx.save()
-    ctx.textAlign = 'center'
-
-    // Iterate over each label and data value to draw the percentage and label
-    labels.forEach((label, index) => {
-      const position = scale.getPointPosition(index, scale.max)
-      const value = `${data[index]}%`
-
-      ctx.font = 'bold 18px Chakra Petch'
-      if (index === 0) {
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--v-theme-skill')
-        ctx.fillText(value, position.x, position.y + 33)
-        ctx.font = '10px Chakra Petch'
-        ctx.fillText(label.toLowerCase(), position.x, position.y + 40)
-      } else if (index === 1) {
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--v-theme-ingredient')
-        ctx.fillText(value, position.x - 35, position.y - 7)
-        ctx.font = '10px Chakra Petch'
-        ctx.fillText(label.toLowerCase(), position.x - 35, position.y)
-      } else if (index === 2) {
-        ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--v-theme-berry')
-        ctx.fillText(value, position.x + 30, position.y - 7)
-        ctx.font = '10px Chakra Petch'
-        ctx.fillText(label.toLowerCase(), position.x + 30, position.y)
+  return ref<ChartData<'radar'>>({
+    labels: ['Skill', 'Ingredient', 'Berry'],
+    datasets: [
+      {
+        data: [0, 0, 0],
+        borderColor: '#767d98',
+        backgroundColor: '#5f6782AA',
+        pointBorderColor: [skill, ingredient, berry],
+        pointBackgroundColor: [skill, ingredient, berry]
       }
-    })
+    ]
+  })
+}
 
-    ctx.restore()
+export function generateIvTextPlugin(themeVariables: { [x: string]: string }): Plugin<'radar'> {
+  const berry = themeVariables['berry']
+  const skill = themeVariables['skill']
+  const ingredient = themeVariables['ingredient']
+  return {
+    id: 'customPlugin',
+    afterDraw(chart: Chart) {
+      const ctx = chart.ctx
+      const scale = chart.scales.r as RadialLinearScale
+      const data = chart.config.data.datasets[0].data as number[]
+      const labels = chart.config.data.labels as string[]
+
+      if (!chart) return
+
+      ctx.save()
+      ctx.textAlign = 'center'
+
+      // Iterate over each label and data value to draw the percentage and label
+      labels.forEach((label, index) => {
+        const position = scale.getPointPosition(index, scale.max)
+        const value = `${data[index]}%`
+
+        ctx.font = 'bold 18px Chakra Petch'
+        if (index === 0) {
+          ctx.fillStyle = skill
+          ctx.fillText(value, position.x, position.y + 33)
+          ctx.font = '10px Chakra Petch'
+          ctx.fillText(label.toLowerCase(), position.x, position.y + 40)
+        } else if (index === 1) {
+          ctx.fillStyle = ingredient
+          ctx.fillText(value, position.x - 35, position.y - 7)
+          ctx.font = '10px Chakra Petch'
+          ctx.fillText(label.toLowerCase(), position.x - 35, position.y)
+        } else if (index === 2) {
+          ctx.fillStyle = berry
+          ctx.fillText(value, position.x + 30, position.y - 7)
+          ctx.font = '10px Chakra Petch'
+          ctx.fillText(label.toLowerCase(), position.x + 30, position.y)
+        }
+      })
+
+      ctx.restore()
+    }
   }
 }
 
@@ -105,23 +117,26 @@ export const ivOptions = {
     legend: {
       display: false
     },
-    ivTextPlugin
+    ivTextPlugin: generateIvTextPlugin
   }
 }
 
 export default {
   setup() {
     onMounted(() => {
-      const skillColor = getComputedStyle(document.documentElement).getPropertyValue('--v-theme-skill')
-      const ingredientColor = getComputedStyle(document.documentElement).getPropertyValue('--v-theme-ingredient')
-      const berryColor = getComputedStyle(document.documentElement).getPropertyValue('--v-theme-berry')
+      const skillColor = '#fff'
+      const ingredientColor = '#aaa'
+      const berryColor = '#000'
 
-      ivData.value.datasets[0].pointBorderColor = [skillColor, ingredientColor, berryColor]
-      ivData.value.datasets[0].pointBackgroundColor = [skillColor, ingredientColor, berryColor]
+      generateIvData.value.datasets[0].pointBorderColor = [skillColor, ingredientColor, berryColor]
+      generateIvData.value.datasets[0].pointBackgroundColor = [skillColor, ingredientColor, berryColor]
     })
 
+    const theme = useTheme()
+    console.log('hello', theme.current)
+
     return {
-      ivData,
+      ivData: generateIvData,
       ivOptions
     }
   }
