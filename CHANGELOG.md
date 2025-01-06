@@ -1,3 +1,11 @@
+## [1.7.7](https://github.com/SleepAPI/SleepAPI/compare/v1.7.6...v1.7.7) (2025-01-06)
+
+
+### Bug Fixes
+
+* compare strength shows more skill values ([1dae600](https://github.com/SleepAPI/SleepAPI/commit/1dae60098fe4d4f8cec4edafe5e5809d23c6ac7d))
+* iv chart compares all ingredients ([7e4fc49](https://github.com/SleepAPI/SleepAPI/commit/7e4fc49776872db4f02c745d214fe78407a4d843))
+
 ## [1.7.6](https://github.com/SleepAPI/SleepAPI/compare/v1.7.5...v1.7.6) (2025-01-05)
 
 
