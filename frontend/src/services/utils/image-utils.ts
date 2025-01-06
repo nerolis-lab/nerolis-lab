@@ -1,7 +1,7 @@
 import { island, mainskill, type Berry, type Pokemon } from 'sleepapi-common'
 
 export function mainskillImage(pokemon: Pokemon) {
-  if (pokemon.skill.isSameOrModifiedVersionOf(mainskill.HELPER_BOOST)) {
+  if (pokemon.skill.isSameOrModifiedVersion(mainskill.HELPER_BOOST)) {
     return `/images/type/${pokemon.berry.type}.png`
   } else {
     const maybeModifier = pokemon.skill.modifier.type === 'Base' ? '' : `${pokemon.skill.modifier.type.toLowerCase()}_`

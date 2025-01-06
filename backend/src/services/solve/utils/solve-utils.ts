@@ -132,7 +132,7 @@ export function settingsToArraySubskills(settings: TeamMemberSettingsExt) {
 export function filterPokedex(members: TeamMemberExt[]) {
   const helperBoostIncludedMembers = new Set(
     members
-      .filter((member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersionOf(mainskill.HELPER_BOOST))
+      .filter((member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.HELPER_BOOST))
       .map((member) => member.pokemonWithIngredients.pokemon.name)
   );
   if (helperBoostIncludedMembers.size > 0) {
@@ -205,11 +205,11 @@ export function calculateNonSupportPokemon(params: {
   if (includeCooking) {
     const [tastyChanceMembers, otherNonSupportMembersWithCookingMembers] = splitArrayByCondition(
       nonSupportMembers,
-      (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersionOf(mainskill.TASTY_CHANCE_S)
+      (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.TASTY_CHANCE_S)
     );
     const [cookingPowerUpMembers, otherNonSupportMembers] = splitArrayByCondition(
       otherNonSupportMembersWithCookingMembers,
-      (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersionOf(mainskill.COOKING_POWER_UP_S)
+      (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.COOKING_POWER_UP_S)
     );
     const otherNonSupportProductionStats = calculateSimple({
       settings,

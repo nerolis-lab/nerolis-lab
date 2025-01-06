@@ -447,7 +447,7 @@ class CookingTierlistImpl {
       teamSizePenalty * (ownCritMultiplier * valueLeftInRecipe - defaultCritMultiplier * valueLeftInRecipe);
     if (
       tastyChanceContribution < 100 ||
-      !getPokemon(currentPokemon.pokemonSet.pokemon).skill.isSameOrModifiedVersionOf(mainskill.TASTY_CHANCE_S)
+      !getPokemon(currentPokemon.pokemonSet.pokemon).skill.isSameOrModifiedVersion(mainskill.TASTY_CHANCE_S)
     ) {
       tastyChanceContribution = 0;
     }
