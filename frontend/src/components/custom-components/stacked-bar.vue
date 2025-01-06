@@ -67,8 +67,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main.scss';
-
 .stacked-bar {
   height: 40px;
   background-color: $secondary;

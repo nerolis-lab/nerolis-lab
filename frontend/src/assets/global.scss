@@ -1,0 +1,44 @@
+@import '@/assets/common.scss';
+@import '@/assets/animations.scss';
+
+html {
+  font-family: $body-font-family, sans-serif !important;
+
+  @each $typoOption in $typoOptions {
+    .#{$typoOption} {
+      font-family: $body-font-family, sans-serif !important;
+    }
+  }
+}
+
+#app * {
+  transition: all 0.2s ease;
+}
+
+.text-outline {
+  text-shadow:
+    -0.5px -0.5px 0 #000,
+    0.5px -0.5px 0 #000,
+    -0.5px 0.5px 0 #000,
+    0.5px 0.5px 0 #000;
+}
+
+.legend {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  width: 34px;
+  border-radius: 30px;
+}
+
+.frosted-glass {
+  background: rgba($surface, 0.4) !important;
+  backdrop-filter: blur(10px);
+}
+
+.frosted-glass-dark {
+  background: rgba($surface, 0.85) !important;
+  backdrop-filter: blur(10px);
+}

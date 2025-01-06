@@ -93,12 +93,12 @@ export default defineComponent({
 }
 
 .heads {
-  background: url('/images/site/home-doctor.png') no-repeat center center;
+  background: url('/images/home-page/doctor-home.png') no-repeat center center;
   background-size: contain;
 }
 
 .tails {
-  background: url('/images/site/home-sneasel.png') no-repeat center center;
+  background: url('/images/home-page/sneasel-home.png') no-repeat center center;
   background-size: contain;
   transform: rotateY(180deg);
 }

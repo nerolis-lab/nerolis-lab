@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col cols="12">
-      <v-card class="d-flex flex-column frosted-glass" rounded="0">
+      <v-card class="d-flex flex-column bg-transparent" rounded="0">
         <v-container>
           <v-row class="flex-center py-2">
             <v-col cols="auto" class="flex-center">
@@ -18,11 +18,13 @@
               <span class="text-body-1">Mon&ndash;Sat</span>
               <span
                 id="weekdayStrength"
-                :class="['text-body-1', 'ml-2', `text-${teamStore.getCurrentTeam.recipeType}`, 'font-weight-medium']"
+                :class="['text-body-1', 'mx-2', `text-${teamStore.getCurrentTeam.recipeType}`, 'font-weight-medium']"
               >
                 {{ weekdayStrength }}</span
               >
-              <v-img src="/images/misc/strength.png" class="ml-2" width="20" height="20" contain />
+              <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}`">
+                <v-img src="/images/misc/strength_black.png" width="20" height="20" contain />
+              </div>
             </v-col>
             <v-col cols="auto" class="flex-right pt-0">
               <span class="text-body-1 flex-right">Sun </span>
@@ -30,17 +32,18 @@
                 id="sundayStrength"
                 :class="[
                   'text-body-1',
-                  'ml-2',
+                  'mx-2',
                   'flex-right',
-                  `text-${teamStore.getCurrentTeam.recipeType}`,
+                  `text-${teamStore.getCurrentTeam.recipeType}-dark`,
                   'font-weight-medium'
                 ]"
-                style="opacity: 50%"
               >
                 {{ sundayStrength }}
               </span>
 
-              <v-img src="/images/misc/strength.png" class="ml-2" width="20" height="20" contain />
+              <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}-dark`">
+                <v-img src="/images/misc/strength_black.png" width="20" height="20" contain />
+              </div>
             </v-col>
           </v-row>
 
@@ -96,8 +99,8 @@
               <v-progress-linear
                 v-model="cookedRecipe.weekdayPercentage"
                 :buffer-value="cookedRecipe.fullWeekPercentage"
-                :buffer-color="teamStore.getCurrentTeam.recipeType"
-                buffer-opacity="0.5"
+                :buffer-color="`${teamStore.getCurrentTeam.recipeType}-dark`"
+                buffer-opacity="1"
                 :color="teamStore.getCurrentTeam.recipeType"
                 height="25"
                 class="flex-grow-1"

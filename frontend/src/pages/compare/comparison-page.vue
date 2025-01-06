@@ -45,7 +45,7 @@
               v-for="tabItem in tabs"
               :key="tabItem.value"
               :value="tabItem.value"
-              :class="[tab === tabItem.value ? 'frosted-tab' : 'bg-surface', 'tab-item']"
+              :class="[tab === tabItem.value ? 'frosted-glass-dark' : 'bg-surface', 'tab-item']"
             >
               {{ tabItem.label }}
             </v-tab>
@@ -218,17 +218,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main';
-
-.frosted-tab {
-  background: rgba($surface, 0.8) !important;
-  backdrop-filter: blur(10px);
-}
-.frosted-glass {
-  background: rgba($surface, 0.4) !important;
-  backdrop-filter: blur(10px);
-}
-
 .tab-item {
   flex: 1;
 }

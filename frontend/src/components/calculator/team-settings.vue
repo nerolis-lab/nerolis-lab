@@ -53,12 +53,12 @@
     </v-col>
 
     <v-dialog v-model="recipeMenu" max-width="400px" aria-label="recipe menu" close-on-content-click>
-      <v-card title="Choose recipe week" subtitle="Curry, salad or dessert">
+      <v-card title="Choose a recipe type">
         <template #append>
           <v-img width="48" height="48" src="/images/misc/pot1.png"></v-img>
         </template>
         <v-card
-          class="flex-center"
+          class="flex-center meal-option"
           color="curry"
           height="72"
           aria-label="curry button"
@@ -73,7 +73,7 @@
         </v-card>
 
         <v-card
-          class="flex-center"
+          class="flex-center meal-option"
           color="salad"
           height="72"
           aria-label="salad button"
@@ -88,7 +88,7 @@
         </v-card>
 
         <v-card
-          class="flex-center"
+          class="flex-center meal-option"
           color="dessert"
           height="72"
           aria-label="dessert button"
@@ -365,9 +365,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main';
-
 .camp-disabled {
   filter: grayscale(100%);
+}
+
+.meal-option {
+  border-radius: 8px;
+  margin: 8px 24px;
 }
 </style>
