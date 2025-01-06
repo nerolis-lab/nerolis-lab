@@ -1,18 +1,22 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "noImplicitAny": true,
-    "outDir": "dist",
-    "sourceMap": true,
-    "baseUrl": ".",
-    "declaration": true,
-    "skipLibCheck": true,
+    "module": "ESNext",
     "moduleResolution": "Bundler",
-    "paths": {
-      "src/*": ["./src/*"],
-      "test/*": ["./test/*"]
-    }
+
+    // rules
+    "lib": ["ESNext", "DOM"],
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+
+    // paths
+    "sourceMap": true,
+    "outDir": "dist",
+    "declaration": true,
+
+    // types
+    "types": ["vitest/globals"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist/"]

@@ -1,18 +1,17 @@
 import type {
+  Berry,
   BerrySet,
   CookingResult,
   IngredientSet,
   MemberProduction,
   PokemonInstanceExt,
-  RecipeType,
-  Time,
-  berry
+  RecipeType
 } from 'sleepapi-common'
 
 export interface TeamCombinedProduction {
   berries: BerrySet[]
   ingredients: IngredientSet[]
-  cooking: CookingResult
+  cooking?: CookingResult
 }
 
 export interface PerformanceDetails {
@@ -28,26 +27,6 @@ export interface MemberProductionExt {
   iv?: PerformanceDetails
 }
 
-export interface SingleProductionExt {
-  externalId: string
-  berries: BerrySet[]
-  ingredients: IngredientSet[]
-  skillProcs: number
-  ingredientPercentage: number
-  skillPercentage: number
-  carrySize: number
-  spilledIngredients: IngredientSet[]
-  sneakySnack: BerrySet[]
-  nrOfHelps: number
-  dayHelps: number
-  nightHelps: number
-  sneakySnackHelps: number
-  totalRecovery: number
-  averageEnergy: number
-  averageFrequency: number
-  collectFrequency?: Time
-}
-
 export interface TeamProductionExt {
   team: TeamCombinedProduction
   members: MemberProduction[]
@@ -60,7 +39,7 @@ export interface TeamInstance {
   bedtime: string
   wakeup: string
   recipeType: RecipeType
-  favoredBerries: berry.Berry[]
+  favoredBerries: Berry[]
   version: number
   members: (string | undefined)[]
   memberIvs: Record<string, PerformanceDetails | undefined>

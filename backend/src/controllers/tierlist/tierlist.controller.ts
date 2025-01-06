@@ -1,12 +1,8 @@
-import { Controller, Get, Queries, Route, Tags } from 'tsoa';
-import { GetTierListQueryParams } from '../../routes/tierlist-router/tierlist-router';
-import { TierlistService } from '../../services/api-service/tierlist/tierlist-service';
+import { TierlistService } from '@src/services/tier-list/tierlist-service.js';
+import type { TierlistSettings } from 'sleepapi-common';
 
-@Route('api/tierlist')
-@Tags('tierlist')
-export default class TierlistController extends Controller {
-  @Get('cooking')
-  public async getCookingTierlist(@Queries() getTierListQueries: GetTierListQueryParams) {
-    return TierlistService.getTierlist(getTierListQueries);
+export default class TierlistController {
+  public async getCookingTierlist(request: TierlistSettings) {
+    return TierlistService.getCookingTierlist(request);
   }
 }

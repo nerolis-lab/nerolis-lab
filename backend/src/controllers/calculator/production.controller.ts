@@ -1,32 +1,30 @@
-import { TeamMember, TeamSettingsExt } from '@src/domain/combination/team';
-import { ProductionStats } from '@src/domain/computed/production';
-import { BadRequestError } from '@src/domain/error/api/api-error';
-import { PokemonError } from '@src/domain/error/pokemon/pokemon-error';
-import { SleepAPIError } from '@src/domain/error/sleepapi-error';
+import type { ProductionStats } from '@src/domain/computed/production.js';
+import { BadRequestError } from '@src/domain/error/api/api-error.js';
+import { PokemonError } from '@src/domain/error/pokemon/pokemon-error.js';
+import { SleepAPIError } from '@src/domain/error/sleepapi-error.js';
 import {
   calculateIv,
   calculatePokemonProduction,
-  calculateTeam,
-} from '@src/services/api-service/production/production-service';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils';
-import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils';
-import { extractSubskillsBasedOnLevel } from '@src/utils/subskill-utils/subskill-utils';
-import { TimeUtils } from '@src/utils/time-utils/time-utils';
-import {
+  calculateTeam
+} from '@src/services/api-service/production/production-service.js';
+import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import * as tsoa from '@tsoa/runtime';
+import type {
   CalculateIvRequest,
   CalculateTeamRequest,
   IngredientInstance,
   IngredientSet,
+  Pokemon,
   PokemonInstanceIdentity,
   SingleProductionRequest,
+  TeamMemberExt,
   TeamSettings,
-  getNature,
-  getPokemon,
-  getSubskill,
-  mainskill,
-  pokemon,
+  TeamSettingsExt
 } from 'sleepapi-common';
-import { Body, Controller, Path, Post, Query, Route, Tags } from 'tsoa';
+import { getNature, getPokemon, limitSubSkillsToLevel, mainskill } from 'sleepapi-common';
+const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
 
 @Route('api/calculator')
 @Tags('calculator')
@@ -71,36 +69,42 @@ export default class ProductionController extends Controller {
     return {
       settings,
       members: parsedMembers,
-      variants: parsedVariants,
+      variants: parsedVariants
     };
   }
 
   #parseTeamMembers(members: PokemonInstanceIdentity[], camp: boolean) {
-    const parsedMembers: TeamMember[] = [];
+    const parsedMembers: TeamMemberExt[] = [];
     for (const member of members) {
       const pokemon = getPokemon(member.pokemon);
-      const subskills = member.subskills
-        .filter((subskill) => subskill.level <= member.level)
-        .map((subskill) => getSubskill(subskill.subskill));
+      const subskills = new Set(
+        member.subskills.filter((subskill) => subskill.level <= member.level).map((subskill) => subskill.subskill)
+      );
 
       parsedMembers.push({
-        pokemonSet: {
+        pokemonWithIngredients: {
           pokemon,
-          ingredientList: this.#getIngredientSet({ pokemon, level: member.level, ingredients: member.ingredients }),
+          ingredientList: this.#getIngredientSet({
+            pokemon,
+            level: member.level,
+            ingredients: member.ingredients
+          })
         },
-        level: member.level,
-        ribbon: member.ribbon,
-        carrySize: InventoryUtils.calculateCarrySize({
-          baseWithEvolutions: member.carrySize,
-          subskills,
-          ribbon: member.ribbon,
+        settings: {
           level: member.level,
-          camp,
-        }),
-        nature: getNature(member.nature),
-        skillLevel: member.skillLevel,
-        subskills,
-        externalId: member.externalId,
+          ribbon: member.ribbon,
+          carrySize: InventoryUtils.calculateCarrySize({
+            baseWithEvolutions: member.carrySize,
+            subskillsLevelLimited: subskills,
+            ribbon: member.ribbon,
+            level: member.level,
+            camp
+          }),
+          nature: getNature(member.nature),
+          skillLevel: member.skillLevel,
+          subskills,
+          externalId: member.externalId
+        }
       });
     }
     return parsedMembers;
@@ -111,7 +115,7 @@ export default class ProductionController extends Controller {
 
     return {
       settings,
-      members: this.#parseTeamMembers(body.members, settings.camp),
+      members: this.#parseTeamMembers(body.members, settings.camp)
     };
   }
 
@@ -119,8 +123,14 @@ export default class ProductionController extends Controller {
     const camp = queryAsBoolean(settings.camp);
     const bedtime = TimeUtils.parseTime(settings.bedtime);
     const wakeup = TimeUtils.parseTime(settings.wakeup);
-    const sleepDuration = TimeUtils.calculateDuration({ start: bedtime, end: wakeup });
-    const dayDuration = TimeUtils.calculateDuration({ start: wakeup, end: bedtime });
+    const sleepDuration = TimeUtils.calculateDuration({
+      start: bedtime,
+      end: wakeup
+    });
+    const dayDuration = TimeUtils.calculateDuration({
+      start: wakeup,
+      end: bedtime
+    });
     if (sleepDuration.hour < 1 || dayDuration.hour < 1) {
       throw new SleepAPIError('Minimum 1 hour of sleep and daytime required');
     }
@@ -128,15 +138,11 @@ export default class ProductionController extends Controller {
     return {
       camp,
       bedtime,
-      wakeup,
+      wakeup
     };
   }
 
-  #getIngredientSet(params: {
-    pokemon: pokemon.Pokemon;
-    level: number;
-    ingredients: IngredientInstance[];
-  }): IngredientSet[] {
+  #getIngredientSet(params: { pokemon: Pokemon; level: number; ingredients: IngredientInstance[] }): IngredientSet[] {
     const { pokemon, level, ingredients } = params;
 
     const ingredientSet: IngredientSet[] = [pokemon.ingredient0];
@@ -160,12 +166,15 @@ export default class ProductionController extends Controller {
     return ingredientSet;
   }
 
-  #parseSingleProductionInput(pkmn: pokemon.Pokemon, input: SingleProductionRequest): ProductionStats {
+  #parseSingleProductionInput(pkmn: Pokemon, input: SingleProductionRequest): ProductionStats {
     const level = queryAsNumber(input.level) ?? 60;
 
     const mainBedtime = TimeUtils.parseTime(input.mainBedtime);
     const mainWakeup = TimeUtils.parseTime(input.mainWakeup);
-    const duration = TimeUtils.calculateDuration({ start: mainBedtime, end: mainWakeup });
+    const duration = TimeUtils.calculateDuration({
+      start: mainBedtime,
+      end: mainWakeup
+    });
     if (duration.hour < 1) {
       throw new SleepAPIError('Minimum sleep of 1 hour required');
     }
@@ -185,7 +194,7 @@ export default class ProductionController extends Controller {
       level,
       ribbon: queryAsNumber(input.ribbon) ?? 0,
       nature: getNature(input.nature),
-      subskills: extractSubskillsBasedOnLevel(level, input.subskills),
+      subskills: limitSubSkillsToLevel(new Set(input.subskills), level),
       skillLevel: Math.min(queryAsNumber(input.skillLevel) ?? pkmn.skill.maxLevel, pkmn.skill.maxLevel),
       inventoryLimit,
       e4eProcs: queryAsNumber(input.e4eProcs) ?? 0,
@@ -200,7 +209,7 @@ export default class ProductionController extends Controller {
       erb: queryAsNumber(input.erb) ?? 0,
       incense: queryAsBoolean(input.recoveryIncense),
       mainBedtime,
-      mainWakeup,
+      mainWakeup
     };
     return parsedInput;
   }

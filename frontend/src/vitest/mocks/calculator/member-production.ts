@@ -1,19 +1,23 @@
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { createMockMemberIv } from '@/vitest/mocks/member-iv'
 import { createMockPokemon } from '@/vitest/mocks/pokemon-instance'
-import { berry, ingredient, type MemberProduction } from 'sleepapi-common'
+import { berry, ingredient, ingredientSetToIntFlat, type MemberProduction } from 'sleepapi-common'
 
 export function createMockMemberProduction(attrs?: Partial<MemberProduction>): MemberProduction {
   const mockPokemon = createMockPokemon()
 
   return {
     externalId: mockPokemon.externalId,
+    pokemonWithIngredients: {
+      pokemon: mockPokemon.name,
+      ingredients: ingredientSetToIntFlat(mockPokemon.ingredients.map(({ ingredient }) => ({ ingredient, amount: 0 })))
+    },
     produceTotal: {
       berries: [
         {
           amount: 10,
           berry: berry.BELUE,
-          level: 60
+          level: mockPokemon.level
         }
       ],
       ingredients: [
@@ -36,7 +40,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
         {
           amount: 10,
           berry: berry.BELUE,
-          level: 60
+          level: mockPokemon.level
         }
       ],
       ingredients: [
@@ -53,6 +57,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
     skillAmount: 100,
     skillProcs: 5,
     advanced: {
+      averageHelps: 0,
       skillCrits: 0,
       spilledIngredients: [],
       totalHelps: 0,
@@ -62,15 +67,18 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
       nightHelpsAfterSS: 0,
       skillCritValue: 0,
       wastedEnergy: 0,
-      morningProcs: 0
+      morningProcs: 0,
+      carrySize: 0,
+      ingredientPercentage: 0,
+      skillPercentage: 0,
+      sneakySnack: { amount: 0, berry: mockPokemon.pokemon.berry, level: mockPokemon.level },
+      totalRecovery: 0
     },
     ...attrs
   }
 }
 
-export function createMockMemberProductionExt(
-  attrs?: Partial<MemberProductionExt>
-): MemberProductionExt {
+export function createMockMemberProductionExt(attrs?: Partial<MemberProductionExt>): MemberProductionExt {
   const mockPokemon = createMockPokemon()
 
   return {

@@ -1,4 +1,5 @@
-import { chunkArray } from './array-utils';
+import { chunkArray, convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
+import { describe, expect, it } from 'bun:test';
 
 describe('chunkArray', () => {
   it('shall chunk an array into specified sizes', () => {
@@ -46,5 +47,54 @@ describe('chunkArray', () => {
 
     expect(result.length).toBe(1);
     expect(result[0]).toEqual([1, 2, 3]);
+  });
+});
+describe('splitArrayByCondition', () => {
+  it('should split array based on the condition function', () => {
+    const inputArray = [1, 2, 3, 4, 5, 6];
+    const conditionFn = (item: number) => item % 2 === 0;
+
+    const [truthy, falsy] = splitArrayByCondition(inputArray, conditionFn);
+
+    expect(truthy).toEqual([2, 4, 6]);
+    expect(falsy).toEqual([1, 3, 5]);
+  });
+
+  it('should return all elements in falsy array if condition is never met', () => {
+    const inputArray = [1, 3, 5];
+    const conditionFn = (item: number) => item % 2 === 0;
+
+    const [truthy, falsy] = splitArrayByCondition(inputArray, conditionFn);
+
+    expect(truthy).toEqual([]);
+    expect(falsy).toEqual([1, 3, 5]);
+  });
+
+  it('should return all elements in truthy array if condition is always met', () => {
+    const inputArray = [2, 4, 6];
+    const conditionFn = (item: number) => item % 2 === 0;
+
+    const [truthy, falsy] = splitArrayByCondition(inputArray, conditionFn);
+
+    expect(truthy).toEqual([2, 4, 6]);
+    expect(falsy).toEqual([]);
+  });
+});
+
+describe('convertFloat32ToInt16', () => {
+  it('should convert Float32Array to Int16Array', () => {
+    const inputArray = new Float32Array([1.1, 2.5, 3.9, 4.4]);
+    const result = convertFloat32ToInt16(inputArray);
+
+    expect(result).toBeInstanceOf(Int16Array);
+    expect(result).toEqual(new Int16Array([1, 3, 4, 4]));
+  });
+
+  it('should handle an empty Float32Array', () => {
+    const inputArray = new Float32Array([]);
+    const result = convertFloat32ToInt16(inputArray);
+
+    expect(result).toBeInstanceOf(Int16Array);
+    expect(result).toEqual(new Int16Array([]));
   });
 });

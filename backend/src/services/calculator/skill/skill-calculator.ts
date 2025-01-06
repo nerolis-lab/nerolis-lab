@@ -1,7 +1,8 @@
-import { PokemonProduce } from '@src/domain/combination/produce';
-import { ProgrammingError } from '@src/domain/error/programming/programming-error';
-import { SkillActivation, mainskill, pokemon } from 'sleepapi-common';
-import { createSkillEvent } from './activation/skill-activation';
+import type { PokemonProduce } from '@src/domain/combination/produce.js';
+import { ProgrammingError } from '@src/domain/error/programming/programming-error.js';
+import type { PokemonSpecialty, SkillActivation } from 'sleepapi-common';
+import { mainskill } from 'sleepapi-common';
+import { createSkillEvent } from './activation/skill-activation.js';
 
 export function calculateSkillProcs(nrOfHelps: number, skillPercentage: number) {
   return nrOfHelps * skillPercentage;
@@ -10,7 +11,7 @@ export function calculateSkillProcs(nrOfHelps: number, skillPercentage: number) 
 export function calculateAverageNumberOfSkillProcsForHelps(params: {
   skillPercentage: number;
   helps: number;
-  pokemonSpecialty: pokemon.PokemonSpecialty;
+  pokemonSpecialty: PokemonSpecialty;
 }): number {
   const { skillPercentage, helps, pokemonSpecialty } = params;
 
@@ -44,14 +45,14 @@ export function scheduleSkillEvents(params: {
     nrOfDaySkillProcs: avgDaytimeSkillProcs,
     nrOfSkillCrits: avgDailySkillCrits,
     nrOfDayHelps,
-    uniqueHelperBoost,
+    uniqueHelperBoost
   } = params;
   const skill = pokemonWithAverageProduce.pokemon.skill;
 
   const activationsWithAdjustedAmount = calculateHelpsToProcSchedule({
     oddsOfNightSkillProc: avgMorningSkillProcs,
     nrOfDaySkillProcs: avgDaytimeSkillProcs,
-    nrOfDayHelps,
+    nrOfDayHelps
   });
 
   const avgDailySkillProcs = avgMorningSkillProcs + avgDaytimeSkillProcs;
@@ -68,7 +69,7 @@ export function scheduleSkillEvents(params: {
       pokemonSet: pokemonWithAverageProduce,
       skillActivations,
       uniqueHelperBoost,
-      avgCritChancePerProc,
+      avgCritChancePerProc
     })
   );
 
@@ -89,8 +90,8 @@ export function calculateHelpsToProcSchedule(params: {
   const activationsWithAdjustedAmount: { nrOfHelpsToActivate: number; adjustedAmount: number }[] = [
     {
       nrOfHelpsToActivate: 0,
-      adjustedAmount: oddsOfNightSkillProc,
-    },
+      adjustedAmount: oddsOfNightSkillProc
+    }
   ];
 
   let currentHelps = 0;
@@ -109,7 +110,7 @@ export function calculateHelpsToProcSchedule(params: {
   // final partial proc
   activationsWithAdjustedAmount.push({
     adjustedAmount: nrOfDaySkillProcs - nrOfFullSkillProcs,
-    nrOfHelpsToActivate: Math.floor(nrOfDayHelps),
+    nrOfHelpsToActivate: Math.floor(nrOfDayHelps)
   });
   return activationsWithAdjustedAmount;
 }

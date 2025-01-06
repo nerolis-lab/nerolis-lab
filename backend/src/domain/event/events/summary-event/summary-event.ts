@@ -1,6 +1,8 @@
-import { TimeUtils } from '@src/utils/time-utils/time-utils';
-import { MathUtils, Summary, Time, prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
-import { EventType, ScheduledEvent } from '../../event';
+import type { EventType } from '@src/domain/event/event.js';
+import { ScheduledEvent } from '@src/domain/event/event.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { Summary, Time } from 'sleepapi-common';
+import { MathUtils, prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
 
 export class SummaryEvent extends ScheduledEvent {
   time: Time;
@@ -43,7 +45,7 @@ export class SummaryEvent extends ScheduledEvent {
       averageFrequency,
       spilledIngredients,
       collectFrequency,
-      totalRecovery,
+      totalRecovery
     } = this.summary;
     const prettifiedProduce = `${prettifyBerries(totalProduce.berries)} ${
       totalProduce.ingredients.length > 0 ? `+ ${prettifyIngredientDrop(totalProduce.ingredients)}` : ''
@@ -58,7 +60,7 @@ export class SummaryEvent extends ScheduledEvent {
         `${prettifyIngredientDrop(
           skillProduceValue.ingredients.map(({ amount, ingredient }) => ({
             amount: MathUtils.round(amount, 1),
-            ingredient,
+            ingredient
           }))
         )}`
       );

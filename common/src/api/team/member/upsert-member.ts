@@ -1,6 +1,6 @@
-import { PokemonInstanceWithMeta } from '../../pokemon';
+import type { PokemonInstanceWithMeta } from '../../../domain/instance/pokemon-instance';
 
-export interface UpsertTeamMemberRequest extends PokemonInstanceWithMeta {}
+export type UpsertTeamMemberRequest = PokemonInstanceWithMeta;
 
 export interface UpsertTeamMemberResponse extends PokemonInstanceWithMeta {
   memberIndex: number;

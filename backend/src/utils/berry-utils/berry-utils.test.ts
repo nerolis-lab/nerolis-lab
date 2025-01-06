@@ -1,5 +1,6 @@
+import { getBerriesForFilter, getBerriesForIsland } from '@src/utils/berry-utils/berry-utils.js';
+import { describe, expect, it } from 'bun:test';
 import { berry, island } from 'sleepapi-common';
-import { getBerriesForFilter, getBerriesForIsland } from './berry-utils';
 
 describe('getBerriesForFilter', () => {
   it('shall default to all berries', () => {
@@ -8,7 +9,7 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getBerriesForFilter(islands)).toEqual(berry.BERRIES);
   });
@@ -19,7 +20,7 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getBerriesForFilter(islands)).toEqual(island.CYAN.berries);
   });
@@ -30,7 +31,7 @@ describe('getBerriesForFilter', () => {
       taupe: true,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getBerriesForFilter(islands)).toEqual(island.TAUPE.berries);
   });
@@ -41,7 +42,7 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: true,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getBerriesForFilter(islands)).toEqual(island.SNOWDROP.berries);
   });
@@ -52,7 +53,7 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: true,
-      powerplant: false,
+      powerplant: false
     };
     expect(getBerriesForFilter(islands)).toEqual(island.LAPIS.berries);
   });
@@ -63,7 +64,7 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: true,
+      powerplant: true
     };
     expect(getBerriesForFilter(islands)).toEqual(island.POWER_PLANT.berries);
   });
@@ -74,7 +75,7 @@ describe('getBerriesForFilter', () => {
       taupe: true,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getBerriesForFilter(islands)).toEqual([...island.CYAN.berries, ...island.TAUPE.berries]);
   });

@@ -1,13 +1,14 @@
-import { Recipe } from '../../../domain/recipe/recipe';
-import { IngredientSet } from '../../../domain/types/ingredient-set';
-import { PokemonInstance } from '../../pokemon/pokemon-instance';
-import { Produce } from '../../production';
-
-export interface TeamSettings {
-  camp: boolean;
-  bedtime: string;
-  wakeup: string;
-}
+import type {
+  BerrySet,
+  IngredientIndexToFloatAmount,
+  IngredientSet,
+  PokemonInstance,
+  PokemonWithIngredientsIndexed,
+  TeamMemberExt,
+  TeamSettings
+} from '../../../domain';
+import type { Recipe } from '../../../domain/recipe/recipe';
+import type { Produce } from '../../production';
 
 export interface PokemonInstanceIdentity extends PokemonInstance {
   externalId: string;
@@ -25,22 +26,29 @@ export interface CalculateIvRequest {
 }
 
 export interface MemberProductionAdvanced {
+  ingredientPercentage: number;
+  skillPercentage: number;
+  carrySize: number;
   spilledIngredients: IngredientSet[];
   totalHelps: number;
+  averageHelps: number;
   dayHelps: number;
   nightHelps: number;
   nightHelpsBeforeSS: number;
   nightHelpsAfterSS: number;
+  sneakySnack: BerrySet;
   skillCrits: number;
   skillCritValue: number;
   wastedEnergy: number;
   morningProcs: number;
+  totalRecovery: number;
 }
 
 export interface MemberProductionBase {
   produceTotal: Produce;
   skillProcs: number;
   externalId: string;
+  pokemonWithIngredients: PokemonWithIngredientsIndexed;
 }
 
 export interface MemberProduction extends MemberProductionBase {
@@ -69,13 +77,29 @@ export interface CookingResult {
   curry: RecipeTypeResult;
   salad: RecipeTypeResult;
   dessert: RecipeTypeResult;
+  // TODO: rename critInfo
+  critInfo: {
+    averageCritMultiplierPerCook: number;
+    averageCritChancePerCook: number;
+    averageWeekdayPotSize: number;
+  };
 }
 
 export interface CalculateTeamResponse {
   members: MemberProduction[];
-  cooking: CookingResult;
+  cooking?: CookingResult;
 }
 
 export interface CalculateIvResponse {
   variants: MemberProductionBase[];
+}
+
+export interface SimpleTeamResult {
+  skillProcs: number;
+  totalHelps: number;
+  skillIngredients: IngredientIndexToFloatAmount;
+  critMultiplier: number;
+  averageWeekdayPotSize: number;
+  ingredientPercentage: number;
+  member: TeamMemberExt;
 }

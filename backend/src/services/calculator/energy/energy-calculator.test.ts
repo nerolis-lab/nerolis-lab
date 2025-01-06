@@ -1,9 +1,15 @@
-import { ScheduledEvent } from '@src/domain/event/event';
-import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event';
-import { SleepInfo } from '@src/domain/sleep/sleep-info';
-import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults';
-import { SkillActivation, Time, mainskill, nature } from 'sleepapi-common';
-import { calculateSleepEnergyRecovery, calculateStartingEnergy, maybeDegradeEnergy } from './energy-calculator';
+import type { ScheduledEvent } from '@src/domain/event/event.js';
+import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event.js';
+import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
+import {
+  calculateSleepEnergyRecovery,
+  calculateStartingEnergy,
+  maybeDegradeEnergy
+} from '@src/services/calculator/energy/energy-calculator.js';
+import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
+import { describe, expect, it } from 'bun:test';
+import type { SkillActivation, Time } from 'sleepapi-common';
+import { mainskill, nature } from 'sleepapi-common';
 
 describe('calculateStartingEnergy', () => {
   it('shall calculate a realistic night correctly', () => {
@@ -12,23 +18,23 @@ describe('calculateStartingEnergy', () => {
         end: {
           hour: 21,
           minute: 30,
-          second: 0,
+          second: 0
         },
         start: {
           hour: 6,
           minute: 0,
-          second: 0,
-        },
+          second: 0
+        }
       },
       incense: false,
       nature: nature.LONELY,
-      erb: 0,
+      erb: 0
     };
 
     const { energyLeftInMorning, energyRecovered, startingEnergy } = calculateStartingEnergy({
       dayPeriod: mainSleep,
       recoveryEvents: [],
-      skillActivations: [],
+      skillActivations: []
     });
     expect(startingEnergy).toBe(88);
     expect(energyLeftInMorning).toBe(0);
@@ -41,23 +47,23 @@ describe('calculateStartingEnergy', () => {
         end: {
           hour: 21,
           minute: 30,
-          second: 0,
+          second: 0
         },
         start: {
           hour: 6,
           minute: 0,
-          second: 0,
-        },
+          second: 0
+        }
       },
       incense: false,
       nature: nature.LONELY,
-      erb: 1,
+      erb: 1
     };
 
     const { energyLeftInMorning, energyRecovered, startingEnergy } = calculateStartingEnergy({
       dayPeriod: mainSleep,
       recoveryEvents: [],
-      skillActivations: [],
+      skillActivations: []
     });
     expect(startingEnergy).toBe(100);
     expect(energyLeftInMorning).toBe(0);
@@ -70,17 +76,17 @@ describe('calculateStartingEnergy', () => {
         end: {
           hour: 21,
           minute: 30,
-          second: 0,
+          second: 0
         },
         start: {
           hour: 6,
           minute: 0,
-          second: 0,
-        },
+          second: 0
+        }
       },
       incense: false,
       nature: nature.LONELY,
-      erb: 0,
+      erb: 0
     };
     const e4e: EnergyEvent[] = [
       new EnergyEvent({
@@ -88,16 +94,16 @@ describe('calculateStartingEnergy', () => {
         time: {
           hour: 6,
           minute: 0,
-          second: 0,
+          second: 0
         },
-        description: 'e4e',
-      }),
+        description: 'e4e'
+      })
     ];
 
     const { energyLeftInMorning, energyRecovered, startingEnergy } = calculateStartingEnergy({
       dayPeriod: mainSleep,
       recoveryEvents: e4e,
-      skillActivations: [],
+      skillActivations: []
     });
     expect(startingEnergy).toBe(88);
     expect(energyRecovered).toBe(88);
@@ -111,17 +117,17 @@ describe('calculateStartingEnergy', () => {
         end: {
           hour: 22,
           minute: 0,
-          second: 0,
+          second: 0
         },
         start: {
           hour: 6,
           minute: 0,
-          second: 0,
-        },
+          second: 0
+        }
       },
       incense: false,
       nature: nature.BASHFUL,
-      erb: 0,
+      erb: 0
     };
     const e4e: EnergyEvent[] = [
       new EnergyEvent({
@@ -129,34 +135,34 @@ describe('calculateStartingEnergy', () => {
         time: {
           hour: 6,
           minute: 0,
-          second: 0,
+          second: 0
         },
-        description: 'e4e',
+        description: 'e4e'
       }),
       new EnergyEvent({
         delta: 18,
         time: {
           hour: 6,
           minute: 0,
-          second: 0,
+          second: 0
         },
-        description: 'e4e',
+        description: 'e4e'
       }),
       new EnergyEvent({
         delta: 18,
         time: {
           hour: 6,
           minute: 0,
-          second: 0,
+          second: 0
         },
-        description: 'e4e',
-      }),
+        description: 'e4e'
+      })
     ];
 
     const { energyLeftInMorning, energyRecovered, startingEnergy } = calculateStartingEnergy({
       dayPeriod: mainSleep,
       recoveryEvents: e4e,
-      skillActivations: [],
+      skillActivations: []
     });
     expect(startingEnergy).toBe(100);
     expect(energyLeftInMorning).toBe(10);
@@ -169,23 +175,23 @@ describe('calculateStartingEnergy', () => {
         end: {
           hour: 0,
           minute: 0,
-          second: 0,
+          second: 0
         },
         start: {
           hour: 6,
           minute: 0,
-          second: 0,
-        },
+          second: 0
+        }
       },
       incense: true,
       nature: nature.BASHFUL,
-      erb: 0,
+      erb: 0
     };
 
     const { startingEnergy, energyLeftInMorning, energyRecovered } = calculateStartingEnergy({
       dayPeriod: mainSleep,
       recoveryEvents: [],
-      skillActivations: [],
+      skillActivations: []
     });
     expect(startingEnergy).toBe(100);
     expect(energyLeftInMorning).toBe(0);
@@ -199,17 +205,17 @@ describe('calculateStartingEnergy', () => {
         end: {
           hour: 4,
           minute: 0,
-          second: 0,
+          second: 0
         },
         start: {
           hour: 6,
           minute: 0,
-          second: 0,
-        },
+          second: 0
+        }
       },
       incense: false,
       nature: nature.BASHFUL,
-      erb: 0,
+      erb: 0
     };
     const skillActivations: SkillActivation[] = [];
     for (let i = 0; i < 15; i++) {
@@ -217,14 +223,14 @@ describe('calculateStartingEnergy', () => {
         adjustedAmount: mainskill.CHARGE_ENERGY_S.amount(6),
         fractionOfProc: 1,
         nrOfHelpsToActivate: 0,
-        skill: mainskill.CHARGE_ENERGY_S,
+        skill: mainskill.CHARGE_ENERGY_S
       });
     }
 
     const { startingEnergy, energyLeftInMorning, energyRecovered } = calculateStartingEnergy({
       dayPeriod: mainSleep,
       recoveryEvents: [],
-      skillActivations,
+      skillActivations
     });
     expect(startingEnergy).toBe(100);
     expect(energyLeftInMorning).toBe(150);
@@ -237,21 +243,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 21,
       minute: 30,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 6,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: wakeupTime,
-        end: bedtime,
+        end: bedtime
       },
       nature: nature.BASHFUL,
       incense: false,
-      erb: 0,
+      erb: 0
     });
     expect(energyRecovered).toBe(100);
   });
@@ -260,21 +266,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 23,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 6,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: bedtime,
-        end: wakeupTime,
+        end: wakeupTime
       },
       nature: nature.BASHFUL,
       incense: false,
-      erb: 0,
+      erb: 0
     });
     expect(energyRecovered).toBe(82.3529411764706);
   });
@@ -283,21 +289,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 14,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 16,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: bedtime,
-        end: wakeupTime,
+        end: wakeupTime
       },
       nature: nature.BASHFUL,
       incense: false,
-      erb: 0,
+      erb: 0
     });
     expect(energyRecovered).toBe(23.52941176470588);
   });
@@ -306,21 +312,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 21,
       minute: 30,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 6,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: wakeupTime,
-        end: bedtime,
+        end: bedtime
       },
       nature: nature.LONELY,
       incense: false,
-      erb: 1,
+      erb: 1
     });
     expect(energyRecovered).toBe(100);
   });
@@ -330,21 +336,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 0,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 4,
       minute: 15,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: bedtime,
-        end: wakeupTime,
+        end: wakeupTime
       },
       nature: nature.BASHFUL,
       incense: false,
-      erb: 2,
+      erb: 2
     });
     expect(energyRecovered).toBe(64);
   });
@@ -353,21 +359,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 20,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 8,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: wakeupTime,
-        end: bedtime,
+        end: bedtime
       },
       nature: nature.BOLD,
       incense: true,
-      erb: 2,
+      erb: 2
     });
     expect(energyRecovered).toBe(100);
   });
@@ -376,21 +382,21 @@ describe('calculateSleepRecovery', () => {
     const bedtime: Time = {
       hour: 0,
       minute: 0,
-      second: 0,
+      second: 0
     };
     const wakeupTime: Time = {
       hour: 4,
       minute: 15,
-      second: 0,
+      second: 0
     };
     const energyRecovered = calculateSleepEnergyRecovery({
       period: {
         start: wakeupTime,
-        end: bedtime,
+        end: bedtime
       },
       nature: nature.BASHFUL,
       incense: true,
-      erb: 0,
+      erb: 0
     });
 
     expect(energyRecovered).toBe(100);
@@ -403,32 +409,32 @@ describe('maybeDegradeEnergy', () => {
     const time: Time = {
       hour: 6,
       minute: 0,
-      second: 0,
+      second: 0
     };
 
     const energyToDegrade = maybeDegradeEnergy({
       timeToDegrade: true,
       currentTime: time,
       currentEnergy: 100,
-      eventLog,
+      eventLog
     });
     expect(energyToDegrade).toBe(1);
     expect(eventLog).toMatchInlineSnapshot(`
-      [
-        EnergyEvent {
-          "after": 99,
-          "before": 100,
-          "delta": -1,
-          "description": "Degrade",
-          "time": {
-            "hour": 6,
-            "minute": 0,
-            "second": 0,
-          },
-          "type": "energy",
-        },
-      ]
-    `);
+[
+  EnergyEvent {
+    "after": 99,
+    "before": 100,
+    "delta": -1,
+    "description": "Degrade",
+    "time": {
+      "hour": 6,
+      "minute": 0,
+      "second": 0,
+    },
+    "type": "energy",
+  },
+]
+`);
   });
 
   it('shall not degrade below 0%', () => {
@@ -437,7 +443,7 @@ describe('maybeDegradeEnergy', () => {
       timeToDegrade: true,
       currentTime: MOCKED_MAIN_SLEEP.start,
       currentEnergy: 0,
-      eventLog,
+      eventLog
     });
     expect(energyToDegrade).toBe(0);
   });
@@ -448,24 +454,24 @@ describe('maybeDegradeEnergy', () => {
       timeToDegrade: true,
       currentTime: MOCKED_MAIN_SLEEP.start,
       currentEnergy: 0.5,
-      eventLog,
+      eventLog
     });
     expect(energyToDegrade).toBe(0.5);
     expect(eventLog).toMatchInlineSnapshot(`
-    [
-      EnergyEvent {
-        "after": 0,
-        "before": 0.5,
-        "delta": -0.5,
-        "description": "Degrade",
-        "time": {
-          "hour": 6,
-          "minute": 0,
-          "second": 0,
-        },
-        "type": "energy",
-      },
-    ]
-  `);
+[
+  EnergyEvent {
+    "after": 0,
+    "before": 0.5,
+    "delta": -0.5,
+    "description": "Degrade",
+    "time": {
+      "hour": 6,
+      "minute": 0,
+      "second": 0,
+    },
+    "type": "energy",
+  },
+]
+`);
   });
 });

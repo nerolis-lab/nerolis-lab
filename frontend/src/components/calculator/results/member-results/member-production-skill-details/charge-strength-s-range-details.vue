@@ -8,15 +8,11 @@
         color="subskillWhite"
         rounded="pill"
       >
-        <v-img
-          :src="mainskillImage(memberWithProduction.member.pokemon)"
-          height="40px"
-          width="40px"
-        ></v-img>
+        <v-img :src="mainskillImage(memberWithProduction.member.pokemon)" height="40px" width="40px"></v-img>
       </v-badge>
       <div class="ml-2">
         <div class="flex-center">
-          <span class="font-weight-medium text-center">{{
+          <span class="font-weight-medium text-center text-h6">{{
             MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
           }}</span>
           <v-img src="/images/misc/skillproc.png" max-height="28" max-width="28px"></v-img>
@@ -25,7 +21,6 @@
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center"
             >{{ skillValuePerProc }} avg.</span
           >
-          <v-img src="/images/unit/strength.png" height="20" width="20"></v-img>
         </div>
       </div>
     </v-col>
@@ -33,9 +28,7 @@
     <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img src="/images/misc/strength.png" height="20" width="20"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-1">
-          {{ totalSkillValue }} total</span
-        >
+        <span class="font-weight-medium text-no-wrap text-center ml-1"> {{ totalSkillValue }} total</span>
       </div>
     </v-col>
   </v-row>
@@ -62,9 +55,7 @@ export default defineComponent({
   },
   computed: {
     skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(
-        this.memberWithProduction.member.skillLevel
-      )
+      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
     },
     totalSkillValue() {
       return compactNumber(

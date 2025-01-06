@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserDAO } from '@src/database/dao/user/user-dao';
-import { DaoFixture } from '@src/utils/test-utils/dao-fixture';
-import { MockService } from '@src/utils/test-utils/mock-service';
+import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
+import { MockService } from '@src/utils/test-utils/mock-service.js';
+import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
+import { boozle } from 'bunboozle';
 import { uuid } from 'sleepapi-common';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 beforeEach(() => {
-  uuid.v4 = jest.fn().mockReturnValue('0'.repeat(36));
+  boozle(uuid, 'v4', () => '0'.repeat(36));
 });
 
 afterEach(() => {
@@ -19,23 +21,23 @@ describe('UserDAO insert', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
-      name: 'some-name',
+      name: 'some-name'
     });
     expect(user).toBeDefined();
 
     const data = await UserDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-      [
-        {
-          "avatar": undefined,
-          "external_id": "000000000000000000000000000000000000",
-          "id": 1,
-          "name": "some-name",
-          "sub": "some-sub",
-          "version": 1,
-        },
-      ]
-    `);
+[
+  {
+    "avatar": undefined,
+    "external_id": "000000000000000000000000000000000000",
+    "id": 1,
+    "name": "some-name",
+    "sub": "some-sub",
+    "version": 1,
+  },
+]
+`);
   });
 
   it('shall fail to insert entity without sub', async () => {
@@ -43,7 +45,7 @@ describe('UserDAO insert', () => {
       UserDAO.insert({
         external_id: uuid.v4(),
         name: 'some-name',
-        sub: undefined as any,
+        sub: undefined as any
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.sub/);
   });
@@ -53,7 +55,7 @@ describe('UserDAO insert', () => {
       UserDAO.insert({
         external_id: undefined as any,
         name: 'some-name',
-        sub: 'some-sub',
+        sub: 'some-sub'
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.external_id/);
   });
@@ -62,13 +64,13 @@ describe('UserDAO insert', () => {
     await UserDAO.insert({
       external_id: uuid.v4(),
       sub: 'sub1',
-      name: 'some-name',
+      name: 'some-name'
     });
     await expect(
       UserDAO.insert({
         external_id: uuid.v4(),
         sub: 'sub1',
-        name: 'some-name',
+        name: 'some-name'
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: UNIQUE constraint failed: user.external_id/);
   });
@@ -79,7 +81,7 @@ describe('UserDAO update', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
-      name: 'some-name',
+      name: 'some-name'
     });
     expect(user.name).toEqual('some-name');
 
@@ -87,16 +89,16 @@ describe('UserDAO update', () => {
 
     const data = await UserDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-      [
-        {
-          "avatar": undefined,
-          "external_id": "000000000000000000000000000000000000",
-          "id": 1,
-          "name": "updated-name",
-          "sub": "some-sub",
-          "version": 2,
-        },
-      ]
-    `);
+[
+  {
+    "avatar": undefined,
+    "external_id": "000000000000000000000000000000000000",
+    "id": 1,
+    "name": "updated-name",
+    "sub": "some-sub",
+    "version": 2,
+  },
+]
+`);
   });
 });

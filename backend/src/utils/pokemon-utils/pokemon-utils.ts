@@ -1,5 +1,5 @@
-import { pokemon } from 'sleepapi-common';
-import { getBerriesForFilter } from '../berry-utils/berry-utils';
+import { getBerriesForFilter } from '@src/utils/berry-utils/berry-utils.js';
+import { COMPLETE_POKEDEX } from 'sleepapi-common';
 
 export function getPokemonNames(islands: {
   cyan: boolean;
@@ -9,7 +9,5 @@ export function getPokemonNames(islands: {
   powerplant: boolean;
 }) {
   const allowedBerries = getBerriesForFilter(islands);
-  return pokemon.COMPLETE_POKEDEX.filter((pokemon) => allowedBerries.includes(pokemon.berry)).map(
-    (pokemon) => pokemon.name
-  );
+  return COMPLETE_POKEDEX.filter((pokemon) => allowedBerries.includes(pokemon.berry)).map((pokemon) => pokemon.name);
 }

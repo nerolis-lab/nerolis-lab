@@ -1,15 +1,13 @@
-import { PokemonProduce } from '@src/domain/combination/produce';
+import type { PokemonProduce } from '@src/domain/combination/produce.js';
+import type { IngredientSet, Mainskill, Produce, SkillActivation } from 'sleepapi-common';
 import {
-  IngredientSet,
-  Mainskill,
-  Produce,
-  SkillActivation,
+  METRONOME_SKILLS,
   emptyBerryInventory,
   emptyIngredientInventory,
   ingredient,
-  mainskill,
+  mainskill
 } from 'sleepapi-common';
-import { calculateHelperBoostHelpsFromUnique } from '../skill-calculator';
+import { calculateHelperBoostHelpsFromUnique } from '../skill-calculator.js';
 
 export function createSkillEvent(
   params: {
@@ -32,7 +30,7 @@ export function createSkillEvent(
     pokemonSet,
     skillActivations,
     avgCritChancePerProc,
-    uniqueHelperBoost,
+    uniqueHelperBoost
   } = params;
   switch (skill) {
     case mainskill.ENERGIZING_CHEER_S: {
@@ -55,7 +53,7 @@ export function createSkillEvent(
           adjustedAmount,
           pokemonSet,
           avgCritChancePerProc,
-          metronomeFactor,
+          metronomeFactor
         })
       );
       break;
@@ -67,7 +65,7 @@ export function createSkillEvent(
           nrOfHelpsToActivate,
           adjustedAmount,
           pokemonSet,
-          metronomeFactor,
+          metronomeFactor
         })
       );
       break;
@@ -80,7 +78,7 @@ export function createSkillEvent(
           uniqueHelperBoost,
           adjustedAmount,
           pokemonSet,
-          metronomeFactor,
+          metronomeFactor
         })
       );
       break;
@@ -119,7 +117,7 @@ export function activateEnergizingCheer(params: {
     skill,
     adjustedAmount: (skill.amount(skillLevel) * adjustedAmount) / divideByRandomAndMetronome,
     nrOfHelpsToActivate,
-    fractionOfProc: adjustedAmount / metronomeFactor,
+    fractionOfProc: adjustedAmount / metronomeFactor
   };
 }
 
@@ -142,7 +140,7 @@ export function activateMoonlightChargeEnergy(params: {
     skill,
     adjustedAmount: averageEnergyGained,
     nrOfHelpsToActivate,
-    fractionOfProc: adjustedAmount / metronomeFactor,
+    fractionOfProc: adjustedAmount / metronomeFactor
   };
 }
 
@@ -159,7 +157,7 @@ export function activateIngredientMagnet(params: {
 
   const magnetIngredients: IngredientSet[] = ingredient.INGREDIENTS.map((ing) => ({
     ingredient: ing,
-    amount: (skill.amount(skillLevel) * adjustedAmount) / divideByAverageIngredientAndMetronome,
+    amount: (skill.amount(skillLevel) * adjustedAmount) / divideByAverageIngredientAndMetronome
   }));
 
   return {
@@ -168,9 +166,9 @@ export function activateIngredientMagnet(params: {
     nrOfHelpsToActivate,
     adjustedProduce: {
       berries: emptyBerryInventory(),
-      ingredients: magnetIngredients,
+      ingredients: magnetIngredients
     },
-    fractionOfProc: adjustedAmount / metronomeFactor,
+    fractionOfProc: adjustedAmount / metronomeFactor
   };
 }
 
@@ -188,7 +186,7 @@ export function activateDisguiseBerryBurst(params: {
     adjustedAmount: fractionOfProc,
     pokemonSet,
     avgCritChancePerProc,
-    metronomeFactor,
+    metronomeFactor
   } = params;
   const skill = mainskill.DISGUISE_BERRY_BURST;
 
@@ -204,10 +202,10 @@ export function activateDisguiseBerryBurst(params: {
     adjustedProduce: {
       // TODO: level is wrong, but not used in classic calc
       berries: [{ amount: averageBerryAmount, berry: pokemonSet.pokemon.berry, level: 0 }],
-      ingredients: emptyIngredientInventory(),
+      ingredients: emptyIngredientInventory()
     },
     fractionOfProc: fractionOfProc / metronomeFactor,
-    critChance: avgCritChancePerProc,
+    critChance: avgCritChancePerProc
   };
 }
 
@@ -227,12 +225,12 @@ export function activateExtraHelpful(params: {
     berries: pokemonSet.produce.berries.map(({ amount, berry, level }) => ({
       berry,
       amount: (amount * skill.amount(skillLevel) * adjustedAmount) / divideByRandomAndMetronome,
-      level,
+      level
     })),
     ingredients: pokemonSet.produce.ingredients.map(({ amount, ingredient }) => ({
       ingredient,
-      amount: (amount * skill.amount(skillLevel) * adjustedAmount) / divideByRandomAndMetronome,
-    })),
+      amount: (amount * skill.amount(skillLevel) * adjustedAmount) / divideByRandomAndMetronome
+    }))
   };
 
   return {
@@ -240,7 +238,7 @@ export function activateExtraHelpful(params: {
     adjustedAmount: (adjustedAmount * skill.amount(skillLevel)) / divideByRandomAndMetronome,
     nrOfHelpsToActivate,
     adjustedProduce: extraHelpfulProduce,
-    fractionOfProc: adjustedAmount / metronomeFactor,
+    fractionOfProc: adjustedAmount / metronomeFactor
   };
 }
 
@@ -257,7 +255,7 @@ export function activateNonProduceSkills(params: {
     skill,
     adjustedAmount: (skill.amount(skillLevel) * adjustedAmount) / metronomeFactor,
     nrOfHelpsToActivate,
-    fractionOfProc: adjustedAmount / metronomeFactor,
+    fractionOfProc: adjustedAmount / metronomeFactor
   };
 }
 
@@ -270,7 +268,7 @@ export function activateMetronome(params: {
   uniqueHelperBoost: number;
   avgCritChancePerProc: number;
 }) {
-  const skillsToActivate = mainskill.METRONOME_SKILLS;
+  const skillsToActivate = METRONOME_SKILLS;
 
   for (const skillToActivate of skillsToActivate) {
     createSkillEvent({ ...params, skill: skillToActivate }, skillsToActivate.length);
@@ -297,12 +295,12 @@ export function activateHelperBoost(params: {
     berries: pokemonSet.produce.berries.map(({ amount, berry, level }) => ({
       berry,
       amount: (amount * helpAmount * adjustedAmount) / metronomeFactor,
-      level,
+      level
     })),
     ingredients: pokemonSet.produce.ingredients.map(({ amount, ingredient }) => ({
       ingredient,
-      amount: (amount * helpAmount * adjustedAmount) / metronomeFactor,
-    })),
+      amount: (amount * helpAmount * adjustedAmount) / metronomeFactor
+    }))
   };
 
   return {
@@ -310,6 +308,6 @@ export function activateHelperBoost(params: {
     adjustedAmount: (adjustedAmount * helpAmount) / metronomeFactor,
     nrOfHelpsToActivate,
     adjustedProduce: helperBoostProduce,
-    fractionOfProc: adjustedAmount / metronomeFactor,
+    fractionOfProc: adjustedAmount / metronomeFactor
   };
 }

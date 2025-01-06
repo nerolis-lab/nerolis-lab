@@ -1,11 +1,13 @@
-import { getSubskill, getSubskillNames, subskill } from 'sleepapi-common';
-import { Controller, Get, Path, Route, Tags } from 'tsoa';
+import tsoa from '@tsoa/runtime';
+import type { Subskill } from 'sleepapi-common';
+import { getSubskill, getSubskillNames } from 'sleepapi-common';
+const { Controller, Path, Get, Route, Tags } = tsoa;
 
 @Route('api/subskill')
 @Tags('subskill')
 export default class SubskillController extends Controller {
   @Get('/{name}')
-  public async getSubskill(@Path() name: string): Promise<subskill.SubSkill> {
+  public async getSubskill(@Path() name: string): Promise<Subskill> {
     return getSubskill(name);
   }
 

@@ -1,6 +1,7 @@
-import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults';
-import { TimeUtils } from '@src/utils/time-utils/time-utils';
-import { SleepEvent } from './sleep-event';
+import { SleepEvent } from '@src/domain/event/events/sleep-event/sleep-event.js';
+import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import { describe, expect, it } from 'bun:test';
 
 describe('SleepEvent', () => {
   it('sleep event end type shall format correctly', () => {
@@ -8,7 +9,7 @@ describe('SleepEvent', () => {
       time: TimeUtils.parseTime('06:00'),
       description: 'test',
       period: MOCKED_MAIN_SLEEP,
-      sleepState: 'end',
+      sleepState: 'end'
     });
     expect(event.format()).toMatchInlineSnapshot(`"[06:00:00][Sleep] (test): Duration 15:30:00, Score (100)"`);
   });
@@ -18,7 +19,7 @@ describe('SleepEvent', () => {
       time: TimeUtils.parseTime('06:00'),
       description: 'test',
       period: MOCKED_MAIN_SLEEP,
-      sleepState: 'start',
+      sleepState: 'start'
     });
     expect(event.format()).toMatchInlineSnapshot(`"[06:00:00][Sleep] (test): Duration 15:30:00"`);
   });

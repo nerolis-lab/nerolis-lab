@@ -1,8 +1,14 @@
-import { Profile, printProfilingResults } from '@src/services/profiler/profiler';
+import { Profile, printProfilingResults } from '@src/services/profiler/profiler.js';
+import { beforeEach, describe, expect, it } from 'bun:test';
+import { boozle } from 'bunboozle';
 
 describe('profiler', () => {
+  beforeEach(() => {
+    boozle(logger, 'log');
+  });
+
   it('shall count the iterations correctly', () => {
-    console.log = jest.fn();
+    boozle(console, 'log', () => undefined);
     class TestClass {
       @Profile
       public someFunction() {
@@ -17,6 +23,6 @@ describe('profiler', () => {
 
     printProfilingResults();
 
-    expect(console.log).toHaveBeenCalledWith(expect.stringMatching(/Calls: 10/));
+    expect(logger.log).toHaveBeenCalledWith(expect.stringMatching(/Calls: 10/));
   });
 });

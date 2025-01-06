@@ -1,7 +1,9 @@
-import { energyFactorFromEnergy } from '@src/services/calculator/energy/energy-calculator';
-import { TimeUtils } from '@src/utils/time-utils/time-utils';
-import { MathUtils, Time } from 'sleepapi-common';
-import { EventType, ScheduledEvent } from '../../event';
+import type { EventType } from '@src/domain/event/event.js';
+import { ScheduledEvent } from '@src/domain/event/event.js';
+import { energyFactorFromEnergy } from '@src/services/calculator/energy/energy-calculator.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { Time } from 'sleepapi-common';
+import { MathUtils } from 'sleepapi-common';
 
 export class EnergyEvent extends ScheduledEvent {
   time: Time;

@@ -1,13 +1,21 @@
 import { describe, expect, it } from 'vitest';
-import { BELUE, Berry, ORAN } from '../../domain/berry';
-import { BerrySet } from '../../domain/types/berry-set';
-import { berryPowerForLevel, emptyBerryInventory, multiplyBerries, prettifyBerries, roundBerries } from './berry-utils';
+import type { Berry, BerrySet } from '../../domain/berry';
+import { BELUE, BERRIES, ORAN, TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
+import {
+  berryPowerForLevel,
+  berrySetToFlat,
+  emptyBerryInventory,
+  flatToBerrySet,
+  multiplyBerries,
+  prettifyBerries,
+  roundBerries
+} from './berry-utils';
 
 const testBerry: Berry = { name: 'Oran', value: 10, type: 'water' };
 const testBerries: BerrySet[] = [
   { berry: testBerry, amount: 15, level: 3 },
   { berry: testBerry, amount: 10, level: 2 },
-  { berry: testBerry, amount: 5, level: 1 },
+  { berry: testBerry, amount: 5, level: 1 }
 ];
 
 describe('berryPowerForLevel', () => {
@@ -36,7 +44,7 @@ describe('multiplyBerries', () => {
     expect(result).toEqual([
       { berry: testBerry, amount: 30, level: 3 },
       { berry: testBerry, amount: 20, level: 2 },
-      { berry: testBerry, amount: 10, level: 1 },
+      { berry: testBerry, amount: 10, level: 1 }
     ]);
   });
 });
@@ -46,13 +54,13 @@ describe('roundBerries', () => {
     const result = roundBerries(
       [
         { berry: testBerry, amount: 15.128361, level: 3 },
-        { berry: testBerry, amount: 10.128361, level: 2 },
+        { berry: testBerry, amount: 10.128361, level: 2 }
       ],
-      1,
+      1
     );
     expect(result).toEqual([
       { berry: testBerry, amount: 15.1, level: 3 },
-      { berry: testBerry, amount: 10.1, level: 2 },
+      { berry: testBerry, amount: 10.1, level: 2 }
     ]);
   });
 });
@@ -72,5 +80,44 @@ describe('prettifyBerries', () => {
   it('allows a custom separator', () => {
     const result = prettifyBerries(testBerries, ' | ');
     expect(result).toBe('15 Oran | 10 Oran | 5 Oran');
+  });
+});
+describe('flatToBerrySet', () => {
+  it('converts a Float32Array to a BerrySet array', () => {
+    const berries = new Float32Array([10, 0, 5]);
+    const level = 2;
+    const result = flatToBerrySet(berries, level);
+    expect(result).toEqual([
+      { berry: BERRIES[0], amount: 10, level },
+      { berry: BERRIES[2], amount: 5, level }
+    ]);
+  });
+
+  it('returns an empty array if all amounts are zero', () => {
+    const berries = new Float32Array([0, 0, 0]);
+    const level = 2;
+    const result = flatToBerrySet(berries, level);
+    expect(result).toEqual([]);
+  });
+});
+
+describe('berrySetToFlat', () => {
+  it('converts a BerrySet array to a Float32Array', () => {
+    const berrySet: BerrySet[] = [
+      { berry: BERRIES[0], amount: 10, level: 2 },
+      { berry: BERRIES[2], amount: 5, level: 2 }
+    ];
+    const result = berrySetToFlat(berrySet);
+    const expected = new Float32Array(TOTAL_NUMBER_OF_BERRIES);
+    expected[0] = 10;
+    expected[2] = 5;
+    expect(result).toEqual(expected);
+  });
+
+  it('handles an empty BerrySet array', () => {
+    const berrySet: BerrySet[] = [];
+    const result = berrySetToFlat(berrySet);
+    const expected = new Float32Array(TOTAL_NUMBER_OF_BERRIES);
+    expect(result).toEqual(expected);
   });
 });

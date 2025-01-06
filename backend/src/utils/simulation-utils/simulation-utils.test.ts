@@ -1,10 +1,12 @@
-import { ProductionStats } from '@src/domain/computed/production';
-import { ScheduledEvent } from '@src/domain/event/event';
-import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event';
-import { SleepInfo } from '@src/domain/sleep/sleep-info';
-import { SkillActivation, Summary, mainskill, maxCarrySize, nature, pokemon } from 'sleepapi-common';
-import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_PRODUCE } from '../test-utils/defaults';
-import { finishSimulation, startDayAndEnergy, startNight } from './simulation-utils';
+import type { ProductionStats } from '@src/domain/computed/production.js';
+import type { ScheduledEvent } from '@src/domain/event/event.js';
+import type { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event.js';
+import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
+import { finishSimulation, startDayAndEnergy, startNight } from '@src/utils/simulation-utils/simulation-utils.js';
+import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
+import { describe, expect, it } from 'bun:test';
+import type { SkillActivation, Summary } from 'sleepapi-common';
+import { mainskill, maxCarrySize, nature, PINSIR } from 'sleepapi-common';
 
 describe('startDayAndEnergy', () => {
   it('shall calculate starting energy and log starting events', () => {
@@ -13,9 +15,9 @@ describe('startDayAndEnergy', () => {
       period: MOCKED_MAIN_SLEEP,
       nature: nature.RASH,
       erb: 0,
-      incense: false,
+      incense: false
     };
-    const pkmn = pokemon.PINSIR;
+    const pkmn = PINSIR;
     const input: ProductionStats = MOCKED_OPTIMAL_PRODUCTION_STATS;
     const recoveryEvents: EnergyEvent[] = [];
     const skillActivations: SkillActivation[] = [];
@@ -62,7 +64,7 @@ describe('finishSimulation', () => {
       totalProduce: MOCKED_PRODUCE,
       totalRecovery: 0,
       collectFrequency: MOCKED_MAIN_SLEEP.end,
-      skillBerriesOtherValue: 0,
+      skillBerriesOtherValue: 0
     };
 
     finishSimulation({
@@ -71,7 +73,7 @@ describe('finishSimulation', () => {
       totalSneakySnack: MOCKED_PRODUCE,
       inventoryLimit: 2,
       summary,
-      eventLog,
+      eventLog
     });
     expect(eventLog).toHaveLength(6);
   });

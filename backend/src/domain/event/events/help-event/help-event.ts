@@ -1,6 +1,7 @@
-import { TimeUtils } from '@src/utils/time-utils/time-utils';
-import { Produce, Time, prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
-import { EventType, ScheduledEvent } from '../../event';
+import { ScheduledEvent, type EventType } from '@src/domain/event/event.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { Produce, Time } from 'sleepapi-common';
+import { prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
 
 export class HelpEvent extends ScheduledEvent {
   time: Time;

@@ -1,26 +1,13 @@
-import { Logger } from '@src/services/logger/logger';
-import { runWorkerFile } from '@src/services/worker/worker';
-import { queryAsBoolean } from '@src/utils/routing/routing-utils';
-import { Request, Response } from 'express';
-import path from 'path';
+import { BaseRouter } from '@src/routes/base-router.js';
+import { calculatorPool } from '@src/services/worker/worker-pool.js';
+import type { Request, Response } from 'express';
 import {
-  CalculateIvRequest,
-  CalculateIvResponse,
-  CalculateTeamRequest,
-  CalculateTeamResponse,
-  SingleProductionRequest,
+  type CalculateIvRequest,
+  type CalculateIvResponse,
+  type CalculateTeamRequest,
+  type CalculateTeamResponse,
+  type SingleProductionRequest
 } from 'sleepapi-common';
-import workerpool from 'workerpool';
-import { BaseRouter } from '../base-router';
-
-const teamPool = workerpool.pool(path.resolve(__dirname, './team-worker.js'), {
-  minWorkers: 4,
-  maxWorkers: 4,
-});
-const ivPool = workerpool.pool(path.resolve(__dirname, './iv-worker.js'), {
-  minWorkers: 4,
-  maxWorkers: 4,
-});
 
 class ProductionRouterImpl {
   public async register() {
@@ -36,21 +23,15 @@ class ProductionRouterImpl {
         res: Response
       ) => {
         try {
-          Logger.log('Entered /calculator/production/:name');
+          logger.log('Entered /calculator/production/:name');
           const { name } = req.params;
+          const body = req.body;
+          const { pretty, includeAnalysis = false } = req.query;
 
-          const pretty = queryAsBoolean(req.query.pretty);
-          const includeAnalysis = queryAsBoolean(req.query.includeAnalysis);
-
-          const result = await runWorkerFile(path.resolve(__dirname, './production-worker.js'), {
-            name,
-            body: req.body,
-            pretty,
-            includeAnalysis,
-          });
-          res.header('Content-Type', 'application/json').send(JSON.stringify(result, null, 4));
+          const result = await calculatorPool.exec('calculateProduction', [name, body, includeAnalysis, pretty]);
+          res.json(result);
         } catch (err) {
-          Logger.error(err as Error);
+          logger.error(err as Error);
           res.status(500).send('Something went wrong');
         }
       }
@@ -60,12 +41,13 @@ class ProductionRouterImpl {
       '/calculator/team',
       async (req: Request<unknown, unknown, CalculateTeamRequest, unknown>, res: Response<CalculateTeamResponse>) => {
         try {
-          Logger.log('Entered /calculator/team');
+          logger.log('Entered /calculator/team');
 
-          const data = await teamPool.exec('calculateTeam', [req.body]);
+          const data = await calculatorPool.exec('calculateTeam', [req.body]);
+
           res.json(data);
         } catch (err) {
-          Logger.error((err as Error).stack);
+          logger.error(err as Error);
           res.sendStatus(500);
         }
       }
@@ -75,12 +57,13 @@ class ProductionRouterImpl {
       '/calculator/iv',
       async (req: Request<unknown, unknown, CalculateIvRequest, unknown>, res: Response<CalculateIvResponse>) => {
         try {
-          Logger.log('Entered /calculator/iv');
+          logger.log('Entered /calculator/iv');
 
-          const data = await ivPool.exec('calculateIv', [req.body]);
+          const data = await calculatorPool.exec('calculateIv', [req.body]);
+
           res.json(data);
         } catch (err) {
-          Logger.error((err as Error).stack);
+          logger.error(err as Error);
           res.sendStatus(500);
         }
       }

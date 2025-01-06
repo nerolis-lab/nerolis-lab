@@ -41,19 +41,9 @@
         </v-col>
 
         <v-col cols="auto" class="flex-right">
-          <v-btn-toggle
-            v-model="tab"
-            mandatory
-            rounded="pill"
-            variant="outlined"
-            style="height: 32px"
-          >
-            <v-btn value="visual" class="w-50" :prepend-icon="tab === 'visual' ? 'mdi-check' : ''">
-              Visual
-            </v-btn>
-            <v-btn value="data" class="w-50" :prepend-icon="tab === 'data' ? 'mdi-check' : ''">
-              Data
-            </v-btn>
+          <v-btn-toggle v-model="tab" mandatory rounded="pill" variant="outlined" style="height: 32px">
+            <v-btn value="visual" class="w-50" :prepend-icon="tab === 'visual' ? 'mdi-check' : ''"> Visual </v-btn>
+            <v-btn value="data" class="w-50" :prepend-icon="tab === 'data' ? 'mdi-check' : ''"> Data </v-btn>
           </v-btn-toggle>
         </v-col>
       </v-row>
@@ -162,7 +152,7 @@
 
           <template #item.skillProcs="{ item }">
             <div class="flex-center">
-              <div v-if="item.skill.unit !== 'metronome'">
+              <div v-if="!item.skill.isUnit('metronome', 'copy')">
                 <div class="flex-center">
                   <v-img :src="mainskillImage(item.pokemon)" height="24" width="24"></v-img>
                 </div>
@@ -196,14 +186,11 @@ import { defineComponent } from 'vue'
 import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage, pokemonImage } from '@/services/utils/image-utils'
-import {
-  AVERAGE_WEEKLY_CRIT_MULTIPLIER,
-  useComparisonStore
-} from '@/stores/comparison-store/comparison-store'
+import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
-import type { SingleProductionExt } from '@/types/member/instanced'
 import {
+  AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   MAX_RECIPE_BONUS,
   MAX_RECIPE_LEVEL,
   MathUtils,
@@ -211,6 +198,7 @@ import {
   defaultZero,
   mainskill,
   recipeLevelBonus,
+  type MemberProduction,
   type PokemonInstanceExt
 } from 'sleepapi-common'
 
@@ -280,8 +268,8 @@ export default defineComponent({
 
         const berryPower = this.showBerries
           ? StrengthService.berryStrength({
-              favored: this.comparisonStore.favoredBerries,
-              berries: memberProduction.berries.filter((b) => b.level === member.level),
+              favored: this.comparisonStore.team?.favoredBerries ?? [],
+              berries: memberProduction.produceTotal.berries.filter((b) => b.level === member.level),
               timeWindow: this.comparisonStore.timeWindow
             })
           : 0
@@ -299,10 +287,10 @@ export default defineComponent({
               // classic calc returns berry array with 2 elements, first is own berries, second is berries from skill
               // berries from skill can be identified with level === 0, but we need to update this to real level so
               // that the berries can scale. the classic calc is messy
-              berries: memberProduction.berries
+              berries: memberProduction.produceTotal.berries
                 .filter((b) => b.level !== member.level)
                 .map((b) => ({ amount: b.amount, berry: b.berry, level: member.level })),
-              favored: this.comparisonStore.favoredBerries,
+              favored: this.comparisonStore.team?.favoredBerries ?? [],
               timeWindow: this.comparisonStore.timeWindow
             })
           : 0
@@ -315,7 +303,7 @@ export default defineComponent({
           berries: berryPower,
           berryCompact: compactNumber(berryPower),
           ingredients:
-            memberProduction.ingredients.reduce((sum, cur) => sum + cur.amount, 0) *
+            memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) *
             StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
           ingredientPower,
           ingredientCompact: compactNumber(ingredientPower),
@@ -353,10 +341,7 @@ export default defineComponent({
     energyPerMember(member: PokemonInstanceExt): number | undefined {
       const skill = member.pokemon.skill
 
-      if (
-        skill.name === mainskill.ENERGIZING_CHEER_S.name ||
-        skill.name === mainskill.ENERGY_FOR_EVERYONE.name
-      ) {
+      if (skill.name === mainskill.ENERGIZING_CHEER_S.name || skill.name === mainskill.ENERGY_FOR_EVERYONE.name) {
         const amount = member.pokemon.skill.amount(member.skillLevel)
         const energy = StrengthService.skillValue({
           skill,
@@ -367,26 +352,22 @@ export default defineComponent({
         return MathUtils.round(energy / factor, 1)
       }
     },
-    lowestIngredientPower(memberProduction: SingleProductionExt) {
-      const amount = memberProduction.ingredients.reduce(
+    lowestIngredientPower(memberProduction: MemberProduction) {
+      const amount = memberProduction.produceTotal.ingredients.reduce(
         (sum, cur) =>
-          sum +
-          cur.amount *
-            cur.ingredient.value *
-            AVERAGE_WEEKLY_CRIT_MULTIPLIER *
-            this.userStore.islandBonus,
+          sum + cur.amount * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER * this.userStore.islandBonus,
         0
       )
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))
     },
-    highestIngredientPower(memberProduction: SingleProductionExt) {
+    highestIngredientPower(memberProduction: MemberProduction) {
       const recipeBonus = 1 + MAX_RECIPE_BONUS / 100
       const maxLevelRecipeMultiplier = recipeLevelBonus[MAX_RECIPE_LEVEL]
       const amount =
         recipeBonus *
         maxLevelRecipeMultiplier *
         this.userStore.islandBonus *
-        memberProduction.ingredients.reduce(
+        memberProduction.produceTotal.ingredients.reduce(
           (sum, cur) => sum + cur.amount * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER,
           0
         )

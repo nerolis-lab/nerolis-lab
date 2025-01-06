@@ -1,4 +1,5 @@
-import { getPokemonNames } from './pokemon-utils';
+import { getPokemonNames } from '@src/utils/pokemon-utils/pokemon-utils.js';
+import { describe, expect, it } from 'bun:test';
 
 describe('getPokemonNames', () => {
   it('shall return all pokemon by default', () => {
@@ -7,7 +8,7 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -18,7 +19,7 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -29,7 +30,7 @@ describe('getPokemonNames', () => {
       taupe: true,
       snowdrop: false,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -40,7 +41,7 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: true,
       lapis: false,
-      powerplant: false,
+      powerplant: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -51,7 +52,7 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: true,
-      powerplant: false,
+      powerplant: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -62,7 +63,7 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: true,
+      powerplant: true
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -73,7 +74,7 @@ describe('getPokemonNames', () => {
       taupe: true,
       snowdrop: true,
       lapis: true,
-      powerplant: true,
+      powerplant: true
     };
 
     expect(getPokemonNames(allIslands)).toMatchSnapshot();

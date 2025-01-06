@@ -1,5 +1,5 @@
-import { RecipeType } from '../../../domain/recipe/recipe';
-import { PokemonInstanceWithMeta } from '../../pokemon/pokemon-instance';
+import type { PokemonInstanceWithMeta } from '../../../domain/instance/pokemon-instance';
+import type { RecipeType } from '../../../domain/recipe/recipe';
 
 export interface MemberInstance extends PokemonInstanceWithMeta {
   memberIndex: number;

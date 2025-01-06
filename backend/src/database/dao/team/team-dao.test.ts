@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao';
-import { TeamDAO } from '@src/database/dao/team/team-dao';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao';
-import { DaoFixture } from '@src/utils/test-utils/dao-fixture';
+import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
+import { TeamDAO } from '@src/database/dao/team/team-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
+import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
+import { beforeEach, describe, expect, it } from 'bun:test';
+import { boozle } from 'bunboozle';
 import { uuid } from 'sleepapi-common';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 beforeEach(() => {
   let innerCounter = 0;
-  uuid.v4 = jest.fn(() => `${++innerCounter}`.padEnd(36, `${innerCounter}`));
+  boozle(uuid, 'v4', () => `${++innerCounter}`.padEnd(36, `${innerCounter}`));
 });
 
 describe('TeamDAO insert', () => {
@@ -21,27 +23,27 @@ describe('TeamDAO insert', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
     expect(team).toBeDefined();
 
     const data = await TeamDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-      [
-        {
-          "bedtime": "21:30",
-          "camp": false,
-          "favored_berries": undefined,
-          "fk_user_id": 1,
-          "id": 1,
-          "name": "Team A",
-          "recipe_type": "curry",
-          "team_index": 0,
-          "version": 1,
-          "wakeup": "06:00",
-        },
-      ]
-    `);
+[
+  {
+    "bedtime": "21:30",
+    "camp": false,
+    "favored_berries": undefined,
+    "fk_user_id": 1,
+    "id": 1,
+    "name": "Team A",
+    "recipe_type": "curry",
+    "team_index": 0,
+    "version": 1,
+    "wakeup": "06:00",
+  },
+]
+`);
   });
 
   it('shall fail to insert entity without fk_user_id', async () => {
@@ -53,7 +55,7 @@ describe('TeamDAO insert', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:00',
-        recipe_type: 'curry',
+        recipe_type: 'curry'
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team.fk_user_id/);
   });
@@ -67,7 +69,7 @@ describe('TeamDAO insert', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:00',
-        recipe_type: 'curry',
+        recipe_type: 'curry'
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team.team_index/);
   });
@@ -81,7 +83,7 @@ describe('TeamDAO insert', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:00',
-        recipe_type: 'curry',
+        recipe_type: 'curry'
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team.name/);
   });
@@ -94,7 +96,7 @@ describe('TeamDAO insert', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
     await expect(
       TeamDAO.insert({
@@ -104,7 +106,7 @@ describe('TeamDAO insert', () => {
         camp: true,
         bedtime: '21:30',
         wakeup: '06:00',
-        recipe_type: 'curry',
+        recipe_type: 'curry'
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: UNIQUE constraint failed: team.fk_user_id, team.team_index/);
   });
@@ -119,7 +121,7 @@ describe('TeamDAO update', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
     expect(team.name).toEqual('Team A');
 
@@ -127,21 +129,21 @@ describe('TeamDAO update', () => {
 
     const data = await TeamDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-      [
-        {
-          "bedtime": "21:30",
-          "camp": false,
-          "favored_berries": undefined,
-          "fk_user_id": 1,
-          "id": 1,
-          "name": "Updated Team A",
-          "recipe_type": "curry",
-          "team_index": 0,
-          "version": 2,
-          "wakeup": "06:00",
-        },
-      ]
-    `);
+[
+  {
+    "bedtime": "21:30",
+    "camp": false,
+    "favored_berries": undefined,
+    "fk_user_id": 1,
+    "id": 1,
+    "name": "Updated Team A",
+    "recipe_type": "curry",
+    "team_index": 0,
+    "version": 2,
+    "wakeup": "06:00",
+  },
+]
+`);
   });
 
   it('shall fail to update entity with duplicate fk_user_id and team_index', async () => {
@@ -152,7 +154,7 @@ describe('TeamDAO update', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
     const teamB = await TeamDAO.insert({
       fk_user_id: 1,
@@ -161,7 +163,7 @@ describe('TeamDAO update', () => {
       camp: true,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
 
     await expect(TeamDAO.update({ ...teamB, team_index: 0 })).rejects.toThrow(
@@ -179,7 +181,7 @@ describe('TeamDAO delete', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
 
     await TeamDAO.delete({ id: team.id });
@@ -198,7 +200,7 @@ describe('findTeamsWithMembers', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
     // should not be found
     await TeamDAO.insert({
@@ -208,7 +210,7 @@ describe('findTeamsWithMembers', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry',
+      recipe_type: 'curry'
     });
 
     await PokemonDAO.insert({
@@ -230,7 +232,7 @@ describe('findTeamsWithMembers', () => {
       subskill_100: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
-      ingredient_60: 'Elixir',
+      ingredient_60: 'Elixir'
     });
 
     await PokemonDAO.insert({
@@ -252,7 +254,7 @@ describe('findTeamsWithMembers', () => {
       subskill_100: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
-      ingredient_60: 'Elixir',
+      ingredient_60: 'Elixir'
     });
 
     // should not be included, is saved to user, but not included in team
@@ -275,24 +277,24 @@ describe('findTeamsWithMembers', () => {
       subskill_100: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
-      ingredient_60: 'Elixir',
+      ingredient_60: 'Elixir'
     });
 
     // Team: [pika, pika, bulba]
     await TeamMemberDAO.insert({
       member_index: 0,
       fk_team_id: 1,
-      fk_pokemon_id: 1,
+      fk_pokemon_id: 1
     });
     await TeamMemberDAO.insert({
       member_index: 1,
       fk_team_id: 1,
-      fk_pokemon_id: 1,
+      fk_pokemon_id: 1
     });
     await TeamMemberDAO.insert({
       member_index: 2,
       fk_team_id: 1,
-      fk_pokemon_id: 2,
+      fk_pokemon_id: 2
     });
 
     expect(await TeamDAO.findTeamsWithMembers(1)).toMatchSnapshot();
