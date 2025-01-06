@@ -33,7 +33,7 @@ class StrengthServiceImpl {
   }) {
     const { skill, berries, favored, timeWindow } = params
 
-    if (skill.isUnit('strength')) {
+    if (skill.isUnit('strength', 'dream shards', 'helps', 'chance', 'pot size')) {
       return this.skillValue(params)
     } else if (skill.isUnit('berries')) {
       return this.berryStrength({ berries, favored, timeWindow })

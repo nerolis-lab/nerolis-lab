@@ -77,7 +77,7 @@ describe('StrengthService', () => {
 
     it('should return 0 for unsupported skill type', () => {
       const strength = StrengthService.skillStrength({
-        skill: mainskill.EXTRA_HELPFUL_S,
+        skill: mainskill.SKILL_COPY,
         amount: 10,
         berries: mockBerrySet,
         favored: favoredBerries,

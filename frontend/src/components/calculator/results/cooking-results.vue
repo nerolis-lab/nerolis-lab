@@ -236,7 +236,7 @@ import {
   type RecipeTypeResult
 } from 'sleepapi-common'
 
-interface CookedRecipeResultDetails extends CookedRecipeResult {
+export interface CookedRecipeResultDetails extends CookedRecipeResult {
   weekdayPercentage: number
   fullWeekPercentage: number
   showDetails: boolean

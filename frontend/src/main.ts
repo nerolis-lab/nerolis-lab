@@ -77,7 +77,7 @@ migrateStores()
 app.use(vuetify)
 app.use(router)
 app.use(vue3GoogleLogin, {
-  clientId: '493172605844-co84oe12lgh8v534q01l7t6n8lel75gm.apps.googleusercontent.com'
+  clientId: '983013278971-m60s443rk30e8sjk04aof0ltaanogck0.apps.googleusercontent.com'
 })
 
 app.mount('#app')

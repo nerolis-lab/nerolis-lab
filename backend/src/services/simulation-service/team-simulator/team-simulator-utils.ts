@@ -49,9 +49,9 @@ class TeamSimulatorUtilsImpl {
   public calculateHelpSpeedBeforeEnergy(params: {
     member: TeamMemberExt;
     settings: TeamSettingsExt;
-    helpingBonus: number;
+    teamHelpingBonus: number;
   }) {
-    const { member, settings, helpingBonus } = params;
+    const { member, settings, teamHelpingBonus } = params;
 
     return calculateHelpSpeedBeforeEnergy({
       pokemon: member.pokemonWithIngredients.pokemon,
@@ -60,7 +60,7 @@ class TeamSimulatorUtilsImpl {
       subskills: member.settings.subskills,
       camp: settings.camp,
       ribbonLevel: member.settings.ribbon,
-      helpingBonus
+      teamHelpingBonus
     });
   }
 

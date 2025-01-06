@@ -20,7 +20,7 @@ export interface Optimal {
   nature: Nature;
   carrySize: number;
   skillLevel: number;
-  ribbon?: number;
+  ribbon: number;
 }
 
 class OptimalImpl {
@@ -36,7 +36,7 @@ class OptimalImpl {
       nature: ADAMANT,
       skillLevel: pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize,
-      ribbon
+      ribbon: ribbon ?? 4
     };
   }
 
@@ -52,7 +52,7 @@ class OptimalImpl {
       nature: QUIET,
       skillLevel: pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
-      ribbon
+      ribbon: ribbon ?? 4
     };
   }
   public skill(pokemon: Pokemon, ribbon?: number): Optimal {
@@ -67,7 +67,7 @@ class OptimalImpl {
       nature: CAREFUL,
       skillLevel: pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
-      ribbon
+      ribbon: ribbon ?? 4
     };
   }
 
@@ -88,7 +88,7 @@ class OptimalImpl {
     return {
       carrySize: stats.carrySize,
       nature: stats.nature,
-      ribbon: stats.ribbon ?? 0,
+      ribbon: stats.ribbon ?? 4,
       skillLevel: stats.skillLevel,
       subskills,
       level,

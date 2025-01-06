@@ -157,7 +157,7 @@
                   <v-img :src="mainskillImage(item.pokemon)" height="24" width="24"></v-img>
                 </div>
                 <div v-if="item.energyPerMember">
-                  <div>{{ item.energyPerMember }} x5</div>
+                  <div>{{ item.energyPerMember }}</div>
                 </div>
                 <div v-else>
                   {{ item.skillStrength }}
@@ -338,10 +338,10 @@ export default defineComponent({
     }
   },
   methods: {
-    energyPerMember(member: PokemonInstanceExt): number | undefined {
+    energyPerMember(member: PokemonInstanceExt): string | undefined {
       const skill = member.pokemon.skill
 
-      if (skill.name === mainskill.ENERGIZING_CHEER_S.name || skill.name === mainskill.ENERGY_FOR_EVERYONE.name) {
+      if (skill.isUnit('energy')) {
         const amount = member.pokemon.skill.amount(member.skillLevel)
         const energy = StrengthService.skillValue({
           skill,
@@ -349,7 +349,7 @@ export default defineComponent({
           timeWindow: this.comparisonStore.timeWindow
         })
         const factor = skill.name === mainskill.ENERGIZING_CHEER_S.name ? 5 : 1
-        return MathUtils.round(energy / factor, 1)
+        return `${MathUtils.round(energy / factor, 1)} ${skill.isSameOrModifiedVersion(mainskill.ENERGIZING_CHEER_S, mainskill.ENERGY_FOR_EVERYONE) ? 'x5' : ''}`
       }
     },
     lowestIngredientPower(memberProduction: MemberProduction) {

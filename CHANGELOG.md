@@ -1,3 +1,32 @@
+## [1.7.7](https://github.com/SleepAPI/SleepAPI/compare/v1.7.6...v1.7.7) (2025-01-06)
+
+
+### Bug Fixes
+
+* compare strength shows more skill values ([1dae600](https://github.com/SleepAPI/SleepAPI/commit/1dae60098fe4d4f8cec4edafe5e5809d23c6ac7d))
+* iv chart compares all ingredients ([7e4fc49](https://github.com/SleepAPI/SleepAPI/commit/7e4fc49776872db4f02c745d214fe78407a4d843))
+
+## [1.7.6](https://github.com/SleepAPI/SleepAPI/compare/v1.7.5...v1.7.6) (2025-01-05)
+
+
+### Bug Fixes
+
+* allows user to select empty team in compare ([3e12de0](https://github.com/SleepAPI/SleepAPI/commit/3e12de06261b022a75c1da9571ed7b29c7ee8732))
+
+## [1.7.5](https://github.com/SleepAPI/SleepAPI/compare/v1.7.4...v1.7.5) (2025-01-05)
+
+
+### Bug Fixes
+
+* highlight only current index team slot ([c4ec025](https://github.com/SleepAPI/SleepAPI/commit/c4ec025d26f16cd5da0c7a4c0e3a1098d25fd60a))
+
+## [1.7.4](https://github.com/SleepAPI/SleepAPI/compare/v1.7.3...v1.7.4) (2025-01-05)
+
+
+### Bug Fixes
+
+* correct member is highlighted on member remove ([e7ff15a](https://github.com/SleepAPI/SleepAPI/commit/e7ff15a3ebced60309a9c43f305a0d55839e88e1))
+
 ## [1.7.3](https://github.com/SleepAPI/SleepAPI/compare/v1.7.2...v1.7.3) (2025-01-05)
 
 

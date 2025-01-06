@@ -159,7 +159,7 @@ export function setupAndRunProductionSimulation(params: {
     subskills,
     camp,
     ribbonLevel: input.ribbon,
-    helpingBonus
+    teamHelpingBonus: helpingBonus
   });
 
   const recoveryEvents = getDefaultRecoveryEvents(daySleepInfo.period, maybeNature, e4eProcs, e4eLevel, cheer);

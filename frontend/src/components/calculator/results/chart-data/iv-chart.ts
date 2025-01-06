@@ -1,8 +1,7 @@
 import type { Chart, RadialLinearScale } from 'chart.js'
 import { type ChartData, type Plugin } from 'chart.js'
 import type { Ref } from 'vue'
-import { onMounted, ref } from 'vue'
-import { useTheme } from 'vuetify'
+import { ref } from 'vue'
 
 export function generateIvData(themeVariables: { [x: string]: string }): Ref<ChartData<'radar'>> {
   const berry = themeVariables['berry']
@@ -116,28 +115,6 @@ export const ivOptions = {
   plugins: {
     legend: {
       display: false
-    },
-    ivTextPlugin: generateIvTextPlugin
-  }
-}
-
-export default {
-  setup() {
-    onMounted(() => {
-      const skillColor = '#fff'
-      const ingredientColor = '#aaa'
-      const berryColor = '#000'
-
-      generateIvData.value.datasets[0].pointBorderColor = [skillColor, ingredientColor, berryColor]
-      generateIvData.value.datasets[0].pointBackgroundColor = [skillColor, ingredientColor, berryColor]
-    })
-
-    const theme = useTheme()
-    console.log('hello', theme.current)
-
-    return {
-      ivData: generateIvData,
-      ivOptions
     }
   }
 }

@@ -352,8 +352,12 @@ export const useTeamStore = defineStore('team', {
       const userStore = useUserStore()
       const pokemonStore = usePokemonStore()
 
-      // members array will be reduced by one
-      this.getCurrentTeam.memberIndex = Math.max(this.getCurrentTeam.memberIndex - 1, 0)
+      // if the current member is removed, we highlight the first found member
+      if (memberIndex === this.getCurrentTeam.memberIndex) {
+        this.getCurrentTeam.memberIndex = this.getCurrentTeam.members.findIndex(
+          (member, i) => i !== memberIndex && member != null
+        )
+      }
 
       if (userStore.loggedIn) {
         try {

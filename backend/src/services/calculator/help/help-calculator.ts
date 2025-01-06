@@ -28,13 +28,13 @@ export function calculateHelpSpeedBeforeEnergy(stats: {
   level: number;
   nature: nature.Nature;
   subskills: Set<string>;
-  helpingBonus: number;
+  teamHelpingBonus: number;
   ribbonLevel: number;
   camp: boolean;
 }): number {
-  const { pokemon, level, nature, subskills, helpingBonus, ribbonLevel, camp } = stats;
+  const { pokemon, level, nature, subskills, teamHelpingBonus, ribbonLevel, camp } = stats;
 
-  const helpSpeedSubskills = calculateHelpSpeedSubskills(subskills, helpingBonus);
+  const helpSpeedSubskills = calculateHelpSpeedSubskills({ subskills, nrOfTeamHelpingBonus: teamHelpingBonus });
   const levelFactor = 1 - 0.002 * (level - 1);
   const natureFreq = invertNatureFrequency(nature);
   const ribbonFrequency = calculateRibbonFrequency(pokemon, ribbonLevel);

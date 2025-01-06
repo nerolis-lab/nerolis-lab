@@ -177,22 +177,38 @@ describe('countErbUsers', () => {
 
 describe('calculateHelpSpeedSubskills', () => {
   it('shall calculate default helpSpeed factor from subskills', () => {
-    expect(calculateHelpSpeedSubskills(new Set(), 0)).toBe(1);
+    expect(calculateHelpSpeedSubskills({ subskills: new Set(), nrOfTeamHelpingBonus: 0 })).toBe(1);
   });
   it('shall calculate helpM+helpS helpSpeed factor from subskills', () => {
-    expect(calculateHelpSpeedSubskills(new Set([HELPING_SPEED_M.name, HELPING_SPEED_S.name]), 0)).toBe(0.79);
+    expect(
+      calculateHelpSpeedSubskills({
+        subskills: new Set([HELPING_SPEED_M.name, HELPING_SPEED_S.name]),
+        nrOfTeamHelpingBonus: 0
+      })
+    ).toBe(0.79);
   });
   it('shall calculate helpM helpSpeed factor from subskills', () => {
-    expect(calculateHelpSpeedSubskills(new Set([HELPING_SPEED_M.name]), 0)).toBe(0.86);
+    expect(calculateHelpSpeedSubskills({ subskills: new Set([HELPING_SPEED_M.name]), nrOfTeamHelpingBonus: 0 })).toBe(
+      0.86
+    );
   });
   it('shall calculate helpS helpSpeed factor from subskills', () => {
-    expect(calculateHelpSpeedSubskills(new Set([HELPING_SPEED_S.name]), 0)).toBe(0.93);
+    expect(calculateHelpSpeedSubskills({ subskills: new Set([HELPING_SPEED_S.name]), nrOfTeamHelpingBonus: 0 })).toBe(
+      0.93
+    );
   });
   it('shall calculate and clamp helpS helpSpeed factor from subskills', () => {
-    expect(calculateHelpSpeedSubskills(new Set([HELPING_SPEED_S.name, HELPING_SPEED_M.name]), 3)).toBe(0.65);
+    expect(
+      calculateHelpSpeedSubskills({
+        subskills: new Set([HELPING_SPEED_S.name, HELPING_SPEED_M.name]),
+        nrOfTeamHelpingBonus: 3
+      })
+    ).toBe(0.65);
   });
   it('shall calculate and clamp helping bonus if user and team exceeds 5', () => {
-    expect(calculateHelpSpeedSubskills(new Set([HELPING_BONUS.name]), 5)).toBe(0.75);
+    expect(calculateHelpSpeedSubskills({ subskills: new Set([HELPING_BONUS.name]), nrOfTeamHelpingBonus: 5 })).toBe(
+      0.75
+    );
   });
 });
 

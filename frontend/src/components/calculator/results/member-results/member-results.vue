@@ -33,153 +33,155 @@
       ></v-btn>
     </template>
     <v-window-item v-for="(memberWithProduction, index) in membersWithProduction" :key="index" style="height: 600px">
-      <v-row
-        no-gutters
-        class="flex-nowrap bg-surface"
-        :style="{
-          backgroundImage: `url(${islandImage({ favoredBerries: teamStore.getCurrentTeam.favoredBerries, background: true })})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'bottom'
-        }"
-      >
-        <div
-          id="chartContainer"
-          class="frosted-glass-dark"
+      <template v-if="memberWithProduction">
+        <v-row
+          no-gutters
+          class="flex-nowrap bg-surface"
           :style="{
-            clipPath: chartClipPath,
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '140px'
-          }"
-        ></div>
-
-        <v-col
-          class="flex-left chart-container-triangle"
-          :style="{
-            maxWidth: '50%',
-            height: '140px',
-            left: teamStore.getTeamSize > 1 ? '20px' : '',
-            position: 'relative'
+            backgroundImage: `url(${islandImage({ favoredBerries: teamStore.getCurrentTeam.favoredBerries, background: true })})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'bottom'
           }"
         >
-          <RadarChart v-if="memberWithProduction.iv" :chart-data="ivData" :chart-options="ivOptions" />
-          <v-col v-else class="flex-center pa-0">
-            <v-skeleton-loader height="130px" width="130px" class="triangle-skeleton"></v-skeleton-loader>
+          <div
+            id="chartContainer"
+            class="frosted-glass-dark"
+            :style="{
+              clipPath: chartClipPath,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '140px'
+            }"
+          ></div>
+
+          <v-col
+            class="flex-left chart-container-triangle"
+            :style="{
+              maxWidth: '50%',
+              height: '140px',
+              left: teamStore.getTeamSize > 1 ? '20px' : '',
+              position: 'relative'
+            }"
+          >
+            <RadarChart v-if="memberWithProduction.iv" :chart-data="ivData" :chart-options="ivOptions" />
+            <v-col v-else class="flex-center pa-0">
+              <v-skeleton-loader height="130px" width="130px" class="triangle-skeleton"></v-skeleton-loader>
+            </v-col>
           </v-col>
-        </v-col>
 
-        <v-col v-if="!isMobile" cols="auto" class="flex-right mr-3" style="max-height: 140px">
-          <SpeechBubble :pokemon-instance="memberWithProduction.member">
-            <template #header-text>
-              <v-row no-gutters class="flex-start flex-nowrap">
-                <v-col cols="auto" class="mx-1">
-                  <span class="text-surface text-left">Lv.{{ memberWithProduction.member.level }}</span>
-                </v-col>
-                <v-col>
-                  <span class="text-primary text-left font-weight-medium">{{ memberWithProduction.member.name }}</span>
-                </v-col>
-              </v-row>
-            </template>
-            <template #body-text>
-              <div style="width: 200px; height: 75px">
-                <span class="text-black text-left font-weight-light text-break">
-                  {{ randomPhrase }}
-                </span>
-              </div>
-            </template>
-          </SpeechBubble>
-        </v-col>
-
-        <v-col class="flex-left" style="max-height: 140px; display: inline-block">
-          <v-img
-            :src="getMemberImage(memberWithProduction.member.pokemon.name, memberWithProduction.member.shiny)"
-            height="140"
-            width="140"
-            style="
-              filter: drop-shadow(0.5px 0.5px 0 black) drop-shadow(-0.5px 0.5px 0 black)
-                drop-shadow(0.5px -0.5px 0 black) drop-shadow(-0.5px -0.5px 0 black);
-            "
-          ></v-img>
-        </v-col>
-      </v-row>
-
-      <v-row dense class="flex-nowrap flex-center">
-        <v-col v-for="(subskill, i) in memberWithProduction.member.subskills" :key="i">
-          <v-card
-            :color="rarityColor(subskill.subskill)"
-            height="20px"
-            :style="subskill.level > memberWithProduction.member.level ? 'opacity: 40%' : ''"
-            class="text-body-2 text-center"
-          >
-            {{ isMobile ? subskill.subskill.shortName : subskill.subskill.name }}
-          </v-card>
-        </v-col>
-      </v-row>
-
-      <v-row dense>
-        <v-col cols="6" class="flex-center w-100 px-2">
-          <v-btn-toggle
-            v-model="teamStore.timeWindow"
-            style="height: 32px; width: 100%; max-width: 300px"
-            mandatory
-            color="primary"
-            rounded="xl"
-            base-color="surface"
-          >
-            <v-btn value="8H" style="width: 50%">8H</v-btn>
-            <v-btn value="24H" style="width: 50%">24H</v-btn>
-          </v-btn-toggle>
-        </v-col>
-        <v-col
-          :class="[memberWithProduction.member.nature.positiveModifier === 'neutral' ? 'flex-center' : 'flex-right']"
-        >
-          <v-card
-            class="w-100 text-center flex-center"
-            height="32px"
-            style="max-width: 150px"
-            rounded="pill"
-            elevation="0"
-            >{{ memberWithProduction.member.nature.name }}</v-card
-          >
-        </v-col>
-        <v-col v-if="!memberWithProduction.member.nature.prettyName.includes('neutral')" class="flex-left">
-          <NatureModifiers :nature="memberWithProduction.member.nature" :short="true" />
-        </v-col>
-      </v-row>
-
-      <MemberProductionHeader :member="currentMemberWithProduction" />
-      <v-row dense class="flex-top flex-nowrap">
-        <v-col cols="6" class="flex-center flex-column">
-          <span class="text-h6 text-accent">Details</span>
-          <v-col cols="12" class="flex-left pt-0">
-            <v-divider />
+          <v-col v-if="!isMobile" cols="auto" class="flex-right mr-3" style="max-height: 140px">
+            <SpeechBubble :pokemon-instance="memberWithProduction.member">
+              <template #header-text>
+                <v-row no-gutters class="flex-start flex-nowrap">
+                  <v-col cols="auto" class="mx-1">
+                    <span class="text-surface text-left">Lv.{{ memberWithProduction.member.level }}</span>
+                  </v-col>
+                  <v-col>
+                    <span class="text-primary text-left font-weight-medium">{{
+                      memberWithProduction.member.name
+                    }}</span>
+                  </v-col>
+                </v-row>
+              </template>
+              <template #body-text>
+                <div style="width: 200px; height: 75px">
+                  <span class="text-black text-left font-weight-light text-break">
+                    {{ randomPhrase }}
+                  </span>
+                </div>
+              </template>
+            </SpeechBubble>
           </v-col>
-          <span>Crit chance: {{ currentMemberWithProduction.member.pokemon.skill.critChance * 100 }}%</span>
-          <span
-            >Crits per day: {{ MathUtils.round(currentMemberWithProduction.production.advanced.skillCrits, 2) }}</span
-          >
-          <span
-            >Crit {{ currentMemberWithProduction.member.pokemon.skill.unit }}:
-            {{ Math.floor(currentMemberWithProduction.production.advanced.skillCritValue) }}
-          </span>
-          <span v-if="currentMemberWithProduction.production.advanced.wastedEnergy > 0">
-            Wasted energy:
-            {{ MathUtils.round(currentMemberWithProduction.production.advanced.wastedEnergy, 1) }}</span
-          >
-        </v-col>
-        <v-col cols="6" class="flex-center flex-column">
-          <span class="text-h6 text-accent text-no-wrap">Team impact</span>
-          <v-col cols="12" class="flex-left pt-0">
-            <v-divider />
+
+          <v-col class="flex-left" style="max-height: 140px; display: inline-block">
+            <v-img
+              :src="getMemberImage(memberWithProduction.member.pokemon.name, memberWithProduction.member.shiny)"
+              height="140"
+              width="140"
+              style="
+                filter: drop-shadow(0.5px 0.5px 0 black) drop-shadow(-0.5px 0.5px 0 black)
+                  drop-shadow(0.5px -0.5px 0 black) drop-shadow(-0.5px -0.5px 0 black);
+              "
+            ></v-img>
           </v-col>
-          <span>Some stat</span>
-          <span>Other stat</span>
-          <span>Other stat</span>
-          <span>Other stat</span>
-        </v-col>
-      </v-row>
+        </v-row>
+
+        <v-row dense class="flex-nowrap flex-center">
+          <v-col v-for="(subskill, i) in memberWithProduction.member.subskills" :key="i">
+            <v-card
+              :color="rarityColor(subskill.subskill)"
+              height="20px"
+              :style="subskill.level > memberWithProduction.member.level ? 'opacity: 40%' : ''"
+              class="text-body-2 text-center"
+            >
+              {{ isMobile ? subskill.subskill.shortName : subskill.subskill.name }}
+            </v-card>
+          </v-col>
+        </v-row>
+
+        <v-row dense>
+          <v-col cols="6" class="flex-center w-100 px-2">
+            <v-btn-toggle
+              v-model="teamStore.timeWindow"
+              style="height: 32px; width: 100%; max-width: 300px"
+              mandatory
+              color="primary"
+              rounded="xl"
+              base-color="surface"
+            >
+              <v-btn value="8H" style="width: 50%">8H</v-btn>
+              <v-btn value="24H" style="width: 50%">24H</v-btn>
+            </v-btn-toggle>
+          </v-col>
+          <v-col
+            :class="[memberWithProduction.member.nature.positiveModifier === 'neutral' ? 'flex-center' : 'flex-right']"
+          >
+            <v-card
+              class="w-100 text-center flex-center"
+              height="32px"
+              style="max-width: 150px"
+              rounded="pill"
+              elevation="0"
+              >{{ memberWithProduction.member.nature.name }}</v-card
+            >
+          </v-col>
+          <v-col v-if="!memberWithProduction.member.nature.prettyName.includes('neutral')" class="flex-left">
+            <NatureModifiers :nature="memberWithProduction.member.nature" :short="true" />
+          </v-col>
+        </v-row>
+
+        <MemberProductionHeader v-if="memberWithProduction" :member="memberWithProduction" />
+        <v-row dense class="flex-top flex-nowrap">
+          <v-col cols="6" class="flex-center flex-column">
+            <span class="text-h6 text-accent">Details</span>
+            <v-col cols="12" class="flex-left pt-0">
+              <v-divider />
+            </v-col>
+            <span>Crit chance: {{ memberWithProduction.member.pokemon.skill.critChance * 100 }}%</span>
+            <span>Crits per day: {{ MathUtils.round(memberWithProduction.production.advanced.skillCrits, 2) }}</span>
+            <span
+              >Crit {{ memberWithProduction.member.pokemon.skill.unit }}:
+              {{ Math.floor(memberWithProduction.production.advanced.skillCritValue) }}
+            </span>
+            <span v-if="memberWithProduction.production.advanced.wastedEnergy > 0">
+              Wasted energy:
+              {{ MathUtils.round(memberWithProduction.production.advanced.wastedEnergy, 1) }}</span
+            >
+          </v-col>
+          <v-col cols="6" class="flex-center flex-column">
+            <span class="text-h6 text-accent text-no-wrap">Team impact</span>
+            <v-col cols="12" class="flex-left pt-0">
+              <v-divider />
+            </v-col>
+            <span>Some stat</span>
+            <span>Other stat</span>
+            <span>Other stat</span>
+            <span>Other stat</span>
+          </v-col>
+        </v-row>
+      </template>
     </v-window-item>
   </v-window>
 </template>
@@ -199,7 +201,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
-import type { PerformanceDetails } from '@/types/member/instanced'
+import type { MemberProductionExt, PerformanceDetails } from '@/types/member/instanced'
 import { Chart } from 'chart.js'
 import { MathUtils, type MemberProductionBase } from 'sleepapi-common'
 import { computed, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
@@ -304,10 +306,10 @@ export default defineComponent({
     }
   },
   computed: {
-    membersWithProduction() {
+    membersWithProduction(): (MemberProductionExt | undefined)[] {
       const result = []
       for (const member of this.teamStore.getCurrentMembersWithProduction) {
-        member && result.push(member)
+        result.push(member)
       }
       return result
     },
@@ -315,7 +317,7 @@ export default defineComponent({
       return this.membersWithProduction[this.teamStore.getCurrentTeam.memberIndex]
     },
     // used by watch to trigger recalc
-    currentExternalId() {
+    currentExternalId(): string | undefined {
       return this.currentMemberWithProduction?.member.externalId
     },
     // used by watch to trigger recalc
@@ -328,7 +330,11 @@ export default defineComponent({
       immediate: true,
       async handler(newIv?: PerformanceDetails) {
         if (!newIv) {
-          if (this.teamStore.getCurrentMember && !this.teamStore.getMemberIvLoading(this.currentExternalId)) {
+          if (
+            this.teamStore.getCurrentMember &&
+            this.currentExternalId &&
+            !this.teamStore.getMemberIvLoading(this.currentExternalId)
+          ) {
             await this.populateIv()
           }
         } else {
@@ -366,12 +372,13 @@ export default defineComponent({
     },
     async populateIv() {
       const calculatedExternalId = this.teamStore.getCurrentMember
-      if (!calculatedExternalId) {
+      const memberProduction = this.currentMemberWithProduction?.production
+
+      if (!calculatedExternalId || !memberProduction) {
         throw new UnexpectedError("Can't calculate iv for non-existing member, contact developer")
       }
       this.teamStore.upsertIv(calculatedExternalId, undefined)
 
-      const memberProduction = this.currentMemberWithProduction.production
       const response = await TeamService.calculateCurrentMemberIv()
 
       if (response) {
@@ -398,19 +405,11 @@ export default defineComponent({
           optimalSkill: optimalSkill.produceTotal.berries.at(0)?.amount ?? 0
         }),
         ingredient: this.calculatePercentageOfOptimal({
-          current: current.produceTotal.ingredients[0].amount,
-          optimalBerry: optimalBerry.produceTotal.ingredients[0].amount,
-          optimalIng: optimalIngredient.produceTotal.ingredients[0].amount,
-          optimalSkill: optimalSkill.produceTotal.ingredients[0].amount
+          current: current.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
+          optimalBerry: optimalBerry.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
+          optimalIng: optimalIngredient.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
+          optimalSkill: optimalSkill.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0)
         }),
-        ingredientsOfTotal: current.produceTotal.ingredients.map(({ amount }) =>
-          this.calculatePercentageOfOptimal({
-            current: amount,
-            optimalBerry: optimalBerry.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
-            optimalIng: optimalIngredient.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
-            optimalSkill: optimalSkill.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0)
-          })
-        ),
         skill: this.calculatePercentageOfOptimal({
           current: current.skillProcs,
           optimalBerry: optimalBerry.skillProcs,
@@ -419,7 +418,6 @@ export default defineComponent({
         })
       }
     },
-
     calculatePercentageOfOptimal(params: {
       current: number
       optimalBerry: number

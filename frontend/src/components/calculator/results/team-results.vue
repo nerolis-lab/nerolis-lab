@@ -13,7 +13,7 @@
             </v-col>
           </v-row>
 
-          <v-row dense class="flex-center totals-row">
+          <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
               <div class="legend bg-berry">
                 <v-img src="/images/berries/berries.png" contain width="28" height="28" />

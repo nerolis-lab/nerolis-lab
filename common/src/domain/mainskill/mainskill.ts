@@ -101,8 +101,8 @@ export class Mainskill {
    * @param modifierType Optional modifier type to check for.
    * @returns True if the current skill is the same as the provided skill or a modified version of it.
    */
-  isSameOrModifiedVersionOf(skill: Mainskill, modifierType?: ModifierType): boolean {
-    return this.name === skill.name || this.isModifiedVersionOf(skill, modifierType);
+  isSameOrModifiedVersion(...skills: Mainskill[]): boolean {
+    return skills.some((skill) => this.name === skill.name || this.isModifiedVersionOf(skill));
   }
 
   toJSON() {
