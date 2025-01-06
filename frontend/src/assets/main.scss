@@ -17,3 +17,13 @@
   width: 34px;
   border-radius: 30px;
 }
+
+.frosted-glass {
+  background: rgba($surface, 0.4) !important;
+  backdrop-filter: blur(10px);
+}
+
+.frosted-glass-dark {
+  background: rgba($surface, 0.85) !important;
+  backdrop-filter: blur(10px);
+}

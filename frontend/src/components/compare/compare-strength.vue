@@ -394,8 +394,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main.scss';
-
 .v-table > .v-table__wrapper > table > tbody > tr > td,
 .v-table > .v-table__wrapper > table > tbody > tr > th,
 .v-table > .v-table__wrapper > table > thead > tr > td,

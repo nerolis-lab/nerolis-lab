@@ -23,6 +23,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-@import '@/assets/main.scss';
-</style>
+<style lang="scss"></style>

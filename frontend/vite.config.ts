@@ -32,6 +32,13 @@ const manifest: Partial<ManifestOptions> = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/assets/main.scss";`
+      }
+    }
+  },
   plugins: [
     vue(),
     vuetify(),

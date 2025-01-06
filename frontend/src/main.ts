@@ -10,8 +10,6 @@ import { createVuetify } from 'vuetify'
 import { VTimePicker } from 'vuetify/labs/VTimePicker'
 import 'vuetify/styles'
 
-import '@/assets/main.scss'
-
 import App from '@/app.vue'
 import router from '@/router/router'
 
@@ -39,11 +37,11 @@ const darkTheme: ThemeDefinition = {
     subskillGold: '#FFE570',
 
     curry: '#ff9f4b',
-    'curry-dark': '#e47615',
+    'curry-dark': '#e66b00',
     salad: '#a8cf5c',
-    'salad-dark': '#a8cf5c',
-    dessert: '#f2df61',
-    'dessert-dark': '#e1c405',
+    'salad-dark': '#81b616',
+    dessert: '#f2d95f',
+    'dessert-dark': '#dbb700',
 
     ingredient: '#fbe346',
     berry: '#b297e7',
