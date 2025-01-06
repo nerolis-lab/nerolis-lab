@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/SleepAPI/SleepAPI/compare/v1.7.7...v1.8.0) (2025-01-06)
+
+
+### Features
+
+* new images and recolors ([1c00cb8](https://github.com/SleepAPI/SleepAPI/commit/1c00cb86d897148f378668e5c3a82a27030a06b7))
+
 ## [1.7.7](https://github.com/SleepAPI/SleepAPI/compare/v1.7.6...v1.7.7) (2025-01-06)
 
 
