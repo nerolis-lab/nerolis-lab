@@ -44,7 +44,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
     expect(
       TeamSimulatorUtils.calculateHelpSpeedBeforeEnergy({
         member: { ...member, settings: { ...member.settings, nature: nature.LONELY, level: 1 } },
-        helpingBonus: 0,
+        teamHelpingBonus: 0,
         settings: { bedtime: TimeUtils.parseTime('06:00'), wakeup: TimeUtils.parseTime('21:30'), camp: false }
       })
     ).toBe(3240);

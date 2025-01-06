@@ -18,7 +18,6 @@ export interface PerformanceDetails {
   berry: number
   skill: number
   ingredient: number
-  ingredientsOfTotal: number[]
 }
 
 export interface MemberProductionExt {

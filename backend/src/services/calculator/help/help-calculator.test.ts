@@ -14,7 +14,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.RASH,
       subskills: new Set([subskill.HELPING_SPEED_M.name]),
       camp: false,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(2268);
@@ -28,7 +28,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.RASH,
       subskills: new Set([subskill.HELPING_SPEED_M.name]),
       camp: true,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(2268 / 1.2);
@@ -42,7 +42,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.RASH,
       subskills: new Set([subskill.HELPING_SPEED_M.name, subskill.HELPING_SPEED_S.name]),
       camp: false,
-      helpingBonus: 4
+      teamHelpingBonus: 4
     });
     const result5hb = calculateHelpSpeedBeforeEnergy({
       pokemon: VICTREEBEL,
@@ -51,7 +51,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.RASH,
       subskills: new Set([subskill.HELPING_SPEED_M.name, subskill.HELPING_SPEED_S.name]),
       camp: false,
-      helpingBonus: 5
+      teamHelpingBonus: 5
     });
 
     expect(result4hb).toBe(1714);
@@ -66,7 +66,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.RASH,
       subskills: new Set([subskill.HELPING_SPEED_M.name]),
       camp: false,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(2268);
@@ -80,7 +80,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.BASHFUL,
       subskills: new Set(),
       camp: false,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(ONIX.frequency * 0.88);
@@ -94,7 +94,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.BASHFUL,
       subskills: new Set(),
       camp: false,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(ONIX.frequency * 0.95);
@@ -108,7 +108,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.BASHFUL,
       subskills: new Set(),
       camp: false,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(PICHU.frequency * 0.89);
@@ -122,7 +122,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       nature: nature.BASHFUL,
       subskills: new Set(),
       camp: false,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
 
     expect(result).toBe(PICHU.frequency * 0.75);

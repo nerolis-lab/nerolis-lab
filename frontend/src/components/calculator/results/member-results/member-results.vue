@@ -402,19 +402,11 @@ export default defineComponent({
           optimalSkill: optimalSkill.produceTotal.berries.at(0)?.amount ?? 0
         }),
         ingredient: this.calculatePercentageOfOptimal({
-          current: current.produceTotal.ingredients[0].amount,
-          optimalBerry: optimalBerry.produceTotal.ingredients[0].amount,
-          optimalIng: optimalIngredient.produceTotal.ingredients[0].amount,
-          optimalSkill: optimalSkill.produceTotal.ingredients[0].amount
+          current: current.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
+          optimalBerry: optimalBerry.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
+          optimalIng: optimalIngredient.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
+          optimalSkill: optimalSkill.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0)
         }),
-        ingredientsOfTotal: current.produceTotal.ingredients.map(({ amount }) =>
-          this.calculatePercentageOfOptimal({
-            current: amount,
-            optimalBerry: optimalBerry.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
-            optimalIng: optimalIngredient.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),
-            optimalSkill: optimalSkill.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0)
-          })
-        ),
         skill: this.calculatePercentageOfOptimal({
           current: current.skillProcs,
           optimalBerry: optimalBerry.skillProcs,
@@ -423,7 +415,6 @@ export default defineComponent({
         })
       }
     },
-
     calculatePercentageOfOptimal(params: {
       current: number
       optimalBerry: number

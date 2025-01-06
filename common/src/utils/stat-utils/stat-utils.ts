@@ -72,8 +72,9 @@ export function calculateNrOfBerriesPerDrop(specialty: PokemonSpecialty, subskil
 }
 
 // Calculate help speed subskills and clamp at 35% boost
-export function calculateHelpSpeedSubskills(subskills: Set<string>, nrOfHelpBonus: number) {
-  const userAndTeamHelpBonus = subskills.has(HELPING_BONUS.name) ? nrOfHelpBonus + 1 : nrOfHelpBonus;
+export function calculateHelpSpeedSubskills(params: { subskills: Set<string>; nrOfTeamHelpingBonus: number }) {
+  const { subskills, nrOfTeamHelpingBonus } = params;
+  const userAndTeamHelpBonus = subskills.has(HELPING_BONUS.name) ? nrOfTeamHelpingBonus + 1 : nrOfTeamHelpingBonus;
   const helpBonus = HELPING_BONUS.amount * Math.min(5, userAndTeamHelpBonus);
 
   const helpM = subskills.has(HELPING_SPEED_M.name) ? HELPING_SPEED_M.amount : 0;

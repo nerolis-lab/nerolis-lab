@@ -28,6 +28,24 @@ describe('Optimal', () => {
   });
   const mockedPokemon: Pokemon = { ...mockPokemon(), skill: baseSkill };
 
+  it('should use the ribbon provided', () => {
+    const optimalBerry = Optimal.berry(mockedPokemon, 2);
+
+    expect(optimalBerry).toEqual({
+      subskills: [
+        { level: 10, subskill: BERRY_FINDING_S },
+        { level: 25, subskill: HELPING_SPEED_M },
+        { level: 50, subskill: HELPING_SPEED_S },
+        { level: 75, subskill: HELPING_BONUS },
+        { level: 100, subskill: SKILL_TRIGGER_M }
+      ],
+      nature: ADAMANT,
+      skillLevel: mockedPokemon.skill.maxLevel,
+      carrySize: mockedPokemon.carrySize,
+      ribbon: 2
+    });
+  });
+
   it('should return correct optimal setup for berry production', () => {
     const optimalBerry = Optimal.berry(mockedPokemon);
 
@@ -41,7 +59,8 @@ describe('Optimal', () => {
       ],
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize
+      carrySize: mockedPokemon.carrySize,
+      ribbon: 4
     });
   });
 
@@ -58,7 +77,8 @@ describe('Optimal', () => {
       ],
       nature: QUIET,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5
+      carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+      ribbon: 4
     });
   });
 
@@ -75,7 +95,8 @@ describe('Optimal', () => {
       ],
       nature: CAREFUL,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5
+      carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+      ribbon: 4
     });
   });
 
@@ -111,7 +132,8 @@ describe('Optimal', () => {
         ],
         nature: QUIET,
         skillLevel: mockedPokemon.skill.maxLevel,
-        carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5
+        carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+        ribbon: 0
       };
 
       const memberSettings = Optimal.toMemberSettings({
