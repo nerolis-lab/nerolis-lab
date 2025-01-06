@@ -250,7 +250,7 @@ export function simulation(params: {
           );
           currentEnergy += clampedDelta;
           totalRecovery += clampedDelta;
-          if (skillActivation.skill.isSameOrModifiedVersionOf(mainskill.CHARGE_ENERGY_S)) {
+          if (skillActivation.skill.isSameOrModifiedVersion(mainskill.CHARGE_ENERGY_S)) {
             skillEnergySelfValue += clampedDelta;
             if (skillActivation.skill.isModifiedVersionOf(mainskill.CHARGE_ENERGY_S, 'Moonlight')) {
               const energyFromCrit =

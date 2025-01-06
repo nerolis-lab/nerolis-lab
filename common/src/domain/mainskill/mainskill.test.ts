@@ -59,9 +59,10 @@ describe('Mainskill', () => {
   });
 
   it('should check if the skill is the same or a modified version using isSameOrModifiedVersionOf()', () => {
-    expect(modifiedSkill.isSameOrModifiedVersionOf(baseSkill)).toBe(true);
-    expect(baseSkill.isSameOrModifiedVersionOf(baseSkill)).toBe(true);
-    expect(baseSkill.isSameOrModifiedVersionOf(modifiedSkill)).toBe(false);
+    expect(modifiedSkill.isSameOrModifiedVersion(baseSkill)).toBe(true);
+    expect(baseSkill.isSameOrModifiedVersion(baseSkill)).toBe(true);
+    expect(baseSkill.isSameOrModifiedVersion(modifiedSkill)).toBe(false);
+    expect(baseSkill.isSameOrModifiedVersion(modifiedSkill, baseSkill)).toBe(true);
   });
 
   it('should convert skill to JSON using toJSON()', () => {

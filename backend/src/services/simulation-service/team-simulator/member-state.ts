@@ -529,7 +529,7 @@ export class MemberState {
 
     // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
     // FIXME: implement once skill copy is known
-    if (this.skill.isSameOrModifiedVersionOf(mainskill.SKILL_COPY)) {
+    if (this.skill.isSameOrModifiedVersion(mainskill.SKILL_COPY)) {
       return [];
     }
 
