@@ -722,7 +722,7 @@ describe('attemptDayHelp', () => {
     const frequencyBeforeEnergy = TeamSimulatorUtils.calculateHelpSpeedBeforeEnergy({
       member,
       settings,
-      helpingBonus: 0
+      teamHelpingBonus: 0
     });
     const frequency = calculateFrequencyWithEnergy(frequencyBeforeEnergy, memberState.energy);
     const nextHelp = frequency / 60;

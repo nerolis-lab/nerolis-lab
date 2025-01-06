@@ -135,7 +135,11 @@ export class MemberState {
     this.cookingState = cookingState;
 
     // list already filtered for level
-    const nrOfHelpingBonus = team.filter((member) => member.settings.subskills.has(subskill.HELPING_BONUS.name)).length;
+    const teamHelpingBonus = team.filter(
+      (otherMember) =>
+        otherMember.settings.externalId !== member.settings.externalId &&
+        otherMember.settings.subskills.has(subskill.HELPING_BONUS.name)
+    ).length;
 
     const nightPeriod = {
       start: settings.bedtime,
@@ -178,7 +182,7 @@ export class MemberState {
     const frequency = TeamSimulatorUtils.calculateHelpSpeedBeforeEnergy({
       member,
       settings,
-      helpingBonus: nrOfHelpingBonus
+      teamHelpingBonus
     });
     // TODO: not nice to duplicate this between here and energy utils in case brackets change
     this.frequency0 = frequency * 1; // 0 energy

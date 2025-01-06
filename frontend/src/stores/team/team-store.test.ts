@@ -659,7 +659,6 @@ describe('resetCurrentTeamIvs', () => {
     const iv: PerformanceDetails = {
       berry: 50,
       ingredient: 50,
-      ingredientsOfTotal: [50],
       skill: 50
     }
     teamStore.teams = createMockTeams(1, {
@@ -768,7 +767,7 @@ describe('getMemberIvLoading', () => {
     const teamStore = useTeamStore()
     const mockTeams = createMockTeams(1, {
       memberIvs: {
-        member1: { berry: 10, ingredient: 20, ingredientsOfTotal: [10], skill: 15 }
+        member1: { berry: 10, ingredient: 20, skill: 15 }
       }
     })
     teamStore.teams = mockTeams
@@ -863,7 +862,6 @@ describe('upsertIv', () => {
     const performanceDetails: PerformanceDetails = {
       berry: 10,
       ingredient: 20,
-      ingredientsOfTotal: [10],
       skill: 15
     }
 
@@ -877,7 +875,6 @@ describe('upsertIv', () => {
     const initialPerformanceDetails: PerformanceDetails = {
       berry: 5,
       ingredient: 10,
-      ingredientsOfTotal: [5],
       skill: 8
     }
     const mockTeams = createMockTeams(1, {
@@ -890,7 +887,6 @@ describe('upsertIv', () => {
     const updatedPerformanceDetails: PerformanceDetails = {
       berry: 15,
       ingredient: 25,
-      ingredientsOfTotal: [15],
       skill: 20
     }
 
@@ -903,7 +899,7 @@ describe('upsertIv', () => {
     const teamStore = useTeamStore()
     const mockTeams = createMockTeams(1, {
       memberIvs: {
-        member1: { berry: 10, ingredient: 20, ingredientsOfTotal: [10], skill: 15 }
+        member1: { berry: 10, ingredient: 20, skill: 15 }
       }
     })
     teamStore.teams = mockTeams
