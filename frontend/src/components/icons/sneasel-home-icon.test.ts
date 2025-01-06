@@ -1,4 +1,3 @@
-import '@/assets/main.scss'
 import SneaselHomeIcon from '@/components/icons/sneasel-home-icon.vue'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'

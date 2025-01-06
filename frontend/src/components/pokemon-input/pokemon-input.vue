@@ -291,8 +291,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main.scss';
-
 .nowrap {
   display: flex;
   align-items: center;

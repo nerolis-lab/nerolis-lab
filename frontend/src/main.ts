@@ -10,8 +10,6 @@ import { createVuetify } from 'vuetify'
 import { VTimePicker } from 'vuetify/labs/VTimePicker'
 import 'vuetify/styles'
 
-import '@/assets/main.scss'
-
 import App from '@/app.vue'
 import router from '@/router/router'
 
@@ -28,18 +26,27 @@ const darkTheme: ThemeDefinition = {
     primary: '#E63946',
     secondary: '#5E5A7F',
     accent: '#9A95C3',
+
     strength: '#FFB81F',
+
     natureUp: 'FF683A',
     natureDown: '2BA0ED',
+
     subskillWhite: '#FAFAFA',
     subskillSilver: '#DCF2FF',
     subskillGold: '#FFE570',
-    curry: '#fc9c36',
-    salad: '#8fc549',
-    dessert: '#fbe346',
+
+    curry: '#ff9f4b',
+    'curry-dark': '#e66b00',
+    salad: '#a8cf5c',
+    'salad-dark': '#81b616',
+    dessert: '#f2d95f',
+    'dessert-dark': '#dbb700',
+
     ingredient: '#fbe346',
     berry: '#b297e7',
     skill: '#ff616e',
+
     'on-background': '#ffffff',
     'on-surface': '#ffffff',
     'on-primary': '#ffffff',

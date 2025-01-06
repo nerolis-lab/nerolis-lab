@@ -129,8 +129,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/colors.scss';
-
 .title {
   text-align: center;
   font-weight: 600;

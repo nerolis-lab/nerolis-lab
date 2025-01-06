@@ -103,6 +103,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-@import '@/assets/colors';
-</style>
+<style lang="scss" scoped></style>

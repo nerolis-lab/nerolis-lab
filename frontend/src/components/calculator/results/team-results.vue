@@ -15,37 +15,27 @@
 
           <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
-              <v-img
-                color="berry"
-                src="/images/berries/berries.png"
-                contain
-                width="24"
-                height="24"
-                style="border-radius: 45px"
-              />
-              <span class="text-body-1 text-berry w-100 text-center font-weight-medium ml-1">
+              <div class="legend bg-berry">
+                <v-img src="/images/berries/berries.png" contain width="28" height="28" />
+              </div>
+              <span class="text-body-1 text-berry w-100 text-center font-weight-medium ml-2">
                 {{ berryStrengthString }}
               </span>
             </v-col>
 
             <v-col cols="auto" class="flex-center">
-              <v-img
-                src="/images/misc/skillproc.png"
-                style="border-radius: 45px"
-                color="skill"
-                contain
-                width="24"
-                height="24"
-              />
-              <span class="text-body-1 text-skill w-100 text-center font-weight-medium ml-1">
+              <div class="legend bg-skill">
+                <v-img src="/images/misc/skillproc.png" contain width="28" height="28" />
+              </div>
+              <span class="text-body-1 text-skill text-center font-weight-medium ml-2">
                 {{ skillStrengthString }}
               </span>
             </v-col>
 
             <v-col cols="auto" class="flex-center">
-              <v-img :color="teamStore.getCurrentTeam.recipeType" style="border-radius: 45px" width="24" height="24">
-                <img :src="recipeTypeImage" style="width: 100%; height: 100%; transform: scale(1.2)" />
-              </v-img>
+              <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}`">
+                <v-img :src="recipeTypeImage" contain width="32" height="32" />
+              </div>
 
               <span
                 :class="[
@@ -54,7 +44,7 @@
                   'w-100',
                   'text-center',
                   'font-weight-medium',
-                  'ml-1'
+                  'ml-2'
                 ]"
               >
                 {{ cookingStrengthString }}</span
@@ -293,6 +283,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-@import '@/assets/main.scss';
-</style>
+<style lang="scss"></style>

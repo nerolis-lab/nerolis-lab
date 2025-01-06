@@ -187,7 +187,7 @@
 </template>
 
 <script lang="ts">
-import { ivData, ivOptions, ivTextPlugin } from '@/components/calculator/results/chart-data/iv-chart'
+import { generateIvData, generateIvTextPlugin, ivOptions } from '@/components/calculator/results/chart-data/iv-chart'
 import MemberProductionHeader from '@/components/calculator/results/member-results/member-production-header.vue'
 import RadarChart from '@/components/custom-components/charts/radar-chart.vue'
 import NatureModifiers from '@/components/pokemon-input/nature-modifiers.vue'
@@ -205,8 +205,7 @@ import type { MemberProductionExt, PerformanceDetails } from '@/types/member/ins
 import { Chart } from 'chart.js'
 import { MathUtils, type MemberProductionBase } from 'sleepapi-common'
 import { computed, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
-
-Chart.register(ivTextPlugin)
+import { useTheme } from 'vuetify'
 
 export default defineComponent({
   name: 'MemberResults',
@@ -227,6 +226,10 @@ export default defineComponent({
     })
 
     const { randomPhrase, getRandomPhrase } = useRandomPhrase()
+
+    const theme = useTheme()
+    const ivData = generateIvData(theme.current.value.colors)
+    Chart.register(generateIvTextPlugin(theme.current.value.colors))
 
     watchEffect(() => {
       if (currentMember.value) {
