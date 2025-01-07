@@ -1,3 +1,10 @@
+## [1.8.4](https://github.com/SleepAPI/SleepAPI/compare/v1.8.3...v1.8.4) (2025-01-07)
+
+
+### Bug Fixes
+
+* divide of-each-ing by total nr of ings ([3f016f7](https://github.com/SleepAPI/SleepAPI/commit/3f016f7c293dca632063ea44c6374c4e9d589875))
+
 ## [1.8.3](https://github.com/SleepAPI/SleepAPI/compare/v1.8.2...v1.8.3) (2025-01-07)
 
 
