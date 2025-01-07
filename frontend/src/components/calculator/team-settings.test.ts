@@ -100,15 +100,6 @@ describe('TeamSettings', () => {
     expect(wrapper.vm.isBedtimeOpen).toBe(true)
   })
 
-  it('calculates sleep score correctly', () => {
-    wrapper.setData({
-      bedtime: '22:00',
-      wakeup: '06:00'
-    })
-
-    expect(wrapper.vm.sleepScore).toBe(94) // 8 hours of sleep
-  })
-
   it('calculates sleep duration correctly', () => {
     wrapper.setData({
       bedtime: '22:00',

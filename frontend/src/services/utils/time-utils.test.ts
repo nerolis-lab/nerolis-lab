@@ -46,3 +46,14 @@ describe('prettifyTime', () => {
     expect(TimeUtils.prettifyTime(time)).toBe('00:00:00')
   })
 })
+
+describe('sleepScore', () => {
+  it('calculates sleep score correctly', () => {
+    expect(
+      TimeUtils.sleepScore({
+        bedtime: '22:00',
+        wakeup: '06:00'
+      })
+    ).toBe(94) // 8 hours of sleep
+  })
+})

@@ -29,9 +29,14 @@
         @click="openSleepMenu"
       >
         <v-avatar size="48">
-          <v-progress-circular :model-value="sleepScore" :size="48" bg-color="#f0f0f0" color="#479EFF" :width="8">{{
-            sleepScore
-          }}</v-progress-circular>
+          <v-progress-circular
+            :model-value="sleepScore({ bedtime, wakeup })"
+            :size="48"
+            bg-color="#f0f0f0"
+            color="#479EFF"
+            :width="8"
+            >{{ sleepScore({ bedtime, wakeup }) }}</v-progress-circular
+          >
         </v-avatar>
       </v-btn>
     </v-col>
@@ -112,9 +117,14 @@
       <v-card title="Update sleep" :subtitle="calculateSleepDuration">
         <template #append>
           <v-avatar size="48" color="white">
-            <v-progress-circular :model-value="sleepScore" :size="48" bg-color="#f0f0f0" color="#479EFF" :width="8">{{
-              sleepScore
-            }}</v-progress-circular>
+            <v-progress-circular
+              :model-value="sleepScore({ bedtime, wakeup })"
+              :size="48"
+              bg-color="#f0f0f0"
+              color="#479EFF"
+              :width="8"
+              >{{ sleepScore({ bedtime, wakeup }) }}</v-progress-circular
+            >
           </v-avatar>
         </template>
 
@@ -213,6 +223,7 @@
 
 <script lang="ts">
 import IslandSelect from '@/components/map/island-select.vue'
+import { TimeUtils } from '@/services/utils/time-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { Berry } from 'sleepapi-common'
 import { defineComponent } from 'vue'
@@ -222,7 +233,7 @@ export default defineComponent({
   components: { IslandSelect },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore }
+    return { teamStore, sleepScore: TimeUtils.sleepScore }
   },
   data: () => ({
     isCampButtonDisabled: false,
@@ -240,26 +251,6 @@ export default defineComponent({
   computed: {
     camp() {
       return this.teamStore.getCurrentTeam.camp
-    },
-    sleepScore() {
-      const [bedHour, bedMinute] = this.bedtime.split(':').map(Number)
-      const [wakeHour, wakeMinute] = this.wakeup.split(':').map(Number)
-
-      const bedTime = new Date()
-      bedTime.setHours(bedHour, bedMinute, 0, 0)
-
-      const wakeTime = new Date()
-      wakeTime.setHours(wakeHour, wakeMinute, 0, 0)
-
-      if (wakeTime <= bedTime) {
-        wakeTime.setDate(wakeTime.getDate() + 1)
-      }
-
-      const durationInMinutes = (wakeTime.getTime() - bedTime.getTime()) / (1000 * 60) // Duration in minutes
-      const maxDurationInMinutes = 8.5 * 60 // 8.5 hours in minutes
-
-      const score = Math.floor(Math.min(100, (durationInMinutes / maxDurationInMinutes) * 100))
-      return score
     },
     calculateSleepDuration(): string {
       const [bedHour, bedMinute] = this.bedtime.split(':').map(Number)

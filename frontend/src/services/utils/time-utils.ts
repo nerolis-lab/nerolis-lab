@@ -21,6 +21,27 @@ class TimeUtilsImpl {
 
     return `${hourString}:${minuteString}:${secondString}`
   }
+
+  public sleepScore(params: { bedtime: string; wakeup: string }) {
+    const [bedHour, bedMinute] = params.bedtime.split(':').map(Number)
+    const [wakeHour, wakeMinute] = params.wakeup.split(':').map(Number)
+
+    const bedTime = new Date()
+    bedTime.setHours(bedHour, bedMinute, 0, 0)
+
+    const wakeTime = new Date()
+    wakeTime.setHours(wakeHour, wakeMinute, 0, 0)
+
+    if (wakeTime <= bedTime) {
+      wakeTime.setDate(wakeTime.getDate() + 1)
+    }
+
+    const durationInMinutes = (wakeTime.getTime() - bedTime.getTime()) / (1000 * 60) // Duration in minutes
+    const maxDurationInMinutes = 8.5 * 60 // 8.5 hours in minutes
+
+    const score = Math.floor(Math.min(100, (durationInMinutes / maxDurationInMinutes) * 100))
+    return score
+  }
 }
 
 export const TimeUtils = new TimeUtilsImpl()

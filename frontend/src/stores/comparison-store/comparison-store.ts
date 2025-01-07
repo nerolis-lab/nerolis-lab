@@ -1,18 +1,18 @@
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { type TeamInstance } from '@/types/member/instanced'
+import { useTeamStore } from '@/stores/team/team-store'
 import { defineStore } from 'pinia'
 import { DOMAIN_VERSION, type MemberProduction } from 'sleepapi-common'
 
 export interface ComparisonState {
   members: MemberProduction[]
-  team?: TeamInstance
+  teamIndex?: number
   timeWindow: '8H' | '24H'
   domainVersion: number
 }
 
 const defaultState = (attrs?: Partial<ComparisonState>): ComparisonState => ({
   members: [],
-  team: undefined,
+  teamIndex: undefined,
   timeWindow: '24H',
   domainVersion: 0,
   ...attrs
@@ -25,7 +25,11 @@ export const useComparisonStore = defineStore('comparison', {
   getters: {
     getMemberProduction: (state) => (externalId: string) =>
       state.members.find((member) => member.externalId === externalId),
-    fullTeam: (state) => state.members.length >= MAX_COMPARISON_MEMBERS
+    fullTeam: (state) => state.members.length >= MAX_COMPARISON_MEMBERS,
+    currentTeam: (state) => {
+      const teamStore = useTeamStore()
+      return state.teamIndex != null ? teamStore.teams[state.teamIndex] : undefined
+    }
   },
   actions: {
     migrate() {

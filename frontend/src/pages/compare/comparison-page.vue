@@ -35,7 +35,7 @@
       />
     </v-row>
 
-    <CompareSettings class="my-2" />
+    <CompareSettings class="py-2" />
 
     <v-row dense>
       <v-col cols="12">
@@ -161,7 +161,7 @@ export default defineComponent({
     },
     async fetchCompareMemberProduction(pokemonInstance: PokemonInstanceExt) {
       const members: PokemonInstanceExt[] = [pokemonInstance]
-      const maybeTeam = this.comparisonStore.team
+      const maybeTeam = this.comparisonStore.currentTeam
       for (const member of maybeTeam?.members ?? []) {
         if (member) {
           const pokemon = this.pokemonStore.getPokemon(member)
@@ -232,7 +232,6 @@ export default defineComponent({
 }
 
 .scroll-container {
-  display: flex;
   overflow-x: auto;
 }
 

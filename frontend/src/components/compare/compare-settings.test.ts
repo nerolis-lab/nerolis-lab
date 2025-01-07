@@ -2,7 +2,6 @@ import CompareSettings from '@/components/compare/compare-settings.vue'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { createMockPokemon } from '@/vitest'
-import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
@@ -11,7 +10,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 describe('CompareSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof CompareSettings>>
   const mockPokemon = createMockPokemon()
-  const mockTeam = createMockTeams()
 
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -38,9 +36,9 @@ describe('CompareSettings', () => {
 
   it('updates comparisonStore when a team is selected', async () => {
     const comparisonStore = useComparisonStore()
-    expect(comparisonStore.team).toBeUndefined()
-    wrapper.vm.selectTeam(mockTeam[0])
-    expect(comparisonStore.team).not.toBeUndefined()
+    expect(comparisonStore.teamIndex).toBeUndefined()
+    wrapper.vm.selectTeam(0)
+    expect(comparisonStore.teamIndex).not.toBeUndefined()
   })
 
   it('disables teams with more than 4 members', () => {
