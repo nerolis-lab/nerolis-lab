@@ -1,14 +1,8 @@
 <template>
-  <v-window
-    v-model="teamStore.getCurrentTeam.memberIndex"
-    continuous
-    show-arrows
-    class="mb-4"
-    style="min-height: 485px"
-  >
+  <v-window v-model="currentMemberIndex" continuous show-arrows class="mb-4" style="min-height: 485px">
     <template #prev="{ props }">
       <v-btn
-        v-if="teamStore.getTeamSize > 1"
+        v-if="filteredMembersIndices.length > 1"
         id="prevMember"
         color="secondary"
         height="140"
@@ -16,12 +10,12 @@
         rounded="0"
         icon="mdi-chevron-left"
         style="position: absolute; top: 0px; left: 0px"
-        @click="props.onClick"
+        @click="goToPrev"
       ></v-btn>
     </template>
     <template #next="{ props }">
       <v-btn
-        v-if="teamStore.getTeamSize > 1"
+        v-if="filteredMembersIndices.length > 1"
         id="nextMember"
         color="secondary"
         height="140"
@@ -29,7 +23,7 @@
         rounded="0"
         icon="mdi-chevron-right"
         style="position: absolute; top: 0px; right: 0px"
-        @click="props.onClick"
+        @click="goToNext"
       ></v-btn>
     </template>
     <v-window-item v-for="(memberWithProduction, index) in membersWithProduction" :key="index" style="height: 600px">
@@ -323,6 +317,23 @@ export default defineComponent({
     // used by watch to trigger recalc
     currentMemberIv() {
       return this.currentMemberWithProduction?.iv
+    },
+    filteredMembersIndices() {
+      return this.membersWithProduction
+        .map((member, index) => (member ? index : null))
+        .filter((index) => index !== null)
+    },
+    currentMemberIndex: {
+      get() {
+        const currentIndex = this.teamStore.getCurrentTeam.memberIndex
+        if (this.filteredMembersIndices.includes(currentIndex)) {
+          return currentIndex
+        }
+        return this.filteredMembersIndices[0] ?? 0
+      },
+      set(value: number) {
+        this.teamStore.getCurrentTeam.memberIndex = value
+      }
     }
   },
   watch: {
@@ -355,6 +366,16 @@ export default defineComponent({
     }
   },
   methods: {
+    goToNext() {
+      const currentIndex = this.filteredMembersIndices.indexOf(this.currentMemberIndex)
+      const nextIndex = (currentIndex + 1) % this.filteredMembersIndices.length
+      this.currentMemberIndex = this.filteredMembersIndices[nextIndex] ?? 0
+    },
+    goToPrev() {
+      const currentIndex = this.filteredMembersIndices.indexOf(this.currentMemberIndex)
+      const prevIndex = (currentIndex - 1 + this.filteredMembersIndices.length) % this.filteredMembersIndices.length
+      this.currentMemberIndex = this.filteredMembersIndices[prevIndex] ?? 0
+    },
     getMemberImage(pokemonName: string, shiny: boolean) {
       return avatarImage({ pokemonName, happy: true, shiny })
     },
