@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/SleepAPI/SleepAPI/compare/v1.8.2...v1.8.3) (2025-01-07)
+
+
+### Bug Fixes
+
+* compare skill value from production result ([647c58e](https://github.com/SleepAPI/SleepAPI/commit/647c58e5b59fd0d8b98a7b215aedb5d87c6a4a92))
+
 ## [1.8.2](https://github.com/SleepAPI/SleepAPI/compare/v1.8.1...v1.8.2) (2025-01-07)
 
 
