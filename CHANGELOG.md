@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/SleepAPI/SleepAPI/compare/v1.8.0...v1.8.1) (2025-01-07)
+
+
+### Bug Fixes
+
+* compare team updates with original team ([dbe0159](https://github.com/SleepAPI/SleepAPI/commit/dbe0159e69480e98a8683b2508f2f0dccc6bf6b9))
+
 # [1.8.0](https://github.com/SleepAPI/SleepAPI/compare/v1.7.7...v1.8.0) (2025-01-06)
 
 
