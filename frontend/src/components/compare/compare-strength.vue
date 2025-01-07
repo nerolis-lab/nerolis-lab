@@ -198,8 +198,7 @@ import {
   defaultZero,
   mainskill,
   recipeLevelBonus,
-  type MemberProduction,
-  type PokemonInstanceExt
+  type MemberProduction
 } from 'sleepapi-common'
 
 type DataTableHeader = {
@@ -269,7 +268,7 @@ export default defineComponent({
         const berryPower = this.showBerries
           ? StrengthService.berryStrength({
               favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
-              berries: memberProduction.produceTotal.berries.filter((b) => b.level === member.level),
+              berries: memberProduction.produceWithoutSkill.berries,
               timeWindow: this.comparisonStore.timeWindow
             })
           : 0
@@ -287,9 +286,11 @@ export default defineComponent({
               // classic calc returns berry array with 2 elements, first is own berries, second is berries from skill
               // berries from skill can be identified with level === 0, but we need to update this to real level so
               // that the berries can scale. the classic calc is messy
-              berries: memberProduction.produceTotal.berries
-                .filter((b) => b.level !== member.level)
-                .map((b) => ({ amount: b.amount, berry: b.berry, level: member.level })),
+              berries: memberProduction.produceFromSkill.berries.map((b) => ({
+                amount: b.amount,
+                berry: b.berry,
+                level: member.level
+              })),
               favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
               timeWindow: this.comparisonStore.timeWindow
             })
@@ -310,7 +311,7 @@ export default defineComponent({
           skill: memberPokemon.skill,
           skillStrength,
           skillCompact: skillStrength > 0 ? compactNumber(skillStrength) : '',
-          energyPerMember: this.energyPerMember(member),
+          energyPerMember: memberPokemon.skill.isUnit('energy') ? this.energyPerMember(memberProduction) : 0,
           total,
           totalCompact: compactNumber(total)
         })
@@ -338,19 +339,15 @@ export default defineComponent({
     }
   },
   methods: {
-    energyPerMember(member: PokemonInstanceExt): string | undefined {
-      const skill = member.pokemon.skill
+    energyPerMember(member: MemberProduction): string | undefined {
+      const skill = member.pokemonWithIngredients.pokemon
+      const critAmount = member.advanced.skillCritValue
+      const amountWithoutCrit = member.skillAmount - critAmount
 
-      if (skill.isUnit('energy')) {
-        const amount = member.pokemon.skill.amount(member.skillLevel)
-        const energy = StrengthService.skillValue({
-          skill,
-          amount,
-          timeWindow: this.comparisonStore.timeWindow
-        })
-        const factor = skill.name === mainskill.ENERGIZING_CHEER_S.name ? 5 : 1
-        return `${MathUtils.round(energy / factor, 1)} ${skill.isSameOrModifiedVersion(mainskill.ENERGIZING_CHEER_S, mainskill.ENERGY_FOR_EVERYONE) ? 'x5' : ''}`
-      }
+      logger.error(member.produceFromSkill)
+
+      const e4eSuffix = skill === mainskill.ENERGY_FOR_EVERYONE.name ? 'x5' : ''
+      return `${MathUtils.round(amountWithoutCrit, 1)} ${e4eSuffix}${critAmount > 0 ? `+${MathUtils.round(critAmount, 1)}` : ''}`
     },
     lowestIngredientPower(memberProduction: MemberProduction) {
       const amount = memberProduction.produceTotal.ingredients.reduce(
