@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/SleepAPI/SleepAPI/compare/v1.8.1...v1.8.2) (2025-01-07)
+
+
+### Bug Fixes
+
+* member result window skips empty items ([227a4a8](https://github.com/SleepAPI/SleepAPI/commit/227a4a85d9b7b3425c591565683cd1b4657c65c7))
+
 ## [1.8.1](https://github.com/SleepAPI/SleepAPI/compare/v1.8.0...v1.8.1) (2025-01-07)
 
 
