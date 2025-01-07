@@ -1,6 +1,8 @@
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProduction } from '@/vitest'
+import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import { createPinia, setActivePinia } from 'pinia'
 import { type MemberProduction } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -84,5 +86,19 @@ describe('outdate', () => {
     comparisonStore.outdate()
     expect(comparisonStore.members).toHaveLength(0)
     expect(comparisonStore.domainVersion).toBeGreaterThan(0)
+  })
+})
+
+describe('currentTeam', () => {
+  it('shall return the correct team', async () => {
+    const teamStore = useTeamStore()
+    const teams = createMockTeams()
+    teamStore.teams = teams
+
+    const comparisonStore = useComparisonStore()
+
+    expect(comparisonStore.currentTeam).toBeUndefined()
+    comparisonStore.teamIndex = 0
+    expect(comparisonStore.currentTeam).toEqual(teams[0])
   })
 })

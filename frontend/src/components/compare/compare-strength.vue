@@ -268,7 +268,7 @@ export default defineComponent({
 
         const berryPower = this.showBerries
           ? StrengthService.berryStrength({
-              favored: this.comparisonStore.team?.favoredBerries ?? [],
+              favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
               berries: memberProduction.produceTotal.berries.filter((b) => b.level === member.level),
               timeWindow: this.comparisonStore.timeWindow
             })
@@ -290,7 +290,7 @@ export default defineComponent({
               berries: memberProduction.produceTotal.berries
                 .filter((b) => b.level !== member.level)
                 .map((b) => ({ amount: b.amount, berry: b.berry, level: member.level })),
-              favored: this.comparisonStore.team?.favoredBerries ?? [],
+              favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
               timeWindow: this.comparisonStore.timeWindow
             })
           : 0

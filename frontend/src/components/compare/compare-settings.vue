@@ -1,19 +1,60 @@
 <template>
   <v-row class="flex-nowrap" dense>
-    <v-col :class="[isMobile ? 'flex-left' : 'flex-right']">
+    <v-col class="flex-left">
       <v-menu v-model="teamMenu" offset-y :close-on-content-click="false">
         <template #activator="{ props }">
-          <v-btn v-bind="props" append-icon="mdi-chevron-down" :class="isMobile ? 'w-100' : ''">
-            <!-- TODO: would prefer not setting explicit max width -->
-            <span class="text-body-2 text-truncate" :style="{ width: isMobile ? '40dvw' : '200px' }">
-              {{ comparisonStore.team?.name ?? 'No team selected' }}
-            </span>
+          <v-btn v-bind="props" height="48" append-icon="mdi-chevron-down" :class="isMobile ? 'w-100' : ''">
+            <template v-if="comparisonStore.currentTeam == null">
+              <span v-if="!comparisonStore.teamIndex"> Select team </span>
+            </template>
+            <template v-else>
+              <template v-if="!isMobile">
+                <span>{{ comparisonStore.currentTeam.name }}</span>
+                <v-divider vertical class="mx-4" />
+                <v-img
+                  width="36"
+                  height="36"
+                  :src="islandImage({ favoredBerries: comparisonStore.currentTeam.favoredBerries, background: false })"
+                >
+                </v-img>
+                <v-img src="/images/misc/camp.png" width="36" height="36" class="ml-2" />
+                <v-avatar color="white" size="36" class="ml-2">
+                  <v-progress-circular
+                    :model-value="
+                      sleepScore({
+                        bedtime: comparisonStore.currentTeam.bedtime,
+                        wakeup: comparisonStore.currentTeam.wakeup
+                      })
+                    "
+                    :size="72"
+                    bg-color="#f0f0f0"
+                    color="#479EFF"
+                    :width="8"
+                    >{{
+                      sleepScore({
+                        bedtime: comparisonStore.currentTeam.bedtime,
+                        wakeup: comparisonStore.currentTeam.wakeup
+                      })
+                    }}</v-progress-circular
+                  >
+                </v-avatar>
+                <v-divider vertical class="ml-4 mr-2" />
+              </template>
+              <v-img
+                v-for="(member, memberIndex) in comparisonStore.currentTeam.members.filter(Boolean)"
+                :key="memberIndex"
+                :src="memberImage(member)"
+                width="36"
+                height="36"
+                class="ml-2"
+              ></v-img>
+            </template>
           </v-btn>
         </template>
 
         <v-card title="Select team" max-height="50dvh" style="overflow-y: auto">
           <template #append>
-            <v-btn icon elevation="0" color="transparent" @click="comparisonStore.team = undefined">
+            <v-btn icon elevation="0" color="transparent" @click="comparisonStore.teamIndex = undefined">
               <v-icon color="primary">mdi-delete</v-icon>
             </v-btn>
           </template>
@@ -33,7 +74,7 @@
               class="px-2"
               :variant="teamDisabled(team.members) ? 'tonal' : undefined"
               :disabled="teamDisabled(team.members)"
-              @click="selectTeam(team)"
+              @click="selectTeam(i)"
             >
               <v-row class="flex-center flex-nowrap" no-gutters>
                 <v-col cols="4.1" class="text-body-2 text-truncate">
@@ -51,8 +92,8 @@
       </v-menu>
     </v-col>
 
-    <v-col cols="auto">
-      <v-btn icon elevation="0" color="transparent" @click="comparisonStore.$reset()">
+    <v-col cols="auto" class="flex-center">
+      <v-btn icon elevation="0" color="transparent" size="36" @click="comparisonStore.$reset()">
         <v-icon color="primary" size="36">mdi-delete</v-icon>
       </v-btn>
     </v-col>
@@ -91,11 +132,11 @@
 
 <script lang="ts">
 import { useViewport } from '@/composables/viewport-composable'
-import { avatarImage } from '@/services/utils/image-utils'
+import { avatarImage, islandImage } from '@/services/utils/image-utils'
+import { TimeUtils } from '@/services/utils/time-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { TeamInstance } from '@/types/member/instanced'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -105,69 +146,14 @@ export default defineComponent({
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
     const { isMobile } = useViewport()
-    return { comparisonStore, teamStore, pokemonStore, isMobile }
+    return { comparisonStore, teamStore, pokemonStore, isMobile, islandImage, sleepScore: TimeUtils.sleepScore }
   },
   data: () => ({
-    teamMenu: false,
-    advancedMenu: false,
-    tooltipMenu: false,
-    isTimePickerOpen: false,
-    isWakeupOpen: false,
-    isBedtimeOpen: false,
-    subskillsMenu: false,
-    helpMenu: false,
-    energyMenu: false,
-    islandMenu: false,
-    wakeup: '06:00',
-    bedtime: '21:30',
-    updatedWakeup: null,
-    updatedBedtime: null
+    teamMenu: false
   }),
-  computed: {
-    sleepScore() {
-      const [bedHour, bedMinute] = this.bedtime.split(':').map(Number)
-      const [wakeHour, wakeMinute] = this.wakeup.split(':').map(Number)
-
-      const bedTime = new Date()
-      bedTime.setHours(bedHour, bedMinute, 0, 0)
-
-      const wakeTime = new Date()
-      wakeTime.setHours(wakeHour, wakeMinute, 0, 0)
-
-      if (wakeTime <= bedTime) {
-        wakeTime.setDate(wakeTime.getDate() + 1)
-      }
-
-      const durationInMinutes = (wakeTime.getTime() - bedTime.getTime()) / (1000 * 60) // Duration in minutes
-      const maxDurationInMinutes = 8.5 * 60 // 8.5 hours in minutes
-
-      const score = Math.floor(Math.min(100, (durationInMinutes / maxDurationInMinutes) * 100))
-      return score
-    },
-    calculateSleepDuration(): string {
-      const [bedHour, bedMinute] = this.bedtime.split(':').map(Number)
-      const [wakeHour, wakeMinute] = this.wakeup.split(':').map(Number)
-
-      const bedTime = new Date()
-      bedTime.setHours(bedHour, bedMinute, 0, 0)
-
-      const wakeTime = new Date()
-      wakeTime.setHours(wakeHour, wakeMinute, 0, 0)
-
-      if (wakeTime <= bedTime) {
-        wakeTime.setDate(wakeTime.getDate() + 1)
-      }
-
-      const duration = (wakeTime.getTime() - bedTime.getTime()) / 1000 // Duration in seconds
-      const hours = Math.floor(duration / 3600)
-      const minutes = Math.floor((duration % 3600) / 60)
-
-      return `${hours} hours and ${minutes} minutes`
-    }
-  },
   methods: {
-    selectTeam(team: TeamInstance) {
-      this.comparisonStore.team = team
+    selectTeam(teamIndex: number) {
+      this.comparisonStore.teamIndex = teamIndex
       this.teamMenu = false
     },
     teamDisabled(members: (string | undefined)[]) {
