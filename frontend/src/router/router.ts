@@ -9,6 +9,7 @@ export enum RouteName {
   Settings = 'Settings',
   Profile = 'Profile',
   UserSettings = 'UserSettings',
+  Beta = 'Beta',
   NotFound = 'NotFound'
 }
 
@@ -17,6 +18,7 @@ const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
 const UserSettingsPage = () => import('@/pages/user-settings-page.vue')
+const BetaPage = () => import('@/pages/beta/beta.vue')
 const NotFoundPage = () => import('@/pages/not-found/not-found-page.vue')
 
 const router = createRouter({
@@ -51,6 +53,11 @@ const router = createRouter({
       path: '/user-settings',
       name: RouteName.UserSettings,
       component: UserSettingsPage
+    },
+    {
+      path: '/beta',
+      name: RouteName.Beta,
+      component: BetaPage
     },
     {
       path: '/:pathMatch(.*)*',

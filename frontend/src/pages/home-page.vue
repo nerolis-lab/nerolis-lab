@@ -5,7 +5,9 @@
         <SneaselHomeIcon />
       </v-col>
       <v-col cols="auto" class="text-start text-lg-start mb-8">
-        <h1 class="title text-h3 font-weight-bold mb-3">Neroli's Lab</h1>
+        <h1 class="title text-h3 font-weight-bold mb-3">
+          Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
+        </h1>
         <p class="mx-auto text-center">Helping you overthink sleep tracking.</p>
         <p class="mb-6 mx-auto text-center">Optimize your strategies with our simulations.</p>
 
@@ -44,9 +46,11 @@
       </v-col>
     </v-row>
     <v-row v-else class="" style="max-width: 1000px">
-      <v-row class="justify-space-between">
+      <v-row class="justify-space-between flex-nowrap">
         <v-col cols="auto">
-          <h1 class="title text-h1 font-weight-bold mb-3">Neroli's Lab</h1>
+          <h1 class="title text-h1 font-weight-bold mb-3">
+            Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
+          </h1>
           <p class="text-h6 mx-auto text-left">Helping you overthink sleep tracking.</p>
           <p class="text-h6 mb-6 mx-auto text-left">Optimize your strategies with our simulations.</p>
           <v-btn
@@ -133,6 +137,7 @@ export default defineComponent({
   text-align: center;
   font-weight: 600;
   line-height: 120%;
+  display: flex;
 }
 
 .sub-title {
@@ -183,5 +188,12 @@ export default defineComponent({
 
 .fx01:hover {
   background-color: $accent;
+}
+
+.beta {
+  color: $skill;
+  font-style: italic;
+  font-size: 36px;
+  margin: -20px 0 0 5px;
 }
 </style>
