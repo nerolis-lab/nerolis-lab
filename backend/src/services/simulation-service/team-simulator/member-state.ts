@@ -417,10 +417,11 @@ export class MemberState {
       this.averageProduce.ingredients._mapUnary((ingredient) => (ingredient * spilledHelps) / iterations)
     );
 
-    const sneakySnack = flatToBerrySet(
-      this.sneakySnackBerries._mutateUnary((a) => (a * this.totalSneakySnackHelps) / iterations),
-      this.level
-    )[0]; // can grab first since sneaky snack can only return 1 berry type
+    const sneakySnack: BerrySet = {
+      berry: this.berry,
+      level: this.level,
+      amount: Math.max(...this.sneakySnackBerries._mutateUnary((a) => (a * this.totalSneakySnackHelps) / iterations))
+    };
 
     return {
       produceTotal,
