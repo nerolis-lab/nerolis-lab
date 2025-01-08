@@ -33,7 +33,7 @@
       </div>
       <div class="flex-center">
         <v-img src="/images/berries/berries.png" height="20" width="20"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ skillValueTeam }} team </span>
+        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ skillValueTeam }} other </span>
       </div>
     </v-col>
   </v-row>

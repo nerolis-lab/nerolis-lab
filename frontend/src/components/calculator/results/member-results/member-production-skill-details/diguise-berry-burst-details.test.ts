@@ -91,6 +91,6 @@ describe('MemberProductionSkill', () => {
     expect(totalSkillValue.at(0)?.text()).toContain(
       `${compactNumber(expectedValue)} ${MIMIKYU.berry.name.toLowerCase()}`
     )
-    expect(totalSkillValue.at(1)?.text()).toContain(`${compactNumber(expectedTeam)} team`)
+    expect(totalSkillValue.at(1)?.text()).toContain(`${compactNumber(expectedTeam)} other`)
   })
 })
