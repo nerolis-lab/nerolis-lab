@@ -1,3 +1,10 @@
+## [1.8.8](https://github.com/SleepAPI/SleepAPI/compare/v1.8.7...v1.8.8) (2025-01-08)
+
+
+### Bug Fixes
+
+* mimikyu team skill split bluk/other ([ffc97b5](https://github.com/SleepAPI/SleepAPI/commit/ffc97b50c03e9648895aab234ab4a4ca041b2d50))
+
 ## [1.8.7](https://github.com/SleepAPI/SleepAPI/compare/v1.8.6...v1.8.7) (2025-01-08)
 
 
