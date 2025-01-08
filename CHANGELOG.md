@@ -1,3 +1,5 @@
+## [1.8.9](https://github.com/SleepAPI/SleepAPI/compare/v1.8.8...v1.8.9) (2025-01-08)
+
 ## [1.8.8](https://github.com/SleepAPI/SleepAPI/compare/v1.8.7...v1.8.8) (2025-01-08)
 
 
