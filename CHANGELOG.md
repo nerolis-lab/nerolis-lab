@@ -1,3 +1,10 @@
+## [1.8.5](https://github.com/SleepAPI/SleepAPI/compare/v1.8.4...v1.8.5) (2025-01-08)
+
+
+### Bug Fixes
+
+* sneaky snack returns correct berry ([732bc7c](https://github.com/SleepAPI/SleepAPI/commit/732bc7c64fe30721c77d4a948ce49b1ad4e0b563))
+
 ## [1.8.4](https://github.com/SleepAPI/SleepAPI/compare/v1.8.3...v1.8.4) (2025-01-07)
 
 
