@@ -6,9 +6,9 @@
       </v-app-bar-nav-icon>
     </template>
 
-    <v-app-bar-title class="flex"
-      >{{ $route.name }}<RouterLink to="/beta" class="beta">beta</RouterLink></v-app-bar-title
-    >
+    <v-app-bar-title>
+      <div class="page-title">{{ $route.name }}<RouterLink to="/beta" class="beta-tag">beta</RouterLink></div>
+    </v-app-bar-title>
 
     <template #append>
       <DonateMenu />
@@ -44,9 +44,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.beta {
+.page-title {
+  display: flex;
+}
+
+.beta-tag {
   color: $skill;
+  font-style: italic;
   font-size: 16px;
-  margin-top: -6px;
+  margin: -6px 0 0 5px;
 }
 </style>
