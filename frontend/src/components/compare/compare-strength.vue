@@ -282,7 +282,7 @@ export default defineComponent({
         const skillStrength = this.showSkills
           ? StrengthService.skillStrength({
               skill: memberPokemon.skill,
-              amount: memberPokemon.skill.amount(member.skillLevel) * memberProduction.skillProcs,
+              amount: memberProduction.skillAmount,
               berries: memberProduction.produceFromSkill.berries.map((b) => ({
                 amount: b.amount,
                 berry: b.berry,
