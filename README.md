@@ -1,8 +1,8 @@
 <a href="https://sleepapi.net/">
   <h1 align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.sleepapi.net/sleepapi-banner.png">
-      <img alt="Sleep API" src="https://api.sleepapi.net/sleepapi-banner-bright.png">
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.sleepapi.net/banner.png">
+      <img alt="Sleep API" src="https://api.sleepapi.net/banner-bright.png">
     </picture>
   </h1>
 </a>

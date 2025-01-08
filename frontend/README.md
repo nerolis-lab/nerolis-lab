@@ -1,4 +1,4 @@
-# Sleep API - Frontend
+# Neroli's Lab - Frontend
 
 This is a project in its early days, but it's scheduled to replace the backend-hosted basic website at some point.
 

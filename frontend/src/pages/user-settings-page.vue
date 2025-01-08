@@ -12,7 +12,7 @@
           <v-row>
             <v-col cols="12" class="flex-center">
               <span class="text-center"
-                >Sleep API does not store personal information. We only store an identifier connected to your Google
+                >Neroli's Lab does not store personal information. We only store an identifier connected to your Google
                 account so we may recognize you between sessions.</span
               >
             </v-col>

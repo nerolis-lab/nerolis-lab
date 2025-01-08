@@ -13,14 +13,14 @@
           <v-icon size="48" color="pink">mdi-heart</v-icon>
         </v-avatar>
 
-        <h6 class="text-h6">Enjoy Sleep API?</h6>
+        <h6 class="text-h6">Enjoy Neroli's Lab?</h6>
       </v-col>
 
       <v-divider />
 
       <v-list>
         <v-list-item class="text-center text-subtitle-1">
-          With just $1/month, you can support the development of Sleep API and help keep it free for everyone!
+          With just $1/month, you can support the development of Neroli's Lab and help keep it free for everyone!
         </v-list-item>
         <v-list-item>
           <!-- TODO: should not hard code color -->
@@ -63,7 +63,7 @@ export default defineComponent({
       this.menu = !this.menu
     },
     openPatreon() {
-      window.open('https://www.patreon.com/SleepAPI', '_blank')
+      window.open('https://www.patreon.com/NerolisLab', '_blank')
     }
   }
 })
