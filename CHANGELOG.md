@@ -1,3 +1,10 @@
+## [1.8.7](https://github.com/SleepAPI/SleepAPI/compare/v1.8.6...v1.8.7) (2025-01-08)
+
+
+### Bug Fixes
+
+* compare strength skill value from produce ([28a3efb](https://github.com/SleepAPI/SleepAPI/commit/28a3efb3d32179e80974788864bac4b0a4c34ec4))
+
 ## [1.8.6](https://github.com/SleepAPI/SleepAPI/compare/v1.8.5...v1.8.6) (2025-01-08)
 
 
