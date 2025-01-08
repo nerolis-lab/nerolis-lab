@@ -1,3 +1,10 @@
+## [1.8.6](https://github.com/SleepAPI/SleepAPI/compare/v1.8.5...v1.8.6) (2025-01-08)
+
+
+### Bug Fixes
+
+* mimikyu own berry in compare from produceWithoutSkill ([6eec685](https://github.com/SleepAPI/SleepAPI/commit/6eec685b14ab9ab99ab5474cc81d37045d6c7984))
+
 ## [1.8.5](https://github.com/SleepAPI/SleepAPI/compare/v1.8.4...v1.8.5) (2025-01-08)
 
 
