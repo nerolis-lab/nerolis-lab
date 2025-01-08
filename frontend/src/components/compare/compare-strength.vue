@@ -283,13 +283,10 @@ export default defineComponent({
           ? StrengthService.skillStrength({
               skill: memberPokemon.skill,
               amount: memberPokemon.skill.amount(member.skillLevel) * memberProduction.skillProcs,
-              // classic calc returns berry array with 2 elements, first is own berries, second is berries from skill
-              // berries from skill can be identified with level === 0, but we need to update this to real level so
-              // that the berries can scale. the classic calc is messy
               berries: memberProduction.produceFromSkill.berries.map((b) => ({
                 amount: b.amount,
                 berry: b.berry,
-                level: member.level
+                level: b.level
               })),
               favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
               timeWindow: this.comparisonStore.timeWindow

@@ -103,7 +103,7 @@ export default defineComponent({
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
         if (!member) continue
         const memberPokemon = member.pokemon
-        const memberBerry = memberProduction.produceTotal.berries.at(0)
+        const memberBerry = memberProduction.produceWithoutSkill.berries.at(0)
 
         production.push({
           member: member.name,
