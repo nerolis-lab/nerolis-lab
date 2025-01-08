@@ -88,18 +88,19 @@ describe('CompareStrength', () => {
     // Check skill value
     const skillValue = StrengthService.skillStrength({
       skill: member.pokemon.skill,
-      amount: member.pokemon.skill.amount(member.skillLevel) * mockMemberProduction.skillProcs,
+      amount: mockMemberProduction.skillAmount,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       favored: [],
       timeWindow: '24H'
     })
+    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount * userStore.islandBonus))
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
     const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
     expect(firstRowCells[4].text()).toContain(totalPower.toString())
 
-    expect(totalPower).toEqual(33436)
+    expect(totalPower).toEqual(30111)
   })
 
   it('renders 8h time window correctly in data tab', async () => {
@@ -156,17 +157,18 @@ describe('CompareStrength', () => {
     // Check skill value
     const skillValue = StrengthService.skillStrength({
       skill: member.pokemon.skill,
-      amount: member.pokemon.skill.amount(member.skillLevel) * mockMemberProduction.skillProcs,
+      amount: mockMemberProduction.skillAmount,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      favored: [],
+      favored: comparisonStore.currentTeam?.favoredBerries ?? [],
       timeWindow: '8H'
     })
+    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount * userStore.islandBonus * factor))
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
     const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
     expect(Math.abs(+firstRowCells[4].text())).toEqual(totalPower)
-    expect(totalPower).toEqual(11145)
+    expect(totalPower).toEqual(10036)
   })
 
   it('displays the correct number of headers', async () => {
