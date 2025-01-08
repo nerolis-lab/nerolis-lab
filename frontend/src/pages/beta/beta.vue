@@ -9,8 +9,12 @@
           <v-row>
             <v-divider />
           </v-row>
-          <v-row>
-            <v-col cols="12" class="flex-center"> Welcome to the open beta of Neroli's Lab! </v-col>
+          <v-row dense>
+            <v-col cols="12" class="flex-column opener px-4">
+              Welcome to the open beta of Neroli's Lab! Since the site is still under development, you may find bugs or
+              incomplete features.
+              <v-img class="bug" src="/images/pokemon/grubbin.png" height="137" width="150"></v-img>
+            </v-col>
           </v-row>
 
           <v-row>
@@ -24,12 +28,17 @@
           </v-row>
 
           <v-row dense>
-            <v-col cols="12" class="flex-center flex-column mx-2">
-              <span
-                >Neroli's Lab is the evolution of Sleep API we've been working on very hard since early 2024. The beta
-                version of Neroli's Lab is still missing two main features from Sleep API; team finder and tier
-                lists—these are under construction and will be finished before the site's full release.
-              </span>
+            <v-col cols="12" class="flex-center flex-column px-4">
+              Neroli's Lab is the evolution of Sleep API. The beta version of Neroli's Lab is still missing two main
+              features from Sleep API: team finder and tier lists—these are under construction and will be finished
+              before the site's full release.
+              <v-img src="/images/beta/gurdurr.png" height="120" width="120"></v-img>
+            </v-col>
+          </v-row>
+          <v-row dense>
+            <v-col cols="12" class="flex-center flex-column px-4">
+              To take advantage of our biggest new feature, saving your teams and Pokemon across devices, log in using
+              Google by clicking the Pokeball in the upper-right corner of the screen.
             </v-col>
           </v-row>
 
@@ -44,11 +53,12 @@
           </v-row>
 
           <v-row dense>
-            <v-col cols="12" class="flex-center flex-column mx-2">
+            <v-col cols="12" class="flex-center flex-column px-4">
               <span
-                >Please join us on Discord to report any feedback, suggestions, or issues you're having with the site.
-                <a class="discord" href="https://discord.gg/ndzTXRHWzK">Join us on Discord</a>
+                >Please <a class="discord" href="https://discord.gg/ndzTXRHWzK">join us on Discord</a> to report any
+                feedback, suggestions, or issues you're having with the site.
               </span>
+              <v-img class="bug" src="/images/pokemon/caterpie.png" height="91" width="100"></v-img>
             </v-col>
           </v-row>
           <v-row>
@@ -61,3 +71,16 @@
 </template>
 
 <script setup lang="ts"></script>
+
+<style lang="scss" scoped>
+.opener {
+  padding-top: 16px;
+  display: flex;
+
+  .bug {
+    align-self: center;
+    margin-top: -35px;
+    margin-bottom: -20px;
+  }
+}
+</style>
