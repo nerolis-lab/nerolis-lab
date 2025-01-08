@@ -56,7 +56,7 @@ describe('DonateMenu', () => {
     expect(patreonCard).not.toBeNull()
     if (patreonCard) {
       ;(patreonCard as HTMLElement).click()
-      expect(openSpy).toHaveBeenCalledWith('https://www.patreon.com/SleepAPI', '_blank')
+      expect(openSpy).toHaveBeenCalledWith('https://www.patreon.com/NerolisLab', '_blank')
     }
     openSpy.mockRestore()
   })
