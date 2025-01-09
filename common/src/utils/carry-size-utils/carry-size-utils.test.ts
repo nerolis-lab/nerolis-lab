@@ -1,14 +1,10 @@
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
-import { describe, expect, it } from 'bun:test';
-import type { Produce } from 'sleepapi-common';
-import {
-  berry,
-  emptyBerryInventory,
-  emptyProduce,
-  ingredient,
-  prettifyIngredientDrop,
-  subskill
-} from 'sleepapi-common';
+import { emptyProduce, type Produce } from '../../api/production/produce';
+import { BELUE, LEPPA } from '../../domain/berry/berries';
+import { SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
+import { INVENTORY_S } from '../../domain/subskill/subskills';
+import { emptyBerryInventory } from '../berry-utils/berry-utils';
+import { prettifyIngredientDrop } from '../ingredient-utils/ingredient-utils';
+import { CarrySizeUtils } from './carry-size-utils';
 
 describe('emptyInventory', () => {
   it('shall empty inventory', () => {
@@ -16,14 +12,14 @@ describe('emptyInventory', () => {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
-    inventory = InventoryUtils.getEmptyInventory();
+    inventory = CarrySizeUtils.getEmptyInventory();
     expect(inventory.berries).toEqual([]);
     expect(inventory.ingredients).toEqual([]);
   });
@@ -35,23 +31,23 @@ describe('countInventory', () => {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
-    expect(InventoryUtils.countInventory(inventory)).toBe(4);
+    expect(CarrySizeUtils.countInventory(inventory)).toBe(4);
   });
 
   it('shall count inventory size and ignore berries if no berries', () => {
     const inventory: Produce = {
       berries: emptyBerryInventory(),
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
-    expect(InventoryUtils.countInventory(inventory)).toBe(2);
+    expect(CarrySizeUtils.countInventory(inventory)).toBe(2);
   });
 
   it('shall count inventory size and ignore ingredients if no ingredients', () => {
@@ -59,18 +55,18 @@ describe('countInventory', () => {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
       ingredients: []
     };
 
-    expect(InventoryUtils.countInventory(inventory)).toBe(2);
+    expect(CarrySizeUtils.countInventory(inventory)).toBe(2);
   });
 
   it('shall count size as 0 if empty', () => {
-    expect(InventoryUtils.countInventory(InventoryUtils.getEmptyInventory())).toBe(0);
+    expect(CarrySizeUtils.countInventory(CarrySizeUtils.getEmptyInventory())).toBe(0);
   });
 });
 
@@ -80,33 +76,33 @@ describe('addToInventory', () => {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
-    inventory = InventoryUtils.addToInventory(inventory, inventory);
-    expect(InventoryUtils.countInventory(inventory)).toBe(8);
+    inventory = CarrySizeUtils.addToInventory(inventory, inventory);
+    expect(CarrySizeUtils.countInventory(inventory)).toBe(8);
   });
 
   it('shall add produce to empty inventory', () => {
-    let inventory = InventoryUtils.getEmptyInventory();
+    let inventory = CarrySizeUtils.getEmptyInventory();
 
     const addedProduce: Produce = {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
-    inventory = InventoryUtils.addToInventory(inventory, addedProduce);
-    expect(InventoryUtils.countInventory(inventory)).toBe(4);
+    inventory = CarrySizeUtils.addToInventory(inventory, addedProduce);
+    expect(CarrySizeUtils.countInventory(inventory)).toBe(4);
     expect(inventory).toMatchInlineSnapshot(`
 {
   "berries": [
@@ -140,15 +136,15 @@ describe('addToInventory', () => {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
-    inventory = InventoryUtils.addToInventory(inventory, InventoryUtils.getEmptyInventory());
-    expect(InventoryUtils.countInventory(inventory)).toBe(4);
+    inventory = CarrySizeUtils.addToInventory(inventory, CarrySizeUtils.getEmptyInventory());
+    expect(CarrySizeUtils.countInventory(inventory)).toBe(4);
   });
 
   it('shall add produce without berries to inventory', () => {
@@ -156,19 +152,19 @@ describe('addToInventory', () => {
       berries: [
         {
           amount: 2,
-          berry: berry.LEPPA,
+          berry: LEPPA,
           level: 60
         }
       ],
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
     const added: Produce = {
       berries: emptyBerryInventory(),
-      ingredients: [{ amount: 2, ingredient: ingredient.TASTY_MUSHROOM }]
+      ingredients: [{ amount: 2, ingredient: TASTY_MUSHROOM }]
     };
 
-    inventory = InventoryUtils.addToInventory(inventory, added);
+    inventory = CarrySizeUtils.addToInventory(inventory, added);
     expect(inventory.berries.reduce((sum, cur) => sum + cur.amount, 0)).toBe(2);
     expect(prettifyIngredientDrop(inventory.ingredients)).toMatchInlineSnapshot(`"2 Tomato, 2 Mushroom"`);
   });
@@ -176,26 +172,26 @@ describe('addToInventory', () => {
   it('shall add produce without berries to inventory without berries', () => {
     let inventory: Produce = {
       berries: emptyBerryInventory(),
-      ingredients: [{ amount: 2, ingredient: ingredient.SNOOZY_TOMATO }]
+      ingredients: [{ amount: 2, ingredient: SNOOZY_TOMATO }]
     };
 
     const added: Produce = {
       berries: emptyBerryInventory(),
-      ingredients: [{ amount: 2, ingredient: ingredient.TASTY_MUSHROOM }]
+      ingredients: [{ amount: 2, ingredient: TASTY_MUSHROOM }]
     };
 
-    inventory = InventoryUtils.addToInventory(inventory, added);
+    inventory = CarrySizeUtils.addToInventory(inventory, added);
     expect(inventory.berries).toEqual([]);
     expect(prettifyIngredientDrop(inventory.ingredients)).toMatchInlineSnapshot(`"2 Tomato, 2 Mushroom"`);
   });
 
   it('shall skip berries and ingredients with 0 amount', () => {
     let inventory: Produce = {
-      berries: [{ amount: 0, berry: berry.BELUE, level: 1 }],
-      ingredients: [{ amount: 0, ingredient: ingredient.SNOOZY_TOMATO }]
+      berries: [{ amount: 0, berry: BELUE, level: 1 }],
+      ingredients: [{ amount: 0, ingredient: SNOOZY_TOMATO }]
     };
 
-    inventory = InventoryUtils.addToInventory(emptyProduce(), inventory);
+    inventory = CarrySizeUtils.addToInventory(emptyProduce(), inventory);
 
     expect(inventory.berries).toEqual([]);
     expect(inventory.ingredients).toEqual([]);
@@ -209,18 +205,18 @@ describe('calculateCarrySize', () => {
     const level = 10;
     const ribbon = 0;
     const camp = false;
-    expect(InventoryUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, level, ribbon, camp })).toBe(
+    expect(CarrySizeUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, level, ribbon, camp })).toBe(
       10
     );
   });
 
   it('shall give correct for subskills, ribbon and camp', () => {
     const baseWithEvolutions = 31;
-    const subskillsLevelLimited = new Set([subskill.INVENTORY_S.name]);
+    const subskillsLevelLimited = new Set([INVENTORY_S.name]);
     const level = 54;
     const ribbon = 2;
     const camp = true;
-    expect(InventoryUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, level, ribbon, camp })).toBe(
+    expect(CarrySizeUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, level, ribbon, camp })).toBe(
       48
     );
   });
