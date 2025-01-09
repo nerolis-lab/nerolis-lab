@@ -1,13 +1,13 @@
 # Development setup
 
-The project acts as a monorepo where each module is individually deployed. It's written in Node.js with Typescript.
+The project acts as a monorepo where each module is individually deployed. It's written in Node.js with Typescript. Bun is used in the backend for testing and improved developer experience.
 
-| Application | Description                                                                                                                                                                                                                                                                               |
-| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| common      | A shared module between backend and frontend. This exists so we may share entities like API types without the need of re-implementing them in both backend/frontend                                                                                                                       |
-| backend     | This deployment exposes the public API: [api.sleepapi][api.sleepapi] and currently also the website [Sleep API][sleepapi]. This is where the simulations, number-crunching and rankings happen. Currently this also exposes a basic html/js/css website, but this is due for replacement. |
-| frontend    | A work-in-progress website. The idea is to deploy a full-fledged proper website as a static web app.                                                                                                                                                                                      |
-| bot         | A work-in-progress Discord bot. Currently this just sets up a basic ping command, but it is deployed and hosted 24/7. There are plans to expand this with functionality from Sleep API.                                                                                                   |
+| Application | Description                                                                                                                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| common      | A shared module between backend and frontend. This exists so we may share entities like API types without the need of re-implementing them in both backend/frontend                                  |
+| backend     | This deployment exposes the public API: [api.sleepapi][api.sleepapi] and currently also the website [Neroli's Lab][nerolislab]. This is where the simulations, number-crunching and rankings happen. |
+| frontend    | The frontend of Neroli's Lab, hosted as a static web application.                                                                                                                                    |
+| bot         | A work-in-progress Discord bot. Currently this just sets up a basic ping command, but it is deployed and hosted 24/7. There are plans to expand this with functionality from Sleep API.              |
 
 |
 
@@ -17,6 +17,7 @@ The project acts as a monorepo where each module is individually deployed. It's 
 | ------ | -------------------------------- |
 | VSCode | <https://code.visualstudio.com/> |
 | NVM    | <https://github.com/nvm-sh/nvm>  |
+| bun    | <https://bun.sh/>                |
 
 On Windows it is recommended to use nvm inside WSL (Windows Subsystem for Linux), but other alternatives like nvm-windows exist.
 
@@ -56,4 +57,4 @@ If you add any new entities to the common module you'll need to re-build it befo
 - [bot](./my-gaim/README.md)
 
 [api.sleepapi]: https://api.sleepapi.net/
-[sleepapi]: https://sleepapi.net/
+[nerolislab]: https://nerolislab.com/

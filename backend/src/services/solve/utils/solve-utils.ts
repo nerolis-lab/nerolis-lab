@@ -14,7 +14,7 @@ import type {
   SolveRecipeSolutionWithSettings
 } from '@src/services/solve/types/solution-types.js';
 import { convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import type {
   IngredientIndexToFloatAmount,
   IngredientSet,
@@ -181,7 +181,7 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
     const settings = Optimal.toMemberSettings({ stats: optimalSettings, level, externalId: pkmn.name });
 
     // TODO: this should probably be moved to member-state constructor
-    settings.carrySize = InventoryUtils.calculateCarrySize({
+    settings.carrySize = CarrySizeUtils.calculateCarrySize({
       baseWithEvolutions: settings.carrySize,
       subskillsLevelLimited: settings.subskills,
       ribbon: settings.ribbon,

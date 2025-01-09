@@ -5,7 +5,7 @@ import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
 import type {
   BerrySet,
@@ -120,7 +120,7 @@ export class MemberState {
   private nightHelpsBeforeSS = 0;
   private nightHelpsAfterSS = 0;
   private totalRecovery = 0;
-  private totalProduce: Produce = InventoryUtils.getEmptyInventory();
+  private totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
 
   constructor(params: {
     member: TeamMemberExt;
@@ -410,7 +410,7 @@ export class MemberState {
       berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
       ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
     };
-    const produceTotal = InventoryUtils.addToInventory(totalSkillProduce, totalHelpProduce);
+    const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
 
     const spilledHelps = this.voidHelps + this.totalSneakySnackHelps;
     const spilledIngredients = flatToIngredientSet(
@@ -471,7 +471,7 @@ export class MemberState {
       ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
     };
 
-    const produceTotal = InventoryUtils.addToInventory(totalSkillProduce, totalHelpProduce);
+    const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
 
     return {
       produceTotal,
@@ -801,7 +801,7 @@ export class MemberState {
         level: this.level
       });
 
-      this.totalProduce = InventoryUtils.addToInventory(this.totalProduce, {
+      this.totalProduce = CarrySizeUtils.addToInventory(this.totalProduce, {
         ingredients: [],
         berries
       });

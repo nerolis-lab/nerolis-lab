@@ -18,7 +18,7 @@ import {
   scheduleTeamEnergyEvents,
   triggerTeamHelpsEvent
 } from '@src/utils/event-utils/event-utils.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { describe, expect, it } from 'bun:test';
@@ -714,14 +714,14 @@ describe('addSneakySnackEvent', () => {
     expect(eventLog[1]).toBeInstanceOf(InventoryEvent);
     const ssEvent = eventLog[1] as InventoryEvent;
     expect(ssEvent.description).toBe('Sneaky snack');
-    expect(ssEvent.delta).toBe(InventoryUtils.countInventory(sneakySnackProduce)); // Assuming this calculates to 2 for apples
-    expect(ssEvent.before).toBe(InventoryUtils.countInventory(totalSneakySnack)); // Assuming this calculates to 5 for apples
+    expect(ssEvent.delta).toBe(CarrySizeUtils.countInventory(sneakySnackProduce)); // Assuming this calculates to 2 for apples
+    expect(ssEvent.before).toBe(CarrySizeUtils.countInventory(totalSneakySnack)); // Assuming this calculates to 5 for apples
 
     expect(eventLog[2]).toBeInstanceOf(InventoryEvent);
     const spilledIngEvent = eventLog[2] as InventoryEvent;
     expect(spilledIngEvent.description).toBe('Spilled ingredients');
-    expect(spilledIngEvent.delta).toBe(InventoryUtils.countInventory(spilledProduce)); // Assuming this calculates to 1 for oranges
-    expect(spilledIngEvent.before).toBe(InventoryUtils.countInventory(totalSpilledIngredients)); // Assuming this calculates to 2 for oranges
+    expect(spilledIngEvent.delta).toBe(CarrySizeUtils.countInventory(spilledProduce)); // Assuming this calculates to 1 for oranges
+    expect(spilledIngEvent.before).toBe(CarrySizeUtils.countInventory(totalSpilledIngredients)); // Assuming this calculates to 2 for oranges
   });
 });
 
@@ -737,7 +737,7 @@ describe('triggerTeamHelpsEvent', () => {
           adjustedAmount: 1,
           fractionOfProc: 1,
           nrOfHelpsToActivate: 1,
-          adjustedProduce: InventoryUtils.getEmptyInventory()
+          adjustedProduce: CarrySizeUtils.getEmptyInventory()
         }
       }),
       new SkillEvent({
@@ -770,7 +770,7 @@ describe('triggerTeamHelpsEvent', () => {
     const result = triggerTeamHelpsEvent({
       helpEvents: helpfulEvents,
       currentTime: TimeUtils.parseTime('13:00'),
-      emptyProduce: InventoryUtils.getEmptyInventory(),
+      emptyProduce: CarrySizeUtils.getEmptyInventory(),
       eventLog,
       helpIndex: 1,
       period: MOCKED_MAIN_SLEEP

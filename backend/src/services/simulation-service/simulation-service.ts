@@ -33,7 +33,7 @@ import {
   getExtraHelpfulEvents,
   getHelperBoostEvents
 } from '@src/utils/event-utils/event-utils.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
 import type {
   BerrySet,
@@ -130,7 +130,7 @@ export function setupAndRunProductionSimulation(params: {
     }
   ];
 
-  const inventoryLimit = InventoryUtils.calculateCarrySize({
+  const inventoryLimit = CarrySizeUtils.calculateCarrySize({
     baseWithEvolutions: input.inventoryLimit ?? maxCarrySize(pokemonSet.pokemon),
     subskillsLevelLimited: limitSubSkillsToLevel(subskills, level),
     level,

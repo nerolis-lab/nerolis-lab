@@ -22,7 +22,7 @@ import { calculateSleepEnergyRecovery, maybeDegradeEnergy } from '@src/services/
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import type { MonteCarloResult } from '@src/services/simulation-service/monte-carlo/monte-carlo.js';
 import { recoverEnergyEvents, recoverFromMeal } from '@src/utils/event-utils/event-utils.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Produce, Time } from 'sleepapi-common';
 import { MathUtils, RandomUtils, emptyProduce, mainskill } from 'sleepapi-common';
@@ -195,13 +195,13 @@ export function randomizedSimulation(params: {
   while (TimeUtils.timeWithinPeriod(currentTime, period)) {
     // only process helps if it fits in carry, not interested in total produce here
     if (
-      InventoryUtils.countInventory(currentInventory) < inventoryLimit &&
+      CarrySizeUtils.countInventory(currentInventory) < inventoryLimit &&
       TimeUtils.isAfterOrEqualWithinPeriod({ currentTime, eventTime: nextHelpEvent, period })
     ) {
       const frequency = calculateFrequencyWithEnergy(helpFrequency, currentEnergy);
       const nextHelp = TimeUtils.addTime(nextHelpEvent, TimeUtils.secondsToTime(frequency));
 
-      currentInventory = InventoryUtils.addToInventory(currentInventory, averageProduce);
+      currentInventory = CarrySizeUtils.addToInventory(currentInventory, averageProduce);
 
       ++nightHelpsBeforeSS;
       nextHelpEvent = nextHelp;
