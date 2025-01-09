@@ -104,6 +104,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-@import '@/assets/main';
-</style>
+<style lang="scss"></style>
