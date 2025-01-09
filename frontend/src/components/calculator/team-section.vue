@@ -265,8 +265,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main';
-
 .frosted-tab {
   background: rgba($surface, 0.2) !important;
   backdrop-filter: blur(10px);

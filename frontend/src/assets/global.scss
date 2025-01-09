@@ -1,5 +1,6 @@
-@import '@/assets/common.scss';
-@import '@/assets/animations.scss';
+@use '@/assets/main' as *;
+@use '@/assets/common';
+@use '@/assets/animations';
 
 html {
   font-family: $body-font-family, sans-serif !important;

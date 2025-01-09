@@ -41,8 +41,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/assets/main';
-
 .speech-bubble {
   position: relative;
   background: $subskill-white;
