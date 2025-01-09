@@ -1,8 +1,9 @@
-import { calculateRibbonCarrySize, calculateSubskillCarrySize, type Produce as Inventory } from 'sleepapi-common';
+import type { Produce } from '../../api/production/produce';
+import { calculateRibbonCarrySize, calculateSubskillCarrySize } from '../stat-utils/stat-utils';
 
-class InventoryUtilsImpl {
-  public addToInventory(currentInventory: Inventory, produce: Inventory): Inventory {
-    const newInventory: Inventory = {
+class CarrySizeUtilsImpl {
+  public addToInventory(currentInventory: Produce, produce: Produce): Produce {
+    const newInventory: Produce = {
       berries: [...currentInventory.berries],
       ingredients: [...currentInventory.ingredients]
     };
@@ -45,14 +46,14 @@ class InventoryUtilsImpl {
     return newInventory;
   }
 
-  public countInventory(inventory: Inventory) {
+  public countInventory(inventory: Produce) {
     return (
       inventory.berries.reduce((sum, cur) => sum + cur.amount, 0) +
       inventory.ingredients.reduce((sum, cur) => sum + cur.amount, 0)
     );
   }
 
-  public getEmptyInventory(): Inventory {
+  public getEmptyInventory(): Produce {
     return {
       berries: [],
       ingredients: []
@@ -74,4 +75,4 @@ class InventoryUtilsImpl {
   }
 }
 
-export const InventoryUtils = new InventoryUtilsImpl();
+export const CarrySizeUtils = new CarrySizeUtilsImpl();

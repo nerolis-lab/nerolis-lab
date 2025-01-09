@@ -7,7 +7,7 @@ import {
   calculatePokemonProduction,
   calculateTeam
 } from '@src/services/api-service/production/production-service.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import * as tsoa from '@tsoa/runtime';
@@ -93,7 +93,7 @@ export default class ProductionController extends Controller {
         settings: {
           level: member.level,
           ribbon: member.ribbon,
-          carrySize: InventoryUtils.calculateCarrySize({
+          carrySize: CarrySizeUtils.calculateCarrySize({
             baseWithEvolutions: member.carrySize,
             subskillsLevelLimited: subskills,
             ribbon: member.ribbon,

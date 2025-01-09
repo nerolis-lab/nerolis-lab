@@ -12,7 +12,7 @@ import { SleepEvent } from '@src/domain/event/events/sleep-event/sleep-event.js'
 import { SummaryEvent } from '@src/domain/event/events/summary-event/summary-event.js';
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateStartingEnergy } from '@src/services/calculator/energy/energy-calculator.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import type { Pokemon, Produce, SkillActivation, Summary, TimePeriod } from 'sleepapi-common';
 
 export function startDayAndEnergy(
@@ -66,7 +66,7 @@ export function startDayAndEnergy(
     before: 0,
     delta: 0,
     max: inventoryLimit,
-    contents: InventoryUtils.getEmptyInventory()
+    contents: CarrySizeUtils.getEmptyInventory()
   });
 
   eventLog.push(startingDayEvent);
@@ -90,10 +90,10 @@ export function startNight(params: {
   const emptyInventoryEvent: InventoryEvent = new InventoryEvent({
     time: period.end,
     description: 'Empty',
-    delta: -InventoryUtils.countInventory(currentInventory),
-    before: InventoryUtils.countInventory(currentInventory),
+    delta: -CarrySizeUtils.countInventory(currentInventory),
+    before: CarrySizeUtils.countInventory(currentInventory),
     max: inventoryLimit,
-    contents: InventoryUtils.getEmptyInventory()
+    contents: CarrySizeUtils.getEmptyInventory()
   });
 
   const sleepStartEvent: SleepEvent = new SleepEvent({
@@ -128,7 +128,7 @@ export function finishSimulation(params: {
     time: period.end,
     description: 'Status',
     delta: 0,
-    before: InventoryUtils.countInventory(currentInventory),
+    before: CarrySizeUtils.countInventory(currentInventory),
     max: inventoryLimit,
     contents: currentInventory
   });
@@ -136,18 +136,18 @@ export function finishSimulation(params: {
   const sneakySnackClaim: InventoryEvent = new InventoryEvent({
     time: period.end,
     description: 'Sneaky snack claim',
-    delta: -InventoryUtils.countInventory(totalSneakySnack),
-    before: InventoryUtils.countInventory(totalSneakySnack),
-    contents: InventoryUtils.getEmptyInventory()
+    delta: -CarrySizeUtils.countInventory(totalSneakySnack),
+    before: CarrySizeUtils.countInventory(totalSneakySnack),
+    contents: CarrySizeUtils.getEmptyInventory()
   });
 
   const morningEmptyInventoryEvent: InventoryEvent = new InventoryEvent({
     time: period.end,
     description: 'Empty',
-    delta: -InventoryUtils.countInventory(currentInventory),
-    before: InventoryUtils.countInventory(currentInventory),
+    delta: -CarrySizeUtils.countInventory(currentInventory),
+    before: CarrySizeUtils.countInventory(currentInventory),
     max: inventoryLimit,
-    contents: InventoryUtils.getEmptyInventory()
+    contents: CarrySizeUtils.getEmptyInventory()
   });
 
   const skillStatusEvent: SkillEvent = new SkillEvent({

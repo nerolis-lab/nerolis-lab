@@ -7,7 +7,7 @@ import { SkillEvent } from '@src/domain/event/events/skill-event/skill-event.js'
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import { calculateHelperBoostHelpsFromUnique } from '@src/services/calculator/skill/skill-calculator.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Produce, Time, TimePeriod, nature } from 'sleepapi-common';
 import { mainskill, multiplyBerries } from 'sleepapi-common';
@@ -245,7 +245,7 @@ export function triggerTeamHelpsEvent(params: {
   for (; helpIndex < helpEvents.length; helpIndex++) {
     const helpEvent = helpEvents[helpIndex];
     if (TimeUtils.isAfterOrEqualWithinPeriod({ currentTime, eventTime: helpEvent.time, period })) {
-      helpsProduce = InventoryUtils.addToInventory(helpsProduce, helpEvent.skillActivation.adjustedProduce!);
+      helpsProduce = CarrySizeUtils.addToInventory(helpsProduce, helpEvent.skillActivation.adjustedProduce!);
 
       eventLog.push(helpEvent);
     } else break;
@@ -261,14 +261,14 @@ export function inventoryFull(params: {
   eventLog: ScheduledEvent[];
 }) {
   const { currentInventory, averageProduceAmount, inventoryLimit, currentTime, eventLog } = params;
-  if (InventoryUtils.countInventory(currentInventory) + averageProduceAmount >= inventoryLimit) {
+  if (CarrySizeUtils.countInventory(currentInventory) + averageProduceAmount >= inventoryLimit) {
     const emptyInventoryEvent: InventoryEvent = new InventoryEvent({
       time: currentTime,
       description: 'Empty',
-      delta: -InventoryUtils.countInventory(currentInventory),
-      before: InventoryUtils.countInventory(currentInventory),
+      delta: -CarrySizeUtils.countInventory(currentInventory),
+      before: CarrySizeUtils.countInventory(currentInventory),
       max: inventoryLimit,
-      contents: InventoryUtils.getEmptyInventory()
+      contents: CarrySizeUtils.getEmptyInventory()
     });
 
     eventLog.push(emptyInventoryEvent);
@@ -298,9 +298,9 @@ export function helpEvent(params: {
     time,
     description: 'Add',
     delta: amount,
-    before: InventoryUtils.countInventory(currentInventory),
+    before: CarrySizeUtils.countInventory(currentInventory),
     max: inventoryLimit,
-    contents: InventoryUtils.addToInventory(currentInventory, produce)
+    contents: CarrySizeUtils.addToInventory(currentInventory, produce)
   });
 
   eventLog.push(helpEvent);
@@ -338,16 +338,16 @@ export function addSneakySnackEvent(params: {
   const addInventoryEvent: InventoryEvent = new InventoryEvent({
     time: currentTime,
     description: 'Sneaky snack',
-    delta: InventoryUtils.countInventory(sneakySnackProduce),
-    before: InventoryUtils.countInventory(totalSneakySnack),
-    contents: InventoryUtils.addToInventory(totalSneakySnack, sneakySnackProduce)
+    delta: CarrySizeUtils.countInventory(sneakySnackProduce),
+    before: CarrySizeUtils.countInventory(totalSneakySnack),
+    contents: CarrySizeUtils.addToInventory(totalSneakySnack, sneakySnackProduce)
   });
   const spilledIngsEvent: InventoryEvent = new InventoryEvent({
     time: currentTime,
     description: 'Spilled ingredients',
-    delta: InventoryUtils.countInventory(spilledProduce),
-    before: InventoryUtils.countInventory(totalSpilledIngredients),
-    contents: InventoryUtils.addToInventory(totalSpilledIngredients, spilledProduce)
+    delta: CarrySizeUtils.countInventory(spilledProduce),
+    before: CarrySizeUtils.countInventory(totalSpilledIngredients),
+    contents: CarrySizeUtils.addToInventory(totalSpilledIngredients, spilledProduce)
   });
 
   eventLog.push(sneakySnackEvent);

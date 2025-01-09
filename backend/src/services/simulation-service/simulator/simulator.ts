@@ -33,7 +33,7 @@ import { finishSimulation, startDayAndEnergy, startNight } from '@src/utils/simu
 import { maybeDegradeEnergy } from '@src/services/calculator/energy/energy-calculator.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { clampHelp } from '@src/services/calculator/production/produce-calculator.js';
-import { InventoryUtils } from '@src/utils/inventory-utils/inventory-utils.js';
+import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { BerrySet, DetailedProduce, Produce, SkillActivation, Summary, Time } from 'sleepapi-common';
 import {
@@ -81,13 +81,13 @@ export function simulation(params: {
   } = params;
   const sneakySnackProduce: Produce = { berries: sneakySnackBerries, ingredients: [] };
   const { pokemon, produce: averageProduce } = pokemonWithAverageProduce;
-  const averageProduceAmount = InventoryUtils.countInventory(averageProduce);
+  const averageProduceAmount = CarrySizeUtils.countInventory(averageProduce);
 
   // summary values
   let skillProcs = 0;
   let skillEnergySelfValue = 0;
   let skillEnergyOthersValue = 0;
-  let skillProduceValue: Produce = InventoryUtils.getEmptyInventory();
+  let skillProduceValue: Produce = CarrySizeUtils.getEmptyInventory();
   let skillBerriesOtherValue = 0;
   let skillStrengthValue = 0;
   let skillDreamShardValue = 0;
@@ -122,12 +122,12 @@ export function simulation(params: {
     eventLog
   );
 
-  let totalProduce: Produce = InventoryUtils.getEmptyInventory();
-  let spilledIngredients: Produce = InventoryUtils.getEmptyInventory();
+  let totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
+  let spilledIngredients: Produce = CarrySizeUtils.getEmptyInventory();
   let totalSneakySnack: Produce = emptyProduce();
 
   let currentEnergy = startingEnergy;
-  let currentInventory: Produce = InventoryUtils.getEmptyInventory();
+  let currentInventory: Produce = CarrySizeUtils.getEmptyInventory();
 
   let nextHelpEvent: Time = dayInfo.period.start;
 
@@ -160,7 +160,7 @@ export function simulation(params: {
     const { helpsProduce: helpfulProduce, helpEventsProcessed: helpfulEventsProcessed } = triggerTeamHelpsEvent({
       helpEvents: helpfulEvents,
       helpIndex: helpfulIndex,
-      emptyProduce: InventoryUtils.getEmptyInventory(),
+      emptyProduce: CarrySizeUtils.getEmptyInventory(),
       currentTime,
       period,
       eventLog
@@ -168,13 +168,13 @@ export function simulation(params: {
     const { helpsProduce: boostProduce, helpEventsProcessed: boostEventsProcessed } = triggerTeamHelpsEvent({
       helpEvents: boostEvents,
       helpIndex: boostIndex,
-      emptyProduce: InventoryUtils.getEmptyInventory(),
+      emptyProduce: CarrySizeUtils.getEmptyInventory(),
       currentTime,
       period,
       eventLog
     });
-    totalProduce = InventoryUtils.addToInventory(totalProduce, helpfulProduce);
-    totalProduce = InventoryUtils.addToInventory(totalProduce, boostProduce);
+    totalProduce = CarrySizeUtils.addToInventory(totalProduce, helpfulProduce);
+    totalProduce = CarrySizeUtils.addToInventory(totalProduce, boostProduce);
 
     mealIndex = mealsProcessed;
     energyIndex = energyEventsProcessed;
@@ -200,7 +200,7 @@ export function simulation(params: {
       ++helpsBeforeSS;
       ++dayHelps;
       frequencyIntervals.push(frequency);
-      currentInventory = InventoryUtils.addToInventory(currentInventory, averageProduce);
+      currentInventory = CarrySizeUtils.addToInventory(currentInventory, averageProduce);
 
       // check if next help scheduled help would hit inventory limit
       if (
@@ -209,8 +209,8 @@ export function simulation(params: {
         if (!collectFrequency) {
           collectFrequency = TimeUtils.calculateDuration({ start: period.start, end: nextHelpEvent });
         }
-        totalProduce = InventoryUtils.addToInventory(totalProduce, currentInventory);
-        currentInventory = InventoryUtils.getEmptyInventory();
+        totalProduce = CarrySizeUtils.addToInventory(totalProduce, currentInventory);
+        currentInventory = CarrySizeUtils.getEmptyInventory();
       }
 
       nextHelpEvent = nextHelp;
@@ -279,7 +279,7 @@ export function simulation(params: {
 
             skillBerriesOtherValue += averageTeamBerryAmount;
           }
-          skillProduceValue = InventoryUtils.addToInventory(skillProduceValue, skillActivation.adjustedProduce);
+          skillProduceValue = CarrySizeUtils.addToInventory(skillProduceValue, skillActivation.adjustedProduce);
         } else if (skillActivation.skill.isUnit('strength')) {
           skillStrengthValue += skillActivation.adjustedAmount;
         } else if (skillActivation.skill.unit === 'dream shards') {
@@ -310,8 +310,8 @@ export function simulation(params: {
 
   // --- NIGHT ---
   startNight({ period, currentInventory, inventoryLimit, eventLog });
-  totalProduce = InventoryUtils.addToInventory(totalProduce, currentInventory);
-  currentInventory = InventoryUtils.getEmptyInventory();
+  totalProduce = CarrySizeUtils.addToInventory(totalProduce, currentInventory);
+  currentInventory = CarrySizeUtils.getEmptyInventory();
 
   period = { start: dayInfo.period.end, end: dayInfo.period.start };
 
@@ -320,7 +320,7 @@ export function simulation(params: {
       const frequency = calculateFrequencyWithEnergy(helpFrequency, currentEnergy);
       const nextHelp = TimeUtils.addTime(nextHelpEvent, TimeUtils.secondsToTime(frequency));
 
-      if (InventoryUtils.countInventory(currentInventory) >= inventoryLimit) {
+      if (CarrySizeUtils.countInventory(currentInventory) >= inventoryLimit) {
         // sneaky snacking
         const spilledProduce: Produce = {
           berries: emptyBerryInventory(),
@@ -339,11 +339,11 @@ export function simulation(params: {
         });
         ++helpsAfterSS;
 
-        spilledIngredients = InventoryUtils.addToInventory(spilledIngredients, averageProduce);
-        totalSneakySnack = InventoryUtils.addToInventory(totalSneakySnack, sneakySnackProduce);
-      } else if (InventoryUtils.countInventory(currentInventory) + averageProduceAmount >= inventoryLimit) {
+        spilledIngredients = CarrySizeUtils.addToInventory(spilledIngredients, averageProduce);
+        totalSneakySnack = CarrySizeUtils.addToInventory(totalSneakySnack, sneakySnackProduce);
+      } else if (CarrySizeUtils.countInventory(currentInventory) + averageProduceAmount >= inventoryLimit) {
         // next help starts sneaky snacking
-        const inventorySpace = inventoryLimit - InventoryUtils.countInventory(currentInventory);
+        const inventorySpace = inventoryLimit - CarrySizeUtils.countInventory(currentInventory);
         const clampedProduce = clampHelp({ inventorySpace, averageProduce, amount: averageProduceAmount });
         const voidProduce = clampHelp({
           inventorySpace: averageProduceAmount - inventorySpace,
@@ -363,8 +363,8 @@ export function simulation(params: {
         });
         ++helpsBeforeSS;
 
-        currentInventory = InventoryUtils.addToInventory(currentInventory, clampedProduce);
-        spilledIngredients = InventoryUtils.addToInventory(spilledIngredients, voidProduce);
+        currentInventory = CarrySizeUtils.addToInventory(currentInventory, clampedProduce);
+        spilledIngredients = CarrySizeUtils.addToInventory(spilledIngredients, voidProduce);
       } else {
         // not yet reached inventory limit
         helpEvent({
@@ -379,7 +379,7 @@ export function simulation(params: {
         });
         ++helpsBeforeSS;
 
-        currentInventory = InventoryUtils.addToInventory(currentInventory, averageProduce);
+        currentInventory = CarrySizeUtils.addToInventory(currentInventory, averageProduce);
       }
 
       ++nightHelps;
@@ -402,10 +402,10 @@ export function simulation(params: {
     currentTime = TimeUtils.addTime(currentTime, { hour: 0, minute: 5, second: 0 });
   }
 
-  totalProduce = InventoryUtils.addToInventory(totalProduce, currentInventory);
+  totalProduce = CarrySizeUtils.addToInventory(totalProduce, currentInventory);
   // for skill berries we set level 0, so skill berries will always add a new index
-  totalProduce = InventoryUtils.addToInventory(totalProduce, skillProduceValue);
-  totalProduce = InventoryUtils.addToInventory(totalProduce, totalSneakySnack);
+  totalProduce = CarrySizeUtils.addToInventory(totalProduce, skillProduceValue);
+  totalProduce = CarrySizeUtils.addToInventory(totalProduce, totalSneakySnack);
   const summary: Summary = {
     ingredientPercentage,
     skillPercentage,
