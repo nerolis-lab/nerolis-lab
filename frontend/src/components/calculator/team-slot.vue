@@ -255,8 +255,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/main';
-
 .card-wrapper {
   position: relative;
   padding-top: 5px;

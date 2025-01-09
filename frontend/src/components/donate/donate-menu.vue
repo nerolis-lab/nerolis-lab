@@ -70,8 +70,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/colors';
-
 .animate-heart {
   position: relative;
   animation: heartPop 0.5s ease forwards;
