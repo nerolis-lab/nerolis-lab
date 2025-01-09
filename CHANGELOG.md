@@ -1,3 +1,12 @@
+## [1.10.1](https://github.com/SleepAPI/SleepAPI/compare/v1.10.0...v1.10.1) (2025-01-09)
+
+# [1.10.0](https://github.com/SleepAPI/SleepAPI/compare/v1.9.0...v1.10.0) (2025-01-09)
+
+
+### Features
+
+* updated beta info tag and page ([4f635b2](https://github.com/SleepAPI/SleepAPI/commit/4f635b267bedad4e3c45e4dbb4662db432f3d717))
+
 # [1.9.0](https://github.com/SleepAPI/SleepAPI/compare/v1.8.9...v1.9.0) (2025-01-08)
 
 

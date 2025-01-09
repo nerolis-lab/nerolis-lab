@@ -108,8 +108,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/main';
-
 .transparent {
   background: rgba($surface, 0) !important;
 }
