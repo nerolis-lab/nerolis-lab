@@ -1,14 +1,14 @@
-import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-skill.vue'
+import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { MathUtils, SWALOT, compactNumber } from 'sleepapi-common'
+import { MAGNEZONE, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: SWALOT })
+  member: createMockPokemon({ pokemon: MAGNEZONE })
 })
 
 describe('MemberProductionSkill', () => {
@@ -43,7 +43,7 @@ describe('MemberProductionSkill', () => {
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/mainskill/dream shards.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/pot size.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -55,9 +55,7 @@ describe('MemberProductionSkill', () => {
 
   it('displays the correct skill value per proc', () => {
     const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(
-      `${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)} avg.`
-    )
+    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}`)
   })
 
   it('displays the correct total skill value', () => {

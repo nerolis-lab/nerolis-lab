@@ -1,38 +1,26 @@
-import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-skill.vue'
+import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { StrengthService } from '@/services/strength/strength-service'
-import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
-import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { ENTEI, MathUtils, compactNumber } from 'sleepapi-common'
+import { MathUtils, TOGEKISS } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: ENTEI, skillLevel: 6 })
+  member: createMockPokemon({ pokemon: TOGEKISS })
 })
 
 describe('MemberProductionSkill', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
-  let teamStore: ReturnType<typeof useTeamStore>
-  let pokemonStore: ReturnType<typeof usePokemonStore>
 
   beforeEach(async () => {
     setActivePinia(createPinia())
-    const mockPokemon = createMockPokemon({ pokemon: ENTEI })
-    teamStore = useTeamStore()
-    teamStore.teams = createMockTeams(1, { members: [mockPokemon.externalId] })
-    pokemonStore = usePokemonStore()
-    pokemonStore.upsertLocalPokemon(mockPokemon)
-
     wrapper = mount(MemberProductionSkill, {
       props: {
         memberWithProduction: mockMember
       }
     })
-
     await flushPromises()
     await vi.dynamicImportSettled()
   })
@@ -49,13 +37,13 @@ describe('MemberProductionSkill', () => {
 
   it('displays the correct skill level', () => {
     const skillLevelBadge = wrapper.find('#skillLevelBadge')
-    expect(skillLevelBadge.text()).toBe('Lv.6')
+    expect(skillLevelBadge.text()).toBe('Lv.1')
   })
 
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/type/fire.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/metronome.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -65,18 +53,9 @@ describe('MemberProductionSkill', () => {
     )
   })
 
-  it('displays the correct skill value per proc', () => {
-    const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}`)
-  })
-
   it('displays the correct total skill value', () => {
-    const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
-    const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
-      amount: mockMember.production.skillAmount,
-      timeWindow: '24H'
-    })
-    expect(totalSkillValue.text()).toContain(compactNumber(expectedValue))
+    const info = wrapper.find('.font-weight-light.text-no-wrap.text-center')
+
+    expect(info.text()).toContain('*more coming')
   })
 })
