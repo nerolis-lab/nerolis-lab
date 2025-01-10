@@ -1,4 +1,4 @@
-import MemberProductionBerry from '@/components/calculator/results/member-results/member-production-berry.vue'
+import MemberProductionBerry from '@/components/calculator/results/member-results/member-production-header/member-production-berry.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'

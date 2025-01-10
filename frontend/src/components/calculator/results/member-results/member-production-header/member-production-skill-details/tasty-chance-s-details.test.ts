@@ -1,17 +1,17 @@
-import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-skill.vue'
+import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { StrengthService } from '@/services/strength/strength-service'
-import type { MemberProductionExt } from '@/types/member/instanced'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { ESPEON, MathUtils, compactNumber } from 'sleepapi-common'
+import { DEDENNE, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember: MemberProductionExt = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: ESPEON })
+const mockMember = createMockMemberProductionExt({
+  member: createMockPokemon({ pokemon: DEDENNE })
 })
-describe('ChargeStrengthMDetails', () => {
+
+describe('MemberProductionSkill', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
 
   beforeEach(async () => {
@@ -35,7 +35,7 @@ describe('ChargeStrengthMDetails', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('displays the correct skill level', () => {
+  it('displays the correct skill level', async () => {
     const skillLevelBadge = wrapper.find('#skillLevelBadge')
     expect(skillLevelBadge.text()).toBe('Lv.1')
   })
@@ -43,7 +43,7 @@ describe('ChargeStrengthMDetails', () => {
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/mainskill/strength.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/chance.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -55,11 +55,11 @@ describe('ChargeStrengthMDetails', () => {
 
   it('displays the correct skill value per proc', () => {
     const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}`)
+    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}%`)
   })
 
   it('displays the correct total skill value', () => {
-    const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
+    const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center')
     const expectedValue = StrengthService.skillValue({
       skill: mockMember.member.pokemon.skill,
       amount: mockMember.production.skillAmount,
