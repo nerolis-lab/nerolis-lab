@@ -1,5 +1,5 @@
-import ChargeEnergySDetails from '@/components/calculator/results/member-results/member-production-skill-details/charge-energy-s-details.vue'
-import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-skill.vue'
+import ChargeEnergySDetails from '@/components/calculator/results/member-results/member-production-header/member-production-skill-details/charge-energy-s-details.vue'
+import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'

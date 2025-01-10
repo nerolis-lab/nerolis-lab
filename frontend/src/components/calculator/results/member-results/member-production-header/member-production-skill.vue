@@ -40,7 +40,7 @@ export default defineComponent({
       return defineAsyncComponent(
         () =>
           import(
-            `@/components/calculator/results/member-results/member-production-skill-details/${skillName.toLowerCase()}-details.vue`
+            `@/components/calculator/results/member-results/member-production-header/member-production-skill-details/${skillName.toLowerCase()}-details.vue`
           )
       )
     }

@@ -27,23 +27,25 @@
         </v-row>
       </v-col>
 
-      <v-col v-for="(feature, i) in features" :key="i" cols="auto">
-        <v-card max-width="300" :to="feature.to">
-          <v-img :src="feature.src" :aspect-ratio="2" width="100%" cover></v-img>
+      <v-row class="flex-center align-stretch pt-2">
+        <v-col v-for="(feature, i) in features" :key="i" cols="auto">
+          <v-card max-width="300" class="fill-height feature-card" :to="feature.to" :disabled="!feature.enabled">
+            <v-img :src="feature.src" :aspect-ratio="2" width="100%" cover></v-img>
 
-          <v-card-text>
-            <div class="d-flex">
-              <v-icon class="mr-2">{{ feature.icon }}</v-icon>
-              <h3 class="text-subheading-1 font-weight-bold mb-2">
-                {{ feature.title }}
-              </h3>
-            </div>
-            <p class="mb-2">{{ feature.description }}</p>
-          </v-card-text>
+            <v-card-text>
+              <div class="d-flex">
+                <v-icon class="mr-2">{{ feature.icon }}</v-icon>
+                <h3 class="text-subheading-1 font-weight-bold mb-2">
+                  {{ feature.title }}
+                </h3>
+              </div>
+              <p class="mb-2">{{ feature.description }}</p>
+            </v-card-text>
 
-          <v-card-actions> </v-card-actions>
-        </v-card>
-      </v-col>
+            <v-card-actions> </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-row>
     <v-row v-else class="" style="max-width: 1000px">
       <v-row class="justify-space-between flex-nowrap">
@@ -70,7 +72,7 @@
       </v-row>
       <v-row class="justify-space-between flex-nowrap">
         <v-col v-for="(feature, i) in features" :key="i" cols="auto">
-          <v-card max-width="300" class="fill-height" :to="feature.to">
+          <v-card max-width="300" class="fill-height feature-card" :to="feature.to" :disabled="!feature.enabled">
             <v-img :src="feature.src" :aspect-ratio="2" width="100%" cover></v-img>
 
             <v-card-text>
@@ -111,21 +113,24 @@ export default defineComponent({
         title: 'Calculator',
         src: '/images/misc/doctor4.png',
         icon: 'mdi-square-root',
-        to: '/calculator'
+        to: '/calculator',
+        enabled: true
       },
       {
         description: 'Compare your Pokémon to each other before deciding on your investments.',
         title: 'Compare',
         src: '/images/misc/doctor2.png',
         icon: 'mdi-compare-horizontal',
-        to: '/compare'
+        to: '/compare',
+        enabled: true
       },
       {
         description: 'Cooking tier lists based on millions of simulated recipe solutions.',
         title: 'Tier lists',
         src: '/images/misc/doctor3.png',
         icon: 'mdi-chart-line',
-        to: '/tierlist'
+        to: '/tierlist',
+        enabled: false
       }
     ]
   })

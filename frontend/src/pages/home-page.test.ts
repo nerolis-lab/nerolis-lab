@@ -21,27 +21,34 @@ describe('HomePage.vue', () => {
   it('should contain the correct feature titles and descriptions', () => {
     const wrapper = mount(HomePage)
 
-    const featureTitles = wrapper.findAll('h3')
-    const featureDescriptions = wrapper.findAll('p.mb-2')
+    const featureCards = wrapper.findAll('.feature-card')
+    const featureTitles = featureCards.map((card) => card.find('h3'))
+    const featureDescriptions = featureCards.map((card) => card.find('p.mb-2'))
 
     const expectedFeatures = [
       {
         title: 'Calculator',
-        description: "Calculate your team's or pokemon's production with our realistic Sleep API-powered simulations."
+        description: "Calculate your team's or pokemon's production with our realistic Sleep API-powered simulations.",
+        enabled: true
       },
       {
         title: 'Compare',
-        description: 'Compare your Pokémon to each other before deciding on your investments.'
+        description: 'Compare your Pokémon to each other before deciding on your investments.',
+        enabled: true
       },
       {
         title: 'Tier lists',
-        description: 'Cooking tier lists based on millions of simulated recipe solutions.'
+        description: 'Cooking tier lists based on millions of simulated recipe solutions.',
+        enabled: false
       }
     ]
 
     expectedFeatures.forEach((feature, index) => {
       expect(featureTitles[index].text()).toBe(feature.title)
       expect(featureDescriptions[index].text()).toBe(feature.description)
+
+      const cardHtml = featureCards[index].html()
+      expect(cardHtml.includes('disabled')).toBe(!feature.enabled)
     })
   })
 })
