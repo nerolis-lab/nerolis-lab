@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/SleepAPI/SleepAPI/compare/v1.10.1...v1.10.2) (2025-01-10)
+
+
+### Bug Fixes
+
+* homepage feature cards same height ([7088b4c](https://github.com/SleepAPI/SleepAPI/commit/7088b4cfebbe453b10691180c7cfaedc0a4db09c))
+
 ## [1.10.1](https://github.com/SleepAPI/SleepAPI/compare/v1.10.0...v1.10.1) (2025-01-09)
 
 # [1.10.0](https://github.com/SleepAPI/SleepAPI/compare/v1.9.0...v1.10.0) (2025-01-09)
