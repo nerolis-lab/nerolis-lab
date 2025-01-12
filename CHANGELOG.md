@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/SleepAPI/SleepAPI/compare/v1.10.2...v1.11.0) (2025-01-12)
+
+
+### Features
+
+* Sort Pokemon nature alphabetically ([0eff379](https://github.com/SleepAPI/SleepAPI/commit/0eff379cce714a70e1caaa3a63e6674419d96e7f))
+
 ## [1.10.2](https://github.com/SleepAPI/SleepAPI/compare/v1.10.1...v1.10.2) (2025-01-10)
 
 
