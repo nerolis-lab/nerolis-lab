@@ -228,11 +228,13 @@ export default {
   }),
   computed: {
     filteredNatures() {
-      return this.natures.filter(
-        (nat) =>
-          (!this.positiveModifier || nat.positiveModifier === this.positiveModifier) &&
-          (!this.negativeModifier || nat.negativeModifier === this.negativeModifier)
-      )
+      return this.natures
+        .filter(
+          (nat) =>
+            (!this.positiveModifier || nat.positiveModifier === this.positiveModifier) &&
+            (!this.negativeModifier || nat.negativeModifier === this.negativeModifier)
+        )
+        .sort((a, b) => a.name.localeCompare(b.name))
     }
   },
   methods: {
@@ -297,9 +299,11 @@ export default {
   .ingredient-text::after {
     content: 'finding';
   }
+
   .energy-text::after {
     content: 'recovery';
   }
+
   .ingredient-text::before,
   .energy-text::before {
     content: '';
