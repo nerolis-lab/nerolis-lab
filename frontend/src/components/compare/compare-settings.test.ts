@@ -75,6 +75,11 @@ describe('CompareSettings', () => {
     const deleteButton = wrapper.find('button.v-btn.v-btn--icon')
     await deleteButton.trigger('click')
 
+    expect(wrapper.vm.isClearMenuOpen).toBe(true)
+
+    const deleteModalButton = document.querySelector('button[aria-label="clear button"]') as HTMLElement
+    deleteModalButton.click()
+
     expect(comparisonStore.$reset).toHaveBeenCalled()
   })
 })
