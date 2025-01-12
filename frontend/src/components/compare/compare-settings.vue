@@ -93,8 +93,8 @@
     </v-col>
 
     <v-col cols="auto" class="flex-center">
-      <v-btn icon elevation="0" color="transparent" size="36" @click="comparisonStore.$reset()">
-        <v-icon color="primary" size="36">mdi-delete</v-icon>
+      <v-btn icon elevation="0" color="transparent" size="36" @click="toggleClearMenu">
+        <v-icon color="primary" size="36" alt="delete team icon">mdi-delete</v-icon>
       </v-btn>
     </v-col>
 
@@ -127,6 +127,22 @@
         </v-progress-circular>
       </div>
     </v-col>
+
+    <v-dialog v-model="isClearMenuOpen" aria-label="clear team menu">
+      <v-row class="flex-center">
+        <v-col cols="auto">
+          <v-card max-width="400px">
+            <v-card-title>Confirm reset</v-card-title>
+            <v-card-text>Do you really want to remove these Pokémon and clear the settings?</v-card-text>
+
+            <v-card-actions class="flex-right">
+              <v-btn aria-label="cancel button" @click="toggleClearMenu">Cancel</v-btn>
+              <v-btn color="primary" aria-label="clear button" @click="clearTeam">Clear compare</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-dialog>
   </v-row>
 </template>
 
@@ -149,7 +165,8 @@ export default defineComponent({
     return { comparisonStore, teamStore, pokemonStore, isMobile, islandImage, sleepScore: TimeUtils.sleepScore }
   },
   data: () => ({
-    teamMenu: false
+    teamMenu: false,
+    isClearMenuOpen: false
   }),
   methods: {
     selectTeam(teamIndex: number) {
@@ -171,6 +188,13 @@ export default defineComponent({
           })
         )
       }
+    },
+    toggleClearMenu() {
+      this.isClearMenuOpen = !this.isClearMenuOpen
+    },
+    clearTeam() {
+      this.toggleClearMenu()
+      this.comparisonStore.$reset()
     }
   }
 })
