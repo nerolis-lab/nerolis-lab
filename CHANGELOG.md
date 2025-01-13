@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/SleepAPI/SleepAPI/compare/v1.11.0...v1.12.0) (2025-01-13)
+
+
+### Features
+
+* adds Neroli's Lab banner to alpha site ([635a44d](https://github.com/SleepAPI/SleepAPI/commit/635a44d03961a53e7dcae8a236ad9381b7a46e4c))
+
 # [1.11.0](https://github.com/SleepAPI/SleepAPI/compare/v1.10.2...v1.11.0) (2025-01-12)
 
 
