@@ -1,5 +1,5 @@
 import { queryAsBoolean, queryAsNumber, queryParamsToString } from '@src/utils/routing/routing-utils.js';
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 
 describe('queryAsBoolean', () => {
   it('shall convert true to true', () => {

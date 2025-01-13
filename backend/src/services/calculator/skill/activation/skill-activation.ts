@@ -45,7 +45,7 @@ export function createSkillEvent(
       );
       break;
     }
-    case mainskill.DISGUISE_BERRY_BURST: {
+    case mainskill.BERRY_BURST_DISGUISE: {
       skillActivations.push(
         activateDisguiseBerryBurst({
           skillLevel,
@@ -83,7 +83,7 @@ export function createSkillEvent(
       );
       break;
     }
-    case mainskill.MOONLIGHT_CHARGE_ENERGY_S: {
+    case mainskill.CHARGE_ENERGY_S_MOONLIGHT: {
       skillActivations.push(
         activateMoonlightChargeEnergy({ skillLevel, nrOfHelpsToActivate, adjustedAmount, metronomeFactor })
       );
@@ -129,7 +129,7 @@ export function activateMoonlightChargeEnergy(params: {
 }): SkillActivation {
   const { skillLevel, nrOfHelpsToActivate, adjustedAmount, metronomeFactor } = params;
 
-  const skill = mainskill.MOONLIGHT_CHARGE_ENERGY_S;
+  const skill = mainskill.CHARGE_ENERGY_S_MOONLIGHT;
   const teamSize = 5;
 
   const energyNormalProc = (skill.amount(skillLevel) * adjustedAmount) / metronomeFactor;
@@ -188,7 +188,7 @@ export function activateDisguiseBerryBurst(params: {
     avgCritChancePerProc,
     metronomeFactor
   } = params;
-  const skill = mainskill.DISGUISE_BERRY_BURST;
+  const skill = mainskill.BERRY_BURST_DISGUISE;
 
   const amountNoCrit = skill.amount(skillLevel) * fractionOfProc;
 

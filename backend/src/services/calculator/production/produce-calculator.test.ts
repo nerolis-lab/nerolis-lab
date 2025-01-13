@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'bun:test';
 import type { PokemonWithIngredients, Produce } from 'sleepapi-common';
 import {
   berry,
@@ -8,6 +7,7 @@ import {
   ingredientSetToFloatFlat,
   PINSIR
 } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 import { calculateAverageProduce, clampHelp } from './produce-calculator.js';
 
 describe('calculateAverageProduce', () => {

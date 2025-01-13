@@ -18,7 +18,7 @@ describe('mainskillImage', () => {
   it('returns correct image path for stockpile skill', () => {
     const mockPokemon: Pokemon = {
       ...MOCK_POKEMON,
-      skill: mainskill.STOCKPILE_CHARGE_STRENGTH_S
+      skill: mainskill.CHARGE_STRENGTH_S_STOCKPILE
     }
 
     const result = mainskillImage(mockPokemon)

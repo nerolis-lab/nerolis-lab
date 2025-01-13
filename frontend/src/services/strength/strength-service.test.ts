@@ -66,7 +66,7 @@ describe('StrengthService', () => {
       const berryStrengthSpy = vi.spyOn(StrengthService, 'berryStrength')
 
       StrengthService.skillStrength({
-        skill: mainskill.DISGUISE_BERRY_BURST,
+        skill: mainskill.BERRY_BURST_DISGUISE,
         amount: 10,
         berries: mockBerrySet,
         favored: favoredBerries,

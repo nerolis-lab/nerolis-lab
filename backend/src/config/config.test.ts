@@ -1,5 +1,5 @@
 import { BackendConfig } from '@src/config/config.js';
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 
 describe('config', () => {
   it('shall use default values', () => {
@@ -56,7 +56,7 @@ describe('config', () => {
     process.env.DATABASE_MIGRATION = 'incorrect';
 
     expect(() => backendConfig.config).toThrowErrorMatchingInlineSnapshot(
-      `"DATABASE_MIGRATION is optional, but if set must be one of [UP, DOWN]"`
+      `[DatabaseMigrationError: DATABASE_MIGRATION is optional, but if set must be one of [UP, DOWN]]`
     );
   });
 });

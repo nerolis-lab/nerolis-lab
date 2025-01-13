@@ -4,7 +4,7 @@ import { Stockpile } from '../modifier';
 import { CHARGE_STRENGTH_S } from './charge-strength-s';
 
 const STRENGTH_SPIT_CHANCE = 0.3;
-export const STOCKPILE_CHARGE_STRENGTH_S: Mainskill = Stockpile(CHARGE_STRENGTH_S, STRENGTH_SPIT_CHANCE, {
+export const CHARGE_STRENGTH_S_STOCKPILE: Mainskill = Stockpile(CHARGE_STRENGTH_S, STRENGTH_SPIT_CHANCE, {
   amount: [600, 853, 1177, 1625, 2243, 3099, 4497],
   description:
     "Stockpile or Spit Up is selected. When Spit Up triggers, Snorlax gains Strength from Stockpile's number.",
@@ -21,4 +21,4 @@ export const STOCKPILE_STRENGTH_STOCKS: Record<number, number[]> = {
   7: [4502, 7653, 11255, 15307, 19809, 24761, 30163, 36916, 46370, 59876, 82386]
 };
 
-MAINSKILLS.push(STOCKPILE_CHARGE_STRENGTH_S);
+MAINSKILLS.push(CHARGE_STRENGTH_S_STOCKPILE);

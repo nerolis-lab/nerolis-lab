@@ -3,9 +3,9 @@ import { CookingState } from '@src/services/simulation-service/team-simulator/co
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import { BALANCED_GENDER, berry, ingredient, mainskill, mockPokemon, nature, subskill } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 const mockPokemonSet: PokemonWithIngredients = {
   pokemon: {
@@ -159,10 +159,6 @@ describe('ivResults', () => {
 
 describe('MemberState init', () => {
   const memberState = new MemberState({ member, settings, team: [member], cookingState });
-
-  it('shall return expected skill level', () => {
-    expect(memberState.skillLevel).toBe(6);
-  });
 
   it('shall return expected team size', () => {
     expect(memberState.teamSize).toBe(1);
@@ -330,6 +326,7 @@ describe('addHelps', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0.02,
+    "skillRegularValue": 0,
     "sneakySnack": {
       "amount": 0,
       "berry": {
@@ -444,6 +441,7 @@ describe('addHelps', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0.02,
+    "skillRegularValue": 0,
     "sneakySnack": {
       "amount": 0,
       "berry": {
@@ -559,6 +557,7 @@ describe('attemptDayHelp', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0,
+    "skillRegularValue": 0,
     "sneakySnack": {
       "amount": 0,
       "berry": {
@@ -681,6 +680,7 @@ describe('attemptDayHelp', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 0.02,
+    "skillRegularValue": 0,
     "sneakySnack": {
       "amount": 0,
       "berry": {
@@ -875,6 +875,7 @@ describe('attemptNightHelp', () => {
     "skillCritValue": 0,
     "skillCrits": 0,
     "skillPercentage": 1,
+    "skillRegularValue": 2066,
     "sneakySnack": {
       "amount": 0,
       "berry": {

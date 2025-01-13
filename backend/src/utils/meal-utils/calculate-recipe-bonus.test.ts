@@ -1,5 +1,5 @@
-import { expect, it } from 'bun:test';
 import { MathUtils, dessert } from 'sleepapi-common';
+import { expect, it } from 'vitest';
 
 it('shall calc stats for given recipe', () => {
   const recp = dessert.HUGE_POWER_SOY_DONUTS;

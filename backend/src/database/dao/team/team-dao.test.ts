@@ -3,15 +3,15 @@ import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamDAO } from '@src/database/dao/team/team-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { beforeEach, describe, expect, it } from 'bun:test';
-import { boozle } from 'bunboozle';
 import { uuid } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 beforeEach(() => {
   let innerCounter = 0;
-  boozle(uuid, 'v4', () => `${++innerCounter}`.padEnd(36, `${innerCounter}`));
+  vimic(uuid, 'v4', () => `${++innerCounter}`.padEnd(36, `${innerCounter}`));
 });
 
 describe('TeamDAO insert', () => {

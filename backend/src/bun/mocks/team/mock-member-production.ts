@@ -30,6 +30,7 @@ export function memberProductionAdvanced(attrs?: Partial<MemberProductionAdvance
     skillCrits: 0,
     skillCritValue: 0,
     skillPercentage: 0,
+    skillRegularValue: 0,
     sneakySnack: berrySet(),
     spilledIngredients: [],
     totalHelps: 0,

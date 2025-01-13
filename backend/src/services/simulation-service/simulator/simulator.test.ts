@@ -5,8 +5,8 @@ import type { SummaryEvent } from '@src/domain/event/events/summary-event/summar
 import { simulation } from '@src/services/simulation-service/simulator/simulator.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import { berry, CarrySizeUtils, emptyBerryInventory, ingredient, mainskill, nature } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('simulator', () => {
   it('shall run a basic simulation', () => {
@@ -57,84 +57,82 @@ describe('simulator', () => {
 
     expect(summaryLog.summary.totalProduce).toEqual(detailedProduce.produce);
     expect(detailedProduce).toMatchInlineSnapshot(`
-{
-  "averageTotalSkillProcs": 1,
-  "dayHelps": 106,
-  "nightHelps": 37,
-  "nightHelpsBeforeSS": 7,
-  "produce": {
-    "berries": [
       {
-        "amount": 229.33333333333334,
-        "berry": {
-          "name": "BELUE",
-          "type": "steel",
-          "value": 33,
-        },
-        "level": 60,
-      },
-    ],
-    "ingredients": [
-      {
-        "amount": 114.66666666666667,
-        "ingredient": {
-          "longName": "Bean Sausage",
-          "name": "Sausage",
-          "taxedValue": 31,
-          "value": 103,
-        },
-      },
-    ],
-  },
-  "skillActivations": [
-    {
-      "adjustedAmount": 1,
-      "fractionOfProc": 1,
-      "nrOfHelpsToActivate": 0,
-      "skill": Mainskill {
-        "attributes": {
-          "RP": [
-            400,
-            569,
-            785,
-            1083,
-            1496,
-            2066,
+        "averageTotalSkillProcs": 1,
+        "dayHelps": 106,
+        "nightHelps": 37,
+        "nightHelpsBeforeSS": 7,
+        "produce": {
+          "berries": [
+            {
+              "amount": 229.33333333333334,
+              "berry": {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              "level": 60,
+            },
           ],
-          "amount": [
-            12,
-            16.2,
-            21.2,
-            26.6,
-            33.6,
-            43.4,
+          "ingredients": [
+            {
+              "amount": 114.66666666666667,
+              "ingredient": {
+                "longName": "Bean Sausage",
+                "name": "Sausage",
+                "taxedValue": 31,
+                "value": 103,
+              },
+            },
           ],
-          "description": "Restores ? Energy to the user.",
-          "maxLevel": 6,
-          "modifier": {
-            "critChance": 0,
-            "type": "Base",
+        },
+        "skillActivations": [
+          {
+            "adjustedAmount": 1,
+            "fractionOfProc": 1,
+            "nrOfHelpsToActivate": 0,
+            "skill": {
+              "RP": [
+                400,
+                569,
+                785,
+                1083,
+                1496,
+                2066,
+              ],
+              "amount": [
+                12,
+                16.2,
+                21.2,
+                26.6,
+                33.6,
+                43.4,
+              ],
+              "description": "Restores ? Energy to the user.",
+              "maxLevel": 6,
+              "modifier": {
+                "critChance": 0,
+                "type": "Base",
+              },
+              "name": "Charge Energy S",
+              "unit": "energy",
+            },
           },
-          "name": "Charge Energy S",
-          "unit": "energy",
-        },
-      },
-    },
-  ],
-  "sneakySnack": [],
-  "spilledIngredients": [
-    {
-      "amount": 30.333333333333332,
-      "ingredient": {
-        "longName": "Bean Sausage",
-        "name": "Sausage",
-        "taxedValue": 31,
-        "value": 103,
-      },
-    },
-  ],
-}
-`);
+        ],
+        "sneakySnack": [],
+        "spilledIngredients": [
+          {
+            "amount": 30.333333333333332,
+            "ingredient": {
+              "longName": "Bean Sausage",
+              "name": "Sausage",
+              "taxedValue": 31,
+              "value": 103,
+            },
+          },
+        ],
+      }
+    `);
   });
 });
 

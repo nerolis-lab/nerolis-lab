@@ -1,5 +1,5 @@
 import { getPokemonNames } from '@src/utils/pokemon-utils/pokemon-utils.js';
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 
 describe('getPokemonNames', () => {
   it('shall return all pokemon by default', () => {

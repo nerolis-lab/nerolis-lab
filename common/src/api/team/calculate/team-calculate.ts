@@ -38,6 +38,7 @@ export interface MemberProductionAdvanced {
   nightHelpsAfterSS: number;
   sneakySnack: BerrySet;
   skillCrits: number;
+  skillRegularValue: number;
   skillCritValue: number;
   wastedEnergy: number;
   morningProcs: number;

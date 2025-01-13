@@ -1,9 +1,9 @@
 import { mocks } from '@src/bun/index.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import type { PokemonWithIngredients, TeamMemberExt, TeamMemberSettingsExt } from 'sleepapi-common';
 import { berry, ingredient, mockPokemon, nature, Optimal } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('calculateSkillPercentage', () => {
   const mockPokemonSet: PokemonWithIngredients = mocks.pokemonWithIngredients({

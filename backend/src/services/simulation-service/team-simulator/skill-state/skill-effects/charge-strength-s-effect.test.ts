@@ -1,0 +1,22 @@
+import { mocks } from '@src/bun/index.js';
+import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-effect.js';
+import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mainskill } from 'sleepapi-common';
+import { beforeEach, describe, expect, it } from 'vitest';
+
+describe('ChargeStrengthSEffect', () => {
+  let chargeStrengthSEffect: ChargeStrengthSEffect;
+  let mockSkillState: SkillState;
+
+  beforeEach(() => {
+    chargeStrengthSEffect = new ChargeStrengthSEffect();
+    mockSkillState = mocks.skillState();
+  });
+
+  it('should activate ChargeStrengthSEffect correctly', () => {
+    const activation = chargeStrengthSEffect.activate(mockSkillState);
+
+    expect(activation.skill).toBe(mainskill.CHARGE_STRENGTH_S);
+    expect(activation.selfValue).toEqual({ regular: 400, crit: 0 });
+  });
+});

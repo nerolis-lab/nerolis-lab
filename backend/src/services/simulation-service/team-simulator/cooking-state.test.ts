@@ -1,6 +1,6 @@
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
-import { describe, expect, it } from 'bun:test';
 import { dessert, ingredient, ingredientSetToFloatFlat } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
   it('shall cook the best recipe for which it has ingredients', () => {

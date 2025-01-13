@@ -2,7 +2,6 @@ import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import type { AuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import { validateAuthHeader } from '@src/middleware/authorization-middleware.js';
 import * as loginService from '@src/services/api-service/login/login-service.js';
-import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 import type { NextFunction, Request, Response } from 'express';
 import type { Logger } from 'sleepapi-common';
 
@@ -16,22 +15,22 @@ describe('validateAuthHeader middleware', () => {
       headers: {}
     };
     res = {
-      sendStatus: mock().mockReturnThis(),
-      json: mock()
+      sendStatus: vi.fn().mockReturnThis(),
+      json: vi.fn()
     };
-    next = mock() as unknown as NextFunction;
+    next = vi.fn() as unknown as NextFunction;
 
     global.logger = {
-      debug: mock() as unknown,
-      log: mock() as unknown,
-      info: mock() as unknown,
-      warn: mock() as unknown,
-      error: mock() as unknown
+      debug: vi.fn() as unknown,
+      log: vi.fn() as unknown,
+      info: vi.fn() as unknown,
+      warn: vi.fn() as unknown,
+      error: vi.fn() as unknown
     } as Logger;
   });
 
   afterEach(() => {
-    mock().mockRestore();
+    vi.clearAllMocks();
   });
 
   it('should respond with 401 if no Authorization header is present', async () => {
@@ -59,7 +58,7 @@ describe('validateAuthHeader middleware', () => {
       name: 'Test User',
       avatar: 'test-avatar'
     };
-    const spy = spyOn(loginService, 'verify');
+    const spy = vi.spyOn(loginService, 'verify');
     spy.mockResolvedValue(mockUser);
 
     await validateAuthHeader(req as Request, res as Response, next);
@@ -72,7 +71,7 @@ describe('validateAuthHeader middleware', () => {
   it('should respond with 401 if token verification fails', async () => {
     req.headers!.authorization = 'Bearer invalidtoken';
 
-    const spy = spyOn(loginService, 'verify');
+    const spy = vi.spyOn(loginService, 'verify');
     spy.mockRejectedValue(new Error('Invalid token'));
 
     await validateAuthHeader(req as Request, res as Response, next);

@@ -13,15 +13,15 @@ import {
 } from '@src/services/api-service/team/team-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
-import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
-import { boozle } from 'bunboozle';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
 import { uuid } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true, enforceForeignKeyConstraints: true });
 
 beforeEach(() => {
-  boozle(uuid, 'v4', () => '0'.repeat(36));
+  vimic(uuid, 'v4', () => '0'.repeat(36));
   MockService.init({ TeamDAO, PokemonDAO, TeamMemberDAO, UserDAO, client });
 });
 

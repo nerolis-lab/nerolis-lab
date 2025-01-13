@@ -1,8 +1,8 @@
 import { SkillEvent } from '@src/domain/event/events/skill-event/skill-event.js';
 import { MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import { mainskill } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('SkillEvent', () => {
   it('skill event shall format correctly', () => {

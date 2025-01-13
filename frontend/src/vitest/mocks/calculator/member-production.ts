@@ -59,6 +59,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
     advanced: {
       averageHelps: 0,
       skillCrits: 0,
+      skillRegularValue: 0,
       spilledIngredients: [],
       totalHelps: 0,
       dayHelps: 0,

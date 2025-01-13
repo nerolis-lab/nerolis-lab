@@ -1,8 +1,8 @@
 import type { PokemonProduce } from '@src/domain/combination/produce.js';
 import { monteCarlo } from '@src/services/simulation-service/monte-carlo/monte-carlo.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
-import { describe, expect, it } from 'bun:test';
 import { berry, CarrySizeUtils, ingredient, nature } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('monteCarlo', () => {
   it('shall run a basic monte carlo simulation', () => {

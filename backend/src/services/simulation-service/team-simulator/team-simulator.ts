@@ -15,11 +15,11 @@
  */
 
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
-import type {
-  TeamSkillActivation,
-  TeamSkillEnergy
-} from '@src/services/simulation-service/team-simulator/member-state.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type {
+  SkillActivationValue,
+  TeamSkillActivation
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
@@ -194,36 +194,48 @@ export class TeamSimulator {
   }
 
   private activateTeamSkill(result: TeamSkillActivation, invoker: MemberState) {
-    if (result.helps) {
-      for (const mem of this.memberStatesWithoutFillers) {
-        mem.addHelps(result.helps);
-        // TODO: we currently don't track produce generated from helps
-        invoker.addSkillValue(result.helps);
+    if (result.teamValue) {
+      if (result.skill.isUnit('helps')) {
+        for (const mem of this.memberStatesWithoutFillers) {
+          mem.addHelps(result.teamValue);
+          // TODO: we currently don't track produce generated from helps
+          invoker.addSkillValue(result.teamValue);
+        }
+      } else if (result.skill.isUnit('energy')) {
+        const recovered = this.recoverMemberEnergy(result.teamValue);
+        invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
+        invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
       }
-    } else if (result.energy) {
-      const regular = this.recoverMemberEnergy(result.energy.regular);
-      const crit = this.recoverMemberEnergy(result.energy.crit);
-      invoker.wasteEnergy(regular.wastedEnergy + crit.wastedEnergy);
-      invoker.addSkillValue({ regular: regular.skillValue, crit: crit.skillValue });
     }
   }
 
-  private recoverMemberEnergy(energy: TeamSkillEnergy) {
-    const { amount, chanceTargetLowest, random } = energy;
-    let skillValue = 0;
-    let wastedEnergy = 0;
+  private recoverMemberEnergy(activation: SkillActivationValue) {
+    const { chanceToTargetLowestMember, crit, regular } = activation;
+    let valueRegular = 0;
+    let valueCrit = 0;
+    let wastedRegular = 0;
+    let wastedCrit = 0;
 
-    if (amount > 0) {
-      const targetGroup = random ? this.energyTargetMember(chanceTargetLowest) : this.memberStates;
+    if (regular + crit > 0) {
+      const targetGroup =
+        chanceToTargetLowestMember !== undefined
+          ? this.energyTargetMember(chanceToTargetLowestMember)
+          : this.memberStates;
 
       for (const mem of targetGroup) {
-        const { recovered, wasted } = mem.recoverEnergy(amount);
-        wastedEnergy += wasted;
-        skillValue += recovered;
+        const { recovered: regularRecovered, wasted: regularWasted } = mem.recoverEnergy(regular);
+        const { recovered: critRecovered, wasted: critWasted } = mem.recoverEnergy(crit);
+        wastedRegular += regularWasted;
+        wastedCrit += critWasted;
+        valueRegular += regularRecovered;
+        valueCrit += critRecovered;
       }
     }
 
-    return { wastedEnergy, skillValue };
+    return {
+      regular: { wastedEnergy: wastedRegular, skillValue: valueRegular },
+      crit: { wastedEnergy: wastedCrit, skillValue: valueCrit }
+    };
   }
 
   /**

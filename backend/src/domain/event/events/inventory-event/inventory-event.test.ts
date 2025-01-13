@@ -1,7 +1,7 @@
 import { InventoryEvent } from '@src/domain/event/events/inventory-event/inventory-event.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import { berry, ingredient } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('InventoryEvent', () => {
   it('inventory event shall format correctly', () => {

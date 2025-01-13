@@ -2,8 +2,6 @@ import { DatabaseService } from '@src/database/database-service.js';
 import DatabaseMigration from '@src/database/migration/database-migration.js';
 import { DatabaseConnectionError } from '@src/domain/error/database/database-error.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
-import { afterAll, afterEach, beforeAll, beforeEach } from 'bun:test';
-import { boozle, unboozle } from 'bunboozle';
 import type { Knex } from 'knex';
 import knex from 'knex';
 
@@ -85,10 +83,6 @@ export const DaoFixture = {
       }
     }
 
-    beforeAll(() => {
-      boozle(logger, 'info');
-    });
-
     afterEach(async () => {
       if (params?.recreateDatabasesBeforeEachTest) {
         await destroyDatabases();
@@ -105,7 +99,6 @@ export const DaoFixture = {
       if (!params?.recreateDatabasesBeforeEachTest) {
         await destroyDatabases();
       }
-      unboozle();
     });
   }
 };

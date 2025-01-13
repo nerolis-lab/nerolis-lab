@@ -4,7 +4,7 @@ import { CHARGE_ENERGY_S } from './charge-energy';
 
 const MOONLIGHT_CHARGE_ENERGY_CRIT_CHANCE = 0.5;
 
-export const MOONLIGHT_CHARGE_ENERGY_S = Moonlight(CHARGE_ENERGY_S, MOONLIGHT_CHARGE_ENERGY_CRIT_CHANCE, {
+export const CHARGE_ENERGY_S_MOONLIGHT = Moonlight(CHARGE_ENERGY_S, MOONLIGHT_CHARGE_ENERGY_CRIT_CHANCE, {
   description: 'Restores ? Energy to the user. Has a chance of restoring ? energy to another Pokémon.',
   RP: [560, 797, 1099, 1516, 2094, 2892]
 });
@@ -14,6 +14,6 @@ export function moonlightCritAmount(skillLevel: number) {
   return critValues[skillLevel - 1] ?? 0;
 }
 
-MAINSKILLS.push(MOONLIGHT_CHARGE_ENERGY_S);
-METRONOME_SKILLS.push(MOONLIGHT_CHARGE_ENERGY_S);
-INGREDIENT_SUPPORT_MAINSKILLS.push(MOONLIGHT_CHARGE_ENERGY_S);
+MAINSKILLS.push(CHARGE_ENERGY_S_MOONLIGHT);
+METRONOME_SKILLS.push(CHARGE_ENERGY_S_MOONLIGHT);
+INGREDIENT_SUPPORT_MAINSKILLS.push(CHARGE_ENERGY_S_MOONLIGHT);

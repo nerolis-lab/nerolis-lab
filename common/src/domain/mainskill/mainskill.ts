@@ -59,6 +59,13 @@ export class Mainskill {
     return this.amounts[this.maxLevel - 1];
   }
 
+  // TEST:
+  get baseSkill(): Mainskill {
+    if (this.isModified) {
+      return MAINSKILLS.find((skill) => this.name.includes(skill.name) && !skill.isModified);
+    } else return this;
+  }
+
   /**
    *
    * @returns amount for given skill level

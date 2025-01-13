@@ -14,128 +14,129 @@ import {
 } from '@src/services/api-service/login/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
-import { boozle } from 'bunboozle';
 import type { PokemonInstanceWithMeta } from 'sleepapi-common';
 import { uuid } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
-boozle(TimeUtils, 'getMySQLNow', () => '2024-01-01 18:00:00');
-boozle(uuid, 'v4', () => '0'.repeat(36));
-boozle(global.logger, 'info');
+uuid.v4 = vi.fn().mockReturnValue('00000000-0000-0000-0000-000000000000');
+TimeUtils.getMySQLNow = vi.fn().mockReturnValue('2024-01-01 18:00:00');
+vimic(global.logger, 'info');
 
 describe('signup', () => {
   it('should call google API with correct credentials', async () => {
-    boozle(client, 'getToken', () => ({
+    client.getToken = vi.fn().mockResolvedValue({
       tokens: {
         refresh_token: 'some-refresh-token',
         access_token: 'some-access-token',
         expiry_date: 10
       }
-    }));
-
-    boozle(client, 'setCredentials', () => ({}));
-    boozle(client, 'request', () => ({
+    });
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
       data: {
         sub: 'some-sub',
         email: 'some-email'
       }
-    }));
+    });
 
     const loginResponse = await signup('some-auth-code');
 
     expect(await UserDAO.findMultiple()).toMatchInlineSnapshot(`
-[
-  {
-    "avatar": undefined,
-    "external_id": "000000000000000000000000000000000000",
-    "id": 1,
-    "name": "New user",
-    "sub": "some-sub",
-    "version": 1,
-  },
-]
-`);
+      [
+        {
+          "avatar": undefined,
+          "external_id": "00000000-0000-0000-0000-000000000000",
+          "id": 1,
+          "name": "New user",
+          "sub": "some-sub",
+          "version": 1,
+        },
+      ]
+    `);
 
     expect(loginResponse).toMatchInlineSnapshot(`
-{
-  "access_token": "some-access-token",
-  "avatar": undefined,
-  "email": "some-email",
-  "expiry_date": 10,
-  "externalId": "000000000000000000000000000000000000",
-  "name": "New user",
-  "refresh_token": "some-refresh-token",
-}
-`);
+      {
+        "access_token": "some-access-token",
+        "avatar": undefined,
+        "email": "some-email",
+        "expiry_date": 10,
+        "externalId": "00000000-0000-0000-0000-000000000000",
+        "name": "New user",
+        "refresh_token": "some-refresh-token",
+      }
+    `);
     expect(client.getToken).toHaveBeenCalledWith({ code: 'some-auth-code', redirect_uri: 'postmessage' });
     expect(client.setCredentials).toHaveBeenCalledWith({ access_token: 'some-access-token' });
   });
 
   it('should throw an error if google response is missing tokens', async () => {
-    boozle(client, 'getToken', () => ({
+    client.getToken = vi.fn().mockResolvedValue({
       tokens: {}
-    }));
+    });
 
     expect(signup('some-auth-code')).rejects.toThrow(AuthorizationError);
   });
 
   it('should handle existing user correctly', async () => {
-    boozle(client, 'getToken', () => ({
+    client.getToken = vi.fn().mockResolvedValue({
       tokens: {
         refresh_token: 'some-refresh-token',
         access_token: 'some-access-token',
         expiry_date: 10
       }
-    }));
-    boozle(client, 'setCredentials', () => ({}));
-    boozle(client, 'request', () => ({
+    });
+
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
       data: {
         sub: 'some-sub',
         email: 'some-email'
       }
-    }));
+    });
 
     await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
 
     const loginResponse = await signup('some-auth-code');
 
     expect(await UserDAO.findMultiple()).toMatchInlineSnapshot(`
-[
-  {
-    "avatar": undefined,
-    "external_id": "000000000000000000000000000000000000",
-    "id": 1,
-    "name": "Existing user",
-    "sub": "some-sub",
-    "version": 1,
-  },
-]
-`);
+      [
+        {
+          "avatar": undefined,
+          "external_id": "00000000-0000-0000-0000-000000000000",
+          "id": 1,
+          "name": "Existing user",
+          "sub": "some-sub",
+          "version": 1,
+        },
+      ]
+    `);
 
     expect(loginResponse).toMatchInlineSnapshot(`
-{
-  "access_token": "some-access-token",
-  "avatar": undefined,
-  "email": "some-email",
-  "expiry_date": 10,
-  "externalId": "000000000000000000000000000000000000",
-  "name": "Existing user",
-  "refresh_token": "some-refresh-token",
-}
-`);
+      {
+        "access_token": "some-access-token",
+        "avatar": undefined,
+        "email": "some-email",
+        "expiry_date": 10,
+        "externalId": "00000000-0000-0000-0000-000000000000",
+        "name": "Existing user",
+        "refresh_token": "some-refresh-token",
+      }
+    `);
   });
 });
 
 describe('refresh', () => {
   it('should refresh the access token successfully', async () => {
-    client.credentials;
-    boozle(client, 'setCredentials');
-    boozle(client, 'getAccessToken', () => ({ token: 'new-access-token' }));
-    boozle(client, 'credentials', {
-      expiry_date: 10
+    client.setCredentials = vi.fn();
+    client.getAccessToken = vi.fn().mockResolvedValue({
+      token: 'new-access-token'
     });
+    client.credentials = {
+      expiry_date: 10
+    };
 
     const refreshResponse = await refresh('some-refresh-token');
 
@@ -151,9 +152,9 @@ describe('refresh', () => {
   });
 
   it('should throw an error if Google API fails to provide a new access token', async () => {
-    boozle(client, 'setCredentials');
-    boozle(client, 'credentials', { expiry_date: 0 });
-    boozle(client, 'getAccessToken', () => ({ token: null }));
+    client.setCredentials = vi.fn();
+    client.getAccessToken = vi.fn().mockResolvedValue({ token: null });
+    client.credentials = {};
 
     expect(refresh('some-refresh-token')).rejects.toThrow('Failed to refresh access token');
   });
@@ -166,9 +167,10 @@ describe('verify', () => {
       sub: 'some-sub',
       aud: config.GOOGLE_CLIENT_ID
     };
-
-    boozle(client, 'setCredentials');
-    boozle(client, 'request', () => ({ data: userInfo }));
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
+      data: userInfo
+    });
     await UserDAO.insert({
       external_id: uuid.v4(),
       name: 'Existing user',
@@ -178,15 +180,15 @@ describe('verify', () => {
     const user = await verify(accessToken);
 
     expect(user).toMatchInlineSnapshot(`
-{
-  "avatar": undefined,
-  "external_id": "000000000000000000000000000000000000",
-  "id": 1,
-  "name": "Existing user",
-  "sub": "some-sub",
-  "version": 1,
-}
-`);
+      {
+        "avatar": undefined,
+        "external_id": "00000000-0000-0000-0000-000000000000",
+        "id": 1,
+        "name": "Existing user",
+        "sub": "some-sub",
+        "version": 1,
+      }
+    `);
 
     expect(client.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
     expect(client.request).toHaveBeenCalledWith({
@@ -201,10 +203,10 @@ describe('verify', () => {
       aud: 'wrong-client-id'
     };
 
-    boozle(client, 'setCredentials');
-    boozle(client, 'request', () => ({
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
       data: userInfo
-    }));
+    });
 
     expect(verify(accessToken)).rejects.toThrow('Token was not issued from this server');
   });
@@ -212,10 +214,8 @@ describe('verify', () => {
   it('should handle Google API request failure', async () => {
     const accessToken = 'valid-access-token';
 
-    boozle(client, 'setCredentials');
-    boozle(client, 'request', () => {
-      throw new Error('Google API request failed');
-    });
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockRejectedValue(new Error('Google API request failed'));
 
     expect(verify(accessToken)).rejects.toThrow('Google API request failed');
   });
@@ -227,11 +227,13 @@ describe('verify', () => {
       aud: config.GOOGLE_CLIENT_ID
     };
 
-    boozle(client, 'setCredentials');
-    boozle(client, 'request', () => ({ data: userInfo }));
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
+      data: userInfo
+    });
 
     expect(verify(accessToken)).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Unable to find entry in user with filter [{"sub":"some-sub"}]"`
+      `[DatabaseNotFoundError: Unable to find entry in user with filter [{"sub":"some-sub"}]]`
     );
   });
 });
