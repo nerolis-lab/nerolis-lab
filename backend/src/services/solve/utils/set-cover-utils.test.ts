@@ -10,8 +10,8 @@ import {
   sortSubRecipesAfterProducerSubtract,
   subtractAndCount
 } from '@src/services/solve/utils/set-cover-utils.js';
-import { beforeEach, describe, expect, it } from 'bun:test';
 import { ingredient } from 'sleepapi-common';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('set-cover-utils', () => {
   let defaultIngredientArray: Int16Array;

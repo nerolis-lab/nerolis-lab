@@ -9,7 +9,6 @@ import {
   activateNonProduceSkills,
   createSkillEvent
 } from '@src/services/calculator/skill/activation/skill-activation.js';
-import { describe, expect, it } from 'bun:test';
 import type { SkillActivation } from 'sleepapi-common';
 import {
   METRONOME_SKILLS,
@@ -20,6 +19,7 @@ import {
   ingredient,
   mainskill
 } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('createSkillEvent', () => {
   it('shall create an Energizing Cheer skill event', () => {
@@ -631,14 +631,14 @@ describe('activateDisguiseBerryBurst', () => {
     const result = activateDisguiseBerryBurst(params);
 
     expect(result).toEqual({
-      skill: mainskill.DISGUISE_BERRY_BURST,
-      adjustedAmount: (mainskill.DISGUISE_BERRY_BURST.amount(6) * 0.7) / 1,
+      skill: mainskill.BERRY_BURST_DISGUISE,
+      adjustedAmount: (mainskill.BERRY_BURST_DISGUISE.amount(6) * 0.7) / 1,
       nrOfHelpsToActivate: 3,
       adjustedProduce: {
         berries: [
           {
             berry: pokemonSet.pokemon.berry,
-            amount: mainskill.DISGUISE_BERRY_BURST.amount(6) * 0.7,
+            amount: mainskill.BERRY_BURST_DISGUISE.amount(6) * 0.7,
             level: 0
           }
         ],
@@ -661,7 +661,7 @@ describe('activateDisguiseBerryBurst', () => {
     const result = activateDisguiseBerryBurst(params);
 
     expect(result).toEqual({
-      skill: mainskill.DISGUISE_BERRY_BURST,
+      skill: mainskill.BERRY_BURST_DISGUISE,
       adjustedAmount: 0,
       nrOfHelpsToActivate: 2,
       adjustedProduce: {
@@ -689,17 +689,17 @@ describe('activateDisguiseBerryBurst', () => {
       metronomeFactor: 5
     };
     const result = activateDisguiseBerryBurst(params);
-    const expectedAdjustedAmount = (mainskill.DISGUISE_BERRY_BURST.amount(6) * 1) / 5;
+    const expectedAdjustedAmount = (mainskill.BERRY_BURST_DISGUISE.amount(6) * 1) / 5;
 
     expect(result).toEqual({
-      skill: mainskill.DISGUISE_BERRY_BURST,
+      skill: mainskill.BERRY_BURST_DISGUISE,
       adjustedAmount: expectedAdjustedAmount,
       nrOfHelpsToActivate: 4,
       adjustedProduce: {
         berries: [
           {
             berry: pokemonSet.pokemon.berry,
-            amount: (mainskill.DISGUISE_BERRY_BURST.amount(6) * 1) / 5,
+            amount: (mainskill.BERRY_BURST_DISGUISE.amount(6) * 1) / 5,
             level: 0
           }
         ],

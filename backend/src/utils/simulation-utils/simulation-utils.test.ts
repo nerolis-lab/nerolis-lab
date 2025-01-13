@@ -4,9 +4,9 @@ import type { EnergyEvent } from '@src/domain/event/events/energy-event/energy-e
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { finishSimulation, startDayAndEnergy, startNight } from '@src/utils/simulation-utils/simulation-utils.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
-import { describe, expect, it } from 'bun:test';
 import type { SkillActivation, Summary } from 'sleepapi-common';
 import { CarrySizeUtils, mainskill, nature, PINSIR } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('startDayAndEnergy', () => {
   it('shall calculate starting energy and log starting events', () => {

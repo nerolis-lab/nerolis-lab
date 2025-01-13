@@ -27,8 +27,7 @@ class DatabaseServiceImpl {
           database: 'pokemonsleep'
         },
         migrations: {
-          extension: 'ts',
-          directory: './migration/migrations'
+          loadExtensions: ['.js', '.ts']
         }
       });
     }

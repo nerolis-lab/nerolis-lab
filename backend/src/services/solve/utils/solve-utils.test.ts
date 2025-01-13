@@ -19,8 +19,6 @@ import {
   settingsToArraySubskills
 } from '@src/services/solve/utils/solve-utils.js';
 import { splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
-import { afterEach, describe, expect, it } from 'bun:test';
-import { boozle, unboozle } from 'bunboozle';
 import type { IngredientSet, Pokedex, SolveSettingsExt } from 'sleepapi-common';
 import {
   ENTEI,
@@ -35,14 +33,13 @@ import {
   mockPokemon,
   prettifyIngredientDrop
 } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import type { MockInstance } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('solve-utils', () => {
-  boozle(productionService, 'calculateSimple');
-  boozle(productionService, 'calculateTeam');
-
-  afterEach(() => {
-    unboozle();
-  });
+  vimic(productionService, 'calculateSimple');
+  vimic(productionService, 'calculateTeam');
 
   // TEST: this function is tested too little, function is probably also too big
   describe('calculateProductionAll', () => {
@@ -52,12 +49,12 @@ describe('solve-utils', () => {
       ];
       const settings: SolveSettingsExt = { ...mocks.teamSettingsExt(), level: 60 };
 
-      const teamSpy = boozle(productionService, 'calculateTeam', () =>
+      const teamSpy = vimic(productionService, 'calculateTeam', () =>
         mocks.teamResults({
           members: [mocks.memberProduction({ externalId: userIncludedMembers[0].settings.externalId })]
         })
       );
-      const simpleSpy = boozle(productionService, 'calculateSimple', () => [
+      const simpleSpy = vimic(productionService, 'calculateSimple', () => [
         mocks.simpleTeamResult({ member: mocks.teamMemberExt() })
       ]);
 
@@ -176,7 +173,7 @@ Set {
         settings: mocks.teamMemberSettingsExt({ externalId: 'supportPokemon2' })
       });
 
-      const simpleCalcSpy = boozle(
+      const simpleCalcSpy = vimic(
         productionService,
         'calculateSimple',
         () => [mocks.simpleTeamResult({ member: supportPokemon1 })],
@@ -200,7 +197,7 @@ Set {
         settings: mocks.teamMemberSettingsExt({ externalId: 'supportPokemon1' })
       });
 
-      const simpleCalcSpy = boozle(productionService, 'calculateSimple', () => []);
+      const simpleCalcSpy = vimic(productionService, 'calculateSimple', () => []);
 
       const result = calculateSupportPokemon({
         supportMembers: [supportPokemon1],
@@ -225,7 +222,8 @@ Set {
         settings: mocks.teamMemberSettingsExt({ externalId: 'supportPokemon2' })
       });
 
-      const simpleCalcSpy = boozle(
+      // TODO: why do I need to specify MockInstance type here, why does it not infer it?
+      const simpleCalcSpy: MockInstance = vimic(
         productionService,
         'calculateSimple',
         () => [mocks.simpleTeamResult({ member: supportPokemon1 })],
@@ -266,7 +264,7 @@ Set {
         settings: mocks.teamMemberSettingsExt({ externalId: 'supportPokemon1' })
       });
 
-      const simpleSpy = boozle(productionService, 'calculateSimple', () => [
+      const simpleSpy = vimic(productionService, 'calculateSimple', () => [
         mocks.simpleTeamResult({ member: supportPokemon1 })
       ]);
 
@@ -597,7 +595,7 @@ Set {
       const userMembers = [mocks.teamMemberExt()];
       const settings = mocks.teamSettingsExt();
 
-      const simpleSpy = boozle(productionService, 'calculateSimple', () => [
+      const simpleSpy = vimic(productionService, 'calculateSimple', () => [
         mocks.simpleTeamResult({ member: nonSupportMembers[0] })
       ]);
 
@@ -629,7 +627,7 @@ Set {
       const userMembers = [mocks.teamMemberExt()];
       const settings = mocks.teamSettingsExt();
 
-      const simpleSpy = boozle(
+      const simpleSpy = vimic(
         productionService,
         'calculateSimple',
         () => [], // otherNonSupportMembers

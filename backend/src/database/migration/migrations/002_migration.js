@@ -1,7 +1,9 @@
-import { Tables } from '@src/database/migration/migrations/001_migration.js';
-import type { Knex } from 'knex';
+const Tables = Object.freeze({
+  Pokemon: 'pokemon',
+  Team: 'team'
+});
 
-export async function up(knex: Knex) {
+export async function up(knex) {
   await knex.schema.alterTable(Tables.Team, (table) => {
     table.string('recipe_type', 255).notNullable().defaultTo('curry');
     table.string('favored_berries', 255);
@@ -12,7 +14,7 @@ export async function up(knex: Knex) {
   });
 }
 
-export async function down(knex: Knex) {
+export async function down(knex) {
   await knex.schema.alterTable(Tables.Team, (table) => {
     table.dropColumn('recipe_type');
     table.dropColumn('favored_berries');

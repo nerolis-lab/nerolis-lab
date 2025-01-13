@@ -2,9 +2,9 @@ import { mocks } from '@src/bun/index.js';
 import { SolveService } from '@src/services/solve/solve-service.js';
 import type { SolveRecipeInput } from '@src/services/solve/types/solution-types.js';
 import * as solveUtils from '@src/services/solve/utils/solve-utils.js';
-import { describe, expect, it } from 'bun:test';
-import { boozle } from 'bunboozle';
 import { mainskill, mockIngredient, mockIngredientSet, mockPokemon, type Recipe } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { describe, expect, it } from 'vitest';
 
 describe('SolveService', () => {
   it('should return the user team if it solves the recipe alone', () => {
@@ -18,7 +18,7 @@ describe('SolveService', () => {
         pokemon: mockPokemon({ skill: mainskill.BERRY_BURST })
       })
     });
-    boozle(solveUtils, 'calculateProductionAll', () => ({
+    vimic(solveUtils, 'calculateProductionAll', () => ({
       userProduction: [mocks.setCoverPokemonWithSettings()],
       nonSupportProduction: [],
       supportProduction: []

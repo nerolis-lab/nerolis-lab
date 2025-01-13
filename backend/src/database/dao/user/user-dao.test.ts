@@ -2,14 +2,14 @@
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
-import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
-import { boozle } from 'bunboozle';
 import { uuid } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 beforeEach(() => {
-  boozle(uuid, 'v4', () => '0'.repeat(36));
+  vimic(uuid, 'v4', () => '0'.repeat(36));
 });
 
 afterEach(() => {

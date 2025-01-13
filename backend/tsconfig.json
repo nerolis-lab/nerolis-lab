@@ -6,6 +6,7 @@
 
     // rules
     "allowJs": true,
+    "declaration": true,
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
@@ -19,15 +20,14 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "declaration": true,
     "paths": {
       "@src/*": ["./src/*"]
     },
 
     // types
-    "types": ["bun-types"]
+    "types": ["vitest/globals"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.js"],
   "exclude": ["dist", "node_modules"],
   "watchOptions": {
     "excludeDirectories": ["dist", "tmp"]

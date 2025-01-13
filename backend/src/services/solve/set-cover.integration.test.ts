@@ -4,8 +4,8 @@ import type {
   ProducersByIngredientIndex,
   SetCoverPokemonSetup
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
-import { describe, expect, it } from 'bun:test';
 import { ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('Set Cover Integration', () => {
   it('should purge sub-optimal solutions when smaller team is found', () => {

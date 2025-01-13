@@ -16,12 +16,12 @@ export function teamMemberSettings(attrs?: Partial<TeamMemberSettings>): TeamMem
 
 export function teamMemberSettingsExt(attrs?: Partial<TeamMemberSettingsExt>): TeamMemberSettingsExt {
   return {
-    carrySize: 0,
+    carrySize: 1,
     externalId: 'mock id',
-    level: 0,
+    level: 1,
     nature: nature.BASHFUL,
     ribbon: 0,
-    skillLevel: 0,
+    skillLevel: 1,
     subskills: new Set(),
     ...attrs
   };

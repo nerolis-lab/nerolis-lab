@@ -6,11 +6,11 @@ import type {
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
 import type { RecipeSolutions, SubRecipeMeta } from '@src/services/solve/types/solution-types.js';
 import * as setCoverUtils from '@src/services/solve/utils/set-cover-utils.js';
-import type { Mock } from 'bun:test';
-import { afterEach, beforeEach, describe, expect, it } from 'bun:test';
-import { boozle, unboozle } from 'bunboozle';
 import type { IngredientIndexToIntAmount, IngredientSet } from 'sleepapi-common';
 import { ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import type { Mock } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('SetCover', () => {
   let setCover: SetCover;
@@ -41,12 +41,8 @@ describe('SetCover', () => {
     let recipe: Int16Array;
 
     beforeEach(() => {
-      mockedKeyCall = boozle(setCoverUtils, 'createMemoKey', () => memoKey);
+      mockedKeyCall = vimic(setCoverUtils, 'createMemoKey', () => memoKey);
       recipe = recipeWithSpotsLeft.slice(0, ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
-    });
-
-    afterEach(() => {
-      unboozle();
     });
 
     it('should return cached solutions if available', () => {
@@ -91,9 +87,9 @@ describe('SetCover', () => {
       const missingCacheKey = () => -1;
       const firstMemoKey = () => 123;
       const secondMemoKey = () => 456;
-      mockedKeyCall = boozle(setCoverUtils, 'createMemoKey', missingCacheKey, firstMemoKey, secondMemoKey);
+      mockedKeyCall = vimic(setCoverUtils, 'createMemoKey', missingCacheKey, firstMemoKey, secondMemoKey);
 
-      boozle(setCoverUtils, 'findSortedRecipeIngredientIndices', () => [10, 4, 11, 5]);
+      vimic(setCoverUtils, 'findSortedRecipeIngredientIndices', () => [10, 4, 11, 5]);
       producersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
       const tyranitar: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
         pokemonSet: {
@@ -401,7 +397,7 @@ Int16Array [
         ingredientIndices: [1, 2, 3]
       };
 
-      const mock = boozle(setCoverUtils, 'ifUnsolvableNode', () => false);
+      const mock = vimic(setCoverUtils, 'ifUnsolvableNode', () => false);
 
       const result = ifStopSearching(params);
 
@@ -439,7 +435,7 @@ Int16Array [
         ingredientIndices: [1, 2, 3]
       };
 
-      const mock = boozle(setCoverUtils, 'ifUnsolvableNode', () => true);
+      const mock = vimic(setCoverUtils, 'ifUnsolvableNode', () => true);
 
       const result = ifStopSearching(params);
 

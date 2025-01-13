@@ -7,9 +7,9 @@ import {
   maybeDegradeEnergy
 } from '@src/services/calculator/energy/energy-calculator.js';
 import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
-import { describe, expect, it } from 'bun:test';
 import type { SkillActivation, Time } from 'sleepapi-common';
 import { mainskill, nature } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('calculateStartingEnergy', () => {
   it('shall calculate a realistic night correctly', () => {

@@ -1,8 +1,6 @@
-import type { TeamSkillEnergy } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type { SkillActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { afterEach, describe, expect, it } from 'bun:test';
-import { boozle, unboozle } from 'bunboozle';
 import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BALANCED_GENDER,
@@ -16,6 +14,8 @@ import {
   nature,
   subskill
 } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { describe, expect, it } from 'vitest';
 
 const mockpokemonWithIngredients: PokemonWithIngredients = {
   pokemon: {
@@ -61,10 +61,6 @@ const mockMembers: TeamMemberExt[] = [
 ];
 
 describe('TeamSimulator', () => {
-  afterEach(() => {
-    unboozle();
-  });
-
   it('shall return expected production from mocked pokemon', () => {
     const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, includeCooking: true });
 
@@ -282,7 +278,7 @@ describe('TeamSimulator', () => {
   });
 
   it('shall only allow 1 disguise crit until sleep reset', () => {
-    const spy = boozle(RandomUtils, 'roll', () => true);
+    const spy = vimic(RandomUtils, 'roll', () => true);
 
     const members: TeamMemberExt[] = [
       {
@@ -290,7 +286,7 @@ describe('TeamSimulator', () => {
           ...mockpokemonWithIngredients,
           pokemon: {
             ...mockPokemon(),
-            skill: mainskill.DISGUISE_BERRY_BURST,
+            skill: mainskill.BERRY_BURST_DISGUISE,
             // one help every ~12 hours, final x2 multiplication is to account for energy frequency
             frequency: 60 * 60 * 12 * 2,
             // 100% chance to activate skill per help
@@ -317,7 +313,7 @@ describe('TeamSimulator', () => {
     expect(result.members).toHaveLength(1);
     expect(result.members[0].skillProcs).toBe(2);
     expect(result.members[0].produceFromSkill.berries).toHaveLength(1);
-    const amountPerProc = mainskill.DISGUISE_BERRY_BURST.amount(6);
+    const amountPerProc = mainskill.BERRY_BURST_DISGUISE.amount(6);
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(amountPerProc * 3 + amountPerProc);
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(84);
 
@@ -335,10 +331,9 @@ describe('recoverMemberEnergy', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
-    const energy: TeamSkillEnergy = {
-      amount: 50,
-      chanceTargetLowest: 0,
-      random: false
+    const energy: SkillActivationValue = {
+      crit: 0,
+      regular: 50
     };
 
     simulator.recoverMemberEnergy(energy);
@@ -359,10 +354,10 @@ describe('recoverMemberEnergy', () => {
     }) as any;
     simulator.memberStates[0].recoverEnergy(100);
 
-    const energy: TeamSkillEnergy = {
-      amount: 50,
-      chanceTargetLowest: 1, // guaranteed to hit lowest member
-      random: true
+    const energy: SkillActivationValue = {
+      crit: 0,
+      regular: 50,
+      chanceToTargetLowestMember: 1
     };
 
     simulator.recoverMemberEnergy(energy);

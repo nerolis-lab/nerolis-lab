@@ -7,8 +7,8 @@ import {
 } from '@src/utils/meal-utils/meal-utils.js';
 import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import { RECIPES, curry, dessert, salad } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('getMeal', () => {
   it('shall return Lovely Kiss for lovely_kIsS_smOOthie name', () => {

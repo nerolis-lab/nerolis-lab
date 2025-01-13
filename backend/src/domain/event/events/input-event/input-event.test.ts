@@ -5,8 +5,8 @@ import {
 } from '@src/domain/event/events/input-event/input-event.js';
 import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import { PINSIR } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('InputEvent', () => {
   it('pokemon input shall format correctly', () => {

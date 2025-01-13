@@ -2,8 +2,8 @@ import {
   calculateFrequencyWithEnergy,
   calculateHelpSpeedBeforeEnergy
 } from '@src/services/calculator/help/help-calculator.js';
-import { describe, expect, it } from 'bun:test';
 import { nature, ONIX, PICHU, subskill, VICTREEBEL } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('calculateHelpSpeedBeforeEnergy', () => {
   it('shall calculate help speed correctly', () => {

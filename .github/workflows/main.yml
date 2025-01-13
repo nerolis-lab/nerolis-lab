@@ -27,8 +27,8 @@ jobs:
       - name: Cache backend dependencies
         uses: actions/cache@v4
         with:
-          path: backend/bun.lock
-          key: backend-${{ hashFiles('backend/bun.lock') }}
+          path: backend/node_modules
+          key: backend-${{ hashFiles('backend/package-lock.json') }}
           restore-keys: backend-
 
       - name: Cache frontend dependencies
@@ -53,7 +53,7 @@ jobs:
           npm install -g bun
           bun install
           bun compile
-          bun test --coverage
+          npm run test
 
       - name: Install and Test Frontend
         run: |

@@ -1,5 +1,5 @@
 import { chunkArray, convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
-import { describe, expect, it } from 'bun:test';
+import { describe, expect, it } from 'vitest';
 
 describe('chunkArray', () => {
   it('shall chunk an array into specified sizes', () => {

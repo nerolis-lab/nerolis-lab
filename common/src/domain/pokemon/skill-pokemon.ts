@@ -45,10 +45,12 @@ import {
   WARMING_GINGER
 } from '../ingredient/ingredients';
 import {
+  BERRY_BURST_DISGUISE,
+  CHARGE_ENERGY_S_MOONLIGHT,
   CHARGE_STRENGTH_M,
   CHARGE_STRENGTH_S_RANGE,
+  CHARGE_STRENGTH_S_STOCKPILE,
   COOKING_POWER_UP_S,
-  DISGUISE_BERRY_BURST,
   DREAM_SHARD_MAGNET_S,
   DREAM_SHARD_MAGNET_S_RANGE,
   ENERGIZING_CHEER_S,
@@ -57,8 +59,6 @@ import {
   HELPER_BOOST,
   INGREDIENT_MAGNET_S,
   METRONOME,
-  MOONLIGHT_CHARGE_ENERGY_S,
-  STOCKPILE_CHARGE_STRENGTH_S,
   TASTY_CHANCE_S
 } from '../mainskill/mainskills';
 
@@ -467,7 +467,7 @@ export const UMBREON: Pokemon = {
   skillPercentage: 10.1,
   berry: WIKI,
   carrySize: 14,
-  skill: MOONLIGHT_CHARGE_ENERGY_S
+  skill: CHARGE_ENERGY_S_MOONLIGHT
 };
 
 export const SLOWKING: Pokemon = {
@@ -737,7 +737,7 @@ export const DRIFLOON: Pokemon = {
     { amount: 4, ingredient: PURE_OIL },
     { amount: 4, ingredient: SOFT_POTATO }
   ],
-  skill: STOCKPILE_CHARGE_STRENGTH_S
+  skill: CHARGE_STRENGTH_S_STOCKPILE
 };
 export const DRIFBLIM: Pokemon = {
   ...evolvesFrom(DRIFLOON),
@@ -889,7 +889,7 @@ export const MIMIKYU: Pokemon = {
     { amount: 2, ingredient: ROUSING_COFFEE },
     { amount: 2, ingredient: TASTY_MUSHROOM }
   ],
-  skill: DISGUISE_BERRY_BURST
+  skill: BERRY_BURST_DISGUISE
 };
 
 export const PAWMI: Pokemon = {

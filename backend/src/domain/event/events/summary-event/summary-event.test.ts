@@ -1,9 +1,9 @@
 import { SummaryEvent } from '@src/domain/event/events/summary-event/summary-event.js';
 import { MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
 import type { Summary } from 'sleepapi-common';
 import { mainskill } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('SummaryEvent', () => {
   it('summary event shall format correctly', () => {

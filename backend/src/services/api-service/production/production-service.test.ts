@@ -5,10 +5,9 @@ import {
 } from '@src/services/api-service/production/production-service.js';
 import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { describe, expect, it } from 'bun:test';
-import { unboozle } from 'bunboozle';
 import type { TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import { BULBASAUR, CHARMANDER, ingredient, nature, PINSIR, subskill } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('calculatePokemonProduction', () => {
   it('should calculate production for PINSIR with given details', () => {
@@ -56,8 +55,6 @@ describe('calculatePokemonProduction', () => {
 
 describe('calculateTeam', () => {
   it('shall calculate production with uneven sleep times', () => {
-    unboozle();
-
     const settings: TeamSettingsExt = {
       bedtime: TimeUtils.parseTime('21:30'),
       wakeup: TimeUtils.parseTime('06:01'),

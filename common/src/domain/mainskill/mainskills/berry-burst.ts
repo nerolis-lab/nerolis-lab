@@ -2,7 +2,6 @@ import { MAX_SKILL_LEVEL } from '../../constants';
 import type { Mainskill } from '../mainskill';
 import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
 
-// TODO: skill doesn't exist yet, values are mock
 export const BERRY_BURST: Mainskill = createBaseSkill({
   name: 'Berry Burst',
   amount: [8, 10, 15, 17, 19, 21],

@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { beforeEach, describe, expect, it } from 'bun:test';
-import { boozle } from 'bunboozle';
 import type { IngredientInstance, SubskillInstance } from 'sleepapi-common';
 import { uuid } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 beforeEach(() => {
-  boozle(uuid, 'v4', () => '0'.repeat(36));
+  vimic(uuid, 'v4', () => '0'.repeat(36));
 });
 
 describe('PokemonDAO insert', () => {

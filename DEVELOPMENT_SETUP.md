@@ -40,9 +40,11 @@ nvm use
 
 The workspace is defined in the file `sleepapi.code-workspace`. Install the recommended extensions when prompted.
 
-### 3. Install and build common module
+### 3. Install and build root and common module
 
-Both the backend and frontend modules use the common module to share entities. Before you start you should install and build the common module.
+Start by running `npm install` in the root of the project, directly under SleepAPI folder. This will set up eslint and prettier packages which work together with the workspace you set up in the previous step.
+
+After that let's set up the common module. Both the backend and frontend modules use the common module to share entities. Before you start you should install and build the common module.
 
 ```
 cd common && npm install && npm run build

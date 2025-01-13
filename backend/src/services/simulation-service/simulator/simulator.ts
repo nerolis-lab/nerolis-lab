@@ -265,8 +265,8 @@ export function simulation(params: {
         } else if (skillActivation.adjustedProduce) {
           if (skillActivation.skill === mainskill.EXTRA_HELPFUL_S || skillActivation.skill === mainskill.HELPER_BOOST) {
             skillHelpsValue += skillActivation.adjustedAmount;
-          } else if (skillActivation.skill.isSkill(mainskill.DISGUISE_BERRY_BURST)) {
-            const skillLevel = input.skillLevel ?? mainskill.DISGUISE_BERRY_BURST.maxLevel;
+          } else if (skillActivation.skill.isSkill(mainskill.BERRY_BURST_DISGUISE)) {
+            const skillLevel = input.skillLevel ?? mainskill.BERRY_BURST_DISGUISE.maxLevel;
             const metronomeUser = pokemon.skill.isSkill(mainskill.METRONOME);
             const metronomeFactor = metronomeUser ? METRONOME_SKILLS.length : 1;
 
