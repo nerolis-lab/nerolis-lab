@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.15.0...v1.15.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* remove ts-node/esm register ([2a9b31f](https://github.com/nerolis-lab/nerolis-lab/commit/2a9b31f4295ebb893d3e04974f7f039787f06d0c))
+
 # [1.15.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.14.0...v1.15.0) (2025-01-14)
 
 
