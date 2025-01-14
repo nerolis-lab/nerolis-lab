@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.14.0...v1.15.0) (2025-01-14)
+
+
+### Features
+
+* adds skill copy implementation ([a75f139](https://github.com/nerolis-lab/nerolis-lab/commit/a75f1391142abf53c7072dc3c4c8cf7fcd18f124))
+
 # [1.14.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.13.0...v1.14.0) (2025-01-14)
 
 
