@@ -5,7 +5,6 @@ import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
 import type {
   BerrySet,
@@ -24,6 +23,7 @@ import type {
 } from 'sleepapi-common';
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
+  CarrySizeUtils,
   MAX_POT_SIZE,
   MAX_TEAM_SIZE,
   METRONOME_SKILLS,

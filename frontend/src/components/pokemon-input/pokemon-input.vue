@@ -140,8 +140,8 @@ import RibbonButton from '@/components/pokemon-input/ribbon-button.vue'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import {
+  CarrySizeUtils,
   getPokemon,
-  maxCarrySize,
   mockPokemon,
   nature,
   RP,
@@ -225,7 +225,7 @@ export default defineComponent({
       }
     } else if (this.pokemonFromSearch) {
       this.pokemonInstance.pokemon = this.pokemonFromSearch
-      this.pokemonInstance.carrySize = maxCarrySize(this.pokemonFromSearch)
+      this.pokemonInstance.carrySize = CarrySizeUtils.maxCarrySize(this.pokemonFromSearch)
       this.pokemonInstance.externalId = uuid.v4()
     } else console.error('Missing both cached and search input mon, contact developer')
   },

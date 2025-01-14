@@ -10,7 +10,7 @@ import type {
   TeamMemberExt,
   TeamSettingsExt
 } from 'sleepapi-common';
-import { getAllIngredientLists, limitSubSkillsToLevel, maxCarrySize, nature, subskill } from 'sleepapi-common';
+import { CarrySizeUtils, getAllIngredientLists, limitSubSkillsToLevel, nature, subskill } from 'sleepapi-common';
 
 // TODO: remove in Sleep API 2.0
 export function calculatePokemonProduction(
@@ -65,7 +65,7 @@ export function calculatePokemonProduction(
         subskills: optimalIngredientSubskills,
         nature: nature.QUIET,
         skillLevel: pokemon.skill.maxLevel,
-        inventoryLimit: maxCarrySize(pokemon)
+        inventoryLimit: CarrySizeUtils.maxCarrySize(pokemon)
       },
       monteCarloIterations
     }).detailedProduce;
@@ -107,7 +107,7 @@ export function calculatePokemonProduction(
         ),
         nature: nature.CAREFUL,
         skillLevel: pokemon.skill.maxLevel,
-        inventoryLimit: maxCarrySize(pokemon)
+        inventoryLimit: CarrySizeUtils.maxCarrySize(pokemon)
       },
       monteCarloIterations
     }).detailedProduce;
