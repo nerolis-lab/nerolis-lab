@@ -6,7 +6,7 @@ import { finishSimulation, startDayAndEnergy, startNight } from '@src/utils/simu
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { describe, expect, it } from 'bun:test';
 import type { SkillActivation, Summary } from 'sleepapi-common';
-import { mainskill, maxCarrySize, nature, PINSIR } from 'sleepapi-common';
+import { CarrySizeUtils, mainskill, nature, PINSIR } from 'sleepapi-common';
 
 describe('startDayAndEnergy', () => {
   it('shall calculate starting energy and log starting events', () => {
@@ -23,7 +23,15 @@ describe('startDayAndEnergy', () => {
     const skillActivations: SkillActivation[] = [];
 
     expect(
-      startDayAndEnergy(dayInfo, pkmn, input, maxCarrySize(pkmn), recoveryEvents, skillActivations, eventLog)
+      startDayAndEnergy(
+        dayInfo,
+        pkmn,
+        input,
+        CarrySizeUtils.maxCarrySize(pkmn),
+        recoveryEvents,
+        skillActivations,
+        eventLog
+      )
     ).toBe(100);
     expect(eventLog).toHaveLength(6);
   });

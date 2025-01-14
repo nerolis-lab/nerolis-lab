@@ -2,7 +2,7 @@ import type { PokemonProduce } from '@src/domain/combination/produce.js';
 import { monteCarlo } from '@src/services/simulation-service/monte-carlo/monte-carlo.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
 import { describe, expect, it } from 'bun:test';
-import { berry, ingredient, maxCarrySize, nature } from 'sleepapi-common';
+import { berry, CarrySizeUtils, ingredient, nature } from 'sleepapi-common';
 
 describe('monteCarlo', () => {
   it('shall run a basic monte carlo simulation', () => {
@@ -11,7 +11,7 @@ describe('monteCarlo', () => {
       helpFrequency: 1000,
       mealTimes: [],
       pokemonWithAverageProduce,
-      inventoryLimit: maxCarrySize(MOCKED_POKEMON),
+      inventoryLimit: CarrySizeUtils.maxCarrySize(MOCKED_POKEMON),
       recoveryEvents: [],
       skillPercentage: MOCKED_POKEMON.skillPercentage / 100,
       skillLevel: 6,

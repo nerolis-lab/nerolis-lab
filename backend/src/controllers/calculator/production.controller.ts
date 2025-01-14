@@ -7,7 +7,6 @@ import {
   calculatePokemonProduction,
   calculateTeam
 } from '@src/services/api-service/production/production-service.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import * as tsoa from '@tsoa/runtime';
@@ -23,7 +22,7 @@ import type {
   TeamSettings,
   TeamSettingsExt
 } from 'sleepapi-common';
-import { getNature, getPokemon, limitSubSkillsToLevel, mainskill } from 'sleepapi-common';
+import { CarrySizeUtils, getNature, getPokemon, limitSubSkillsToLevel, mainskill } from 'sleepapi-common';
 const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
 
 @Route('api/calculator')
@@ -97,7 +96,6 @@ export default class ProductionController extends Controller {
             baseWithEvolutions: member.carrySize,
             subskillsLevelLimited: subskills,
             ribbon: member.ribbon,
-            level: member.level,
             camp
           }),
           nature: getNature(member.nature),

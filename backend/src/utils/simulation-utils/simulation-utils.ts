@@ -12,8 +12,8 @@ import { SleepEvent } from '@src/domain/event/events/sleep-event/sleep-event.js'
 import { SummaryEvent } from '@src/domain/event/events/summary-event/summary-event.js';
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateStartingEnergy } from '@src/services/calculator/energy/energy-calculator.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import type { Pokemon, Produce, SkillActivation, Summary, TimePeriod } from 'sleepapi-common';
+import { CarrySizeUtils } from 'sleepapi-common';
 
 export function startDayAndEnergy(
   dayInfo: SleepInfo,

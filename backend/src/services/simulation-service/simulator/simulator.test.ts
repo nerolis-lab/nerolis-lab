@@ -6,7 +6,7 @@ import { simulation } from '@src/services/simulation-service/simulator/simulator
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { describe, expect, it } from 'bun:test';
-import { berry, emptyBerryInventory, ingredient, mainskill, maxCarrySize, nature } from 'sleepapi-common';
+import { berry, CarrySizeUtils, emptyBerryInventory, ingredient, mainskill, nature } from 'sleepapi-common';
 
 describe('simulator', () => {
   it('shall run a basic simulation', () => {
@@ -17,7 +17,7 @@ describe('simulator', () => {
       skillPercentage: 0.02,
       input: MOCKED_OPTIMAL_PRODUCTION_STATS,
       pokemonWithAverageProduce,
-      inventoryLimit: maxCarrySize(pokemonWithAverageProduce.pokemon),
+      inventoryLimit: CarrySizeUtils.maxCarrySize(pokemonWithAverageProduce.pokemon),
       recoveryEvents: [new EnergyEvent({ delta: 10, description: 'some-desc', time: TimeUtils.parseTime('08:00') })],
       extraHelpfulEvents: [
         new SkillEvent({
