@@ -18,11 +18,10 @@ import {
   scheduleTeamEnergyEvents,
   triggerTeamHelpsEvent
 } from '@src/utils/event-utils/event-utils.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { describe, expect, it } from 'bun:test';
-import { ABOMASNOW, MathUtils, berry, ingredient, mainskill, nature } from 'sleepapi-common';
+import { ABOMASNOW, CarrySizeUtils, MathUtils, berry, ingredient, mainskill, nature } from 'sleepapi-common';
 
 describe('getExtraHelpfulEvents', () => {
   it('shall schedule extra helpful events evenly throughout the day', () => {

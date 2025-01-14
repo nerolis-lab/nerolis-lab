@@ -33,10 +33,10 @@ import { finishSimulation, startDayAndEnergy, startNight } from '@src/utils/simu
 import { maybeDegradeEnergy } from '@src/services/calculator/energy/energy-calculator.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { clampHelp } from '@src/services/calculator/production/produce-calculator.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { BerrySet, DetailedProduce, Produce, SkillActivation, Summary, Time } from 'sleepapi-common';
 import {
+  CarrySizeUtils,
   METRONOME_SKILLS,
   MathUtils,
   combineSameIngredientsInDrop,

@@ -1,4 +1,5 @@
 import type { Produce } from '../../api/production/produce';
+import type { Pokemon } from '../../domain/pokemon';
 import { calculateRibbonCarrySize, calculateSubskillCarrySize } from '../stat-utils/stat-utils';
 
 class CarrySizeUtilsImpl {
@@ -63,7 +64,6 @@ class CarrySizeUtilsImpl {
   public calculateCarrySize(params: {
     baseWithEvolutions: number;
     subskillsLevelLimited: Set<string>;
-    level: number;
     ribbon: number;
     camp: boolean;
   }) {
@@ -72,6 +72,18 @@ class CarrySizeUtilsImpl {
       (baseWithEvolutions + calculateSubskillCarrySize(subskillsLevelLimited) + calculateRibbonCarrySize(ribbon)) *
         (camp ? 1.2 : 1)
     );
+  }
+
+  public timesEvolvedByCarrySize(pokemon: Pokemon, currentBaseCarrySize: number): number {
+    return (currentBaseCarrySize - pokemon.carrySize) / 5;
+  }
+
+  public baseCarrySize(pokemon: Pokemon, timesEvolved: number): number {
+    return pokemon.carrySize + 5 * timesEvolved;
+  }
+
+  public maxCarrySize(pokemon: Pokemon): number {
+    return pokemon.carrySize + 5 * pokemon.previousEvolutions;
   }
 }
 

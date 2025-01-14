@@ -55,6 +55,8 @@ describe('solve.controller', () => {
 
       expect(natureMock).toHaveBeenCalledWith(settings.nature);
       expect(result).toEqual({ ...settings, nature: nature.BASHFUL, subskills: new Set() });
+
+      natureMock.mockRestore();
     });
   });
 
@@ -67,7 +69,7 @@ describe('solve.controller', () => {
 
     it('should map result to response correctly', () => {
       const result = mocks.solveRecipeResultWithSettings();
-      boozle(mealUtils, 'getMeal', () => mocks.recipe());
+      const mock = boozle(mealUtils, 'getMeal', () => mocks.recipe());
 
       const mockedIngredientSet: common.IngredientSet[] = [
         mocks.mockIngredientSet({ amount: 10, ingredient: common.ingredient.FANCY_APPLE })
@@ -104,6 +106,8 @@ describe('solve.controller', () => {
 
       expect(flatToIngredientSetMock).toHaveBeenCalledWith(new Int16Array());
       expect(getPokemonMock).toHaveBeenCalledWith('Mockemon');
+      mock.mockRestore();
+      flatToIngredientSetMock.mockRestore();
     });
   });
 });

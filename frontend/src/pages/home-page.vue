@@ -4,7 +4,7 @@
       <v-col cols="auto">
         <SneaselHomeIcon />
       </v-col>
-      <v-col cols="auto" class="text-start text-lg-start mb-8">
+      <v-col cols="auto" class="text-center text-lg-start mb-8">
         <h1 class="title text-h3 font-weight-bold mb-3">
           Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
         </h1>
@@ -138,11 +138,28 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@media (max-width: 450px) {
+  .title {
+    font-size: 10vw !important;
+  }
+  .beta {
+    font-size: 8vw !important;
+  }
+}
+
 .title {
   text-align: center;
   font-weight: 600;
   line-height: 120%;
   display: flex;
+  justify-content: center;
+
+  .beta {
+    color: $skill;
+    font-style: italic;
+    font-size: 36px;
+    margin: -20px 0 0 5px;
+  }
 }
 
 .sub-title {
@@ -193,12 +210,5 @@ export default defineComponent({
 
 .fx01:hover {
   background-color: $accent;
-}
-
-.beta {
-  color: $skill;
-  font-style: italic;
-  font-size: 36px;
-  margin: -20px 0 0 5px;
 }
 </style>
