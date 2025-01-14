@@ -369,6 +369,113 @@
   </head>
 
   <body>
+    <div
+      style="
+        position: relative;
+        background: url('./background.png') no-repeat center center;
+        background-size: cover;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px 0;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+      "
+    >
+      <img
+        src="./neroli-home.png"
+        alt="Logo"
+        style="position: absolute; top: 50%; left: -10px; transform: translateY(-50%); height: 100px; z-index: 1"
+      />
+
+      <!-- Flexbox container for text and buttons -->
+      <div
+        style="
+          position: relative; /* Ensures the content stays above the image */
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-wrap: wrap; /* Wraps on small screens */
+          max-width: 100%;
+          box-sizing: border-box;
+          flex-direction: column; /* Default: column for mobile */
+          z-index: 2;
+        "
+      >
+        <!-- Header text -->
+        <p style="margin: 0 0 0px 0; font-size: 20px; font-weight: bold; text-align: center">Check out our new site!</p>
+
+        <!-- Buttons container -->
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center">
+          <!-- Neroli's Lab button with logo -->
+          <a
+            href="https://nerolislab.com"
+            target="_blank"
+            style="
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px;
+              color: #ffffff;
+              text-decoration: none;
+              background-color: #403d58;
+              border-radius: 8px;
+              font-weight: bold;
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+              min-width: 150px;
+              height: 40px;
+              padding: 10px;
+              transition: transform 0.2s ease-in-out;
+            "
+            onmouseover="this.style.transform='scale(1.05)'"
+            onmouseout="this.style.transform='scale(1)'"
+          >
+            <img src="./neroli-logo.png" alt="Neroli Logo" style="width: 24px; height: 24px; display: inline-block" />
+            Neroli's Lab
+          </a>
+
+          <!-- Discord button -->
+          <a
+            href="https://discord.gg/ejdkHGm3jP"
+            target="_blank"
+            style="
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              background-color: #5865f2;
+              padding: 10px;
+              border-radius: 8px;
+              font-size: 16px;
+              font-weight: bold;
+              box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+              width: 150px;
+              height: 40px;
+              overflow: hidden;
+              transition: transform 0.2s ease-in-out;
+              flex-shrink: 0;
+            "
+            onmouseover="this.style.transform='scale(1.05)'"
+            onmouseout="this.style.transform='scale(1)'"
+          >
+            <img src="./discord-logo-white.png" alt="Discord" style="width: auto; height: 20px" />
+          </a>
+        </div>
+      </div>
+
+      <!-- Responsive styling -->
+      <style>
+        @media (min-width: 768px) {
+          .responsive-container {
+            flex-direction: row; /* On larger screens, place text and buttons side by side */
+          }
+          .responsive-text {
+            margin-right: 20px; /* Add spacing to the right of the text */
+            text-align: left; /* Align text to the left */
+          }
+        }
+      </style>
+    </div>
+
     <div class="topnav" id="topnavId">
       <a href="index.html">Home</a>
       <a href="production-calculator.html">Production Calculator</a>

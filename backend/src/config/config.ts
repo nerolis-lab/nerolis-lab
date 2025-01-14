@@ -35,7 +35,7 @@ export class BackendConfig {
       DB_PASS,
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
-      GENERATE_TIERLIST: GENERATE_TIERLIST === 'true' ? true : false
+      GENERATE_TIERLIST: GENERATE_TIERLIST === 'true'
     };
   }
 }

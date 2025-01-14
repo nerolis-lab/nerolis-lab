@@ -1,4 +1,4 @@
-import MemberProductionIngredient from '@/components/calculator/results/member-results/member-production-ingredient.vue'
+import MemberProductionIngredient from '@/components/calculator/results/member-results/member-production-header/member-production-ingredient.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProductionExt } from '@/vitest'

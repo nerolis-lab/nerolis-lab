@@ -1,3 +1,31 @@
+# [1.13.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.12.0...v1.13.0) (2025-01-14)
+
+
+### Features
+
+* Add confirm dialog when clearing compare list ([19d31f8](https://github.com/nerolis-lab/nerolis-lab/commit/19d31f88e2cdd38410311e5642d79a17a6424e5e))
+
+# [1.12.0](https://github.com/SleepAPI/SleepAPI/compare/v1.11.0...v1.12.0) (2025-01-13)
+
+
+### Features
+
+* adds Neroli's Lab banner to alpha site ([635a44d](https://github.com/SleepAPI/SleepAPI/commit/635a44d03961a53e7dcae8a236ad9381b7a46e4c))
+
+# [1.11.0](https://github.com/SleepAPI/SleepAPI/compare/v1.10.2...v1.11.0) (2025-01-12)
+
+
+### Features
+
+* Sort Pokemon nature alphabetically ([0eff379](https://github.com/SleepAPI/SleepAPI/commit/0eff379cce714a70e1caaa3a63e6674419d96e7f))
+
+## [1.10.2](https://github.com/SleepAPI/SleepAPI/compare/v1.10.1...v1.10.2) (2025-01-10)
+
+
+### Bug Fixes
+
+* homepage feature cards same height ([7088b4c](https://github.com/SleepAPI/SleepAPI/commit/7088b4cfebbe453b10691180c7cfaedc0a4db09c))
+
 ## [1.10.1](https://github.com/SleepAPI/SleepAPI/compare/v1.10.0...v1.10.1) (2025-01-09)
 
 # [1.10.0](https://github.com/SleepAPI/SleepAPI/compare/v1.9.0...v1.10.0) (2025-01-09)

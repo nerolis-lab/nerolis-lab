@@ -4,6 +4,18 @@ As explained in [Development Setup](../DEVELOPMENT_SETUP.md) you should now have
 
 Start by installing the required node modules with `npm install` inside the backend folder.
 
+Create a .env file directly under the backend folder. Add the following default configuration:
+
+```bash
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASS=admin
+DATABASE_MIGRATION="UP"
+```
+
+If you also want to use login functionality you'll need to set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` variables too. I won't give the values for these, as these are personal, instead you should generate a pair using google cloud API console.
+
 ## Running backend in development mode
 
 If you installed bun as explained in [Development Setup](../DEVELOPMENT_SETUP.md), you are now able to run `npm run dev` or `bun dev`.
