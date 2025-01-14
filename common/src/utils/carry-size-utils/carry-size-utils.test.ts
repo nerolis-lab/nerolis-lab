@@ -1,6 +1,9 @@
 import { emptyProduce, type Produce } from '../../api/production/produce';
 import { BELUE, LEPPA } from '../../domain/berry/berries';
-import { SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
+import { BALANCED_GENDER } from '../../domain/gender/gender';
+import { SLOWPOKE_TAIL, SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
+import { HELPER_BOOST } from '../../domain/mainskill/mainskills/helper-boost';
+import type { Pokemon } from '../../domain/pokemon';
 import { INVENTORY_S } from '../../domain/subskill/subskills';
 import { emptyBerryInventory } from '../berry-utils/berry-utils';
 import { prettifyIngredientDrop } from '../ingredient-utils/ingredient-utils';
@@ -202,22 +205,61 @@ describe('calculateCarrySize', () => {
   it('shall give same for default', () => {
     const baseWithEvolutions = 10;
     const subskillsLevelLimited = new Set<string>();
-    const level = 10;
     const ribbon = 0;
     const camp = false;
-    expect(CarrySizeUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, level, ribbon, camp })).toBe(
-      10
-    );
+    expect(CarrySizeUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, ribbon, camp })).toBe(10);
   });
 
   it('shall give correct for subskills, ribbon and camp', () => {
     const baseWithEvolutions = 31;
     const subskillsLevelLimited = new Set([INVENTORY_S.name]);
-    const level = 54;
     const ribbon = 2;
     const camp = true;
-    expect(CarrySizeUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, level, ribbon, camp })).toBe(
-      48
-    );
+    expect(CarrySizeUtils.calculateCarrySize({ baseWithEvolutions, subskillsLevelLimited, ribbon, camp })).toBe(48);
+  });
+});
+
+describe('base and max carry size', () => {
+  const MOCK_POKEMON: Pokemon = {
+    name: 'Mockemon',
+    specialty: 'berry',
+    frequency: 0,
+    ingredientPercentage: 0,
+    skillPercentage: 0,
+    berry: BELUE,
+    genders: BALANCED_GENDER,
+    carrySize: 10,
+    previousEvolutions: 1,
+    remainingEvolutions: 1,
+    ingredient0: { amount: 0, ingredient: SLOWPOKE_TAIL },
+    ingredient30: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
+    ingredient60: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
+    skill: HELPER_BOOST
+  };
+
+  describe('timesEvolvedByCarrySize', () => {
+    it('shall return 2 given 10 over base carry size', () => {
+      expect(CarrySizeUtils.timesEvolvedByCarrySize(MOCK_POKEMON, 20)).toBe(2);
+    });
+
+    it('shall return 0 given the base carry size', () => {
+      expect(CarrySizeUtils.timesEvolvedByCarrySize(MOCK_POKEMON, 10)).toBe(0);
+    });
+  });
+
+  describe('baseCarrySize', () => {
+    it('shall return 15 given 1 time evolved', () => {
+      expect(CarrySizeUtils.baseCarrySize(MOCK_POKEMON, 1)).toBe(15);
+    });
+
+    it('shall return 10 given 0 times evolved', () => {
+      expect(CarrySizeUtils.baseCarrySize(MOCK_POKEMON, 0)).toBe(10);
+    });
+  });
+
+  describe('maxCarrySize', () => {
+    it('shall return 15 for MOCK_POKEMON', () => {
+      expect(CarrySizeUtils.maxCarrySize(MOCK_POKEMON)).toBe(15);
+    });
   });
 });

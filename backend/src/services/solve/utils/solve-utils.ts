@@ -14,7 +14,6 @@ import type {
   SolveRecipeSolutionWithSettings
 } from '@src/services/solve/types/solution-types.js';
 import { convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import type {
   IngredientIndexToFloatAmount,
   IngredientSet,
@@ -29,6 +28,7 @@ import type {
   TeamSettingsExt
 } from 'sleepapi-common';
 import {
+  CarrySizeUtils,
   getAllIngredientLists,
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
@@ -185,7 +185,6 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
       baseWithEvolutions: settings.carrySize,
       subskillsLevelLimited: settings.subskills,
       ribbon: settings.ribbon,
-      level: settings.level,
       camp
     });
 

@@ -22,10 +22,9 @@ import { calculateSleepEnergyRecovery, maybeDegradeEnergy } from '@src/services/
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import type { MonteCarloResult } from '@src/services/simulation-service/monte-carlo/monte-carlo.js';
 import { recoverEnergyEvents, recoverFromMeal } from '@src/utils/event-utils/event-utils.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Produce, Time } from 'sleepapi-common';
-import { MathUtils, RandomUtils, emptyProduce, mainskill } from 'sleepapi-common';
+import { CarrySizeUtils, MathUtils, RandomUtils, emptyProduce, mainskill } from 'sleepapi-common';
 
 /**
  * Runs the randomized simulation for Monte Carlo

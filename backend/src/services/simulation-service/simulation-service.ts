@@ -33,7 +33,6 @@ import {
   getExtraHelpfulEvents,
   getHelperBoostEvents
 } from '@src/utils/event-utils/event-utils.js';
-import { CarrySizeUtils } from '@src/utils/inventory-utils/inventory-utils.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
 import type {
   BerrySet,
@@ -46,6 +45,7 @@ import type {
   Time
 } from 'sleepapi-common';
 import {
+  CarrySizeUtils,
   MEALS_IN_DAY,
   berrySetToFlat,
   calculateAveragePokemonIngredientSet,
@@ -58,7 +58,6 @@ import {
   ingredientSetToIntFlat,
   limitSubSkillsToLevel,
   mainskill,
-  maxCarrySize,
   nature
 } from 'sleepapi-common';
 
@@ -131,9 +130,8 @@ export function setupAndRunProductionSimulation(params: {
   ];
 
   const inventoryLimit = CarrySizeUtils.calculateCarrySize({
-    baseWithEvolutions: input.inventoryLimit ?? maxCarrySize(pokemonSet.pokemon),
+    baseWithEvolutions: input.inventoryLimit ?? CarrySizeUtils.maxCarrySize(pokemonSet.pokemon),
     subskillsLevelLimited: limitSubSkillsToLevel(subskills, level),
-    level,
     ribbon,
     camp
   });
