@@ -29,7 +29,7 @@
     <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img :src="berryImage(memberWithProduction.member.pokemon.berry)" height="20" width="20"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ skillValueSelf }} {{ berryName }}</span>
+        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ skillValueBluk }} {{ berryName }}</span>
       </div>
       <div class="flex-center">
         <v-img src="/images/berries/berries.png" height="20" width="20"></v-img>
@@ -66,10 +66,12 @@ export default defineComponent({
     skillValuePerProc() {
       return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
     },
-    skillValueSelf() {
+    skillValueBluk() {
       const amount =
         this.memberWithProduction.production.produceFromSkill.berries.find(
-          (b) => b.berry.name === this.memberWithProduction.member.pokemon.berry.name
+          (b) =>
+            b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
+            b.level === this.memberWithProduction.member.level
         )?.amount ?? 0
       return compactNumber(
         StrengthService.skillValue({
@@ -81,7 +83,12 @@ export default defineComponent({
     },
     skillValueTeam() {
       const amount = this.memberWithProduction.production.produceFromSkill.berries.reduce(
-        (sum, cur) => sum + (cur.berry.name !== this.memberWithProduction.member.pokemon.berry.name ? cur.amount : 0),
+        (sum, cur) =>
+          sum +
+          (cur.berry.name !== this.memberWithProduction.member.pokemon.berry.name ||
+          cur.level !== this.memberWithProduction.member.level
+            ? cur.amount
+            : 0),
         0
       )
       return compactNumber(
