@@ -3,7 +3,7 @@ import { MAINSKILLS } from '../mainskill';
 import { Stockpile } from '../modifier';
 import { CHARGE_STRENGTH_S } from './charge-strength-s';
 
-const STRENGTH_SPIT_CHANCE = 0.3;
+const STRENGTH_SPIT_CHANCE = 0.2674;
 export const CHARGE_STRENGTH_S_STOCKPILE: Mainskill = Stockpile(CHARGE_STRENGTH_S, STRENGTH_SPIT_CHANCE, {
   amount: [600, 853, 1177, 1625, 2243, 3099, 4497],
   description:
