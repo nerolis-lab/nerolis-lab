@@ -1,3 +1,11 @@
+## [1.15.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.15.1...v1.15.2) (2025-01-15)
+
+
+### Bug Fixes
+
+* mimikyu bluk berries filter by same level ([144f7ec](https://github.com/nerolis-lab/nerolis-lab/commit/144f7ec9c666ce0926fb69f21300552235e7cd16))
+* set compare team to undefined if full ([1306514](https://github.com/nerolis-lab/nerolis-lab/commit/1306514d0617b41b8fac8327a8080d88927a3eed))
+
 ## [1.15.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.15.0...v1.15.1) (2025-01-14)
 
 
