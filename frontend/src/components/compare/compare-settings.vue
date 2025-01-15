@@ -153,6 +153,7 @@ import { TimeUtils } from '@/services/utils/time-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
+import { MAX_TEAM_SIZE } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -162,6 +163,11 @@ export default defineComponent({
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
     const { isMobile } = useViewport()
+
+    if (comparisonStore.currentTeam && comparisonStore.currentTeam.members.filter(Boolean).length >= MAX_TEAM_SIZE) {
+      comparisonStore.teamIndex = undefined
+    }
+
     return { comparisonStore, teamStore, pokemonStore, isMobile, islandImage, sleepScore: TimeUtils.sleepScore }
   },
   data: () => ({
