@@ -121,7 +121,7 @@ export const RATTATA: Pokemon = {
 export const RATICATE: Pokemon = {
   ...evolvesFrom(RATTATA),
   name: 'RATICATE',
-  frequency: toSeconds(0, 53, 20),
+  frequency: toSeconds(0, 49, 10),
   ingredientPercentage: 23.7,
   skillPercentage: 3.0,
   carrySize: 16
@@ -708,10 +708,10 @@ export const VIGOROTH: Pokemon = {
 export const SLAKING: Pokemon = {
   ...evolvesFrom(VIGOROTH),
   name: 'SLAKING',
-  frequency: toSeconds(1, 3, 20),
+  frequency: toSeconds(1, 0, 0),
   ingredientPercentage: 33.9,
   skillPercentage: 6.7,
-  carrySize: 12
+  carrySize: 16
 };
 
 export const SWABLU: Pokemon = {
