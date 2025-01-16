@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.15.2...v1.16.0) (2025-01-16)
+
+
+### Features
+
+* adds january balance patch ([794dac7](https://github.com/nerolis-lab/nerolis-lab/commit/794dac7a08f732da0ce8fbedeae4f187483eb013))
+
 ## [1.15.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.15.1...v1.15.2) (2025-01-15)
 
 
