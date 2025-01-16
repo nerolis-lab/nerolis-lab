@@ -1,0 +1,48 @@
+import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { getUsers } from '@src/services/admin-service/admin-service.js';
+import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
+import { MockService } from '@src/utils/test-utils/mock-service.js';
+import { Roles, uuid } from 'sleepapi-common';
+import { vimic } from 'vimic';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+
+DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
+
+beforeEach(() => {
+  vimic(uuid, 'v4', () => '0'.repeat(36));
+});
+
+afterEach(() => {
+  MockService.restore();
+});
+
+describe('getUsers', () => {
+  it('shall return all users', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'some-name',
+      role: Roles.Default
+    });
+    expect(user).toBeDefined();
+
+    const result = await getUsers();
+    expect(result).toEqual(
+      expect.objectContaining({
+        users: [
+          {
+            avatar: undefined,
+            created_at: expect.any(String),
+            external_id: '000000000000000000000000000000000000',
+            id: 1,
+            last_login: expect.any(String),
+            name: 'some-name',
+            role: 'default',
+            updated_at: expect.any(String),
+            version: 1
+          }
+        ]
+      })
+    );
+  });
+});

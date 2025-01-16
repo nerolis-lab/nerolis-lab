@@ -9,13 +9,15 @@ import {
   getSavedPokemon,
   refresh,
   signup,
+  updateUser,
   upsertPokemon,
-  verify
+  verifyAdmin,
+  verifyExistingUser
 } from '@src/services/api-service/login/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { PokemonInstanceWithMeta } from 'sleepapi-common';
-import { uuid } from 'sleepapi-common';
+import { Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
@@ -44,18 +46,20 @@ describe('signup', () => {
 
     const loginResponse = await signup('some-auth-code');
 
-    expect(await UserDAO.findMultiple()).toMatchInlineSnapshot(`
-      [
-        {
-          "avatar": undefined,
-          "external_id": "00000000-0000-0000-0000-000000000000",
-          "id": 1,
-          "name": "New user",
-          "sub": "some-sub",
-          "version": 1,
-        },
-      ]
-    `);
+    expect(await UserDAO.findMultiple()).toEqual([
+      expect.objectContaining({
+        avatar: undefined,
+        external_id: '00000000-0000-0000-0000-000000000000',
+        id: 1,
+        name: 'New user',
+        role: 'default',
+        version: 1,
+        sub: 'some-sub',
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+        last_login: expect.any(String)
+      })
+    ]);
 
     expect(loginResponse).toMatchInlineSnapshot(`
       {
@@ -66,6 +70,7 @@ describe('signup', () => {
         "externalId": "00000000-0000-0000-0000-000000000000",
         "name": "New user",
         "refresh_token": "some-refresh-token",
+        "role": "default",
       }
     `);
     expect(client.getToken).toHaveBeenCalledWith({ code: 'some-auth-code', redirect_uri: 'postmessage' });
@@ -77,7 +82,7 @@ describe('signup', () => {
       tokens: {}
     });
 
-    expect(signup('some-auth-code')).rejects.toThrow(AuthorizationError);
+    await expect(() => signup('some-auth-code')).rejects.toThrow(AuthorizationError);
   });
 
   it('should handle existing user correctly', async () => {
@@ -97,22 +102,24 @@ describe('signup', () => {
       }
     });
 
-    await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user', role: Roles.Default });
 
     const loginResponse = await signup('some-auth-code');
 
-    expect(await UserDAO.findMultiple()).toMatchInlineSnapshot(`
-      [
-        {
-          "avatar": undefined,
-          "external_id": "00000000-0000-0000-0000-000000000000",
-          "id": 1,
-          "name": "Existing user",
-          "sub": "some-sub",
-          "version": 1,
-        },
-      ]
-    `);
+    expect(await UserDAO.findMultiple()).toEqual([
+      expect.objectContaining({
+        avatar: undefined,
+        external_id: '00000000-0000-0000-0000-000000000000',
+        id: 1,
+        name: 'Existing user',
+        role: 'default',
+        version: 1,
+        sub: 'some-sub',
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+        last_login: expect.any(String)
+      })
+    ]);
 
     expect(loginResponse).toMatchInlineSnapshot(`
       {
@@ -123,6 +130,7 @@ describe('signup', () => {
         "externalId": "00000000-0000-0000-0000-000000000000",
         "name": "Existing user",
         "refresh_token": "some-refresh-token",
+        "role": "default",
       }
     `);
   });
@@ -156,7 +164,7 @@ describe('refresh', () => {
     client.getAccessToken = vi.fn().mockResolvedValue({ token: null });
     client.credentials = {};
 
-    expect(refresh('some-refresh-token')).rejects.toThrow('Failed to refresh access token');
+    await expect(() => refresh('some-refresh-token')).rejects.toThrow('Failed to refresh access token');
   });
 });
 
@@ -174,21 +182,25 @@ describe('verify', () => {
     await UserDAO.insert({
       external_id: uuid.v4(),
       name: 'Existing user',
-      sub: 'some-sub'
+      sub: 'some-sub',
+      role: Roles.Default
     });
 
-    const user = await verify(accessToken);
+    const user = await verifyExistingUser(accessToken);
 
-    expect(user).toMatchInlineSnapshot(`
-      {
-        "avatar": undefined,
-        "external_id": "00000000-0000-0000-0000-000000000000",
-        "id": 1,
-        "name": "Existing user",
-        "sub": "some-sub",
-        "version": 1,
-      }
-    `);
+    expect(user).toEqual(
+      expect.objectContaining({
+        avatar: undefined,
+        external_id: '00000000-0000-0000-0000-000000000000',
+        id: 1,
+        name: 'Existing user',
+        role: 'default',
+        version: 1,
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+        last_login: expect.any(String)
+      })
+    );
 
     expect(client.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
     expect(client.request).toHaveBeenCalledWith({
@@ -208,7 +220,7 @@ describe('verify', () => {
       data: userInfo
     });
 
-    expect(verify(accessToken)).rejects.toThrow('Token was not issued from this server');
+    await expect(() => verifyExistingUser(accessToken)).rejects.toThrow('Token was not issued from this server');
   });
 
   it('should handle Google API request failure', async () => {
@@ -217,7 +229,7 @@ describe('verify', () => {
     client.setCredentials = vi.fn();
     client.request = vi.fn().mockRejectedValue(new Error('Google API request failed'));
 
-    expect(verify(accessToken)).rejects.toThrow('Google API request failed');
+    await expect(() => verifyExistingUser(accessToken)).rejects.toThrow('Google API request failed');
   });
 
   it('should throw an error if user is not found in the database', async () => {
@@ -232,7 +244,7 @@ describe('verify', () => {
       data: userInfo
     });
 
-    expect(verify(accessToken)).rejects.toThrowErrorMatchingInlineSnapshot(
+    await expect(() => verifyExistingUser(accessToken)).rejects.toThrowErrorMatchingInlineSnapshot(
       `[DatabaseNotFoundError: Unable to find entry in user with filter [{"sub":"some-sub"}]]`
     );
   });
@@ -240,7 +252,12 @@ describe('verify', () => {
 
 describe('delete', () => {
   it('should delete user from database', async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
 
     expect((await UserDAO.findMultiple()).map((user) => user.id)).toEqual([1]);
     await deleteUser(user);
@@ -251,7 +268,12 @@ describe('delete', () => {
 
 describe('getSavedPokemon', () => {
   it("shall return a user's saved pokemon", async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
     const pkmnSaved = await PokemonDAO.insert({
       ...basePokemon,
       saved: true,
@@ -286,7 +308,12 @@ describe('upsertPokemon', () => {
     version: 0
   };
   it('shall insert pokemon if not exists and saved is true', async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
 
     await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: true } });
 
@@ -294,7 +321,12 @@ describe('upsertPokemon', () => {
   });
 
   it('shall update pokemon if pre-exists', async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
 
     await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: true } });
     await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: true } });
@@ -305,7 +337,12 @@ describe('upsertPokemon', () => {
   });
 
   it('shall delete pokemon if saved false and does not exist in any teams', async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
 
     await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: false } });
 
@@ -315,7 +352,12 @@ describe('upsertPokemon', () => {
 
 describe('deletePokemon', () => {
   it('shall delete specific pokemon for user', async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
     const pkmn = await PokemonDAO.insert({
       ...basePokemon,
       saved: true,
@@ -331,7 +373,12 @@ describe('deletePokemon', () => {
   });
 
   it('shall not delete if user id matches, but external id doesnt', async () => {
-    const user = await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user' });
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
     await PokemonDAO.insert({
       ...basePokemon,
       saved: true,
@@ -344,6 +391,94 @@ describe('deletePokemon', () => {
     await deletePokemon({ user, externalId: 'incorrect' });
 
     expect(await PokemonDAO.findMultiple()).toHaveLength(1);
+  });
+});
+
+describe('verifyAdmin', () => {
+  it('should verify the access token and return the correct admin user', async () => {
+    const accessToken = 'valid-access-token';
+    const userInfo = {
+      sub: 'some-sub',
+      aud: config.GOOGLE_CLIENT_ID
+    };
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
+      data: userInfo
+    });
+    await UserDAO.insert({
+      external_id: uuid.v4(),
+      name: 'Admin user',
+      sub: 'some-sub',
+      role: Roles.Admin
+    });
+
+    const user = await verifyAdmin(accessToken);
+
+    expect(user).toEqual(
+      expect.objectContaining({
+        avatar: undefined,
+        external_id: '00000000-0000-0000-0000-000000000000',
+        id: 1,
+        name: 'Admin user',
+        role: 'admin',
+        version: 1,
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+        last_login: expect.any(String)
+      })
+    );
+
+    expect(client.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
+    expect(client.request).toHaveBeenCalledWith({
+      url: `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
+    });
+  });
+
+  it('should throw an error if user is not an admin', async () => {
+    const accessToken = 'valid-access-token';
+    const userInfo = {
+      sub: 'some-sub',
+      aud: config.GOOGLE_CLIENT_ID
+    };
+    client.setCredentials = vi.fn();
+    client.request = vi.fn().mockResolvedValue({
+      data: userInfo
+    });
+    await UserDAO.insert({
+      external_id: uuid.v4(),
+      name: 'Regular user',
+      sub: 'some-sub',
+      role: Roles.Default
+    });
+
+    await expect(() => verifyAdmin(accessToken)).rejects.toThrow('User is not an admin');
+  });
+});
+
+describe('updateUser', () => {
+  it('should update user settings correctly', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      role: Roles.Default
+    });
+
+    const updatedUser = await updateUser(user, { name: 'Updated user' });
+
+    expect(updatedUser).toEqual(
+      expect.objectContaining({
+        avatar: undefined,
+        external_id: '00000000-0000-0000-0000-000000000000',
+        id: 1,
+        name: 'Updated user',
+        role: 'default',
+        version: 2,
+        created_at: expect.any(String),
+        updated_at: expect.any(String),
+        last_login: expect.any(String)
+      })
+    );
   });
 });
 

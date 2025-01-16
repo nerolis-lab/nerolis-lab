@@ -10,6 +10,7 @@ export enum RouteName {
   Profile = 'Profile',
   UserSettings = 'UserSettings',
   Beta = 'Beta',
+  Admin = 'Admin',
   NotFound = 'NotFound'
 }
 
@@ -19,6 +20,7 @@ const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
 const UserSettingsPage = () => import('@/pages/user-settings-page.vue')
 const BetaPage = () => import('@/pages/beta/beta.vue')
+const AdminPage = () => import('@/pages/admin/admin.vue')
 const NotFoundPage = () => import('@/pages/not-found/not-found-page.vue')
 
 const router = createRouter({
@@ -60,11 +62,35 @@ const router = createRouter({
       component: BetaPage
     },
     {
+      path: '/admin',
+      name: RouteName.Admin,
+      component: AdminPage,
+      meta: { requiresAdmin: true }
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: RouteName.NotFound,
       component: NotFoundPage
     }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresAdmin) {
+    const { AdminService } = await import('@/services/admin/admin-service')
+    const { useUserStore } = await import('@/stores/user-store')
+    const { Roles } = await import('sleepapi-common')
+
+    const userStore = useUserStore()
+    if (userStore.role !== Roles.Admin) {
+      next({ name: RouteName.Home })
+    } else {
+      await AdminService.verifyAdmin()
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

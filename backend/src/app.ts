@@ -22,6 +22,8 @@ import SubskillController from './controllers/subskill/subskill.controller.js';
 import TierlistController from './controllers/tierlist/tierlist.controller.js';
 import DatabaseMigration from './database/migration/database-migration.js';
 
+import AdminController from '@src/controllers/admin/admin.controller.js';
+import { AdminRouter } from '@src/routes/admin-router/admin-router.js';
 import { LoginRouter } from '@src/routes/login-router/login-router.js';
 import { TeamRouter } from '@src/routes/team-router/team-router.js';
 import { UserRouter } from '@src/routes/user-router/user-router.js';
@@ -95,6 +97,7 @@ async function main() {
   LoginRouter.register(new LoginController());
   TeamRouter.register(new TeamController());
   UserRouter.register(new UserController());
+  AdminRouter.register(new AdminController());
 
   app.listen(config.PORT, async () => {
     logger.info(`Server is running at ${config.PORT}`);

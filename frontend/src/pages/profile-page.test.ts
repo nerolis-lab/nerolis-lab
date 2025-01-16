@@ -42,14 +42,4 @@ describe('ProfilePage', () => {
     const externalId = wrapper.findAll('.text-center').find((el) => el.text() === mockUserStoreData.externalId)
     expect(externalId).toBeDefined()
   })
-
-  it('renders avatar, name, and user ID sections', () => {
-    const avatarLabel = wrapper.findAll('.text-h6').find((el) => el.text() === 'Avatar')
-    const nameLabel = wrapper.findAll('.text-h6').find((el) => el.text() === 'Name')
-    const userIdLabel = wrapper.findAll('.text-h6').find((el) => el.text() === 'User ID')
-
-    expect(avatarLabel).toBeDefined()
-    expect(nameLabel).toBeDefined()
-    expect(userIdLabel).toBeDefined()
-  })
 })

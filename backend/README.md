@@ -14,6 +14,7 @@ DB_PASS=admin
 DATABASE_MIGRATION="UP"
 ```
 
+You can inspect the database with mysql shell: `docker exec -it backend-db-1 mysql -padmin`
 If you also want to use login functionality you'll need to set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` variables too. I won't give the values for these, as these are personal, instead you should generate a pair using google cloud API console.
 
 ## Running backend in development mode

@@ -2,7 +2,7 @@
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
-import { uuid } from 'sleepapi-common';
+import { Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
@@ -21,23 +21,27 @@ describe('UserDAO insert', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
-      name: 'some-name'
+      name: 'some-name',
+      role: Roles.Default
     });
     expect(user).toBeDefined();
 
     const data = await UserDAO.findMultiple();
-    expect(data).toMatchInlineSnapshot(`
-[
-  {
-    "avatar": undefined,
-    "external_id": "000000000000000000000000000000000000",
-    "id": 1,
-    "name": "some-name",
-    "sub": "some-sub",
-    "version": 1,
-  },
-]
-`);
+
+    expect(data).toEqual([
+      expect.objectContaining({
+        avatar: undefined,
+        created_at: expect.any(String),
+        external_id: '000000000000000000000000000000000000',
+        id: 1,
+        last_login: expect.any(String),
+        name: 'some-name',
+        role: 'default',
+        sub: 'some-sub',
+        updated_at: expect.any(String),
+        version: 1
+      })
+    ]);
   });
 
   it('shall fail to insert entity without sub', async () => {
@@ -45,7 +49,8 @@ describe('UserDAO insert', () => {
       UserDAO.insert({
         external_id: uuid.v4(),
         name: 'some-name',
-        sub: undefined as any
+        sub: undefined as any,
+        role: Roles.Default
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.sub/);
   });
@@ -55,7 +60,8 @@ describe('UserDAO insert', () => {
       UserDAO.insert({
         external_id: undefined as any,
         name: 'some-name',
-        sub: 'some-sub'
+        sub: 'some-sub',
+        role: Roles.Default
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.external_id/);
   });
@@ -64,13 +70,15 @@ describe('UserDAO insert', () => {
     await UserDAO.insert({
       external_id: uuid.v4(),
       sub: 'sub1',
-      name: 'some-name'
+      name: 'some-name',
+      role: Roles.Default
     });
     await expect(
       UserDAO.insert({
         external_id: uuid.v4(),
         sub: 'sub1',
-        name: 'some-name'
+        name: 'some-name',
+        role: Roles.Default
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: UNIQUE constraint failed: user.external_id/);
   });
@@ -81,24 +89,27 @@ describe('UserDAO update', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
-      name: 'some-name'
+      name: 'some-name',
+      role: Roles.Default
     });
     expect(user.name).toEqual('some-name');
 
     await UserDAO.update({ ...user, name: 'updated-name' });
 
     const data = await UserDAO.findMultiple();
-    expect(data).toMatchInlineSnapshot(`
-[
-  {
-    "avatar": undefined,
-    "external_id": "000000000000000000000000000000000000",
-    "id": 1,
-    "name": "updated-name",
-    "sub": "some-sub",
-    "version": 2,
-  },
-]
-`);
+    expect(data).toEqual([
+      expect.objectContaining({
+        avatar: undefined,
+        created_at: expect.any(String),
+        external_id: '000000000000000000000000000000000000',
+        id: 1,
+        last_login: expect.any(String),
+        name: 'updated-name',
+        role: 'default',
+        sub: 'some-sub',
+        updated_at: expect.any(String),
+        version: 2
+      })
+    ]);
   });
 });

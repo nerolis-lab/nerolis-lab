@@ -37,3 +37,4 @@ test-results/
 !vite-env.d.ts
 
 /dev-dist
+avatars.json

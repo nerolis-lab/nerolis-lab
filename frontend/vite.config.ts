@@ -1,5 +1,8 @@
+/* eslint-disable SleepAPILogger/no-console */
 import vue from '@vitejs/plugin-vue'
+import fs from 'fs-extra'
 import { fileURLToPath, URL } from 'node:url'
+import path from 'path'
 import { defineConfig } from 'vite'
 import type { ManifestOptions } from 'vite-plugin-pwa'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -91,7 +94,39 @@ export default defineConfig({
         enabled: true
       }
     }),
-    VueDevTools()
+    VueDevTools(),
+    {
+      name: 'generate-avatars-json',
+      buildStart: () => {
+        const avatarDir = path.resolve(__dirname, 'public/images/avatar')
+        const outputJson = path.resolve(__dirname, 'public/images/avatar/avatars.json')
+
+        function getAllFiles(dirPath: string, filesObject: Record<string, string> = {}): Record<string, string> {
+          const files = fs.readdirSync(dirPath)
+
+          files.forEach((file) => {
+            const fullPath = path.join(dirPath, file)
+            if (fs.statSync(fullPath).isDirectory()) {
+              getAllFiles(fullPath, filesObject)
+            } else if (/\.(png|jpg|jpeg)$/i.test(file)) {
+              const baseName = path.parse(file).name
+              filesObject[baseName] = path.relative(avatarDir, fullPath)
+            }
+          })
+
+          return filesObject
+        }
+
+        if (fs.existsSync(avatarDir)) {
+          const filesObject = getAllFiles(avatarDir)
+
+          fs.writeFileSync(outputJson, JSON.stringify(filesObject, null, 2))
+          console.log(`Generated avatars.json with ${Object.keys(filesObject).length} entries.`)
+        } else {
+          console.warn('Avatar directory does not exist.')
+        }
+      }
+    }
   ],
   server: {
     host: true,

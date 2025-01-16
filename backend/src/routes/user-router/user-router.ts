@@ -3,10 +3,32 @@ import type { AuthenticatedRequest } from '@src/middleware/authorization-middlew
 import { validateAuthHeader } from '@src/middleware/authorization-middleware.js';
 import { BaseRouter } from '@src/routes/base-router.js';
 import type { Request, Response } from 'express';
-import type { PokemonInstanceWithMeta } from 'sleepapi-common';
+import type { PokemonInstanceWithMeta, UpdateUserRequest } from 'sleepapi-common';
 
 class UserRouterImpl {
   public async register(controller: UserController) {
+    BaseRouter.router.patch(
+      '/user',
+      validateAuthHeader,
+      async (req: Request<Partial<UpdateUserRequest>>, res: Response) => {
+        try {
+          logger.log('Entered /user PATCH');
+
+          const user = (req as AuthenticatedRequest).user;
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          const data = await controller.updateUser(user, req.body);
+
+          res.json(data);
+        } catch (err) {
+          logger.error(err as Error);
+          res.status(500).send('Something went wrong');
+        }
+      }
+    );
+
     BaseRouter.router.get('/user/pokemon', validateAuthHeader, async (req: Request, res: Response) => {
       try {
         logger.log('Entered /user/pokemon GET');

@@ -1,6 +1,7 @@
 import serverAxios from '@/router/server-axios'
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
-import type { PokemonInstanceExt, PokemonInstanceWithMeta } from 'sleepapi-common'
+import { useUserStore } from '@/stores/user-store'
+import type { PokemonInstanceExt, PokemonInstanceWithMeta, User } from 'sleepapi-common'
 
 class UserServiceImpl {
   public async getUserPokemon() {
@@ -18,6 +19,19 @@ class UserServiceImpl {
 
   public async deletePokemon(externalId: string) {
     return serverAxios.delete(`user/pokemon/${externalId}`)
+  }
+
+  public async updateUser(updated: Partial<User>) {
+    const response = (await serverAxios.patch<User>(`user`, updated)).data
+    const userStore = useUserStore()
+
+    userStore.setUserData({
+      name: response.name,
+      email: userStore.email!,
+      externalId: response.external_id,
+      role: response.role,
+      avatar: response.avatar
+    })
   }
 }
 

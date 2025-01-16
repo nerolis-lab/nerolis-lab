@@ -1,3 +1,5 @@
+import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
+import { useUserStore } from '@/stores/user-store'
 import { island, mainskill, type Berry, type Pokemon } from 'sleepapi-common'
 
 export function mainskillImage(pokemon: Pokemon) {
@@ -7,6 +9,14 @@ export function mainskillImage(pokemon: Pokemon) {
     const maybeModifier = pokemon.skill.modifier.type === 'Base' ? '' : `${pokemon.skill.modifier.type.toLowerCase()}_`
     return `/images/mainskill/${maybeModifier}${pokemon.skill.unit}.png`
   }
+}
+
+export function userAvatar(): string {
+  const userStore = useUserStore()
+  const avatarStore = useAvatarStore()
+  const avatarName = userStore.avatar ?? 'default'
+
+  return avatarStore.getAvatarPath(avatarName)
 }
 
 export function pokemonImage(params: { pokemonName: string; shiny: boolean }) {

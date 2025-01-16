@@ -4,6 +4,7 @@ import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
+import { useVersionStore } from '@/stores/version-store/version-store'
 
 export function clearCacheAndLogout() {
   localStorage.clear()
@@ -38,8 +39,15 @@ export function clearCacheKeepLogin() {
 }
 
 export function migrateStores() {
+  const versionStore = useVersionStore()
   const teamStore = useTeamStore()
   const comparisonStore = useComparisonStore()
+  const userStore = useUserStore()
+
+  if (versionStore.updateFound) {
+    versionStore.updateVersion()
+  }
   teamStore.migrate()
   comparisonStore.migrate()
+  userStore.migrate()
 }

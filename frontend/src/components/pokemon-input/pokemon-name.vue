@@ -19,6 +19,7 @@
           no-resize
           label="Pokemon Name"
           class="compact-control"
+          autofocus
           @input="filterInput"
           @keydown.enter="saveEditDialog"
         ></v-textarea>
