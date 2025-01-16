@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.16.0...v1.17.0) (2025-01-16)
+
+
+### Features
+
+* adds admin console and user basic profile ([53ba124](https://github.com/nerolis-lab/nerolis-lab/commit/53ba1240e11f65a7f55488c8a91fb1f0205ae8a1))
+
 # [1.16.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.15.2...v1.16.0) (2025-01-16)
 
 
