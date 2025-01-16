@@ -3,6 +3,7 @@ import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
+import { Roles } from 'sleepapi-common'
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
@@ -53,7 +54,6 @@ describe('AccountMenu', () => {
     const userStore = useUserStore()
 
     userStore.name = 'John Doe'
-    userStore.avatar = 'default-avatar'
     userStore.setTokens({
       accessToken: 'access token',
       refreshToken: 'refresh token',
@@ -61,11 +61,12 @@ describe('AccountMenu', () => {
     })
 
     await nextTick()
+    await flushPromises()
 
     expect(wrapper.find('#navBarIcon').exists()).toBe(true)
     expect(wrapper.find('.mdi-account-circle').exists()).toBe(false)
     expect(wrapper.find('img').exists()).toBe(true)
-    expect(wrapper.find('img').attributes('src')).toContain('/images/avatar/default-avatar.png')
+    expect(wrapper.find('img').attributes('src')).toContain('/images/avatar/default.png')
 
     const openMenuButton = wrapper.find('#navBarIcon')
     await openMenuButton.trigger('click')
@@ -89,7 +90,8 @@ describe('AccountMenu', () => {
     userStore.setUserData({
       name: 'some name',
       email: 'some email',
-      externalId: 'some id'
+      externalId: 'some id',
+      role: Roles.Default
     })
     userStore.setTokens({
       accessToken: 'access token',
@@ -104,6 +106,7 @@ describe('AccountMenu', () => {
         "email": "some email",
         "externalId": "some id",
         "name": "some name",
+        "role": "default",
         "tokens": {
           "accessToken": "access token",
           "expiryDate": 10,
@@ -126,6 +129,7 @@ describe('AccountMenu', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "role": "default",
         "tokens": null,
       }
     `)

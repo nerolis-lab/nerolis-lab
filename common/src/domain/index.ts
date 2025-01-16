@@ -12,4 +12,5 @@ export * from './recipe';
 export * from './subskill';
 export * from './team';
 export * from './types';
+export * from './user';
 export * from './version';

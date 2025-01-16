@@ -1,3 +1,4 @@
+import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { defineStore } from 'pinia'
 
 export interface VersionState {
@@ -7,16 +8,19 @@ export interface VersionState {
 export const useVersionStore = defineStore('version', {
   state: (): VersionState => {
     return {
-      version: APP_VERSION || '1.0.0'
+      version: '1.0.0'
     }
   },
   getters: {
     updateFound: (state) => state.version !== APP_VERSION
   },
   actions: {
-    updateVersion() {
+    async updateVersion() {
       logger.debug(`Client updating version: ${this.version} -> ${APP_VERSION}`)
       this.version = APP_VERSION
+
+      const avatarStore = useAvatarStore()
+      await avatarStore.loadAvatars()
     }
   },
   persist: true

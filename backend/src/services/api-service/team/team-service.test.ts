@@ -14,7 +14,7 @@ import {
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
-import { uuid } from 'sleepapi-common';
+import { Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
@@ -34,7 +34,8 @@ describe('upsertTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     expect(await TeamDAO.findMultiple()).toEqual([]);
@@ -69,7 +70,8 @@ describe('upsertTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     await TeamDAO.insert({
@@ -111,7 +113,8 @@ describe('upsertTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     await TeamDAO.insert({
@@ -164,7 +167,14 @@ describe('upsertTeam', () => {
 
 describe('getTeams', () => {
   it('should return an empty array if no teams exist for the user', async () => {
-    const response = await getTeams({ id: 1, version: 1, name: 'some name', sub: 'some sub', external_id: uuid.v4() });
+    const response = await getTeams({
+      id: 1,
+      version: 1,
+      name: 'some name',
+      sub: 'some sub',
+      external_id: uuid.v4(),
+      role: Roles.Default
+    });
 
     expect(response).toEqual({ teams: [] });
   });
@@ -173,7 +183,8 @@ describe('getTeams', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     await TeamDAO.insert({
@@ -229,12 +240,14 @@ describe('getTeams', () => {
     const user1 = await UserDAO.insert({
       external_id: 'ext id 1',
       name: 'name1',
-      sub: 'sub1'
+      sub: 'sub1',
+      role: Roles.Default
     });
     const user2 = await UserDAO.insert({
       external_id: 'ext id 2',
       name: 'name2',
-      sub: 'sub2'
+      sub: 'sub2',
+      role: Roles.Default
     });
 
     await TeamDAO.insert({
@@ -281,7 +294,8 @@ describe('upsertTeamMember', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const request: UpsertTeamMemberRequest = {
@@ -384,7 +398,8 @@ describe('upsertTeamMember', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const request: UpsertTeamMemberRequest = {
@@ -524,7 +539,8 @@ describe('upsertTeamMember', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const request: UpsertTeamMemberRequest = {
@@ -560,7 +576,8 @@ describe('deleteMember', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const team = await TeamDAO.insert({
@@ -607,7 +624,8 @@ describe('deleteMember', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const team = await TeamDAO.insert({
@@ -654,7 +672,8 @@ describe('deleteMember', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const team1 = await TeamDAO.insert({
@@ -715,7 +734,8 @@ describe('deleteTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const team = await TeamDAO.insert({
@@ -768,7 +788,8 @@ describe('deleteTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const team = await TeamDAO.insert({
@@ -791,7 +812,8 @@ describe('deleteTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub'
+      sub: 'sub',
+      role: Roles.Default
     });
 
     const team = await TeamDAO.insert({

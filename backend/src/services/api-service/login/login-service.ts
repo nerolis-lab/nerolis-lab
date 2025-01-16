@@ -6,8 +6,8 @@ import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import type { TokenInfo } from 'google-auth-library';
 import { OAuth2Client } from 'google-auth-library';
-import type { LoginResponse, PokemonInstanceWithMeta, RefreshResponse } from 'sleepapi-common';
-import { uuid } from 'sleepapi-common';
+import type { LoginResponse, PokemonInstanceWithMeta, RefreshResponse, UpdateUserRequest } from 'sleepapi-common';
+import { Roles, uuid } from 'sleepapi-common';
 
 interface DecodedUserData {
   sub: string;
@@ -40,7 +40,12 @@ export async function signup(authorization_code: string): Promise<LoginResponse>
 
   const existingUser =
     (await UserDAO.find({ sub: userinfo.data.sub })) ??
-    (await UserDAO.insert({ sub: userinfo.data.sub, external_id: uuid.v4(), name: 'New user' }));
+    (await UserDAO.insert({
+      sub: userinfo.data.sub,
+      external_id: uuid.v4(),
+      name: 'New user',
+      role: Roles.Default
+    }));
 
   return {
     name: existingUser.name,
@@ -49,7 +54,8 @@ export async function signup(authorization_code: string): Promise<LoginResponse>
     refresh_token: tokens.refresh_token,
     expiry_date: tokens.expiry_date,
     email: userinfo.data.email,
-    externalId: existingUser.external_id
+    externalId: existingUser.external_id,
+    role: existingUser.role
   };
 }
 
@@ -69,8 +75,7 @@ export async function refresh(refresh_token: string): Promise<RefreshResponse> {
   };
 }
 
-// TODO: too generic name, not obvious when called outside since this is pure function
-export async function verify(access_token: string) {
+export async function verifyExistingUser(access_token: string) {
   client.setCredentials({ access_token });
   const response = await client.request<TokenInfo>({
     url: `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${access_token}`
@@ -81,11 +86,31 @@ export async function verify(access_token: string) {
     throw new AuthorizationError('Token was not issued from this server');
   }
 
-  return UserDAO.get({ sub: tokenInfo.sub });
+  return updateLastLogin(tokenInfo.sub);
+}
+
+export async function verifyAdmin(access_token: string) {
+  const user = await verifyExistingUser(access_token);
+  if (user.role !== Roles.Admin) {
+    throw new AuthorizationError('User is not an admin');
+  }
+  return user;
+}
+
+export async function updateLastLogin(inputSub?: string) {
+  const user = await UserDAO.get({ sub: inputSub });
+  await UserDAO.update({ ...user, last_login: new Date() });
+  return user;
+}
+
+export async function updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { sub, ...rest } = await UserDAO.update({ ...user, ...newSettings });
+  return rest;
 }
 
 export async function deleteUser(user: DBUser) {
-  UserDAO.delete(user);
+  UserDAO.delete({ id: user.id });
 }
 
 export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWithMeta[]> {

@@ -1,7 +1,7 @@
 import serverAxios from '@/router/server-axios'
 import { GoogleService } from '@/services/login/google-service'
 import axios from 'axios'
-import type { LoginResponse, RefreshResponse } from 'sleepapi-common'
+import { Roles, type LoginResponse, type RefreshResponse } from 'sleepapi-common'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('axios')
@@ -23,7 +23,8 @@ describe('login', () => {
       refresh_token: 'some-refresh-id',
       expiry_date: 1,
       email: 'some email',
-      externalId: 'some id'
+      externalId: 'some id',
+      role: Roles.Default
     }
 
     mockedAxios.post.mockResolvedValue({ data: mockResponse })

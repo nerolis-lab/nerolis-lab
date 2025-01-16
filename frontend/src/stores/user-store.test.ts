@@ -2,6 +2,7 @@ import router from '@/router/router'
 import { GoogleService } from '@/services/login/google-service'
 import { useUserStore } from '@/stores/user-store'
 import { createPinia, setActivePinia } from 'pinia'
+import { Roles } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { googleLogout } from 'vue3-google-login'
 
@@ -14,6 +15,16 @@ describe('User Store', () => {
     setActivePinia(createPinia())
   })
 
+  it('should migrate the store', () => {
+    const userStore = useUserStore()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userStore.role = null as any
+    expect(userStore.role).toBeNull()
+
+    userStore.migrate()
+    expect(userStore.role).toBe(Roles.Default)
+  })
+
   it('should have expected default state', () => {
     const userStore = useUserStore()
     expect(userStore.$state).toMatchInlineSnapshot(`
@@ -22,6 +33,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "role": "default",
         "tokens": null,
       }
     `)
@@ -35,7 +47,8 @@ describe('User Store', () => {
       name: 'some name',
       avatar: 'some avatar',
       email: 'some email',
-      externalId: 'some id'
+      externalId: 'some id',
+      role: Roles.Default
     })
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
@@ -43,6 +56,7 @@ describe('User Store', () => {
         "email": "some email",
         "externalId": "some id",
         "name": "some name",
+        "role": "default",
         "tokens": null,
       }
     `)
@@ -63,6 +77,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "role": "default",
         "tokens": {
           "accessToken": "some access token",
           "expiryDate": 10,
@@ -78,7 +93,8 @@ describe('User Store', () => {
       name: 'some name',
       avatar: 'some avatar',
       email: 'some email',
-      externalId: 'some id'
+      externalId: 'some id',
+      role: Roles.Default
     })
     userStore.setTokens({
       accessToken: 'some access token',
@@ -92,6 +108,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "role": "default",
         "tokens": null,
       }
     `)
@@ -103,7 +120,8 @@ describe('User Store', () => {
       refresh_token: 'some refresh token',
       expiry_date: '10',
       name: 'some name',
-      avatar: 'some avatar'
+      avatar: 'some avatar',
+      role: 'default'
     })
 
     router.go = vi.fn()
@@ -118,6 +136,7 @@ describe('User Store', () => {
         "email": undefined,
         "externalId": undefined,
         "name": "some name",
+        "role": "default",
         "tokens": {
           "accessToken": "some access token",
           "expiryDate": "10",
@@ -202,7 +221,8 @@ describe('User Store', () => {
       name: 'some name',
       avatar: 'some avatar',
       email: 'some email',
-      externalId: 'some id'
+      externalId: 'some id',
+      role: Roles.Default
     })
     userStore.setTokens({
       accessToken: 'some access token',
@@ -218,6 +238,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "role": "default",
         "tokens": null,
       }
     `)

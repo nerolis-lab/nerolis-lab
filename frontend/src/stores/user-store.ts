@@ -2,7 +2,7 @@ import router from '@/router/router'
 import { GoogleService } from '@/services/login/google-service'
 import { clearCacheAndLogout } from '@/stores/store-service'
 import { defineStore } from 'pinia'
-import { MAX_ISLAND_BONUS, type LoginResponse } from 'sleepapi-common'
+import { MAX_ISLAND_BONUS, Roles, type LoginResponse } from 'sleepapi-common'
 import { googleLogout } from 'vue3-google-login'
 
 export interface UserState {
@@ -11,6 +11,7 @@ export interface UserState {
   email: string | null
   tokens: TokenInfo | null
   externalId: string | null
+  role: Roles
 }
 
 export interface TokenInfo {
@@ -26,20 +27,26 @@ export const useUserStore = defineStore('user', {
       avatar: null,
       email: null,
       tokens: null,
-      externalId: null
+      externalId: null,
+      role: Roles.Default
     }
   },
   getters: {
-    // loggedIn doesnt check if access token valid/expired, just that the user is logged in
     loggedIn: (state) => state.tokens !== null,
-    islandBonus: () => 1 + MAX_ISLAND_BONUS / 100 // TODO: user should probably hold island bonuses and recipe levels
+    islandBonus: () => 1 + MAX_ISLAND_BONUS / 100
   },
   actions: {
-    setUserData(userData: { name: string; avatar?: string; email: string; externalId: string }) {
+    migrate() {
+      if (!this.role) {
+        this.role = Roles.Default
+      }
+    },
+    setUserData(userData: { name: string; avatar?: string; email: string; externalId: string; role: Roles }) {
       this.name = userData.name
       this.avatar = userData.avatar ?? 'default'
       this.email = userData.email
       this.externalId = userData.externalId
+      this.role = userData.role
     },
     setTokens(tokens: TokenInfo) {
       this.tokens = tokens
@@ -55,7 +62,8 @@ export const useUserStore = defineStore('user', {
         name: loginResponse.name,
         avatar: loginResponse.avatar,
         email: loginResponse.email,
-        externalId: loginResponse.externalId
+        externalId: loginResponse.externalId,
+        role: loginResponse.role
       })
 
       // Refresh the current page

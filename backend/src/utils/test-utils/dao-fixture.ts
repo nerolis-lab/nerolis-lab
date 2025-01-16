@@ -4,6 +4,8 @@ import { DatabaseConnectionError } from '@src/domain/error/database/database-err
 import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { Knex } from 'knex';
 import knex from 'knex';
+import 'sleepapi-common';
+import { vimic } from 'vimic';
 
 type InitParams = {
   enforceForeignKeyConstraints?: boolean;
@@ -41,6 +43,7 @@ export const DaoFixture = {
 
     if (params?.recreateDatabasesBeforeEachTest) {
       beforeEach(async () => {
+        vimic(logger, 'info');
         await setup();
       });
     } else {

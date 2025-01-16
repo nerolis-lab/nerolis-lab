@@ -2,23 +2,19 @@
   <v-menu v-model="menu" :close-on-content-click="false" location="bottom" width="250px">
     <template #activator="{ props }">
       <v-btn v-bind="props" id="navBarIcon" icon>
-        <img
-          v-if="userStore.loggedIn"
-          :src="`/images/avatar/${userStore.avatar}.png`"
-          alt="User Profile Picture"
-          height="24px"
-          style="transform: scale(1.4)"
-        />
+        <v-avatar v-if="userStore.loggedIn" variant="outlined" color="surface" size="40" class="avatar-button">
+          <img :src="userAvatar()" alt="User Profile Picture" height="24px" style="transform: scale(1.4)" />
+        </v-avatar>
         <v-icon v-else size="24">mdi-account-circle</v-icon>
       </v-btn>
     </template>
 
     <v-card id="accountMenu">
-      <v-col cols="auto" class="text-center">
-        <v-avatar size="72" color="background" class="mb-2">
+      <v-col cols="auto" class="flex-column flex-center">
+        <v-avatar size="72" color="secondary" class="mb-2">
           <img
             v-if="userStore.loggedIn"
-            :src="`/images/avatar/${userStore.avatar}.png`"
+            :src="userAvatar()"
             alt="User Profile Picture"
             style="width: 100%; height: 100%; object-fit: cover"
           />
@@ -63,6 +59,7 @@
 
 <script lang="ts">
 import GoogleIcon from '@/components/icons/icon-google.vue'
+import { userAvatar } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
 import { defineComponent } from 'vue'
 import type { CallbackTypes } from 'vue3-google-login'
@@ -76,7 +73,8 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
-    return { userStore }
+
+    return { userStore, userAvatar }
   },
   data: () => ({
     menu: false
@@ -103,4 +101,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.avatar-button {
+  border-width: 2px;
+}
+</style>

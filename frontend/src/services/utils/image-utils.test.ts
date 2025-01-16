@@ -1,4 +1,14 @@
-import { avatarImage, berryImage, islandImage, mainskillImage, pokemonImage } from '@/services/utils/image-utils'
+import {
+  avatarImage,
+  berryImage,
+  islandImage,
+  mainskillImage,
+  pokemonImage,
+  userAvatar
+} from '@/services/utils/image-utils'
+import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
+import { useUserStore } from '@/stores/user-store'
+import { createPinia, setActivePinia } from 'pinia'
 import { berry, island, mainskill, mockPokemon, type Pokemon } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
@@ -88,5 +98,27 @@ describe('islandImage', () => {
 describe('berryImage', () => {
   it('return the correct image path', () => {
     expect(berryImage(berry.BELUE)).toEqual('/images/berries/belue.png')
+  })
+})
+
+describe('userAvatar', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
+
+  it('returns the correct avatar path from the avatar store', () => {
+    const userStore = useUserStore()
+    const avatarStore = useAvatarStore()
+    Object.defineProperty(avatarStore, 'getAvatarPath', {
+      value: vi.fn(() => 'some avatar')
+    })
+    userStore.avatar = 'test-avatar'
+
+    const result = userAvatar()
+    expect(result).toBe('some avatar')
+  })
+
+  it('returns the default avatar path if no avatar is set', () => {
+    expect(userAvatar()).toBe('/images/avatar/default.png')
   })
 })

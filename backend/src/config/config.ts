@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 export class BackendConfig {
   constructor() {
-    // TODO: dotenv might not be needed for bun
     dotenv.config();
   }
 
