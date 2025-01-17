@@ -55,9 +55,9 @@ describe('signup', () => {
         role: 'default',
         version: 1,
         sub: 'some-sub',
-        created_at: expect.any(String),
-        updated_at: expect.any(String),
-        last_login: expect.any(String)
+        created_at: expect.any(Date),
+        updated_at: expect.any(Date),
+        last_login: expect.any(Date)
       })
     ]);
 
@@ -115,9 +115,9 @@ describe('signup', () => {
         role: 'default',
         version: 1,
         sub: 'some-sub',
-        created_at: expect.any(String),
-        updated_at: expect.any(String),
-        last_login: expect.any(String)
+        created_at: expect.any(Date),
+        updated_at: expect.any(Date),
+        last_login: expect.any(Date)
       })
     ]);
 
@@ -195,10 +195,10 @@ describe('verify', () => {
         id: 1,
         name: 'Existing user',
         role: 'default',
-        version: 1,
-        created_at: expect.any(String),
-        updated_at: expect.any(String),
-        last_login: expect.any(String)
+        version: 2,
+        created_at: expect.any(Date),
+        updated_at: expect.any(Date),
+        last_login: expect.any(Date)
       })
     );
 
@@ -421,10 +421,10 @@ describe('verifyAdmin', () => {
         id: 1,
         name: 'Admin user',
         role: 'admin',
-        version: 1,
-        created_at: expect.any(String),
-        updated_at: expect.any(String),
-        last_login: expect.any(String)
+        version: 2,
+        created_at: expect.any(Date),
+        updated_at: expect.any(Date),
+        last_login: expect.any(Date)
       })
     );
 
@@ -474,9 +474,9 @@ describe('updateUser', () => {
         name: 'Updated user',
         role: 'default',
         version: 2,
-        created_at: expect.any(String),
-        updated_at: expect.any(String),
-        last_login: expect.any(String)
+        created_at: expect.any(Date),
+        updated_at: expect.any(Date),
+        last_login: expect.any(Date)
       })
     );
   });

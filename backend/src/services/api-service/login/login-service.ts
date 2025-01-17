@@ -99,8 +99,7 @@ export async function verifyAdmin(access_token: string) {
 
 export async function updateLastLogin(inputSub?: string) {
   const user = await UserDAO.get({ sub: inputSub });
-  await UserDAO.update({ ...user, last_login: new Date() });
-  return user;
+  return UserDAO.update({ ...user, last_login: new Date() });
 }
 
 export async function updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {

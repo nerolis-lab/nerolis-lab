@@ -32,13 +32,13 @@ describe('getUsers', () => {
         users: [
           {
             avatar: undefined,
-            created_at: expect.any(String),
+            created_at: expect.any(Date),
             external_id: '000000000000000000000000000000000000',
             id: 1,
-            last_login: expect.any(String),
+            last_login: expect.any(Date),
             name: 'some-name',
             role: 'default',
-            updated_at: expect.any(String),
+            updated_at: expect.any(Date),
             version: 1
           }
         ]

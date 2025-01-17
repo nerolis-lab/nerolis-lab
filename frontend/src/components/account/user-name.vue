@@ -23,6 +23,7 @@
           clearable
           rows="2"
           no-resize
+          autofocus
           label="Enter your new name.."
           class="compact-control"
           @input="filterInput"
