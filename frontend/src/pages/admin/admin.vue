@@ -8,7 +8,7 @@
           key="key"
           :items="filteredUsers"
           :headers="headers"
-          item-value="name"
+          item-value="external_id"
           class="elevation-1"
           show-expand
           :loading="loading"
@@ -30,8 +30,16 @@
 
           <template #[`item.avatar`]="{ item }">
             <v-avatar size="36">
-              <v-img :src="userAvatar()" />
+              <v-img :src="avatarStore.getAvatarPath(item.avatar ?? 'default')" />
             </v-avatar>
+          </template>
+
+          <template #[`item.last_login`]="{ item }">
+            <span>{{ DateUtils.formatDate(item.last_login ?? new Date().toISOString()) }}</span>
+          </template>
+
+          <template #[`item.created_at`]="{ item }">
+            <span>{{ DateUtils.formatDate(item.created_at ?? new Date().toISOString()) }}</span>
           </template>
 
           <template #no-data>
@@ -47,7 +55,9 @@
 
 <script lang="ts">
 import { AdminService } from '@/services/admin/admin-service'
+import { DateUtils } from '@/services/utils/date/date-utils'
 import { userAvatar } from '@/services/utils/image-utils'
+import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import type { User } from 'sleepapi-common'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
@@ -61,6 +71,7 @@ type DataTableHeader = {
 export default defineComponent({
   name: 'AdminConsole',
   setup() {
+    const avatarStore = useAvatarStore()
     const users = ref<User[]>([])
     const loading = ref(false)
     const search = ref('')
@@ -109,7 +120,9 @@ export default defineComponent({
       refreshUsers,
       userAvatar,
       search,
-      filteredUsers
+      filteredUsers,
+      avatarStore,
+      DateUtils
     }
   }
 })
