@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.17.0...v1.17.1) (2025-01-17)
+
+
+### Bug Fixes
+
+* uses UTC timestamp and unique admin table id ([4fce4b0](https://github.com/nerolis-lab/nerolis-lab/commit/4fce4b0acdffa4e1ab25fd6cdfed2067f59ed70c))
+
 # [1.17.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.16.0...v1.17.0) (2025-01-16)
 
 
