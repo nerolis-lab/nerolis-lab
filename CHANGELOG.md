@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.0...v1.18.1) (2025-01-20)
+
+
+### Bug Fixes
+
+* adds berry burst details component ([52b1a84](https://github.com/nerolis-lab/nerolis-lab/commit/52b1a849f01a9da6b22dd3aa6f3c02a7f6a61765))
+
 # [1.18.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.17.2...v1.18.0) (2025-01-20)
 
 
