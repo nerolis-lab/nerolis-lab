@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.17.2...v1.18.0) (2025-01-20)
+
+
+### Features
+
+* add rufflet ([bbeec4e](https://github.com/nerolis-lab/nerolis-lab/commit/bbeec4e30c09086aa32a5ce062759695ddc5e6eb))
+
 ## [1.17.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.17.1...v1.17.2) (2025-01-20)
 
 
