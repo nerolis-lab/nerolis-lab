@@ -1,3 +1,11 @@
+## [1.17.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.17.1...v1.17.2) (2025-01-20)
+
+
+### Bug Fixes
+
+* disable current mon in search with pokemon name, not nickname ([2d0b31b](https://github.com/nerolis-lab/nerolis-lab/commit/2d0b31baad2fca8b68ab0dc9dcd856af2f9a7894))
+* significantly reduces set cover memory usage ([c6cc81b](https://github.com/nerolis-lab/nerolis-lab/commit/c6cc81bd1c702e93aa84c6c5ba7bc26ef46352ad))
+
 ## [1.17.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.17.0...v1.17.1) (2025-01-17)
 
 
