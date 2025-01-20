@@ -58,6 +58,19 @@ export function createSkillEvent(
       );
       break;
     }
+    case mainskill.BERRY_BURST: {
+      skillActivations.push(
+        activateBerryBurst({
+          skillLevel,
+          nrOfHelpsToActivate,
+          adjustedAmount,
+          pokemonSet,
+          avgCritChancePerProc,
+          metronomeFactor
+        })
+      );
+      break;
+    }
     case mainskill.EXTRA_HELPFUL_S: {
       skillActivations.push(
         activateExtraHelpful({
@@ -206,6 +219,40 @@ export function activateDisguiseBerryBurst(params: {
     },
     fractionOfProc: fractionOfProc / metronomeFactor,
     critChance: avgCritChancePerProc
+  };
+}
+export function activateBerryBurst(params: {
+  skillLevel: number;
+  nrOfHelpsToActivate: number;
+  adjustedAmount: number;
+  pokemonSet: PokemonProduce;
+  avgCritChancePerProc: number;
+  metronomeFactor: number;
+}): SkillActivation {
+  const {
+    skillLevel,
+    nrOfHelpsToActivate,
+    adjustedAmount: fractionOfProc,
+    pokemonSet,
+    avgCritChancePerProc,
+    metronomeFactor
+  } = params;
+  const skill = mainskill.BERRY_BURST;
+
+  const amountNoCrit = skill.amount(skillLevel) * fractionOfProc;
+
+  const averageBerryAmount = (amountNoCrit + avgCritChancePerProc * amountNoCrit) / metronomeFactor;
+
+  return {
+    skill,
+    adjustedAmount: averageBerryAmount,
+    nrOfHelpsToActivate,
+    adjustedProduce: {
+      // TODO: level is wrong, but not used in classic calc
+      berries: [{ amount: averageBerryAmount, berry: pokemonSet.pokemon.berry, level: 0 }],
+      ingredients: emptyIngredientInventory()
+    },
+    fractionOfProc: fractionOfProc / metronomeFactor
   };
 }
 

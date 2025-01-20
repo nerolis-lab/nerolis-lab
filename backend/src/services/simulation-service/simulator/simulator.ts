@@ -278,6 +278,16 @@ export function simulation(params: {
               (amountNoCrit + critChance * amountNoCrit * mainskill.DISGUISE_CRIT_MULTIPLIER) / metronomeFactor;
 
             skillBerriesOtherValue += averageTeamBerryAmount;
+          } else if (skillActivation.skill.isSkill(mainskill.BERRY_BURST)) {
+            const skillLevel = input.skillLevel ?? mainskill.BERRY_BURST.maxLevel;
+            const metronomeUser = pokemon.skill.isSkill(mainskill.METRONOME);
+            const metronomeFactor = metronomeUser ? METRONOME_SKILLS.length : 1;
+
+            const amountNoCrit = mainskill.BERRY_BURST_TEAM_AMOUNT[skillLevel - 1] * skillActivation.fractionOfProc;
+
+            const averageTeamBerryAmount = amountNoCrit / metronomeFactor;
+
+            skillBerriesOtherValue += averageTeamBerryAmount;
           }
           skillProduceValue = CarrySizeUtils.addToInventory(skillProduceValue, skillActivation.adjustedProduce);
         } else if (skillActivation.skill.isUnit('strength')) {

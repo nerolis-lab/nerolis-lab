@@ -3,7 +3,21 @@
 exports[`activateMetronome > shall use the correct metronomeFactor for each skill activation 1`] = `
 [
   {
-    "adjustedAmount": 1.12,
+    "adjustedAmount": 3.2,
+    "adjustedProduce": {
+      "berries": [
+        {
+          "amount": 3.2,
+          "berry": {
+            "name": "LUM",
+            "type": "bug",
+            "value": 24,
+          },
+          "level": 0,
+        },
+      ],
+      "ingredients": [],
+    },
     "fractionOfProc": 0.05333333333333334,
     "nrOfHelpsToActivate": 2,
     "skill": {
@@ -16,14 +30,14 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         7232,
       ],
       "amount": [
-        8,
-        10,
-        15,
-        17,
-        19,
+        11,
+        14,
         21,
+        24,
+        27,
+        30,
       ],
-      "description": "Gets ? Berries.",
+      "description": "Gets ? Berries plus ? of each of the Berries other Pokémon on your team collect.",
       "maxLevel": 6,
       "modifier": {
         "critChance": 0,
