@@ -45,6 +45,7 @@ import {
   WARMING_GINGER
 } from '../ingredient/ingredients';
 import {
+  BERRY_BURST,
   BERRY_BURST_DISGUISE,
   CHARGE_ENERGY_S_MOONLIGHT,
   CHARGE_STRENGTH_M,
@@ -833,6 +834,39 @@ export const GALLADE: Pokemon = {
   skill: EXTRA_HELPFUL_S
 };
 
+export const RUFFLET: Pokemon = {
+  name: 'RUFFLET',
+  specialty: 'skill',
+  frequency: toSeconds(1, 3, 20),
+  ingredientPercentage: 12.5,
+  skillPercentage: 3.1,
+  berry: GREPA,
+  genders: MALE_ONLY,
+  carrySize: 10,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: { amount: 1, ingredient: BEAN_SAUSAGE },
+  ingredient30: [
+    { amount: 2, ingredient: BEAN_SAUSAGE },
+    { amount: 1, ingredient: GREENGRASS_CORN }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: BEAN_SAUSAGE },
+    { amount: 3, ingredient: GREENGRASS_CORN },
+    { amount: 2, ingredient: ROUSING_COFFEE }
+  ],
+  skill: BERRY_BURST
+};
+
+export const BRAVIARY: Pokemon = {
+  ...evolvesFrom(RUFFLET),
+  name: 'BRAVIARY',
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 12.1,
+  skillPercentage: 3.2,
+  carrySize: 18
+};
+
 export const SYLVEON: Pokemon = {
   ...evolvesFrom(EEVEE),
   name: 'SYLVEON',
@@ -963,6 +997,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   LEAFEON,
   GLACEON,
   GALLADE,
+  BRAVIARY,
   SYLVEON,
   DEDENNE,
   MIMIKYU,
@@ -991,6 +1026,7 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   BONSLY,
   DRIFLOON,
   RIOLU,
+  RUFFLET,
   PAWMI,
   PAWMO
 ];
