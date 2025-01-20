@@ -21,7 +21,7 @@
     <v-card>
       <GroupList
         :data="pokedexStore.groupedPokedex"
-        :selected-options="[pokemonInstance.name]"
+        :selected-options="[pokemonInstance.pokemon.name]"
         @select-option="selectPokemon"
         @cancel="closeMenu"
       />
