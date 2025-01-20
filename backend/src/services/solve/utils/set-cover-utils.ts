@@ -1,11 +1,4 @@
-import type { SetCoverPokemonSetup } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
-import type {
-  RecipeSolutions,
-  SolveRecipeResult,
-  SolveRecipeSolution,
-  SubRecipeMeta
-} from '@src/services/solve/types/solution-types.js';
-import { combineProduction, hashPokemonSetIndexed } from '@src/services/solve/utils/solve-utils.js';
+import type { RecipeSolutions } from '@src/services/solve/types/solution-types.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientIndexToIntAmount } from 'sleepapi-common';
 import { ingredient } from 'sleepapi-common';
@@ -96,93 +89,11 @@ export function subtractAndCount(
   return { remainingRecipeWithSpotsLeft, sumRemainingRecipeIngredients, remainingIngredientIndices };
 }
 
-/**
- * Creates an array of sub-recipes after subtracting the ingredients provided by the producers.
- *
- * @param recipeWithSpotsLeft - The initial recipe with remaining spots left for ingredients.
- * @param ingredientIndices - The indices of the ingredients to be considered.
- * @param producersOfFirstIngredient - The set of producers for the first ingredient.
- * @returns An array of objects, each containing:
- *   - `remainingRecipeWithSpotsLeft`: The sub-recipe after subtracting the producer's ingredients.
- *   - `remainingIngredientIndices`: The remaining ingredient indices after subtraction.
- *   - `sumRemainingRecipeIngredients`: The sum of the remaining ingredients in the sub-recipe.
- *   - `member`: The producer that was subtracted.
- */
-export function sortSubRecipesAfterProducerSubtract(
-  recipeWithSpotsLeft: IngredientIndexToIntAmount,
-  ingredientIndices: number[],
-  producersOfFirstIngredient: SetCoverPokemonSetup[]
-): SubRecipeMeta[] {
-  const subRecipesAfterProducerSubtract: SubRecipeMeta[] = [];
-
-  for (let i = 0; i < producersOfFirstIngredient.length; ++i) {
-    const member = producersOfFirstIngredient[i];
-
-    const { remainingRecipeWithSpotsLeft, remainingIngredientIndices, sumRemainingRecipeIngredients } =
-      subtractAndCount(recipeWithSpotsLeft, member.totalIngredients, ingredientIndices);
-
-    subRecipesAfterProducerSubtract.push({
-      remainingRecipeWithSpotsLeft,
-      remainingIngredientIndices,
-      sumRemainingRecipeIngredients,
-      member
-    });
-  }
-
-  // Sort sub-recipes by remaining ingredients (least to most), prioritizing the most promising solution first
-  return subRecipesAfterProducerSubtract.sort(
-    (a, b) => a.sumRemainingRecipeIngredients - b.sumRemainingRecipeIngredients
-  );
-}
-
-export function addMemberToSubTeams(teams: RecipeSolutions, subTeams: RecipeSolutions, member: SetCoverPokemonSetup) {
+export function addMemberToSubTeams(teams: RecipeSolutions, subTeams: RecipeSolutions, memberIndex: number) {
   for (let i = 0; i < subTeams.length; i++) {
     // const copiedSubTeam = subTeams[i];
     const copiedSubTeam = [...subTeams[i]];
-    copiedSubTeam.push(member);
+    copiedSubTeam.push(memberIndex);
     teams.push(copiedSubTeam);
   }
-}
-
-/**
- * Formats the result of solving a recipe problem.
- * This calculates and adds each team's combined ingredient production.
- * This also determines whether the solving process was exhaustive.
- *
- * @param solutions - The solutions to the recipe.
- * @param startTime - The start time of the solving process.
- * @param timeout - The timeout duration for the solving process.
- * @returns The formatted result including whether the process was exhaustive and the teams with their produced ingredients.
- */
-export function formatResult(params: {
-  solutions: RecipeSolutions;
-  startTime: number;
-  timeout: number;
-}): SolveRecipeResult {
-  const { solutions, startTime, timeout } = params;
-
-  const foundSolutions: Set<string> = new Set();
-  const teams: SolveRecipeSolution[] = [];
-  for (const members of solutions) {
-    members.sort((a, b) => {
-      const hashA = hashPokemonSetIndexed(a.pokemonSet).toString();
-      const hashB = hashPokemonSetIndexed(b.pokemonSet).toString();
-      return hashA.localeCompare(hashB);
-    });
-
-    const foundSolution = members.map((member) => hashPokemonSetIndexed(member.pokemonSet)).join(',');
-    if (!foundSolutions.has(foundSolution)) {
-      foundSolutions.add(foundSolution);
-
-      const combinedIngredientProduction = combineProduction(members);
-      teams.push({
-        members,
-        producedIngredients: combinedIngredientProduction
-      });
-    }
-  }
-  return {
-    exhaustive: !TimeUtils.checkTimeout({ startTime, timeout }),
-    teams
-  };
 }

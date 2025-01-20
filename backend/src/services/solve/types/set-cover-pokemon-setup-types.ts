@@ -16,13 +16,7 @@ export interface SetCoverPokemonSetup {
 }
 
 export type IngredientProducers = SetCoverPokemonSetup[];
-
-/**
- * Represents a mapping of ingredient indices to their respective producers.
- * Each index corresponds to an ingredient from the @INGREDIENTS array.
- * Producers are sorted in descending order of production amount.
- */
-export type ProducersByIngredientIndex = IngredientProducers[];
+export type ProducersByIngredientIndex = Array<Array<number>>;
 
 /**
  * Used to cache and track the settings associated with a Pokémon setup.

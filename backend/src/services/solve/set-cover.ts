@@ -14,37 +14,53 @@
  * limitations under the License.
  */
 
-import type { ProducersByIngredientIndex } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
-import type { RecipeSolutions, SolveRecipeResult, SubRecipeMeta } from '@src/services/solve/types/solution-types.js';
+import type { IngredientProducers } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
+import type {
+  RecipeSolutions,
+  SolveRecipeResult,
+  SolveRecipeSolution,
+  SubRecipeMeta
+} from '@src/services/solve/types/solution-types.js';
 import {
   addMemberToSubTeams,
   addSpotsLeftToRecipe,
   createMemoKey,
   findSortedRecipeIngredientIndices,
-  formatResult,
   ifUnsolvableNode,
-  sortSubRecipesAfterProducerSubtract
+  subtractAndCount
 } from '@src/services/solve/utils/set-cover-utils.js';
+import { combineProduction, hashPokemonSetIndexed } from '@src/services/solve/utils/solve-utils.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientIndexToIntAmount } from 'sleepapi-common';
 import { ingredient } from 'sleepapi-common';
 
-// TODO: Can we parallelize recursive calls with worker_threads?
 export class SetCover {
-  private producersByIngredientIndex: ProducersByIngredientIndex;
-  private cachedSubRecipeSolves: Map<number, ProducersByIngredientIndex>;
+  private ingredientProducers: IngredientProducers; // flat array of all ingredient producers
+  private producersByIngredientIndexOriginal: Array<Array<number>>; // used to reset the producersByIngredientIndex between solves
+  private producersByIngredientIndex: Array<Array<number>>; // each index of outer array maps to each ingredient's index in INGREDIENTS array, each inner array contains the indices of the producers that can produce that ingredient
+  private cachedSubRecipeSolves: Map<number, Array<Array<number>>>; // a map of subrecipe memo key to an array of solutions, where each solution is an array of indices that point to the producer in ingredientProducers
 
   private startTime: number = Date.now();
   private timeout = 10000;
+  private originalMaxTeamSize = 0;
 
   constructor(
-    producersByIngredientIndex: ProducersByIngredientIndex,
+    ingredientProducers: IngredientProducers,
+    producersByIngredientIndex: Array<Array<number>>,
     cachedSubRecipeSolves: Map<number, RecipeSolutions>
   ) {
+    this.ingredientProducers = ingredientProducers;
     this.producersByIngredientIndex = producersByIngredientIndex;
+    this.producersByIngredientIndexOriginal = producersByIngredientIndex;
     this.cachedSubRecipeSolves = cachedSubRecipeSolves;
   }
 
   public solveRecipe(recipe: IngredientIndexToIntAmount, maxTeamSize: number): SolveRecipeResult {
+    this.originalMaxTeamSize = maxTeamSize;
+    // not 100% sure resetting this.producersByIngredientIndex is actually needed since testing suggests it's not, but brain says it should be
+    // we're mutating this.producersByIngredientIndex so if we're doing back-to-back solves with same set cover
+    // we should reset this array between
+    this.producersByIngredientIndex = this.producersByIngredientIndexOriginal.map((pkmnIdxs) => [...pkmnIdxs]);
     const recipeWithSpotsLeft = addSpotsLeftToRecipe(recipe, maxTeamSize);
 
     this.startTime = Date.now();
@@ -52,32 +68,79 @@ export class SetCover {
     const ingredientIndices = findSortedRecipeIngredientIndices(recipe);
 
     const solutions = this.solve(recipeWithSpotsLeft, ingredientIndices);
-    return formatResult({ solutions, startTime: this.startTime, timeout: this.timeout });
+
+    return this.formatResult({ solutions, startTime: this.startTime, timeout: this.timeout });
   }
 
   private solve(subRecipeWithSpotsLeft: IngredientIndexToIntAmount, ingredientIndices: number[]): RecipeSolutions {
     const memoKey = createMemoKey(subRecipeWithSpotsLeft);
     const spotsLeftInTeam = subRecipeWithSpotsLeft[ingredient.TOTAL_NUMBER_OF_INGREDIENTS];
 
-    const maybeCachedSolution = this.ifStopSearching({ memoKey, spotsLeftInTeam, ingredientIndices });
+    const maybeCachedSolution = this.ifStopSearching({
+      memoKey,
+      spotsLeftInTeam,
+      ingredientIndices,
+      startTime: this.startTime,
+      timeout: this.timeout
+    });
     if (maybeCachedSolution) {
       return maybeCachedSolution;
     }
 
     // recipeIngredientIndices is sorted by difficult to solve DESC, grab the most difficult remaining ingredient
     const firstIngredientIndex = ingredientIndices[0];
-    const producersOfFirstIngredient = this.producersByIngredientIndex[firstIngredientIndex];
 
-    const subRecipesAfterProducerSubtract: SubRecipeMeta[] = sortSubRecipesAfterProducerSubtract(
+    const producerIndicesOfFirstIngredient = this.producersByIngredientIndex[firstIngredientIndex];
+
+    const subRecipesAfterProducerSubtract: SubRecipeMeta[] = this.sortSubRecipesAfterProducerSubtract(
       subRecipeWithSpotsLeft,
       ingredientIndices,
-      producersOfFirstIngredient
+      producerIndicesOfFirstIngredient
     );
 
-    const teams = this.findTeams(subRecipesAfterProducerSubtract);
+    const teams = this.findTeams(subRecipesAfterProducerSubtract, firstIngredientIndex);
 
     this.addCacheEntry(memoKey, teams);
     return teams;
+  }
+
+  /**
+   * Creates an array of sub-recipes after subtracting the ingredients provided by the producers.
+   *
+   * @param recipeWithSpotsLeft - The initial recipe with remaining spots left for ingredients.
+   * @param ingredientIndices - The indices of the ingredients to be considered.
+   * @param producersOfFirstIngredient - The set of producers for the first ingredient.
+   * @returns An array of objects, each containing:
+   *   - `remainingRecipeWithSpotsLeft`: The sub-recipe after subtracting the producer's ingredients.
+   *   - `remainingIngredientIndices`: The remaining ingredient indices after subtraction.
+   *   - `sumRemainingRecipeIngredients`: The sum of the remaining ingredients in the sub-recipe.
+   *   - `member`: The producer that was subtracted.
+   */
+  private sortSubRecipesAfterProducerSubtract(
+    recipeWithSpotsLeft: IngredientIndexToIntAmount,
+    ingredientIndices: number[],
+    producerIndicesOfFirstIngredient: number[]
+  ): SubRecipeMeta[] {
+    const subRecipesAfterProducerSubtract: SubRecipeMeta[] = [];
+
+    for (const producerIndex of producerIndicesOfFirstIngredient) {
+      const member = this.ingredientProducers[producerIndex];
+
+      const { remainingRecipeWithSpotsLeft, remainingIngredientIndices, sumRemainingRecipeIngredients } =
+        subtractAndCount(recipeWithSpotsLeft, member.totalIngredients, ingredientIndices);
+
+      subRecipesAfterProducerSubtract.push({
+        remainingRecipeWithSpotsLeft,
+        remainingIngredientIndices,
+        sumRemainingRecipeIngredients,
+        member: producerIndex
+      });
+    }
+
+    // Sort sub-recipes by remaining ingredients (least to most), prioritizing the most promising solution first
+    return subRecipesAfterProducerSubtract.sort(
+      (a, b) => a.sumRemainingRecipeIngredients - b.sumRemainingRecipeIngredients
+    );
   }
 
   /**
@@ -103,10 +166,10 @@ export class SetCover {
    * @returns The optimal teams that can solve the given sub-recipes.
    */
   // TODO: missleading function name, all this does is check if we should search deeper or finish the search (add the member to team etc)
-  private findTeams(subRecipesAfterProducerSubtract: SubRecipeMeta[]): RecipeSolutions {
+  private findTeams(subRecipesAfterProducerSubtract: SubRecipeMeta[], currentIngredientIndex: number): RecipeSolutions {
     const teams: RecipeSolutions = [];
 
-    // every recipe has same spots left at same depth
+    // every sub-solution has same spots left at same depth
     let spotsLeftInTeam =
       subRecipesAfterProducerSubtract[0].remainingRecipeWithSpotsLeft[ingredient.TOTAL_NUMBER_OF_INGREDIENTS];
 
@@ -129,6 +192,22 @@ export class SetCover {
           // If no teams could solve the sub-recipe, then we continue without adding any solutions to "teams"
           // Should mostly never happen, but might happen if we limit the pool of eligible Pokémon beyond OPTIMAL_POKEDEX
           continue;
+        }
+
+        // this if checks if we're all the way back up to the first member and
+        // since it checks if only spotsLeftInTeam only accounts for the first member and
+        // since we're after the subTeams.length === 0 condition we know we have solutions here
+        if (
+          spotsLeftInTeam === this.originalMaxTeamSize - 1 &&
+          this.producersByIngredientIndex[currentIngredientIndex].length > 1
+        ) {
+          // this was an accidental stroke of genius
+          // if first ingredient has found a solution that means
+          // we're never interested again in finding producers for that ingredient after this for loop has completed
+          // since we would have already gone through all of their producers and tested them in this for loop
+          // the producers for this ingredient have already been grouped and sent into this function by solve and thus
+          // mutating the original producers array here won't affect the next iterations
+          this.producersByIngredientIndex[currentIngredientIndex] = [member];
         }
 
         const subTeamSize = subTeams[0].length;
@@ -158,25 +237,57 @@ export class SetCover {
     memoKey: number;
     spotsLeftInTeam: number;
     ingredientIndices: number[];
+    startTime: number;
+    timeout: number;
   }): RecipeSolutions | undefined {
-    const { memoKey, spotsLeftInTeam, ingredientIndices } = params;
-    const maybeCachedSolution = this.cachedSubRecipeSolves.get(memoKey);
-    if (maybeCachedSolution) {
-      return maybeCachedSolution;
-    }
+    const maybeCachedSolution = this.cachedSubRecipeSolves.get(params.memoKey);
+    if (maybeCachedSolution) return maybeCachedSolution;
 
-    const startTime = this.startTime;
-    const timeout = this.timeout;
-
-    if (ifUnsolvableNode({ spotsLeftInTeam, ingredientIndices, startTime, timeout })) {
-      return [];
-    }
+    if (ifUnsolvableNode(params)) return [];
   }
 
-  private addCacheEntry(memoKey: number, teams: ProducersByIngredientIndex) {
-    if (!this.cachedSubRecipeSolves.has(memoKey)) {
-      this.cachedSubRecipeSolves.set(memoKey, teams);
+  private addCacheEntry(memoKey: number, teams: RecipeSolutions) {
+    this.cachedSubRecipeSolves.set(memoKey, teams);
+  }
+
+  /**
+   * Formats the result of solving a recipe problem.
+   * This calculates and adds each team's combined ingredient production.
+   * This also determines whether the solving process was exhaustive.
+   *
+   * @param solutions - The solutions to the recipe.
+   * @param startTime - The start time of the solving process.
+   * @param timeout - The timeout duration for the solving process.
+   * @returns The formatted result including whether the process was exhaustive and the teams with their produced ingredients.
+   */
+  private formatResult(params: { solutions: RecipeSolutions; startTime: number; timeout: number }): SolveRecipeResult {
+    const { solutions, startTime, timeout } = params;
+
+    const foundSolutions: Set<string> = new Set();
+    const teams: SolveRecipeSolution[] = [];
+    for (const memberIndices of solutions) {
+      const members = memberIndices.map((memberIndex) => this.ingredientProducers[memberIndex]);
+      members.sort((a, b) => {
+        const hashA = hashPokemonSetIndexed(a.pokemonSet).toString();
+        const hashB = hashPokemonSetIndexed(b.pokemonSet).toString();
+        return hashA.localeCompare(hashB);
+      });
+
+      const foundSolution = members.map((member) => hashPokemonSetIndexed(member.pokemonSet)).join(',');
+      if (!foundSolutions.has(foundSolution)) {
+        foundSolutions.add(foundSolution);
+
+        const combinedIngredientProduction = combineProduction(members);
+        teams.push({
+          members,
+          producedIngredients: combinedIngredientProduction
+        });
+      }
     }
+    return {
+      exhaustive: !TimeUtils.checkTimeout({ startTime, timeout }),
+      teams
+    };
   }
 
   /**
@@ -185,8 +296,10 @@ export class SetCover {
   public _testAccess() {
     return {
       solve: this.solve.bind(this),
+      sortSubRecipesAfterProducerSubtract: this.sortSubRecipesAfterProducerSubtract.bind(this),
       findTeams: this.findTeams.bind(this),
-      ifStopSearching: this.ifStopSearching.bind(this)
+      ifStopSearching: this.ifStopSearching.bind(this),
+      formatResult: this.formatResult.bind(this)
     };
   }
 }

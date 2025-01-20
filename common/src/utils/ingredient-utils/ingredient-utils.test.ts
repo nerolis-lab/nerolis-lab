@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { IngredientSet } from '../../domain/ingredient/ingredient';
+import type { IngredientSet, IngredientSetSimple } from '../../domain/ingredient/ingredient';
 import {
   FANCY_APPLE,
   FANCY_EGG,
@@ -22,7 +22,9 @@ import {
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
   prettifyIngredientDrop,
-  shortPrettifyIngredientDrop
+  shortPrettifyIngredientDrop,
+  simplifyIngredientSet,
+  unsimplifyIngredientSet
 } from './ingredient-utils';
 
 describe('getIngredient', () => {
@@ -652,5 +654,72 @@ describe('includesMagnet', () => {
       { amount: 5, ingredient: FANCY_APPLE }
     ];
     expect(includesMagnet(ingredients)).toBe(false);
+  });
+});
+
+describe('simplifyIngredientSet', () => {
+  it('shall simplify an ingredient set', () => {
+    const ingredientSet: IngredientSet[] = [
+      { amount: 2, ingredient: HONEY },
+      { amount: 5, ingredient: FANCY_EGG },
+      { amount: 7, ingredient: HONEY }
+    ];
+    expect(simplifyIngredientSet(ingredientSet)).toMatchInlineSnapshot(`
+      [
+        {
+          "amount": 2,
+          "ingredient": "Honey",
+        },
+        {
+          "amount": 5,
+          "ingredient": "Egg",
+        },
+        {
+          "amount": 7,
+          "ingredient": "Honey",
+        },
+      ]
+    `);
+  });
+});
+
+describe('unsimplifyIngredientSet', () => {
+  it('shall unsimplify an ingredient set', () => {
+    const ingredientSet: IngredientSetSimple[] = [
+      { amount: 2, ingredient: HONEY.name },
+      { amount: 5, ingredient: FANCY_EGG.name },
+      { amount: 7, ingredient: HONEY.name }
+    ];
+    expect(unsimplifyIngredientSet(ingredientSet)).toMatchInlineSnapshot(`
+      [
+        {
+          "amount": 2,
+          "ingredient": {
+            "longName": "Honey",
+            "name": "Honey",
+            "taxedValue": 29.8,
+            "value": 101,
+          },
+        },
+        {
+          "amount": 5,
+          "ingredient": {
+            "longName": "Fancy Egg",
+            "name": "Egg",
+            "taxedValue": 38.7,
+            "value": 115,
+          },
+        },
+        {
+          "amount": 7,
+          "ingredient": {
+            "longName": "Honey",
+            "name": "Honey",
+            "taxedValue": 29.8,
+            "value": 101,
+          },
+        },
+      ]
+    `);
   });
 });

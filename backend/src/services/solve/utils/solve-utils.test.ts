@@ -12,7 +12,7 @@ import {
   createSettingsLookupTable,
   enrichSolutions,
   filterPokedex,
-  groupProducersByIngredientIndex,
+  groupProducersByIngredient,
   hashPokemonSetIndexed,
   pokedexToMembers,
   pokemonProductionToRecipeSolutions,
@@ -403,7 +403,7 @@ Set {
     });
   });
 
-  describe('groupProducersByIngredientIndex', () => {
+  describe('groupProducersByIngredient', () => {
     it('should group producers by ingredient produced', () => {
       const member1 = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
@@ -416,9 +416,15 @@ Set {
         ])
       });
 
-      const result = groupProducersByIngredientIndex([member1, member2]);
-      expect(result).toHaveLength(ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
-      expect(result[0]).toHaveLength(1); // one producer of apple
+      const { ingredientProducers: groupedProducers, producersByIngredientIndex } = groupProducersByIngredient([
+        member1,
+        member2
+      ]);
+
+      expect(groupedProducers).toHaveLength(2);
+      expect(producersByIngredientIndex).toHaveLength(ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
+      expect(producersByIngredientIndex[0]).toEqual([0]); // one producer of apple
+      expect(producersByIngredientIndex[1]).toEqual([1]); // one producer of milk
     });
 
     it('should sort producers of same ingredient by amount DESC', () => {
@@ -433,11 +439,14 @@ Set {
         ])
       });
 
-      const result = groupProducersByIngredientIndex([member1, member2]);
-      expect(result).toHaveLength(ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
-      expect(result[0]).toHaveLength(2); // two producers of apple
-      expect(result[0][0].totalIngredients[0]).toBe(10);
-      expect(result[0][1].totalIngredients[0]).toBe(5);
+      const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient([member1, member2]);
+      expect(ingredientProducers).toHaveLength(2);
+      expect(ingredientProducers[0].pokemonSet.pokemon).toEqual(member2.pokemonSet.pokemon);
+      expect(ingredientProducers[1].pokemonSet.pokemon).toEqual(member1.pokemonSet.pokemon);
+      expect(producersByIngredientIndex).toHaveLength(ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
+      expect(producersByIngredientIndex[0]).toHaveLength(2); // two producers of apple
+      expect(ingredientProducers[producersByIngredientIndex[0][0]].totalIngredients[0]).toBe(10);
+      expect(ingredientProducers[producersByIngredientIndex[0][1]].totalIngredients[0]).toBe(5);
     });
   });
 

@@ -8,14 +8,14 @@ import type {
 import {
   calculateProductionAll,
   convertAAAToAllIngredientSets,
-  groupProducersByIngredientIndex,
+  groupProducersByIngredient,
   hashPokemonSetIndexed,
   pokedexToMembers
 } from '@src/services/solve/utils/solve-utils.js';
 import { joinPath } from '@src/utils/file-utils/file-utils.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import type { Pokemon, Recipe, TierlistSettings } from 'sleepapi-common';
+import type { IngredientSetSimple, Pokemon, Recipe, TeamMemberSettings, TierlistSettings } from 'sleepapi-common';
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   getAllIngredientLists,
@@ -31,6 +31,7 @@ import {
   recipeCoverage,
   recipeLevelBonus,
   RECIPES,
+  simplifyIngredientSet,
   type SolveSettingsExt,
   type TeamMemberExt,
   type Time
@@ -43,9 +44,27 @@ export interface RecipeContribution {
   skillValue: number;
   coverage: number;
 }
-export interface PokemonWithRecipeContributions {
+export interface PokemonWithRecipeContributionsRaw {
   pokemonWithSettings: SetCoverPokemonSetupWithSettings;
   contributions: RecipeContribution[];
+}
+
+export interface PokemonWithRecipeContributions {
+  pokemonWithSettings: {
+    pokemon: string;
+    ingredientList: IngredientSetSimple[];
+    totalIngredients: Float32Array;
+    critMultiplier: number;
+    averageWeekdayPotSize: number;
+    settings: TeamMemberSettings;
+  };
+  contributions: {
+    coverage: number;
+    skillValue: number;
+    score: number;
+    recipe: string;
+    team: { pokemon: string }[];
+  }[];
 }
 export interface PokemonWithFinalContribution extends PokemonWithRecipeContributions {
   score: number;
@@ -69,7 +88,7 @@ class CookingTierlistImpl {
   }
 
   public async seed(settings: TierlistSettings) {
-    const data: PokemonWithRecipeContributions[] = this.generate(settings);
+    const data: PokemonWithRecipeContributionsRaw[] = this.generate(settings);
 
     const combinedContributions: PokemonWithFinalContribution[] = [];
     for (let i = 0; i < data.length; ++i) {
@@ -136,11 +155,12 @@ class CookingTierlistImpl {
       includeCooking: true
     });
     const defaultCache = new Map();
-    const defaultSetCover = new SetCover(groupProducersByIngredientIndex(setCoverSetups), defaultCache);
+    const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient(setCoverSetups);
+    const defaultSetCover = new SetCover(ingredientProducers, producersByIngredientIndex, defaultCache);
 
     // eslint-disable-next-line SleepAPILogger/no-console
     console.timeEnd('Tierlist default production');
-    const result: PokemonWithRecipeContributions[] = [];
+    const result: PokemonWithRecipeContributionsRaw[] = [];
 
     // TODO: split into functions
     for (const pkmn of OPTIMAL_POKEDEX) {
@@ -170,11 +190,13 @@ class CookingTierlistImpl {
 
         // TODO: can we worker thread this?
         for (const recipe of recipesToCook) {
+          const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient(supportSetCoverSetups);
+
           const recipeContribution = this.calculateRecipeContribution({
             recipe,
             currentPokemon: pokemonWithIngredients,
             setCover: isSupport
-              ? new SetCover(groupProducersByIngredientIndex(supportSetCoverSetups), new Map())
+              ? new SetCover(ingredientProducers, producersByIngredientIndex, new Map())
               : defaultSetCover,
             isSupport,
             defaultProduceMap: defaultProductionMap,
@@ -507,7 +529,7 @@ class CookingTierlistImpl {
     };
   }
 
-  private calculateFinalContribution(data: PokemonWithRecipeContributions): PokemonWithFinalContribution {
+  private calculateFinalContribution(data: PokemonWithRecipeContributionsRaw): PokemonWithFinalContribution {
     const { pokemonWithSettings, contributions } = data;
 
     const bestXRecipes = contributions
@@ -521,8 +543,27 @@ class CookingTierlistImpl {
     });
 
     return {
-      pokemonWithSettings,
-      contributions: bestXRecipesWithBoost,
+      pokemonWithSettings: {
+        pokemon: pokemonWithSettings.pokemonSet.pokemon,
+        ingredientList: simplifyIngredientSet(pokemonWithSettings.ingredientList),
+        totalIngredients: pokemonWithSettings.totalIngredientsFloat,
+        critMultiplier: pokemonWithSettings.critMultiplier,
+        averageWeekdayPotSize: pokemonWithSettings.averageWeekdayPotSize,
+        settings: {
+          ...pokemonWithSettings.settings,
+          nature: pokemonWithSettings.settings.nature.name,
+          subskills: [...pokemonWithSettings.settings.subskills]
+        }
+      },
+      contributions: bestXRecipesWithBoost.map((recipeWithContributions) => ({
+        coverage: recipeWithContributions.coverage,
+        skillValue: recipeWithContributions.skillValue,
+        score: recipeWithContributions.contributedPower,
+        recipe: recipeWithContributions.recipe.name,
+        team: recipeWithContributions.team.map((member) => ({
+          pokemon: member.pokemonSet.pokemon
+        }))
+      })),
       score: bestXRecipesWithBoost.reduce((acc, recipe) => acc + recipe.contributedPower, 0)
     };
   }
@@ -566,7 +607,7 @@ class CookingTierlistImpl {
       }
 
       const previousIndex: number | undefined = previousTierlistIndices.get(
-        hashPokemonSetIndexed(entry.pokemonWithSettings.pokemonSet)
+        this.hashPokemonSetSimple(entry.pokemonWithSettings.pokemon, entry.pokemonWithSettings.ingredientList)
       );
 
       const tier = currentTier?.tier ?? 'F';
@@ -582,11 +623,18 @@ class CookingTierlistImpl {
     const indexMap = new Map<string, number>();
 
     previous.forEach((entry, index) => {
-      const hash = hashPokemonSetIndexed(entry.pokemonWithSettings.pokemonSet);
+      const hash = this.hashPokemonSetSimple(
+        entry.pokemonWithSettings.pokemon,
+        entry.pokemonWithSettings.ingredientList
+      );
       indexMap.set(hash, index);
     });
 
     return indexMap;
+  }
+
+  private hashPokemonSetSimple(pokemon: string, ingredientList: IngredientSetSimple[]) {
+    return `${pokemon}${ingredientList.map((ing) => ing.ingredient + ing.amount).join('')}`;
   }
 }
 

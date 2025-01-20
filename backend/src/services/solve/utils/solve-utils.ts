@@ -3,8 +3,8 @@ import { ProgrammingError } from '@src/domain/error/programming/programming-erro
 import { calculateSimple, calculateTeam } from '@src/services/api-service/production/production-service.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import type {
+  IngredientProducers,
   IngredientProducersWithSettings,
-  ProducersByIngredientIndex,
   SetCoverPokemonSetup,
   SetCoverPokemonSetupWithSettings
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
@@ -337,30 +337,37 @@ export function convertAAAToAllIngredientSets(
   return result;
 }
 
-export function groupProducersByIngredientIndex(
-  producers: SetCoverPokemonSetupWithSettings[]
-): ProducersByIngredientIndex {
-  const result: ProducersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
-  for (let producerIndex = 0; producerIndex < producers.length; ++producerIndex) {
-    const producerWithSettings = producers[producerIndex];
-    const producer: SetCoverPokemonSetup = {
-      pokemonSet: producerWithSettings.pokemonSet,
-      totalIngredients: producerWithSettings.totalIngredients
-    };
-    for (let ingredientIndex = 0; ingredientIndex < ingredient.TOTAL_NUMBER_OF_INGREDIENTS; ++ingredientIndex) {
-      const producedIngredient = producer.totalIngredients[ingredientIndex];
-      if (producedIngredient > 0) {
-        result[ingredientIndex].push(producer);
+export function groupProducersByIngredient(producers: SetCoverPokemonSetupWithSettings[]): {
+  ingredientProducers: IngredientProducers;
+  producersByIngredientIndex: Array<Array<number>>;
+} {
+  const ingredientProducers: IngredientProducers = producers.map((producer) => ({
+    pokemonSet: producer.pokemonSet,
+    totalIngredients: producer.totalIngredients
+  }));
+
+  const producersByIngredientIndex: Array<Array<number>> = Array.from(
+    { length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS },
+    () => []
+  );
+  for (let ingredientIndex = 0; ingredientIndex < ingredient.TOTAL_NUMBER_OF_INGREDIENTS; ++ingredientIndex) {
+    const producersOfIngredientIndex: number[] = [];
+    for (let producerIndex = 0; producerIndex < ingredientProducers.length; ++producerIndex) {
+      if (ingredientProducers[producerIndex].totalIngredients[ingredientIndex] > 0) {
+        producersOfIngredientIndex.push(producerIndex);
       }
     }
+
+    producersOfIngredientIndex.sort(
+      (a, b) =>
+        ingredientProducers[b].totalIngredients[ingredientIndex] -
+        ingredientProducers[a].totalIngredients[ingredientIndex]
+    );
+
+    producersByIngredientIndex[ingredientIndex] = producersOfIngredientIndex;
   }
 
-  // for every ingredient sort the producers DESC by the amount of that ingredient
-  for (let i = 0; i < ingredient.TOTAL_NUMBER_OF_INGREDIENTS; ++i) {
-    const ingredientProducers = result[i];
-    ingredientProducers.sort((a, b) => b.totalIngredients[i] - a.totalIngredients[i]);
-  }
-  return result;
+  return { ingredientProducers, producersByIngredientIndex };
 }
 
 export function pokemonProductionToRecipeSolutions(
