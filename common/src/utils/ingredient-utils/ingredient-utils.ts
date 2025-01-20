@@ -2,7 +2,8 @@ import type {
   Ingredient,
   IngredientIndexToFloatAmount,
   IngredientIndexToIntAmount,
-  IngredientSet
+  IngredientSet,
+  IngredientSetSimple
 } from '../../domain/ingredient/ingredient';
 import { INGREDIENTS, TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 import type { Pokemon } from '../../domain/pokemon/pokemon';
@@ -71,6 +72,22 @@ export function flatToIngredientSet(
   return result;
 }
 
+export function simplifyIngredientSet(ingredients: IngredientSet[]): IngredientSetSimple[] {
+  const result: IngredientSetSimple[] = [];
+  for (const { ingredient, amount } of ingredients) {
+    result.push({ ingredient: ingredient.name, amount });
+  }
+  return result;
+}
+
+export function unsimplifyIngredientSet(ingredients: IngredientSetSimple[]): IngredientSet[] {
+  const result: IngredientSet[] = [];
+  for (const { ingredient, amount } of ingredients) {
+    result.push({ ingredient: INGREDIENTS.find((ing) => ing.name === ingredient), amount });
+  }
+  return result;
+}
+
 /**
  * Combines same ingredients in drop, e.g., [2 honey, 4 honey, 5 milk] => [6 honey, 5 milk]
  */
@@ -92,7 +109,7 @@ export function combineSameIngredientsInDrop(ingredients: IngredientSet[]): Ingr
 }
 
 export function isFlat(
-  ingredients: IngredientSet[] | IngredientIndexToFloatAmount | IngredientIndexToIntAmount
+  ingredients: IngredientSet[] | IngredientSetSimple[] | IngredientIndexToFloatAmount | IngredientIndexToIntAmount
 ): ingredients is IngredientIndexToFloatAmount | IngredientIndexToIntAmount {
   return ingredients instanceof Float32Array || ingredients instanceof Int16Array;
 }

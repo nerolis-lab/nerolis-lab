@@ -1,13 +1,10 @@
-import { mocks } from '@src/bun/index.js';
 import type { RecipeSolutions } from '@src/services/solve/types/solution-types.js';
 import {
   addMemberToSubTeams,
   addSpotsLeftToRecipe,
   createMemoKey,
   findSortedRecipeIngredientIndices,
-  formatResult,
   ifUnsolvableNode,
-  sortSubRecipesAfterProducerSubtract,
   subtractAndCount
 } from '@src/services/solve/utils/set-cover-utils.js';
 import { ingredient } from 'sleepapi-common';
@@ -235,146 +232,17 @@ describe('set-cover-utils', () => {
     });
   });
 
-  describe('createSubRecipesAfterProducerSubtract', () => {
-    it('should create sub-recipes and sort after producer subtract', () => {
-      const subRecipeWithSpotsLeft = new Int16Array(ingredient.INGREDIENTS.length + 1);
-      subRecipeWithSpotsLeft.set([5, 3, 2]);
-      const ingredientIndices = [0, 1, 2];
-      const producersOfFirstIngredient = [
-        mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([2, 1, 1]) }),
-        mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([3, 2, 1]) })
-      ];
-
-      const result = sortSubRecipesAfterProducerSubtract(
-        subRecipeWithSpotsLeft,
-        ingredientIndices,
-        producersOfFirstIngredient
-      );
-
-      expect(result).toHaveLength(2);
-
-      // expect 2nd team to be first now in results since it has the least amount of ingredients left
-      expect(result[0].remainingRecipeWithSpotsLeft).toEqual(
-        // verify on -1 is fine since in practice we will never call this function with 0 spots, dont want to add additional computational logic for the clamp
-        new Int16Array([2, 1, 1, ...new Int16Array(ingredient.INGREDIENTS.length - 3), -1])
-      );
-      expect(result[0].remainingIngredientIndices).toEqual([0, 1, 2]);
-      expect(result[0].sumRemainingRecipeIngredients).toBe(4);
-      expect(result[0].member).toEqual(producersOfFirstIngredient[1]);
-
-      expect(result[1].remainingRecipeWithSpotsLeft).toEqual(
-        // verify on -1 is fine since in practice we will never call this function with 0 spots, dont want to add additional computational logic for the clamp
-        new Int16Array([3, 2, 1, ...new Int16Array(ingredient.INGREDIENTS.length - 3), -1])
-      );
-      expect(result[1].remainingIngredientIndices).toEqual([0, 1, 2]);
-      expect(result[1].sumRemainingRecipeIngredients).toBe(6);
-      expect(result[1].member).toEqual(producersOfFirstIngredient[0]);
-    });
-
-    it('should subtract 1 from spots left', () => {
-      const subRecipeWithSpotsLeft = new Int16Array(ingredient.INGREDIENTS.length + 1);
-      subRecipeWithSpotsLeft.set([5, 3, 2]);
-      subRecipeWithSpotsLeft[ingredient.INGREDIENTS.length] = 3;
-      const ingredientIndices = [0, 1, 2];
-      const producersOfFirstIngredient = [
-        mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([2, 1, 1]) }),
-        mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([3, 2, 1]) })
-      ];
-
-      const result = sortSubRecipesAfterProducerSubtract(
-        subRecipeWithSpotsLeft,
-        ingredientIndices,
-        producersOfFirstIngredient
-      );
-      expect(result).toHaveLength(2);
-      result.forEach((subRecipe) => {
-        expect(subRecipe.remainingRecipeWithSpotsLeft[ingredient.INGREDIENTS.length]).toBe(2);
-      });
-    });
-  });
-
   describe('addMemberToSubTeams', () => {
     it('should add member to each sub-team and push to teams', () => {
       const teams: RecipeSolutions = [];
-      const subTeams: RecipeSolutions = [
-        [
-          mocks.setCoverPokemonSetup({
-            totalIngredients: new Int16Array([1, 2, 3]),
-            pokemonSet: { ingredients: new Int16Array(), pokemon: '1stSubTeamOldMember' }
-          })
-        ],
-        [
-          mocks.setCoverPokemonSetup({
-            totalIngredients: new Int16Array([4, 5, 6]),
-            pokemonSet: { ingredients: new Int16Array(), pokemon: '2ndSubTeamOldMember' }
-          })
-        ]
-      ];
-      const newMember = mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([7, 8, 9]) });
+      const subTeams: RecipeSolutions = [[0], [1]];
+      const newMember = 2;
 
       addMemberToSubTeams(teams, subTeams, newMember);
 
       expect(teams).toHaveLength(2);
-      expect(teams[0]).toEqual([
-        {
-          totalIngredients: new Int16Array([1, 2, 3]),
-          pokemonSet: { ingredients: new Int16Array(), pokemon: '1stSubTeamOldMember' }
-        },
-        newMember
-      ]);
-      expect(teams[1]).toEqual([
-        {
-          totalIngredients: new Int16Array([4, 5, 6]),
-          pokemonSet: { ingredients: new Int16Array(), pokemon: '2ndSubTeamOldMember' }
-        },
-        newMember
-      ]);
-    });
-  });
-
-  describe('formatResult', () => {
-    it('should format the result correctly', () => {
-      const solutions: RecipeSolutions = [
-        [
-          mocks.setCoverPokemonSetup({
-            totalIngredients: new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0]),
-            pokemonSet: { ingredients: new Int16Array(), pokemon: '1stTeam1stMember' }
-          }),
-          mocks.setCoverPokemonSetup({
-            totalIngredients: new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-            pokemonSet: { ingredients: new Int16Array(), pokemon: '1stTeam2ndMember' }
-          })
-        ],
-        [
-          mocks.setCoverPokemonSetup({
-            totalIngredients: new Int16Array([4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
-            pokemonSet: { ingredients: new Int16Array(), pokemon: '2ndTeam1stMember' }
-          })
-        ]
-      ];
-
-      const startTime = Date.now();
-      const timeout = 1000;
-
-      const result = formatResult({ solutions, startTime, timeout });
-
-      expect(result.exhaustive).toBe(true);
-      expect(result.teams).toHaveLength(2);
-      expect(result.teams[0].producedIngredients).toEqual(
-        new Int16Array([2, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0])
-      );
-      expect(result.teams[0].members).toEqual(solutions[0]);
-      expect(result.teams[1].members).toEqual(solutions[1]);
-    });
-
-    it('should set exhaustive to false if timeout is reached', () => {
-      const solutions: RecipeSolutions = [];
-      const startTime = Date.now() - 2000;
-      const timeout = 1000;
-
-      const result = formatResult({ solutions, startTime, timeout });
-
-      expect(result.exhaustive).toBe(false);
+      expect(teams[0]).toEqual([0, 2]);
+      expect(teams[1]).toEqual([1, 2]);
     });
   });
 });

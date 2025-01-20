@@ -1,6 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import { SetCover } from '@src/services/solve/set-cover.js';
 import type {
+  IngredientProducers,
   ProducersByIngredientIndex,
   SetCoverPokemonSetup
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
@@ -9,11 +10,10 @@ import { describe, expect, it } from 'vitest';
 
 describe('Set Cover Integration', () => {
   it('should purge sub-optimal solutions when smaller team is found', () => {
-    const producersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
-    setupGreengrassProducers(producersByIngredientIndex);
+    const { ingredientProducers, producersByIngredientIndex } = setupGreengrassProducers();
 
     const cachedSubRecipeSolves = new Map();
-    const setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+    const setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
     const maxTeamSize = 5;
     const mockedGreengrassSalad = [
@@ -34,7 +34,16 @@ describe('Set Cover Integration', () => {
   });
 });
 
-function setupGreengrassProducers(producersByIngredientIndex: ProducersByIngredientIndex) {
+function setupGreengrassProducers(): {
+  ingredientProducers: IngredientProducers;
+  producersByIngredientIndex: ProducersByIngredientIndex;
+} {
+  const ingredientProducers: IngredientProducers = [];
+  const producersByIngredientIndex: Array<Array<number>> = Array.from(
+    { length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS },
+    () => []
+  );
+
   // [
   //   "DRAGONITE 32 Oil, 28 Herb",
   //   "DRAGONITE 32 Oil, 8 Herb, 16 Corn",
@@ -126,14 +135,10 @@ function setupGreengrassProducers(producersByIngredientIndex: ProducersByIngredi
     ])
   });
 
-  producersByIngredientIndex[8].push(dragoniteAAC);
-  producersByIngredientIndex[8].push(dragoniteABC);
-  producersByIngredientIndex[8].push(cramorantAAA);
-  producersByIngredientIndex[8].push(cramorantABA);
-  producersByIngredientIndex[8].push(cramorantAAB);
-  producersByIngredientIndex[8].push(cramorantAAC);
-  producersByIngredientIndex[8].push(cramorantABB);
-  producersByIngredientIndex[8].push(cramorantABC);
+  ingredientProducers.push(
+    ...[dragoniteAAC, dragoniteABC, cramorantAAA, cramorantABA, cramorantAAB, cramorantAAC, cramorantABB, cramorantABC]
+  );
+  producersByIngredientIndex[8] = [0, 1, 2, 3, 4, 5, 6, 7];
 
   // [
   //   "DRAGONITE 8 Herb, 44 Corn",
@@ -172,10 +177,9 @@ function setupGreengrassProducers(producersByIngredientIndex: ProducersByIngredi
       mocks.mockIngredientSet({ amount: 16, ingredient: ingredient.GREENGRASS_CORN })
     ])
   });
-  producersByIngredientIndex[11].push(dragoniteABB);
-  producersByIngredientIndex[11].push(dragoniteAAB);
-  producersByIngredientIndex[11].push(dragoniteABA);
-  producersByIngredientIndex[11].push(dragoniteABC);
+
+  ingredientProducers.push(...[dragoniteABB, dragoniteAAB, dragoniteABA]);
+  producersByIngredientIndex[11] = [8, 9, 10, 1];
 
   // [
   //   "VICTREEBEL 47 Tomato",
@@ -247,12 +251,10 @@ function setupGreengrassProducers(producersByIngredientIndex: ProducersByIngredi
     ])
   });
 
-  producersByIngredientIndex[6].push(victreebelAAA);
-  producersByIngredientIndex[6].push(victreebelABA);
-  producersByIngredientIndex[6].push(victreebelAAB);
-  producersByIngredientIndex[6].push(victreebelAAC);
-  producersByIngredientIndex[6].push(victreebelABB);
-  producersByIngredientIndex[6].push(victreebelABC);
+  ingredientProducers.push(
+    ...[victreebelAAA, victreebelABA, victreebelAAB, victreebelAAC, victreebelABB, victreebelABC]
+  );
+  producersByIngredientIndex[6] = [11, 12, 13, 14, 15, 16];
 
   // [
   //   "VICTREEBEL 7 Tomato, 34 Potato",
@@ -265,13 +267,7 @@ function setupGreengrassProducers(producersByIngredientIndex: ProducersByIngredi
   //   "CRAMORANT 17 Egg, 4 Oil, 8 Potato"
   // ]
   // SOFT_POTATO - index 9
+  producersByIngredientIndex[9] = [15, 6, 13, 4, 12, 16, 3, 7];
 
-  producersByIngredientIndex[9].push(victreebelABB);
-  producersByIngredientIndex[9].push(cramorantABB);
-  producersByIngredientIndex[9].push(victreebelAAB);
-  producersByIngredientIndex[9].push(cramorantAAB);
-  producersByIngredientIndex[9].push(victreebelABA);
-  producersByIngredientIndex[9].push(victreebelABC);
-  producersByIngredientIndex[9].push(cramorantABA);
-  producersByIngredientIndex[9].push(cramorantABC);
+  return { ingredientProducers, producersByIngredientIndex };
 }

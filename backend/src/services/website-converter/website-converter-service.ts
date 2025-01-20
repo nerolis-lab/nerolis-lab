@@ -16,7 +16,8 @@ import {
   mainskill,
   prettifyBerries,
   prettifyIngredientDrop,
-  shortPrettifyIngredientDrop
+  shortPrettifyIngredientDrop,
+  unsimplifyIngredientSet
 } from 'sleepapi-common';
 import { calculateHelperBoostHelpsFromUnique } from '../calculator/skill/skill-calculator.js';
 
@@ -112,18 +113,17 @@ class WebsiteConverterServiceImpl {
       new Map();
     for (const tieredEntry of tieredData) {
       const allEntriesOfPokemon = tieredData.filter(
-        (allPokemon) =>
-          allPokemon.pokemonWithSettings.pokemonSet.pokemon === tieredEntry.pokemonWithSettings.pokemonSet.pokemon
+        (allPokemon) => allPokemon.pokemonWithSettings.pokemon === tieredEntry.pokemonWithSettings.pokemon
       );
 
       const prettyEntry = {
-        pokemon: tieredEntry.pokemonWithSettings.pokemonSet.pokemon,
-        ingredientList: prettifyIngredientDrop(tieredEntry.pokemonWithSettings.ingredientList),
+        pokemon: tieredEntry.pokemonWithSettings.pokemon,
+        ingredientList: prettifyIngredientDrop(unsimplifyIngredientSet(tieredEntry.pokemonWithSettings.ingredientList)),
         diff: tieredEntry.diff,
         details: allEntriesOfPokemon
           .map(
             ({ tier, pokemonWithSettings: otherPairingsEntry, score, contributions }) =>
-              `[${tier}] (${prettifyIngredientDrop(otherPairingsEntry.ingredientList)})\n` +
+              `[${tier}] (${prettifyIngredientDrop(unsimplifyIngredientSet(otherPairingsEntry.ingredientList))})\n` +
               `Total score: ${Math.round(score)}` +
               `${
                 (contributions[0].skillValue ?? 0) > 0
@@ -133,7 +133,7 @@ class WebsiteConverterServiceImpl {
               `${contributions
                 .map(
                   (meal) =>
-                    `[${Math.round(meal.contributedPower)} ${MathUtils.round(meal.coverage, 1)}%] ${meal.recipe.name
+                    `[${Math.round(meal.score)} ${MathUtils.round(meal.coverage, 1)}%] ${meal.recipe
                       .toLowerCase()
                       .replace(/_/g, ' ')}`
                   // Produced ings: ${prettifyIngredientDrop(flatToIngredientSet(otherPairingsEntry.totalIngredients))}

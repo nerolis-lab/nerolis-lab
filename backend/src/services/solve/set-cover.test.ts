@@ -1,6 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import { SetCover } from '@src/services/solve/set-cover.js';
 import type {
+  IngredientProducers,
   ProducersByIngredientIndex,
   SetCoverPokemonSetup
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
@@ -14,6 +15,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('SetCover', () => {
   let setCover: SetCover;
+  let ingredientProducers: IngredientProducers;
   let producersByIngredientIndex: ProducersByIngredientIndex;
   let cachedSubRecipeSolves: Map<number, RecipeSolutions>;
   let recipeWithSpotsLeft: IngredientIndexToIntAmount;
@@ -30,10 +32,12 @@ describe('SetCover', () => {
     ];
 
     recipeWithSpotsLeft = new Int16Array(ingredient.TOTAL_NUMBER_OF_INGREDIENTS + 1);
+
+    ingredientProducers = [];
     producersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
     cachedSubRecipeSolves = new Map();
 
-    setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+    setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
   });
 
   describe('solveRecipe', () => {
@@ -48,7 +52,8 @@ describe('SetCover', () => {
     it('should return cached solutions if available', () => {
       recipe[0] = 5;
       const maxTeamSize = 3;
-      const cachedSolutions: RecipeSolutions = [[mocks.setCoverPokemonSetup()]];
+      ingredientProducers.push(mocks.setCoverPokemonSetup());
+      const cachedSolutions: RecipeSolutions = [[0]];
 
       cachedSubRecipeSolves.set(memoKey, cachedSolutions);
       const result = setCover.solveRecipe(recipe, maxTeamSize);
@@ -67,10 +72,11 @@ describe('SetCover', () => {
       recipe[0] = 5;
       const maxTeamSize = 3;
 
+      ingredientProducers = [mocks.setCoverPokemonSetup({ totalIngredients: recipe })];
       producersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
-      producersByIngredientIndex[0] = [mocks.setCoverPokemonSetup({ totalIngredients: recipe })];
+      producersByIngredientIndex[0] = [0];
 
-      setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+      setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
       const result = setCover.solveRecipe(recipe, maxTeamSize);
 
@@ -90,6 +96,7 @@ describe('SetCover', () => {
       mockedKeyCall = vimic(setCoverUtils, 'createMemoKey', missingCacheKey, firstMemoKey, secondMemoKey);
 
       vimic(setCoverUtils, 'findSortedRecipeIngredientIndices', () => [10, 4, 11, 5]);
+
       producersByIngredientIndex = Array.from({ length: ingredient.TOTAL_NUMBER_OF_INGREDIENTS }, () => []);
       const tyranitar: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
         pokemonSet: {
@@ -111,13 +118,15 @@ describe('SetCover', () => {
           mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN })
         ])
       });
-      producersByIngredientIndex[4].push(tyranitar); // sausage
-      producersByIngredientIndex[5].push(tyranitar); // ginger
-      producersByIngredientIndex[10].push(dragonite); // herb
-      producersByIngredientIndex[11].push(dragonite); // corn
+      ingredientProducers = [tyranitar, dragonite];
+
+      producersByIngredientIndex[4].push(0); // sausage
+      producersByIngredientIndex[5].push(0); // ginger
+      producersByIngredientIndex[10].push(1); // herb
+      producersByIngredientIndex[11].push(1); // corn
 
       cachedSubRecipeSolves = new Map();
-      setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+      setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
       const maxTeamSize = 5;
       recipe.set(ingredientSetToIntFlat(mockedCornKeema));
@@ -183,10 +192,11 @@ Int16Array [
           mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
         ])
       });
-      producersByIngredientIndex[0].push(appleProducer);
+      ingredientProducers = [appleProducer];
+      producersByIngredientIndex[0] = [0];
 
       cachedSubRecipeSolves = new Map();
-      setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+      setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
       const { solve } = setCover._testAccess();
 
@@ -203,8 +213,8 @@ Int16Array [
       expect(firstTeam).toHaveLength(1); // team only has one member
       const teamMember = firstTeam[0];
 
-      expect(teamMember.pokemonSet.pokemon).toEqual('member1');
-      expect(teamMember.totalIngredients).toEqual(
+      expect(ingredientProducers[teamMember].pokemonSet.pokemon).toEqual('member1');
+      expect(ingredientProducers[teamMember].totalIngredients).toEqual(
         Int16Array.from([5, ...Array(ingredient.INGREDIENTS.length - 1).fill(0)])
       );
     });
@@ -222,10 +232,11 @@ Int16Array [
           mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
         ])
       });
-      producersByIngredientIndex[0].push(appleProducer);
+      ingredientProducers = [appleProducer];
+      producersByIngredientIndex[0] = [0];
 
       cachedSubRecipeSolves = new Map();
-      setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+      setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
       const { solve } = setCover._testAccess();
 
@@ -243,13 +254,13 @@ Int16Array [
       const teamMember1 = firstTeam[0];
       const teamMember2 = firstTeam[1];
 
-      expect(teamMember1.pokemonSet.pokemon).toEqual('member1');
-      expect(teamMember1.totalIngredients).toEqual(
+      expect(ingredientProducers[teamMember1].pokemonSet.pokemon).toEqual('member1');
+      expect(ingredientProducers[teamMember1].totalIngredients).toEqual(
         Int16Array.from([5, ...Array(ingredient.INGREDIENTS.length - 1).fill(0)])
       );
 
-      expect(teamMember2.pokemonSet.pokemon).toEqual('member1');
-      expect(teamMember2.totalIngredients).toEqual(
+      expect(ingredientProducers[teamMember2].pokemonSet.pokemon).toEqual('member1');
+      expect(ingredientProducers[teamMember2].totalIngredients).toEqual(
         Int16Array.from([5, ...Array(ingredient.INGREDIENTS.length - 1).fill(0)])
       );
     });
@@ -276,13 +287,15 @@ Int16Array [
           mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN })
         ])
       });
-      producersByIngredientIndex[4].push(tyranitar); // sausage
-      producersByIngredientIndex[5].push(tyranitar); // ginger
-      producersByIngredientIndex[10].push(dragonite); // herb
-      producersByIngredientIndex[11].push(dragonite); // corn
+
+      ingredientProducers = [tyranitar, dragonite];
+      producersByIngredientIndex[4] = [0]; // sausage
+      producersByIngredientIndex[5] = [0]; // ginger
+      producersByIngredientIndex[10] = [1]; // herb
+      producersByIngredientIndex[11] = [1]; // corn
 
       cachedSubRecipeSolves = new Map();
-      setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+      setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
       const { solve } = setCover._testAccess();
 
@@ -300,13 +313,13 @@ Int16Array [
       const teamMember1 = firstTeam[0];
       const teamMember2 = firstTeam[1];
 
-      expect(teamMember1.pokemonSet.pokemon).toEqual('tyranitar');
-      expect(teamMember1.totalIngredients[4]).toMatchInlineSnapshot(`30`);
-      expect(teamMember1.totalIngredients[5]).toMatchInlineSnapshot(`30`);
+      expect(ingredientProducers[teamMember1].pokemonSet.pokemon).toEqual('tyranitar');
+      expect(ingredientProducers[teamMember1].totalIngredients[4]).toMatchInlineSnapshot(`30`);
+      expect(ingredientProducers[teamMember1].totalIngredients[5]).toMatchInlineSnapshot(`30`);
 
-      expect(teamMember2.pokemonSet.pokemon).toEqual('dragonite');
-      expect(teamMember2.totalIngredients[10]).toMatchInlineSnapshot(`30`);
-      expect(teamMember2.totalIngredients[11]).toMatchInlineSnapshot(`30`);
+      expect(ingredientProducers[teamMember2].pokemonSet.pokemon).toEqual('dragonite');
+      expect(ingredientProducers[teamMember2].totalIngredients[10]).toMatchInlineSnapshot(`30`);
+      expect(ingredientProducers[teamMember2].totalIngredients[11]).toMatchInlineSnapshot(`30`);
     });
 
     it('should return cached solution if available', () => {
@@ -315,10 +328,11 @@ Int16Array [
       recipe[ingredient.TOTAL_NUMBER_OF_INGREDIENTS] = 5; // 5 spots left
 
       const ingredientIndices = [0, 2, 3];
-      const memoKey = setCoverUtils.createMemoKey(recipe);
-      const cachedSolutions: RecipeSolutions = [
-        [mocks.setCoverPokemonSetup({ pokemonSet: { pokemon: 'Cached member', ingredients: new Int16Array() } })]
+      ingredientProducers = [
+        mocks.setCoverPokemonSetup({ pokemonSet: { pokemon: 'Cached member', ingredients: new Int16Array() } })
       ];
+      const memoKey = setCoverUtils.createMemoKey(recipe);
+      const cachedSolutions: RecipeSolutions = [];
 
       cachedSubRecipeSolves.set(memoKey, cachedSolutions);
 
@@ -339,11 +353,11 @@ Int16Array [
           mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
         ])
       });
-
+      ingredientProducers = [appleProducer];
       recipeWithSpotsLeft[ingredient.TOTAL_NUMBER_OF_INGREDIENTS] = 0; // team is full
       recipeWithSpotsLeft[0] = 5; // recipe requires 5 apples, first index is apple
       const ingredientIndices = [0]; // only apple ingredient index
-      producersByIngredientIndex[0].push(appleProducer); // producer can solve the recipe alone
+      producersByIngredientIndex[0].push(0); // producer can solve the recipe alone
 
       const result = solve(recipeWithSpotsLeft, ingredientIndices);
 
@@ -362,10 +376,10 @@ Int16Array [
           remainingRecipeWithSpotsLeft: new Int16Array(ingredient.TOTAL_NUMBER_OF_INGREDIENTS + 1),
           remainingIngredientIndices: [1, 2, 3],
           sumRemainingRecipeIngredients: 0,
-          member: mocks.setCoverPokemonSetup()
+          member: 0
         }
       ];
-      const result = findTeams(subRecipesAfterProducerSubtract);
+      const result = findTeams(subRecipesAfterProducerSubtract, 0);
       expect(result).toBeDefined();
       expect(result.length).toBeGreaterThan(0);
     });
@@ -379,10 +393,10 @@ Int16Array [
           remainingRecipeWithSpotsLeft,
           remainingIngredientIndices: [1, 2, 3],
           sumRemainingRecipeIngredients: 5,
-          member: mocks.setCoverPokemonSetup()
+          member: 0
         }
       ];
-      const result = findTeams(subRecipesAfterProducerSubtract);
+      const result = findTeams(subRecipesAfterProducerSubtract, 0);
       expect(result).toBeDefined();
       expect(result.length).toBe(0);
     });
@@ -394,7 +408,9 @@ Int16Array [
       const params = {
         memoKey: 123,
         spotsLeftInTeam: 2,
-        ingredientIndices: [1, 2, 3]
+        ingredientIndices: [1, 2, 3],
+        startTime: 0,
+        timeout: 1000
       };
 
       const mock = vimic(setCoverUtils, 'ifUnsolvableNode', () => false);
@@ -403,6 +419,7 @@ Int16Array [
 
       expect(result).toBeUndefined();
       expect(mock).toHaveBeenCalledWith({
+        memoKey: 123,
         spotsLeftInTeam: 2,
         ingredientIndices: [1, 2, 3],
         startTime: expect.any(Number),
@@ -414,12 +431,14 @@ Int16Array [
       const params = {
         memoKey: 123,
         spotsLeftInTeam: 2,
-        ingredientIndices: [1, 2, 3]
+        ingredientIndices: [1, 2, 3],
+        startTime: 0,
+        timeout: 1000
       };
-      const cachedSolutions: RecipeSolutions = [[mocks.setCoverPokemonSetup()]];
+      const cachedSolutions: RecipeSolutions = [[0]];
 
       cachedSubRecipeSolves.set(params.memoKey, cachedSolutions);
-      setCover = new SetCover(producersByIngredientIndex, cachedSubRecipeSolves);
+      setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
       const { ifStopSearching } = setCover._testAccess();
 
       const result = ifStopSearching(params);
@@ -432,7 +451,9 @@ Int16Array [
       const params = {
         memoKey: 123,
         spotsLeftInTeam: 0,
-        ingredientIndices: [1, 2, 3]
+        ingredientIndices: [1, 2, 3],
+        startTime: 0,
+        timeout: 1000
       };
 
       const mock = vimic(setCoverUtils, 'ifUnsolvableNode', () => true);
@@ -441,11 +462,124 @@ Int16Array [
 
       expect(result).toEqual([]);
       expect(mock).toHaveBeenCalledWith({
+        memoKey: 123,
         spotsLeftInTeam: 0,
         ingredientIndices: [1, 2, 3],
         startTime: expect.any(Number),
         timeout: expect.any(Number)
       });
+    });
+  });
+
+  describe('sortSubRecipesAfterProducerSubtract', () => {
+    it('should create sub-recipes and sort after producer subtract', () => {
+      const { sortSubRecipesAfterProducerSubtract } = setCover._testAccess();
+
+      const subRecipeWithSpotsLeft = new Int16Array(ingredient.INGREDIENTS.length + 1);
+      subRecipeWithSpotsLeft.set([5, 3, 2]);
+      const ingredientIndices = [0, 1, 2];
+      ingredientProducers.push(
+        ...[
+          mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([2, 1, 1]) }),
+          mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([3, 2, 1]) })
+        ]
+      );
+
+      const producersOfFirstIngredient = [0, 1];
+      producersByIngredientIndex[0] = producersOfFirstIngredient;
+
+      const result = sortSubRecipesAfterProducerSubtract(
+        subRecipeWithSpotsLeft,
+        ingredientIndices,
+        producersOfFirstIngredient
+      );
+
+      expect(result).toHaveLength(2);
+
+      // expect 2nd team to be first now in results since it has the least amount of ingredients left
+      expect(result[0].remainingRecipeWithSpotsLeft).toEqual(
+        // verify on -1 is fine since in practice we will never call this function with 0 spots, dont want to add additional computational logic for the clamp
+        new Int16Array([2, 1, 1, ...new Int16Array(ingredient.INGREDIENTS.length - 3), -1])
+      );
+      expect(result[0].remainingIngredientIndices).toEqual([0, 1, 2]);
+      expect(result[0].sumRemainingRecipeIngredients).toBe(4);
+      expect(result[0].member).toEqual(producersOfFirstIngredient[1]);
+
+      expect(result[1].remainingRecipeWithSpotsLeft).toEqual(
+        // verify on -1 is fine since in practice we will never call this function with 0 spots, dont want to add additional computational logic for the clamp
+        new Int16Array([3, 2, 1, ...new Int16Array(ingredient.INGREDIENTS.length - 3), -1])
+      );
+      expect(result[1].remainingIngredientIndices).toEqual([0, 1, 2]);
+      expect(result[1].sumRemainingRecipeIngredients).toBe(6);
+      expect(result[1].member).toEqual(producersOfFirstIngredient[0]);
+    });
+
+    it('should subtract 1 from spots left', () => {
+      const { sortSubRecipesAfterProducerSubtract } = setCover._testAccess();
+
+      const subRecipeWithSpotsLeft = new Int16Array(ingredient.INGREDIENTS.length + 1);
+      subRecipeWithSpotsLeft.set([5, 3, 2]);
+      subRecipeWithSpotsLeft[ingredient.INGREDIENTS.length] = 3;
+      const ingredientIndices = [0, 1, 2];
+      ingredientProducers.push(mocks.setCoverPokemonSetup({ totalIngredients: new Int16Array([2, 1, 1]) }));
+      producersByIngredientIndex[0] = [0];
+      producersByIngredientIndex[1] = [0];
+      producersByIngredientIndex[2] = [0];
+
+      const result = sortSubRecipesAfterProducerSubtract(subRecipeWithSpotsLeft, ingredientIndices, [0]);
+      expect(result).toHaveLength(1);
+      result.forEach((subRecipe) => {
+        expect(subRecipe.remainingRecipeWithSpotsLeft[ingredient.INGREDIENTS.length]).toBe(2);
+      });
+    });
+  });
+
+  describe('formatResult', () => {
+    it('should format the result correctly', () => {
+      ingredientProducers.push(
+        ...[
+          mocks.setCoverPokemonSetup({
+            totalIngredients: new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0]),
+            pokemonSet: { ingredients: new Int16Array(), pokemon: '1stTeam1stMember' }
+          }),
+          mocks.setCoverPokemonSetup({
+            totalIngredients: new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+            pokemonSet: { ingredients: new Int16Array(), pokemon: '1stTeam2ndMember' }
+          }),
+          mocks.setCoverPokemonSetup({
+            totalIngredients: new Int16Array([4, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+            pokemonSet: { ingredients: new Int16Array(), pokemon: '2ndTeam1stMember' }
+          })
+        ]
+      );
+      const { formatResult } = setCover._testAccess();
+
+      const solutions: RecipeSolutions = [[0, 1], [2]];
+
+      const startTime = Date.now();
+      const timeout = 1000;
+
+      const result = formatResult({ solutions, startTime, timeout });
+
+      expect(result.exhaustive).toBe(true);
+      expect(result.teams).toHaveLength(2);
+      expect(result.teams[0].producedIngredients).toEqual(
+        new Int16Array([2, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0])
+      );
+      expect(result.teams[0].members).toEqual([ingredientProducers[0], ingredientProducers[1]]);
+      expect(result.teams[1].members).toEqual([ingredientProducers[2]]);
+    });
+
+    it('should set exhaustive to false if timeout is reached', () => {
+      const { formatResult } = setCover._testAccess();
+
+      const solutions: RecipeSolutions = [];
+      const startTime = Date.now() - 2000;
+      const timeout = 1000;
+
+      const result = formatResult({ solutions, startTime, timeout });
+
+      expect(result.exhaustive).toBe(false);
     });
   });
 });

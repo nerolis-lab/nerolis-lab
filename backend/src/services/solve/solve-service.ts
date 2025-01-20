@@ -1,15 +1,12 @@
 import { SetCover } from '@src/services/solve/set-cover.js';
-import type {
-  ProducersByIngredientIndex,
-  SetCoverPokemonSetupWithSettings
-} from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
+import type { SetCoverPokemonSetupWithSettings } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
 import type { SolveRecipeInput, SolveRecipeResultWithSettings } from '@src/services/solve/types/solution-types.js';
 import {
   calculateProductionAll,
   combineProduction,
   createSettingsLookupTable,
   enrichSolutions,
-  groupProducersByIngredientIndex,
+  groupProducersByIngredient,
   pokemonProductionToRecipeSolutions
 } from '@src/services/solve/utils/solve-utils.js';
 import type { Ingredient, Recipe, SolveSettingsExt } from 'sleepapi-common';
@@ -41,12 +38,12 @@ class SolveServiceImpl {
     }
 
     const allProducers = [...nonSupportProduction, ...supportProduction];
-    const producersByIngredientIndex: ProducersByIngredientIndex = groupProducersByIngredientIndex(allProducers);
+    const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient(allProducers);
     const settingsCache: Map<string, SetCoverPokemonSetupWithSettings> = createSettingsLookupTable(allProducers);
 
     const cache = new Map();
     const maxTeamSize = input.maxTeamSize - input.includedMembers.length;
-    const setCover = new SetCover(producersByIngredientIndex, cache);
+    const setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cache);
     const solutions = setCover.solveRecipe(flatRecipeIngredients, maxTeamSize);
 
     return enrichSolutions(solutions, settingsCache);
