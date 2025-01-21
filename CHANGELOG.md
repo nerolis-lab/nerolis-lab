@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.2...v1.18.3) (2025-01-21)
+
+
+### Bug Fixes
+
+* braviary use pamtre instead of grepa ([7ba8b29](https://github.com/nerolis-lab/nerolis-lab/commit/7ba8b29ccf4ffee9dbf81e72dc6bc2d1b7206c10))
+
 ## [1.18.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.1...v1.18.2) (2025-01-21)
 
 
