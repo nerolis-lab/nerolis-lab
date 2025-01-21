@@ -28,6 +28,7 @@ exports[`getPokemonNames > shall return all cyan pokemon 1`] = `
   "SLOWKING",
   "SUICUNE",
   "TOGEKISS",
+  "BRAVIARY",
   "SYLVEON",
   "JIGGLYPUFF",
   "PSYDUCK",
@@ -35,6 +36,7 @@ exports[`getPokemonNames > shall return all cyan pokemon 1`] = `
   "IGGLYBUFF",
   "TOGEPI",
   "TOGETIC",
+  "RUFFLET",
 ]
 `;
 
@@ -423,7 +425,6 @@ exports[`getPokemonNames > shall return all power plant pokemon 1`] = `
   "RAIKOU",
   "DRIFBLIM",
   "MAGNEZONE",
-  "BRAVIARY",
   "DEDENNE",
   "MIMIKYU",
   "PAWMOT",
@@ -433,7 +434,6 @@ exports[`getPokemonNames > shall return all power plant pokemon 1`] = `
   "MAREEP",
   "FLAAFFY",
   "DRIFLOON",
-  "RUFFLET",
   "PAWMI",
   "PAWMO",
 ]
