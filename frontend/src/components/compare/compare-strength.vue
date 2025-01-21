@@ -280,17 +280,20 @@ export default defineComponent({
             : 0
 
         const skillStrength = this.showSkills
-          ? StrengthService.skillStrength({
-              skill: memberPokemon.skill,
-              amount: memberProduction.skillAmount,
-              berries: memberProduction.produceFromSkill.berries.map((b) => ({
-                amount: b.amount,
-                berry: b.berry,
-                level: b.level
-              })),
-              favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
-              timeWindow: this.comparisonStore.timeWindow
-            })
+          ? StrengthService.skillStrength(
+              {
+                skill: memberPokemon.skill,
+                amount: memberProduction.skillAmount,
+                berries: memberProduction.produceFromSkill.berries.map((b) => ({
+                  amount: b.amount,
+                  berry: b.berry,
+                  level: b.level
+                })),
+                favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
+                timeWindow: this.comparisonStore.timeWindow
+              },
+              true
+            )
           : 0
         const total = Math.floor(berryPower + ingredientPower + skillStrength)
 

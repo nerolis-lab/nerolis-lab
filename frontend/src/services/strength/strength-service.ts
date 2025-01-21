@@ -24,16 +24,20 @@ class StrengthServiceImpl {
     return Math.floor(strength)
   }
 
-  public skillStrength(params: {
-    skill: Mainskill
-    amount: number
-    berries: BerrySet[]
-    favored: Berry[]
-    timeWindow: TimeWindowWeek
-  }) {
+  public skillStrength(
+    params: {
+      skill: Mainskill
+      amount: number
+      berries: BerrySet[]
+      favored: Berry[]
+      timeWindow: TimeWindowWeek
+    },
+    considerEverythingStrength = false
+  ) {
     const { skill, berries, favored, timeWindow } = params
 
-    if (skill.isUnit('strength', 'dream shards', 'helps', 'chance', 'pot size')) {
+    if (considerEverythingStrength || skill.isUnit('strength')) {
+      logger.debug('yo')
       return this.skillValue(params)
     } else if (skill.isUnit('berries')) {
       return this.berryStrength({ berries, favored, timeWindow })
