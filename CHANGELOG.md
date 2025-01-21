@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.1...v1.18.2) (2025-01-21)
+
+
+### Bug Fixes
+
+* charge range to use correct processor ([e05b414](https://github.com/nerolis-lab/nerolis-lab/commit/e05b4145bd487547ca5a873621baed96b8c26c02))
+
 ## [1.18.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.0...v1.18.1) (2025-01-20)
 
 
