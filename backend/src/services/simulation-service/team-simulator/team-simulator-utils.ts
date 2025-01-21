@@ -79,7 +79,7 @@ class TeamSimulatorUtilsImpl {
     const { count } = members.reduce(
       (accumulator, cur) => {
         if (
-          cur.pokemonWithIngredients.pokemon.berry === berry &&
+          cur.pokemonWithIngredients.pokemon.berry.name === berry.name &&
           !accumulator.names.has(cur.pokemonWithIngredients.pokemon.name)
         ) {
           accumulator.names.add(cur.pokemonWithIngredients.pokemon.name);

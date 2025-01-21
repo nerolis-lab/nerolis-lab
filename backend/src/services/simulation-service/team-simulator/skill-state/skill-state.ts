@@ -27,7 +27,7 @@ import type {
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { Mainskill } from 'sleepapi-common';
-import { calculatePityProcThreshold, defaultZero, mainskill, METRONOME_SKILLS, RandomUtils } from 'sleepapi-common';
+import { calculatePityProcThreshold, defaultZero, mainskill, RandomUtils } from 'sleepapi-common';
 
 export class SkillState {
   memberState: MemberState;
@@ -81,11 +81,7 @@ export class SkillState {
     this.helpsSinceLastSkillProc += 1;
 
     if (this.helpsSinceLastSkillProc > this.pityProcThreshold || RandomUtils.roll(this.skillPercentage)) {
-      // TODO: we want to make metronome true random instead of average each skill, but seems to get different results atm
-      const skillsToActivate = this.skill.isSkill(mainskill.METRONOME) ? METRONOME_SKILLS : [this.skill];
-      for (const skill of skillsToActivate) {
-        activations.push(this.activateSkill(skill));
-      }
+      activations.push(this.activateSkill(this.skill));
     }
 
     return activations;
@@ -99,7 +95,7 @@ export class SkillState {
   public results(iterations: number) {
     return {
       skillAmount: (this.regularValue + this.critValue) / iterations,
-      skillProcs: this.skillProcs / this.metronomeFactor / iterations,
+      skillProcs: this.skillProcs / iterations,
       skillCrits: this.skillCrits / iterations,
       skillRegularValue: this.regularValue / iterations,
       skillCritValue: this.critValue / iterations
@@ -110,20 +106,16 @@ export class SkillState {
     return this.memberState.skill;
   }
 
-  get skillLevel() {
-    return this.memberState.member.settings.skillLevel;
-  }
-
   get skillPercentage() {
     return this.memberState.skillPercentage;
   }
 
-  public skillAmount(skill: Mainskill) {
-    return skill.amount(this.skillLevel) / this.metronomeFactor;
+  public skillLevel(skill: Mainskill) {
+    return Math.min(this.memberState.member.settings.skillLevel, skill.maxLevel);
   }
 
-  get metronomeFactor() {
-    return this.memberState.skill === mainskill.METRONOME ? METRONOME_SKILLS.length : 1;
+  public skillAmount(skill: Mainskill) {
+    return skill.amount(this.skillLevel(skill));
   }
 
   private activateSkill(skill: Mainskill): TeamSkillActivation {

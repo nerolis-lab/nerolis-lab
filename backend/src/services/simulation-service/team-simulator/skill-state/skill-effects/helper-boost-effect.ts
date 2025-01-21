@@ -16,7 +16,7 @@ export class HelperBoostEffect implements SkillEffect {
             members: memberState.team
           });
 
-    const uniqueHelps = mainskill.HELPER_BOOST_UNIQUE_BOOST_TABLE[unique - 1][skillState.skillLevel - 1];
+    const uniqueHelps = mainskill.HELPER_BOOST_UNIQUE_BOOST_TABLE[unique - 1][skillState.skillLevel(skill) - 1];
     const regularAmount = skillState.skillAmount(skill) + uniqueHelps;
 
     return {

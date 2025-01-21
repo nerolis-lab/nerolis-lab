@@ -48,7 +48,7 @@ describe('ChargeEnergySMoonlightEffect', () => {
 
     const activation = effect.activate(skillState);
     const skill = mainskill.CHARGE_ENERGY_S_MOONLIGHT;
-    const teamAmount = mainskill.moonlightCritAmount(skillState.skillLevel);
+    const teamAmount = mainskill.moonlightCritAmount(skillState.skillLevel(skill));
 
     expect(activation.skill).toBe(skill);
     expect(activation.selfValue?.regular).toBeGreaterThan(0);
