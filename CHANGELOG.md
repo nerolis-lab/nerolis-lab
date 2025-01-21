@@ -1,3 +1,11 @@
+## [1.18.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.3...v1.18.4) (2025-01-21)
+
+
+### Bug Fixes
+
+* remove non-strength skill from team overview ([1b74e27](https://github.com/nerolis-lab/nerolis-lab/commit/1b74e27aac1a05f38842de9c899df628ae8f35ca))
+* skill copy respects copied skill max level ([d0b3863](https://github.com/nerolis-lab/nerolis-lab/commit/d0b386342a4c250475d2e81311a5e4abe7455aa3))
+
 ## [1.18.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.2...v1.18.3) (2025-01-21)
 
 
