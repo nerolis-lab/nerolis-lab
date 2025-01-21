@@ -1,6 +1,6 @@
 export * from './berry-burst';
 export * from './berry-burst-disguise';
-export * from './charge-energy';
+export * from './charge-energy-s';
 export * from './charge-energy-s-moonlight';
 export * from './charge-strength-m';
 export * from './charge-strength-s';

@@ -7,7 +7,8 @@ export class ChargeStrengthSStockpileEffect implements SkillEffect {
   private currentStockpile = 0;
   activate(skillState: SkillState): TeamSkillActivation {
     const skill = mainskill.CHARGE_STRENGTH_S_STOCKPILE;
-    const currentLevelStocks = mainskill.STOCKPILE_STRENGTH_STOCKS[skillState.skillLevel];
+    const currentLevelStocks =
+      mainskill.STOCKPILE_STRENGTH_STOCKS[Math.min(skillState.skillLevel(skill), skill.maxLevel)];
     const triggerSpitUp = RandomUtils.roll(skill.critChance);
 
     if (triggerSpitUp || this.currentStockpile === currentLevelStocks.length - 1) {

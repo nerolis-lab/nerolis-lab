@@ -21,7 +21,7 @@ describe('BerryBurstEffect', () => {
     const regularSelfAmount = 10;
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel - 1] = regularOtherAmount;
+    mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST) - 1] = regularOtherAmount;
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstEffect.activate(skillState);
@@ -74,7 +74,7 @@ describe('BerryBurstEffect', () => {
     const regularSelfAmount = 10;
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    mainskill.BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel - 1] = regularOtherAmount;
+    mainskill.BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST) - 1] = regularOtherAmount;
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstEffect.activate(skillState);

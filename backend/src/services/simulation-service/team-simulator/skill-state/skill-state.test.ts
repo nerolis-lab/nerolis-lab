@@ -1,7 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { capitalize, mainskill, MAINSKILLS, METRONOME_SKILLS } from 'sleepapi-common';
+import { capitalize, mainskill, MAINSKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('SkillState', () => {
@@ -85,7 +85,9 @@ describe('SkillState', () => {
   });
 
   it('should return correct skill level', () => {
-    expect(skillState.skillLevel).toBe(mockMemberState.member.settings.skillLevel);
+    expect(skillState.skillLevel(mockMemberState.member.pokemonWithIngredients.pokemon.skill)).toBe(
+      mockMemberState.member.settings.skillLevel
+    );
   });
 
   it('should return correct skill percentage', () => {
@@ -95,14 +97,7 @@ describe('SkillState', () => {
   it('should return correct skill amount', () => {
     const skill = mainskill.BERRY_BURST;
     const skillAmount = skillState.skillAmount(skill);
-    expect(skillAmount).toBe(skill.amount(mockMemberState.member.settings.skillLevel) / skillState.metronomeFactor);
-  });
-
-  it('should return correct metronome factor', () => {
-    mockMemberState.member.pokemonWithIngredients.pokemon.skill = mainskill.METRONOME;
-    expect(skillState.metronomeFactor).toBe(METRONOME_SKILLS.length);
-    mockMemberState.member.pokemonWithIngredients.pokemon.skill = mainskill.BERRY_BURST;
-    expect(skillState.metronomeFactor).toBe(1);
+    expect(skillAmount).toBe(skill.amount(mockMemberState.member.settings.skillLevel));
   });
 
   it('should initialize skillEffects map with all mainskills', () => {

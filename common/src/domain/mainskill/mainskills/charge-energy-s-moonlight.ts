@@ -1,6 +1,6 @@
 import { INGREDIENT_SUPPORT_MAINSKILLS, MAINSKILLS, METRONOME_SKILLS } from '../mainskill';
 import { Moonlight } from '../modifier';
-import { CHARGE_ENERGY_S } from './charge-energy';
+import { CHARGE_ENERGY_S } from './charge-energy-s';
 
 const MOONLIGHT_CHARGE_ENERGY_CRIT_CHANCE = 0.5;
 
