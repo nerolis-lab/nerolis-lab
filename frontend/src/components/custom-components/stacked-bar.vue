@@ -3,14 +3,14 @@
     <div
       v-for="(section, index) in sections"
       :key="index"
-      class="flex-center"
-      :class="`bg-${section.color}`"
+      :class="[`bg-${section.color}`]"
       :style="{
-        width: section.percentage + '%',
+        height: '100%',
+        width: calculateWidth(section.percentage, index) + '%',
         borderTopLeftRadius: index === 0 ? '10px' : '0',
         borderBottomLeftRadius: index === 0 ? '10px' : '0',
-        borderTopRightRadius: index === sections.length - 1 ? '10px' : '0',
-        borderBottomRightRadius: index === sections.length - 1 ? '10px' : '0'
+        borderTopRightRadius: isLastSection(index) ? '10px' : '0',
+        borderBottomRightRadius: isLastSection(index) ? '10px' : '0'
       }"
     >
       <v-tooltip v-model="activeTooltips[index]" theme="light" bottom :close-on-content-click="false">
@@ -59,8 +59,12 @@ export default defineComponent({
     toggleTooltip(index: number) {
       this.activeTooltips[index] = !this.activeTooltips[index]
     },
-    round(num: number) {
-      return Math.round(num)
+    calculateWidth(percentage: number, index: number): number {
+      const remainingPercentage = this.sections.slice(0, index).reduce((sum, section) => sum - section.percentage, 100)
+      return Math.max(0, Math.min(percentage, remainingPercentage))
+    },
+    isLastSection(index: number): boolean {
+      return index === this.sections.length - 1
     }
   }
 })
