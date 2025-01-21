@@ -3,7 +3,7 @@ import type { TeamSkillActivation } from '@src/services/simulation-service/team-
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mainskill, RandomUtils } from 'sleepapi-common';
 
-export class ChargeStrengthSStockpileSEffect implements SkillEffect {
+export class ChargeStrengthSStockpileEffect implements SkillEffect {
   private currentStockpile = 0;
   activate(skillState: SkillState): TeamSkillActivation {
     const skill = mainskill.CHARGE_STRENGTH_S_STOCKPILE;
