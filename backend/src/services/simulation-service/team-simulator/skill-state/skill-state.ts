@@ -7,7 +7,8 @@ import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simul
 import { ChargeEnergySMoonlightEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s-moonlight-effect.js';
 import { ChargeStrengthMEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m-effect.js';
 import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-effect.js';
-import { ChargeStrengthSStockpileSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
+import { ChargeStrengthSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-range-effect.js';
+import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-effect.js';
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
@@ -54,8 +55,8 @@ export class SkillState {
       [mainskill.CHARGE_ENERGY_S_MOONLIGHT, new ChargeEnergySMoonlightEffect()],
       [mainskill.CHARGE_STRENGTH_M, new ChargeStrengthMEffect()],
       [mainskill.CHARGE_STRENGTH_S, new ChargeStrengthSEffect()],
-      [mainskill.CHARGE_STRENGTH_S_RANGE, new ChargeStrengthSEffect()],
-      [mainskill.CHARGE_STRENGTH_S_STOCKPILE, new ChargeStrengthSStockpileSEffect()],
+      [mainskill.CHARGE_STRENGTH_S_RANGE, new ChargeStrengthSRangeEffect()],
+      [mainskill.CHARGE_STRENGTH_S_STOCKPILE, new ChargeStrengthSStockpileEffect()],
       [mainskill.COOKING_POWER_UP_S, new CookingPowerUpSEffect()],
       [mainskill.DREAM_SHARD_MAGNET_S, new DreamShardMagnetSEffect()],
       [mainskill.DREAM_SHARD_MAGNET_S_RANGE, new DreamShardMagnetSRangeEffect()],

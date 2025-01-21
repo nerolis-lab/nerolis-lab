@@ -1,15 +1,15 @@
 import { mocks } from '@src/bun/index.js';
-import { ChargeStrengthSStockpileSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
+import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mainskill, RandomUtils } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('ChargeStrengthSStockpileSEffect', () => {
-  let effect: ChargeStrengthSStockpileSEffect;
+  let effect: ChargeStrengthSStockpileEffect;
   let mockSkillState: SkillState;
 
   beforeEach(() => {
-    effect = new ChargeStrengthSStockpileSEffect();
+    effect = new ChargeStrengthSStockpileEffect();
     mockSkillState = mocks.skillState();
   });
 

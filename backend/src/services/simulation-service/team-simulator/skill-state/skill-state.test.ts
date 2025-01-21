@@ -1,7 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill, MAINSKILLS, METRONOME_SKILLS } from 'sleepapi-common';
+import { capitalize, mainskill, MAINSKILLS, METRONOME_SKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('SkillState', () => {
@@ -103,5 +103,32 @@ describe('SkillState', () => {
     expect(skillState.metronomeFactor).toBe(METRONOME_SKILLS.length);
     mockMemberState.member.pokemonWithIngredients.pokemon.skill = mainskill.BERRY_BURST;
     expect(skillState.metronomeFactor).toBe(1);
+  });
+
+  it('should initialize skillEffects map with all mainskills', () => {
+    const skillEffects = skillState['skillEffects'];
+
+    skillEffects.forEach((effect, mainskill) => {
+      expect(skillEffects.has(mainskill)).toBe(true);
+      expect(effect).toBeDefined();
+
+      const skillName = mainskill.name;
+      let expectedEffectName: string;
+
+      if (mainskill.isModified) {
+        const [modifier, baseName] = skillName.split('(');
+        const cleanBaseName = baseName.replace(')', '').trim();
+        const cleanModifier = modifier.trim();
+
+        expectedEffectName =
+          cleanBaseName.split(/[- ]/g).map(capitalize).join('') +
+          cleanModifier.split(/[- ]/g).map(capitalize).join('') +
+          'Effect';
+      } else {
+        expectedEffectName = skillName.split(/[- ]/g).map(capitalize).join('') + 'Effect';
+      }
+
+      expect(effect.constructor.name).toBe(expectedEffectName);
+    });
   });
 });
