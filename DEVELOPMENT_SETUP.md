@@ -17,8 +17,8 @@ The project acts as a monorepo where each module is individually deployed. It's 
 | ------ | ------------------------------------- |
 | VSCode | <https://code.visualstudio.com/>      |
 | NVM    | <https://github.com/nvm-sh/nvm>       |
-| docker | <https://bun.sh/>                     |
-| bun    | <https://www.docker.com/get-started/> |
+| docker | <https://www.docker.com/get-started/> |
+| bun    | <https://bun.sh/>                     |
 
 On Windows it is recommended to use nvm inside WSL (Windows Subsystem for Linux), but other alternatives like nvm-windows exist.
 
