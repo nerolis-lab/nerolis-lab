@@ -1,3 +1,10 @@
+## [1.18.6](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.5...v1.18.6) (2025-01-24)
+
+
+### Bug Fixes
+
+* set correct link for bun/docker in readme ([0d831ce](https://github.com/nerolis-lab/nerolis-lab/commit/0d831ceecc5aeda4671cb6233300f30badfe2d4f))
+
 ## [1.18.5](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.4...v1.18.5) (2025-01-24)
 
 ## [1.18.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.3...v1.18.4) (2025-01-21)
