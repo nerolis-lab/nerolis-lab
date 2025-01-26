@@ -9,14 +9,17 @@ export type TastyChance = 'chance';
 export type Metronome = 'metronome';
 export type Copy = 'copy';
 
-export type MainskillUnit =
-  | Energy
-  | Ingredients
-  | Berries
-  | Helps
-  | DreamShards
-  | Strength
-  | PotSize
-  | TastyChance
-  | Metronome
-  | Copy;
+export const mainskillUnits = [
+  'energy',
+  'berries',
+  'ingredients',
+  'helps',
+  'dream shards',
+  'strength',
+  'pot size',
+  'chance',
+  'metronome',
+  'copy'
+] as const;
+
+export type MainskillUnit = (typeof mainskillUnits)[number];

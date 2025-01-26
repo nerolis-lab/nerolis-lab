@@ -327,7 +327,6 @@ describe('recoverMemberEnergy', () => {
       settings: mockSettings,
       members: mockMembers.concat(mockMembers),
       includeCooking: true
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
@@ -336,7 +335,7 @@ describe('recoverMemberEnergy', () => {
       regular: 50
     };
 
-    simulator.recoverMemberEnergy(energy);
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0]);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     simulator.memberStates.forEach((member: any) => {
@@ -352,7 +351,7 @@ describe('recoverMemberEnergy', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
-    simulator.memberStates[0].recoverEnergy(100);
+    simulator.memberStates[0].recoverEnergy(100, simulator.memberStates[0]);
 
     const energy: SkillActivationValue = {
       crit: 0,
@@ -360,7 +359,7 @@ describe('recoverMemberEnergy', () => {
       chanceToTargetLowestMember: 1
     };
 
-    simulator.recoverMemberEnergy(energy);
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0]);
     expect(simulator.memberStates).toHaveLength(2);
     expect(simulator.memberStates[0].energy).toBe(100);
     expect(simulator.memberStates[1].energy).toBe(50);

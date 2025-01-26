@@ -20,6 +20,7 @@ export function createMockPokemon(attrs?: Partial<PokemonInstanceExt>): PokemonI
     skillLevel: 1,
     subskills: [],
     version: 1,
+    rp: 0,
     ...attrs
   }
 }

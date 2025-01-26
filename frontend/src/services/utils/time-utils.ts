@@ -22,6 +22,19 @@ class TimeUtilsImpl {
     return `${hourString}:${minuteString}:${secondString}`
   }
 
+  public prettifySeconds(frequency: number) {
+    const hours = Math.floor(frequency / 3600)
+      .toString()
+      .padStart(2, '0')
+    const minutes = Math.floor((frequency % 3600) / 60)
+      .toString()
+      .padStart(2, '0')
+    const seconds = Math.round(frequency % 60)
+      .toString()
+      .padStart(2, '0')
+    return `${hours !== '00' ? `${hours}h ` : ''}${minutes}m ${seconds}s`
+  }
+
   public sleepScore(params: { bedtime: string; wakeup: string }) {
     const [bedHour, bedMinute] = params.bedtime.split(':').map(Number)
     const [wakeHour, wakeMinute] = params.wakeup.split(':').map(Number)

@@ -43,10 +43,12 @@ export function migrateStores() {
   const teamStore = useTeamStore()
   const comparisonStore = useComparisonStore()
   const userStore = useUserStore()
+  const pokemonStore = usePokemonStore()
 
   if (versionStore.updateFound) {
     versionStore.updateVersion()
   }
+  pokemonStore.migrate()
   teamStore.migrate()
   comparisonStore.migrate()
   userStore.migrate()

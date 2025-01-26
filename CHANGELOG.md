@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.6...v1.19.0) (2025-01-26)
+
+
+### Features
+
+* member tab stats and skill distribution ([e8f613e](https://github.com/nerolis-lab/nerolis-lab/commit/e8f613e7563070ddc2fd9f78551eed076ae88697))
+
 ## [1.18.6](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.5...v1.18.6) (2025-01-24)
 
 

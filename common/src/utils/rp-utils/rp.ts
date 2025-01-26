@@ -39,6 +39,8 @@ import {
   calculateSkillPercentage
 } from '../../utils/stat-utils';
 
+export type PokemonInstanceWithoutRP = Omit<PokemonInstanceExt, 'rp'>;
+
 export class RP {
   private pokemon: Pokemon;
   private ingredientSet: IngredientSet[];
@@ -48,7 +50,7 @@ export class RP {
   private subskills: Set<string>;
   private ribbon: number;
 
-  constructor(pokemonInstance: PokemonInstanceExt) {
+  constructor(pokemonInstance: PokemonInstanceWithoutRP) {
     this.ingredientSet = [];
     this.pokemon = pokemonInstance.pokemon;
     this.level = pokemonInstance.level;
@@ -218,7 +220,7 @@ export class RP {
     60: 1.88
   };
 
-  private filteredSubskills(pokemonInstance: PokemonInstanceExt): Set<string> {
+  private filteredSubskills(pokemonInstance: PokemonInstanceWithoutRP): Set<string> {
     const result = new Set<string>();
     for (const sub of pokemonInstance.subskills) {
       if (sub.level <= pokemonInstance.level) {
@@ -228,7 +230,7 @@ export class RP {
     return result;
   }
 
-  private filteredIngredientSet(pokemonInstance: PokemonInstanceExt): IngredientSet[] {
+  private filteredIngredientSet(pokemonInstance: PokemonInstanceWithoutRP): IngredientSet[] {
     const { pokemon, ingredients, level } = pokemonInstance;
 
     const ingredientSet: IngredientSet[] = [pokemon.ingredient0];

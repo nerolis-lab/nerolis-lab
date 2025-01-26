@@ -61,7 +61,6 @@ export class MemberState {
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
   private voidHelps = 0;
-  private currentStockpile = 0;
 
   // stats
   private frequency0;
@@ -84,6 +83,15 @@ export class MemberState {
   private totalNightHelps = 0;
   private nightHelpsBeforeSS = 0;
   private nightHelpsAfterSS = 0;
+  private helpsAtFrequency0 = 0;
+  private helpsAtFrequency1 = 0;
+  private helpsAtFrequency40 = 0;
+  private helpsAtFrequency60 = 0;
+  private helpsAtFrequency80 = 0;
+
+  // team members support
+  private totalHealedByMembers = 0;
+  private totalHelpsByMembers = 0;
 
   constructor(params: {
     member: TeamMemberExt;
@@ -197,6 +205,7 @@ export class MemberState {
       erb: nrOfErb,
       nature: this.member.settings.nature
     };
+    this.skillState.wakeup();
 
     const missingEnergy = Math.max(0, 100 - this.currentEnergy);
     const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo));
@@ -210,13 +219,17 @@ export class MemberState {
   /**
    * @returns any leftover (wasted) energy
    */
-  public recoverEnergy(recovered: number) {
+  public recoverEnergy(recovered: number, invoker: MemberState) {
     const recoveredWithNature = recovered * this.member.settings.nature.energy;
     const clampedEnergyRecovered =
       this.currentEnergy + recoveredWithNature > 150 ? 150 - this.currentEnergy : recoveredWithNature;
 
     this.currentEnergy += clampedEnergyRecovered;
     this.totalRecovery += clampedEnergyRecovered;
+
+    if (invoker.id !== this.id) {
+      this.totalHealedByMembers += clampedEnergyRecovered;
+    }
 
     return {
       recovered: clampedEnergyRecovered,
@@ -232,9 +245,13 @@ export class MemberState {
     this.skillState.addValue(skillValue);
   }
 
-  public addHelps(helps: SkillActivationValue) {
+  public addHelps(helps: SkillActivationValue, invoker: MemberState) {
     const { regular, crit } = helps;
     const totalHelps = regular + crit;
+
+    if (invoker.id !== this.id) {
+      this.totalHelpsByMembers += totalHelps;
+    }
 
     this.helpsSinceLastCook += totalHelps;
     this.totalAverageHelps += totalHelps;
@@ -261,13 +278,6 @@ export class MemberState {
     }
 
     return [];
-  }
-
-  public scheduleHelp(currentMinutesSincePeriodStart: number) {
-    if (currentMinutesSincePeriodStart >= this.nextHelp) {
-      const frequency = this.calculateFrequencyWithEnergy();
-      this.nextHelp += frequency / 60;
-    }
   }
 
   public attemptNightHelp(currentMinutesSincePeriodStart: number) {
@@ -298,6 +308,13 @@ export class MemberState {
         this.totalSneakySnackHelps += 1;
       }
 
+      this.nextHelp += frequency / 60;
+    }
+  }
+
+  public scheduleHelp(currentMinutesSincePeriodStart: number) {
+    if (currentMinutesSincePeriodStart >= this.nextHelp) {
+      const frequency = this.calculateFrequencyWithEnergy();
       this.nextHelp += frequency / 60;
     }
   }
@@ -365,14 +382,24 @@ export class MemberState {
       amount: Math.max(...this.sneakySnackBerries._mutateUnary((a) => (a * this.totalSneakySnackHelps) / iterations))
     };
 
-    const { skillAmount, skillProcs, skillCritValue, skillCrits, skillRegularValue } =
-      this.skillState.results(iterations);
+    const {
+      skillAmount,
+      skillValue,
+      skillProcs,
+      skillCritValue,
+      skillCrits,
+      skillRegularValue,
+      skillProcDistribution
+    } = this.skillState.results(iterations);
+
+    const totalHelps = (this.totalDayHelps + this.totalNightHelps) / iterations;
 
     return {
       produceTotal,
       produceWithoutSkill: totalHelpProduce,
       produceFromSkill: totalSkillProduce,
       skillAmount,
+      skillValue,
       skillProcs,
       externalId: this.id,
       pokemonWithIngredients: this.pokemonWithIngredients,
@@ -380,11 +407,12 @@ export class MemberState {
         ingredientPercentage: this.ingredientPercentage,
         skillPercentage: this.skillPercentage,
         carrySize: this.inventoryLimit,
+        maxFrequency: this.frequency80,
         spilledIngredients,
         dayHelps: this.totalDayHelps / iterations,
         nightHelps: this.totalNightHelps / iterations,
         averageHelps: this.totalAverageHelps / iterations,
-        totalHelps: (this.totalDayHelps + this.totalNightHelps) / iterations,
+        totalHelps,
         nightHelpsAfterSS: this.nightHelpsAfterSS / iterations,
         nightHelpsBeforeSS: this.nightHelpsBeforeSS / iterations,
         sneakySnack,
@@ -393,7 +421,19 @@ export class MemberState {
         skillCritValue,
         wastedEnergy: this.wastedEnergy / iterations,
         totalRecovery: this.totalRecovery / iterations,
-        morningProcs: this.morningProcs / iterations
+        morningProcs: this.morningProcs / iterations,
+        skillProcDistribution,
+        frequencySplit: {
+          zero: this.helpsAtFrequency0 / totalHelps,
+          one: this.helpsAtFrequency1 / totalHelps,
+          fourty: this.helpsAtFrequency40 / totalHelps,
+          sixty: this.helpsAtFrequency60 / totalHelps,
+          eighty: this.helpsAtFrequency80 / totalHelps
+        },
+        teamSupport: {
+          energy: this.totalHealedByMembers / iterations,
+          helps: this.totalHelpsByMembers / iterations
+        }
       }
     };
   }
@@ -462,14 +502,19 @@ export class MemberState {
 
   private calculateFrequencyWithEnergy() {
     if (this.currentEnergy >= 80) {
+      this.helpsAtFrequency80 += 1;
       return this.frequency80;
     } else if (this.currentEnergy >= 60) {
+      this.helpsAtFrequency60 += 1;
       return this.frequency60;
     } else if (this.currentEnergy >= 40) {
+      this.helpsAtFrequency40 += 1;
       return this.frequency40;
     } else if (this.currentEnergy >= 1) {
+      this.helpsAtFrequency1 += 1;
       return this.frequency1;
     } else {
+      this.helpsAtFrequency0 += 1;
       return this.frequency0;
     }
   }

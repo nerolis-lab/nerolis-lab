@@ -29,5 +29,5 @@ export interface PokemonInstanceExt {
   nature: Nature;
   subskills: SubskillInstanceExt[];
   ingredients: IngredientInstanceExt[];
-  rp?: number;
+  rp: number;
 }

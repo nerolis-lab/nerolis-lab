@@ -3,7 +3,7 @@ import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { defineStore } from 'pinia'
-import { RP, getPokemon, type PokemonInstanceExt } from 'sleepapi-common'
+import { getPokemon, RP, type PokemonInstanceExt } from 'sleepapi-common'
 
 export interface PokemonState {
   pokemon: Record<string, PokemonInstanceExt>
@@ -24,10 +24,15 @@ export const usePokemonStore = defineStore('pokemon', {
     }
   },
   actions: {
+    migrate() {
+      for (const pkmn of Object.values(this.pokemon)) {
+        if (!pkmn.rp) {
+          const rpUtil = new RP(pkmn)
+          pkmn.rp = rpUtil.calc()
+        }
+      }
+    },
     upsertLocalPokemon(pokemon: PokemonInstanceExt) {
-      // TODO: instead of calcing we probably should store in db on save and load here
-      const rpUtil = new RP(pokemon)
-      pokemon.rp = rpUtil.calc()
       this.pokemon[pokemon.externalId] = pokemon
     },
     removePokemon(externalId: string, source: 'team' | 'compare' | 'pokebox') {
