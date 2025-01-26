@@ -2,6 +2,7 @@ import type {
   BerrySet,
   IngredientIndexToFloatAmount,
   IngredientSet,
+  MainskillUnit,
   PokemonInstance,
   PokemonWithIngredientsIndexed,
   TeamMemberExt,
@@ -29,6 +30,7 @@ export interface MemberProductionAdvanced {
   ingredientPercentage: number;
   skillPercentage: number;
   carrySize: number;
+  maxFrequency: number;
   spilledIngredients: IngredientSet[];
   totalHelps: number;
   averageHelps: number;
@@ -43,6 +45,18 @@ export interface MemberProductionAdvanced {
   wastedEnergy: number;
   morningProcs: number;
   totalRecovery: number;
+  skillProcDistribution: Record<number, number>;
+  frequencySplit: {
+    zero: number;
+    one: number;
+    fourty: number;
+    sixty: number;
+    eighty: number;
+  };
+  teamSupport: {
+    energy: number;
+    helps: number;
+  };
 }
 
 export interface MemberProductionBase {
@@ -52,10 +66,13 @@ export interface MemberProductionBase {
   pokemonWithIngredients: PokemonWithIngredientsIndexed;
 }
 
+export type MemberSkillValue = Record<MainskillUnit, { amountToSelf: number; amountToTeam: number }>;
+
 export interface MemberProduction extends MemberProductionBase {
   produceFromSkill: Produce;
   produceWithoutSkill: Produce;
   skillAmount: number;
+  skillValue: MemberSkillValue;
   advanced: MemberProductionAdvanced;
 }
 

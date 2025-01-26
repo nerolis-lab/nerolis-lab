@@ -3,9 +3,11 @@ import {
   getNature,
   getPokemon,
   getSubskill,
+  RP,
   type PokemonInstanceExt,
   type PokemonInstanceIdentity,
-  type PokemonInstanceWithMeta
+  type PokemonInstanceWithMeta,
+  type PokemonInstanceWithoutRP
 } from 'sleepapi-common'
 
 class PokemonInstanceUtilsImpl {
@@ -16,7 +18,7 @@ class PokemonInstanceUtilsImpl {
       throw new Error('Received corrupt subskill data')
     }
 
-    return {
+    const pokemonWithoutRP: PokemonInstanceWithoutRP = {
       version: pokemonInstance.version,
       saved: pokemonInstance.saved,
       shiny: pokemonInstance.shiny,
@@ -37,6 +39,10 @@ class PokemonInstanceUtilsImpl {
         level: instancedIngredient.level,
         ingredient: getIngredient(instancedIngredient.ingredient)
       }))
+    }
+    return {
+      ...pokemonWithoutRP,
+      rp: new RP(pokemonWithoutRP).calc()
     }
   }
 

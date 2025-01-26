@@ -57,3 +57,25 @@ describe('sleepScore', () => {
     ).toBe(94) // 8 hours of sleep
   })
 })
+
+describe('prettifySeconds', () => {
+  it('shall format seconds to hh:mm:ss', () => {
+    expect(TimeUtils.prettifySeconds(3661)).toBe('01h 01m 01s')
+  })
+
+  it('shall format correctly if hours 0', () => {
+    expect(TimeUtils.prettifySeconds(3599)).toBe('59m 59s')
+  })
+
+  it('shall format correctly if minutes 0', () => {
+    expect(TimeUtils.prettifySeconds(59)).toBe('00m 59s')
+  })
+
+  it('shall format correctly if 0', () => {
+    expect(TimeUtils.prettifySeconds(0)).toBe('00m 00s')
+  })
+
+  it('shall format correctly if only minutes 0', () => {
+    expect(TimeUtils.prettifySeconds(3601)).toBe('01h 00m 01s')
+  })
+})

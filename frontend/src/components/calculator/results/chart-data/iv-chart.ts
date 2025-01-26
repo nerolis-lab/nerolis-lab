@@ -85,10 +85,7 @@ export const ivOptions = {
         stepSize: 100,
         backdropColor: 'rgba(0, 0, 0, 0)',
         callback(value: number) {
-          if (value === 100) {
-            return ''
-          }
-          return value
+          return value === 100 ? '' : value
         }
       },
       pointLabels: {

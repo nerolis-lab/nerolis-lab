@@ -151,4 +151,24 @@ describe('Pokemon Store', () => {
 
     expect(UserService.deletePokemon).toHaveBeenCalled()
   })
+  it('should migrate pokemon correctly', () => {
+    const pokemonStore = usePokemonStore()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mockPokemonWithoutRP = { ...mockPokemon, rp: undefined } as any
+    pokemonStore.upsertLocalPokemon(mockPokemonWithoutRP)
+
+    pokemonStore.migrate()
+
+    expect(pokemonStore.pokemon[externalId].rp).toBeDefined()
+  })
+
+  it('should not change pokemon that already have rp', () => {
+    const pokemonStore = usePokemonStore()
+    const mockPokemonWithRP = { ...mockPokemon, rp: 100 }
+    pokemonStore.upsertLocalPokemon(mockPokemonWithRP)
+
+    pokemonStore.migrate()
+
+    expect(pokemonStore.pokemon[externalId].rp).toEqual(100)
+  })
 })

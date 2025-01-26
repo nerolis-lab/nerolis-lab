@@ -7,108 +7,19 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Energy": {
-				"type": "string",
-				"enum": [
-					"energy"
-				],
-				"nullable": false
-			},
-			"Ingredients": {
-				"type": "string",
-				"enum": [
-					"ingredients"
-				],
-				"nullable": false
-			},
-			"Berries": {
-				"type": "string",
-				"enum": [
-					"berries"
-				],
-				"nullable": false
-			},
-			"Helps": {
-				"type": "string",
-				"enum": [
-					"helps"
-				],
-				"nullable": false
-			},
-			"DreamShards": {
-				"type": "string",
-				"enum": [
-					"dream shards"
-				],
-				"nullable": false
-			},
-			"Strength": {
-				"type": "string",
-				"enum": [
-					"strength"
-				],
-				"nullable": false
-			},
-			"PotSize": {
-				"type": "string",
-				"enum": [
-					"pot size"
-				],
-				"nullable": false
-			},
-			"TastyChance": {
-				"type": "string",
-				"enum": [
-					"chance"
-				],
-				"nullable": false
-			},
-			"Metronome": {
-				"type": "string",
-				"enum": [
-					"metronome"
-				],
-				"nullable": false
-			},
-			"Copy": {
-				"type": "string",
-				"enum": [
-					"copy"
-				],
-				"nullable": false
-			},
 			"MainskillUnit": {
-				"anyOf": [
-					{
-						"$ref": "#/components/schemas/Energy"
-					},
-					{
-						"$ref": "#/components/schemas/Ingredients"
-					},
-					{
-						"$ref": "#/components/schemas/Berries"
-					},
-					{
-						"$ref": "#/components/schemas/Helps"
-					},
-					{
-						"$ref": "#/components/schemas/DreamShards"
-					},
-					{
-						"$ref": "#/components/schemas/Strength"
-					},
-					{
-						"$ref": "#/components/schemas/PotSize"
-					},
-					{
-						"$ref": "#/components/schemas/TastyChance"
-					},
-					{
-						"$ref": "#/components/schemas/Metronome"
-					},
-					{
-						"$ref": "#/components/schemas/Copy"
-					}
+				"type": "string",
+				"enum": [
+					"energy",
+					"berries",
+					"ingredients",
+					"helps",
+					"dream shards",
+					"strength",
+					"pot size",
+					"chance",
+					"metronome",
+					"copy"
 				]
 			},
 			"ModifierType": {

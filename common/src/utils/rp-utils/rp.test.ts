@@ -25,13 +25,13 @@ import {
   SKILL_TRIGGER_S,
   SLEEP_EXP_BONUS
 } from '../../domain/subskill/subskills';
-import type { PokemonInstanceExt } from '../../domain/types/pokemon-instance';
+import type { PokemonInstanceWithoutRP } from '../../utils/rp-utils/rp';
 import { RP } from '../../utils/rp-utils/rp';
 import { uuid } from '../../utils/uuid-utils';
 
 describe('RP', () => {
   it('shall calculate realistic level 50 Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: PINSIR,
       name: 'Paris',
       carrySize: 24,
@@ -67,7 +67,7 @@ describe('RP', () => {
   });
 
   it('shall calculate realistic level 60 Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: ESPEON,
       name: 'Espeon',
       carrySize: 21,
@@ -96,7 +96,7 @@ describe('RP', () => {
   });
 
   it('shall calculate realistic ribbon 500 hours Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: PUPITAR,
       name: 'Pupitar',
       carrySize: 18,
@@ -124,7 +124,7 @@ describe('RP', () => {
   });
 
   it('shall calculate realistic ribbon 2000 hours Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: EEVEE,
       name: 'Eevee',
       carrySize: 12,
@@ -153,7 +153,7 @@ describe('RP', () => {
   });
 
   it('shall calculate level 60 Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: PINSIR,
       name: 'Paris',
       carrySize: 24,
@@ -184,7 +184,7 @@ describe('RP', () => {
   });
 
   it('shall calculate skill Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: GOLDUCK,
       name: 'Golduck',
       carrySize: 19,
@@ -215,7 +215,7 @@ describe('RP', () => {
   });
 
   it('shall calculate berry Pokémon', () => {
-    const pokemonInstance: PokemonInstanceExt = {
+    const pokemonInstance: PokemonInstanceWithoutRP = {
       pokemon: RAICHU,
       name: 'Thor',
       carrySize: 31,
