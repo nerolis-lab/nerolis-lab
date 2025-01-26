@@ -1,7 +1,14 @@
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { createMockMemberIv } from '@/vitest/mocks/member-iv'
 import { createMockPokemon } from '@/vitest/mocks/pokemon-instance'
-import { berry, ingredient, ingredientSetToIntFlat, type MemberProduction } from 'sleepapi-common'
+import {
+  berry,
+  ingredient,
+  ingredientSetToIntFlat,
+  mainskillUnits,
+  type MemberProduction,
+  type MemberSkillValue
+} from 'sleepapi-common'
 
 export function createMockMemberProduction(attrs?: Partial<MemberProduction>): MemberProduction {
   const mockPokemon = createMockPokemon()
@@ -55,10 +62,14 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
       ]
     },
     skillAmount: 100,
+    skillValue: Object.fromEntries(
+      mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])
+    ) as MemberSkillValue,
     skillProcs: 5,
     advanced: {
       averageHelps: 0,
       skillCrits: 0,
+      maxFrequency: 0,
       skillRegularValue: 0,
       spilledIngredients: [],
       totalHelps: 0,
@@ -73,7 +84,19 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
       ingredientPercentage: 0,
       skillPercentage: 0,
       sneakySnack: { amount: 0, berry: mockPokemon.pokemon.berry, level: mockPokemon.level },
-      totalRecovery: 0
+      totalRecovery: 0,
+      frequencySplit: {
+        eighty: 0,
+        sixty: 0,
+        fourty: 0,
+        one: 0,
+        zero: 0
+      },
+      skillProcDistribution: {},
+      teamSupport: {
+        energy: 0,
+        helps: 0
+      }
     },
     ...attrs
   }

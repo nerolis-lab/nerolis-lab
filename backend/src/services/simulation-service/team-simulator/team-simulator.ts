@@ -197,19 +197,18 @@ export class TeamSimulator {
     if (result.teamValue) {
       if (result.skill.isUnit('helps')) {
         for (const mem of this.memberStatesWithoutFillers) {
-          mem.addHelps(result.teamValue);
-          // TODO: we currently don't track produce generated from helps
+          mem.addHelps(result.teamValue, invoker);
           invoker.addSkillValue(result.teamValue);
         }
       } else if (result.skill.isUnit('energy')) {
-        const recovered = this.recoverMemberEnergy(result.teamValue);
+        const recovered = this.recoverMemberEnergy(result.teamValue, invoker);
         invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
         invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
       }
     }
   }
 
-  private recoverMemberEnergy(activation: SkillActivationValue) {
+  private recoverMemberEnergy(activation: SkillActivationValue, invoker: MemberState) {
     const { chanceToTargetLowestMember, crit, regular } = activation;
     let valueRegular = 0;
     let valueCrit = 0;
@@ -223,8 +222,8 @@ export class TeamSimulator {
           : this.memberStates;
 
       for (const mem of targetGroup) {
-        const { recovered: regularRecovered, wasted: regularWasted } = mem.recoverEnergy(regular);
-        const { recovered: critRecovered, wasted: critWasted } = mem.recoverEnergy(crit);
+        const { recovered: regularRecovered, wasted: regularWasted } = mem.recoverEnergy(regular, invoker);
+        const { recovered: critRecovered, wasted: critWasted } = mem.recoverEnergy(crit, invoker);
         wastedRegular += regularWasted;
         wastedCrit += critWasted;
         valueRegular += regularRecovered;

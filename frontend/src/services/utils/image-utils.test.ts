@@ -1,6 +1,7 @@
 import {
   avatarImage,
   berryImage,
+  ingredientImage,
   islandImage,
   mainskillImage,
   pokemonImage,
@@ -120,5 +121,17 @@ describe('userAvatar', () => {
 
   it('returns the default avatar path if no avatar is set', () => {
     expect(userAvatar()).toBe('/images/avatar/default.png')
+  })
+})
+
+describe('ingredientImage', () => {
+  it('returns correct image path for magnet', () => {
+    const result = ingredientImage('magnet')
+    expect(result).toBe('/images/ingredient/ingredients.png')
+  })
+
+  it('returns correct image path for other ingredients', () => {
+    const result = ingredientImage('apple')
+    expect(result).toBe('/images/ingredient/apple.png')
   })
 })

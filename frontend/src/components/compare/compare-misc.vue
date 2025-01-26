@@ -95,7 +95,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { berryImage, pokemonImage } from '@/services/utils/image-utils'
+import { berryImage, ingredientImage, pokemonImage } from '@/services/utils/image-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { MathUtils } from 'sleepapi-common'
@@ -116,7 +116,8 @@ export default defineComponent({
       comparisonStore,
       pokemonStore,
       pokemonImage,
-      berryImage
+      berryImage,
+      ingredientImage
     }
   },
   data: () => ({
@@ -170,11 +171,6 @@ export default defineComponent({
       }
 
       return production
-    }
-  },
-  methods: {
-    ingredientImage(name: string) {
-      return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
     }
   }
 })

@@ -1,13 +1,13 @@
-import RadarChart from '@/components/custom-components/charts/radar-chart.vue'
+import BarChart from '@/components/custom-components/charts/bar-chart/bar-chart.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import type { ChartData } from 'chart.js'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-describe('RadarChart', () => {
-  let wrapper: VueWrapper<InstanceType<typeof RadarChart>>
+describe('BarChart', () => {
+  let wrapper: VueWrapper<InstanceType<typeof BarChart>>
 
-  const chartData: ChartData<'radar', (number | null)[], string> = {
+  const chartData: ChartData<'bar', (number | null)[], string> = {
     labels: ['A', 'B', 'C', 'D'],
     datasets: [
       {
@@ -23,7 +23,7 @@ describe('RadarChart', () => {
   const chartOptions = {
     responsive: true,
     scales: {
-      r: {
+      y: {
         beginAtZero: true
       }
     }
@@ -40,7 +40,7 @@ describe('RadarChart', () => {
   ]
 
   beforeEach(() => {
-    wrapper = mount(RadarChart, {
+    wrapper = mount(BarChart, {
       props: {
         chartData,
         chartOptions,
@@ -65,11 +65,11 @@ describe('RadarChart', () => {
     expect(wrapper.props('chartPlugins')).toEqual(chartPlugins)
   })
 
-  it('renders the Radar component with correct data', () => {
-    const radarComponent = wrapper.findComponent({ name: 'Radar' })
-    expect(radarComponent.exists()).toBe(true)
-    expect(radarComponent.props('data')).toEqual(chartData)
-    expect(radarComponent.props('options')).toEqual(chartOptions)
-    expect(radarComponent.props('plugins')).toEqual(chartPlugins)
+  it('renders the Bar component with correct data', () => {
+    const barComponent = wrapper.findComponent({ name: 'Bar' })
+    expect(barComponent.exists()).toBe(true)
+    expect(barComponent.props('data')).toEqual(chartData)
+    expect(barComponent.props('options')).toEqual(chartOptions)
+    expect(barComponent.props('plugins')).toEqual(chartPlugins)
   })
 })

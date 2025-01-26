@@ -1,4 +1,5 @@
 import MemberResults from '@/components/calculator/results/member-results/member-results.vue'
+import { registerChartJS } from '@/components/custom-components/charts/register-charts'
 import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -14,6 +15,7 @@ describe('MemberResults', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberResults>>
   let teamStore: ReturnType<typeof useTeamStore>
   let pokemonStore: ReturnType<typeof usePokemonStore>
+  registerChartJS()
 
   const mockPokemon = createMockPokemon()
 

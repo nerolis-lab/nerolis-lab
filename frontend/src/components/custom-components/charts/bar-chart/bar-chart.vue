@@ -1,19 +1,19 @@
 <template>
-  <Radar :options="chartOptions" :data="chartData" :plugins="chartPlugins" />
+  <Bar :options="chartOptions" :data="chartData" :plugins="chartPlugins" />
 </template>
 
 <script lang="ts">
 import type { ChartData, Plugin } from 'chart.js'
-import { Radar } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 
 export default {
-  name: 'RadarChart',
+  name: 'BarChart',
   components: {
-    Radar
+    Bar
   },
   props: {
     chartData: {
-      type: Object as () => ChartData<'radar'>,
+      type: Object as () => ChartData<'bar'>,
       required: true
     },
     chartOptions: {
@@ -21,7 +21,7 @@ export default {
       required: true
     },
     chartPlugins: {
-      type: Array as () => Plugin<'radar'>[],
+      type: Array as () => Plugin<'bar'>[],
       required: false,
       default: () => []
     }

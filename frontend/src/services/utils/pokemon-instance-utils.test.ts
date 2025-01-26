@@ -36,7 +36,7 @@ const mockPokemonInstanceWithMeta: PokemonInstanceWithMeta = {
 describe('toPokemonInstanceExt', () => {
   it('should convert a valid PokemonInstanceWithMeta to PokemonInstanceExt', () => {
     const result = PokemonInstanceUtils.toPokemonInstanceExt(mockPokemonInstanceWithMeta)
-    expect(result).toEqual(mockPokemonInstanceExt)
+    expect(result).toEqual({ ...mockPokemonInstanceExt, rp: 674 })
   })
 
   it('should throw an error if ingredient data is corrupt (not exactly 3)', () => {

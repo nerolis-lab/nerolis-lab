@@ -11,7 +11,8 @@ describe('CompareSlot', () => {
 
   const pokemonInstance = createMockPokemon({
     name: 'Ash',
-    subskills: [{ level: 10, subskill: subskill.HELPING_BONUS }]
+    subskills: [{ level: 10, subskill: subskill.HELPING_BONUS }],
+    rp: 674
   })
 
   beforeEach(() => {

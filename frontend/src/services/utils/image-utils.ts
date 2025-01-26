@@ -11,6 +11,10 @@ export function mainskillImage(pokemon: Pokemon) {
   }
 }
 
+export function ingredientImage(name: string) {
+  return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
+}
+
 export function userAvatar(): string {
   const userStore = useUserStore()
   const avatarStore = useAvatarStore()

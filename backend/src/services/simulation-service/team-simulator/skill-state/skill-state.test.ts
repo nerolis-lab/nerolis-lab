@@ -126,4 +126,25 @@ describe('SkillState', () => {
       expect(effect.constructor.name).toBe(expectedEffectName);
     });
   });
+  it('should reset todaysSkillProcs and push to skillProcsPerDay on wakeup', () => {
+    skillState['todaysSkillProcs'] = 5;
+    skillState.wakeup();
+    expect(skillState['todaysSkillProcs']).toBe(0);
+    expect(skillState['skillProcsPerDay']).toContain(5);
+  });
+
+  it('should correctly handle multiple wakeups', () => {
+    skillState['todaysSkillProcs'] = 3;
+    skillState.wakeup();
+    skillState['todaysSkillProcs'] = 7;
+    skillState.wakeup();
+    expect(skillState['todaysSkillProcs']).toBe(0);
+    expect(skillState['skillProcsPerDay']).toEqual([3, 7]);
+  });
+
+  it('should handle wakeup with no skill procs', () => {
+    skillState.wakeup();
+    expect(skillState['todaysSkillProcs']).toBe(0);
+    expect(skillState['skillProcsPerDay']).toEqual([0]);
+  });
 });

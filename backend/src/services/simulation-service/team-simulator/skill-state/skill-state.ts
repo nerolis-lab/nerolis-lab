@@ -26,8 +26,9 @@ import type {
   SkillActivationValue,
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
-import type { Mainskill } from 'sleepapi-common';
-import { calculatePityProcThreshold, defaultZero, mainskill, RandomUtils } from 'sleepapi-common';
+import { calculateSkillProcDistribution } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-utils.js';
+import type { Mainskill, MemberSkillValue } from 'sleepapi-common';
+import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits, RandomUtils } from 'sleepapi-common';
 
 export class SkillState {
   memberState: MemberState;
@@ -38,12 +39,17 @@ export class SkillState {
 
   // state
   private helpsSinceLastSkillProc = 0;
+  private todaysSkillProcs = 0;
 
   // stats
+  private skillValue: MemberSkillValue = Object.fromEntries(
+    mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])
+  ) as MemberSkillValue;
   private regularValue = 0;
   private critValue = 0;
   private skillProcs = 0;
   private skillCrits = 0;
+  private skillProcsPerDay: number[] = [];
 
   constructor(memberState: MemberState) {
     this.memberState = memberState;
@@ -81,10 +87,16 @@ export class SkillState {
     this.helpsSinceLastSkillProc += 1;
 
     if (this.helpsSinceLastSkillProc > this.pityProcThreshold || RandomUtils.roll(this.skillPercentage)) {
+      this.todaysSkillProcs += 1;
       activations.push(this.activateSkill(this.skill));
     }
 
     return activations;
+  }
+
+  public wakeup() {
+    this.skillProcsPerDay.push(this.todaysSkillProcs);
+    this.todaysSkillProcs = 0;
   }
 
   public addValue(value: SkillActivationValue) {
@@ -93,12 +105,26 @@ export class SkillState {
   }
 
   public results(iterations: number) {
+    const skillProcsPerDay = this.skillProcsPerDay.slice(1); // remove first wakeup when nothing has happened yet
     return {
       skillAmount: (this.regularValue + this.critValue) / iterations,
+      skillValue: Object.fromEntries(
+        Object.entries(this.skillValue)
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          .filter(([d_, value]) => value.amountToSelf > 0 || value.amountToTeam > 0)
+          .map(([key, value]) => [
+            key,
+            {
+              amountToSelf: value.amountToSelf / iterations,
+              amountToTeam: value.amountToTeam / iterations
+            }
+          ])
+      ) as MemberSkillValue,
       skillProcs: this.skillProcs / iterations,
       skillCrits: this.skillCrits / iterations,
       skillRegularValue: this.regularValue / iterations,
-      skillCritValue: this.critValue / iterations
+      skillCritValue: this.critValue / iterations,
+      skillProcDistribution: calculateSkillProcDistribution(skillProcsPerDay)
     };
   }
 
@@ -132,8 +158,17 @@ export class SkillState {
     this.skillCrits += activation?.selfValue?.crit || activation?.teamValue?.crit ? 1 : 0;
     this.helpsSinceLastSkillProc = 0;
 
-    this.regularValue += defaultZero(activation.selfValue?.regular);
-    this.critValue += defaultZero(activation.selfValue?.crit);
+    const selfRegular = defaultZero(activation.selfValue?.regular);
+    const selfCrit = defaultZero(activation.selfValue?.crit);
+    const teamRegular = defaultZero(activation.teamValue?.regular);
+    const teamCrit = defaultZero(activation.teamValue?.crit);
+
+    this.regularValue += selfRegular;
+    this.critValue += selfCrit;
+
+    const entry = this.skillValue[skill.unit];
+    entry.amountToSelf += selfRegular + selfCrit;
+    entry.amountToTeam += teamRegular + teamCrit;
 
     return activation;
   }

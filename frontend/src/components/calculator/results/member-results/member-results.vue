@@ -26,7 +26,7 @@
         @click="goToNext"
       ></v-btn>
     </template>
-    <v-window-item v-for="(memberWithProduction, index) in membersWithProduction" :key="index" style="height: 600px">
+    <v-window-item v-for="(memberWithProduction, index) in membersWithProduction" :key="index">
       <template v-if="memberWithProduction">
         <v-row
           no-gutters
@@ -59,7 +59,12 @@
               position: 'relative'
             }"
           >
-            <RadarChart v-if="memberWithProduction.iv" :chart-data="ivData" :chart-options="ivOptions" />
+            <RadarChart
+              v-if="memberWithProduction.iv"
+              :chart-data="ivData"
+              :chart-options="ivOptions"
+              :chart-plugins="ivPlugins"
+            />
             <v-col v-else class="flex-center pa-0">
               <v-skeleton-loader height="130px" width="130px" class="triangle-skeleton"></v-skeleton-loader>
             </v-col>
@@ -148,34 +153,11 @@
 
         <MemberProductionHeader v-if="memberWithProduction" :member="memberWithProduction" />
 
-        <v-row dense class="flex-top flex-nowrap">
-          <v-col cols="6" class="flex-center flex-column">
-            <span class="text-h6 text-accent">Details</span>
-            <v-col cols="12" class="flex-left pt-0">
-              <v-divider />
-            </v-col>
-            <span>Crit chance: {{ memberWithProduction.member.pokemon.skill.critChance * 100 }}%</span>
-            <span>Crits per day: {{ MathUtils.round(memberWithProduction.production.advanced.skillCrits, 2) }}</span>
-            <span
-              >Crit {{ memberWithProduction.member.pokemon.skill.unit }}:
-              {{ Math.floor(memberWithProduction.production.advanced.skillCritValue) }}
-            </span>
-            <span v-if="memberWithProduction.production.advanced.wastedEnergy > 0">
-              Wasted energy:
-              {{ MathUtils.round(memberWithProduction.production.advanced.wastedEnergy, 1) }}</span
-            >
-          </v-col>
-          <v-col cols="6" class="flex-center flex-column">
-            <span class="text-h6 text-accent text-no-wrap">Team impact</span>
-            <v-col cols="12" class="flex-left pt-0">
-              <v-divider />
-            </v-col>
-            <span>Some stat</span>
-            <span>Other stat</span>
-            <span>Other stat</span>
-            <span>Other stat</span>
-          </v-col>
-        </v-row>
+        <MemberStats v-if="currentMemberWithProduction" :pokemonProduction="currentMemberWithProduction" />
+
+        <TeamImpact :production-advanced-stats="memberWithProduction.production.advanced" />
+
+        <!-- <SkillBreakdown :pokemonProduction="memberWithProduction" /> -->
       </template>
     </v-window-item>
   </v-window>
@@ -184,6 +166,9 @@
 <script lang="ts">
 import { generateIvData, generateIvTextPlugin, ivOptions } from '@/components/calculator/results/chart-data/iv-chart'
 import MemberProductionHeader from '@/components/calculator/results/member-results/member-production-header/member-production-header.vue'
+import MemberStats from '@/components/calculator/results/member-results/member-stats/member-stats.vue'
+import SkillBreakdown from '@/components/calculator/results/member-results/skill-breakdown/skill-breakdown.vue'
+import TeamImpact from '@/components/calculator/results/member-results/team-impact/team-impact.vue'
 import RadarChart from '@/components/custom-components/charts/radar-chart.vue'
 import NatureModifiers from '@/components/pokemon-input/nature-modifiers.vue'
 import SpeechBubble from '@/components/speech-bubble/speech-bubble.vue'
@@ -197,7 +182,6 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
 import type { MemberProductionExt, PerformanceDetails } from '@/types/member/instanced'
-import { Chart } from 'chart.js'
 import { MathUtils, type MemberProductionBase } from 'sleepapi-common'
 import { computed, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { useTheme } from 'vuetify'
@@ -208,7 +192,10 @@ export default defineComponent({
     RadarChart,
     NatureModifiers,
     SpeechBubble,
-    MemberProductionHeader
+    MemberProductionHeader,
+    TeamImpact,
+    MemberStats,
+    SkillBreakdown
   },
   setup() {
     const teamStore = useTeamStore()
@@ -224,7 +211,7 @@ export default defineComponent({
 
     const theme = useTheme()
     const ivData = generateIvData(theme.current.value.colors)
-    Chart.register(generateIvTextPlugin(theme.current.value.colors))
+    const ivPlugins = [generateIvTextPlugin(theme.current.value.colors)]
 
     watchEffect(() => {
       if (currentMember.value) {
@@ -297,6 +284,7 @@ export default defineComponent({
       rarityColor,
       ivData,
       ivOptions,
+      ivPlugins,
       MathUtils
     }
   },
