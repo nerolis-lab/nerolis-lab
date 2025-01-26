@@ -54,6 +54,7 @@ import type { Pokemon } from './pokemon';
 
 export const CATERPIE: Pokemon = {
   name: 'CATERPIE',
+  pokedexNumber: 10,
   specialty: 'berry',
   frequency: toSeconds(1, 13, 20),
   ingredientPercentage: 17.9,
@@ -79,6 +80,7 @@ export const CATERPIE: Pokemon = {
 export const METAPOD: Pokemon = {
   ...evolvesFrom(CATERPIE),
   name: 'METAPOD',
+  pokedexNumber: 11,
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 20.8,
   skillPercentage: 1.8,
@@ -88,6 +90,7 @@ export const METAPOD: Pokemon = {
 export const BUTTERFREE: Pokemon = {
   ...evolvesFrom(METAPOD),
   name: 'BUTTERFREE',
+  pokedexNumber: 12,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 19.7,
   skillPercentage: 1.4,
@@ -96,6 +99,7 @@ export const BUTTERFREE: Pokemon = {
 
 export const RATTATA: Pokemon = {
   name: 'RATTATA',
+  pokedexNumber: 19,
   specialty: 'berry',
   frequency: toSeconds(1, 21, 40),
   ingredientPercentage: 23.7,
@@ -121,6 +125,7 @@ export const RATTATA: Pokemon = {
 export const RATICATE: Pokemon = {
   ...evolvesFrom(RATTATA),
   name: 'RATICATE',
+  pokedexNumber: 20,
   frequency: toSeconds(0, 49, 10),
   ingredientPercentage: 23.7,
   skillPercentage: 3.0,
@@ -129,6 +134,7 @@ export const RATICATE: Pokemon = {
 
 export const EKANS: Pokemon = {
   name: 'EKANS',
+  pokedexNumber: 23,
   specialty: 'berry',
   frequency: toSeconds(1, 23, 20),
   ingredientPercentage: 23.5,
@@ -154,6 +160,7 @@ export const EKANS: Pokemon = {
 export const ARBOK: Pokemon = {
   ...evolvesFrom(EKANS),
   name: 'ARBOK',
+  pokedexNumber: 24,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 26.4,
   skillPercentage: 5.7,
@@ -162,6 +169,7 @@ export const ARBOK: Pokemon = {
 
 export const PIKACHU: Pokemon = {
   name: 'PIKACHU',
+  pokedexNumber: 25,
   specialty: 'berry',
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 20.7,
@@ -186,6 +194,7 @@ export const PIKACHU: Pokemon = {
 
 export const PIKACHU_HALLOWEEN: Pokemon = {
   name: 'PIKACHU_HALLOWEEN',
+  pokedexNumber: 25,
   specialty: 'berry',
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 21.8,
@@ -211,6 +220,7 @@ export const PIKACHU_HALLOWEEN: Pokemon = {
 export const RAICHU: Pokemon = {
   ...evolvesFrom(PIKACHU),
   name: 'RAICHU',
+  pokedexNumber: 26,
   frequency: toSeconds(0, 36, 40),
   ingredientPercentage: 22.4,
   skillPercentage: 3.2,
@@ -219,6 +229,7 @@ export const RAICHU: Pokemon = {
 
 export const CLEFAIRY: Pokemon = {
   name: 'CLEFAIRY',
+  pokedexNumber: 35,
   specialty: 'berry',
   frequency: toSeconds(1, 6, 40),
   ingredientPercentage: 16.8,
@@ -244,6 +255,7 @@ export const CLEFAIRY: Pokemon = {
 export const CLEFABLE: Pokemon = {
   ...evolvesFrom(CLEFAIRY),
   name: 'CLEFABLE',
+  pokedexNumber: 36,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 16.8,
   skillPercentage: 3.6,
@@ -252,6 +264,7 @@ export const CLEFABLE: Pokemon = {
 
 export const VULPIX: Pokemon = {
   name: 'VULPIX',
+  pokedexNumber: 37,
   specialty: 'berry',
   frequency: toSeconds(1, 18, 20),
   ingredientPercentage: 16.8,
@@ -276,6 +289,7 @@ export const VULPIX: Pokemon = {
 
 export const VULPIX_ALOLAN: Pokemon = {
   name: 'VULPIX_ALOLAN',
+  pokedexNumber: 37,
   specialty: 'berry',
   frequency: toSeconds(1, 33, 20),
   ingredientPercentage: 23,
@@ -301,6 +315,7 @@ export const VULPIX_ALOLAN: Pokemon = {
 export const NINETALES: Pokemon = {
   ...evolvesFrom(VULPIX),
   name: 'NINETALES',
+  pokedexNumber: 38,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 16.4,
   skillPercentage: 2.5,
@@ -310,6 +325,7 @@ export const NINETALES: Pokemon = {
 export const NINETALES_ALOLAN: Pokemon = {
   ...evolvesFrom(VULPIX_ALOLAN),
   name: 'NINETALES_ALOLAN',
+  pokedexNumber: 38,
   frequency: toSeconds(0, 48, 20),
   ingredientPercentage: 23.1,
   skillPercentage: 2.8,
@@ -318,6 +334,7 @@ export const NINETALES_ALOLAN: Pokemon = {
 
 export const MANKEY: Pokemon = {
   name: 'MANKEY',
+  pokedexNumber: 56,
   specialty: 'berry',
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 19.7,
@@ -343,6 +360,7 @@ export const MANKEY: Pokemon = {
 export const PRIMEAPE: Pokemon = {
   ...evolvesFrom(MANKEY),
   name: 'PRIMEAPE',
+  pokedexNumber: 57,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 20.0,
   skillPercentage: 2.4,
@@ -351,6 +369,7 @@ export const PRIMEAPE: Pokemon = {
 
 export const DODUO: Pokemon = {
   name: 'DODUO',
+  pokedexNumber: 84,
   specialty: 'berry',
   frequency: toSeconds(1, 3, 20),
   ingredientPercentage: 18.4,
@@ -376,6 +395,7 @@ export const DODUO: Pokemon = {
 export const DODRIO: Pokemon = {
   ...evolvesFrom(DODUO),
   name: 'DODRIO',
+  pokedexNumber: 85,
   frequency: toSeconds(0, 40, 0),
   ingredientPercentage: 18.4,
   skillPercentage: 2.0,
@@ -384,6 +404,7 @@ export const DODRIO: Pokemon = {
 
 export const ONIX: Pokemon = {
   name: 'ONIX',
+  pokedexNumber: 95,
   specialty: 'berry',
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 13.2,
@@ -408,6 +429,7 @@ export const ONIX: Pokemon = {
 
 export const CUBONE: Pokemon = {
   name: 'CUBONE',
+  pokedexNumber: 104,
   specialty: 'berry',
   frequency: toSeconds(1, 20, 0),
   ingredientPercentage: 22.3,
@@ -432,6 +454,7 @@ export const CUBONE: Pokemon = {
 export const MAROWAK: Pokemon = {
   ...evolvesFrom(CUBONE),
   name: 'MAROWAK',
+  pokedexNumber: 105,
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 22.5,
   skillPercentage: 4.5,
@@ -440,6 +463,7 @@ export const MAROWAK: Pokemon = {
 
 export const EEVEE_CHRISTMAS: Pokemon = {
   name: 'EEVEE_CHRISTMAS',
+  pokedexNumber: 133,
   specialty: 'berry',
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 15.6,
@@ -464,6 +488,7 @@ export const EEVEE_CHRISTMAS: Pokemon = {
 
 export const CHIKORITA: Pokemon = {
   name: 'CHIKORITA',
+  pokedexNumber: 152,
   specialty: 'berry',
   frequency: toSeconds(1, 13, 20),
   ingredientPercentage: 16.9,
@@ -489,6 +514,7 @@ export const CHIKORITA: Pokemon = {
 export const BAYLEEF: Pokemon = {
   ...evolvesFrom(CHIKORITA),
   name: 'BAYLEEF',
+  pokedexNumber: 153,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 16.8,
   skillPercentage: 3.8,
@@ -498,6 +524,7 @@ export const BAYLEEF: Pokemon = {
 export const MEGANIUM: Pokemon = {
   ...evolvesFrom(BAYLEEF),
   name: 'MEGANIUM',
+  pokedexNumber: 154,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 17.5,
   skillPercentage: 4.6,
@@ -506,6 +533,7 @@ export const MEGANIUM: Pokemon = {
 
 export const CYNDAQUIL: Pokemon = {
   name: 'CYNDAQUIL',
+  pokedexNumber: 155,
   specialty: 'berry',
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 18.6,
@@ -531,6 +559,7 @@ export const CYNDAQUIL: Pokemon = {
 export const QUILAVA: Pokemon = {
   ...evolvesFrom(CYNDAQUIL),
   name: 'QUILAVA',
+  pokedexNumber: 156,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 21.1,
   skillPercentage: 4.1,
@@ -540,6 +569,7 @@ export const QUILAVA: Pokemon = {
 export const TYPHLOSION: Pokemon = {
   ...evolvesFrom(QUILAVA),
   name: 'TYPHLOSION',
+  pokedexNumber: 157,
   frequency: toSeconds(0, 40, 0),
   ingredientPercentage: 20.8,
   skillPercentage: 3.9,
@@ -548,6 +578,7 @@ export const TYPHLOSION: Pokemon = {
 
 export const TOTODILE: Pokemon = {
   name: 'TOTODILE',
+  pokedexNumber: 158,
   specialty: 'berry',
   frequency: toSeconds(1, 15, 0),
   ingredientPercentage: 25.3,
@@ -572,6 +603,7 @@ export const TOTODILE: Pokemon = {
 export const CROCONAW: Pokemon = {
   ...evolvesFrom(TOTODILE),
   name: 'CROCONAW',
+  pokedexNumber: 159,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 25.3,
   skillPercentage: 5.2,
@@ -581,6 +613,7 @@ export const CROCONAW: Pokemon = {
 export const FERALIGATR: Pokemon = {
   ...evolvesFrom(CROCONAW),
   name: 'FERALIGATR',
+  pokedexNumber: 160,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 25.7,
   skillPercentage: 5.5,
@@ -590,6 +623,7 @@ export const FERALIGATR: Pokemon = {
 export const PICHU: Pokemon = {
   ...evolvesInto(PIKACHU),
   name: 'PICHU',
+  pokedexNumber: 172,
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 21.0,
   skillPercentage: 2.3,
@@ -599,6 +633,7 @@ export const PICHU: Pokemon = {
 export const CLEFFA: Pokemon = {
   ...evolvesInto(CLEFAIRY),
   name: 'CLEFFA',
+  pokedexNumber: 173,
   frequency: toSeconds(1, 33, 20),
   ingredientPercentage: 16.4,
   skillPercentage: 3.4,
@@ -608,6 +643,7 @@ export const CLEFFA: Pokemon = {
 export const STEELIX: Pokemon = {
   ...evolvesFrom(ONIX),
   name: 'STEELIX',
+  pokedexNumber: 208,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 15.4,
   skillPercentage: 3.2,
@@ -617,6 +653,7 @@ export const STEELIX: Pokemon = {
 
 export const SNEASEL: Pokemon = {
   name: 'SNEASEL',
+  pokedexNumber: 215,
   specialty: 'berry',
   frequency: toSeconds(0, 53, 20),
   ingredientPercentage: 25.5,
@@ -641,6 +678,7 @@ export const SNEASEL: Pokemon = {
 
 export const HOUNDOUR: Pokemon = {
   name: 'HOUNDOUR',
+  pokedexNumber: 228,
   specialty: 'berry',
   frequency: toSeconds(1, 21, 40),
   ingredientPercentage: 20.1,
@@ -666,6 +704,7 @@ export const HOUNDOUR: Pokemon = {
 export const HOUNDOOM: Pokemon = {
   ...evolvesFrom(HOUNDOUR),
   name: 'HOUNDOOM',
+  pokedexNumber: 229,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 20.3,
   skillPercentage: 4,
@@ -674,6 +713,7 @@ export const HOUNDOOM: Pokemon = {
 
 export const SLAKOTH: Pokemon = {
   name: 'SLAKOTH',
+  pokedexNumber: 287,
   specialty: 'berry',
   frequency: toSeconds(1, 21, 40),
   ingredientPercentage: 21.6,
@@ -699,6 +739,7 @@ export const SLAKOTH: Pokemon = {
 export const VIGOROTH: Pokemon = {
   ...evolvesFrom(SLAKOTH),
   name: 'VIGOROTH',
+  pokedexNumber: 288,
   frequency: toSeconds(0, 53, 20),
   ingredientPercentage: 20.4,
   skillPercentage: 1.5,
@@ -708,6 +749,7 @@ export const VIGOROTH: Pokemon = {
 export const SLAKING: Pokemon = {
   ...evolvesFrom(VIGOROTH),
   name: 'SLAKING',
+  pokedexNumber: 289,
   frequency: toSeconds(1, 0, 0),
   ingredientPercentage: 33.9,
   skillPercentage: 6.7,
@@ -716,6 +758,7 @@ export const SLAKING: Pokemon = {
 
 export const SWABLU: Pokemon = {
   name: 'SWABLU',
+  pokedexNumber: 333,
   specialty: 'berry',
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 17.7,
@@ -741,6 +784,7 @@ export const SWABLU: Pokemon = {
 export const ALTARIA: Pokemon = {
   ...evolvesFrom(SWABLU),
   name: 'ALTARIA',
+  pokedexNumber: 334,
   frequency: toSeconds(1, 1, 40),
   ingredientPercentage: 25.8,
   skillPercentage: 6.1,
@@ -750,6 +794,7 @@ export const ALTARIA: Pokemon = {
 
 export const SHUPPET: Pokemon = {
   name: 'SHUPPET',
+  pokedexNumber: 353,
   specialty: 'berry',
   frequency: toSeconds(1, 5, 0),
   ingredientPercentage: 17.1,
@@ -775,6 +820,7 @@ export const SHUPPET: Pokemon = {
 export const BANETTE: Pokemon = {
   ...evolvesFrom(SHUPPET),
   name: 'BANETTE',
+  pokedexNumber: 354,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 17.9,
   skillPercentage: 3.3,
@@ -783,6 +829,7 @@ export const BANETTE: Pokemon = {
 
 export const SPHEAL: Pokemon = {
   name: 'SPHEAL',
+  pokedexNumber: 363,
   specialty: 'berry',
   frequency: toSeconds(1, 33, 20),
   ingredientPercentage: 22.4,
@@ -808,6 +855,7 @@ export const SPHEAL: Pokemon = {
 export const SEALEO: Pokemon = {
   ...evolvesFrom(SPHEAL),
   name: 'SEALEO',
+  pokedexNumber: 364,
   frequency: toSeconds(1, 6, 40),
   ingredientPercentage: 22.1,
   skillPercentage: 2.1,
@@ -817,6 +865,7 @@ export const SEALEO: Pokemon = {
 export const WALREIN: Pokemon = {
   ...evolvesFrom(SEALEO),
   name: 'WALREIN',
+  pokedexNumber: 365,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 22.3,
   skillPercentage: 2.2,
@@ -826,6 +875,7 @@ export const WALREIN: Pokemon = {
 export const WEAVILE: Pokemon = {
   ...evolvesFrom(SNEASEL),
   name: 'WEAVILE',
+  pokedexNumber: 461,
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 25.2,
   skillPercentage: 1.8,
