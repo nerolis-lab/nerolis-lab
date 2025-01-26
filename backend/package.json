@@ -14,7 +14,9 @@
     "start": "npm run build && node ./dist/app.js",
     "dev": "bun i && bun --watch src/app.ts"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/bun": "^1.1.17",
     "@types/cors": "^2.8.15",
@@ -48,5 +50,7 @@
     "tsoa": "^6.6.0",
     "workerpool": "^9.2.0"
   },
-  "bundleDependencies": ["sleepapi-common"]
+  "bundleDependencies": [
+    "sleepapi-common"
+  ]
 }
