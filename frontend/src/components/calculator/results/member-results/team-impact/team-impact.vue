@@ -9,15 +9,23 @@
     </v-col>
   </v-row>
 
-  <template v-if="isMobile">
-    <v-row class="flex-center px-2" dense>
+  <template v-if="!anyTeamSupport">
+    <div class="flex-center pa-2">
+      <span class="text-center font-weight-light text-body-2 text-no-wrap">
+        Your team is not affecting this Pokémon
+      </span>
+    </div>
+  </template>
+
+  <template v-else-if="isMobile">
+    <v-row v-if="anyTeamMainSkill" class="flex-center px-2" dense>
       <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Main Skills </v-col>
       <v-col>
         <v-divider />
       </v-col>
     </v-row>
 
-    <v-row class="flex-left px-2 flex-nowrap" dense>
+    <v-row v-if="anyTeamMainSkill" class="flex-left px-2 flex-nowrap" dense>
       <v-col class="flex-left flex-column" style="align-items: flex-start">
         <div v-if="teamHelps > 0" class="flex-left">
           <v-img class="mr-1" src="/images/mainskill/helps.png" height="28" width="28px"></v-img>
@@ -31,13 +39,9 @@
             <span class="text-energy text-no-wrap">{{ teamEnergy }}</span> energy recovered
           </span>
         </div>
-
-        <div v-if="!anyTeamSupport" class="flex-center">
-          <span class="text-center font-weight-light text-body-2 text-no-wrap">Nothing to see here</span>
-        </div>
       </v-col>
 
-      <v-col class="flex-center pl-2" style="overflow: hidden">
+      <v-col v-if="anyTeamMainSkill" class="flex-center pl-2" style="overflow: hidden">
         <v-avatar
           v-for="(helpSupportMember, index) in teamHelpMembers"
           :key="index"
@@ -57,14 +61,14 @@
       </v-col>
     </v-row>
 
-    <v-row class="flex-center px-2" dense>
+    <v-row v-if="anyTeamSubSkill" class="flex-center px-2" dense>
       <v-col>
         <v-divider />
       </v-col>
       <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Subskills </v-col>
     </v-row>
 
-    <v-row class="flex-left px-2 flex-nowrap" dense>
+    <v-row v-if="anyTeamSubSkill" class="flex-left px-2 flex-nowrap" dense>
       <v-col class="flex-center" style="overflow: hidden">
         <v-avatar
           v-for="(helpingBonusMember, index) in helpingBonusMembers"
@@ -108,20 +112,24 @@
   <!-- Desktop layout -->
   <template v-else>
     <v-row class="flex-center px-2" dense>
-      <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Main Skills </v-col>
-      <v-col>
-        <v-divider />
-      </v-col>
-      <v-spacer />
-      <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Subskills </v-col>
-      <v-col>
-        <v-divider />
-      </v-col>
-      <v-spacer />
+      <template v-if="anyTeamMainSkill">
+        <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Main Skills </v-col>
+        <v-col>
+          <v-divider />
+        </v-col>
+        <v-spacer />
+      </template>
+      <template v-if="anyTeamSubSkill">
+        <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Subskills </v-col>
+        <v-col>
+          <v-divider />
+        </v-col>
+        <v-spacer />
+      </template>
     </v-row>
 
     <v-row class="flex-left px-2 flex-nowrap" dense>
-      <v-col class="flex-left flex-column" style="align-items: flex-start">
+      <v-col v-if="anyTeamMainSkill" class="flex-left flex-column" style="align-items: flex-start">
         <div v-if="teamHelps > 0" class="flex-left">
           <v-img class="mr-1" src="/images/mainskill/helps.png" height="28" width="28px"></v-img>
           <span class="text-no-wrap">
@@ -134,13 +142,9 @@
             <span class="text-energy text-no-wrap">{{ teamEnergy }}</span> energy recovered
           </span>
         </div>
-
-        <div v-if="!anyTeamSupport" class="flex-center">
-          <span class="text-center font-weight-light text-body-2 text-no-wrap">Nothing to see here</span>
-        </div>
       </v-col>
 
-      <v-col class="flex-left pl-2" style="overflow: hidden">
+      <v-col v-if="anyTeamMainSkill" class="flex-left pl-2" style="overflow: hidden">
         <v-avatar
           v-for="(helpSupportMember, index) in teamHelpMembers"
           :key="index"
@@ -159,7 +163,7 @@
         </v-avatar>
       </v-col>
 
-      <v-col class="flex-left flex-column" style="align-items: flex-start">
+      <v-col v-if="anyTeamSubSkill" class="flex-left flex-column" style="align-items: flex-start">
         <div v-if="helpingBonusMembers.length > 0" class="flex-right">
           <v-img src="/images/subskill/hb.png" height="28" width="28px"></v-img>
           <span class="text-no-wrap">
@@ -178,7 +182,7 @@
         </div>
       </v-col>
 
-      <v-col class="flex-left" style="overflow: hidden">
+      <v-col v-if="anyTeamSubSkill" class="flex-left" style="overflow: hidden">
         <v-avatar
           v-for="(hbMember, index) in helpingBonusMembers"
           :key="index"
@@ -205,7 +209,13 @@ import { useViewport } from '@/composables/viewport-composable'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { MathUtils, subskill, type MemberProductionAdvanced } from 'sleepapi-common'
+import {
+  filterMembersWithSubskill,
+  isDefined,
+  MathUtils,
+  subskill,
+  type MemberProductionAdvanced
+} from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -252,16 +262,20 @@ export default defineComponent({
         .map((member) => ({ pokemonName: member.pokemonWithIngredients.pokemon, shiny: member.member?.shiny === true }))
     },
     helpingBonusMembers() {
-      return this.teamMembersWithProduction
-        .filter((member) => member.member?.subskills.some((s) => s.subskill.name === subskill.HELPING_BONUS.name))
-        .map((member) => ({ pokemonName: member.pokemonWithIngredients.pokemon, shiny: member.member?.shiny === true }))
+      const definedMembers = this.teamMembersWithProduction.map((m) => m.member).filter(isDefined)
+
+      return filterMembersWithSubskill(definedMembers, subskill.HELPING_BONUS).map((member) => ({
+        pokemonName: member.pokemon.name,
+        shiny: member.shiny === true
+      }))
     },
     energyRecoveryBonusMembers() {
-      return this.teamMembersWithProduction
-        .filter((member) =>
-          member.member?.subskills.some((s) => s.subskill.name === subskill.ENERGY_RECOVERY_BONUS.name)
-        )
-        .map((member) => ({ pokemonName: member.pokemonWithIngredients.pokemon, shiny: member.member?.shiny === true }))
+      const definedMembers = this.teamMembersWithProduction.map((m) => m.member).filter(isDefined)
+
+      return filterMembersWithSubskill(definedMembers, subskill.ENERGY_RECOVERY_BONUS).map((member) => ({
+        pokemonName: member.pokemon.name,
+        shiny: member.shiny === true
+      }))
     },
     anyTeamSupport() {
       return (
@@ -270,6 +284,12 @@ export default defineComponent({
         this.helpingBonusMembers.length > 0 ||
         this.energyRecoveryBonusMembers.length > 0
       )
+    },
+    anyTeamMainSkill() {
+      return this.teamHelps > 0 || this.teamEnergy > 0
+    },
+    anyTeamSubSkill() {
+      return this.helpingBonusMembers.length > 0 || this.energyRecoveryBonusMembers.length > 0
     }
   }
 })

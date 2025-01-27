@@ -1,4 +1,6 @@
+import type { Subskill } from '../../domain';
 import { SUBSKILLS } from '../../domain/subskill/subskills';
+import type { PokemonInstanceExt } from '../../domain/types/pokemon-instance';
 
 export function getSubskillNames() {
   return SUBSKILLS.map((subskill) => subskill.name);
@@ -25,4 +27,10 @@ export function limitSubSkillsToLevel(subskills: Set<string>, level: number): Se
   }
 
   return result;
+}
+
+export function filterMembersWithSubskill(members: PokemonInstanceExt[], subskill: Subskill) {
+  return members.filter((member) =>
+    member.subskills.some((s) => s.subskill.name === subskill.name && s.level <= member.level)
+  );
 }

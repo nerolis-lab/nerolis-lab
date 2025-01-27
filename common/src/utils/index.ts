@@ -15,4 +15,5 @@ export * from './stat-utils';
 export * from './string-utils';
 export * from './subskill-utils';
 export * from './time-utils';
+export * from './type-utils';
 export * from './uuid-utils';
