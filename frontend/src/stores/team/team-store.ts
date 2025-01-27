@@ -135,6 +135,10 @@ export const useTeamStore = defineStore('team', {
           team.memberIvs = {}
         }
       }
+
+      if (this.domainVersion !== DOMAIN_VERSION) {
+        this.outdate()
+      }
     },
     outdate() {
       for (const team of this.teams) {
@@ -354,9 +358,8 @@ export const useTeamStore = defineStore('team', {
 
       // if the current member is removed, we highlight the first found member
       if (memberIndex === this.getCurrentTeam.memberIndex) {
-        this.getCurrentTeam.memberIndex = this.getCurrentTeam.members.findIndex(
-          (member, i) => i !== memberIndex && member != null
-        )
+        const newIndex = this.getCurrentTeam.members.findIndex((member, i) => i !== memberIndex && member != null)
+        this.getCurrentTeam.memberIndex = newIndex !== -1 ? newIndex : 0
       }
 
       if (userStore.loggedIn) {

@@ -151,9 +151,9 @@
           </v-col>
         </v-row>
 
-        <MemberProductionHeader v-if="memberWithProduction" :member="memberWithProduction" />
+        <MemberProductionHeader :member="memberWithProduction" />
 
-        <MemberStats v-if="currentMemberWithProduction" :pokemonProduction="currentMemberWithProduction" />
+        <MemberStats :pokemonProduction="memberWithProduction" />
 
         <TeamImpact :production-advanced-stats="memberWithProduction.production.advanced" />
 
