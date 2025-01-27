@@ -1,3 +1,10 @@
+## [1.19.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.1...v1.19.2) (2025-01-27)
+
+
+### Bug Fixes
+
+* limit team impact subskills to level ([7f59e6e](https://github.com/nerolis-lab/nerolis-lab/commit/7f59e6ea43ab8ed1e501c15029586e651f65c19a))
+
 ## [1.19.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.0...v1.19.1) (2025-01-27)
 
 
