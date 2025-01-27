@@ -1,3 +1,21 @@
+# [1.20.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.3...v1.20.0) (2025-01-27)
+
+
+### Bug Fixes
+
+* couple more spots with missing mocked pokedexNumbers ([222c35a](https://github.com/nerolis-lab/nerolis-lab/commit/222c35a62300c56288a4c70751216d60cf6c9d7e))
+* linter ([d43ea1e](https://github.com/nerolis-lab/nerolis-lab/commit/d43ea1e32e701605d2cfc27e03d801e203f31e53))
+* Made hardcoded mocks more resiliant to changes to Pokemon interface ([daac27d](https://github.com/nerolis-lab/nerolis-lab/commit/daac27d7c89237df540295c6af7425cf153c6030))
+* replace static mocks with mockPokemon func ([2a1fecb](https://github.com/nerolis-lab/nerolis-lab/commit/2a1fecb2241a5e6b05829af5df7d851f3f803af5))
+* type safety of field parameter in sort-utils ([1cc407f](https://github.com/nerolis-lab/nerolis-lab/commit/1cc407f75a4660bbfe90c38c445c857b152925a4))
+* update mock in backend and include pokedexNumber in swagger ([8a8b2e3](https://github.com/nerolis-lab/nerolis-lab/commit/8a8b2e35e66c1aa48dd740152bed814736995301))
+
+
+### Features
+
+* Added pokedexNumber to pokemon fixtures ([d16be9b](https://github.com/nerolis-lab/nerolis-lab/commit/d16be9b3eea87d68bd05a8e7a0588340cffe55ae))
+* Added sort util to sort pokemon by field ([c5d1f36](https://github.com/nerolis-lab/nerolis-lab/commit/c5d1f36c2918f608024e617d0470bb7a9e956111))
+
 ## [1.19.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.2...v1.19.3) (2025-01-27)
 
 
