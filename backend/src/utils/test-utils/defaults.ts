@@ -105,6 +105,7 @@ export const MOCKED_POKEMON: Pokemon = {
   previousEvolutions: 0,
   remainingEvolutions: 0,
   name: 'MOCK_POKEMON',
+  pokedexNumber: 0,
   skill: mainskill.CHARGE_STRENGTH_M,
   skillPercentage: 2,
   specialty: 'skill'
