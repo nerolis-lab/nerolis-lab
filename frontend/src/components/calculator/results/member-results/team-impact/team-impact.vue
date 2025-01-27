@@ -279,8 +279,8 @@ export default defineComponent({
     },
     anyTeamSupport() {
       return (
-        this.productionAdvancedStats.teamSupport.energy > 0 ||
-        this.productionAdvancedStats.teamSupport.helps > 0 ||
+        this.productionAdvancedStats?.teamSupport?.energy > 0 ||
+        this.productionAdvancedStats?.teamSupport?.helps > 0 ||
         this.helpingBonusMembers.length > 0 ||
         this.energyRecoveryBonusMembers.length > 0
       )
