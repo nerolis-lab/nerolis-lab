@@ -9,7 +9,8 @@ import {
   INVENTORY_L,
   SUBSKILLS
 } from '../../domain/subskill/subskills';
-import { getSubskill, getSubskillNames, limitSubSkillsToLevel } from './subskill-utils';
+import type { PokemonInstanceExt } from '../../domain/types/pokemon-instance';
+import { filterMembersWithSubskill, getSubskill, getSubskillNames, limitSubSkillsToLevel } from './subskill-utils';
 
 describe('getSubskillNames', () => {
   it('shall get all subskill names', () => {
@@ -147,5 +148,56 @@ describe('limitSubSkillsToLevel', () => {
         24
       )
     ).toEqual(new Set([INGREDIENT_FINDER_M.name]));
+  });
+});
+
+describe('filterMembersWithSubskill', () => {
+  const subskill = { name: 'Helping Speed S' } as Subskill;
+  const members = [
+    {
+      subskills: [{ subskill, level: 10 }],
+      level: 10
+    },
+    {
+      subskills: [{ subskill, level: 20 }],
+      level: 15
+    },
+    {
+      subskills: [{ subskill, level: 5 }],
+      level: 5
+    },
+    {
+      subskills: [{ subskill: { name: 'Other Subskill' } as Subskill, level: 10 }],
+      level: 10
+    }
+  ] as PokemonInstanceExt[];
+
+  it('shall return members with the specified subskill and level less than or equal to member level', () => {
+    expect(filterMembersWithSubskill(members, subskill)).toEqual([
+      {
+        subskills: [{ subskill, level: 10 }],
+        level: 10
+      },
+      {
+        subskills: [{ subskill, level: 5 }],
+        level: 5
+      }
+    ]);
+  });
+
+  it('shall return an empty array if no members have the specified subskill', () => {
+    const nonExistentSubskill = { name: 'Non Existent Subskill' } as Subskill;
+    expect(filterMembersWithSubskill(members, nonExistentSubskill)).toEqual([]);
+  });
+
+  it('shall return an empty array if no members have the specified subskill with level less than or equal to member level', () => {
+    const highLevelSubskill = { name: 'Helping Speed S' } as Subskill;
+    const highLevelMembers = [
+      {
+        subskills: [{ subskill: highLevelSubskill, level: 20 }],
+        level: 10
+      }
+    ] as PokemonInstanceExt[];
+    expect(filterMembersWithSubskill(highLevelMembers, highLevelSubskill)).toEqual([]);
   });
 });
