@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.0...v1.19.1) (2025-01-27)
+
+
+### Bug Fixes
+
+* radar chart loads correct member index ([f07c323](https://github.com/nerolis-lab/nerolis-lab/commit/f07c32376724a0470511a0c657b61170a01b9601))
+
 # [1.19.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.18.6...v1.19.0) (2025-01-26)
 
 
