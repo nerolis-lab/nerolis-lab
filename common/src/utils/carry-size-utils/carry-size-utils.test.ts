@@ -1,10 +1,10 @@
 import { emptyProduce, type Produce } from '../../api/production/produce';
 import { BELUE, LEPPA } from '../../domain/berry/berries';
-import { BALANCED_GENDER } from '../../domain/gender/gender';
-import { SLOWPOKE_TAIL, SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
+import { SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
 import { HELPER_BOOST } from '../../domain/mainskill/mainskills/helper-boost';
 import type { Pokemon } from '../../domain/pokemon';
 import { INVENTORY_S } from '../../domain/subskill/subskills';
+import { mockPokemon } from '../../vitest/mocks/pokemon/mock-pokemon';
 import { emptyBerryInventory } from '../berry-utils/berry-utils';
 import { prettifyIngredientDrop } from '../ingredient-utils/ingredient-utils';
 import { CarrySizeUtils } from './carry-size-utils';
@@ -220,22 +220,12 @@ describe('calculateCarrySize', () => {
 });
 
 describe('base and max carry size', () => {
-  const MOCK_POKEMON: Pokemon = {
-    name: 'Mockemon',
-    specialty: 'berry',
-    frequency: 0,
-    ingredientPercentage: 0,
-    skillPercentage: 0,
-    berry: BELUE,
-    genders: BALANCED_GENDER,
+  const MOCK_POKEMON: Pokemon = mockPokemon({
     carrySize: 10,
     previousEvolutions: 1,
     remainingEvolutions: 1,
-    ingredient0: { amount: 0, ingredient: SLOWPOKE_TAIL },
-    ingredient30: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
-    ingredient60: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
     skill: HELPER_BOOST
-  };
+  });
 
   describe('timesEvolvedByCarrySize', () => {
     it('shall return 2 given 10 over base carry size', () => {
