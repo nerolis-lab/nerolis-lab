@@ -11,6 +11,7 @@ export * from './produce-utils';
 export * from './random-utils';
 export * from './recipe-utils';
 export * from './rp-utils';
+export * from './sort-utils';
 export * from './stat-utils';
 export * from './string-utils';
 export * from './subskill-utils';
