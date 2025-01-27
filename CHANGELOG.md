@@ -1,3 +1,10 @@
+## [1.19.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.2...v1.19.3) (2025-01-27)
+
+
+### Bug Fixes
+
+* treat new API attributes optional ([074f747](https://github.com/nerolis-lab/nerolis-lab/commit/074f747edfa753ef677ad464237d121d9b2a99b8))
+
 ## [1.19.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.1...v1.19.2) (2025-01-27)
 
 
