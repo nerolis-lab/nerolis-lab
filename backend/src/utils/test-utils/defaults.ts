@@ -1,12 +1,12 @@
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import type { Pokemon, Produce, ProduceFlat, TimePeriod } from 'sleepapi-common';
 import {
-  BALANCED_GENDER,
   berry,
   berrySetToFlat,
   ingredient,
   ingredientSetToFloatFlat,
   mainskill,
+  mockPokemon,
   nature,
   subskill
 } from 'sleepapi-common';
@@ -80,33 +80,15 @@ export const MOCKED_PRODUCE_FLAT: ProduceFlat = {
   ])
 };
 
-export const MOCKED_POKEMON: Pokemon = {
-  berry: berry.BELUE,
-  genders: BALANCED_GENDER,
-  carrySize: 20,
-  frequency: 2500,
-  ingredient0: {
-    amount: 1,
-    ingredient: ingredient.BEAN_SAUSAGE
-  },
-  ingredient30: [
-    {
-      amount: 2,
-      ingredient: ingredient.FANCY_APPLE
-    }
-  ],
-  ingredient60: [
-    {
-      amount: 3,
-      ingredient: ingredient.FANCY_EGG
-    }
-  ],
-  ingredientPercentage: 20,
-  previousEvolutions: 0,
-  remainingEvolutions: 0,
+export const MOCKED_POKEMON: Pokemon = mockPokemon({
   name: 'MOCK_POKEMON',
-  pokedexNumber: 0,
+  frequency: 2500,
+  ingredientPercentage: 20,
   skill: mainskill.CHARGE_STRENGTH_M,
   skillPercentage: 2,
-  specialty: 'skill'
-};
+  specialty: 'skill',
+  carrySize: 20,
+  ingredient0: { amount: 1, ingredient: ingredient.BEAN_SAUSAGE },
+  ingredient30: [{ amount: 2, ingredient: ingredient.FANCY_APPLE }],
+  ingredient60: [{ amount: 3, ingredient: ingredient.FANCY_EGG }]
+});
