@@ -263,6 +263,10 @@
 					"name": {
 						"type": "string"
 					},
+					"pokedexNumber": {
+						"type": "number",
+						"format": "double"
+					},
 					"specialty": {
 						"$ref": "#/components/schemas/PokemonSpecialty"
 					},
@@ -317,6 +321,7 @@
 				},
 				"required": [
 					"name",
+					"pokedexNumber",
 					"specialty",
 					"frequency",
 					"ingredientPercentage",
