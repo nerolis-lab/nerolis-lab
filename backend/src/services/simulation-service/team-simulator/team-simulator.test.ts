@@ -20,6 +20,7 @@ import { describe, expect, it } from 'vitest';
 const mockpokemonWithIngredients: PokemonWithIngredients = {
   pokemon: {
     name: 'Mockemon',
+    pokedexNumber: 0,
     berry: berry.BELUE,
     genders: BALANCED_GENDER,
     carrySize: 10,
