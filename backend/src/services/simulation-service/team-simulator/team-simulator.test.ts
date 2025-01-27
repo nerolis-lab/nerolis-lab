@@ -3,10 +3,8 @@ import { TeamSimulator } from '@src/services/simulation-service/team-simulator/t
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
-  BALANCED_GENDER,
   PINSIR,
   RandomUtils,
-  berry,
   calculatePityProcThreshold,
   ingredient,
   mainskill,
@@ -18,23 +16,17 @@ import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
 const mockpokemonWithIngredients: PokemonWithIngredients = {
-  pokemon: {
-    name: 'Mockemon',
-    pokedexNumber: 0,
-    berry: berry.BELUE,
-    genders: BALANCED_GENDER,
+  pokemon: mockPokemon({
     carrySize: 10,
     frequency: 3600,
     ingredient0: { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
     ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredientPercentage: 20,
-    previousEvolutions: 0,
-    remainingEvolutions: 0,
     skill: mainskill.CHARGE_STRENGTH_S,
     skillPercentage: 100,
     specialty: 'skill'
-  },
+  }),
   ingredientList: [
     { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
     { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
