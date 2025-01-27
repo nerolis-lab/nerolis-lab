@@ -34,7 +34,7 @@ import {
 import BarChart from '@/components/custom-components/charts/bar-chart/bar-chart.vue'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils } from 'sleepapi-common'
-import { computed, defineComponent, ref, type PropType } from 'vue'
+import { defineComponent, type PropType } from 'vue'
 import { useTheme } from 'vuetify'
 
 export default defineComponent({
@@ -48,44 +48,39 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
-    const theme = useTheme()
-    const themeColors = theme.current.value.colors
-    const skillColor = themeColors['skill']
-    const strengthColor = themeColors['strength']
-
-    const showSkillDistribution = ref(false)
-
-    // Computed skill distributions
-    const skillDistributions = computed(() => {
-      return props.pokemonProduction.production.advanced?.skillProcDistribution ?? {}
-    })
-
-    // Generate chart data using the skill color
-    const chartData = computed(() => getSkillProcChartData(skillDistributions.value, skillColor))
-
-    const mostCommonProcsPerDay = computed(() => {
-      const skillDistributions = props.pokemonProduction.production.advanced?.skillProcDistribution ?? {}
+  data: () => ({
+    showSkillDistribution: false
+  }),
+  computed: {
+    averageSkillProcsPerDay(): number {
+      return MathUtils.round(this.pokemonProduction.production.skillProcs, 1)
+    },
+    mostCommonProcsPerDay(): { procs: number; percentage: number } {
+      const skillDistributions = this.pokemonProduction.production.advanced?.skillProcDistribution ?? {}
       const mostCommonProcs = Object.entries(skillDistributions).reduce((a, b) => (b[1] > a[1] ? b : a))
       return { procs: MathUtils.round(+mostCommonProcs[0], 1), percentage: MathUtils.round(+mostCommonProcs[1], 1) }
-    })
-
-    const averageSkillProcsPerDay = computed(() => {
-      return MathUtils.round(props.pokemonProduction.production.skillProcs, 1)
-    })
-
-    // Generate chart options
-    const chartOptions = computed(() => getSkillProcChartOptions())
-
-    const chartPlugins = [averageSkillProcsPlugin(averageSkillProcsPerDay.value, strengthColor)]
-
-    return {
-      chartData,
-      chartOptions,
-      chartPlugins,
-      mostCommonProcsPerDay,
-      averageSkillProcsPerDay,
-      showSkillDistribution
+    },
+    themeColors() {
+      const theme = useTheme()
+      return theme.current.value.colors
+    },
+    skillColor(): string {
+      return this.themeColors['skill']
+    },
+    strengthColor(): string {
+      return this.themeColors['strength']
+    },
+    skillDistributions(): Record<number, number> {
+      return this.pokemonProduction.production.advanced?.skillProcDistribution ?? {}
+    },
+    chartOptions() {
+      return getSkillProcChartOptions()
+    },
+    chartPlugins(): any[] {
+      return [averageSkillProcsPlugin(this.averageSkillProcsPerDay, this.strengthColor)]
+    },
+    chartData(): any {
+      return getSkillProcChartData(this.skillDistributions, this.skillColor)
     }
   }
 })

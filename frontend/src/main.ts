@@ -14,7 +14,6 @@ import App from '@/app.vue'
 import router from '@/router/router'
 
 import { registerChartJS } from '@/components/custom-components/charts/register-charts'
-import domainVersionPlugin from '@/stores/domain-version-plugin'
 import { migrateStores } from '@/stores/store-service'
 import { type ThemeDefinition } from 'vuetify'
 
@@ -63,7 +62,6 @@ const darkTheme: ThemeDefinition = {
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
-pinia.use(domainVersionPlugin)
 
 const app = createApp(App)
 const vuetify = createVuetify({
