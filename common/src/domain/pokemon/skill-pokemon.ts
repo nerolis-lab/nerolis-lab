@@ -66,9 +66,9 @@ import {
 
 import type { Pokemon } from './pokemon';
 
-export const PIKACHU_CHRISTMAS: Pokemon = {
-  name: 'PIKACHU_CHRISTMAS',
-  displayName: 'Pikachu (Christmas)',
+export const PIKACHU_HOLIDAY: Pokemon = {
+  name: 'PIKACHU_HOLIDAY',
+  displayName: 'Pikachu (Holiday)',
   pokedexNumber: 25,
   specialty: 'skill',
   frequency: toSeconds(0, 41, 40),
@@ -1120,7 +1120,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
 ];
 
 export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
-  PIKACHU_CHRISTMAS,
+  PIKACHU_HOLIDAY,
   JIGGLYPUFF,
   MEOWTH,
   PSYDUCK,

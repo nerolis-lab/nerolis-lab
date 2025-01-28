@@ -11,7 +11,7 @@ import {
   GLACEON,
   LEAFEON,
   MAGNEZONE,
-  PIKACHU_CHRISTMAS,
+  PIKACHU_HOLIDAY,
   RAICHU,
   RAIKOU,
   SYLVEON,
@@ -95,7 +95,7 @@ describe('calculatePityProcThreshold', () => {
     expect(calculatePityProcThreshold(GALLADE)).toBe(60);
     expect(calculatePityProcThreshold(SYLVEON)).toBe(55);
     expect(calculatePityProcThreshold(DEDENNE)).toBe(57);
-    expect(calculatePityProcThreshold(PIKACHU_CHRISTMAS)).toBe(57);
+    expect(calculatePityProcThreshold(PIKACHU_HOLIDAY)).toBe(57);
     expect(calculatePityProcThreshold(GLACEON)).toBe(45);
     expect(calculatePityProcThreshold(LEAFEON)).toBe(48);
     expect(calculatePityProcThreshold(TOGEKISS)).toBe(55);

@@ -484,9 +484,9 @@ export const MAROWAK: Pokemon = {
   carrySize: 15
 };
 
-export const EEVEE_CHRISTMAS: Pokemon = {
-  name: 'EEVEE_CHRISTMAS',
-  displayName: 'Eevee (Christmas)',
+export const EEVEE_HOLIDAY: Pokemon = {
+  name: 'EEVEE_HOLIDAY',
+  displayName: 'Eevee (Holiday)',
   pokedexNumber: 133,
   specialty: 'berry',
   frequency: toSeconds(0, 51, 40),
@@ -969,7 +969,7 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   MANKEY,
   DODUO,
   CUBONE,
-  EEVEE_CHRISTMAS,
+  EEVEE_HOLIDAY,
   CHIKORITA,
   BAYLEEF,
   CYNDAQUIL,

@@ -11,7 +11,7 @@ import {
   LEAFEON,
   MAGNEZONE,
   PIKACHU,
-  PIKACHU_CHRISTMAS,
+  PIKACHU_HOLIDAY,
   RAICHU,
   RAIKOU,
   SYLVEON,
@@ -34,7 +34,7 @@ describe('sortPokemonByField', () => {
     VULPIX,
     VULPIX_ALOLAN,
     PIKACHU,
-    PIKACHU_CHRISTMAS,
+    PIKACHU_HOLIDAY,
     RAICHU,
     RAIKOU,
     SYLVEON,
@@ -58,7 +58,7 @@ describe('sortPokemonByField', () => {
       'LEAFEON',
       'MAGNEZONE',
       'PIKACHU',
-      'PIKACHU_CHRISTMAS',
+      'PIKACHU_HOLIDAY',
       'RAICHU',
       'RAIKOU',
       'SYLVEON',
@@ -77,7 +77,7 @@ describe('sortPokemonByField', () => {
       'SYLVEON',
       'RAIKOU',
       'RAICHU',
-      'PIKACHU_CHRISTMAS',
+      'PIKACHU_HOLIDAY',
       'PIKACHU',
       'MAGNEZONE',
       'LEAFEON',
@@ -112,7 +112,7 @@ describe('sortPokemonByField', () => {
   });
 
   it('should handle a single-element list', () => {
-    const singleElementList: Pokemon[] = [PIKACHU_CHRISTMAS];
+    const singleElementList: Pokemon[] = [PIKACHU_HOLIDAY];
     const sorted = sortPokemonByField(singleElementList, 'name', 'asc');
     expect(sorted).toEqual(singleElementList);
   });
