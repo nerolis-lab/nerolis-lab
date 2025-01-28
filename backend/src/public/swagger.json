@@ -263,6 +263,9 @@
 					"name": {
 						"type": "string"
 					},
+					"displayName": {
+						"type": "string"
+					},
 					"pokedexNumber": {
 						"type": "number",
 						"format": "double"
@@ -321,6 +324,7 @@
 				},
 				"required": [
 					"name",
+					"displayName",
 					"pokedexNumber",
 					"specialty",
 					"frequency",

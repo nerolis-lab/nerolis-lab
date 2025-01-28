@@ -370,7 +370,7 @@ describe('addHelps', () => {
             0,
             3,
           ],
-          "pokemon": "Mockemon",
+          "pokemon": "MOCKEMON",
         },
         "produceFromSkill": {
           "berries": [],
@@ -499,7 +499,7 @@ describe('addHelps', () => {
             0,
             3,
           ],
-          "pokemon": "Mockemon",
+          "pokemon": "MOCKEMON",
         },
         "produceFromSkill": {
           "berries": [],
@@ -629,7 +629,7 @@ describe('attemptDayHelp', () => {
             0,
             3,
           ],
-          "pokemon": "Mockemon",
+          "pokemon": "MOCKEMON",
         },
         "produceFromSkill": {
           "berries": [],
@@ -766,7 +766,7 @@ describe('attemptDayHelp', () => {
             0,
             3,
           ],
-          "pokemon": "Mockemon",
+          "pokemon": "MOCKEMON",
         },
         "produceFromSkill": {
           "berries": [],
@@ -975,7 +975,7 @@ describe('attemptNightHelp', () => {
             0,
             3,
           ],
-          "pokemon": "Mockemon",
+          "pokemon": "MOCKEMON",
         },
         "produceFromSkill": {
           "berries": [],

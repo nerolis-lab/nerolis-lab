@@ -125,7 +125,7 @@ Set {
 }
 `);
       expect(member.settings.level).toBe(60);
-      expect(member.settings.externalId).toMatchInlineSnapshot(`"Mockemon"`);
+      expect(member.settings.externalId).toMatchInlineSnapshot(`"MOCKEMON"`);
       expect(member.settings.ribbon).toMatchInlineSnapshot(`4`);
       expect(member.settings.skillLevel).toEqual(pokedex[0].skill.maxLevel);
     });
@@ -541,7 +541,7 @@ Set {
       const members = bogusMembers(1);
       expect(members).toHaveLength(1);
       const member = members[0];
-      expect(member.pokemonWithIngredients.pokemon.name).toMatchInlineSnapshot(`"Mockemon"`);
+      expect(member.pokemonWithIngredients.pokemon.name).toMatchInlineSnapshot(`"MOCKEMON"`);
       expect(member.settings).toMatchSnapshot();
     });
 
@@ -564,7 +564,7 @@ Set {
         { amount: 5, ingredient: ingredient.MOOMOO_MILK }
       ];
       const member = mocks.pokemonWithIngredientsIndexed({ ingredients: ingredientSetToIntFlat(ings) });
-      expect(hashPokemonSetIndexed(member)).toMatchInlineSnapshot(`"Mockemon:10,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"`);
+      expect(hashPokemonSetIndexed(member)).toMatchInlineSnapshot(`"MOCKEMON:10,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"`);
     });
   });
 
@@ -572,7 +572,7 @@ Set {
     it('should add settings from cache', () => {
       const cachedSettings = mocks.setCoverPokemonWithSettings();
       const cache: Map<string, SetCoverPokemonSetupWithSettings> = new Map();
-      cache.set('Mockemon:', cachedSettings);
+      cache.set('MOCKEMON:', cachedSettings);
 
       const solutions: SolveRecipeResult = mocks.solveRecipeResult();
       expect(solutions.teams).toHaveLength(1);

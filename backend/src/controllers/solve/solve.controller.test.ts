@@ -104,7 +104,7 @@ describe('solve.controller', () => {
       });
 
       expect(flatToIngredientSetMock).toHaveBeenCalledWith(new Int16Array());
-      expect(getPokemonMock).toHaveBeenCalledWith('Mockemon');
+      expect(getPokemonMock).toHaveBeenCalledWith('MOCKEMON');
       flatToIngredientSetMock.mockRestore();
     });
   });
