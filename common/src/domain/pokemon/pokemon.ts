@@ -17,6 +17,7 @@ import { ALL_SKILL_SPECIALISTS, INFERIOR_SKILL_SPECIALISTS, OPTIMAL_SKILL_SPECIA
 export type PokemonSpecialty = 'berry' | 'ingredient' | 'skill';
 export interface Pokemon {
   name: string;
+  displayName: string;
   pokedexNumber: number;
   specialty: PokemonSpecialty;
   frequency: number;

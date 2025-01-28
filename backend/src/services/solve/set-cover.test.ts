@@ -61,7 +61,7 @@ describe('SetCover', () => {
       expect(result.exhaustive).toBe(true);
       expect(result.teams).toHaveLength(1);
       expect(result.teams[0].members).toHaveLength(1);
-      expect(result.teams[0].members[0].pokemonSet.pokemon).toEqual('Mockemon');
+      expect(result.teams[0].members[0].pokemonSet.pokemon).toEqual('MOCKEMON');
 
       expect(mockedKeyCall).toHaveBeenCalledWith(
         new Int16Array([5, ...Array(ingredient.TOTAL_NUMBER_OF_INGREDIENTS - 1).fill(0), maxTeamSize])
@@ -83,7 +83,7 @@ describe('SetCover', () => {
       expect(result.exhaustive).toBe(true);
       expect(result.teams).toHaveLength(1);
       expect(result.teams[0].members).toHaveLength(1);
-      expect(result.teams[0].members[0].pokemonSet.pokemon).toEqual('Mockemon');
+      expect(result.teams[0].members[0].pokemonSet.pokemon).toEqual('MOCKEMON');
 
       expect(cachedSubRecipeSolves.has(memoKey)).toBe(true);
     });

@@ -15,7 +15,8 @@ export const mockMainskill = createBaseSkill({
 
 export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   return {
-    name: 'Mockemon',
+    name: 'MOCKEMON',
+    displayName: 'Mockemon',
     pokedexNumber: 0,
     specialty: 'berry',
     frequency: 0,
