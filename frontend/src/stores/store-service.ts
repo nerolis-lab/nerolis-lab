@@ -1,5 +1,5 @@
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
-import { useNotificationStore } from '@/stores/notification-store'
+import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'

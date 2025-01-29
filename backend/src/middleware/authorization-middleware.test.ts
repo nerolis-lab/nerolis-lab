@@ -54,6 +54,7 @@ describe('validateAuthHeader middleware', () => {
       id: 1,
       version: 1,
       sub: 'test-sub',
+      friend_code: 'TESTFC',
       external_id: '00000000-0000-0000-0000-000000000000',
       name: 'Test User',
       avatar: 'test-avatar',
@@ -133,6 +134,7 @@ describe('validateAdmin middleware', () => {
       version: 1,
       sub: 'test-sub',
       external_id: '00000000-0000-0000-0000-000000000000',
+      friend_code: 'TESTFC',
       name: 'Test User',
       avatar: 'test-avatar',
       role: Roles.Admin

@@ -11,6 +11,7 @@ export interface UserState {
   email: string | null
   tokens: TokenInfo | null
   externalId: string | null
+  friendCode?: string
   role: Roles
 }
 

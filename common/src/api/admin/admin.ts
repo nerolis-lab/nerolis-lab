@@ -1,14 +1,4 @@
-import type { Roles } from '../../domain';
-
-export interface User {
-  external_id: string;
-  name: string;
-  avatar?: string;
-  role: Roles;
-  last_login?: string;
-  updated_at?: string;
-  created_at?: string;
-}
+import type { Roles, User } from '../../domain/user';
 
 export interface UpdateUserRequest {
   name: string;

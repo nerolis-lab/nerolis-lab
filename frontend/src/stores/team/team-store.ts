@@ -46,7 +46,7 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
     {
       index: 0,
       memberIndex: 0,
-      name: 'Log in to save your teams',
+      name: 'Log in to save teams',
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
@@ -245,7 +245,7 @@ export const useTeamStore = defineStore('team', {
     async deleteTeam() {
       const userStore = useUserStore()
 
-      const newName = userStore.loggedIn ? `Helper team ${this.currentIndex + 1}` : 'Log in to save your teams'
+      const newName = userStore.loggedIn ? `Helper team ${this.currentIndex + 1}` : 'Log in to save teams'
 
       this.teams[this.currentIndex] = {
         index: this.currentIndex,

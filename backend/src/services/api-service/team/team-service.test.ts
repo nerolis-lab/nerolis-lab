@@ -34,6 +34,7 @@ describe('upsertTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
+      friend_code: 'TESTFC',
       sub: 'sub',
       role: Roles.Default
     });
@@ -71,6 +72,7 @@ describe('upsertTeam', () => {
       external_id: 'user id',
       name: 'name',
       sub: 'sub',
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
 
@@ -113,6 +115,7 @@ describe('upsertTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
+      friend_code: 'TESTFC',
       sub: 'sub',
       role: Roles.Default
     });
@@ -173,6 +176,7 @@ describe('getTeams', () => {
       name: 'some name',
       sub: 'some sub',
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
 
@@ -183,6 +187,7 @@ describe('getTeams', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
+      friend_code: 'TESTFC',
       sub: 'sub',
       role: Roles.Default
     });
@@ -240,12 +245,14 @@ describe('getTeams', () => {
     const user1 = await UserDAO.insert({
       external_id: 'ext id 1',
       name: 'name1',
+      friend_code: 'TESTF2',
       sub: 'sub1',
       role: Roles.Default
     });
     const user2 = await UserDAO.insert({
       external_id: 'ext id 2',
       name: 'name2',
+      friend_code: 'TESTF1',
       sub: 'sub2',
       role: Roles.Default
     });
@@ -293,6 +300,7 @@ describe('upsertTeamMember', () => {
   it('should create a new pokemon if member doesnt exist', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -397,6 +405,7 @@ describe('upsertTeamMember', () => {
   it('should update an existing member', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -538,6 +547,7 @@ describe('upsertTeamMember', () => {
   it('should throw an error if required ingredient is missing', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -575,6 +585,7 @@ describe('deleteMember', () => {
   it('should delete the member and its associated Pokemon if not saved and not in other teams', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -623,6 +634,7 @@ describe('deleteMember', () => {
   it('should not delete the Pokemon if it is saved', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -671,6 +683,7 @@ describe('deleteMember', () => {
   it('should not delete the Pokemon if it is in another team', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -733,6 +746,7 @@ describe('deleteTeam', () => {
   it('shall delete team and its unsaved members', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -787,6 +801,7 @@ describe('deleteTeam', () => {
   it('shall delete team without members', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default
@@ -811,6 +826,7 @@ describe('deleteTeam', () => {
   it('shall not delete saved pokemon', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
+      friend_code: 'TESTFC',
       name: 'name',
       sub: 'sub',
       role: Roles.Default

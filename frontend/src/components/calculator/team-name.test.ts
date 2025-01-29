@@ -22,11 +22,11 @@ describe('TeamSlotName', () => {
   it('displays team name correctly', async () => {
     const teamStore = useTeamStore()
     teamStore.loadingTeams = false
-    teamStore.teams[0].name = 'Log in to save your teams'
+    teamStore.teams[0].name = 'Log in to save teams'
     wrapper = mount(TeamName)
 
     const teamNameSpan = teamStore.getCurrentTeam.name
-    expect(teamNameSpan).toBe('Log in to save your teams')
+    expect(teamNameSpan).toBe('Log in to save teams')
   })
 
   it('updates team name correctly when input changes', async () => {

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { generateFriendCode } from '@src/services/api-service/login/login-utils.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
 import { Roles, uuid } from 'sleepapi-common';
@@ -19,11 +21,40 @@ afterEach(() => {
 describe('UserDAO insert', () => {
   it('shall insert new entity', async () => {
     const user = await UserDAO.insert({
+      friend_code: generateFriendCode(),
       sub: 'some-sub',
       external_id: uuid.v4(),
       name: 'some-name',
       role: Roles.Default
     });
+    expect(user).toBeDefined();
+
+    const data = await UserDAO.findMultiple();
+
+    expect(data).toEqual([
+      expect.objectContaining({
+        avatar: undefined,
+        created_at: expect.any(Date),
+        external_id: '000000000000000000000000000000000000',
+        friend_code: expect.stringMatching(/^[A-Z0-9]{6}$/),
+        id: 1,
+        last_login: expect.any(Date),
+        name: 'some-name',
+        role: 'default',
+        sub: 'some-sub',
+        updated_at: expect.any(Date),
+        version: 1
+      })
+    ]);
+  });
+
+  it('shall auto-generate friend_code as default', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'some-name',
+      role: Roles.Default
+    } as DBUser);
     expect(user).toBeDefined();
 
     const data = await UserDAO.findMultiple();
@@ -47,6 +78,7 @@ describe('UserDAO insert', () => {
   it('shall fail to insert entity without sub', async () => {
     await expect(
       UserDAO.insert({
+        friend_code: generateFriendCode(),
         external_id: uuid.v4(),
         name: 'some-name',
         sub: undefined as any,
@@ -58,6 +90,7 @@ describe('UserDAO insert', () => {
   it('shall fail to insert entity without external_id', async () => {
     await expect(
       UserDAO.insert({
+        friend_code: generateFriendCode(),
         external_id: undefined as any,
         name: 'some-name',
         sub: 'some-sub',
@@ -68,6 +101,7 @@ describe('UserDAO insert', () => {
 
   it('shall fail to insert entity with sub that already exists', async () => {
     await UserDAO.insert({
+      friend_code: generateFriendCode(),
       external_id: uuid.v4(),
       sub: 'sub1',
       name: 'some-name',
@@ -75,6 +109,7 @@ describe('UserDAO insert', () => {
     });
     await expect(
       UserDAO.insert({
+        friend_code: generateFriendCode(),
         external_id: uuid.v4(),
         sub: 'sub1',
         name: 'some-name',
@@ -87,6 +122,7 @@ describe('UserDAO insert', () => {
 describe('UserDAO update', () => {
   it('shall update entity', async () => {
     const user = await UserDAO.insert({
+      friend_code: generateFriendCode(),
       sub: 'some-sub',
       external_id: uuid.v4(),
       name: 'some-name',
@@ -102,6 +138,7 @@ describe('UserDAO update', () => {
         avatar: undefined,
         created_at: expect.any(Date),
         external_id: '000000000000000000000000000000000000',
+        friend_code: expect.stringMatching(/^[A-Z0-9]{6}$/),
         id: 1,
         last_login: expect.any(Date),
         name: 'updated-name',

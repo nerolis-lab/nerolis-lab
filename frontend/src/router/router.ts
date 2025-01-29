@@ -8,6 +8,7 @@ export enum RouteName {
   Compare = 'Compare',
   Settings = 'Settings',
   Profile = 'Profile',
+  // Friends = 'Friends',
   UserSettings = 'UserSettings',
   Beta = 'Beta',
   Admin = 'Admin',
@@ -18,6 +19,7 @@ const CalculatorPage = () => import('@/pages/calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
+// const FriendsPage = () => import('@/pages/friends/friends-page.vue')
 const UserSettingsPage = () => import('@/pages/user-settings-page.vue')
 const BetaPage = () => import('@/pages/beta/beta.vue')
 const AdminPage = () => import('@/pages/admin/admin.vue')
@@ -51,6 +53,11 @@ const router = createRouter({
       name: RouteName.Profile,
       component: ProfilePage
     },
+    // {
+    //   path: '/friends',
+    //   name: RouteName.Friends,
+    //   component: FriendsPage
+    // },
     {
       path: '/user-settings',
       name: RouteName.UserSettings,

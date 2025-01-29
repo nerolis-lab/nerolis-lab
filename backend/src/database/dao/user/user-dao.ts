@@ -3,17 +3,20 @@ import { Type } from '@sinclair/typebox';
 import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract-dao.js';
 import { Roles } from 'sleepapi-common';
 
+const FriendCodeType = Type.RegExp(/^[a-zA-Z0-9]{6}$/);
+
 const DBUserSchema = Type.Composite([
   DBWithVersionedIdSchema,
   Type.Object({
-    sub: Type.String(),
-    external_id: Type.String({ minLength: 36, maxLength: 36 }),
-    name: Type.String(),
     avatar: Type.Optional(Type.String()),
-    role: Type.Enum(Roles),
+    created_at: Type.Optional(Type.Date()),
+    external_id: Type.String({ minLength: 36, maxLength: 36 }),
+    friend_code: FriendCodeType,
     last_login: Type.Optional(Type.Date()),
-    updated_at: Type.Optional(Type.Date()),
-    created_at: Type.Optional(Type.Date())
+    name: Type.String(),
+    role: Type.Enum(Roles),
+    sub: Type.String(),
+    updated_at: Type.Optional(Type.Date())
   })
 ]);
 export type DBUser = Static<typeof DBUserSchema>;

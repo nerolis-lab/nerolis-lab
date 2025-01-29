@@ -6,6 +6,7 @@ export * from './instance';
 export * as island from './island';
 export * from './mainskill';
 export * as nature from './nature';
+export * from './notification';
 export * from './optimal';
 export * from './pokemon';
 export * from './recipe';

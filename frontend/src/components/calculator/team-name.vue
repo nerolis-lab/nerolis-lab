@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { useNotificationStore } from '@/stores/notification-store'
+import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { defineComponent } from 'vue'

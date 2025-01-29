@@ -9,7 +9,10 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './public/swagger.json' with { type: 'json' };
 
+import AdminController from '@src/controllers/admin/admin.controller.js';
+import FriendController from '@src/controllers/friend/friend.controller.js';
 import LoginController from '@src/controllers/login/login.controller.js';
+import NotificationController from '@src/controllers/notification/notification.controller.js';
 import TeamController from '@src/controllers/team/team.controller.js';
 import UserController from '@src/controllers/user/user.controller.js';
 import HealthController from './controllers/health/health.controller.js';
@@ -20,9 +23,9 @@ import NatureController from './controllers/nature/nature.controller.js';
 import PokemonController from './controllers/pokemon/pokemon.controller.js';
 import SubskillController from './controllers/subskill/subskill.controller.js';
 import TierlistController from './controllers/tierlist/tierlist.controller.js';
+
 import DatabaseMigration from './database/migration/database-migration.js';
 
-import AdminController from '@src/controllers/admin/admin.controller.js';
 import { AdminRouter } from '@src/routes/admin-router/admin-router.js';
 import { LoginRouter } from '@src/routes/login-router/login-router.js';
 import { TeamRouter } from '@src/routes/team-router/team-router.js';
@@ -31,11 +34,13 @@ import { TierlistService } from '@src/services/tier-list/tierlist-service.js';
 import { getDirname, joinPath } from '@src/utils/file-utils/file-utils.js';
 import { BaseRouter } from './routes/base-router.js';
 import { ProductionRouter } from './routes/calculator-router/production-router.js';
+import { FriendRouter } from './routes/friend-router/friend-router.js';
 import { HealthRouter } from './routes/health-router/health-router.js';
 import { IngredientRouter } from './routes/ingredient-router/ingredient-router.js';
 import { MainskillRouter } from './routes/mainskill-router/mainskill-router.js';
 import { MealRouter } from './routes/meal-router/meal-router.js';
 import { NatureRouter } from './routes/nature-router/nature-router.js';
+import { NotificationRouter } from './routes/notification-router/notification-router.js';
 import { PokemonRouter } from './routes/pokemon-router/pokemon-router.js';
 import { SolveRouter } from './routes/solve-router/solve-router.js';
 import { SubskillRouter } from './routes/subskill-router/subskill-router.js';
@@ -98,6 +103,8 @@ async function main() {
   TeamRouter.register(new TeamController());
   UserRouter.register(new UserController());
   AdminRouter.register(new AdminController());
+  FriendRouter.register(new FriendController());
+  NotificationRouter.register(new NotificationController());
 
   app.listen(config.PORT, async () => {
     logger.info(`Server is running at ${config.PORT}`);
