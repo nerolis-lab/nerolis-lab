@@ -1,3 +1,16 @@
+# [1.21.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.20.0...v1.21.0) (2025-01-29)
+
+
+### Bug Fixes
+
+* changed assets for eevee_holiday/pikachu_holiday in backend ([6260b2d](https://github.com/nerolis-lab/nerolis-lab/commit/6260b2db01473b0b9e97128271988428acf2b0a7))
+* Renamed Christmas pokemon to Holiday and updated assets associated ([8214444](https://github.com/nerolis-lab/nerolis-lab/commit/821444452bf64610fa7985b031c12255620f1c5a))
+
+
+### Features
+
+* Created displayName for all pokemon ([56974d1](https://github.com/nerolis-lab/nerolis-lab/commit/56974d1a25a531b17f18455dc9d66b9c50f3af02))
+
 # [1.20.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.19.3...v1.20.0) (2025-01-27)
 
 
