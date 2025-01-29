@@ -1,3 +1,10 @@
+# [1.22.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.21.0...v1.22.0) (2025-01-29)
+
+
+### Features
+
+* adds notification support ([e97e4f1](https://github.com/nerolis-lab/nerolis-lab/commit/e97e4f19ca6cfefa24f8c83c9a6fbd81451b8b05))
+
 # [1.21.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.20.0...v1.21.0) (2025-01-29)
 
 
