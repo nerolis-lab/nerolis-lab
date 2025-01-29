@@ -344,8 +344,6 @@ export default defineComponent({
       const critAmount = member.advanced.skillCritValue
       const amountWithoutCrit = member.skillAmount - critAmount
 
-      logger.error(member.produceFromSkill)
-
       const e4eSuffix = skill === mainskill.ENERGY_FOR_EVERYONE.name ? 'x5' : ''
       return `${MathUtils.round(amountWithoutCrit, 1)} ${e4eSuffix}${critAmount > 0 ? `+${MathUtils.round(critAmount, 1)}` : ''}`
     },

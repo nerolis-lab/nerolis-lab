@@ -35,7 +35,7 @@ export default {
       this.$emit('cancel')
     },
     selectPokemon(name: string) {
-      const pkmn = COMPLETE_POKEDEX.find((p) => p.name.toLowerCase() === name.toLowerCase())
+      const pkmn = COMPLETE_POKEDEX.find((p) => p.displayName.toLowerCase() === name.toLowerCase())
       if (!pkmn) {
         console.error('Error selecting Pokémon')
         return
