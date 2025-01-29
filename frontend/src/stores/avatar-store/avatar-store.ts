@@ -1,3 +1,4 @@
+import { findPokemon } from '@/stores/avatar-store/avatar-utils'
 import { defineStore } from 'pinia'
 
 export interface AvatarState {
@@ -28,6 +29,15 @@ export const useAvatarStore = defineStore('avatar', {
       const basePokemon = Object.entries(state.avatars)
         .filter(([name, path]) => path.includes('portrait/') && !name.includes('shiny'))
         .map(([name, path]) => ({ name, path }))
+        .sort((a, b) => {
+          const { name: stringA } = a
+          const { name: stringB } = b
+
+          const pokemonA = findPokemon(stringA)
+          const pokemonB = findPokemon(stringB)
+
+          return pokemonA.pokedexNumber - pokemonB.pokedexNumber
+        })
 
       return result.concat(basePokemon)
     }
