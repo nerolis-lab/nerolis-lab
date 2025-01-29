@@ -79,7 +79,6 @@ export default defineComponent({
   },
   computed: {
     notifications() {
-      logger.error(this.notificationStore.notifications)
       return this.notificationStore.notifications
     }
   }
