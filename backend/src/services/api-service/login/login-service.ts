@@ -4,6 +4,7 @@ import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
+import { generateFriendCode } from '@src/services/api-service/login/login-utils.js';
 import type { TokenInfo } from 'google-auth-library';
 import { OAuth2Client } from 'google-auth-library';
 import type { LoginResponse, PokemonInstanceWithMeta, RefreshResponse, UpdateUserRequest } from 'sleepapi-common';
@@ -41,6 +42,7 @@ export async function signup(authorization_code: string): Promise<LoginResponse>
   const existingUser =
     (await UserDAO.find({ sub: userinfo.data.sub })) ??
     (await UserDAO.insert({
+      friend_code: generateFriendCode(),
       sub: userinfo.data.sub,
       external_id: uuid.v4(),
       name: 'New user',
@@ -87,6 +89,12 @@ export async function verifyExistingUser(access_token: string) {
   }
 
   return updateLastLogin(tokenInfo.sub);
+}
+
+export async function getUser(user: DBUser) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { sub, ...rest } = await UserDAO.get({ id: user.id });
+  return rest;
 }
 
 export async function verifyAdmin(access_token: string) {

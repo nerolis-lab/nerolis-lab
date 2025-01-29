@@ -21,6 +21,7 @@ describe('getUsers', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       name: 'some-name',
       role: Roles.Default
     });
@@ -35,6 +36,7 @@ describe('getUsers', () => {
             created_at: expect.any(Date),
             external_id: '000000000000000000000000000000000000',
             id: 1,
+            friend_code: 'TESTFC',
             last_login: expect.any(Date),
             name: 'some-name',
             role: 'default',

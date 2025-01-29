@@ -11,7 +11,7 @@
 
     <v-card id="accountMenu">
       <v-col cols="auto" class="flex-column flex-center">
-        <v-avatar size="72" color="secondary" class="mb-2">
+        <v-avatar size="72" color="background" class="mb-2">
           <img
             v-if="userStore.loggedIn"
             :src="userAvatar()"
@@ -30,6 +30,13 @@
         <v-list-item :to="'/profile'" :disabled="!userStore.loggedIn" prepend-icon="mdi-account-box" @click="toggleMenu"
           >Profile</v-list-item
         >
+        <!-- <v-list-item
+          :to="'/friends'"
+          :disabled="!userStore.loggedIn"
+          prepend-icon="mdi-account-heart"
+          @click="toggleMenu"
+          >Friends</v-list-item
+        > -->
         <v-list-item :to="'/user-settings'" :disabled="!userStore.loggedIn" prepend-icon="mdi-cog" @click="toggleMenu"
           >User Settings</v-list-item
         >

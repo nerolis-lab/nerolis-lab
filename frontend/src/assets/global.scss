@@ -34,6 +34,11 @@ html {
   border-radius: 30px;
 }
 
+.frosted-glass-light {
+  background: rgba($surface, 0.2) !important;
+  backdrop-filter: blur(10px);
+}
+
 .frosted-glass {
   background: rgba($surface, 0.4) !important;
   backdrop-filter: blur(10px);

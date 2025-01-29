@@ -1,5 +1,4 @@
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
-import { useNotificationStore } from '@/stores/notification-store'
 import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { clearCacheAndLogout, clearCacheKeepLogin, migrateStores } from '@/stores/store-service'
@@ -20,7 +19,6 @@ describe('Store Service', () => {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
     const pokedexStore = usePokedexStore()
-    const notificationStore = useNotificationStore()
     const comparisonStore = useComparisonStore()
 
     // Set some state to verify it gets reset
@@ -28,7 +26,6 @@ describe('Store Service', () => {
     teamStore.teams = createMockTeams(2)
     pokemonStore.upsertLocalPokemon(createMockPokemon())
     pokedexStore.groupedPokedex = []
-    notificationStore.showTeamNameNotification = false
     comparisonStore.members = [createMockMemberProduction()]
 
     clearCacheAndLogout()
@@ -37,7 +34,6 @@ describe('Store Service', () => {
     expect(teamStore.teams).toHaveLength(1)
     expect(Object.keys(pokemonStore.pokemon)).toHaveLength(0)
     expect(pokedexStore.groupedPokedex).not.toEqual([])
-    expect(notificationStore.showTeamNameNotification).toBe(true)
     expect(comparisonStore.members).toHaveLength(0)
   })
 
@@ -46,7 +42,6 @@ describe('Store Service', () => {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
     const pokedexStore = usePokedexStore()
-    const notificationStore = useNotificationStore()
     const comparisonStore = useComparisonStore()
 
     // Set some state to verify it gets reset
@@ -54,7 +49,6 @@ describe('Store Service', () => {
     teamStore.teams = createMockTeams(2)
     pokemonStore.upsertLocalPokemon(createMockPokemon())
     pokedexStore.groupedPokedex = []
-    notificationStore.showTeamNameNotification = false
     comparisonStore.members = [createMockMemberProduction()]
 
     clearCacheKeepLogin()
@@ -63,7 +57,6 @@ describe('Store Service', () => {
     expect(teamStore.teams).toHaveLength(1)
     expect(Object.keys(pokemonStore.pokemon)).toHaveLength(0)
     expect(pokedexStore.groupedPokedex).not.toEqual([])
-    expect(notificationStore.showTeamNameNotification).toBe(true)
     expect(comparisonStore.members).toHaveLength(0)
   })
 

@@ -3,12 +3,17 @@ import {
   deletePokemon,
   deleteUser,
   getSavedPokemon,
+  getUser,
   updateUser,
   upsertPokemon
 } from '@src/services/api-service/login/login-service.js';
 import type { PokemonInstanceWithMeta, UpdateUserRequest } from 'sleepapi-common';
 
 export default class UserController {
+  public async getUser(user: DBUser) {
+    return getUser(user);
+  }
+
   public async updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {
     return updateUser(user, newSettings);
   }

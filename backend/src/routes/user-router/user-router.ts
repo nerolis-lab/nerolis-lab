@@ -7,6 +7,24 @@ import type { PokemonInstanceWithMeta, UpdateUserRequest } from 'sleepapi-common
 
 class UserRouterImpl {
   public async register(controller: UserController) {
+    BaseRouter.router.get('/user', validateAuthHeader, async (req: Request, res: Response) => {
+      try {
+        logger.log('Entered /user GET');
+
+        const user = (req as AuthenticatedRequest).user;
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        const data = await controller.getUser(user);
+
+        res.json(data);
+      } catch (err) {
+        logger.error(err as Error);
+        res.status(500).send('Something went wrong');
+      }
+    });
+
     BaseRouter.router.patch(
       '/user',
       validateAuthHeader,

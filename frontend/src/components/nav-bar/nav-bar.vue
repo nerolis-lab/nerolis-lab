@@ -12,6 +12,7 @@
 
     <template #append>
       <DonateMenu />
+      <InboxMenu v-if="loggedIn" />
       <AccountMenu />
     </template>
   </v-app-bar>
@@ -30,6 +31,7 @@
 <script lang="ts">
 import AccountMenu from '@/components/account/account-menu.vue'
 import DonateMenu from '@/components/donate/donate-menu.vue'
+import InboxMenu from '@/components/inbox/inbox-menu.vue'
 import { useUserStore } from '@/stores/user-store'
 import { Roles } from 'sleepapi-common'
 import { defineComponent } from 'vue'
@@ -42,11 +44,12 @@ export default defineComponent({
   name: 'TheNavBar',
   components: {
     AccountMenu,
-    DonateMenu
+    DonateMenu,
+    InboxMenu
   },
   setup() {
     const userStore = useUserStore()
-    return { isAdmin: userStore.role === Roles.Admin }
+    return { isAdmin: userStore.role === Roles.Admin, loggedIn: userStore.loggedIn }
   },
   data: () => ({
     drawer: false

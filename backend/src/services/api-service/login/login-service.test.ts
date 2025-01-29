@@ -102,7 +102,13 @@ describe('signup', () => {
       }
     });
 
-    await UserDAO.insert({ sub: 'some-sub', external_id: uuid.v4(), name: 'Existing user', role: Roles.Default });
+    await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      friend_code: 'TESTFC',
+      name: 'Existing user',
+      role: Roles.Default
+    });
 
     const loginResponse = await signup('some-auth-code');
 
@@ -112,6 +118,7 @@ describe('signup', () => {
         external_id: '00000000-0000-0000-0000-000000000000',
         id: 1,
         name: 'Existing user',
+        friend_code: 'TESTFC',
         role: 'default',
         version: 1,
         sub: 'some-sub',
@@ -182,6 +189,7 @@ describe('verify', () => {
     await UserDAO.insert({
       external_id: uuid.v4(),
       name: 'Existing user',
+      friend_code: 'TESTFC',
       sub: 'some-sub',
       role: Roles.Default
     });
@@ -195,6 +203,7 @@ describe('verify', () => {
         id: 1,
         name: 'Existing user',
         role: 'default',
+        friend_code: 'TESTFC',
         version: 2,
         created_at: expect.any(Date),
         updated_at: expect.any(Date),
@@ -256,6 +265,7 @@ describe('delete', () => {
       sub: 'some-sub',
       external_id: uuid.v4(),
       name: 'Existing user',
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
 
@@ -271,6 +281,7 @@ describe('getSavedPokemon', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       name: 'Existing user',
       role: Roles.Default
     });
@@ -312,6 +323,7 @@ describe('upsertPokemon', () => {
       sub: 'some-sub',
       external_id: uuid.v4(),
       name: 'Existing user',
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
 
@@ -324,6 +336,7 @@ describe('upsertPokemon', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       name: 'Existing user',
       role: Roles.Default
     });
@@ -340,6 +353,7 @@ describe('upsertPokemon', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       name: 'Existing user',
       role: Roles.Default
     });
@@ -356,6 +370,7 @@ describe('deletePokemon', () => {
       sub: 'some-sub',
       external_id: uuid.v4(),
       name: 'Existing user',
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
     const pkmn = await PokemonDAO.insert({
@@ -376,6 +391,7 @@ describe('deletePokemon', () => {
     const user = await UserDAO.insert({
       sub: 'some-sub',
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       name: 'Existing user',
       role: Roles.Default
     });
@@ -407,6 +423,7 @@ describe('verifyAdmin', () => {
     });
     await UserDAO.insert({
       external_id: uuid.v4(),
+      friend_code: 'TESTFC',
       name: 'Admin user',
       sub: 'some-sub',
       role: Roles.Admin
@@ -421,6 +438,7 @@ describe('verifyAdmin', () => {
         id: 1,
         name: 'Admin user',
         role: 'admin',
+        friend_code: 'TESTFC',
         version: 2,
         created_at: expect.any(Date),
         updated_at: expect.any(Date),
@@ -448,6 +466,7 @@ describe('verifyAdmin', () => {
       external_id: uuid.v4(),
       name: 'Regular user',
       sub: 'some-sub',
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
 
@@ -461,6 +480,7 @@ describe('updateUser', () => {
       sub: 'some-sub',
       external_id: uuid.v4(),
       name: 'Existing user',
+      friend_code: 'TESTFC',
       role: Roles.Default
     });
 
@@ -473,6 +493,7 @@ describe('updateUser', () => {
         id: 1,
         name: 'Updated user',
         role: 'default',
+        friend_code: 'TESTFC',
         version: 2,
         created_at: expect.any(Date),
         updated_at: expect.any(Date),

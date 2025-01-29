@@ -1,7 +1,9 @@
 <template>
   <v-card color="surface" rounded="xl" class="fill-height d-flex flex-column">
     <v-row dense class="flex-center">
-      <v-col cols="12" class="flex-center text-h6 text-ingredient font-weight-medium"> Ings </v-col>
+      <v-col cols="12" class="flex-center text-h6 text-ingredient font-weight-medium">
+        {{ isMobile ? 'Ings' : 'Ingredients' }}
+      </v-col>
     </v-row>
 
     <v-row no-gutters class="fill-height justify-space-around flex-center flex-column">
@@ -23,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import { useViewport } from '@/composables/viewport-composable'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
@@ -39,7 +42,8 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, MathUtils }
+    const { isMobile } = useViewport()
+    return { teamStore, MathUtils, isMobile }
   },
   computed: {
     memberWithIngredientImages() {

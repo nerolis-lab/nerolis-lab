@@ -78,12 +78,13 @@ export default defineComponent({
 
     // Table headers
     const headers = ref<DataTableHeader[]>([
-      { title: 'External ID', key: 'external_id' },
-      { title: 'Name', key: 'name' },
       { title: 'Avatar', key: 'avatar' },
-      { title: 'Role', key: 'role' },
+      { title: 'Name', key: 'name' },
+      { title: 'Friend Code', key: 'friend_code' },
       { title: 'Last Login', key: 'last_login', align: 'end' as 'end' },
-      { title: 'Created At', key: 'created_at', align: 'end' as 'end' }
+      { title: 'Created At', key: 'created_at', align: 'end' as 'end' },
+      { title: 'Role', key: 'role' },
+      { title: 'External ID', key: 'external_id' }
     ])
 
     // Fetch users from backend
