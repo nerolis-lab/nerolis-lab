@@ -18,6 +18,7 @@ describe('config', () => {
   "GOOGLE_CLIENT_SECRET": undefined,
   "NODE_ENV": "DEV",
   "PORT": 3000,
+  "ROLLBACK_BATCHES": undefined,
 }
 `);
   });
@@ -32,6 +33,7 @@ describe('config', () => {
     process.env.GENERATE_TIERLIST = 'false';
     process.env.NODE_ENV = 'DEV';
     process.env.PORT = '2';
+    process.env.ROLLBACK_BATCHES = '3';
     process.env.GOOGLE_CLIENT_ID = 'some-google-id';
     process.env.GOOGLE_CLIENT_SECRET = 'some-google-secret';
 
@@ -47,6 +49,7 @@ describe('config', () => {
   "GOOGLE_CLIENT_SECRET": "some-google-secret",
   "NODE_ENV": "DEV",
   "PORT": "2",
+  "ROLLBACK_BATCHES": 3,
 }
 `);
   });
