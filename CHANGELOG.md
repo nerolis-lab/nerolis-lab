@@ -1,3 +1,10 @@
+# [1.23.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.22.0...v1.23.0) (2025-01-30)
+
+
+### Features
+
+* pokemon search uses displayName ([c031f4a](https://github.com/nerolis-lab/nerolis-lab/commit/c031f4ae45958d89bfd3ef2740cc5a2717ea7ff8))
+
 # [1.22.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.21.0...v1.22.0) (2025-01-29)
 
 
