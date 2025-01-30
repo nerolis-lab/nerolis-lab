@@ -11,7 +11,7 @@
             <v-col class="flex-center">
               <v-divider />
             </v-col>
-            <v-col class="flex-center text-h5" style="text-wrap: nowrap"> About Me </v-col>
+            <v-col cols="auto" class="flex-center text-h5 text-no-wrap"> About Me </v-col>
             <v-col class="flex-center">
               <v-divider />
             </v-col>
