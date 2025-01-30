@@ -10,6 +10,7 @@ export class BackendConfig {
     const {
       NODE_ENV,
       DATABASE_MIGRATION,
+      ROLLBACK_BATCHES,
       PORT,
       DB_HOST,
       DB_PORT,
@@ -24,10 +25,15 @@ export class BackendConfig {
       throw new DatabaseMigrationError('DATABASE_MIGRATION is optional, but if set must be one of [UP, DOWN]');
     }
 
+    if (!ROLLBACK_BATCHES && DATABASE_MIGRATION === 'DOWN') {
+      logger.warn('ROLLBACK_BATCHES is not set, all migrations will be rolled back at once');
+    }
+
     return {
       NODE_ENV: NODE_ENV ?? 'DEV',
       PORT: PORT ?? 3000,
       DATABASE_MIGRATION,
+      ROLLBACK_BATCHES: ROLLBACK_BATCHES ? Number(ROLLBACK_BATCHES) : undefined,
       DB_HOST,
       DB_PORT,
       DB_USER,
