@@ -1,3 +1,10 @@
+## [1.23.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.1...v1.23.2) (2025-01-30)
+
+
+### Bug Fixes
+
+* friend_code migration generates code ([9d4bdd5](https://github.com/nerolis-lab/nerolis-lab/commit/9d4bdd511dd849cb6cbae18b24395b1093d54e6f))
+
 ## [1.23.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.0...v1.23.1) (2025-01-30)
 
 
