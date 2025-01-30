@@ -36,9 +36,9 @@ describe('Avatar Store', () => {
     }
     const baseAvatars = store.getBasePokemonAvatars
     expect(baseAvatars).toEqual([
-      { name: 'default', path: 'default.png' },
-      { name: 'charmander', path: 'portrait/charmander.png' },
-      { name: 'pikachu', path: 'portrait/pikachu.png' }
+      { name: 'default', path: 'default.png', pokedexNumber: 0, displayName: 'Default' },
+      { name: 'charmander', path: 'portrait/charmander.png', pokedexNumber: 4, displayName: 'Charmander' },
+      { name: 'pikachu', path: 'portrait/pikachu.png', pokedexNumber: 25, displayName: 'Pikachu' }
     ])
   })
 

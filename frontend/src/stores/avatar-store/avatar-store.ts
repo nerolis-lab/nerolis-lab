@@ -8,6 +8,8 @@ export interface AvatarState {
 export interface Avatar {
   name: string
   path: string
+  displayName: string
+  pokedexNumber: number
 }
 
 export const useAvatarStore = defineStore('avatar', {
@@ -23,21 +25,22 @@ export const useAvatarStore = defineStore('avatar', {
         return relativePath ? `/images/avatar/${relativePath}` : '/images/avatar/default.png'
       },
     getBasePokemonAvatars: (state) => {
-      const result: Avatar[] = []
-      result.push({ name: 'default', path: state.avatars['default'] })
+      const result: Avatar[] = [
+        { name: 'default', path: state.avatars['default'], displayName: 'Default', pokedexNumber: 0 }
+      ]
 
       const basePokemon = Object.entries(state.avatars)
         .filter(([name, path]) => path.includes('portrait/') && !name.includes('shiny'))
-        .map(([name, path]) => ({ name, path }))
-        .sort((a, b) => {
-          const { name: stringA } = a
-          const { name: stringB } = b
-
-          const pokemonA = findPokemon(stringA)
-          const pokemonB = findPokemon(stringB)
-
-          return pokemonA.pokedexNumber - pokemonB.pokedexNumber
+        .map(([name, path]) => {
+          const pokemon = findPokemon(name)
+          return {
+            name,
+            path,
+            displayName: pokemon.displayName,
+            pokedexNumber: pokemon.pokedexNumber
+          }
         })
+        .sort((a, b) => a.pokedexNumber - b.pokedexNumber)
 
       return result.concat(basePokemon)
     }
