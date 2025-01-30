@@ -54,7 +54,7 @@ async function main() {
   if (migration === 'UP') {
     await DatabaseMigration.migrate();
   } else if (migration === 'DOWN') {
-    await DatabaseMigration.downgrade();
+    await DatabaseMigration.downgrade(config.ROLLBACK_BATCHES);
   } else {
     logger.info('Skipping database migration, set DATABASE_MIGRATION env to UP/DOWN');
     logger.info('Skipping database migration, set DATABASE_MIGRATION env to UP/DOWN');
