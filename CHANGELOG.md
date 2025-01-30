@@ -1,3 +1,10 @@
+## [1.23.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.0...v1.23.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* avatar search by displayName ([11e0ef1](https://github.com/nerolis-lab/nerolis-lab/commit/11e0ef18d598b0b682b541c34ee7ac87ed08bec9))
+
 # [1.23.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.22.0...v1.23.0) (2025-01-30)
 
 
