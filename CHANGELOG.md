@@ -1,3 +1,10 @@
+## [1.23.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.2...v1.23.3) (2025-02-02)
+
+
+### Bug Fixes
+
+* invalidate christmas cached mons ([dbaef5a](https://github.com/nerolis-lab/nerolis-lab/commit/dbaef5aa3915b53cc46f17fe930a2b8f49ed06eb))
+
 ## [1.23.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.1...v1.23.2) (2025-01-30)
 
 
