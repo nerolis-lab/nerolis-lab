@@ -1,3 +1,10 @@
+# [1.24.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.3...v1.24.0) (2025-02-03)
+
+
+### Features
+
+* adds stockpiling to team sim ([0391ef2](https://github.com/nerolis-lab/nerolis-lab/commit/0391ef2f921bb7c34dd2e406c808d248f18a5360))
+
 ## [1.23.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.2...v1.23.3) (2025-02-02)
 
 
