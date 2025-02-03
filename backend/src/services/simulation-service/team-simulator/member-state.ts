@@ -9,6 +9,7 @@ import { SkillState } from '@src/services/simulation-service/team-simulator/skil
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
 import type {
+  BerryIndexToFloatAmount,
   BerrySet,
   MemberProduction,
   MemberProductionBase,
@@ -27,7 +28,7 @@ import {
   MathUtils,
   berrySetToFlat,
   calculateNrOfBerriesPerDrop,
-  emptyBerryInventoryFlat,
+  emptyBerryInventoryFloat,
   flatToBerrySet,
   flatToIngredientSet,
   getEmptyInventoryFloat,
@@ -70,7 +71,7 @@ export class MemberState {
   private frequency80;
   public skillPercentage: number;
   private ingredientPercentage: number;
-  private sneakySnackBerries: Float32Array = emptyBerryInventoryFlat();
+  private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
   private averageProduceAmount: number;
   private averageProduce: ProduceFlat = getEmptyInventoryFloat();
 

@@ -1,5 +1,6 @@
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { setupAndRunProductionSimulation } from '@src/services/simulation-service/simulation-service.js';
+import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { getIngredientSet } from '@src/utils/production-utils/production-utils.js';
 import type {
@@ -129,14 +130,11 @@ export function calculatePokemonProduction(
 }
 
 // 5110 days is 14 years or 730 weeks
-export function calculateTeam(
-  params: { settings: TeamSettingsExt; members: TeamMemberExt[] },
-  iterations = 5110,
-  includeCooking = true
-) {
+export function calculateTeam(params: { settings: TeamSettingsExt; members: TeamMemberExt[] }, iterations = 5110) {
   const { settings, members } = params;
 
-  const teamSimulator = new TeamSimulator({ settings, members, includeCooking });
+  const cookingState = settings.includeCooking ? new CookingState(settings) : undefined;
+  const teamSimulator = new TeamSimulator({ settings, members, cookingState });
 
   for (let i = 0; i < iterations; i++) {
     teamSimulator.simulate();
@@ -145,15 +143,14 @@ export function calculateTeam(
   return teamSimulator.results();
 }
 
-export function calculateSimple(
-  params: { settings: TeamSettingsExt; members: TeamMemberExt[]; includeCooking: boolean },
-  iterations = 700
-) {
-  const { settings, members, includeCooking } = params;
+export function calculateSimple(params: { settings: TeamSettingsExt; members: TeamMemberExt[] }, iterations = 700) {
+  const { settings, members } = params;
+
+  const cookingState = settings.includeCooking ? new CookingState(settings) : undefined;
   const teamSimulator = new TeamSimulator({
     settings,
     members,
-    includeCooking: includeCooking === true
+    cookingState
   });
 
   for (let i = 0; i < iterations; i++) {
@@ -172,7 +169,7 @@ export function calculateIv(
   const variantResults: MemberProductionBase[] = [];
   for (const variant of variants) {
     const teamWithVariant = [variant, ...members];
-    const teamSimulator = new TeamSimulator({ settings, members: teamWithVariant, includeCooking: false });
+    const teamSimulator = new TeamSimulator({ settings, members: teamWithVariant });
 
     for (let i = 0; i < iterations; i++) {
       teamSimulator.simulate();

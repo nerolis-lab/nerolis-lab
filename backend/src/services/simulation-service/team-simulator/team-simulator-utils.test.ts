@@ -1,6 +1,5 @@
 import { mocks } from '@src/bun/index.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamMemberSettingsExt } from 'sleepapi-common';
 import { berry, ingredient, mockPokemon, nature, Optimal } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
@@ -45,7 +44,7 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
       TeamSimulatorUtils.calculateHelpSpeedBeforeEnergy({
         member: { ...member, settings: { ...member.settings, nature: nature.LONELY, level: 1 } },
         teamHelpingBonus: 0,
-        settings: { bedtime: TimeUtils.parseTime('06:00'), wakeup: TimeUtils.parseTime('21:30'), camp: false }
+        settings: mocks.teamSettingsExt()
       })
     ).toBe(3240);
   });

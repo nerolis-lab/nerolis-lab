@@ -23,6 +23,22 @@
               </span>
             </v-col>
 
+            <v-col v-if="stockpiledBerryStrength > 0" cols="auto" class="flex-center">
+              <div class="legend bg-berry-dark">
+                <v-img
+                  style="filter: grayscale(100)"
+                  src="/images/berries/berries.png"
+                  contain
+                  width="28"
+                  height="28"
+                />
+              </div>
+              <span class="text-body-1 text-berry-dark text-center font-weight-medium ml-2"> Starting Berries </span>
+              <span class="text-body-1 text-berry-dark text-center font-weight-medium ml-1">
+                {{ stockpiledBerryStrengthString }}
+              </span>
+            </v-col>
+
             <v-col cols="auto" class="flex-center">
               <div class="legend bg-skill">
                 <v-img src="/images/misc/skillproc.png" contain width="28" height="28" />
@@ -63,6 +79,12 @@
                     percentage: berryPercentage,
                     sectionText: `${berryPercentage}%`,
                     tooltipText: `${compactNumber(berryStrength)} (${berryPercentage}%)`
+                  },
+                  {
+                    color: 'berry-dark',
+                    percentage: stockpiledBerryPercentage,
+                    sectionText: `${stockpiledBerryPercentage}%`,
+                    tooltipText: `${compactNumber(stockpiledBerryStrength)} (${stockpiledBerryPercentage}%)`
                   },
                   {
                     color: 'skill',
@@ -111,6 +133,18 @@
               />
             </v-col>
           </v-row>
+
+          <v-row dense class="flex-center">
+            <v-col cols="auto" class="flex-center">
+              <div class="">
+                <v-img src="/images/ingredient/ingredients.png" contain :width="isMobile ? '28' : '60'" />
+              </div>
+              <span class="text-center ml-2">
+                +{{ teamStore.getCurrentTeam.stockpiledIngredients.reduce((sum, cur) => sum + cur.amount, 0) }} starting
+                ingredients
+              </span>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card>
     </v-col>
@@ -127,7 +161,7 @@ import { pokemonImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { MathUtils, compactNumber, type RecipeTypeResult } from 'sleepapi-common'
+import { MathUtils, compactNumber, getBerry, type RecipeTypeResult } from 'sleepapi-common'
 export default defineComponent({
   name: 'TeamResults',
   components: { StackedBar },
@@ -186,9 +220,24 @@ export default defineComponent({
         return sum + memberSkillStrength
       }, 0)
     },
+    stockpiledBerryStrength() {
+      const favoredBerries = this.teamStore.getCurrentTeam.favoredBerries
 
+      return this.teamStore.getCurrentTeam.stockpiledBerries.reduce((sum, stockpiledBerry) => {
+        const { amount, level, name } = stockpiledBerry
+        const berry = getBerry(name)
+
+        const berryStrength = StrengthService.berryStrength({
+          favored: favoredBerries,
+          berries: [{ berry, amount, level }],
+          timeWindow: 'WEEK'
+        })
+
+        return sum + berryStrength
+      }, 0)
+    },
     totalStrength() {
-      return Math.floor(this.cookingStrength + this.berryStrength + this.skillStrength)
+      return Math.floor(this.cookingStrength + this.berryStrength + this.skillStrength + this.stockpiledBerryStrength)
     },
     cookingStrengthString() {
       const userLocale = navigator.language || 'en-US'
@@ -208,6 +257,12 @@ export default defineComponent({
         maximumFractionDigits: 0
       }).format(this.skillStrength)
     },
+    stockpiledBerryStrengthString() {
+      const userLocale = navigator.language || 'en-US'
+      return new Intl.NumberFormat(userLocale, {
+        maximumFractionDigits: 0
+      }).format(this.stockpiledBerryStrength)
+    },
     totalStrengthString() {
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
@@ -224,6 +279,10 @@ export default defineComponent({
     },
     skillPercentage() {
       const pct = MathUtils.floor((this.skillStrength / this.totalStrength) * 100, 1)
+      return isNaN(pct) ? 0 : pct
+    },
+    stockpiledBerryPercentage() {
+      const pct = MathUtils.floor((this.stockpiledBerryStrength / this.totalStrength) * 100, 1)
       return isNaN(pct) ? 0 : pct
     },
     recipeTypeImage() {

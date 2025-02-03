@@ -10,7 +10,7 @@ export interface IngredientSet {
 }
 export interface IngredientSetSimple {
   amount: number;
-  ingredient: string;
+  name: string;
 }
 export type IngredientIndexToIntAmount = Int16Array;
 export type IngredientIndexToFloatAmount = Float32Array;

@@ -1,4 +1,10 @@
-import type { CookedRecipeResult, CookingResult, IngredientIndexToFloatAmount, RecipeFlat } from 'sleepapi-common';
+import type {
+  CookedRecipeResult,
+  CookingResult,
+  IngredientIndexToFloatAmount,
+  RecipeFlat,
+  TeamSettingsExt
+} from 'sleepapi-common';
 import {
   MAX_POT_SIZE,
   RandomUtils,
@@ -46,8 +52,23 @@ export class CookingState {
   private currentSaladInventory: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
   private currentDessertInventory: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
 
-  constructor(camp: boolean) {
-    this.camp = camp;
+  private startingStockpiledIngredients: IngredientIndexToFloatAmount;
+  private currentCurryStockpile: IngredientIndexToFloatAmount;
+  private currentSaladStockpile: IngredientIndexToFloatAmount;
+  private currentDessertStockpile: IngredientIndexToFloatAmount;
+
+  constructor(settings: TeamSettingsExt) {
+    this.camp = settings.camp;
+    this.startingStockpiledIngredients = settings.stockpiledIngredients;
+    this.currentCurryStockpile = settings.stockpiledIngredients.slice();
+    this.currentSaladStockpile = settings.stockpiledIngredients.slice();
+    this.currentDessertStockpile = settings.stockpiledIngredients.slice();
+  }
+
+  public startNewWeek() {
+    this.currentCurryStockpile = this.startingStockpiledIngredients.slice();
+    this.currentSaladStockpile = this.startingStockpiledIngredients.slice();
+    this.currentDessertStockpile = this.startingStockpiledIngredients.slice();
   }
 
   public addIngredients(ingredients: IngredientIndexToFloatAmount) {
@@ -71,7 +92,8 @@ export class CookingState {
       this.cookRecipeType({
         availableRecipes: potLimitedCurries,
         currentIngredients: this.currentCurryInventory,
-        skippedRecipesGrouped: this.skippedCurries
+        skippedRecipesGrouped: this.skippedCurries,
+        currentStockpile: this.currentCurryStockpile
       }) ?? curry.MIXED_CURRY_FLAT;
 
     const potLimitedSalads = this.findRecipesWithinPotLimit(allSalads, currentPotSize, this.skippedSalads);
@@ -79,7 +101,8 @@ export class CookingState {
       this.cookRecipeType({
         availableRecipes: potLimitedSalads,
         currentIngredients: this.currentSaladInventory,
-        skippedRecipesGrouped: this.skippedSalads
+        skippedRecipesGrouped: this.skippedSalads,
+        currentStockpile: this.currentSaladStockpile
       }) ?? salad.MIXED_SALAD_FLAT;
 
     const potLimitedDesserts = this.findRecipesWithinPotLimit(allDesserts, currentPotSize, this.skippedDesserts);
@@ -87,7 +110,8 @@ export class CookingState {
       this.cookRecipeType({
         availableRecipes: potLimitedDesserts,
         currentIngredients: this.currentDessertInventory,
-        skippedRecipesGrouped: this.skippedDesserts
+        skippedRecipesGrouped: this.skippedDesserts,
+        currentStockpile: this.currentDessertStockpile
       }) ?? dessert.MIXED_JUICE_FLAT;
 
     const extraTasty = RandomUtils.roll(currentCritChance);
@@ -136,8 +160,9 @@ export class CookingState {
     availableRecipes: RecipeFlat[];
     currentIngredients: IngredientIndexToFloatAmount;
     skippedRecipesGrouped: Map<string, SkippedRecipe>;
+    currentStockpile: IngredientIndexToFloatAmount;
   }): RecipeFlat | undefined {
-    const { availableRecipes, currentIngredients, skippedRecipesGrouped } = params;
+    const { availableRecipes, currentIngredients, skippedRecipesGrouped, currentStockpile } = params;
 
     for (let recipeIndex = 0; recipeIndex < availableRecipes.length; ++recipeIndex) {
       const recipe = availableRecipes[recipeIndex];
@@ -147,18 +172,53 @@ export class CookingState {
 
       let canCook = true;
       const ingredientMissing = existingEntry.ingredientMissing;
-      for (let ingredientIndex = 0; ingredientIndex < recipe.ingredients.length; ingredientIndex++) {
-        const missingAmount = recipe.ingredients[ingredientIndex] - currentIngredients[ingredientIndex];
 
-        if (missingAmount > 0) {
-          canCook = false;
-          ingredientMissing[ingredientIndex].count += 1;
-          ingredientMissing[ingredientIndex].totalAmountMissing += missingAmount;
+      const subtractedInventory: Float32Array = emptyIngredientInventoryFloat();
+      const subtractedStockpile: Float32Array = emptyIngredientInventoryFloat();
+      let startedSubtracting = false;
+      for (let i = 0; i < recipe.ingredients.length; i++) {
+        const requiredAmount = recipe.ingredients[i];
+        const availableAmount = currentIngredients[i];
+
+        if (availableAmount < requiredAmount) {
+          const stockpileNeeded = requiredAmount - availableAmount;
+          const stockpileAvailable = currentStockpile[i];
+
+          if (stockpileAvailable >= stockpileNeeded) {
+            // Sufficient stockpile to cover missing amount
+
+            startedSubtracting = true;
+
+            subtractedInventory[i] = availableAmount;
+            subtractedStockpile[i] = stockpileNeeded;
+            currentStockpile[i] -= stockpileNeeded;
+            currentIngredients[i] = 0; // Used all available in inventory
+          } else {
+            // Not enough stockpile either, track missing amount
+            canCook = false;
+
+            ingredientMissing[i].count += 1;
+            ingredientMissing[i].totalAmountMissing += stockpileNeeded - stockpileAvailable;
+
+            if (startedSubtracting) {
+              // We have already started subtracting, but we can't cook this recipe
+              // Reset the inventory and stockpile
+              currentIngredients._mutateCombine(subtractedInventory, (a, b) => a + b);
+              currentStockpile._mutateCombine(subtractedStockpile, (a, b) => a + b);
+              break;
+            }
+          }
+        } else {
+          // Fully cover the requirement using inventory only
+
+          startedSubtracting = true;
+
+          subtractedInventory[i] = requiredAmount;
+          currentIngredients[i] -= requiredAmount;
         }
       }
 
       if (canCook) {
-        currentIngredients._mutateCombine(recipe.ingredients, (a, b) => a - b);
         return recipe;
       } else {
         existingEntry.totalCount += 1;

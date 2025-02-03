@@ -8,4 +8,10 @@ export interface BerrySet {
   berry: Berry;
   level: number;
 }
-export type BerryIndexToAmount = Float32Array;
+export interface BerrySetSimple {
+  amount: number;
+  name: string;
+  level: number;
+}
+export type BerryIndexToIntAmount = Int16Array;
+export type BerryIndexToFloatAmount = Float32Array;

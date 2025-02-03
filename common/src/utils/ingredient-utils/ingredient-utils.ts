@@ -7,6 +7,7 @@ import type {
 } from '../../domain/ingredient/ingredient';
 import { INGREDIENTS, TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 import type { Pokemon } from '../../domain/pokemon/pokemon';
+import { emptyIngredientInventoryFloat, emptyIngredientInventoryInt } from '../flat-utils';
 import { MathUtils } from '../math-utils/math-utils';
 import { capitalize } from '../string-utils/string-utils';
 
@@ -35,7 +36,7 @@ export function emptyIngredientInventory(): IngredientSet[] {
 }
 
 export function ingredientSetToFloatFlat(ingredientSet: IngredientSet[]): Float32Array {
-  const result = new Float32Array(INGREDIENTS.length);
+  const result = emptyIngredientInventoryFloat();
 
   for (const { ingredient, amount } of ingredientSet) {
     const index = ING_ID_LOOKUP[ingredient.name];
@@ -47,7 +48,7 @@ export function ingredientSetToFloatFlat(ingredientSet: IngredientSet[]): Float3
   return result;
 }
 export function ingredientSetToIntFlat(ingredientSet: IngredientSet[]): Int16Array {
-  const result = new Int16Array(INGREDIENTS.length);
+  const result = emptyIngredientInventoryInt();
 
   for (const { ingredient, amount } of ingredientSet) {
     const index = ING_ID_LOOKUP[ingredient.name];
@@ -75,15 +76,15 @@ export function flatToIngredientSet(
 export function simplifyIngredientSet(ingredients: IngredientSet[]): IngredientSetSimple[] {
   const result: IngredientSetSimple[] = [];
   for (const { ingredient, amount } of ingredients) {
-    result.push({ ingredient: ingredient.name, amount });
+    result.push({ name: ingredient.name, amount });
   }
   return result;
 }
 
 export function unsimplifyIngredientSet(ingredients: IngredientSetSimple[]): IngredientSet[] {
   const result: IngredientSet[] = [];
-  for (const { ingredient, amount } of ingredients) {
-    result.push({ ingredient: INGREDIENTS.find((ing) => ing.name === ingredient), amount });
+  for (const { name, amount } of ingredients) {
+    result.push({ ingredient: INGREDIENTS.find((ing) => ing.name === name), amount });
   }
   return result;
 }

@@ -24,7 +24,9 @@ describe('solve.controller', () => {
         camp: settings.camp,
         level: settings.level,
         bedtime: mocks.bedtime(),
-        wakeup: mocks.wakeup()
+        wakeup: mocks.wakeup(),
+        includeCooking: false,
+        stockpiledIngredients: common.emptyIngredientInventoryFloat()
       });
     });
 

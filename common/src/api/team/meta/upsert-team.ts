@@ -1,3 +1,4 @@
+import type { BerrySetSimple, IngredientSetSimple } from '../../../domain';
 import type { RecipeType } from '../../../domain/recipe/recipe';
 
 export interface UpsertTeamMetaRequest {
@@ -7,6 +8,8 @@ export interface UpsertTeamMetaRequest {
   wakeup: string;
   recipeType: RecipeType;
   favoredBerries?: string[];
+  stockpiledIngredients?: IngredientSetSimple[];
+  stockpiledBerries?: BerrySetSimple[];
 }
 
 export interface UpsertTeamMetaResponse {
@@ -18,4 +21,6 @@ export interface UpsertTeamMetaResponse {
   version: number;
   recipeType: RecipeType;
   favoredBerries?: string[];
+  stockpiledIngredients?: IngredientSetSimple[];
+  stockpiledBerries?: BerrySetSimple[];
 }

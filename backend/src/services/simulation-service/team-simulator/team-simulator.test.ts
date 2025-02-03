@@ -1,3 +1,4 @@
+import { mocks } from '@src/bun/index.js';
 import type { SkillActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
@@ -33,11 +34,7 @@ const mockpokemonWithIngredients: PokemonWithIngredients = {
     { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }
   ]
 };
-const mockSettings: TeamSettingsExt = {
-  bedtime: TimeUtils.parseTime('21:30'),
-  wakeup: TimeUtils.parseTime('06:00'),
-  camp: false
-};
+const mockSettings: TeamSettingsExt = mocks.teamSettingsExt({ includeCooking: true });
 const mockMembers: TeamMemberExt[] = [
   {
     pokemonWithIngredients: mockpokemonWithIngredients,
@@ -55,7 +52,7 @@ const mockMembers: TeamMemberExt[] = [
 
 describe('TeamSimulator', () => {
   it('shall return expected production from mocked pokemon', () => {
-    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers });
 
     simulator.simulate();
 
@@ -69,7 +66,7 @@ describe('TeamSimulator', () => {
   });
 
   it('shall return expected variant production from mocked pokemon', () => {
-    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers });
 
     simulator.simulate();
 
@@ -81,11 +78,10 @@ describe('TeamSimulator', () => {
   });
 
   it('shall calculate production with uneven sleep times', () => {
-    const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('21:30'),
-      wakeup: TimeUtils.parseTime('06:01'),
-      camp: false
-    };
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({
+      includeCooking: true,
+      wakeup: TimeUtils.parseTime('06:01')
+    });
 
     const members: TeamMemberExt[] = [
       {
@@ -108,7 +104,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings, members, includeCooking: true });
+    const simulator = new TeamSimulator({ settings, members });
 
     simulator.simulate();
 
@@ -134,7 +130,7 @@ describe('TeamSimulator', () => {
     };
 
     const members: TeamMemberExt[] = [mockMember, mockMember, mockMember, mockMember, mockMember];
-    const simulator = new TeamSimulator({ settings: mockSettings, members, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members });
 
     simulator.simulate();
 
@@ -179,7 +175,7 @@ describe('TeamSimulator', () => {
     };
 
     const members: TeamMemberExt[] = [mockMember, mockMemberSupport];
-    const simulator = new TeamSimulator({ settings: mockSettings, members, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members });
 
     simulator.simulate();
 
@@ -216,7 +212,7 @@ describe('TeamSimulator', () => {
       mockMemberSupport,
       mockMemberSupport
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members });
 
     simulator.simulate();
 
@@ -251,7 +247,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members });
 
     simulator.simulate();
 
@@ -297,7 +293,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members, includeCooking: true });
+    const simulator = new TeamSimulator({ settings: mockSettings, members });
 
     simulator.simulate();
 
@@ -318,8 +314,7 @@ describe('recoverMemberEnergy', () => {
   it("shall recover every member's energy", () => {
     const simulator = new TeamSimulator({
       settings: mockSettings,
-      members: mockMembers.concat(mockMembers),
-      includeCooking: true
+      members: mockMembers.concat(mockMembers)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
@@ -339,8 +334,7 @@ describe('recoverMemberEnergy', () => {
   it('shall recover member energy', () => {
     const simulator = new TeamSimulator({
       settings: mockSettings,
-      members: mockMembers.concat(mockMembers),
-      includeCooking: true
+      members: mockMembers.concat(mockMembers)
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;

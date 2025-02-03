@@ -1,10 +1,11 @@
+import { mocks } from '@src/bun/index.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
-import { dessert, ingredient, ingredientSetToFloatFlat } from 'sleepapi-common';
+import { dessert, emptyIngredientInventoryFloat, ingredient, ingredientSetToFloatFlat } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
   it('shall cook the best recipe for which it has ingredients', () => {
-    const cookingState = new CookingState(true);
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
 
     const ingsForMacaronsAndFlan = ingredientSetToFloatFlat([
       ...dessert.JIGGLYPUFFS_FRUITY_FLAN.ingredients,
@@ -23,7 +24,7 @@ describe('CookingState', () => {
   });
 
   it('shall fallback to mixed meal if team cant cook', () => {
-    const cookingState = new CookingState(true);
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
 
     cookingState.cook(false);
 
@@ -46,7 +47,7 @@ describe('CookingState', () => {
   });
 
   it('shall cook mixed meal if team cant cook better', () => {
-    const cookingState = new CookingState(true);
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
 
     cookingState.addIngredients(ingredientSetToFloatFlat([{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }]));
 
@@ -71,7 +72,7 @@ describe('CookingState', () => {
   });
 
   it('shall crit with max bonus on sunday', () => {
-    const cookingState = new CookingState(true);
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
 
     cookingState.addIngredients(ingredientSetToFloatFlat(dessert.FLOWER_GIFT_MACARONS.ingredients));
     cookingState.addCritBonus(0.7);
@@ -88,7 +89,7 @@ describe('CookingState', () => {
   });
 
   it('shall be able to cook macarons with pot skill proc', () => {
-    const cookingState = new CookingState(true);
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
 
     cookingState.addIngredients(ingredientSetToFloatFlat(dessert.FLOWER_GIFT_MACARONS.ingredients));
     cookingState.addPotSize(30);
@@ -100,5 +101,24 @@ describe('CookingState', () => {
   "FLOWER_GIFT_MACARONS",
 ]
 `);
+  });
+  it('shall reset stockpiles at the start of a new week', () => {
+    const initialStockpile = ingredientSetToFloatFlat([
+      { amount: 10, ingredient: ingredient.SLOWPOKE_TAIL },
+      { amount: 5, ingredient: ingredient.BEAN_SAUSAGE }
+    ]);
+    const cookingState = new CookingState(
+      mocks.teamSettingsExt({ camp: true, stockpiledIngredients: initialStockpile })
+    );
+
+    cookingState.addIngredients(ingredientSetToFloatFlat([{ amount: 5, ingredient: ingredient.SLOWPOKE_TAIL }]));
+    cookingState.cook(false);
+    cookingState['currentDessertStockpile'] = emptyIngredientInventoryFloat();
+
+    expect(cookingState['currentDessertStockpile']).not.toEqual(initialStockpile);
+
+    cookingState.startNewWeek();
+
+    expect(cookingState['currentDessertStockpile']).toEqual(initialStockpile);
   });
 });

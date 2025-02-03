@@ -19,6 +19,7 @@ import type {
   TeamMemberWithProduce
 } from 'sleepapi-common';
 import {
+  emptyIngredientInventoryFloat,
   flatToIngredientSet,
   getIngredient,
   getNature,
@@ -66,11 +67,14 @@ export default class SolveController {
     if (sleepDuration.hour < 1 || dayDuration.hour < 1) {
       throw new BadRequestError('Minimum 1 hour of sleep and daytime required');
     }
+
     return {
       camp,
       level,
       bedtime,
-      wakeup
+      wakeup,
+      includeCooking: false,
+      stockpiledIngredients: emptyIngredientInventoryFloat()
     };
   }
 

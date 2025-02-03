@@ -7,8 +7,12 @@ export const MAX_RECIPE_LEVEL = 60;
 // TODO: rework max recipe bonus to be per ingredient, slowpoke tail for example cant reach 48%
 export const MAX_RECIPE_BONUS = 61;
 
+// ingredient
+export const MAX_INGREDIENT_INVENTORY = 700;
+
 // pokemon
 export const MAX_POKEMON_LEVEL = 60;
+export const MAX_STOCKPILED_BERRIES = 999;
 
 // cooking
 export const MAX_POT_SIZE = 69;

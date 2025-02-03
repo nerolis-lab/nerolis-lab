@@ -18,6 +18,7 @@ import { join } from 'path';
 import type { IngredientSetSimple, Pokemon, Recipe, TeamMemberSettings, TierlistSettings } from 'sleepapi-common';
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
+  emptyIngredientInventoryFloat,
   getAllIngredientLists,
   getPokemon,
   ingredient,
@@ -144,16 +145,15 @@ class CookingTierlistImpl {
       bedtime: this.bedtime,
       camp,
       level,
-      wakeup: this.wakeup
+      wakeup: this.wakeup,
+      includeCooking: true,
+      stockpiledIngredients: emptyIngredientInventoryFloat()
     };
     let counter = 0;
     // eslint-disable-next-line SleepAPILogger/no-console
     console.time('Tierlist default production');
 
-    const { productionMap: defaultProductionMap, setCoverSetups } = this.calculateProductionAll({
-      solveSettings,
-      includeCooking: true
-    });
+    const { productionMap: defaultProductionMap, setCoverSetups } = this.calculateProductionAll({ solveSettings });
     const defaultCache = new Map();
     const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient(setCoverSetups);
     const defaultSetCover = new SetCover(ingredientProducers, producersByIngredientIndex, defaultCache);
@@ -222,23 +222,18 @@ class CookingTierlistImpl {
     return result;
   }
 
-  private calculateProductionAll(params: {
-    solveSettings: SolveSettingsExt;
-    includeCooking: boolean;
-    supportMember?: TeamMemberExt;
-  }): {
+  private calculateProductionAll(params: { solveSettings: SolveSettingsExt; supportMember?: TeamMemberExt }): {
     productionMap: Map<string, SetCoverPokemonSetupWithSettings>;
     setCoverSetups: SetCoverPokemonSetupWithSettings[];
     userProduction: SetCoverPokemonSetupWithSettings;
   } {
-    const { solveSettings, includeCooking, supportMember } = params;
+    const { solveSettings, supportMember } = params;
     const productionMap: Map<string, SetCoverPokemonSetupWithSettings> = new Map();
     const setCoverSetups: SetCoverPokemonSetupWithSettings[] = [];
 
     const { userProduction, nonSupportProduction, supportProduction } = calculateProductionAll({
       settings: solveSettings,
-      userMembers: supportMember ? [supportMember] : [],
-      includeCooking
+      userMembers: supportMember ? [supportMember] : []
     });
 
     for (const production of [...nonSupportProduction, ...supportProduction]) {
@@ -276,8 +271,11 @@ class CookingTierlistImpl {
         userProduction: userAAA,
         setCoverSetups
       } = this.calculateProductionAll({
-        solveSettings,
-        includeCooking: false,
+        solveSettings: {
+          ...solveSettings,
+          includeCooking: false,
+          stockpiledIngredients: emptyIngredientInventoryFloat()
+        },
         supportMember
       });
 
@@ -634,7 +632,7 @@ class CookingTierlistImpl {
   }
 
   private hashPokemonSetSimple(pokemon: string, ingredientList: IngredientSetSimple[]) {
-    return `${pokemon}${ingredientList.map((ing) => ing.ingredient + ing.amount).join('')}`;
+    return `${pokemon}${ingredientList.map((ing) => ing.name + ing.amount).join('')}`;
   }
 }
 

@@ -1,5 +1,10 @@
 import { bedtime, BEDTIME, wakeup, WAKEUP } from '@src/bun/mocks/time/mock-time.js';
-import type { SolveSettings, SolveSettingsExt } from 'sleepapi-common';
+import {
+  mockIngredientSetFloatIndexed,
+  mockIngredientSetSimple,
+  type SolveSettings,
+  type SolveSettingsExt
+} from 'sleepapi-common';
 
 export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
   return {
@@ -7,6 +12,7 @@ export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
     bedtime: BEDTIME,
     wakeup: WAKEUP,
     level: 0,
+    stockpiledIngredients: [mockIngredientSetSimple()],
     ...attrs
   };
 }
@@ -17,6 +23,8 @@ export function solveSettingsExt(attrs?: Partial<SolveSettingsExt>): SolveSettin
     bedtime: bedtime(),
     wakeup: wakeup(),
     level: 0,
+    includeCooking: false,
+    stockpiledIngredients: mockIngredientSetFloatIndexed(),
     ...attrs
   };
 }
