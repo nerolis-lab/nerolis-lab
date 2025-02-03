@@ -4,7 +4,13 @@ import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract
 import type { DBPokemon } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
-import type { GetTeamResponse, MemberInstance, SubskillInstance } from 'sleepapi-common';
+import type {
+  BerrySetSimple,
+  GetTeamResponse,
+  IngredientSetSimple,
+  MemberInstance,
+  SubskillInstance
+} from 'sleepapi-common';
 
 const DBTeamSchema = Type.Composite([
   DBWithVersionedIdSchema,
@@ -16,7 +22,9 @@ const DBTeamSchema = Type.Composite([
     bedtime: Type.String(),
     wakeup: Type.String(),
     recipe_type: Type.Union([Type.Literal('curry'), Type.Literal('salad'), Type.Literal('dessert')]),
-    favored_berries: Type.Optional(Type.String())
+    favored_berries: Type.Optional(Type.String()),
+    stockpiled_ingredients: Type.Optional(Type.String()),
+    stockpiled_berries: Type.Optional(Type.String())
   })
 ]);
 export type DBTeam = Static<typeof DBTeamSchema>;
@@ -93,11 +101,35 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         wakeup: team.wakeup,
         recipeType: team.recipe_type,
         favoredBerries: team.favored_berries?.split(','),
+        stockpiledBerries: this.stringToStockpile(team.stockpiled_berries, true),
+        stockpiledIngredients: this.stringToStockpile(team.stockpiled_ingredients, false),
         version: team.version,
         members
       });
     }
     return teamsWithMembers;
+  }
+
+  public stockpileToString(stockpile?: { name: string; amount: number; level?: number }[]) {
+    return stockpile
+      ?.map(({ name, amount, level }) => `${name}:${amount}${level !== undefined ? `:${level}` : ''}`)
+      .join(',');
+  }
+
+  public stringToStockpile(stockpileStr?: string, isBerry?: true): BerrySetSimple[] | undefined;
+  public stringToStockpile(stockpileStr?: string, isBerry?: false): IngredientSetSimple[] | undefined;
+  public stringToStockpile(
+    stockpileStr?: string,
+    isBerry?: boolean
+  ): { name: string; amount: number; level?: number }[] | undefined {
+    if (!stockpileStr) return undefined;
+
+    return stockpileStr.split(',').map((entry) => {
+      const [name, amount, level] = entry.split(':');
+      const base = { name, amount: Number(amount) };
+
+      return isBerry ? { ...base, level: Number(level) } : base;
+    });
   }
 }
 

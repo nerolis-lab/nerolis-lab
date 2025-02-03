@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { BERRIES } from '../../domain/berry/berries';
 import { INGREDIENTS } from '../../domain/ingredient/ingredients';
 import {
-  emptyBerryInventoryFlat,
+  emptyBerryInventoryFloat,
+  emptyBerryInventoryInt,
   emptyIngredientInventoryFloat,
   emptyIngredientInventoryInt,
   getEmptyInventoryFloat,
@@ -43,8 +44,15 @@ describe('flat-utils', () => {
   });
 
   it('should create an empty berry inventory as Float32Array', () => {
-    const result = emptyBerryInventoryFlat();
+    const result = emptyBerryInventoryFloat();
     expect(result).toBeInstanceOf(Float32Array);
+    expect(result.length).toBe(BERRIES.length);
+    expect(result.every((value) => value === 0)).toBe(true);
+  });
+
+  it('should create an empty berry inventory as Int16Array', () => {
+    const result = emptyBerryInventoryInt();
+    expect(result).toBeInstanceOf(Int16Array);
     expect(result.length).toBe(BERRIES.length);
     expect(result.every((value) => value === 0)).toBe(true);
   });

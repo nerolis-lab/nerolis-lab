@@ -6,6 +6,14 @@ export const BERRY_ID_LOOKUP: Record<string, number> = Object.fromEntries(
   BERRIES.map((berry, index) => [berry.name, index])
 );
 
+export function getBerry(berryName: string): Berry {
+  const berry = BERRIES.find((berry) => berry.name.toLowerCase() === berryName.toLowerCase());
+  if (!berry) {
+    throw new Error(`Berry ${berryName} not found`);
+  }
+  return berry;
+}
+
 export function flatToBerrySet(berries: Float32Array, level: number): BerrySet[] {
   const result: BerrySet[] = emptyBerryInventory();
   for (let i = 0, len = berries.length; i < len; ++i) {

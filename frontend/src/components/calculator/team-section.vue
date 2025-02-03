@@ -16,6 +16,15 @@
           <TeamName />
 
           <v-btn
+            icon="mdi-delete"
+            size="36"
+            :class="{ nudge: teamStore.getCurrentTeam.version === 0 }"
+            color="primary"
+            aria-label="delete team"
+            @click="openDeleteMenu"
+          ></v-btn>
+
+          <v-btn
             icon="mdi-chevron-right"
             size="36"
             class="px-0 mx-auto"
@@ -109,6 +118,15 @@
         <TeamName />
 
         <v-btn
+          icon="mdi-delete"
+          size="36"
+          :class="{ nudge: teamStore.getCurrentTeam.version === 0 }"
+          color="primary"
+          aria-label="delete team"
+          @click="openDeleteMenu"
+        ></v-btn>
+
+        <v-btn
           icon="mdi-chevron-right"
           size="36"
           class="px-0 mx-auto"
@@ -188,6 +206,26 @@
       </v-col>
     </div>
   </v-container>
+
+  <v-dialog v-model="isDeleteOpen" aria-label="delete team menu">
+    <v-row class="flex-center">
+      <v-col cols="auto">
+        <v-card max-width="400px">
+          <v-card-title>Confirm delete team</v-card-title>
+          <v-card-text>Do you really want to delete this team?</v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn @click="toggleDeleteMenu">Close</v-btn>
+            <v-row>
+              <v-btn color="surface" aria-label="close button" @click="toggleDeleteMenu">Close</v-btn>
+
+              <v-btn color="primary" aria-label="delete button" @click="deleteTeam">Delete team</v-btn>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-dialog>
 </template>
 
 <script lang="ts">
@@ -197,7 +235,7 @@ import CookingResults from '@/components/calculator/results/cooking-results.vue'
 import MemberResults from '@/components/calculator/results/member-results/member-results.vue'
 import TeamResults from '@/components/calculator/results/team-results.vue'
 import TeamName from '@/components/calculator/team-name.vue'
-import TeamSettings from '@/components/calculator/team-settings.vue'
+import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import TeamSlot from '@/components/calculator/team-slot.vue'
 import { useViewport } from '@/composables/viewport-composable'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
@@ -231,7 +269,7 @@ export default defineComponent({
       { value: 'members', label: 'Members' },
       { value: 'cooking', label: 'Cooking' }
     ],
-    currentMemberIndex: 0
+    isDeleteOpen: false
   }),
   computed: {
     teamProduction() {
@@ -242,6 +280,18 @@ export default defineComponent({
     },
     teamSlots() {
       return this.teamStore.getTeamSize === 0 ? 1 : MAX_TEAM_MEMBERS
+    }
+  },
+  methods: {
+    openDeleteMenu() {
+      this.isDeleteOpen = true
+    },
+    toggleDeleteMenu() {
+      this.isDeleteOpen = !this.isDeleteOpen
+    },
+    deleteTeam() {
+      this.toggleDeleteMenu()
+      this.teamStore.deleteTeam()
     }
   },
   watch: {

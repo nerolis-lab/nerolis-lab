@@ -38,6 +38,8 @@ describe('TeamDAO insert', () => {
     "id": 1,
     "name": "Team A",
     "recipe_type": "curry",
+    "stockpiled_berries": undefined,
+    "stockpiled_ingredients": undefined,
     "team_index": 0,
     "version": 1,
     "wakeup": "06:00",
@@ -129,21 +131,23 @@ describe('TeamDAO update', () => {
 
     const data = await TeamDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-[
-  {
-    "bedtime": "21:30",
-    "camp": false,
-    "favored_berries": undefined,
-    "fk_user_id": 1,
-    "id": 1,
-    "name": "Updated Team A",
-    "recipe_type": "curry",
-    "team_index": 0,
-    "version": 2,
-    "wakeup": "06:00",
-  },
-]
-`);
+      [
+        {
+          "bedtime": "21:30",
+          "camp": false,
+          "favored_berries": undefined,
+          "fk_user_id": 1,
+          "id": 1,
+          "name": "Updated Team A",
+          "recipe_type": "curry",
+          "stockpiled_berries": undefined,
+          "stockpiled_ingredients": undefined,
+          "team_index": 0,
+          "version": 2,
+          "wakeup": "06:00",
+        },
+      ]
+    `);
   });
 
   it('shall fail to update entity with duplicate fk_user_id and team_index', async () => {
@@ -298,5 +302,46 @@ describe('findTeamsWithMembers', () => {
     });
 
     expect(await TeamDAO.findTeamsWithMembers(1)).toMatchSnapshot();
+  });
+});
+
+describe('stockpileToString', () => {
+  it('shall convert stockpile to string', () => {
+    const stockpile = [
+      { name: 'Berry', amount: 10, level: 1 },
+      { name: 'Potion', amount: 5 }
+    ];
+    const result = TeamDAO.stockpileToString(stockpile);
+    expect(result).toEqual('Berry:10:1,Potion:5');
+  });
+
+  it('shall return undefined for empty stockpile', () => {
+    const result = TeamDAO.stockpileToString();
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('stringToStockpile', () => {
+  it('shall convert string to berry stockpile', () => {
+    const stockpileStr = 'Berry:10:1,Potion:5:2';
+    const result = TeamDAO.stringToStockpile(stockpileStr, true);
+    expect(result).toEqual([
+      { name: 'Berry', amount: 10, level: 1 },
+      { name: 'Potion', amount: 5, level: 2 }
+    ]);
+  });
+
+  it('shall convert string to ingredient stockpile', () => {
+    const stockpileStr = 'Berry:10,Potion:5';
+    const result = TeamDAO.stringToStockpile(stockpileStr, false);
+    expect(result).toEqual([
+      { name: 'Berry', amount: 10 },
+      { name: 'Potion', amount: 5 }
+    ]);
+  });
+
+  it('shall return undefined for empty string', () => {
+    const result = TeamDAO.stringToStockpile('');
+    expect(result).toBeUndefined();
   });
 });

@@ -19,8 +19,7 @@ class SolveServiceImpl {
     // TODO: is calculateProductionAll the bottleneck now? Is set cover fast now?
     const { userProduction, nonSupportProduction, supportProduction } = calculateProductionAll({
       settings: input.solveSettings,
-      userMembers: input.includedMembers,
-      includeCooking: false
+      userMembers: input.includedMembers
     });
 
     // remove user's ingredients from recipe

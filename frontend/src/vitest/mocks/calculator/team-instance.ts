@@ -16,6 +16,8 @@ export function createMockTeams(nrOfTeams = 1, attrs?: Partial<TeamInstance>) {
       wakeup: '06:00',
       recipeType: 'curry',
       favoredBerries: [],
+      stockpiledBerries: [],
+      stockpiledIngredients: [],
       version: 0,
       members: [mockPokemonExternalId, ...new Array(4).fill(undefined)],
       production: createMockTeamProduction(),
