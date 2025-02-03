@@ -11,7 +11,8 @@ export function mainskillImage(pokemon: Pokemon) {
   }
 }
 
-export function ingredientImage(name: string) {
+export function ingredientImage(rawName: string) {
+  const name = rawName.toLowerCase()
   return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
 }
 

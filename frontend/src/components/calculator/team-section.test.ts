@@ -1,5 +1,6 @@
 import TeamSection from '@/components/calculator/team-section.vue'
 import { registerChartJS } from '@/components/custom-components/charts/register-charts'
+import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -135,5 +136,24 @@ describe('Team section', () => {
 
     expect(leftButton.exists()).toBe(true)
     expect(rightButton.exists()).toBe(true)
+  })
+
+  it('clicking delete button should call server to delete team', async () => {
+    TeamService.deleteTeam = vi.fn().mockResolvedValue(undefined)
+    const teamStore = useTeamStore()
+    const deleteTeamSpy = vi.spyOn(teamStore, 'deleteTeam')
+
+    const deleteMenuButton = wrapper.find('button[aria-label="delete team"]')
+    expect(deleteMenuButton.exists()).toBe(true)
+    await deleteMenuButton.trigger('click')
+
+    await nextTick()
+    expect(wrapper.vm.isDeleteOpen).toBe(true)
+
+    const deleteModalButton = document.querySelector('button[aria-label="delete button"]') as HTMLElement
+    deleteModalButton.click()
+
+    await nextTick()
+    expect(deleteTeamSpy).toHaveBeenCalled()
   })
 })

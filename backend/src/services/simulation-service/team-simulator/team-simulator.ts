@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
+import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import type {
   SkillActivationValue,
@@ -49,12 +49,10 @@ export class TeamSimulator {
   private fullDayDuration = 1440;
   private energyDegradeCounter = -1; // -1 so it takes 3 iterations and first degrade is after 10 minutes, then 10 minutes between each
 
-  constructor(params: { settings: TeamSettingsExt; members: TeamMemberExt[]; includeCooking: boolean }) {
-    const { settings, members, includeCooking } = params;
+  constructor(params: { settings: TeamSettingsExt; members: TeamMemberExt[]; cookingState?: CookingState }) {
+    const { settings, members, cookingState } = params;
 
-    if (includeCooking) {
-      this.cookingState = new CookingState(settings.camp);
-    }
+    this.cookingState = cookingState;
 
     const dayPeriod = {
       start: settings.wakeup,
@@ -156,9 +154,7 @@ export class TeamSimulator {
   }
 
   private init() {
-    for (const member of this.memberStates) {
-      member.wakeUp();
-    }
+    this.startDay();
 
     for (const member of this.memberStatesWithoutFillers) {
       for (const proc of member.collectInventory()) {
@@ -168,7 +164,17 @@ export class TeamSimulator {
 
     this.energyDegradeCounter = -1;
     this.cookedMealsCounter = 0;
+  }
+
+  private startDay() {
     this.run++;
+    if (this.cookingState && this.run % 7 === 1) {
+      this.cookingState?.startNewWeek();
+    }
+
+    for (const member of this.memberStates) {
+      member.wakeUp();
+    }
   }
 
   private attemptCooking(currentMinutesSincePeriodStart: number) {

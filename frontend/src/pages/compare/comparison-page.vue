@@ -171,7 +171,8 @@ export default defineComponent({
       const settings: TeamSettings = {
         camp: maybeTeam?.camp ?? false,
         bedtime: maybeTeam?.bedtime ?? '21:30',
-        wakeup: maybeTeam?.wakeup ?? '06:00'
+        wakeup: maybeTeam?.wakeup ?? '06:00',
+        stockpiledIngredients: maybeTeam?.stockpiledIngredients ?? []
       }
 
       const result = await TeamService.calculateProduction({ members, settings })

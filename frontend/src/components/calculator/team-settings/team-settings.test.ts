@@ -1,5 +1,4 @@
-import TeamSettings from '@/components/calculator/team-settings.vue'
-import { TeamService } from '@/services/team/team-service'
+import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -133,24 +132,6 @@ describe('TeamSettings', () => {
     const allowedWakeupHours = wrapper.vm.allowedWakeupHours
     expect(allowedWakeupHours(7)).toBe(true)
     expect(allowedWakeupHours(22)).toBe(false)
-  })
-
-  it('clicking delete button should call server to delete team', async () => {
-    TeamService.deleteTeam = vi.fn().mockResolvedValue(undefined)
-    const teamStore = useTeamStore()
-    const deleteTeamSpy = vi.spyOn(teamStore, 'deleteTeam')
-
-    const deleteMenuButton = wrapper.find('button[aria-label="delete team"]')
-    await deleteMenuButton.trigger('click')
-
-    await nextTick()
-    expect(wrapper.vm.isDeleteOpen).toBe(true)
-
-    const deleteModalButton = document.querySelector('button[aria-label="delete button"]') as HTMLElement
-    deleteModalButton.click()
-
-    await nextTick()
-    expect(deleteTeamSpy).toHaveBeenCalled()
   })
 
   it('opens the recipe menu correctly', async () => {

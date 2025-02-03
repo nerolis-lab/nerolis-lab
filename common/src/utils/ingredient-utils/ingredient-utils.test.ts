@@ -668,15 +668,15 @@ describe('simplifyIngredientSet', () => {
       [
         {
           "amount": 2,
-          "ingredient": "Honey",
+          "name": "Honey",
         },
         {
           "amount": 5,
-          "ingredient": "Egg",
+          "name": "Egg",
         },
         {
           "amount": 7,
-          "ingredient": "Honey",
+          "name": "Honey",
         },
       ]
     `);
@@ -686,9 +686,9 @@ describe('simplifyIngredientSet', () => {
 describe('unsimplifyIngredientSet', () => {
   it('shall unsimplify an ingredient set', () => {
     const ingredientSet: IngredientSetSimple[] = [
-      { amount: 2, ingredient: HONEY.name },
-      { amount: 5, ingredient: FANCY_EGG.name },
-      { amount: 7, ingredient: HONEY.name }
+      { amount: 2, name: HONEY.name },
+      { amount: 5, name: FANCY_EGG.name },
+      { amount: 7, name: HONEY.name }
     ];
     expect(unsimplifyIngredientSet(ingredientSet)).toMatchInlineSnapshot(`
       [

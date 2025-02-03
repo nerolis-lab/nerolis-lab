@@ -6,7 +6,16 @@ import type { PerformanceDetails, TeamInstance } from '@/types/member/instanced'
 import { createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import { createPinia, setActivePinia } from 'pinia'
-import { berry, LEAFEON, subskill, uuid, WIGGLYTUFF, type PokemonInstanceExt } from 'sleepapi-common'
+import {
+  berry,
+  LEAFEON,
+  mockBerrySetSimple,
+  mockIngredientSetSimple,
+  subskill,
+  uuid,
+  WIGGLYTUFF,
+  type PokemonInstanceExt
+} from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -62,6 +71,8 @@ describe('Team Store', () => {
             "name": "Log in to save teams",
             "production": undefined,
             "recipeType": "curry",
+            "stockpiledBerries": [],
+            "stockpiledIngredients": [],
             "version": 0,
             "wakeup": "06:00",
           },
@@ -155,6 +166,8 @@ describe('Team Store', () => {
             "name": "Log in to save teams",
             "production": undefined,
             "recipeType": "curry",
+            "stockpiledBerries": [],
+            "stockpiledIngredients": [],
             "version": 0,
             "wakeup": "06:00",
           },
@@ -178,6 +191,8 @@ describe('Team Store', () => {
         version: 1,
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         memberIvs: {},
         production: undefined
       },
@@ -192,6 +207,8 @@ describe('Team Store', () => {
         version: 1,
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         memberIvs: {},
         production: undefined
       }
@@ -216,6 +233,8 @@ describe('Team Store', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [],
         version: 1,
         memberIvs: {},
@@ -230,6 +249,8 @@ describe('Team Store', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [],
         version: 1,
         memberIvs: {},
@@ -258,6 +279,8 @@ describe('Team Store', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [undefined, member.name, null!, member.name, ''],
         version: 1,
         memberIvs: {},
@@ -281,6 +304,8 @@ describe('Team Store', () => {
       wakeup: '06:00',
       recipeType: 'curry',
       favoredBerries: [],
+      stockpiledBerries: [],
+      stockpiledIngredients: [],
       members: [undefined, 'member1', undefined, 'member2', undefined],
       version: 1,
       memberIvs: {},
@@ -295,6 +320,8 @@ describe('Team Store', () => {
       wakeup: '06:00',
       recipeType: 'curry',
       favoredBerries: [],
+      stockpiledBerries: [],
+      stockpiledIngredients: [],
       members: [undefined, 'member3', undefined, 'member4', undefined],
       version: 1,
       memberIvs: {},
@@ -324,6 +351,8 @@ describe('Team Store', () => {
         "name": "Log in to save teams",
         "production": undefined,
         "recipeType": "curry",
+        "stockpiledBerries": [],
+        "stockpiledIngredients": [],
         "version": 0,
         "wakeup": "06:00",
       }
@@ -345,6 +374,8 @@ describe('Team Store', () => {
       wakeup: '06:00',
       recipeType: 'curry',
       favoredBerries: [],
+      stockpiledBerries: [],
+      stockpiledIngredients: [],
       members: [undefined, 'member1', undefined, 'member2', undefined],
       version: 1,
       memberIvs: {},
@@ -383,6 +414,8 @@ describe('duplicateMember', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [undefined, mockPokemon.externalId, undefined, undefined, undefined],
         version: 1,
         memberIvs: {},
@@ -416,6 +449,8 @@ describe('duplicateMember', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [member, member, member, member, member],
         version: 1,
         memberIvs: {},
@@ -443,6 +478,8 @@ describe('duplicateMember', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [undefined, undefined, undefined, undefined, undefined],
         version: 1,
         memberIvs: {},
@@ -482,6 +519,8 @@ describe('removeMember', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [undefined, member2, undefined, member4, undefined],
         version: 1,
         memberIvs: {},
@@ -730,7 +769,11 @@ describe('migrate', () => {
   it('should migrate old teams to new state', () => {
     const teamStore = useTeamStore()
 
-    teamStore.teams = createMockTeams(2, { memberIndex: undefined })
+    teamStore.teams = createMockTeams(2, {
+      memberIndex: undefined,
+      stockpiledBerries: undefined,
+      stockpiledIngredients: undefined
+    })
     teamStore.timeWindow = undefined!
     teamStore.tab = null!
 
@@ -738,7 +781,11 @@ describe('migrate', () => {
 
     expect(teamStore.tab).toEqual('overview')
     expect(teamStore.timeWindow).toEqual('24H')
-    teamStore.teams.forEach((team) => expect(team.memberIndex).toBe(0))
+    teamStore.teams.forEach((team) => {
+      expect(team.memberIndex).toBe(0)
+      expect(team.stockpiledBerries).toEqual([])
+      expect(team.stockpiledIngredients).toEqual([])
+    })
   })
 })
 
@@ -907,5 +954,40 @@ describe('upsertIv', () => {
     teamStore.upsertIv('member1', undefined)
 
     expect(teamStore.getCurrentTeam.memberIvs['member1']).toBeUndefined()
+  })
+})
+
+describe('updateStockpile', () => {
+  it('should update stockpiled ingredients and berries', async () => {
+    const teamStore = useTeamStore()
+    const userStore = useUserStore()
+
+    userStore.setTokens({ accessToken: 'at', expiryDate: 0, refreshToken: 'rt' })
+    await nextTick()
+
+    teamStore.updateTeam = vi.fn()
+    teamStore.calculateProduction = vi.fn()
+
+    const ingredients = [mockIngredientSetSimple({ amount: 10 })]
+    const berries = [mockBerrySetSimple({ amount: 5 })]
+
+    await teamStore.updateStockpile({ ingredients, berries })
+
+    expect(teamStore.getCurrentTeam.stockpiledIngredients).toEqual(ingredients)
+    expect(teamStore.getCurrentTeam.stockpiledBerries).toEqual(berries)
+    expect(teamStore.updateTeam).toHaveBeenCalled()
+    expect(teamStore.calculateProduction).toHaveBeenCalled()
+  })
+
+  it('should call calculateProduction after updating stockpile', async () => {
+    const teamStore = useTeamStore()
+    const ingredients = [mockIngredientSetSimple({ amount: 10 })]
+    const berries = [mockBerrySetSimple({ amount: 5 })]
+
+    teamStore.calculateProduction = vi.fn()
+
+    await teamStore.updateStockpile({ ingredients, berries })
+
+    expect(teamStore.calculateProduction).toHaveBeenCalled()
   })
 })

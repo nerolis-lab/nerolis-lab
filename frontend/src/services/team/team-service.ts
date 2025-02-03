@@ -63,6 +63,8 @@ class TeamServiceImpl {
           wakeup: '06:00',
           recipeType: 'curry',
           favoredBerries: [],
+          stockpiledBerries: [],
+          stockpiledIngredients: [],
           version: 0,
           members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
           memberIvs: {},
@@ -105,6 +107,8 @@ class TeamServiceImpl {
           wakeup: serverTeam.wakeup,
           recipeType: serverTeam.recipeType,
           favoredBerries,
+          stockpiledBerries: serverTeam.stockpiledBerries ?? [],
+          stockpiledIngredients: serverTeam.stockpiledIngredients ?? [],
           version: serverTeam.version,
           members,
           memberIvs: {},
@@ -180,7 +184,8 @@ class TeamServiceImpl {
     const settings: TeamSettings = {
       camp: currentTeam.camp,
       bedtime: currentTeam.bedtime,
-      wakeup: currentTeam.wakeup
+      wakeup: currentTeam.wakeup,
+      stockpiledIngredients: currentTeam.stockpiledIngredients
     }
 
     const berrySetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({

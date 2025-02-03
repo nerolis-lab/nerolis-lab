@@ -1,5 +1,5 @@
 import type { CalculateTeamResponse } from '../../api/team/calculate/team-calculate';
-import type { IngredientSet } from '../ingredient/ingredient';
+import type { IngredientIndexToFloatAmount, IngredientSet, IngredientSetSimple } from '../ingredient/ingredient';
 import type { Time } from '../types/time';
 import type { TeamMemberWithProduce } from './member';
 
@@ -7,11 +7,14 @@ export interface TeamSettings {
   camp: boolean;
   bedtime: string;
   wakeup: string;
+  stockpiledIngredients?: IngredientSetSimple[];
 }
 export interface TeamSettingsExt {
   camp: boolean;
   bedtime: Time;
   wakeup: Time;
+  includeCooking: boolean;
+  stockpiledIngredients: IngredientIndexToFloatAmount;
 }
 
 export interface TeamSolution {

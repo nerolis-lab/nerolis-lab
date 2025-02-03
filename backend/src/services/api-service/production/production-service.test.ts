@@ -6,7 +6,15 @@ import {
 import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
-import { BULBASAUR, CHARMANDER, ingredient, nature, PINSIR, subskill } from 'sleepapi-common';
+import {
+  BULBASAUR,
+  CHARMANDER,
+  emptyIngredientInventoryFloat,
+  ingredient,
+  nature,
+  PINSIR,
+  subskill
+} from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculatePokemonProduction', () => {
@@ -58,7 +66,9 @@ describe('calculateTeam', () => {
     const settings: TeamSettingsExt = {
       bedtime: TimeUtils.parseTime('21:30'),
       wakeup: TimeUtils.parseTime('06:01'),
-      camp: false
+      camp: false,
+      includeCooking: false,
+      stockpiledIngredients: emptyIngredientInventoryFloat()
     };
 
     const members: TeamMemberExt[] = [
@@ -120,7 +130,9 @@ describe('calculateIv', () => {
     const settings: TeamSettingsExt = {
       bedtime: TimeUtils.parseTime('22:00'),
       wakeup: TimeUtils.parseTime('06:00'),
-      camp: true
+      camp: true,
+      includeCooking: false,
+      stockpiledIngredients: emptyIngredientInventoryFloat()
     };
 
     const members: TeamMemberExt[] = [

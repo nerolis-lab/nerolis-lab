@@ -16,18 +16,20 @@ export function emptyIngredientInventoryInt(): Int16Array {
   return initIntArray(INGREDIENTS.length);
 }
 
-export function emptyBerryInventoryFlat(): Float32Array {
+export function emptyBerryInventoryFloat(): Float32Array {
   return initFloatArray(BERRIES.length);
+}
+export function emptyBerryInventoryInt(): Int16Array {
+  return initIntArray(BERRIES.length);
 }
 
 export function getEmptyInventoryFloat(): ProduceFlat {
   return {
-    berries: emptyBerryInventoryFlat(),
+    berries: emptyBerryInventoryFloat(),
     ingredients: emptyIngredientInventoryFloat()
   };
 }
 
-// TEST
 export function sumFlats(array1: Float32Array, array2: Float32Array) {
   const minLength = Math.min(array1.length, array2.length);
   const maxArray = array1.length > array2.length ? array1 : array2;
