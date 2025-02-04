@@ -1,8 +1,8 @@
-<a href="https://sleepapi.net/">
+<a href="https://nerolislab.com/">
   <h1 align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.sleepapi.net/banner.png">
-      <img alt="Sleep API" src="https://api.sleepapi.net/banner-bright.png">
+      <source media="(prefers-color-scheme: dark)" srcset="./backend/src/assets/thumbnail.png">
+      <img alt="Neroli's Lab" src="./backend/src/assets/banner-bright.png">
     </picture>
   </h1>
 </a>
@@ -13,27 +13,26 @@
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![Semantic Release](https://img.shields.io/badge/Semantic_Release-semver-blue)](https://semver.org/)
 
-Sleep API is an open source tool for Pokémon Sleep data analysis. Sleep API provides a publicly available [API][API docs], but also provides tooling on a simple [website][sleepapi].
+Neroli's Lab is an open source tool for Pokémon Sleep data analysis. Neroli's Lab provides a publicly available [API][API docs], known as Sleep API and also provides tooling on our [beta Neroli's Lab site][nerolislab], which will replace our old website, [Sleep API][sleepapi].
 
-## What is Sleep API
+## What is Neroli's Lab
 
-Sleep API exists to help users make informed decisions regarding their investments in Pokémon Sleep. We provide tooling such as the ingredient production calculator, an optimal team composition per recipe algorithm or simulation-based cooking tier lists.
-
-<p align="center"><img src="https://api.sleepapi.net/website-preview.png" alt="Website preview"></p>
+Neroli's Lab exists to help users make informed decisions regarding their investments in Pokémon Sleep. We provide tooling such as the ingredient production calculator, an optimal team composition per recipe algorithm, and simulation-based cooking tier lists.
 
 ## Contributing
 
-Thank you for considering contributing to Sleep API, we welcome you with open arms. You can start by reading our [contributing guide](CONTRIBUTING.md).
+Thank you for considering contributing to Neroli's Lab, we welcome you with open arms. You can start by reading our [contributing guide](CONTRIBUTING.md).
 
 ## Resources
 
 - [API documentation][API docs]
 - [Discord][Discord invite]
-- [Contributing to Sleep API](CONTRIBUTING.md)
+- [Contributing to Neroli's Lab](CONTRIBUTING.md)
 - [Code of conduct](CODE_OF_CONDUCT.md)
 - [Apache 2.0 license](LICENSE.md)
 
-[Discord invite]: https://discord.gg/w97qFff8n4
-[Discord badge]: https://img.shields.io/discord/1133923264146706452?logo=discord
+[Discord invite]: https://discord.gg/SP9Ms69ueD
+[Discord badge]: https://img.shields.io/discord/1300099710996058252?logo=discord
 [API docs]: https://api.sleepapi.net/docs
 [sleepapi]: https://sleepapi.net
+[nerolislab]: https://nerolislab.com
