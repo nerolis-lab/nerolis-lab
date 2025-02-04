@@ -1,3 +1,10 @@
+## [1.24.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.0...v1.24.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* stockpile ingredients now more performant ([14a8b25](https://github.com/nerolis-lab/nerolis-lab/commit/14a8b255fbcf9b1d9b6f06a779e3a771018381de))
+
 # [1.24.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.3...v1.24.0) (2025-02-03)
 
 
