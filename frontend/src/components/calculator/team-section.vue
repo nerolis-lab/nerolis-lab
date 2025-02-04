@@ -15,14 +15,7 @@
 
           <TeamName />
 
-          <v-btn
-            icon="mdi-delete"
-            size="36"
-            :class="{ nudge: teamStore.getCurrentTeam.version === 0 }"
-            color="primary"
-            aria-label="delete team"
-            @click="openDeleteMenu"
-          ></v-btn>
+          <v-btn icon="mdi-delete" size="36" color="primary" aria-label="delete team" @click="openDeleteMenu"></v-btn>
 
           <v-btn
             icon="mdi-chevron-right"
@@ -117,14 +110,7 @@
 
         <TeamName />
 
-        <v-btn
-          icon="mdi-delete"
-          size="36"
-          :class="{ nudge: teamStore.getCurrentTeam.version === 0 }"
-          color="primary"
-          aria-label="delete team"
-          @click="openDeleteMenu"
-        ></v-btn>
+        <v-btn icon="mdi-delete" size="36" color="primary" aria-label="delete team" @click="openDeleteMenu"></v-btn>
 
         <v-btn
           icon="mdi-chevron-right"

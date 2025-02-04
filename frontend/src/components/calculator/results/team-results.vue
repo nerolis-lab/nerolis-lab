@@ -140,8 +140,8 @@
                 <v-img src="/images/ingredient/ingredients.png" contain :width="isMobile ? '28' : '60'" />
               </div>
               <span class="text-center ml-2">
-                +{{ teamStore.getCurrentTeam.stockpiledIngredients.reduce((sum, cur) => sum + cur.amount, 0) }} starting
-                ingredients
+                +{{ stockpiledIngredientAmont }}
+                starting ingredients
               </span>
             </v-col>
           </v-row>
@@ -332,6 +332,9 @@ export default defineComponent({
         skillValue: member.skillValue,
         image: member.image
       }))
+    },
+    stockpiledIngredientAmont() {
+      return this.teamStore.getCurrentTeam.stockpiledIngredients.reduce((sum, cur) => sum + Number(cur.amount), 0)
     }
   },
   methods: {
