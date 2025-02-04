@@ -1,7 +1,7 @@
 <a href="https://nerolislab.com/">
   <h1 align="center">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./backend/src/assets/thumbnail.png">
+      <source media="(prefers-color-scheme: dark)" srcset="./backend/src/assets/banner.png">
       <img alt="Neroli's Lab" src="./backend/src/assets/banner-bright.png">
     </picture>
   </h1>
