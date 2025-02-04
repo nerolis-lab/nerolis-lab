@@ -166,66 +166,51 @@ export class CookingState {
 
     for (let recipeIndex = 0; recipeIndex < availableRecipes.length; ++recipeIndex) {
       const recipe = availableRecipes[recipeIndex];
-
-      // If this recipe has failed before, get it; otherwise, create a new entry with default values.
-      const existingEntry: SkippedRecipe = this.getOrInitSkippedRecipe(recipe, skippedRecipesGrouped);
+      const existingEntry = this.getOrInitSkippedRecipe(recipe, skippedRecipesGrouped);
 
       let canCook = true;
       const ingredientMissing = existingEntry.ingredientMissing;
 
-      const subtractedInventory: Float32Array = emptyIngredientInventoryFloat();
-      const subtractedStockpile: Float32Array = emptyIngredientInventoryFloat();
-      let startedSubtracting = false;
+      // First pass: validate that we can cook the recipe and compute what's missing
       for (let i = 0; i < recipe.ingredients.length; i++) {
         const requiredAmount = recipe.ingredients[i];
-        const availableAmount = currentIngredients[i];
+        const availableInventory = currentIngredients[i];
+        const availableStockpile = currentStockpile[i];
 
-        if (availableAmount < requiredAmount) {
-          const stockpileNeeded = requiredAmount - availableAmount;
-          const stockpileAvailable = currentStockpile[i];
+        const totalAvailable = availableInventory + availableStockpile;
 
-          if (stockpileAvailable >= stockpileNeeded) {
-            // Sufficient stockpile to cover missing amount
-
-            startedSubtracting = true;
-
-            subtractedInventory[i] = availableAmount;
-            subtractedStockpile[i] = stockpileNeeded;
-            currentStockpile[i] -= stockpileNeeded;
-            currentIngredients[i] = 0; // Used all available in inventory
-          } else {
-            // Not enough stockpile either, track missing amount
-            canCook = false;
-
-            ingredientMissing[i].count += 1;
-            ingredientMissing[i].totalAmountMissing += stockpileNeeded - stockpileAvailable;
-
-            if (startedSubtracting) {
-              // We have already started subtracting, but we can't cook this recipe
-              // Reset the inventory and stockpile
-              currentIngredients._mutateCombine(subtractedInventory, (a, b) => a + b);
-              currentStockpile._mutateCombine(subtractedStockpile, (a, b) => a + b);
-              break;
-            }
-          }
-        } else {
-          // Fully cover the requirement using inventory only
-
-          startedSubtracting = true;
-
-          subtractedInventory[i] = requiredAmount;
-          currentIngredients[i] -= requiredAmount;
+        if (requiredAmount > totalAvailable) {
+          // Can't cook this recipe, track the missing amount and fail early
+          canCook = false;
+          ingredientMissing[i].count += 1;
+          ingredientMissing[i].totalAmountMissing += requiredAmount - totalAvailable;
+          break;
         }
       }
 
       if (canCook) {
-        return recipe;
+        // Second pass: perform the actual subtraction from inventory and stockpile
+        for (let i = 0; i < recipe.ingredients.length; i++) {
+          const requiredAmount = recipe.ingredients[i];
+          const availableInventory = currentIngredients[i];
+
+          if (availableInventory >= requiredAmount) {
+            // Fully covered by inventory
+            currentIngredients[i] -= requiredAmount;
+          } else {
+            // Partially covered by inventory, fallback to stockpile
+            const remainingNeeded = requiredAmount - availableInventory;
+            currentIngredients[i] = 0; // All inventory used up
+            currentStockpile[i] -= remainingNeeded;
+          }
+        }
+        return recipe; // Success, return the cooked recipe
       } else {
         existingEntry.totalCount += 1;
       }
     }
 
-    return undefined;
+    return undefined; // No recipe could be cooked
   }
 
   private findRecipesWithinPotLimit(
