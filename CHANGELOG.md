@@ -1,3 +1,10 @@
+## [1.24.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.3...v1.24.4) (2025-02-05)
+
+
+### Bug Fixes
+
+* sets ingredient limit to 10k ([67b0607](https://github.com/nerolis-lab/nerolis-lab/commit/67b060797e0e1a8d860489e9e886a33441ff29d6))
+
 ## [1.24.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.2...v1.24.3) (2025-02-05)
 
 ## [1.24.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.1...v1.24.2) (2025-02-04)
