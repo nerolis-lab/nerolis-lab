@@ -64,7 +64,7 @@ describe('AdvancedMenu', () => {
   it('validates ingredient amount rules correctly', async () => {
     wrapper.setData({
       stockpiledIngredients: [
-        { ingredient: { name: 'Tomato' }, amount: 1100 } // Over maximum
+        { ingredient: { name: 'Tomato' }, amount: 11000 } // Over maximum
       ]
     })
     await wrapper.vm.$nextTick()
