@@ -22,9 +22,11 @@ const darkTheme: ThemeDefinition = {
   dark: true,
   colors: {
     background: '#191224',
-    surface: '#403D58',
     primary: '#E63946',
     secondary: '#5E5A7F',
+    'secondary-medium-dark': '#545072',
+    'secondary-dark': '#4A4765',
+    surface: '#403D58',
     accent: '#9A95C3',
 
     strength: '#FFB81F',

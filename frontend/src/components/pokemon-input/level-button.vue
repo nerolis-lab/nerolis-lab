@@ -12,6 +12,7 @@
         hide-details
         hide-spin-buttons
         type="number"
+        @focus="highlightText"
         :rules="[(v: any) => (v <= 100 && v >= 1) || `Level must be 1-100`]"
         @keydown.enter="menu = false"
       ></v-text-field>
@@ -73,6 +74,12 @@ export default {
     },
     updateLevel(newLevel: number) {
       this.$emit('update-level', newLevel)
+    },
+    highlightText(event: FocusEvent) {
+      const target = event.target as HTMLInputElement
+
+      // Use a slight delay to avoid browser conflicts
+      setTimeout(() => target.select(), 1)
     }
   }
 }
