@@ -134,13 +134,13 @@
             </v-col>
           </v-row>
 
-          <v-row dense class="flex-center">
+          <v-row v-if="stockpiledIngredientAmount > 0" dense class="flex-center">
             <v-col cols="auto" class="flex-center">
               <div class="">
-                <v-img src="/images/ingredient/ingredients.png" contain :width="isMobile ? '28' : '60'" />
+                <v-img src="/images/ingredient/ingredients.png" contain :width="isMobile ? '28' : '40'" />
               </div>
               <span class="text-center ml-2">
-                +{{ stockpiledIngredientAmont }}
+                +{{ stockpiledIngredientAmount }}
                 starting ingredients
               </span>
             </v-col>
@@ -333,7 +333,7 @@ export default defineComponent({
         image: member.image
       }))
     },
-    stockpiledIngredientAmont() {
+    stockpiledIngredientAmount() {
       return this.teamStore.getCurrentTeam.stockpiledIngredients.reduce((sum, cur) => sum + Number(cur.amount), 0)
     }
   },

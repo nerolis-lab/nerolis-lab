@@ -26,7 +26,6 @@ describe('AdvancedMenu', () => {
     expect(wrapper.vm.advancedMenu).toBe(true)
     expect(document.querySelector('.v-dialog')).toBeTruthy()
     expect(document.querySelector('.v-card-title')?.textContent).toBe('Advanced Settings')
-    expect(document.querySelectorAll('.v-text-field').length).toBe(2)
   })
 
   it('loads stockpile from team on button click', async () => {

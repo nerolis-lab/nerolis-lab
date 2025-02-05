@@ -47,7 +47,7 @@
           </v-col>
 
           <span v-if="stockpiledIngredientsAmount > MAX_INGREDIENT_INVENTORY" class="text-strength">
-            Exceeding the ingredient inventory limit requires your Pokémon to start the week with holding ingredients
+            Exceeding the ingredient inventory limit requires your Pokémon to start the week holding ingredients
           </span>
         </v-row>
 
@@ -55,37 +55,62 @@
           <v-divider />
         </v-row>
 
-        <v-row>
-          <v-col>
-            <v-form>
-              <v-autocomplete
-                v-model="stockpiledIngredients"
-                :items="ingredientDefaultOptions"
-                item-text="ingredient.name"
-                label="Add ingredients"
-                prepend-inner-icon="mdi-magnify"
-                multiple
-                hide-details
-                hide-selected
-                :custom-filter="customIngredientFilter"
-              >
-                <template #selection="data">
-                  <span></span>
-                </template>
+        <v-menu v-model="ingredientMenuOpen" :close-on-content-click="false">
+          <template #activator="{ props }">
+            <v-row>
+              <v-col>
+                <v-btn
+                  append-icon="mdi-chevron-down"
+                  color="secondary"
+                  aria-label="add ingredients"
+                  v-bind="props"
+                  class="w-100"
+                  @click="initializeMenuSelection"
+                >
+                  Add Ingredients
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
 
-                <template v-slot:item="{ props, item }">
-                  <v-list-item
-                    v-bind="props"
-                    density="compact"
-                    :prepend-avatar="ingredientImage(item.raw.ingredient.name)"
-                    :subtitle="`${item.raw.ingredient.value} value`"
-                    :title="item.raw.ingredient.name"
-                  />
-                </template>
-              </v-autocomplete>
-            </v-form>
-          </v-col>
-        </v-row>
+          <v-container class="bg-secondary-dark elevation-10">
+            <v-row dense class="grid-container" :class="isMobile ? 'mobile' : 'desktop'">
+              <v-card
+                v-for="(ingredient, index) in ingredientDefaultOptions"
+                class="grid-item"
+                :key="index"
+                :color="isMenuIngredientSelected(ingredient) ? 'secondary' : 'secondary-dark'"
+                :class="isMenuIngredientSelected(ingredient) ? 'elevation-0' : 'elevation-4'"
+                @click="toggleMenuIngredient(ingredient)"
+              >
+                <span v-if="!isMobile">{{ ingredient.ingredient.name }}</span>
+                <v-avatar size="40">
+                  <v-img :src="ingredientImage(ingredient.ingredient.name)" />
+                </v-avatar>
+              </v-card>
+            </v-row>
+
+            <v-row dense class="mt-2 justify-space-between flex-center w-100">
+              <v-col cols="5" class="flex-left">
+                <v-btn
+                  id="cancelButton"
+                  class="w-100"
+                  size="large"
+                  rounded="lg"
+                  color="secondary-medium-dark"
+                  @click="closeIngredientMenu"
+                >
+                  Cancel
+                </v-btn>
+              </v-col>
+              <v-col cols="5" class="flex-right">
+                <v-btn id="addButton" class="w-100" size="large" rounded="lg" color="primary" @click="addIngredients">
+                  Add
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-menu>
 
         <v-row v-for="(ingredientSet, index) in stockpiledIngredients" :key="index" dense>
           <v-col>
@@ -98,6 +123,7 @@
               bg-color="secondary"
               variant="outlined"
               density="compact"
+              @focus="highlightText"
               :rules="[rules.minRule, rules.maxIngredientsRule]"
               @blur="ingredientSet.amount = ingredientSet.amount || 0"
             >
@@ -130,39 +156,101 @@
           <v-divider />
         </v-row>
 
-        <v-row class="pb-1">
-          <v-col>
-            <v-form>
-              <v-autocomplete
-                v-model="stockpiledBerries"
-                :items="berryDefaultOptions"
-                item-value="uuid"
-                item-text="uuid"
-                label="Add berries"
-                prepend-inner-icon="mdi-magnify"
-                multiple
-                hide-details
-                :custom-filter="customBerryFilter"
-                :return-object="true"
-                @update:model-value="addBerry"
-              >
-                <template #selection="data">
-                  <span></span>
-                </template>
+        <v-menu v-model="berryMenuOpen" :close-on-content-click="false">
+          <template #activator="{ props }">
+            <v-row>
+              <v-col>
+                <v-btn
+                  append-icon="mdi-chevron-down"
+                  color="secondary"
+                  aria-label="add berries"
+                  v-bind="props"
+                  class="w-100 mb-2"
+                  @click="initializeBerryMenuSelection"
+                >
+                  Add Berries
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
 
-                <template v-slot:item="{ props, item }">
-                  <v-list-item
-                    v-bind="props"
-                    :prepend-avatar="berryImage(item.raw.berry)"
-                    density="compact"
-                    :subtitle="`${capitalize(item.raw.berry.type)} - ${berryPowerForLevel(item.raw.berry, item.raw.level)} value`"
-                    :title="item.raw.berry.name"
-                  ></v-list-item>
-                </template>
-              </v-autocomplete>
-            </v-form>
-          </v-col>
-        </v-row>
+          <v-container
+            class="bg-secondary-dark flex-center flex-column elevation-10"
+            :style="{ 'max-width': '518px', width: `${viewportWidth - 80}px` }"
+          >
+            <div class="text-subtitle-2 text-center font-weight-light mb-4">
+              Click to add up to 5 berries. You can click the same berry multiple times. You can set the individual
+              amounts after clicking add.
+            </div>
+
+            <v-row class="flex-left" dense>
+              <v-col
+                v-for="(berryOption, index) in berryDefaultOptions"
+                :key="index"
+                class="flex-left flex-column"
+                cols="3"
+              >
+                <v-card
+                  variant="flat"
+                  class="flex-left flex-column w-100 mx-2"
+                  color="secondary-medium-dark"
+                  @click="addBerryToMenuSelection(berryOption)"
+                  :disabled="menuSelectedBerries.length >= MAX_TEAM_SIZE"
+                >
+                  <span v-if="!isMobile">{{ berryOption.berry.name }}</span>
+                  <v-avatar size="32">
+                    <v-img :src="berryImage(berryOption.berry)" />
+                  </v-avatar>
+                </v-card>
+              </v-col>
+            </v-row>
+
+            <!-- Chip group to show selected berries -->
+            <v-row dense class="mt-2 w-100">
+              <v-col class="pa-0">
+                <v-sheet color="secondary" rounded min-height="48">
+                  <v-chip-group column multiple class="ml-2">
+                    <v-chip v-for="(berry, index) in menuSelectedBerries" :key="berry.uuid" class="mx-1">
+                      <v-avatar size="24">
+                        <v-img :src="berryImage(berry.berry)" />
+                      </v-avatar>
+                      <v-icon small class="ml-1" @click.stop="removeBerryFromMenuSelection(index)">
+                        mdi-close-circle
+                      </v-icon>
+                    </v-chip>
+                  </v-chip-group>
+                </v-sheet>
+              </v-col>
+            </v-row>
+
+            <v-row dense class="mt-2 justify-space-between flex-center w-100">
+              <v-col cols="5" class="flex-left">
+                <v-btn
+                  id="cancelButton"
+                  class="w-100"
+                  size="large"
+                  rounded="lg"
+                  color="secondary-medium-dark"
+                  @click="closeBerryMenu"
+                >
+                  Cancel
+                </v-btn>
+              </v-col>
+              <v-col cols="5" class="flex-right">
+                <v-btn
+                  id="addButton"
+                  class="w-100"
+                  size="large"
+                  rounded="lg"
+                  color="primary"
+                  @click="commitBerrySelection"
+                >
+                  Add
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-menu>
 
         <v-row v-for="(berrySet, index) in stockpiledBerries" :key="index" no-gutters>
           <v-col>
@@ -175,6 +263,7 @@
               bg-color="secondary"
               variant="outlined"
               density="compact"
+              @focus="highlightText"
               :rules="[rules.minRule, rules.maxBerriesRule]"
               @blur="berrySet.amount = berrySet.amount || 0"
             >
@@ -201,6 +290,7 @@
               bg-color="secondary"
               variant="outlined"
               density="compact"
+              @focus="highlightText"
               :rules="[rules.minLevelRule, rules.maxLevelRule]"
               @blur="berrySet.level = berrySet.level || 60"
               class="ml-2"
@@ -264,6 +354,7 @@ import {
   ingredient,
   MAX_INGREDIENT_INVENTORY,
   MAX_STOCKPILED_BERRIES,
+  MAX_TEAM_SIZE,
   uuid,
   type BerrySet,
   type IngredientSet
@@ -279,7 +370,7 @@ export default defineComponent({
   emits: ['save'],
   setup() {
     const teamStore = useTeamStore()
-    const { isMobile } = useViewport()
+    const { isMobile, viewportWidth } = useViewport()
     return {
       teamStore,
       MAX_INGREDIENT_INVENTORY,
@@ -287,17 +378,24 @@ export default defineComponent({
       berryImage,
       berryPowerForLevel,
       capitalize,
-      isMobile
+      isMobile,
+      viewportWidth,
+      MAX_TEAM_SIZE
     }
   },
   data: () => ({
     advancedMenu: false,
+    ingredientMenuOpen: false,
+    berryMenuOpen: false,
+
     stockpiledIngredients: [] as IngredientSet[],
     stockpiledBerries: [] as BerrySetUnique[],
+
+    menuSelectedIngredients: [] as IngredientSet[],
+    menuSelectedBerries: [] as BerrySetUnique[],
     rules: {
       minRule: (value: number) => value >= 0 || 'Value must be at least 0',
-      maxIngredientsRule: (value: number) =>
-        value <= MAX_STOCKPILED_BERRIES || `Value must be ${MAX_STOCKPILED_BERRIES} or less`,
+      maxIngredientsRule: (value: number) => value <= MAX_STOCKPILED_BERRIES || `Value must be 10000 or less`,
       maxBerriesRule: (value: number) =>
         value <= MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS ||
         `Value must be ${MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS} or less`,
@@ -321,6 +419,57 @@ export default defineComponent({
     toggleAdvancedMenu() {
       this.advancedMenu = !this.advancedMenu
     },
+    initializeMenuSelection() {
+      this.menuSelectedIngredients = [...this.stockpiledIngredients]
+    },
+    closeIngredientMenu() {
+      this.ingredientMenuOpen = false
+    },
+    highlightText(event: FocusEvent) {
+      const target = event.target as HTMLInputElement
+
+      setTimeout(() => target.select(), 1)
+    },
+    isMenuIngredientSelected(ingredientSet: IngredientSet) {
+      return this.menuSelectedIngredients.some((selected) => selected.ingredient.name === ingredientSet.ingredient.name)
+    },
+    toggleMenuIngredient(ingredientSet: IngredientSet) {
+      const index = this.menuSelectedIngredients.findIndex(
+        (selected) => selected.ingredient.name === ingredientSet.ingredient.name
+      )
+      if (index !== -1) {
+        // Ingredient is already selected, so remove it
+        this.menuSelectedIngredients.splice(index, 1)
+      } else {
+        // Ingredient is not selected, so add it
+        this.menuSelectedIngredients.push(ingredientSet)
+      }
+    },
+    addIngredients() {
+      this.stockpiledIngredients = [...this.menuSelectedIngredients]
+      this.closeIngredientMenu()
+    },
+    initializeBerryMenuSelection() {
+      this.menuSelectedBerries = [...this.stockpiledBerries]
+    },
+    closeBerryMenu() {
+      this.berryMenuOpen = false
+    },
+    addBerryToMenuSelection(berryOption: BerrySetUnique) {
+      this.menuSelectedBerries.push({
+        berry: berryOption.berry,
+        amount: 1,
+        level: 1,
+        uuid: uuid.v4()
+      })
+    },
+    removeBerryFromMenuSelection(index: number) {
+      this.menuSelectedBerries.splice(index, 1)
+    },
+    commitBerrySelection() {
+      this.stockpiledBerries = [...this.menuSelectedBerries]
+      this.closeBerryMenu()
+    },
     save() {
       const ingredients = this.stockpiledIngredients.map((ingredient) => ({
         name: ingredient.ingredient.name,
@@ -335,32 +484,9 @@ export default defineComponent({
       this.$emit('save', { ingredients, berries })
       this.toggleAdvancedMenu()
     },
-    // item as type any since vuetify both doesn't export the type and also literally uses any internally
-    customIngredientFilter(itemTitle: string, queryText: string, item?: { value: any; raw: IngredientSet }): boolean {
-      const textOne = item?.raw.ingredient.name.toLowerCase()
-      const textTwo = item?.raw.ingredient.longName.toLowerCase()
-      const searchText = queryText.toLowerCase()
-
-      return (!!textOne && textOne.indexOf(searchText) > -1) || (!!textTwo && textTwo.indexOf(searchText) > -1)
-    },
-    // item as type any since vuetify both doesn't export the type and also literally uses any internally
-    customBerryFilter(itemTitle: string, queryText: string, item?: { value: any; raw: BerrySetUnique }): boolean {
-      const textOne = item?.raw.berry.name.toLowerCase()
-      const searchText = queryText.toLowerCase()
-
-      return !!textOne && textOne.indexOf(searchText) > -1
-    },
     shouldHideDetails(params: { amount: number; min: number; max: number }): boolean {
       const { amount, min, max } = params
       return amount >= min && amount <= max
-    },
-    addBerry(selectedBerries: BerrySetUnique[]) {
-      this.stockpiledBerries[this.stockpiledBerries.length - 1] = {
-        amount: 0,
-        berry: selectedBerries[0].berry,
-        level: 1,
-        uuid: uuid.v4()
-      }
     },
     validateRule(rule: (value: number) => boolean | string, value: number): boolean {
       // Return true if the rule fails (i.e., returns a string)
@@ -372,14 +498,7 @@ export default defineComponent({
       return ingredient.INGREDIENTS.map((ingredient) => ({
         ingredient,
         amount: 0
-      }))
-        .filter(
-          (ingredient) =>
-            !this.stockpiledIngredients.some(
-              (stockpiledIngredient) => stockpiledIngredient.ingredient.name === ingredient.ingredient.name
-            )
-        )
-        .sort((a, b) => a.ingredient.name.localeCompare(b.ingredient.name))
+      })).sort((a, b) => a.ingredient.name.localeCompare(b.ingredient.name))
     },
     berryDefaultOptions(): BerrySetUnique[] {
       return berry.BERRIES.map((berry) => ({
@@ -399,7 +518,6 @@ export default defineComponent({
       return this.stockpiledIngredientsAmount > MAX_INGREDIENT_INVENTORY ? 'strength' : 'default'
     },
     isSaveDisabled(): boolean {
-      // Validate ingredients
       const ingredientsInvalid = this.stockpiledIngredients.some((ingredient) => {
         return (
           this.validateRule(this.rules.minRule, ingredient.amount) ||
@@ -407,7 +525,6 @@ export default defineComponent({
         )
       })
 
-      // Validate berries
       const berriesInvalid = this.stockpiledBerries.some((berry) => {
         return (
           this.validateRule(this.rules.minRule, berry.amount) ||
@@ -422,3 +539,26 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped lang="scss">
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  justify-content: center;
+  align-content: flex-start;
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+
+  &.desktop {
+    grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+  }
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+</style>
