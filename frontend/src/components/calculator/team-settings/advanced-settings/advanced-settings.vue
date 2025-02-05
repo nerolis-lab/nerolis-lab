@@ -51,13 +51,53 @@
           </span>
         </v-row>
 
-        <v-row>
+        <v-row class="mb-2">
           <v-divider />
+        </v-row>
+
+        <v-row v-for="(ingredientSet, index) in stockpiledIngredients" :key="index" dense>
+          <v-col>
+            <v-text-field
+              v-model="ingredientSet.amount"
+              type="number"
+              min="0"
+              max="10000"
+              hide-details="auto"
+              bg-color="secondary"
+              variant="outlined"
+              density="compact"
+              @focus="highlightText"
+              :rules="[rules.minRule, rules.maxIngredientsRule]"
+              @blur="ingredientSet.amount = ingredientSet.amount || 0"
+            >
+              <!-- Prepend Avatar -->
+              <template #prepend-inner>
+                <v-avatar size="32" class="mr-2">
+                  <v-img :src="ingredientImage(ingredientSet.ingredient.name)" />
+                </v-avatar>
+              </template>
+
+              <!-- Append Pencil Icon -->
+              <template #append-inner>
+                <v-icon>mdi-pencil</v-icon>
+              </template>
+            </v-text-field>
+          </v-col>
+
+          <v-col :class="[isMobile ? '' : 'mr-6']" :cols="isMobile ? 'auto' : ''">
+            <v-btn
+              variant="flat"
+              icon="mdi-close-circle"
+              density="comfortable"
+              @click="stockpiledIngredients.splice(index, 1)"
+            >
+            </v-btn>
+          </v-col>
         </v-row>
 
         <v-menu v-model="ingredientMenuOpen" :close-on-content-click="false">
           <template #activator="{ props }">
-            <v-row>
+            <v-row dense>
               <v-col>
                 <v-btn
                   append-icon="mdi-chevron-down"
@@ -112,10 +152,14 @@
           </v-container>
         </v-menu>
 
-        <v-row v-for="(ingredientSet, index) in stockpiledIngredients" :key="index" dense>
+        <v-row class="mb-3">
+          <v-divider />
+        </v-row>
+
+        <v-row v-for="(berrySet, index) in stockpiledBerries" :key="index" no-gutters>
           <v-col>
             <v-text-field
-              v-model="ingredientSet.amount"
+              v-model="berrySet.amount"
               type="number"
               min="0"
               max="1000"
@@ -124,48 +168,62 @@
               variant="outlined"
               density="compact"
               @focus="highlightText"
-              :rules="[rules.minRule, rules.maxIngredientsRule]"
-              @blur="ingredientSet.amount = ingredientSet.amount || 0"
+              :rules="[rules.minRule, rules.maxBerriesRule]"
+              @blur="berrySet.amount = berrySet.amount || 0"
             >
               <!-- Prepend Avatar -->
               <template #prepend-inner>
-                <v-avatar size="32" class="mr-2">
-                  <v-img :src="ingredientImage(ingredientSet.ingredient.name)" />
+                <v-avatar size="20" class="mr-2">
+                  <v-img :src="berryImage(berrySet.berry)" />
                 </v-avatar>
               </template>
 
               <!-- Append Pencil Icon -->
               <template #append-inner>
-                <v-icon>mdi-pencil</v-icon>
+                <v-icon size="20">mdi-pencil</v-icon>
+              </template>
+            </v-text-field>
+          </v-col>
+          <v-col>
+            <v-text-field
+              v-model="berrySet.level"
+              type="number"
+              min="1"
+              max="100"
+              :hide-details="shouldHideDetails({ amount: berrySet.level, min: 1, max: 100 })"
+              bg-color="secondary"
+              variant="outlined"
+              density="compact"
+              @focus="highlightText"
+              :rules="[rules.minLevelRule, rules.maxLevelRule]"
+              @blur="berrySet.level = berrySet.level || 60"
+              class="ml-2"
+            >
+              <!-- Prepend Avatar -->
+              <template #prepend-inner> <span>Lv.</span></template>
+
+              <!-- Append Pencil Icon -->
+              <template #append-inner>
+                <v-icon size="20">mdi-pencil</v-icon>
               </template>
             </v-text-field>
           </v-col>
 
-          <v-col :class="[isMobile ? '' : 'mr-6']" :cols="isMobile ? 'auto' : ''">
-            <v-btn
-              variant="flat"
-              icon="mdi-close-circle"
-              density="comfortable"
-              @click="stockpiledIngredients.splice(index, 1)"
-            >
-            </v-btn>
+          <v-col cols="auto">
+            <v-btn variant="flat" icon="mdi-close-circle" @click="stockpiledBerries.splice(index, 1)"> </v-btn>
           </v-col>
-        </v-row>
-
-        <v-row>
-          <v-divider />
         </v-row>
 
         <v-menu v-model="berryMenuOpen" :close-on-content-click="false">
           <template #activator="{ props }">
-            <v-row>
+            <v-row no-gutters>
               <v-col>
                 <v-btn
                   append-icon="mdi-chevron-down"
                   color="secondary"
                   aria-label="add berries"
                   v-bind="props"
-                  class="w-100 mb-2"
+                  class="w-100"
                   @click="initializeBerryMenuSelection"
                 >
                   Add Berries
@@ -252,65 +310,7 @@
           </v-container>
         </v-menu>
 
-        <v-row v-for="(berrySet, index) in stockpiledBerries" :key="index" no-gutters>
-          <v-col>
-            <v-text-field
-              v-model="berrySet.amount"
-              type="number"
-              min="0"
-              max="1000"
-              hide-details="auto"
-              bg-color="secondary"
-              variant="outlined"
-              density="compact"
-              @focus="highlightText"
-              :rules="[rules.minRule, rules.maxBerriesRule]"
-              @blur="berrySet.amount = berrySet.amount || 0"
-            >
-              <!-- Prepend Avatar -->
-              <template #prepend-inner>
-                <v-avatar size="20" class="mr-2">
-                  <v-img :src="berryImage(berrySet.berry)" />
-                </v-avatar>
-              </template>
-
-              <!-- Append Pencil Icon -->
-              <template #append-inner>
-                <v-icon size="20">mdi-pencil</v-icon>
-              </template>
-            </v-text-field>
-          </v-col>
-          <v-col>
-            <v-text-field
-              v-model="berrySet.level"
-              type="number"
-              min="1"
-              max="100"
-              :hide-details="shouldHideDetails({ amount: berrySet.level, min: 1, max: 100 })"
-              bg-color="secondary"
-              variant="outlined"
-              density="compact"
-              @focus="highlightText"
-              :rules="[rules.minLevelRule, rules.maxLevelRule]"
-              @blur="berrySet.level = berrySet.level || 60"
-              class="ml-2"
-            >
-              <!-- Prepend Avatar -->
-              <template #prepend-inner> <span>Lv.</span></template>
-
-              <!-- Append Pencil Icon -->
-              <template #append-inner>
-                <v-icon size="20">mdi-pencil</v-icon>
-              </template>
-            </v-text-field>
-          </v-col>
-
-          <v-col cols="auto">
-            <v-btn variant="flat" icon="mdi-close-circle" @click="stockpiledBerries.splice(index, 1)"> </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-row dense class="mt-2">
+        <v-row dense class="mt-4">
           <v-col cols="6">
             <v-btn
               id="cancelButton"
@@ -395,7 +395,7 @@ export default defineComponent({
     menuSelectedBerries: [] as BerrySetUnique[],
     rules: {
       minRule: (value: number) => value >= 0 || 'Value must be at least 0',
-      maxIngredientsRule: (value: number) => value <= MAX_STOCKPILED_BERRIES || `Value must be 10000 or less`,
+      maxIngredientsRule: (value: number) => value <= 10000 || `Value must be 10000 or less`,
       maxBerriesRule: (value: number) =>
         value <= MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS ||
         `Value must be ${MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS} or less`,
