@@ -14,8 +14,8 @@
           variant="solo"
           hide-details
           single-line
-          @input="filterInput"
-          @update:focused="updateTeamName"
+          @focus="highlightText"
+          @blur="updateTeamName"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+import { useHighlightText } from '@/composables/highlight-text/use-highlight-text'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -34,7 +35,8 @@ export default defineComponent({
     const userStore = useUserStore()
     const teamStore = useTeamStore()
     const notificationStore = useNotificationStore()
-    return { userStore, teamStore, notificationStore }
+    const { highlightText } = useHighlightText()
+    return { userStore, teamStore, notificationStore, highlightText }
   },
   data: () => ({
     isEditDialogOpen: false,
@@ -52,20 +54,12 @@ export default defineComponent({
     updateTeamName() {
       if (this.remainingChars >= 0) {
         if (this.remainingChars === this.maxTeamNameLength) {
-          this.currentTeamName = `Helper team ${this.teamStore.currentIndex + 1}`
+          this.teamStore.getCurrentTeam.name = `Helper team ${this.teamStore.currentIndex + 1}`
         }
         this.teamStore.updateTeam()
         this.isEditDialogOpen = false
-      }
-    },
-    filterInput(event: Event) {
-      const input = event.target as HTMLInputElement
-      const regex = /^[a-zA-Z0-9 ]*$/
-      if (!regex.test(input.value)) {
-        this.teamStore.getCurrentTeam.name = this.teamStore.getCurrentTeam.name.replace(/[^a-zA-Z0-9 ]/g, '')
-      }
-      if (input.value.length > this.maxTeamNameLength) {
-        this.teamStore.getCurrentTeam.name = this.teamStore.getCurrentTeam.name.slice(0, -1)
+      } else if (this.remainingChars < 0) {
+        this.teamStore.getCurrentTeam.name = this.currentTeamName.slice(0, this.maxTeamNameLength)
       }
     }
   }
