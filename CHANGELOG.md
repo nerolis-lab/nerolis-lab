@@ -1,3 +1,10 @@
+# [1.26.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.25.0...v1.26.0) (2025-02-06)
+
+
+### Features
+
+* generate valentine 2025 tier list ([0c4762f](https://github.com/nerolis-lab/nerolis-lab/commit/0c4762fb3bbccbe808c5bda9e15b1c864dbfb3bb))
+
 # [1.25.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.5...v1.25.0) (2025-02-06)
 
 
