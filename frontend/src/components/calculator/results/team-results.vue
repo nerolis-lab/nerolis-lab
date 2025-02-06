@@ -230,7 +230,7 @@ export default defineComponent({
         const berryStrength = StrengthService.berryStrength({
           favored: favoredBerries,
           berries: [{ berry, amount, level }],
-          timeWindow: 'WEEK'
+          timeWindow: '24H' // week multiplies it by 7, but this is already for a week
         })
 
         return sum + berryStrength
