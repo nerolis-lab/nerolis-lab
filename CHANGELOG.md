@@ -1,3 +1,10 @@
+# [1.25.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.5...v1.25.0) (2025-02-06)
+
+
+### Features
+
+* adds valentine 2025 recipes and absol buff ([05b16cc](https://github.com/nerolis-lab/nerolis-lab/commit/05b16cca056ec4f6b00451da50202805ba0414b7))
+
 ## [1.24.5](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.4...v1.24.5) (2025-02-06)
 
 
