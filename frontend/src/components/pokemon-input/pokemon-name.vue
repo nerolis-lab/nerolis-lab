@@ -20,7 +20,7 @@
           label="Pokemon Name"
           class="compact-control"
           autofocus
-          @input="filterInput"
+          @focus="highlightText"
           @keydown.enter="saveEditDialog"
         ></v-textarea>
       </v-card-text>
@@ -39,6 +39,7 @@
 </template>
 
 <script lang="ts">
+import { useHighlightText } from '@/composables/highlight-text/use-highlight-text'
 import { randomName } from '@/services/utils/name-utils'
 import type { PokemonInstanceExt } from 'sleepapi-common'
 import type { PropType } from 'vue'
@@ -50,6 +51,11 @@ export default {
       type: Object as PropType<PokemonInstanceExt>,
       required: true
     }
+  },
+  setup() {
+    const { highlightText } = useHighlightText()
+
+    return { highlightText }
   },
   emits: ['update-name'],
   data: () => ({
@@ -84,13 +90,6 @@ export default {
         }
         this.$emit('update-name', this.editedName)
         this.isEditDialogOpen = false
-      }
-    },
-    filterInput(event: Event) {
-      const input = event.target as HTMLInputElement
-      const regex = /^[a-zA-Z0-9 ]*$/
-      if (!regex.test(input.value)) {
-        this.editedName = this.editedName.replace(/[^a-zA-Z0-9 ]/g, '')
       }
     },
     randomizeName() {

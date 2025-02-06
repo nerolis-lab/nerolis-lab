@@ -26,7 +26,7 @@
           autofocus
           label="Enter your new name.."
           class="compact-control"
-          @input="filterInput"
+          @focus="highlightText"
           @keydown.enter="saveEditDialog"
         ></v-textarea>
       </v-card-text>
@@ -42,14 +42,16 @@
 </template>
 
 <script lang="ts">
+import { useHighlightText } from '@/composables/highlight-text/use-highlight-text'
 import { useUserStore } from '@/stores/user-store'
 
 export default {
   name: 'UserName',
   setup() {
     const userStore = useUserStore()
+    const { highlightText } = useHighlightText()
 
-    return { userStore }
+    return { userStore, highlightText }
   },
   emits: ['update-name'],
   data: () => ({
@@ -77,13 +79,6 @@ export default {
         }
         this.$emit('update-name', this.editedName)
         this.isEditDialogOpen = false
-      }
-    },
-    filterInput(event: Event) {
-      const input = event.target as HTMLInputElement
-      const regex = /^[a-zA-Z0-9 ]*$/
-      if (!regex.test(input.value)) {
-        this.editedName = this.editedName.replace(/[^a-zA-Z0-9 ]/g, '')
       }
     }
   }
