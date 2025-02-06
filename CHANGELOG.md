@@ -1,3 +1,10 @@
+## [1.24.5](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.4...v1.24.5) (2025-02-06)
+
+
+### Bug Fixes
+
+* stockpiled berries dont multiply by days in week ([342d13d](https://github.com/nerolis-lab/nerolis-lab/commit/342d13da9148cb56e61678fe50498b5062bd6429))
+
 ## [1.24.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.3...v1.24.4) (2025-02-05)
 
 
