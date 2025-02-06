@@ -186,6 +186,16 @@ export const EARLY_BIRD_COFFEE_JELLY = createDessert({
   bonus: 35
 });
 
+export const MOLD_BREAKER_CORN_TIRAMISU = createDessert({
+  name: 'MOLD_BREAKER_CORN_TIRAMISU',
+  ingredients: [
+    { amount: 14, ingredient: ROUSING_COFFEE },
+    { amount: 14, ingredient: GREENGRASS_CORN },
+    { amount: 12, ingredient: MOOMOO_MILK }
+  ],
+  bonus: 35
+});
+
 export const JIGGLYPUFFS_FRUITY_FLAN = createDessert({
   name: 'JIGGLYPUFFS_FRUITY_FLAN',
   ingredients: [
@@ -230,6 +240,17 @@ export const ZING_ZAP_SPICED_COLA = createDessert({
   bonus: 61
 });
 
+export const CLODSIRE_ECLAIR = createDessert({
+  name: 'CLODSIRE_ECLAIR',
+  ingredients: [
+    { amount: 30, ingredient: SOOTHING_CACAO },
+    { amount: 26, ingredient: MOOMOO_MILK },
+    { amount: 24, ingredient: ROUSING_COFFEE },
+    { amount: 22, ingredient: HONEY }
+  ],
+  bonus: 61
+});
+
 export const DESSERTS: Recipe[] = [
   WARM_MOOMOO_MILK,
   FANCY_APPLE_JUICE,
@@ -249,10 +270,12 @@ export const DESSERTS: Recipe[] = [
   NEROLIS_RESTORATIVE_TEA,
   EXPLOSION_POPCORN,
   EARLY_BIRD_COFFEE_JELLY,
+  MOLD_BREAKER_CORN_TIRAMISU,
   JIGGLYPUFFS_FRUITY_FLAN,
   TEATIME_CORN_SCONES,
   FLOWER_GIFT_MACARONS,
-  ZING_ZAP_SPICED_COLA
+  ZING_ZAP_SPICED_COLA,
+  CLODSIRE_ECLAIR
 ];
 
 export const MIXED_JUICE_FLAT: RecipeFlat = recipesToFlat(MIXED_JUICE);
