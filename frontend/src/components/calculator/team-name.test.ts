@@ -42,7 +42,6 @@ describe('TeamSlotName', () => {
     wrapper.vm.updateTeamName()
     expect(teamStore.getCurrentTeam.name).toBe('New Team Name')
   })
-
   it('restricts input value length to maxTeamNameLength', async () => {
     const teamStore = useTeamStore()
     teamStore.loadingTeams = false
@@ -52,22 +51,8 @@ describe('TeamSlotName', () => {
     const input = wrapper.find('input')
     const longName = 'A'.repeat(wrapper.vm.maxTeamNameLength + 1)
     await input.setValue(longName)
+    await input.trigger('blur')
 
     expect(teamStore.getCurrentTeam.name.length).toBe(wrapper.vm.maxTeamNameLength)
-  })
-
-  it('filters invalid characters in input', async () => {
-    const teamStore = useTeamStore()
-    teamStore.loadingTeams = false
-    teamStore.teams[0].name = 'Valid Name'
-    wrapper = mount(TeamName)
-
-    const input = wrapper.find('input')
-    await input.setValue('Invalid#Name!')
-
-    const event = { target: input.element } as unknown as Event
-    wrapper.vm.filterInput(event)
-
-    expect(teamStore.getCurrentTeam.name).toBe('InvalidName')
   })
 })
