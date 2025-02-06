@@ -1,3 +1,10 @@
+# [1.27.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.26.0...v1.27.0) (2025-02-06)
+
+
+### Features
+
+* support UTF-8 name inputs ([f60ab69](https://github.com/nerolis-lab/nerolis-lab/commit/f60ab695fac54e3fba3f122e3adcedf2cc3c34a0))
+
 # [1.26.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.25.0...v1.26.0) (2025-02-06)
 
 
