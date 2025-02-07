@@ -1,6 +1,7 @@
 # Contributing
 
-You can find beginner-friendly issues [here][good first issues]. Please either use a fork-pull request or contact the code owner (@sleepapi) directly on Discord.
+You can find beginner-friendly issues [here][good first issues]. 
+Start by forking and cloning the repository, you can find a general workflow for contributing to open source projects [HERE](<https://github.com/asmeurer/git-workflow>)
 
 ## Development Setup
 
