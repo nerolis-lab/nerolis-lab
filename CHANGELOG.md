@@ -1,3 +1,10 @@
+# [1.28.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.27.0...v1.28.0) (2025-02-07)
+
+
+### Features
+
+* add footer with links ([49e0160](https://github.com/nerolis-lab/nerolis-lab/commit/49e0160197433377ede223b07fc49c51c498d994))
+
 # [1.27.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.26.0...v1.27.0) (2025-02-06)
 
 
