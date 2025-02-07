@@ -213,7 +213,6 @@ export function activateDisguiseBerryBurst(params: {
     adjustedAmount: averageBerryAmount,
     nrOfHelpsToActivate,
     adjustedProduce: {
-      // TODO: level is wrong, but not used in classic calc
       berries: [{ amount: averageBerryAmount, berry: pokemonSet.pokemon.berry, level: 0 }],
       ingredients: emptyIngredientInventory()
     },
@@ -248,7 +247,6 @@ export function activateBerryBurst(params: {
     adjustedAmount: averageBerryAmount,
     nrOfHelpsToActivate,
     adjustedProduce: {
-      // TODO: level is wrong, but not used in classic calc
       berries: [{ amount: averageBerryAmount, berry: pokemonSet.pokemon.berry, level: 0 }],
       ingredients: emptyIngredientInventory()
     },

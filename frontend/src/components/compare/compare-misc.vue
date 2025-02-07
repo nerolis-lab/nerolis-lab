@@ -155,11 +155,16 @@ export default defineComponent({
           ingredientPercentage: MathUtils.round(memberProduction.advanced.ingredientPercentage * 100, 1),
           skillPercentage: MathUtils.round(memberProduction.advanced.skillPercentage * 100, 1),
           carryLimit: memberProduction.advanced.carrySize,
-          spilledIngredients: memberProduction.advanced.spilledIngredients.reduce((sum, cur) => sum + cur.amount, 0),
-          spilledIngredientsProduce: memberProduction.advanced.spilledIngredients.map(({ amount, ingredient }) => ({
-            ingredient,
-            amount: MathUtils.round(amount, 1)
-          })),
+          spilledIngredients: memberProduction.advanced.nightPeriod?.spilledIngredients.reduce(
+            (sum, cur) => sum + cur.amount,
+            0
+          ),
+          spilledIngredientsProduce: memberProduction.advanced.nightPeriod?.spilledIngredients.map(
+            ({ amount, ingredient }) => ({
+              ingredient,
+              amount: MathUtils.round(amount, 1)
+            })
+          ),
           sneakySnack: MathUtils.round(memberProduction.advanced.sneakySnack.amount, 1),
           sneakySnackProduce: memberProduction.advanced.sneakySnack,
           totalHelps: MathUtils.round(memberProduction.advanced.totalHelps, 1),

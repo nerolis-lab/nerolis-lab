@@ -1,7 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill, RandomUtils } from 'sleepapi-common';
+import { mainskill, mockPokemon, RandomUtils } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('ChargeStrengthSStockpileSEffect', () => {
@@ -10,7 +10,15 @@ describe('ChargeStrengthSStockpileSEffect', () => {
 
   beforeEach(() => {
     effect = new ChargeStrengthSStockpileEffect();
-    mockSkillState = mocks.skillState();
+    mockSkillState = mocks.skillState(
+      mocks.memberState({
+        member: mocks.teamMemberExt({
+          pokemonWithIngredients: mocks.pokemonWithIngredients({
+            pokemon: mockPokemon({ skill: mainskill.CHARGE_STRENGTH_S_STOCKPILE })
+          })
+        })
+      })
+    );
   });
 
   it('should initialize currentStockpile to 0', () => {

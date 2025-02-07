@@ -56,6 +56,9 @@ const darkTheme: ThemeDefinition = {
     erb: '#499fff',
     hb: '#ffdf2e',
 
+    day: '#FF9D45',
+    night: '#4896FF',
+
     'on-background': '#ffffff',
     'on-surface': '#ffffff',
     'on-primary': '#ffffff',

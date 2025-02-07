@@ -555,3 +555,36 @@ describe('checkTimeout', () => {
     expect(TimeUtils.checkTimeout({ startTime, timeout })).toBeFalsy();
   });
 });
+describe('TimeUtils.durationInMinutes', () => {
+  it('shall calculate duration correctly within the same day', () => {
+    const period: TimePeriod = {
+      start: { hour: 9, minute: 0, second: 0 },
+      end: { hour: 17, minute: 0, second: 0 }
+    };
+    expect(TimeUtils.durationInMinutes(period)).toBe(480); // 8 hours
+  });
+
+  it('shall calculate duration correctly across midnight', () => {
+    const period: TimePeriod = {
+      start: { hour: 22, minute: 0, second: 0 },
+      end: { hour: 6, minute: 0, second: 0 }
+    };
+    expect(TimeUtils.durationInMinutes(period)).toBe(480); // 8 hours
+  });
+
+  it('shall calculate duration correctly for a period less than an hour', () => {
+    const period: TimePeriod = {
+      start: { hour: 10, minute: 0, second: 0 },
+      end: { hour: 10, minute: 30, second: 0 }
+    };
+    expect(TimeUtils.durationInMinutes(period)).toBe(30); // 30 minutes
+  });
+
+  it('shall calculate duration correctly for a period spanning multiple hours', () => {
+    const period: TimePeriod = {
+      start: { hour: 14, minute: 45, second: 0 },
+      end: { hour: 18, minute: 15, second: 0 }
+    };
+    expect(TimeUtils.durationInMinutes(period)).toBe(210); // 3 hours and 30 minutes
+  });
+});
