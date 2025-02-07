@@ -55,8 +55,11 @@
           <v-row dense>
             <v-col cols="12" class="flex-center flex-column px-4">
               <span
-                >Please <a class="discord" href="https://discord.gg/ndzTXRHWzK">join us on Discord</a> to report any
-                feedback, suggestions, or issues you're having with the site.
+                >Please
+                <a class="discord" href="https://discord.gg/ndzTXRHWzK" target="_blank" rel="noopener noreferrer"
+                  >join us on Discord</a
+                >
+                to report any feedback, suggestions, or issues you're having with the site.
               </span>
               <v-img class="bug" src="/images/pokemon/caterpie.png" height="91" width="100"></v-img>
             </v-col>
