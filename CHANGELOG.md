@@ -1,3 +1,10 @@
+# [1.29.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.28.0...v1.29.0) (2025-02-07)
+
+
+### Features
+
+* day/night member stats info ([97918f5](https://github.com/nerolis-lab/nerolis-lab/commit/97918f5432b827066b039413c8677bfb2a0d17fd))
+
 # [1.28.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.27.0...v1.28.0) (2025-02-07)
 
 
