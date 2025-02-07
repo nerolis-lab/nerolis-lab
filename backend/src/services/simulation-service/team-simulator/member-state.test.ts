@@ -320,6 +320,11 @@ describe('addHelps', () => {
           "averageHelps": 2,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": NaN,
             "fourty": NaN,
@@ -333,6 +338,11 @@ describe('addHelps', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0.02,
@@ -347,7 +357,6 @@ describe('addHelps', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -449,6 +458,11 @@ describe('addHelps', () => {
           "averageHelps": 0,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": NaN,
             "fourty": NaN,
@@ -462,6 +476,11 @@ describe('addHelps', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0.02,
@@ -476,7 +495,6 @@ describe('addHelps', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -575,11 +593,16 @@ describe('attemptDayHelp', () => {
           "averageHelps": 1,
           "carrySize": 10,
           "dayHelps": 1,
+          "dayPeriod": {
+            "averageEnergy": 0.3641456582633053,
+            "averageFrequency": 7.8619047619047615,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": 0,
             "fourty": 0,
             "one": 0,
-            "sixty": 0,
+            "sixty": 1,
             "zero": 0,
           },
           "ingredientPercentage": 0.2,
@@ -588,6 +611,11 @@ describe('attemptDayHelp', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0,
@@ -602,7 +630,6 @@ describe('attemptDayHelp', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -708,11 +735,16 @@ describe('attemptDayHelp', () => {
           "averageHelps": 0,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0.3641456582633053,
+            "averageFrequency": 7.8619047619047615,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": NaN,
             "fourty": NaN,
             "one": NaN,
-            "sixty": NaN,
+            "sixty": Infinity,
             "zero": NaN,
           },
           "ingredientPercentage": 0.2,
@@ -721,6 +753,11 @@ describe('attemptDayHelp', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0.02,
@@ -735,7 +772,6 @@ describe('attemptDayHelp', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -913,6 +949,11 @@ describe('attemptNightHelp', () => {
           "averageHelps": 1,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": 1,
             "fourty": 0,
@@ -926,6 +967,11 @@ describe('attemptNightHelp', () => {
           "nightHelps": 1,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 1,
+          "nightPeriod": {
+            "averageEnergy": 0.9803921568627451,
+            "averageFrequency": 14.007352941176471,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 1,
@@ -940,7 +986,6 @@ describe('attemptNightHelp', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,

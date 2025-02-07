@@ -26,12 +26,17 @@ export interface CalculateIvRequest {
   variants: PokemonInstanceIdentity[];
 }
 
+export interface PeriodInfo {
+  averageFrequency: number;
+  averageEnergy: number;
+  spilledIngredients: IngredientSet[];
+}
+
 export interface MemberProductionAdvanced {
   ingredientPercentage: number;
   skillPercentage: number;
   carrySize: number;
   maxFrequency: number;
-  spilledIngredients: IngredientSet[];
   totalHelps: number;
   averageHelps: number;
   dayHelps: number;
@@ -46,6 +51,8 @@ export interface MemberProductionAdvanced {
   morningProcs: number;
   totalRecovery: number;
   skillProcDistribution: Record<number, number>;
+  dayPeriod: PeriodInfo;
+  nightPeriod: PeriodInfo;
   frequencySplit: {
     zero: number;
     one: number;

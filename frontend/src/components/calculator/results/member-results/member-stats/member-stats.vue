@@ -15,11 +15,22 @@
       <span> <span class="text-primary font-weight-medium">RP</span> {{ rp }}</span>
     </v-col>
 
-    <!-- Max frequency -->
     <v-col class="text-no-wrap">
-      <span>
-        Max frequency: <span class="font-weight-medium">{{ frequency }}</span>
-      </span>
+      <span> Level {{ level }}</span>
+    </v-col>
+
+    <v-col class="flex-center">
+      <v-row dense>
+        <v-col cols="auto">
+          <span> Ingredient list </span>
+        </v-col>
+        <v-col v-for="(ingredientSet, index) in ingredientList" :key="index" cols="auto">
+          <div class="flex-center">
+            <span> {{ 2 }}</span>
+            <v-img :src="ingredientImage(ingredientSet.ingredient.name)" height="24" width="24"></v-img>
+          </div>
+        </v-col>
+      </v-row>
     </v-col>
 
     <!-- Carry limit -->
@@ -29,27 +40,52 @@
       </span>
     </v-col>
 
-    <!-- Spilled ingredients -->
-    <v-col v-if="spilledIngredients.length > 0" class="d-flex">
-      <span class="mr-2 text-no-wrap"> Spilled ingredients: </span>
-      <v-row class="flex-left flex-nowrap" dense>
-        <v-col v-for="(ingredientSet, index) in spilledIngredients" :key="index" cols="auto">
-          <div class="flex-center">
-            <div class="text-center">
-              {{ MathUtils.round(ingredientSet.amount, 1) }}
-            </div>
-            <v-img :src="ingredientImage(ingredientSet.ingredient.name.toLowerCase())" height="24" width="24"></v-img>
-          </div>
-        </v-col>
-      </v-row>
-    </v-col>
-  </v-row>
+    <SkillDistribution :pokemonProduction="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
 
-  <SkillDistribution :pokemonProduction="pokemonProduction" />
+    <v-row dense :class="[{ 'flex-wrap': isMobile }]">
+      <!-- Day period -->
+      <v-col>
+        <v-card class="day-card d-flex justify-space-between h-100" prepend-avatar="/images/misc/day.png">
+          <template #append>
+            <v-row class="flex-column" no-gutters>
+              <span> Average Frequency: {{ averageDayFrequency }} </span>
+              <span> Average Energy: {{ averageDayEnergy }} </span>
+            </v-row>
+          </template>
+        </v-card>
+      </v-col>
+
+      <!-- Night period -->
+      <v-col>
+        <v-card class="night-card" append-avatar="/images/misc/night.png">
+          <template #prepend>
+            <v-row class="flex-column" no-gutters>
+              <span> Average Frequency: {{ averageNightFrequency }} </span>
+              <span> Average Energy: {{ averageNightEnergy }} </span>
+              <div v-if="spilledIngredients.length > 0">
+                <v-row dense>
+                  <v-col v-for="(ingredientSet, index) in spilledIngredients" :key="index" cols="auto">
+                    <div class="flex-center">
+                      <div class="text-center">
+                        {{ MathUtils.round(ingredientSet.amount, 1) }}
+                      </div>
+                      <v-img :src="ingredientImage(ingredientSet.ingredient.name)" height="24" width="24"></v-img>
+                    </div>
+                  </v-col>
+                  <v-col cols="auto"> spilled </v-col>
+                </v-row>
+              </div>
+            </v-row>
+          </template>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-row>
 </template>
 
 <script lang="ts">
 import SkillDistribution from '@/components/calculator/results/member-results/member-stats/skill-distribution.vue'
+import { useViewport } from '@/composables/viewport-composable'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -76,23 +112,55 @@ export default defineComponent({
     const showSkillDistribution = ref(false)
 
     const rp = computed(() => props.pokemonProduction.member.rp)
+    const level = computed(() => props.pokemonProduction.member.level)
+    const ingredientList = computed(() => props.pokemonProduction.member.ingredients)
     const carrySize = computed(() => props.pokemonProduction.production.advanced.carrySize)
-    const spilledIngredients = computed(() => props.pokemonProduction.production.advanced.spilledIngredients)
-    const frequency = computed(() =>
-      TimeUtils.prettifySeconds(props.pokemonProduction.production.advanced.maxFrequency)
+    const spilledIngredients = computed(
+      () => props.pokemonProduction.production.advanced.nightPeriod?.spilledIngredients
     )
+
+    const averageDayFrequency = computed(() => {
+      return TimeUtils.prettifySeconds(props.pokemonProduction.production.advanced.dayPeriod?.averageFrequency)
+    })
+    const averageDayEnergy = computed(() =>
+      MathUtils.round(props.pokemonProduction.production.advanced.dayPeriod?.averageEnergy, 1)
+    )
+    const averageNightFrequency = computed(() =>
+      TimeUtils.prettifySeconds(props.pokemonProduction.production.advanced.nightPeriod?.averageFrequency)
+    )
+    const averageNightEnergy = computed(() =>
+      MathUtils.round(props.pokemonProduction.production.advanced.nightPeriod?.averageEnergy, 1)
+    )
+
+    const { isMobile } = useViewport()
 
     return {
       teamStore,
       pokemonStore,
       rp,
+      level,
+      ingredientList,
       carrySize,
       spilledIngredients,
       ingredientImage,
-      frequency,
       MathUtils,
-      showSkillDistribution
+      showSkillDistribution,
+      averageDayFrequency,
+      averageDayEnergy,
+      averageNightFrequency,
+      averageNightEnergy,
+      isMobile
     }
   }
 })
 </script>
+
+<style scoped lang="scss">
+.day-card {
+  background-color: rgba($day, 0.2);
+}
+
+.night-card {
+  background-color: rgba($night, 0.2);
+}
+</style>
