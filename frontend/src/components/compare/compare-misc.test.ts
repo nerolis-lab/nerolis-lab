@@ -39,10 +39,14 @@ describe('CompareMisc', () => {
       ...mockMemberProduction,
       advanced: {
         ...mockMemberProduction.advanced,
-        spilledIngredients: [
-          { amount: 5, ingredient: ingredient.FANCY_APPLE },
-          { amount: 3, ingredient: ingredient.HONEY }
-        ],
+        nightPeriod: {
+          averageEnergy: 0,
+          averageFrequency: 0,
+          spilledIngredients: [
+            { amount: 5, ingredient: ingredient.FANCY_APPLE },
+            { amount: 3, ingredient: ingredient.HONEY }
+          ]
+        },
         sneakySnack: { amount: 5, berry: mockPokemon.pokemon.berry, level: mockPokemon.level }
       }
     })
@@ -93,10 +97,14 @@ describe('CompareMisc', () => {
       ...mockMemberProduction,
       advanced: {
         ...mockMemberProduction.advanced,
-        spilledIngredients: [
-          { amount: 5, ingredient: ingredient.FANCY_APPLE },
-          { amount: 3, ingredient: ingredient.HONEY }
-        ]
+        nightPeriod: {
+          averageEnergy: 0,
+          averageFrequency: 0,
+          spilledIngredients: [
+            { amount: 5, ingredient: ingredient.FANCY_APPLE },
+            { amount: 3, ingredient: ingredient.HONEY }
+          ]
+        }
       }
     })
 

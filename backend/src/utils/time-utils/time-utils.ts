@@ -23,7 +23,7 @@ class TimeUtilsImpl {
 
     const currentMinutes = this.timeToMinutesSinceStart(currentTime, period.start);
     const eventMinutes = this.timeToMinutesSinceStart(eventTime, period.start);
-    const periodDuration = this.calculatePeriodDuration(period);
+    const periodDuration = this.durationInMinutes(period);
 
     return currentMinutes >= eventMinutes && currentMinutes <= periodDuration;
   }
@@ -37,8 +37,7 @@ class TimeUtilsImpl {
     return minutesSinceStart;
   }
 
-  // used by isAfterOrEqualWithinPeriod
-  private calculatePeriodDuration(period: TimePeriod): number {
+  public durationInMinutes(period: TimePeriod): number {
     const startMinutes = period.start.hour * 60 + period.start.minute;
     const endMinutes = period.end.hour * 60 + period.end.minute;
     let duration = endMinutes - startMinutes;

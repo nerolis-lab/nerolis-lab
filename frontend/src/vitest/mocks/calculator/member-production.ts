@@ -71,8 +71,17 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
       skillCrits: 0,
       maxFrequency: 0,
       skillRegularValue: 0,
-      spilledIngredients: [],
       totalHelps: 0,
+      dayPeriod: {
+        averageEnergy: 0,
+        averageFrequency: 0,
+        spilledIngredients: []
+      },
+      nightPeriod: {
+        averageEnergy: 0,
+        averageFrequency: 0,
+        spilledIngredients: []
+      },
       dayHelps: 0,
       nightHelps: 0,
       nightHelpsBeforeSS: 0,

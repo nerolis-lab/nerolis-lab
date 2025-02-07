@@ -70,7 +70,6 @@ export interface PokemonWithRecipeContributions {
 export interface PokemonWithFinalContribution extends PokemonWithRecipeContributions {
   score: number;
 }
-// TODO: this type can be significantly reduced, theres a ton of duplicate info
 export interface PokemonWithTiering extends PokemonWithFinalContribution {
   tier: Tier;
   diff?: number;

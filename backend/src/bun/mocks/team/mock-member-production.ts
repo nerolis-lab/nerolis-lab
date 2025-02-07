@@ -49,7 +49,16 @@ export function memberProductionAdvanced(attrs?: Partial<MemberProductionAdvance
     },
     skillRegularValue: 0,
     sneakySnack: berrySet(),
-    spilledIngredients: [],
+    dayPeriod: {
+      averageEnergy: 0,
+      averageFrequency: 0,
+      spilledIngredients: []
+    },
+    nightPeriod: {
+      averageEnergy: 0,
+      averageFrequency: 0,
+      spilledIngredients: []
+    },
     totalHelps: 0,
     totalRecovery: 0,
     wastedEnergy: 0,

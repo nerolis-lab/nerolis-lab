@@ -124,7 +124,6 @@ describe('setupAndRunProductionSimulation', () => {
       Math.round(detailedProduce.produce.ingredients[0].amount * MEALS_IN_DAY)
     );
 
-    // TODO: this seems way off
     expect(detailedProduce).toMatchInlineSnapshot(`
       {
         "averageTotalSkillProcs": 2.1226022374497338,

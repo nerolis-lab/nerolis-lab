@@ -193,14 +193,14 @@ function goToProductionCalculator() {
     e4eProcs: +document.getElementById('e4eProcs').value,
     e4eLevel: +document.getElementById('e4eLevel').value,
     helpingbonus: +document.querySelector('input[name="helpingBonus"]:checked').value,
-    cheer: 0, // TODO: hard-coded
-    extraHelpful: 0, // TODO: hard-coded
+    cheer: 0,
+    extraHelpful: 0,
     helperBoostProcs: +document.getElementById('helperBoostProcs').value,
     helperBoostUnique: +document.getElementById('helperBoostUnique').value,
     helperBoostLevel: +document.getElementById('helperBoostLevel').value,
     camp: document.getElementById('camp').checked,
     erb: +document.querySelector('input[name="erb"]:checked').value,
-    recoveryincense: false, // TODO: hard-coded
+    recoveryincense: false,
     mainBedtime: document.getElementById('mainBedtime').value,
     mainWakeup: document.getElementById('mainWakeup').value,
     ingredientSet: document.getElementById('ingredientDropdown').getAttribute('data-combination').split('/')

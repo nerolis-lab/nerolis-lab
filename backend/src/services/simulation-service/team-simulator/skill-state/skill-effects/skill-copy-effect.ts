@@ -9,7 +9,6 @@ export class SkillCopyEffect implements SkillEffect {
 
     let copiedSkill = selectedMember?.pokemonWithIngredients.pokemon.skill;
 
-    // TODO: figure out what happens if skill copy triggers on empty team, do we get strength skill or error?
     if (copiedSkill?.isSameOrModifiedVersion(mainskill.SKILL_COPY) || !copiedSkill) {
       copiedSkill = mainskill.CHARGE_STRENGTH_S;
     }

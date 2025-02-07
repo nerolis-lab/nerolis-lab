@@ -221,7 +221,6 @@ Set {
         settings: mocks.teamMemberSettingsExt({ externalId: 'supportPokemon2' })
       });
 
-      // TODO: why do I need to specify MockInstance type here, why does it not infer it?
       const simpleCalcSpy: MockInstance = vimic(
         productionService,
         'calculateSimple',
