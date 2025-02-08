@@ -1,3 +1,10 @@
+## [1.29.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.0...v1.29.1) (2025-02-08)
+
+
+### Bug Fixes
+
+* footer and beta page styles ([5f265a1](https://github.com/nerolis-lab/nerolis-lab/commit/5f265a1e4af3e2f1338b16d7a27d7c9c6629659b))
+
 # [1.29.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.28.0...v1.29.0) (2025-02-07)
 
 
