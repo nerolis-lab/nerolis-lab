@@ -16,6 +16,24 @@ html {
   transition: all 0.2s ease;
 }
 
+a.simple {
+  color: $berry-light;
+  transition: unset !important;
+
+  &:visited {
+    color: $berry-light;
+  }
+
+  &:active,
+  &:hover {
+    color: $berry;
+  }
+
+  * {
+    transition: unset !important;
+  }
+}
+
 .text-outline {
   text-shadow:
     -0.5px -0.5px 0 #000,
