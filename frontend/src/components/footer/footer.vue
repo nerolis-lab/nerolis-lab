@@ -1,16 +1,17 @@
 <template>
   <v-footer class="footer flex-center">
     <div class="link-container">
-      <a href="https://feedback.nerolislab.com">
+      <a class="simple" href="https://feedback.nerolislab.com" target="_blank" rel="noopener noreferrer">
         <v-icon class="icon" icon="mdi-forum"></v-icon>
         <span>Feedback</span>
+        <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
       </a>
-      <a href="https://github.com/nerolis-lab/nerolis-lab" target="_blank" rel="noopener noreferrer">
+      <a class="simple" href="https://github.com/nerolis-lab/nerolis-lab" target="_blank" rel="noopener noreferrer">
         <GithubIcon class="icon"></GithubIcon>
         <span>GitHub</span>
         <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
       </a>
-      <a href="https://discord.gg/ndzTXRHWzK" target="_blank" rel="noopener noreferrer">
+      <a class="simple" href="https://discord.gg/ndzTXRHWzK" target="_blank" rel="noopener noreferrer">
         <DiscordIcon class="icon"></DiscordIcon>
         <span>Discord</span>
         <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
@@ -34,13 +35,12 @@ export default defineComponent({
 .footer {
   background: none;
   border-top: 1px solid $secondary;
-  @media (min-width: 350px) {
+  @media (min-width: 360px) {
     max-height: 50px;
-    margin: 0 -7px;
+    margin: 0 -10px;
   }
 
   @media (min-width: 400px) {
-    max-height: 50px;
     margin: unset;
   }
 
@@ -49,10 +49,10 @@ export default defineComponent({
     max-width: 800px;
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: center;
     flex-direction: column;
 
-    @media (min-width: 350px) {
+    @media (min-width: 360px) {
       flex-wrap: nowrap;
       flex-direction: row;
     }

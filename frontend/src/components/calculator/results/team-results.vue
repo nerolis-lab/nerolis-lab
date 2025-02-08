@@ -24,7 +24,7 @@
             </v-col>
 
             <v-col v-if="stockpiledBerryStrength > 0" cols="auto" class="flex-center">
-              <div class="legend bg-berry-dark">
+              <div class="legend bg-berry-light">
                 <v-img
                   style="filter: grayscale(100)"
                   src="/images/berries/berries.png"
@@ -33,8 +33,8 @@
                   height="28"
                 />
               </div>
-              <span class="text-body-1 text-berry-dark text-center font-weight-medium ml-2"> Starting Berries </span>
-              <span class="text-body-1 text-berry-dark text-center font-weight-medium ml-1">
+              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-2"> Starting Berries </span>
+              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-1">
                 {{ stockpiledBerryStrengthString }}
               </span>
             </v-col>
@@ -81,7 +81,7 @@
                     tooltipText: `${compactNumber(berryStrength)} (${berryPercentage}%)`
                   },
                   {
-                    color: 'berry-dark',
+                    color: 'berry-light',
                     percentage: stockpiledBerryPercentage,
                     sectionText: `${stockpiledBerryPercentage}%`,
                     tooltipText: `${compactNumber(stockpiledBerryStrength)} (${stockpiledBerryPercentage}%)`
