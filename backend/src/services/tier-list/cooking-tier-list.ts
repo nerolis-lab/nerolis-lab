@@ -634,7 +634,7 @@ class CookingTierlistImpl {
   }
 
   private hashPokemonSetSimple(pokemon: string, ingredientList: IngredientSetSimple[]) {
-    return `${pokemon}${ingredientList.map((ing) => ing.ingredient + ing.amount).join('')}`;
+    return `${pokemon}${ingredientList.map((ing) => ing.name + ing.amount).join('')}`;
   }
 }
 

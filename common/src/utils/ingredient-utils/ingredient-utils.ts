@@ -75,15 +75,15 @@ export function flatToIngredientSet(
 export function simplifyIngredientSet(ingredients: IngredientSet[]): IngredientSetSimple[] {
   const result: IngredientSetSimple[] = [];
   for (const { ingredient, amount } of ingredients) {
-    result.push({ ingredient: ingredient.name, amount });
+    result.push({ name: ingredient.name, amount });
   }
   return result;
 }
 
 export function unsimplifyIngredientSet(ingredients: IngredientSetSimple[]): IngredientSet[] {
   const result: IngredientSet[] = [];
-  for (const { ingredient, amount } of ingredients) {
-    result.push({ ingredient: INGREDIENTS.find((ing) => ing.name === ingredient), amount });
+  for (const { name, amount } of ingredients) {
+    result.push({ ingredient: INGREDIENTS.find((ing) => ing.name === name), amount });
   }
   return result;
 }
