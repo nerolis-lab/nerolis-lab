@@ -8,8 +8,7 @@
 </a>
 
 [![Discord badge][]][Discord invite]
-[![codecov](https://codecov.io/gh/SleepAPI/SleepAPI/graph/badge.svg?token=ASFVY848GK)](https://codecov.io/gh/SleepAPI/SleepAPI)
-[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://www.conventionalcommits.org/en/v1.0.0/)
+[![codecov](https://codecov.io/gh/nerolis-lab/nerolis-lab/graph/badge.svg?token=ASFVY848GK)](https://codecov.io/gh/nerolis-lab/nerolis-lab)[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://www.conventionalcommits.org/en/v1.0.0/)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 [![Semantic Release](https://img.shields.io/badge/Semantic_Release-semver-blue)](https://semver.org/)
 
