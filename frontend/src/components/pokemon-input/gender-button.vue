@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { mockPokemon, RandomUtils, type Pokemon, type PokemonInstanceExt } from 'sleepapi-common'
+import { type PokemonInstanceExt } from 'sleepapi-common'
 import type { PropType } from 'vue'
 
 export default {
@@ -29,25 +29,6 @@ export default {
   computed: {
     pokemon() {
       return this.pokemonInstance.pokemon
-    }
-  },
-  watch: {
-    pokemon: {
-      deep: false,
-      handler(newPokemon: Pokemon, oldPokemon: Pokemon) {
-        // new mon is from search or new mon is actually new and not just mocked mon changing
-        const loadFromExisting = oldPokemon.name === mockPokemon().name && this.pokemonInstance.gender !== undefined
-
-        if (loadFromExisting) {
-          this.$emit('update-gender', this.pokemonInstance.gender)
-          return
-        } else {
-          const unknownGender = newPokemon.genders.female + newPokemon.genders.male === 0
-          const newGender = unknownGender ? undefined : RandomUtils.roll(newPokemon.genders.male) ? 'male' : 'female'
-
-          this.$emit('update-gender', newGender)
-        }
-      }
     }
   },
   methods: {

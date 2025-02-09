@@ -121,9 +121,9 @@ describe('getTeams', () => {
             nature: 'brave',
             subskills: [],
             ingredients: [
-              { level: 0, ingredient: 'apple' },
-              { level: 30, ingredient: 'apple' },
-              { level: 60, ingredient: 'apple' }
+              { level: 0, name: ingredient.FANCY_APPLE.name, amount: 2 },
+              { level: 30, name: ingredient.FANCY_APPLE.name, amount: 5 },
+              { level: 60, name: ingredient.FANCY_APPLE.name, amount: 7 }
             ]
           }
         ]
@@ -173,9 +173,9 @@ describe('getTeams', () => {
         nature: 'brave',
         subskills: [{ level: 10, subskill: subskill.HELPING_BONUS.name }],
         ingredients: [
-          { level: 0, ingredient: ingredient.FANCY_APPLE.name },
-          { level: 30, ingredient: ingredient.FANCY_APPLE.name },
-          { level: 60, ingredient: ingredient.FANCY_APPLE.name }
+          { level: 0, name: ingredient.FANCY_APPLE.name, amount: 2 },
+          { level: 30, name: ingredient.FANCY_APPLE.name, amount: 5 },
+          { level: 60, name: ingredient.FANCY_APPLE.name, amount: 7 }
         ]
       }))
     }))
@@ -209,7 +209,7 @@ describe('getTeams', () => {
     expect(pokemonStore.getPokemon('000000000000000000000000000000000000')).toEqual({
       version: 1,
       externalId: '000000000000000000000000000000000000',
-      rp: 463,
+      rp: 437,
       saved: false,
       pokemon: BULBASAUR,
       name: `Bubble`,
@@ -219,9 +219,9 @@ describe('getTeams', () => {
       nature: nature.BRAVE,
       subskills: [{ level: 10, subskill: subskill.HELPING_BONUS }],
       ingredients: [
-        { level: 0, ingredient: ingredient.FANCY_APPLE },
-        { level: 30, ingredient: ingredient.FANCY_APPLE },
-        { level: 60, ingredient: ingredient.FANCY_APPLE }
+        { level: 0, ingredient: ingredient.FANCY_APPLE, amount: 2 },
+        { level: 30, ingredient: ingredient.FANCY_APPLE, amount: 5 },
+        { level: 60, ingredient: ingredient.FANCY_APPLE, amount: 7 }
       ]
     })
   })
@@ -271,9 +271,10 @@ describe('createOrUpdateMember', () => {
         level: subskill.level,
         subskill: subskill.subskill.name
       })),
-      ingredients: member.ingredients.map((ingredient) => ({
-        level: ingredient.level,
-        ingredient: ingredient.ingredient.name
+      ingredients: member.ingredients.map((ingredientSet) => ({
+        level: ingredientSet.level,
+        name: ingredientSet.ingredient.name,
+        amount: ingredientSet.amount
       }))
     })
   })
@@ -302,9 +303,10 @@ describe('createOrUpdateMember', () => {
         level: subskill.level,
         subskill: subskill.subskill.name
       })),
-      ingredients: member.ingredients.map((ingredient) => ({
-        level: ingredient.level,
-        ingredient: ingredient.ingredient.name
+      ingredients: member.ingredients.map((ingredientSet) => ({
+        level: ingredientSet.level,
+        name: ingredientSet.ingredient.name,
+        amount: ingredientSet.amount
       }))
     })
   })
@@ -377,7 +379,8 @@ describe('calculateProduction', () => {
         subskills: member.subskills.map((s) => ({ level: s.level, subskill: s.subskill.name })),
         ingredients: member.ingredients.map((i) => ({
           level: i.level,
-          ingredient: i.ingredient.name
+          name: i.ingredient.name,
+          amount: i.amount
         }))
       })),
       settings
@@ -481,7 +484,8 @@ describe('calculateIv', () => {
           })),
           ingredients: otherMember.ingredients.map((i) => ({
             level: i.level,
-            ingredient: i.ingredient.name
+            name: i.ingredient.name,
+            amount: i.amount
           }))
         }
       ],

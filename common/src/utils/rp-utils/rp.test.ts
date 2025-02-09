@@ -47,9 +47,9 @@ describe('RP', () => {
         { level: 100, subskill: SKILL_LEVEL_UP_M }
       ],
       ingredients: [
-        { level: 0, ingredient: HONEY },
-        { level: 30, ingredient: FANCY_APPLE },
-        { level: 60, ingredient: HONEY }
+        { level: 0, ingredient: HONEY, amount: 2 },
+        { level: 30, ingredient: FANCY_APPLE, amount: 5 },
+        { level: 60, ingredient: HONEY, amount: 7 }
       ],
       externalId: uuid.v4(),
       version: 0,
@@ -81,9 +81,9 @@ describe('RP', () => {
         { level: 50, subskill: SKILL_TRIGGER_S }
       ],
       ingredients: [
-        { level: 0, ingredient: MOOMOO_MILK },
-        { level: 30, ingredient: SOOTHING_CACAO },
-        { level: 60, ingredient: MOOMOO_MILK }
+        { level: 0, ingredient: MOOMOO_MILK, amount: 1 },
+        { level: 30, ingredient: SOOTHING_CACAO, amount: 1 },
+        { level: 60, ingredient: MOOMOO_MILK, amount: 4 }
       ],
       externalId: uuid.v4(),
       version: 0,
@@ -109,9 +109,9 @@ describe('RP', () => {
         { level: 25, subskill: SKILL_TRIGGER_S }
       ],
       ingredients: [
-        { level: 0, ingredient: WARMING_GINGER },
-        { level: 30, ingredient: GREENGRASS_SOYBEANS },
-        { level: 60, ingredient: BEAN_SAUSAGE }
+        { level: 0, ingredient: WARMING_GINGER, amount: 2 },
+        { level: 30, ingredient: GREENGRASS_SOYBEANS, amount: 5 },
+        { level: 60, ingredient: BEAN_SAUSAGE, amount: 7 }
       ],
       externalId: uuid.v4(),
       version: 0,
@@ -138,9 +138,9 @@ describe('RP', () => {
         { level: 50, subskill: HELPING_SPEED_M }
       ],
       ingredients: [
-        { level: 0, ingredient: MOOMOO_MILK },
-        { level: 30, ingredient: SOOTHING_CACAO },
-        { level: 60, ingredient: SOOTHING_CACAO }
+        { level: 0, ingredient: MOOMOO_MILK, amount: 1 },
+        { level: 30, ingredient: SOOTHING_CACAO, amount: 1 },
+        { level: 60, ingredient: SOOTHING_CACAO, amount: 3 }
       ],
       externalId: uuid.v4(),
       version: 0,
@@ -169,9 +169,9 @@ describe('RP', () => {
         { level: 100, subskill: SKILL_LEVEL_UP_M }
       ],
       ingredients: [
-        { level: 0, ingredient: HONEY },
-        { level: 30, ingredient: FANCY_APPLE },
-        { level: 60, ingredient: HONEY }
+        { level: 0, ingredient: HONEY, amount: 2 },
+        { level: 30, ingredient: FANCY_APPLE, amount: 5 },
+        { level: 60, ingredient: HONEY, amount: 7 }
       ],
       externalId: uuid.v4(),
       version: 0,
@@ -200,9 +200,9 @@ describe('RP', () => {
         { level: 100, subskill: HELPING_SPEED_S }
       ],
       ingredients: [
-        { level: 0, ingredient: SOOTHING_CACAO },
-        { level: 30, ingredient: FANCY_APPLE },
-        { level: 60, ingredient: SOOTHING_CACAO }
+        { level: 0, ingredient: SOOTHING_CACAO, amount: 1 },
+        { level: 30, ingredient: FANCY_APPLE, amount: 4 },
+        { level: 60, ingredient: SOOTHING_CACAO, amount: 4 }
       ],
       externalId: uuid.v4(),
       version: 0,
@@ -231,9 +231,9 @@ describe('RP', () => {
         { level: 100, subskill: SKILL_TRIGGER_M }
       ],
       ingredients: [
-        { level: 0, ingredient: FANCY_APPLE },
-        { level: 30, ingredient: FANCY_APPLE },
-        { level: 60, ingredient: FANCY_APPLE }
+        { level: 0, ingredient: FANCY_APPLE, amount: 1 },
+        { level: 30, ingredient: FANCY_APPLE, amount: 2 },
+        { level: 60, ingredient: FANCY_APPLE, amount: 4 }
       ],
       externalId: uuid.v4(),
       version: 0,

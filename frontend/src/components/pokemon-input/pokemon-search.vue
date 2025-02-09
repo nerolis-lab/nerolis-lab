@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="!pokemon">
+  <v-card v-if="!pokemonInstance">
     <GroupList
       :data="pokedexStore.groupedPokedex"
       :selected-options="[]"
@@ -7,14 +7,23 @@
       @cancel="closeMenu"
     />
   </v-card>
-  <PokemonInput v-else :pokemon-from-search="pokemon" @cancel="closeMenu" />
+  <PokemonInput v-else :pre-selected-pokemon-instance="pokemonInstance" @cancel="closeMenu" />
 </template>
 
 <script lang="ts">
 import GroupList from '@/components/custom-components/group-list.vue'
 import PokemonInput from '@/components/pokemon-input/pokemon-input.vue'
+import { randomName } from '@/services/utils/name-utils'
 import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
-import { COMPLETE_POKEDEX, type Pokemon } from 'sleepapi-common'
+import {
+  CarrySizeUtils,
+  COMPLETE_POKEDEX,
+  getRandomGender,
+  nature,
+  RP,
+  uuid,
+  type PokemonInstanceExt
+} from 'sleepapi-common'
 
 export default {
   name: 'PokemonSearch',
@@ -28,7 +37,7 @@ export default {
     return { pokedexStore }
   },
   data: () => ({
-    pokemon: undefined as Pokemon | undefined
+    pokemonInstance: undefined as PokemonInstanceExt | undefined
   }),
   methods: {
     closeMenu() {
@@ -40,7 +49,34 @@ export default {
         console.error('Error selecting Pokémon')
         return
       }
-      this.pokemon = pkmn
+
+      const gender = getRandomGender(pkmn)
+
+      const pokemonInstance: PokemonInstanceExt = {
+        pokemon: pkmn,
+        name: randomName(12, gender),
+        level: 60,
+        ribbon: 0,
+        carrySize: CarrySizeUtils.maxCarrySize(pkmn),
+        skillLevel: pkmn.previousEvolutions + 1,
+        nature: nature.BASHFUL,
+        subskills: [],
+        ingredients: [
+          { ...pkmn.ingredient0, level: 0 },
+          { ...pkmn.ingredient30[0], level: 30 },
+          { ...pkmn.ingredient60[0], level: 60 }
+        ],
+        rp: 0,
+        version: 0,
+        externalId: uuid.v4(),
+        saved: false,
+        shiny: false,
+        gender
+      }
+      const rpUtil = new RP(pokemonInstance)
+      pokemonInstance.rp = rpUtil.calc()
+
+      this.pokemonInstance = pokemonInstance
     }
   }
 }

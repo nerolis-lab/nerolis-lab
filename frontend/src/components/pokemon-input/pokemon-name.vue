@@ -68,13 +68,6 @@ export default {
       return this.maxNameLength - (this.editedName?.length || 0)
     }
   },
-  mounted() {
-    this.$nextTick(() => {
-      if (this.pokemonInstance.name === '') {
-        this.$emit('update-name', this.randomizeName())
-      }
-    })
-  },
   methods: {
     openEditDialog() {
       this.editedName = this.pokemonInstance.name

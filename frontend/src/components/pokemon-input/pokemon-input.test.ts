@@ -6,14 +6,15 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import {
   CarrySizeUtils,
-  GALLADE,
-  mockPokemon,
+  mockIngredientSet,
   nature,
-  PIKACHU,
+  RandomUtils,
+  SNEASEL,
   subskill,
-  type Ingredient,
+  WEAVILE,
   type PokemonInstanceExt
 } from 'sleepapi-common'
+import { vimic } from 'vimic'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('PokemonInput', () => {
@@ -27,8 +28,7 @@ describe('PokemonInput', () => {
 
     wrapper = mount(PokemonInput, {
       props: {
-        pokemonFromPreExist: undefined,
-        pokemonFromSearch: undefined
+        preSelectedPokemonInstance: preExistingMon
       }
     })
   })
@@ -40,35 +40,9 @@ describe('PokemonInput', () => {
   })
 
   it('renders correctly with initial data', () => {
-    expect(console.error).toHaveBeenCalledWith('Missing both cached and search input mon, contact developer')
-    expect(console.error).toHaveBeenCalledWith('Missing both cached and search input mon, contact developer')
     expect(wrapper.exists()).toBe(true)
-  })
-
-  it('shall update data from cache on mount', () => {
-    wrapper = mount(PokemonInput, {
-      props: {
-        pokemonFromPreExist: preExistingMon,
-        pokemonFromSearch: undefined
-      }
-    })
     const updatedPokemonInstance = wrapper.vm.$data.pokemonInstance
     expect(updatedPokemonInstance).toEqual(preExistingMon)
-  })
-
-  it('shall update data coming from pokemon search as selectedPokemon on mount', () => {
-    wrapper = mount(PokemonInput, {
-      props: {
-        pokemonFromPreExist: undefined,
-        pokemonFromSearch: GALLADE
-      }
-    })
-    const updatedPokemonInstance = wrapper.vm.$data.pokemonInstance
-    expect(updatedPokemonInstance).not.toEqual(preExistingMon)
-    expect(updatedPokemonInstance.pokemon).not.toEqual(mockPokemon)
-
-    expect(updatedPokemonInstance.pokemon).toEqual(GALLADE)
-    expect(updatedPokemonInstance.carrySize).toBe(CarrySizeUtils.maxCarrySize(GALLADE))
   })
 
   it('renders child components correctly', () => {
@@ -114,8 +88,21 @@ describe('PokemonInput', () => {
   })
 
   it('updates pokemon correctly', async () => {
-    wrapper.vm.updatePokemon(PIKACHU)
-    expect(wrapper.vm.pokemonInstance.pokemon).toBe(PIKACHU)
+    vimic(RandomUtils, 'roll', () => false)
+    expect(wrapper.vm.pokemonInstance.gender).toBeUndefined()
+
+    wrapper.vm.updatePokemon(WEAVILE)
+
+    const pokemonInstance = wrapper.vm.pokemonInstance
+    expect(pokemonInstance.pokemon).toBe(WEAVILE)
+    expect(pokemonInstance.ingredients).toEqual([
+      { ...SNEASEL.ingredient0, level: 0 },
+      { ...SNEASEL.ingredient30[0], level: 30 },
+      { ...SNEASEL.ingredient60[0], level: 60 }
+    ])
+    expect(pokemonInstance.skillLevel).toBe(1)
+    expect(pokemonInstance.gender).toEqual('female')
+    expect(pokemonInstance.carrySize).toBe(CarrySizeUtils.maxCarrySize(WEAVILE))
   })
 
   it('updates name correctly', async () => {
@@ -139,9 +126,9 @@ describe('PokemonInput', () => {
   })
 
   it('updates ingredient correctly', async () => {
-    const testIngredient = { name: 'Berry' } as Ingredient
-    wrapper.vm.updateIngredient({ ingredient: testIngredient, ingredientLevel: 0 })
-    expect(wrapper.vm.pokemonInstance.ingredients[0].ingredient).toBe(testIngredient)
+    const testIngredient = mockIngredientSet()
+    wrapper.vm.updateIngredient({ ingredientSet: testIngredient, ingredientLevel: 0 })
+    expect(wrapper.vm.pokemonInstance.ingredients[0]).toEqual({ ...testIngredient, level: 0 })
   })
 
   it('updates skill level correctly', async () => {

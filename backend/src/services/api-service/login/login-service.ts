@@ -137,20 +137,7 @@ export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWith
     skillLevel: pkmn.skill_level,
     nature: pkmn.nature,
     subskills: PokemonDAO.filterFilledSubskills(pkmn),
-    ingredients: [
-      {
-        level: 0,
-        ingredient: pkmn.ingredient_0
-      },
-      {
-        level: 30,
-        ingredient: pkmn.ingredient_30
-      },
-      {
-        level: 60,
-        ingredient: pkmn.ingredient_60
-      }
-    ]
+    ingredients: PokemonDAO.filterChosenIngredientList(pkmn)
   }));
 }
 

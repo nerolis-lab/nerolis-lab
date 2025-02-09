@@ -112,21 +112,8 @@ export async function upsertTeamMember(params: {
     carrySize: upsertedMember.carry_size,
     skillLevel: upsertedMember.skill_level,
     nature: upsertedMember.nature,
-    subskills: PokemonDAO.filterFilledSubskills(upsertedMember),
-    ingredients: [
-      {
-        level: 0,
-        ingredient: upsertedMember.ingredient_0
-      },
-      {
-        level: 30,
-        ingredient: upsertedMember.ingredient_30
-      },
-      {
-        level: 60,
-        ingredient: upsertedMember.ingredient_60
-      }
-    ]
+    subskills: request.subskills,
+    ingredients: request.ingredients
   };
 }
 

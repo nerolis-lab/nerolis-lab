@@ -19,6 +19,7 @@ import {
   getIngredient,
   getIngredientNames,
   includesMagnet,
+  ingredientIndex,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
   prettifyIngredientDrop,
@@ -721,5 +722,20 @@ describe('unsimplifyIngredientSet', () => {
         },
       ]
     `);
+  });
+});
+
+describe('ingredientIndex', () => {
+  it('shall return 0 for <30', () => {
+    expect(ingredientIndex(29)).toBe(0);
+  });
+  it('shall return 1 for <60', () => {
+    expect(ingredientIndex(59)).toBe(1);
+  });
+  it('shall return 2 for <89', () => {
+    expect(ingredientIndex(89)).toBe(2);
+  });
+  it('shall return 2 for 100', () => {
+    expect(ingredientIndex(100)).toBe(2);
   });
 });

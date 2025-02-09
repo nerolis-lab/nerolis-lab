@@ -1,8 +1,10 @@
 import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
+import { faker } from '@faker-js/faker/locale/en'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { PIKACHU } from 'sleepapi-common'
+import { PIKACHU, RandomUtils, uuid } from 'sleepapi-common'
+import { vimic } from 'vimic'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -35,22 +37,15 @@ describe('PokemonSearch', () => {
         memberIndex: 0
       }
     })
+
+    vimic(uuid, 'v4', () => 'some uuid')
+    vimic(RandomUtils, 'roll', () => true)
+    vimic(faker.person, 'firstName', () => 'Some name')
   })
 
   it('renders GroupList when no Pokémon is selected', () => {
     expect(wrapper.findComponent({ name: 'GroupList' }).exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'PokemonInput' }).exists()).toBe(false)
-  })
-
-  it('renders PokemonInput when a Pokémon is selected', async () => {
-    const pkmn = PIKACHU
-    wrapper.vm.selectPokemon(pkmn.name)
-
-    await nextTick()
-
-    expect(wrapper.findComponent({ name: 'GroupList' }).exists()).toBe(false)
-    expect(wrapper.findComponent({ name: 'PokemonInput' }).exists()).toBe(true)
-    expect(wrapper.findComponent({ name: 'PokemonInput' }).props('pokemonFromSearch')).toEqual(pkmn)
   })
 
   it('emits cancel event when closeMenu is called', async () => {
@@ -66,8 +61,9 @@ describe('PokemonSearch', () => {
 
     await nextTick()
 
-    expect(wrapper.vm.pokemon).toEqual(pkmn)
-    expect(wrapper.findComponent({ name: 'PokemonInput' }).props('pokemonFromSearch')).toEqual(pkmn)
+    expect(wrapper.findComponent({ name: 'PokemonInput' }).exists()).toBe(true)
+    expect(wrapper.vm.pokemonInstance).toMatchSnapshot()
+    expect(wrapper.findComponent({ name: 'PokemonInput' }).props('preSelectedPokemonInstance')).toMatchSnapshot()
   })
 
   it('displays error message if Pokémon is not found', async () => {

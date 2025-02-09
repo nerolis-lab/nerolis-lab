@@ -4,12 +4,12 @@ import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract
 import type { DBPokemon } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
-import type {
-  BerrySetSimple,
-  GetTeamResponse,
-  IngredientSetSimple,
-  MemberInstance,
-  SubskillInstance
+import {
+  type BerrySetSimple,
+  type GetTeamResponse,
+  type IngredientSetSimple,
+  type MemberInstance,
+  type SubskillInstance
 } from 'sleepapi-common';
 
 const DBTeamSchema = Type.Composite([
@@ -76,20 +76,7 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
           skillLevel: member.skill_level,
           nature: member.nature,
           subskills,
-          ingredients: [
-            {
-              level: 0,
-              ingredient: member.ingredient_0
-            },
-            {
-              level: 30,
-              ingredient: member.ingredient_30
-            },
-            {
-              level: 60,
-              ingredient: member.ingredient_60
-            }
-          ]
+          ingredients: PokemonDAO.filterChosenIngredientList(member)
         });
       }
 

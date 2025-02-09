@@ -160,27 +160,18 @@ export default class ProductionController extends Controller {
   }
 
   #getIngredientSet(params: { pokemon: Pokemon; level: number; ingredients: IngredientInstance[] }): IngredientSet[] {
-    const { pokemon, level, ingredients } = params;
+    const { ingredients, level } = params;
+    const result: IngredientSet[] = [];
 
-    const ingredientSet: IngredientSet[] = [pokemon.ingredient0];
-
-    const ingredient30 = pokemon.ingredient30.find(
-      (ingList) =>
-        ingList.ingredient.name.toLowerCase() === ingredients.find((ing) => ing.level === 30)?.ingredient.toLowerCase()
-    );
-    if (ingredient30 && level >= 30) {
-      ingredientSet.push(ingredient30);
+    for (const ingredientSet of ingredients) {
+      if (ingredientSet.level <= level) {
+        result.push({
+          amount: ingredientSet.amount,
+          ingredient: getIngredient(ingredientSet.name)
+        });
+      } else break;
     }
-
-    const ingredient60 = pokemon.ingredient60.find(
-      (ingList) =>
-        ingList.ingredient.name.toLowerCase() === ingredients.find((ing) => ing.level === 60)?.ingredient.toLowerCase()
-    );
-    if (ingredient60 && level >= 60) {
-      ingredientSet.push(ingredient60);
-    }
-
-    return ingredientSet;
+    return result;
   }
 
   #parseSingleProductionInput(pkmn: Pokemon, input: SingleProductionRequest): ProductionStats {

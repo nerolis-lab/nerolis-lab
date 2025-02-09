@@ -26,7 +26,7 @@
         </v-col>
         <v-col v-for="(ingredientSet, index) in ingredientList" :key="index" cols="auto">
           <div class="flex-center">
-            <span> {{ 2 }}</span>
+            <span> {{ ingredientSet.amount }}</span>
             <v-img :src="ingredientImage(ingredientSet.ingredient.name)" height="24" width="24"></v-img>
           </div>
         </v-col>

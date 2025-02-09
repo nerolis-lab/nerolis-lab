@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import type { PokemonInstanceExt } from '../../domain/instance/pokemon-instance';
 import type { Subskill } from '../../domain/subskill/subskill';
 import {
   HELPING_SPEED_M,
@@ -9,7 +10,6 @@ import {
   INVENTORY_L,
   SUBSKILLS
 } from '../../domain/subskill/subskills';
-import type { PokemonInstanceExt } from '../../domain/types/pokemon-instance';
 import { filterMembersWithSubskill, getSubskill, getSubskillNames, limitSubSkillsToLevel } from './subskill-utils';
 
 describe('getSubskillNames', () => {
