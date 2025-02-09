@@ -37,7 +37,8 @@ class PokemonInstanceUtilsImpl {
       })),
       ingredients: pokemonInstance.ingredients.map((instancedIngredient) => ({
         level: instancedIngredient.level,
-        ingredient: getIngredient(instancedIngredient.ingredient)
+        ingredient: getIngredient(instancedIngredient.name),
+        amount: instancedIngredient.amount
       }))
     }
     return {
@@ -72,7 +73,8 @@ class PokemonInstanceUtilsImpl {
       })),
       ingredients: instancedPokemon.ingredients.map((instancedIngredient) => ({
         level: instancedIngredient.level,
-        ingredient: instancedIngredient.ingredient.name
+        name: instancedIngredient.ingredient.name,
+        amount: instancedIngredient.amount
       }))
     }
   }
@@ -87,7 +89,8 @@ class PokemonInstanceUtilsImpl {
       })),
       ingredients: pokemonInstance.ingredients.map((ingredient) => ({
         level: ingredient.level,
-        ingredient: ingredient.ingredient.name
+        name: ingredient.ingredient.name,
+        amount: ingredient.amount
       })),
       carrySize: pokemonInstance.carrySize,
       level: pokemonInstance.level,

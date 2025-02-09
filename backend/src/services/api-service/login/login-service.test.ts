@@ -302,9 +302,9 @@ describe('upsertPokemon', () => {
     carrySize: 0,
     externalId: 'ext id',
     ingredients: [
-      { level: 0, ingredient: 'ing0' },
-      { level: 30, ingredient: 'ing30' },
-      { level: 60, ingredient: 'ing60' }
+      { level: 0, name: 'ing0', amount: 2 },
+      { level: 30, name: 'ing30', amount: 2 },
+      { level: 60, name: 'ing60', amount: 2 }
     ],
     level: 0,
     name: 'name',

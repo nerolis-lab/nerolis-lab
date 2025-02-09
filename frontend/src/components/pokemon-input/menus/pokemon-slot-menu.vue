@@ -116,9 +116,13 @@ export default defineComponent({
       this.openSubDialog('PokemonSearch', {})
     },
     handleEditClick() {
+      if (!this.pokemonFromPreExist) {
+        logger.error("Can't call edit on empty slot, contact developer")
+        return
+      }
       this.closeSlotMenuDialog()
       this.openSubDialog('PokemonInput', {
-        pokemonFromPreExist: this.pokemonFromPreExist
+        preSelectedPokemonInstance: this.pokemonFromPreExist
       })
     },
     handleSavedClick() {

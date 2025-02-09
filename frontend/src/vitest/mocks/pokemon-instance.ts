@@ -7,9 +7,9 @@ export function createMockPokemon(attrs?: Partial<PokemonInstanceExt>): PokemonI
     pokemon: PIKACHU,
     carrySize: 10,
     ingredients: [
-      { level: 0, ingredient: ingredient.FANCY_APPLE },
-      { level: 30, ingredient: ingredient.FANCY_APPLE },
-      { level: 60, ingredient: ingredient.FANCY_APPLE }
+      { level: 0, ingredient: ingredient.FANCY_APPLE, amount: 2 },
+      { level: 30, ingredient: ingredient.FANCY_APPLE, amount: 5 },
+      { level: 60, ingredient: ingredient.FANCY_APPLE, amount: 7 }
     ],
     level: 10,
     ribbon: 0,

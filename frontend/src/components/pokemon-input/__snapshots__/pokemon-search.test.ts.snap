@@ -1,0 +1,335 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PokemonSearch > selects Pokémon correctly 1`] = `
+{
+  "carrySize": 22,
+  "externalId": "some uuid",
+  "gender": "male",
+  "ingredients": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+      "level": 0,
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+      "level": 30,
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+      "level": 60,
+    },
+  ],
+  "level": 60,
+  "name": "Some name",
+  "nature": {
+    "energy": 1,
+    "exp": 1,
+    "frequency": 1,
+    "ingredient": 1,
+    "name": "Bashful",
+    "negativeModifier": "neutral",
+    "positiveModifier": "neutral",
+    "prettyName": "Bashful (neutral)",
+    "skill": 1,
+  },
+  "pokemon": {
+    "berry": {
+      "name": "GREPA",
+      "type": "electric",
+      "value": 25,
+    },
+    "carrySize": 17,
+    "displayName": "Pikachu",
+    "frequency": 2700,
+    "genders": {
+      "female": 0.5,
+      "male": 0.5,
+    },
+    "ingredient0": {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    "ingredient30": [
+      {
+        "amount": 2,
+        "ingredient": {
+          "longName": "Fancy Apple",
+          "name": "Apple",
+          "taxedValue": 23.7,
+          "value": 90,
+        },
+      },
+      {
+        "amount": 2,
+        "ingredient": {
+          "longName": "Warming Ginger",
+          "name": "Ginger",
+          "taxedValue": 34.7,
+          "value": 109,
+        },
+      },
+    ],
+    "ingredient60": [
+      {
+        "amount": 4,
+        "ingredient": {
+          "longName": "Fancy Apple",
+          "name": "Apple",
+          "taxedValue": 23.7,
+          "value": 90,
+        },
+      },
+      {
+        "amount": 3,
+        "ingredient": {
+          "longName": "Fancy Egg",
+          "name": "Egg",
+          "taxedValue": 38.7,
+          "value": 115,
+        },
+      },
+      {
+        "amount": 3,
+        "ingredient": {
+          "longName": "Warming Ginger",
+          "name": "Ginger",
+          "taxedValue": 34.7,
+          "value": 109,
+        },
+      },
+    ],
+    "ingredientPercentage": 20.7,
+    "name": "PIKACHU",
+    "pokedexNumber": 25,
+    "previousEvolutions": 1,
+    "remainingEvolutions": 1,
+    "skill": {
+      "RP": [
+        400,
+        569,
+        785,
+        1083,
+        1496,
+        2066,
+        2656,
+      ],
+      "amount": [
+        400,
+        569,
+        785,
+        1083,
+        1496,
+        2066,
+        3002,
+      ],
+      "description": "Increases Snorlax's Strength by ?.",
+      "maxLevel": 7,
+      "modifier": {
+        "critChance": 0,
+        "type": "Base",
+      },
+      "name": "Charge Strength S",
+      "unit": "strength",
+    },
+    "skillPercentage": 2.1,
+    "specialty": "berry",
+  },
+  "ribbon": 0,
+  "rp": 1988,
+  "saved": false,
+  "shiny": false,
+  "skillLevel": 2,
+  "subskills": [],
+  "version": 0,
+}
+`;
+
+exports[`PokemonSearch > selects Pokémon correctly 2`] = `
+{
+  "carrySize": 22,
+  "externalId": "some uuid",
+  "gender": "male",
+  "ingredients": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+      "level": 0,
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+      "level": 30,
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+      "level": 60,
+    },
+  ],
+  "level": 60,
+  "name": "Some name",
+  "nature": {
+    "energy": 1,
+    "exp": 1,
+    "frequency": 1,
+    "ingredient": 1,
+    "name": "Bashful",
+    "negativeModifier": "neutral",
+    "positiveModifier": "neutral",
+    "prettyName": "Bashful (neutral)",
+    "skill": 1,
+  },
+  "pokemon": {
+    "berry": {
+      "name": "GREPA",
+      "type": "electric",
+      "value": 25,
+    },
+    "carrySize": 17,
+    "displayName": "Pikachu",
+    "frequency": 2700,
+    "genders": {
+      "female": 0.5,
+      "male": 0.5,
+    },
+    "ingredient0": {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    "ingredient30": [
+      {
+        "amount": 2,
+        "ingredient": {
+          "longName": "Fancy Apple",
+          "name": "Apple",
+          "taxedValue": 23.7,
+          "value": 90,
+        },
+      },
+      {
+        "amount": 2,
+        "ingredient": {
+          "longName": "Warming Ginger",
+          "name": "Ginger",
+          "taxedValue": 34.7,
+          "value": 109,
+        },
+      },
+    ],
+    "ingredient60": [
+      {
+        "amount": 4,
+        "ingredient": {
+          "longName": "Fancy Apple",
+          "name": "Apple",
+          "taxedValue": 23.7,
+          "value": 90,
+        },
+      },
+      {
+        "amount": 3,
+        "ingredient": {
+          "longName": "Fancy Egg",
+          "name": "Egg",
+          "taxedValue": 38.7,
+          "value": 115,
+        },
+      },
+      {
+        "amount": 3,
+        "ingredient": {
+          "longName": "Warming Ginger",
+          "name": "Ginger",
+          "taxedValue": 34.7,
+          "value": 109,
+        },
+      },
+    ],
+    "ingredientPercentage": 20.7,
+    "name": "PIKACHU",
+    "pokedexNumber": 25,
+    "previousEvolutions": 1,
+    "remainingEvolutions": 1,
+    "skill": {
+      "RP": [
+        400,
+        569,
+        785,
+        1083,
+        1496,
+        2066,
+        2656,
+      ],
+      "amount": [
+        400,
+        569,
+        785,
+        1083,
+        1496,
+        2066,
+        3002,
+      ],
+      "description": "Increases Snorlax's Strength by ?.",
+      "maxLevel": 7,
+      "modifier": {
+        "critChance": 0,
+        "type": "Base",
+      },
+      "name": "Charge Strength S",
+      "unit": "strength",
+    },
+    "skillPercentage": 2.1,
+    "specialty": "berry",
+  },
+  "ribbon": 0,
+  "rp": 1988,
+  "saved": false,
+  "shiny": false,
+  "skillLevel": 2,
+  "subskills": [],
+  "version": 0,
+}
+`;

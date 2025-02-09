@@ -48,9 +48,7 @@ export default defineComponent({
     async acceptFriendRequest() {
       this.loading = true
       const accepted = await FriendService.acceptFriendRequest(this.notification.sender.friend_code)
-      logger.info(1)
       if (accepted) {
-        logger.info(2)
         await this.notificationStore.sync()
       }
 

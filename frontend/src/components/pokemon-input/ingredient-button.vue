@@ -49,11 +49,13 @@ export default {
   },
   emits: ['update-ingredient'],
   data: () => ({
-    ingredientSet: undefined as IngredientSet | undefined,
     fab: false,
     updateTimer: null as ReturnType<typeof setTimeout> | null
   }),
   computed: {
+    ingredientSet() {
+      return this.pokemonInstance.ingredients[Math.floor(Math.min(this.ingredientLevel / 30, 2))]
+    },
     ingredientImage() {
       return this.ingredientSet
         ? `/images/ingredient/${this.ingredientSet.ingredient.name.toLowerCase()}.png`
@@ -84,40 +86,6 @@ export default {
         )
     }
   },
-  watch: {
-    pokemon: {
-      deep: false,
-      handler(newPokemon: Pokemon, oldPokemon: Pokemon) {
-        // only grab from cache on initial setup, if pre-existing value exists
-        if (this.ingredientLevel < 30) {
-          this.ingredientSet = newPokemon.ingredient0
-        } else {
-          if (this.loadFromExisting(oldPokemon)) {
-            if (this.ingredientLevel === 30) {
-              this.ingredientSet = newPokemon.ingredient30.find(
-                (ing) => ing.ingredient.name === this.pokemonInstance.ingredients[1].ingredient.name
-              )
-            } else {
-              this.ingredientSet = newPokemon.ingredient60.find(
-                (ing) => ing.ingredient.name === this.pokemonInstance.ingredients[2].ingredient.name
-              )
-            }
-          } else {
-            if (this.ingredientLevel === 30) {
-              this.ingredientSet = newPokemon.ingredient30[0]
-            } else {
-              this.ingredientSet = newPokemon.ingredient60[0]
-            }
-          }
-        }
-
-        this.$emit('update-ingredient', {
-          ingredient: this.ingredientSet?.ingredient,
-          ingredientLevel: this.ingredientLevel
-        })
-      }
-    }
-  },
   beforeUnmount() {
     if (this.updateTimer) {
       clearTimeout(this.updateTimer)
@@ -141,15 +109,13 @@ export default {
         return
       }
 
-      this.ingredientSet = ingredientSet
       this.$emit('update-ingredient', {
-        ingredient: this.ingredientSet.ingredient,
+        ingredientSet,
         ingredientLevel: this.ingredientLevel
       })
     },
     loadFromExisting(oldPokemon: Pokemon) {
-      const existingIngredients =
-        this.pokemonInstance.ingredients.filter((ing) => ing.ingredient !== undefined).length === 3
+      const existingIngredients = this.pokemonInstance.ingredients.length === 3
 
       return oldPokemon.name === mockPokemon().name && existingIngredients
     }

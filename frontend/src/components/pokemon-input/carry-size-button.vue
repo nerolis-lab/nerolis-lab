@@ -41,8 +41,6 @@ import {
   calculateSubskillCarrySize,
   CarrySizeUtils,
   limitSubSkillsToLevel,
-  mockPokemon,
-  type Pokemon,
   type PokemonInstanceExt
 } from 'sleepapi-common'
 import type { PropType } from 'vue'
@@ -56,10 +54,15 @@ export default {
     }
   },
   emits: ['update-carry'],
-  data: () => ({
-    menu: false,
-    selectedEvolutions: 0
-  }),
+  data(this: { pokemonInstance: PokemonInstanceExt }) {
+    return {
+      menu: false,
+      selectedEvolutions: CarrySizeUtils.timesEvolvedByCarrySize(
+        this.pokemonInstance.pokemon,
+        this.pokemonInstance.carrySize
+      )
+    }
+  },
   setup() {
     const { isMobile } = useViewport()
     return { isMobile }
@@ -105,23 +108,8 @@ export default {
   },
   watch: {
     pokemon: {
-      handler(_, oldPokemon: Pokemon) {
-        // new mon is from search or new mon is actually new and not just mocked mon changing
-        const firstTimeSet = this.pokemonInstance.carrySize > 0 && oldPokemon.name === mockPokemon().name
-
-        let newCarrySize = 0
-        if (firstTimeSet) {
-          this.selectedEvolutions = CarrySizeUtils.timesEvolvedByCarrySize(
-            this.pokemonInstance.pokemon,
-            this.pokemonInstance.carrySize
-          )
-          newCarrySize = this.pokemonInstance.carrySize
-        } else {
-          newCarrySize = CarrySizeUtils.maxCarrySize(this.pokemonInstance.pokemon)
-          this.selectedEvolutions = this.possibleStages - 1
-        }
-
-        this.$emit('update-carry', newCarrySize)
+      handler() {
+        this.selectedEvolutions = this.possibleStages - 1
       }
     },
     selectedEvolutions: {

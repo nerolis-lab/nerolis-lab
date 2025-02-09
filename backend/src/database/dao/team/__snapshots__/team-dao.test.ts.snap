@@ -14,16 +14,19 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "gender": undefined,
         "ingredients": [
           {
-            "ingredient": "Berry",
+            "amount": 1,
             "level": 0,
+            "name": "Berry",
           },
           {
-            "ingredient": "Potion",
+            "amount": 0,
             "level": 30,
+            "name": "Potion",
           },
           {
-            "ingredient": "Elixir",
+            "amount": 0,
             "level": 60,
+            "name": "Elixir",
           },
         ],
         "level": 25,
@@ -65,16 +68,19 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "gender": undefined,
         "ingredients": [
           {
-            "ingredient": "Berry",
+            "amount": 1,
             "level": 0,
+            "name": "Berry",
           },
           {
-            "ingredient": "Potion",
+            "amount": 0,
             "level": 30,
+            "name": "Potion",
           },
           {
-            "ingredient": "Elixir",
+            "amount": 0,
             "level": 60,
+            "name": "Elixir",
           },
         ],
         "level": 25,
@@ -116,16 +122,19 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "gender": undefined,
         "ingredients": [
           {
-            "ingredient": "Berry",
+            "amount": 2,
             "level": 0,
+            "name": "Berry",
           },
           {
-            "ingredient": "Potion",
+            "amount": 0,
             "level": 30,
+            "name": "Potion",
           },
           {
-            "ingredient": "Elixir",
+            "amount": 0,
             "level": 60,
+            "name": "Elixir",
           },
         ],
         "level": 25,

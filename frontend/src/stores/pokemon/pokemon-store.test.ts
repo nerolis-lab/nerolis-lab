@@ -6,6 +6,7 @@ import { useUserStore } from '@/stores/user-store'
 import { createMockMemberProduction, createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import { createPinia, setActivePinia } from 'pinia'
+import { DOMAIN_VERSION } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -28,6 +29,7 @@ describe('Pokemon Store', () => {
     const pokemonStore = usePokemonStore()
     expect(pokemonStore.$state).toMatchInlineSnapshot(`
       {
+        "domainVersion": 0,
         "pokemon": {},
       }
     `)
@@ -153,6 +155,8 @@ describe('Pokemon Store', () => {
   })
   it('should migrate pokemon correctly', () => {
     const pokemonStore = usePokemonStore()
+    pokemonStore.domainVersion = DOMAIN_VERSION
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockPokemonWithoutRP = { ...mockPokemon, rp: undefined } as any
     pokemonStore.upsertLocalPokemon(mockPokemonWithoutRP)
@@ -164,11 +168,21 @@ describe('Pokemon Store', () => {
 
   it('should not change pokemon that already have rp', () => {
     const pokemonStore = usePokemonStore()
+    pokemonStore.domainVersion = DOMAIN_VERSION
     const mockPokemonWithRP = { ...mockPokemon, rp: 100 }
     pokemonStore.upsertLocalPokemon(mockPokemonWithRP)
 
     pokemonStore.migrate()
 
     expect(pokemonStore.pokemon[externalId].rp).toEqual(100)
+  })
+
+  it('should outdate the store correctly', () => {
+    const pokemonStore = usePokemonStore()
+    pokemonStore.upsertLocalPokemon(mockPokemon)
+
+    pokemonStore.outdate()
+
+    expect(pokemonStore.pokemon).toEqual({})
   })
 })

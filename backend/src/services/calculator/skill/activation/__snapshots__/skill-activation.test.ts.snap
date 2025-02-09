@@ -229,7 +229,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         17,
         22,
         27,
-        32,
+        31,
       ],
       "description": "Gives your pot room for ? more ingredients next time you cook.",
       "maxLevel": 7,

@@ -1,6 +1,5 @@
-import type { Subskill } from '../../domain';
+import type { PokemonInstanceExt, Subskill } from '../../domain';
 import { SUBSKILLS } from '../../domain/subskill/subskills';
-import type { PokemonInstanceExt } from '../../domain/types/pokemon-instance';
 
 export function getSubskillNames() {
   return SUBSKILLS.map((subskill) => subskill.name);
