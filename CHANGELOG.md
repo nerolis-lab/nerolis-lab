@@ -1,3 +1,10 @@
+## [1.30.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.1...v1.30.2) (2025-02-09)
+
+
+### Bug Fixes
+
+* update missed berry-light color in main ([7d31259](https://github.com/nerolis-lab/nerolis-lab/commit/7d3125963ed75a2f1b6245930cf3bed625f934ec))
+
 ## [1.30.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.0...v1.30.1) (2025-02-09)
 
 # [1.30.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.1...v1.30.0) (2025-02-09)
