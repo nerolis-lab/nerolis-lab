@@ -13,6 +13,7 @@ import * as tsoa from '@tsoa/runtime';
 import type {
   CalculateIvRequest,
   CalculateTeamRequest,
+  IngredientIndexToFloatAmount,
   IngredientInstance,
   IngredientSet,
   Pokemon,
@@ -22,7 +23,15 @@ import type {
   TeamSettings,
   TeamSettingsExt
 } from 'sleepapi-common';
-import { CarrySizeUtils, getNature, getPokemon, limitSubSkillsToLevel, mainskill } from 'sleepapi-common';
+import {
+  CarrySizeUtils,
+  getIngredient,
+  getNature,
+  getPokemon,
+  ingredientSetToFloatFlat,
+  limitSubSkillsToLevel,
+  mainskill
+} from 'sleepapi-common';
 const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
 
 @Route('api/calculator')
@@ -51,7 +60,7 @@ export default class ProductionController extends Controller {
 
   #parseIvInput(body: CalculateIvRequest) {
     const { members, variants } = body;
-    const settings = this.#parseSettings(body.settings);
+    const settings = this.#parseSettings({ settings: body.settings, includeCooking: false });
 
     if (members.length > 4) {
       throw new BadRequestError(
@@ -109,7 +118,7 @@ export default class ProductionController extends Controller {
   }
 
   #parseTeamInput(body: CalculateTeamRequest) {
-    const settings = this.#parseSettings(body.settings);
+    const settings = this.#parseSettings({ settings: body.settings, includeCooking: true });
 
     return {
       settings,
@@ -117,7 +126,8 @@ export default class ProductionController extends Controller {
     };
   }
 
-  #parseSettings(settings: TeamSettings): TeamSettingsExt {
+  #parseSettings(params: { settings: TeamSettings; includeCooking: boolean }): TeamSettingsExt {
+    const { settings, includeCooking } = params;
     const camp = queryAsBoolean(settings.camp);
     const bedtime = TimeUtils.parseTime(settings.bedtime);
     const wakeup = TimeUtils.parseTime(settings.wakeup);
@@ -133,10 +143,19 @@ export default class ProductionController extends Controller {
       throw new SleepAPIError('Minimum 1 hour of sleep and daytime required');
     }
 
+    const stockpiledIngredients: IngredientIndexToFloatAmount = ingredientSetToFloatFlat(
+      settings.stockpiledIngredients?.map(({ name, amount }) => ({
+        ingredient: getIngredient(name),
+        amount
+      })) ?? []
+    );
+
     return {
       camp,
       bedtime,
-      wakeup
+      wakeup,
+      includeCooking,
+      stockpiledIngredients
     };
   }
 

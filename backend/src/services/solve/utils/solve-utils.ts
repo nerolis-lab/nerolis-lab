@@ -41,16 +41,12 @@ import {
   OPTIMAL_POKEDEX
 } from 'sleepapi-common';
 
-export function calculateProductionAll(params: {
-  settings: SolveSettingsExt;
-  userMembers: TeamMemberExt[];
-  includeCooking: boolean;
-}): {
+export function calculateProductionAll(params: { settings: SolveSettingsExt; userMembers: TeamMemberExt[] }): {
   userProduction: SetCoverPokemonSetupWithSettings[];
   nonSupportProduction: SetCoverPokemonSetupWithSettings[];
   supportProduction: SetCoverPokemonSetupWithSettings[];
 } {
-  const { settings, userMembers, includeCooking } = params;
+  const { settings, userMembers } = params;
 
   const filteredPokedex = filterPokedex(userMembers);
 
@@ -64,13 +60,15 @@ export function calculateProductionAll(params: {
     camp: settings.camp
   });
 
-  const userIncludedProduction = calculateTeam({ settings, members: userMembers }, 1400, true);
+  const userIncludedProduction = calculateTeam(
+    { settings: { ...settings, includeCooking: true }, members: userMembers },
+    1400
+  );
 
   const nonSupportProductionStats = calculateNonSupportPokemon({
     nonSupportMembers,
     settings,
-    userMembers,
-    includeCooking
+    userMembers
   });
 
   const supportMembers = pokedexToMembers({ pokedex: supportMons, level: settings.level, camp: settings.camp });
@@ -197,11 +195,10 @@ export function calculateNonSupportPokemon(params: {
   nonSupportMembers: TeamMemberExt[];
   userMembers: TeamMemberExt[];
   settings: TeamSettingsExt;
-  includeCooking: boolean;
 }): SimpleTeamResult[] {
-  const { nonSupportMembers, userMembers, settings, includeCooking } = params;
+  const { nonSupportMembers, userMembers, settings } = params;
 
-  if (includeCooking) {
+  if (settings.includeCooking) {
     const [tastyChanceMembers, otherNonSupportMembersWithCookingMembers] = splitArrayByCondition(
       nonSupportMembers,
       (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.TASTY_CHANCE_S)
@@ -211,9 +208,8 @@ export function calculateNonSupportPokemon(params: {
       (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.COOKING_POWER_UP_S)
     );
     const otherNonSupportProductionStats = calculateSimple({
-      settings,
-      members: [...userMembers, ...otherNonSupportMembers],
-      includeCooking: false
+      settings: { ...settings, includeCooking: false },
+      members: [...userMembers, ...otherNonSupportMembers]
     });
 
     // TODO: duplicated code for tasty chance and cooking power up, refactor
@@ -223,8 +219,7 @@ export function calculateNonSupportPokemon(params: {
 
       const tastyChanceTeamResults = calculateSimple({
         settings,
-        members: [...userMembers, tastyChanceMember],
-        includeCooking
+        members: [...userMembers, tastyChanceMember]
       });
       const tastyChanceMemberResult = tastyChanceTeamResults.find(
         (member) => member.member.settings.externalId === tastyChanceMember.settings.externalId
@@ -241,8 +236,7 @@ export function calculateNonSupportPokemon(params: {
 
       const cookingPowerUpTeamResults = calculateSimple({
         settings,
-        members: [...userMembers, cookingPowerUpMember],
-        includeCooking
+        members: [...userMembers, cookingPowerUpMember]
       });
       const cookingPowerUpMemberResult = cookingPowerUpTeamResults.find(
         (member) => member.member.settings.externalId === cookingPowerUpMember.settings.externalId
@@ -261,9 +255,8 @@ export function calculateNonSupportPokemon(params: {
     ];
   } else {
     return calculateSimple({
-      settings,
-      members: [...userMembers, ...nonSupportMembers],
-      includeCooking: false
+      settings: { ...settings, includeCooking: false },
+      members: [...userMembers, ...nonSupportMembers]
     });
   }
 }
@@ -279,9 +272,8 @@ export function calculateSupportPokemon(params: {
     const supportMember = supportMembers[i];
     const emptyTeamSpace = MAX_TEAM_SIZE - (userMembers.length + 1); // user mons + the support member we're calculating
     const simpleResults = calculateSimple({
-      settings,
-      members: [...userMembers, supportMember, ...bogusMembers(emptyTeamSpace)],
-      includeCooking: false
+      settings: { ...settings, includeCooking: false },
+      members: [...userMembers, supportMember, ...bogusMembers(emptyTeamSpace)]
     });
     const simpleResult = simpleResults.find(
       (result) =>

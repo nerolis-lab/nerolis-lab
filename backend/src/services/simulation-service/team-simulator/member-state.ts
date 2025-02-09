@@ -8,7 +8,9 @@ import type {
 import { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
+  BerryIndexToFloatAmount,
   BerrySet,
   MemberProduction,
   MemberProductionBase,
@@ -27,7 +29,7 @@ import {
   MathUtils,
   berrySetToFlat,
   calculateNrOfBerriesPerDrop,
-  emptyBerryInventoryFlat,
+  emptyBerryInventoryFloat,
   flatToBerrySet,
   flatToIngredientSet,
   getEmptyInventoryFloat,
@@ -54,6 +56,7 @@ export class MemberState {
   disguiseBusted = false;
   private nextHelp: number;
   private currentNightHelps = 0;
+  private dayPeriod: TimePeriod;
   private nightPeriod: TimePeriod;
   private fullDayDuration = 1440;
   private carriedAmount = 0;
@@ -70,7 +73,7 @@ export class MemberState {
   private frequency80;
   public skillPercentage: number;
   private ingredientPercentage: number;
-  private sneakySnackBerries: Float32Array = emptyBerryInventoryFlat();
+  private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
   private averageProduceAmount: number;
   private averageProduce: ProduceFlat = getEmptyInventoryFloat();
 
@@ -78,6 +81,10 @@ export class MemberState {
   totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
   totalRecovery = 0;
   wastedEnergy = 0;
+  private energyIntervalsDay = 0;
+  private energyIntervalsNight = 0;
+  private frequencyIntervalsDay = 0;
+  private frequencyIntervalsNight = 0;
   private morningProcs = 0;
   private totalDayHelps = 0;
   private totalNightHelps = 0;
@@ -116,7 +123,12 @@ export class MemberState {
       start: settings.bedtime,
       end: settings.wakeup
     };
+    const dayPeriod = {
+      start: settings.wakeup,
+      end: settings.bedtime
+    };
     this.nightPeriod = nightPeriod;
+    this.dayPeriod = dayPeriod;
 
     this.nextHelp = this.fullDayDuration; // set to 1440, first start of day subtracts 1440
 
@@ -269,6 +281,8 @@ export class MemberState {
   }
 
   public attemptDayHelp(currentMinutesSincePeriodStart: number): TeamSkillActivation[] {
+    const frequency = this.calculateFrequencyWithEnergy();
+    this.countFrequencyAndEnergyIntervals('day', frequency);
     if (currentMinutesSincePeriodStart >= this.nextHelp) {
       this.totalDayHelps += 1;
       this.totalAverageHelps += 1;
@@ -281,9 +295,10 @@ export class MemberState {
   }
 
   public attemptNightHelp(currentMinutesSincePeriodStart: number) {
-    if (currentMinutesSincePeriodStart >= this.nextHelp) {
-      const frequency = this.calculateFrequencyWithEnergy();
+    const frequency = this.calculateFrequencyWithEnergy();
+    this.countFrequencyAndEnergyIntervals('night', frequency);
 
+    if (currentMinutesSincePeriodStart >= this.nextHelp) {
       // update stats
       this.totalNightHelps += 1;
 
@@ -393,6 +408,8 @@ export class MemberState {
     } = this.skillState.results(iterations);
 
     const totalHelps = (this.totalDayHelps + this.totalNightHelps) / iterations;
+    const fiveMinIntervalsTotalDay = iterations * (TimeUtils.durationInMinutes(this.dayPeriod) / 5);
+    const fiveMinIntervalsTotalNight = iterations * (TimeUtils.durationInMinutes(this.nightPeriod) / 5);
 
     return {
       produceTotal,
@@ -408,7 +425,6 @@ export class MemberState {
         skillPercentage: this.skillPercentage,
         carrySize: this.inventoryLimit,
         maxFrequency: this.frequency80,
-        spilledIngredients,
         dayHelps: this.totalDayHelps / iterations,
         nightHelps: this.totalNightHelps / iterations,
         averageHelps: this.totalAverageHelps / iterations,
@@ -423,6 +439,16 @@ export class MemberState {
         totalRecovery: this.totalRecovery / iterations,
         morningProcs: this.morningProcs / iterations,
         skillProcDistribution,
+        dayPeriod: {
+          averageEnergy: this.energyIntervalsDay / fiveMinIntervalsTotalDay,
+          averageFrequency: this.frequencyIntervalsDay / fiveMinIntervalsTotalDay,
+          spilledIngredients: []
+        },
+        nightPeriod: {
+          averageEnergy: this.energyIntervalsNight / fiveMinIntervalsTotalNight,
+          averageFrequency: this.frequencyIntervalsNight / fiveMinIntervalsTotalNight,
+          spilledIngredients
+        },
         frequencySplit: {
           zero: this.helpsAtFrequency0 / totalHelps,
           one: this.helpsAtFrequency1 / totalHelps,
@@ -483,6 +509,16 @@ export class MemberState {
       member: this.member,
       ingredientPercentage: this.ingredientPercentage
     };
+  }
+
+  private countFrequencyAndEnergyIntervals(period: 'day' | 'night', frequency: number) {
+    if (period === 'day') {
+      this.frequencyIntervalsDay += frequency;
+      this.energyIntervalsDay += this.currentEnergy;
+    } else {
+      this.frequencyIntervalsNight += frequency;
+      this.energyIntervalsNight += this.currentEnergy;
+    }
   }
 
   private simpleCookingResults(iterations: number) {

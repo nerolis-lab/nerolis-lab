@@ -9,13 +9,25 @@ const DatabaseMigration = new (class {
     await this.#performMigration(configuration);
   }
 
-  public async downgrade() {
+  public async downgrade(batches?: number) {
     const baseDir = relativePath('migrations', import.meta.url);
     const configuration: Knex.MigratorConfig = { directory: baseDir, loadExtensions: ['.js'] };
 
     const knex = await DatabaseService.getKnex();
-    logger.info('Rolling back all migrations');
-    await knex.migrate.rollback(configuration);
+
+    if (!batches) {
+      logger.info('Rolling back all migrations');
+
+      await knex.migrate.rollback(configuration, true);
+    } else {
+      logger.info(`Rolling back ${batches} batch(es) of migrations`);
+
+      for (let i = 0; i < batches; i++) {
+        await knex.migrate.rollback(configuration, false);
+      }
+    }
+
+    logger.info(`Migration rollback completed`);
   }
 
   async #performMigration(configuration: Knex.MigratorConfig) {

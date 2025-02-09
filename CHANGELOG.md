@@ -1,3 +1,105 @@
+## [1.29.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.0...v1.29.1) (2025-02-08)
+
+
+### Bug Fixes
+
+* footer and beta page styles ([5f265a1](https://github.com/nerolis-lab/nerolis-lab/commit/5f265a1e4af3e2f1338b16d7a27d7c9c6629659b))
+
+# [1.29.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.28.0...v1.29.0) (2025-02-07)
+
+
+### Features
+
+* day/night member stats info ([97918f5](https://github.com/nerolis-lab/nerolis-lab/commit/97918f5432b827066b039413c8677bfb2a0d17fd))
+
+# [1.28.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.27.0...v1.28.0) (2025-02-07)
+
+
+### Features
+
+* add footer with links ([49e0160](https://github.com/nerolis-lab/nerolis-lab/commit/49e0160197433377ede223b07fc49c51c498d994))
+
+# [1.27.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.26.0...v1.27.0) (2025-02-06)
+
+
+### Features
+
+* support UTF-8 name inputs ([f60ab69](https://github.com/nerolis-lab/nerolis-lab/commit/f60ab695fac54e3fba3f122e3adcedf2cc3c34a0))
+
+# [1.26.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.25.0...v1.26.0) (2025-02-06)
+
+
+### Features
+
+* generate valentine 2025 tier list ([0c4762f](https://github.com/nerolis-lab/nerolis-lab/commit/0c4762fb3bbccbe808c5bda9e15b1c864dbfb3bb))
+
+# [1.25.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.5...v1.25.0) (2025-02-06)
+
+
+### Features
+
+* adds valentine 2025 recipes and absol buff ([05b16cc](https://github.com/nerolis-lab/nerolis-lab/commit/05b16cca056ec4f6b00451da50202805ba0414b7))
+
+## [1.24.5](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.4...v1.24.5) (2025-02-06)
+
+
+### Bug Fixes
+
+* stockpiled berries dont multiply by days in week ([342d13d](https://github.com/nerolis-lab/nerolis-lab/commit/342d13da9148cb56e61678fe50498b5062bd6429))
+
+## [1.24.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.3...v1.24.4) (2025-02-05)
+
+
+### Bug Fixes
+
+* sets ingredient limit to 10k ([67b0607](https://github.com/nerolis-lab/nerolis-lab/commit/67b060797e0e1a8d860489e9e886a33441ff29d6))
+
+## [1.24.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.2...v1.24.3) (2025-02-05)
+
+## [1.24.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.1...v1.24.2) (2025-02-04)
+
+## [1.24.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.24.0...v1.24.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* stockpile ingredients now more performant ([14a8b25](https://github.com/nerolis-lab/nerolis-lab/commit/14a8b255fbcf9b1d9b6f06a779e3a771018381de))
+
+# [1.24.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.3...v1.24.0) (2025-02-03)
+
+
+### Features
+
+* adds stockpiling to team sim ([0391ef2](https://github.com/nerolis-lab/nerolis-lab/commit/0391ef2f921bb7c34dd2e406c808d248f18a5360))
+
+## [1.23.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.2...v1.23.3) (2025-02-02)
+
+
+### Bug Fixes
+
+* invalidate christmas cached mons ([dbaef5a](https://github.com/nerolis-lab/nerolis-lab/commit/dbaef5aa3915b53cc46f17fe930a2b8f49ed06eb))
+
+## [1.23.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.1...v1.23.2) (2025-01-30)
+
+
+### Bug Fixes
+
+* friend_code migration generates code ([9d4bdd5](https://github.com/nerolis-lab/nerolis-lab/commit/9d4bdd511dd849cb6cbae18b24395b1093d54e6f))
+
+## [1.23.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.23.0...v1.23.1) (2025-01-30)
+
+
+### Bug Fixes
+
+* avatar search by displayName ([11e0ef1](https://github.com/nerolis-lab/nerolis-lab/commit/11e0ef18d598b0b682b541c34ee7ac87ed08bec9))
+
+# [1.23.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.22.0...v1.23.0) (2025-01-30)
+
+
+### Features
+
+* pokemon search uses displayName ([c031f4a](https://github.com/nerolis-lab/nerolis-lab/commit/c031f4ae45958d89bfd3ef2740cc5a2717ea7ff8))
+
 # [1.22.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.21.0...v1.22.0) (2025-01-29)
 
 

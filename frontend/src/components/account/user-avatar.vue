@@ -84,7 +84,9 @@ export default {
     const filteredAvatars = computed(() => {
       const query = searchQuery.value.toLowerCase().trim()
 
-      return avatarStore.getBasePokemonAvatars.filter(({ name, path }) => !query || name.toLowerCase().includes(query))
+      return avatarStore.getBasePokemonAvatars.filter(
+        ({ name, path, displayName }) => !query || displayName.toLowerCase().includes(query)
+      )
     })
 
     return {

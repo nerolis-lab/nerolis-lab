@@ -60,8 +60,7 @@ describe('solve-utils', () => {
 
       const result = calculateProductionAll({
         userMembers: userIncludedMembers,
-        settings,
-        includeCooking: false
+        settings
       });
 
       const [supportMons] = splitArrayByCondition(OPTIMAL_POKEDEX, (pkmn) =>
@@ -222,7 +221,6 @@ Set {
         settings: mocks.teamMemberSettingsExt({ externalId: 'supportPokemon2' })
       });
 
-      // TODO: why do I need to specify MockInstance type here, why does it not infer it?
       const simpleCalcSpy: MockInstance = vimic(
         productionService,
         'calculateSimple',
@@ -602,7 +600,7 @@ Set {
     it('should calculate non-support pokemon production without cooking', () => {
       const nonSupportMembers = [mocks.teamMemberExt()];
       const userMembers = [mocks.teamMemberExt()];
-      const settings = mocks.teamSettingsExt();
+      const settings = mocks.teamSettingsExt({ includeCooking: true });
 
       const simpleSpy = vimic(productionService, 'calculateSimple', () => [
         mocks.simpleTeamResult({ member: nonSupportMembers[0] })
@@ -611,8 +609,7 @@ Set {
       const result = calculateNonSupportPokemon({
         nonSupportMembers,
         userMembers,
-        settings,
-        includeCooking: false
+        settings
       });
 
       expect(result).toHaveLength(1);
@@ -634,7 +631,7 @@ Set {
         })
       ];
       const userMembers = [mocks.teamMemberExt()];
-      const settings = mocks.teamSettingsExt();
+      const settings = mocks.teamSettingsExt({ includeCooking: true });
 
       const simpleSpy = vimic(
         productionService,
@@ -647,8 +644,7 @@ Set {
       const result = calculateNonSupportPokemon({
         nonSupportMembers,
         userMembers,
-        settings,
-        includeCooking: true
+        settings
       });
 
       expect(result).toHaveLength(2);

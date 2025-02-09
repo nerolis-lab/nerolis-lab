@@ -1,8 +1,10 @@
 import type {
   Berry,
   BerrySet,
+  BerrySetSimple,
   CookingResult,
   IngredientSet,
+  IngredientSetSimple,
   MemberProduction,
   PokemonInstanceExt,
   RecipeType
@@ -37,6 +39,8 @@ export interface TeamInstance {
   camp: boolean
   bedtime: string
   wakeup: string
+  stockpiledIngredients: IngredientSetSimple[]
+  stockpiledBerries: BerrySetSimple[]
   recipeType: RecipeType
   favoredBerries: Berry[]
   version: number
@@ -45,6 +49,7 @@ export interface TeamInstance {
   production?: TeamProductionExt
 }
 
+// TODO: exists in common, clean up
 export const MAX_TEAM_MEMBERS = 5
 export const MAX_TEAMS = 10
 export const DEFAULT_SLEEP = {

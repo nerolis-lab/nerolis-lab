@@ -924,6 +924,7 @@ export const WALREIN: Pokemon = {
 export const WEAVILE: Pokemon = {
   ...evolvesFrom(SNEASEL),
   name: 'WEAVILE',
+  displayName: 'Weavile',
   pokedexNumber: 461,
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 25.2,

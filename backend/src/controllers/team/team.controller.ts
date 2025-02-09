@@ -1,4 +1,4 @@
-import type { DBTeamWithoutVersion } from '@src/database/dao/team/team-dao.js';
+import { TeamDAO, type DBTeamWithoutVersion } from '@src/database/dao/team/team-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import {
   deleteMember,
@@ -19,7 +19,9 @@ export default class TeamController {
       bedtime: request.bedtime,
       wakeup: request.wakeup,
       recipe_type: request.recipeType,
-      favored_berries: request.favoredBerries?.join(',')
+      favored_berries: request.favoredBerries?.join(','),
+      stockpiled_ingredients: TeamDAO.stockpileToString(request.stockpiledIngredients),
+      stockpiled_berries: TeamDAO.stockpileToString(request.stockpiledBerries)
     };
     return upsertTeamMeta(team);
   }

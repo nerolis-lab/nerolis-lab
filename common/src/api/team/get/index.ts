@@ -1,23 +1,2 @@
-import type { PokemonInstanceWithMeta } from '../../../domain/instance/pokemon-instance';
-import type { RecipeType } from '../../../domain/recipe/recipe';
-
-export interface MemberInstance extends PokemonInstanceWithMeta {
-  memberIndex: number;
-}
-
-export interface GetTeamResponse {
-  index: number;
-  name: string;
-  camp: boolean;
-  bedtime: string;
-  wakeup: string;
-  recipeType: RecipeType;
-  favoredBerries?: string[];
-  version: number;
-
-  members: MemberInstance[];
-}
-
-export interface GetTeamsResponse {
-  teams: GetTeamResponse[];
-}
+export * from './member-instance';
+export * from './team-response';

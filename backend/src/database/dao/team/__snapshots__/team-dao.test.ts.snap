@@ -164,6 +164,8 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
     ],
     "name": "Team A",
     "recipeType": "curry",
+    "stockpiledBerries": undefined,
+    "stockpiledIngredients": undefined,
     "version": 1,
     "wakeup": "06:00",
   },

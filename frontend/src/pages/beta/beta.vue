@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <v-card class="pb-4">
-          <v-row class="pt-4">
+          <v-row class="pt-4 heading">
             <v-col cols="12" class="flex-center text-h4"> Neroli's Lab open beta</v-col>
           </v-row>
           <v-row>
@@ -54,11 +54,30 @@
 
           <v-row dense>
             <v-col cols="12" class="flex-center flex-column px-4">
-              <span
-                >Please <a class="discord" href="https://discord.gg/ndzTXRHWzK">join us on Discord</a> to report any
-                feedback, suggestions, or issues you're having with the site.
+              <span>
+                We'd love to hear your feedback! You can report any suggestions or issues you're having with the site at
+                <a class="simple" href="https://feedback.nerolislab.com" target="_blank" rel="noopener noreferrer">
+                  <span>our feedback website</span>
+                  <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
+                </a>
+                and vote to help us pick which features to work on next.
               </span>
               <v-img class="bug" src="/images/pokemon/caterpie.png" height="91" width="100"></v-img>
+            </v-col>
+            <v-col cols="12" class="flex-center flex-column px-4">
+              <span>
+                You can also
+                <a
+                  class="discord simple"
+                  href="https://discord.gg/ndzTXRHWzK"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>join us on Discord</span>
+                  <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
+                </a>
+                to discuss and get regular updates about Neroli's Lab and Pokemon Sleep.
+              </span>
             </v-col>
           </v-row>
           <v-row>
@@ -73,6 +92,10 @@
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped>
+.heading {
+  margin: -12px 0 !important;
+}
+
 .opener {
   padding-top: 16px;
   display: flex;

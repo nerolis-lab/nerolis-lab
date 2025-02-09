@@ -47,17 +47,23 @@
             </v-col>
           </v-row>
 
-          <v-row class="flex-center pt-4" dense>
-            <v-col cols="12" class="w-100">
-              <v-divider />
-            </v-col>
+          <Divider />
+
+          <v-row class="flex-center" dense>
             <v-col cols="12" class="flex-center">
               <span class="text-h6"> Daily team ingredients </span>
             </v-col>
-          </v-row>
 
-          <v-row class="flex-center" dense>
             <v-col v-for="(ingredient, i) in teamIngredients" :key="i" class="flex-column flex-center" cols="2">
+              <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
+              {{ ingredient.amount }}
+            </v-col>
+
+            <v-col cols="12" class="flex-center">
+              <span class="text-h6"> Weekly starting ingredients </span>
+            </v-col>
+
+            <v-col v-for="(ingredient, i) in stockpiledIngredients" :key="i" class="flex-column flex-center" cols="2">
               <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
               {{ ingredient.amount }}
             </v-col>
@@ -224,6 +230,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import Divider from '@/components/custom-components/divider/divider.vue'
+import { ingredientImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -243,6 +251,9 @@ export interface CookedRecipeResultDetails extends CookedRecipeResult {
 
 export default defineComponent({
   name: 'CookingResults',
+  components: {
+    Divider
+  },
   data() {
     return {
       teamStore: useTeamStore(),
@@ -340,6 +351,16 @@ export default defineComponent({
           image: `/images/ingredient/${ingredient.name.toLowerCase()}.png`
         }))
       }
+    },
+    stockpiledIngredients() {
+      const ingredients = this.teamStore.getCurrentTeam.stockpiledIngredients
+        .filter((ing) => ing.amount > 0)
+        .sort((a, b) => b.amount - a.amount)
+
+      return ingredients.map(({ amount, name }) => ({
+        amount: MathUtils.round(amount, 1),
+        image: ingredientImage(name)
+      }))
     },
     totalCooks() {
       const recipes = this.currentRecipeTypeResult?.cookedRecipes ?? []

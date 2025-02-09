@@ -17,6 +17,7 @@ import {
   type GetTeamResponse,
   type MemberProductionBase,
   type PokemonInstanceExt,
+  type TeamSettings,
   type UpsertTeamMetaRequest
 } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -82,6 +83,8 @@ describe('getTeams', () => {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         version: 0,
         members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
         memberIvs: {}
@@ -98,6 +101,8 @@ describe('getTeams', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         version: 1,
         members: [
           {
@@ -138,6 +143,8 @@ describe('getTeams', () => {
       wakeup: '06:00',
       recipeType: 'curry',
       favoredBerries: [],
+      stockpiledBerries: [],
+      stockpiledIngredients: [],
       version: 1,
       members: [existingTeams[0].members[0].externalId, undefined, undefined, undefined, undefined],
       memberIvs: {}
@@ -186,6 +193,8 @@ describe('getTeams', () => {
         version: 1,
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         members: [
           '000000000000000000000000000000000000',
           '000000000000000000000000000000000000',
@@ -320,10 +329,11 @@ describe('deleteTeam', () => {
 describe('calculateProduction', () => {
   it('should call server to calculate team production', async () => {
     const members: PokemonInstanceExt[] = [createMockPokemon()]
-    const settings = {
+    const settings: TeamSettings = {
       camp: false,
       bedtime: '21:00',
-      wakeup: '07:00'
+      wakeup: '07:00',
+      stockpiledIngredients: []
     }
 
     mockedAxios.post.mockResolvedValueOnce({
@@ -479,7 +489,8 @@ describe('calculateIv', () => {
       settings: {
         camp: false,
         bedtime: '21:30',
-        wakeup: '06:00'
+        wakeup: '06:00',
+        stockpiledIngredients: []
       }
     })
 

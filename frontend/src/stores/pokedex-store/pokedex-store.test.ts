@@ -13,7 +13,7 @@ describe('Pokedex Store', () => {
     const pokedexStore = usePokedexStore()
 
     const categories = ['ingredient', 'berry', 'skill']
-    const completePokedex = [...COMPLETE_POKEDEX].sort((a, b) => a.name.localeCompare(b.name))
+    const completePokedex = [...COMPLETE_POKEDEX].sort((a, b) => a.displayName.localeCompare(b.displayName))
 
     const categorizedPokedex: { [key: string]: string[] } = {
       ingredient: [],
@@ -23,7 +23,7 @@ describe('Pokedex Store', () => {
 
     for (const pkmn of completePokedex) {
       if (categorizedPokedex[pkmn.specialty]) {
-        categorizedPokedex[pkmn.specialty].push(capitalize(pkmn.name))
+        categorizedPokedex[pkmn.specialty].push(capitalize(pkmn.displayName))
       }
     }
 

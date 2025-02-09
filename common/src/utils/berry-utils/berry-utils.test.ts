@@ -6,6 +6,7 @@ import {
   berrySetToFlat,
   emptyBerryInventory,
   flatToBerrySet,
+  getBerry,
   multiplyBerries,
   prettifyBerries,
   roundBerries
@@ -119,5 +120,16 @@ describe('berrySetToFlat', () => {
     const result = berrySetToFlat(berrySet);
     const expected = new Float32Array(TOTAL_NUMBER_OF_BERRIES);
     expect(result).toEqual(expected);
+  });
+});
+
+describe('getBerry', () => {
+  it('returns the correct berry object for a valid berry name', () => {
+    const berry = getBerry('Oran');
+    expect(berry).toEqual(ORAN);
+  });
+
+  it('throws an error for an invalid berry name', () => {
+    expect(() => getBerry('InvalidBerry')).toThrow('Berry InvalidBerry not found');
   });
 });

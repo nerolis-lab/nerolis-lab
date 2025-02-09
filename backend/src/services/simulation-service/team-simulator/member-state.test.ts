@@ -1,10 +1,19 @@
+import { mocks } from '@src/bun/index.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
-import { berry, ingredient, mainskill, mockPokemon, nature, subskill } from 'sleepapi-common';
+import {
+  berry,
+  emptyIngredientInventoryFloat,
+  ingredient,
+  mainskill,
+  mockPokemon,
+  nature,
+  subskill
+} from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 const mockPokemonSet: PokemonWithIngredients = {
@@ -55,10 +64,12 @@ const member: TeamMemberExt = {
 const settings: TeamSettingsExt = {
   bedtime: TimeUtils.parseTime('21:30'),
   wakeup: TimeUtils.parseTime('06:00'),
-  camp: false
+  camp: false,
+  includeCooking: true,
+  stockpiledIngredients: emptyIngredientInventoryFloat()
 };
 
-const cookingState: CookingState = new CookingState(settings.camp);
+const cookingState: CookingState = new CookingState(settings);
 
 describe('results', () => {
   it('should return correct results after multiple iterations', () => {
@@ -216,11 +227,7 @@ describe('startDay', () => {
       }
     };
 
-    const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('23:30'),
-      wakeup: TimeUtils.parseTime('06:00'),
-      camp: false
-    };
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
@@ -313,6 +320,11 @@ describe('addHelps', () => {
           "averageHelps": 2,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": NaN,
             "fourty": NaN,
@@ -326,6 +338,11 @@ describe('addHelps', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0.02,
@@ -340,7 +357,6 @@ describe('addHelps', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -442,6 +458,11 @@ describe('addHelps', () => {
           "averageHelps": 0,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": NaN,
             "fourty": NaN,
@@ -455,6 +476,11 @@ describe('addHelps', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0.02,
@@ -469,7 +495,6 @@ describe('addHelps', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -541,11 +566,7 @@ describe('recoverMeal', () => {
 
 describe('attemptDayHelp', () => {
   it('shall perform a help if time surpasses scheduled help time', () => {
-    const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('23:30'),
-      wakeup: TimeUtils.parseTime('06:00'),
-      camp: false
-    };
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
 
     const member: TeamMemberExt = {
       pokemonWithIngredients: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 0 } },
@@ -572,11 +593,16 @@ describe('attemptDayHelp', () => {
           "averageHelps": 1,
           "carrySize": 10,
           "dayHelps": 1,
+          "dayPeriod": {
+            "averageEnergy": 0.3641456582633053,
+            "averageFrequency": 7.8619047619047615,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": 0,
             "fourty": 0,
             "one": 0,
-            "sixty": 0,
+            "sixty": 1,
             "zero": 0,
           },
           "ingredientPercentage": 0.2,
@@ -585,6 +611,11 @@ describe('attemptDayHelp', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0,
@@ -599,7 +630,6 @@ describe('attemptDayHelp', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -691,11 +721,7 @@ describe('attemptDayHelp', () => {
   });
 
   it('shall not perform a help if time has not passed scheduled help time', () => {
-    const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('23:30'),
-      wakeup: TimeUtils.parseTime('06:00'),
-      camp: false
-    };
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     memberState.wakeUp();
@@ -709,11 +735,16 @@ describe('attemptDayHelp', () => {
           "averageHelps": 0,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0.3641456582633053,
+            "averageFrequency": 7.8619047619047615,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": NaN,
             "fourty": NaN,
             "one": NaN,
-            "sixty": NaN,
+            "sixty": Infinity,
             "zero": NaN,
           },
           "ingredientPercentage": 0.2,
@@ -722,6 +753,11 @@ describe('attemptDayHelp', () => {
           "nightHelps": 0,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 0,
+          "nightPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 0.02,
@@ -736,7 +772,6 @@ describe('attemptDayHelp', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,
@@ -788,11 +823,7 @@ describe('attemptDayHelp', () => {
   });
 
   it('shall schedule the next help', () => {
-    const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('23:30'),
-      wakeup: TimeUtils.parseTime('06:00'),
-      camp: false
-    };
+    const settings: TeamSettingsExt = mocks.teamSettingsExt();
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     memberState.wakeUp();
@@ -918,6 +949,11 @@ describe('attemptNightHelp', () => {
           "averageHelps": 1,
           "carrySize": 10,
           "dayHelps": 0,
+          "dayPeriod": {
+            "averageEnergy": 0,
+            "averageFrequency": 0,
+            "spilledIngredients": [],
+          },
           "frequencySplit": {
             "eighty": 1,
             "fourty": 0,
@@ -931,6 +967,11 @@ describe('attemptNightHelp', () => {
           "nightHelps": 1,
           "nightHelpsAfterSS": 0,
           "nightHelpsBeforeSS": 1,
+          "nightPeriod": {
+            "averageEnergy": 0.9803921568627451,
+            "averageFrequency": 14.007352941176471,
+            "spilledIngredients": [],
+          },
           "skillCritValue": 0,
           "skillCrits": 0,
           "skillPercentage": 1,
@@ -945,7 +986,6 @@ describe('attemptNightHelp', () => {
             },
             "level": 60,
           },
-          "spilledIngredients": [],
           "teamSupport": {
             "energy": 0,
             "helps": 0,

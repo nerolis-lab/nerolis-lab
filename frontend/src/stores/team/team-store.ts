@@ -18,6 +18,8 @@ import {
   subskill,
   uuid,
   type Berry,
+  type BerrySetSimple,
+  type IngredientSetSimple,
   type PokemonInstanceExt,
   type RecipeType,
   type TeamSettings
@@ -52,6 +54,8 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
       wakeup: '06:00',
       recipeType: 'curry',
       favoredBerries: [],
+      stockpiledBerries: [],
+      stockpiledIngredients: [],
       version: 0,
       members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
       memberIvs: {},
@@ -65,7 +69,7 @@ export const useTeamStore = defineStore('team', {
   // NOTE: If state is changed, migration/outdate must be updated
   state: (): TeamState => defaultState(),
   getters: {
-    getCurrentTeam: (state) => state.teams[state.currentIndex],
+    getCurrentTeam: (state: TeamState) => state.teams[state.currentIndex],
     getPokemon: (state) => {
       return (memberIndex: number) => {
         const pokemonStore = usePokemonStore()
@@ -73,24 +77,24 @@ export const useTeamStore = defineStore('team', {
         return pokemonExternalId != null ? pokemonStore.getPokemon(pokemonExternalId) : undefined
       }
     },
-    getTeamSize: (state) => state.teams[state.currentIndex].members.filter(Boolean).length,
+    getTeamSize: (state: TeamState) => state.teams[state.currentIndex].members.filter(Boolean).length,
     getMemberLoading(state) {
       return (memberIndex: number) => {
         return state.loadingMembers[memberIndex]
       }
     },
-    getCurrentMember: (state) => {
+    getCurrentMember: (state: TeamState) => {
       const currentTeam = state.teams[state.currentIndex]
       return currentTeam.members.at(currentTeam.memberIndex)
     },
-    getMemberIvLoading: (state) => (externalId: string) => {
+    getMemberIvLoading: (state: TeamState) => (externalId: string) => {
       const currentTeam = state.teams[state.currentIndex]
       // member is loading if key exists, but value is undefined
       if (externalId in currentTeam.memberIvs) {
         return currentTeam.memberIvs[externalId] === undefined
       } else return false
     },
-    getCurrentMembersWithProduction: (state) => {
+    getCurrentMembersWithProduction: (state: TeamState) => {
       const pokemonStore = usePokemonStore()
 
       const currentTeam = state.teams[state.currentIndex]
@@ -133,6 +137,12 @@ export const useTeamStore = defineStore('team', {
         }
         if (!team.memberIvs) {
           team.memberIvs = {}
+        }
+        if (!team.stockpiledBerries) {
+          team.stockpiledBerries = []
+        }
+        if (!team.stockpiledIngredients) {
+          team.stockpiledIngredients = []
         }
       }
 
@@ -218,7 +228,16 @@ export const useTeamStore = defineStore('team', {
       const userStore = useUserStore()
       if (userStore.loggedIn) {
         try {
-          const { favoredBerries: teamBerries, name, camp, bedtime, wakeup, recipeType } = this.getCurrentTeam
+          const {
+            favoredBerries: teamBerries,
+            name,
+            camp,
+            bedtime,
+            wakeup,
+            recipeType,
+            stockpiledBerries,
+            stockpiledIngredients
+          } = this.getCurrentTeam
 
           const anyFavoredBerries = teamBerries?.length > 0
           const favoredBerries = anyFavoredBerries
@@ -233,7 +252,9 @@ export const useTeamStore = defineStore('team', {
             bedtime,
             wakeup,
             recipeType,
-            favoredBerries
+            favoredBerries,
+            stockpiledBerries,
+            stockpiledIngredients
           })
 
           this.getCurrentTeam.version = version
@@ -256,6 +277,8 @@ export const useTeamStore = defineStore('team', {
         wakeup: '06:00',
         recipeType: 'curry',
         favoredBerries: [],
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
         version: 0,
         members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
         memberIvs: {},
@@ -320,7 +343,8 @@ export const useTeamStore = defineStore('team', {
       const settings: TeamSettings = {
         camp: this.teams[teamIndex].camp,
         bedtime: this.teams[teamIndex].bedtime,
-        wakeup: this.teams[teamIndex].wakeup
+        wakeup: this.teams[teamIndex].wakeup,
+        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients
       }
       this.teams[teamIndex].production = await TeamService.calculateProduction({
         members,
@@ -392,6 +416,14 @@ export const useTeamStore = defineStore('team', {
       this.updateTeam()
       await this.calculateProduction(this.currentIndex)
       this.resetCurrentTeamIvs() // reset after production is available
+    },
+    async updateStockpile(params: { ingredients: IngredientSetSimple[]; berries: BerrySetSimple[] }) {
+      const { ingredients, berries } = params
+      this.getCurrentTeam.stockpiledIngredients = ingredients
+      this.getCurrentTeam.stockpiledBerries = berries
+
+      this.updateTeam()
+      await this.calculateProduction(this.currentIndex)
     },
     async updateSleep(params: { bedtime: string; wakeup: string }) {
       const { bedtime, wakeup } = params

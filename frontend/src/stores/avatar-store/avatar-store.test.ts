@@ -30,15 +30,15 @@ describe('Avatar Store', () => {
     const store = useAvatarStore()
     store.avatars = {
       default: 'default.png',
-      pikachu: 'portrait/pikachu.png',
       charmander: 'portrait/charmander.png',
+      pikachu: 'portrait/pikachu.png',
       shinyPikachu: 'portrait/shinyPikachu.png'
     }
     const baseAvatars = store.getBasePokemonAvatars
     expect(baseAvatars).toEqual([
-      { name: 'default', path: 'default.png' },
-      { name: 'pikachu', path: 'portrait/pikachu.png' },
-      { name: 'charmander', path: 'portrait/charmander.png' }
+      { name: 'default', path: 'default.png', pokedexNumber: 0, displayName: 'Default' },
+      { name: 'charmander', path: 'portrait/charmander.png', pokedexNumber: 4, displayName: 'Charmander' },
+      { name: 'pikachu', path: 'portrait/pikachu.png', pokedexNumber: 25, displayName: 'Pikachu' }
     ])
   })
 

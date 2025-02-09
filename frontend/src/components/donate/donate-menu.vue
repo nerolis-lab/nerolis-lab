@@ -23,7 +23,6 @@
           With just $1/month, you can support the development of Neroli's Lab and help keep it free for everyone!
         </v-list-item>
         <v-list-item>
-          <!-- TODO: should not hard code color -->
           <v-card
             id="patreonButton"
             title="Patreon"

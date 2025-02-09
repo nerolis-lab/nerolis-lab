@@ -23,6 +23,8 @@ export async function upsertTeamMeta(team: DBTeamWithoutVersion): Promise<Upsert
     wakeup: upsertedTeam.wakeup,
     recipeType: upsertedTeam.recipe_type,
     favoredBerries: upsertedTeam.favored_berries?.split(','),
+    stockpiledBerries: TeamDAO.stringToStockpile(upsertedTeam.stockpiled_berries, true),
+    stockpiledIngredients: TeamDAO.stringToStockpile(upsertedTeam.stockpiled_ingredients, false),
     version: upsertedTeam.version
   };
 }
