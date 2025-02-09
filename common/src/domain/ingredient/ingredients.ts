@@ -139,6 +139,7 @@ export const INGREDIENTS: Ingredient[] = [
   SLOWPOKE_TAIL
 ];
 
+
 export const TOTAL_NUMBER_OF_INGREDIENTS = INGREDIENTS.length;
 
 export function createIngredient(params: {
