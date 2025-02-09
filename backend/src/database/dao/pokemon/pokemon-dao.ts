@@ -2,7 +2,7 @@ import type { Static } from '@sinclair/typebox';
 import { Type } from '@sinclair/typebox';
 import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract-dao.js';
 import { IngredientError } from '@src/domain/error/ingredient/ingredient-error.js';
-import type { IngredientInstance, SubskillInstance } from 'sleepapi-common';
+import { getPokemon, type IngredientInstance, type SubskillInstance } from 'sleepapi-common';
 
 const DBPokemonSchema = Type.Composite([
   DBWithVersionedIdSchema,
@@ -63,11 +63,33 @@ class PokemonDAOImpl extends AbstractDAO<typeof DBPokemonSchema> {
   }
 
   public ingredientForLevel(level: number, ingredients: IngredientInstance[]) {
-    const ingredient = ingredients.find((ingredient) => ingredient.level === level)?.ingredient;
+    const ingredient = ingredients.find((ingredient) => ingredient.level === level)?.name;
     if (!ingredient) {
       throw new IngredientError('Missing required ingredient in upsert member request for level: ' + level);
     }
     return ingredient;
+  }
+
+  public filterChosenIngredientList(pokemonInstance: DBPokemon): IngredientInstance[] {
+    const { ingredient_0, ingredient_30, ingredient_60, pokemon } = pokemonInstance;
+    const member = getPokemon(pokemon);
+    return [
+      {
+        level: 0,
+        name: ingredient_0,
+        amount: member.ingredient0.amount
+      },
+      {
+        level: 30,
+        name: ingredient_30,
+        amount: member.ingredient30.find((ing) => ing.ingredient.name === ingredient_30)?.amount ?? 0
+      },
+      {
+        level: 60,
+        name: ingredient_60,
+        amount: member.ingredient60.find((ing) => ing.ingredient.name === ingredient_60)?.amount ?? 0
+      }
+    ];
   }
 }
 

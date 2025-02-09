@@ -340,11 +340,53 @@ describe('subskillForLevel', () => {
 describe('ingredientForLevel', () => {
   it('shall return the ingredient matching the level', () => {
     const ingredients: IngredientInstance[] = [
-      { level: 1, ingredient: 'ingredient1' },
-      { level: 2, ingredient: 'ingredient2' }
+      { level: 1, name: 'ingredient1', amount: 2 },
+      { level: 2, name: 'ingredient2', amount: 5 }
     ];
 
     expect(PokemonDAO.ingredientForLevel(1, ingredients)).toEqual('ingredient1');
     expect(PokemonDAO.ingredientForLevel(2, ingredients)).toEqual('ingredient2');
+  });
+});
+
+describe('filterChosenIngredientList', () => {
+  it('shall return expected ingredient list', async () => {
+    const pokemon = await PokemonDAO.insert({
+      fk_user_id: 1,
+      saved: true,
+      shiny: false,
+      external_id: uuid.v4(),
+      pokemon: 'Pikachu',
+      name: 'Sparky',
+      skill_level: 5,
+      carry_size: 10,
+      level: 25,
+      ribbon: 0,
+      nature: 'Brave',
+      ingredient_0: 'Apple',
+      ingredient_30: 'Apple',
+      ingredient_60: 'Apple'
+    });
+
+    const ingredients = PokemonDAO.filterChosenIngredientList(pokemon);
+    expect(ingredients).toMatchInlineSnapshot(`
+      [
+        {
+          "amount": 1,
+          "level": 0,
+          "name": "Apple",
+        },
+        {
+          "amount": 2,
+          "level": 30,
+          "name": "Apple",
+        },
+        {
+          "amount": 4,
+          "level": 60,
+          "name": "Apple",
+        },
+      ]
+    `);
   });
 });

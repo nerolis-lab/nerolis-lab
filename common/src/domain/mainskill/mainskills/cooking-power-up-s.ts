@@ -4,7 +4,7 @@ import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
 
 export const COOKING_POWER_UP_S: Mainskill = createBaseSkill({
   name: 'Cooking Power-up S',
-  amount: [7, 10, 12, 17, 22, 27, 32],
+  amount: [7, 10, 12, 17, 22, 27, 31],
   unit: 'pot size',
   maxLevel: MAX_SKILL_LEVEL,
   description: 'Gives your pot room for ? more ingredients next time you cook.',

@@ -1,3 +1,4 @@
+import type { SubskillInstanceExt } from '../instance/subskill-instance';
 import type { Nature } from '../nature/nature';
 import { ADAMANT, CAREFUL, QUIET } from '../nature/nature';
 import type { Pokemon } from '../pokemon/pokemon';
@@ -13,7 +14,6 @@ import {
   SKILL_TRIGGER_S
 } from '../subskill/subskills';
 import type { TeamMemberSettingsExt } from '../team';
-import type { SubskillInstanceExt } from '../types/pokemon-instance';
 
 export interface Optimal {
   subskills: SubskillInstanceExt[];

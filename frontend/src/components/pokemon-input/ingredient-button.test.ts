@@ -2,9 +2,11 @@ import IngredientButton from '@/components/pokemon-input/ingredient-button.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
+  GENGAR,
+  ingredient,
+  mockIngredientSet,
   PIKACHU,
   PINSIR,
-  type Ingredient,
   type IngredientInstanceExt,
   type IngredientSet,
   type PokemonInstanceExt
@@ -56,7 +58,11 @@ describe('IngredientButton', () => {
       ingredientLevel: 60,
       pokemonInstance: {
         ...mockPokemon,
-        pokemon: PINSIR
+        ingredients: [
+          { ...mockIngredientSet(), level: 0 },
+          { ...mockIngredientSet(), level: 30 },
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
+        ]
       }
     })
 
@@ -74,7 +80,12 @@ describe('IngredientButton', () => {
       ingredientLevel: 60,
       pokemonInstance: {
         ...mockPokemon,
-        pokemon: PINSIR
+        pokemon: PINSIR,
+        ingredients: [
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 0 },
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 30 },
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
+        ]
       }
     })
     await wrapper.setData({ fab: true })
@@ -95,7 +106,12 @@ describe('IngredientButton', () => {
       ingredientLevel: 60,
       pokemonInstance: {
         ...mockPokemon,
-        pokemon: PINSIR
+        pokemon: PINSIR,
+        ingredients: [
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 0 },
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 30 },
+          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
+        ]
       }
     })
     // Use fake timers
@@ -114,16 +130,14 @@ describe('IngredientButton', () => {
     // Advance timers by 300ms
     vitest.advanceTimersByTime(300)
 
-    expect(wrapper.vm.ingredientSet!.ingredient.name).toBe('Apple')
-
     const emitted = wrapper.emitted('update-ingredient') as Array<
-      Array<{ ingredient: Ingredient; ingredientLevel: number }>
+      Array<{ ingredientSet: IngredientSet; ingredientLevel: number }>
     >
 
-    expect(emitted).toHaveLength(2)
-    const emittedEvent = emitted[1][0]
+    expect(emitted).toHaveLength(1)
+    const emittedEvent = emitted[0][0]
 
-    expect(emittedEvent.ingredient.name).toBe('Apple')
+    expect(emittedEvent.ingredientSet.ingredient.name).toBe('Apple')
     expect(emittedEvent.ingredientLevel).toBe(60)
 
     // Clear mock timers after the test
@@ -141,10 +155,12 @@ describe('IngredientButton', () => {
       ingredientLevel: 30,
       pokemonInstance: {
         ...mockPokemon,
-        pokemon: {
-          ...mockPokemon.pokemon,
-          ingredient30: [{ ingredient: { name: 'Herb' }, amount: 0 } as IngredientSet]
-        }
+        pokemon: GENGAR,
+        ingredients: [
+          { ...mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 0 },
+          { ...mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 30 },
+          { ...mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 60 }
+        ]
       }
     })
     expect(wrapper.vm.ingredientSet?.ingredient.name).toBe('Herb')

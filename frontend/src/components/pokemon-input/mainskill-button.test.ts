@@ -29,8 +29,10 @@ describe('MainskillButton', () => {
   })
 
   it('renders correctly with provided data', async () => {
-    await wrapper.setProps({
-      pokemonInstance: { pokemon: GENGAR, skillLevel: 0 } as PokemonInstanceExt
+    wrapper = mount(MainskillButton, {
+      props: {
+        pokemonInstance: createMockPokemon({ pokemon: GENGAR, skillLevel: 3 })
+      }
     })
     expect(wrapper.find('.responsive-text').text()).toBe('Charge Strength S RangeLv.3')
     expect(wrapper.find('.responsive-text-small').text()).toContain(

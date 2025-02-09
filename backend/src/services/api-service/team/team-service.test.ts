@@ -321,9 +321,9 @@ describe('upsertTeamMember', () => {
       nature: 'brave',
       subskills: [],
       ingredients: [
-        { level: 0, ingredient: 'apple' },
-        { level: 30, ingredient: 'apple' },
-        { level: 60, ingredient: 'apple' }
+        { level: 0, name: 'apple', amount: 2 },
+        { level: 30, name: 'apple', amount: 5 },
+        { level: 60, name: 'apple', amount: 7 }
       ]
     };
 
@@ -345,9 +345,9 @@ describe('upsertTeamMember', () => {
       nature: 'brave',
       subskills: [],
       ingredients: [
-        { level: 0, ingredient: 'apple' },
-        { level: 30, ingredient: 'apple' },
-        { level: 60, ingredient: 'apple' }
+        { level: 0, name: 'apple', amount: 2 },
+        { level: 30, name: 'apple', amount: 5 },
+        { level: 60, name: 'apple', amount: 7 }
       ]
     });
 
@@ -429,9 +429,9 @@ describe('upsertTeamMember', () => {
         { level: 25, subskill: 'solar-beam' }
       ],
       ingredients: [
-        { level: 0, ingredient: 'apple' },
-        { level: 30, ingredient: 'berry' },
-        { level: 60, ingredient: 'pearl' }
+        { level: 0, name: 'apple', amount: 2 },
+        { level: 30, name: 'apple', amount: 5 },
+        { level: 60, name: 'apple', amount: 7 }
       ]
     };
 
@@ -489,9 +489,9 @@ describe('upsertTeamMember', () => {
         { level: 25, subskill: 'solar-beam' }
       ],
       ingredients: [
-        { level: 0, ingredient: 'apple' },
-        { level: 30, ingredient: 'berry' },
-        { level: 60, ingredient: 'pearl' }
+        { level: 0, name: 'apple', amount: 2 },
+        { level: 30, name: 'apple', amount: 5 },
+        { level: 60, name: 'apple', amount: 7 }
       ]
     });
 
@@ -515,8 +515,8 @@ describe('upsertTeamMember', () => {
       subskill_75: undefined,
       subskill_100: undefined,
       ingredient_0: 'apple',
-      ingredient_30: 'berry',
-      ingredient_60: 'pearl',
+      ingredient_30: 'apple',
+      ingredient_60: 'apple',
       version: 2
     });
 
@@ -571,8 +571,8 @@ describe('upsertTeamMember', () => {
         { level: 25, subskill: 'solar-beam' }
       ],
       ingredients: [
-        { level: 0, ingredient: 'apple' },
-        { level: 30, ingredient: 'berry' }
+        { level: 0, name: 'apple', amount: 2 },
+        { level: 30, name: 'apple', amount: 5 }
         // Missing ingredient for level 60
       ]
     };
