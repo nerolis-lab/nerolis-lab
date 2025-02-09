@@ -1,3 +1,10 @@
+# [1.30.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.1...v1.30.0) (2025-02-09)
+
+
+### Features
+
+* add ingredientset to API ([9344a01](https://github.com/nerolis-lab/nerolis-lab/commit/9344a018b1bef34b4deff43c51fbe71bb3595927))
+
 ## [1.29.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.0...v1.29.1) (2025-02-08)
 
 
