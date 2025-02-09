@@ -4,6 +4,8 @@ import type { Recipe, RecipeFlat, RecipeType } from '../../domain/recipe';
 import { emptyIngredientInventoryFloat } from '../../utils/flat-utils';
 import { ING_ID_LOOKUP } from '../ingredient-utils/ingredient-utils';
 
+export const ingredientBonusCache = new Map<string, number>();
+
 export function createCurry(params: { name: string; ingredients: IngredientSet[]; bonus: number }): Recipe {
   return createRecipe({ ...params, type: 'curry' });
 }
@@ -78,6 +80,7 @@ export function recipeCoverage(recipe: Int16Array, ingredients: IngredientIndexT
 function createRecipe(params: { name: string; ingredients: IngredientSet[]; bonus: number; type: RecipeType }): Recipe {
   const { name, ingredients, bonus, type } = params;
   const nrOfIngredients = ingredients.reduce((sum, cur) => sum + cur.amount, 0);
+  updateIngredientBonus(ingredients, bonus);
   return {
     name,
     value: calculateRecipeValue({ level: 1, ingredients, bonus }),
@@ -87,6 +90,16 @@ function createRecipe(params: { name: string; ingredients: IngredientSet[]; bonu
     bonus,
     nrOfIngredients
   };
+}
+
+export function updateIngredientBonus(ingredientSets: IngredientSet[], bonus: number): void {
+  for (const ingredientSet of ingredientSets) {
+    if (ingredientBonusCache.has(ingredientSet.ingredient.name)) {
+      ingredientBonusCache.set(ingredientSet.ingredient.name, bonus);
+    } else if (ingredientBonusCache.get(ingredientSet.ingredient.name) < bonus) {
+      ingredientBonusCache.set(ingredientSet.ingredient.name, bonus);
+    }
+  }
 }
 
 export const recipeLevelBonus: { [level: number]: number } = {
