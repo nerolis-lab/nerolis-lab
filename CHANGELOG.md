@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.2...v1.31.0) (2025-02-10)
+
+
+### Features
+
+* adds clodsire and paldean wooper ([88e13f5](https://github.com/nerolis-lab/nerolis-lab/commit/88e13f55e4d6547afdea5e0470f3bf5e39885a38))
+
 ## [1.30.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.1...v1.30.2) (2025-02-09)
 
 
