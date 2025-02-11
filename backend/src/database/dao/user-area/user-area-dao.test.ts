@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserAreaBonusDAO } from '@src/database/dao/user-area-bonus/user-area-bonus.js';
+import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -10,16 +10,16 @@ afterEach(() => {
   MockService.restore();
 });
 
-describe('UserAreaBonusDAO insert', () => {
-  it('shall insert new user area bonus entity', async () => {
-    const userAreaBonus = await UserAreaBonusDAO.insert({
+describe('UserAreaDAO insert', () => {
+  it('shall insert new user area entity', async () => {
+    const userArea = await UserAreaDAO.insert({
       fk_user_id: 2,
       area: 'Downtown',
       bonus: 15
     });
-    expect(userAreaBonus).toBeDefined();
+    expect(userArea).toBeDefined();
 
-    const data = await UserAreaBonusDAO.findMultiple();
+    const data = await UserAreaDAO.findMultiple();
     expect(data).toEqual([
       expect.objectContaining({
         id: 1,
@@ -33,41 +33,41 @@ describe('UserAreaBonusDAO insert', () => {
 
   it('shall fail to insert entity without area', async () => {
     await expect(
-      UserAreaBonusDAO.insert({
+      UserAreaDAO.insert({
         fk_user_id: 2,
         area: undefined as any,
         bonus: 15
       })
-    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user_area_bonus.area/);
+    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user_area.area/);
   });
 
   it('shall fail to insert entity without bonus', async () => {
     await expect(
-      UserAreaBonusDAO.insert({
+      UserAreaDAO.insert({
         fk_user_id: 2,
         area: 'Downtown',
         bonus: undefined as any
       })
-    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user_area_bonus.bonus/);
+    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user_area.bonus/);
   });
 });
 
-describe('UserAreaBonusDAO update', () => {
-  it('shall update user area bonus entity', async () => {
-    const userAreaBonus = await UserAreaBonusDAO.insert({
+describe('UserAreaDAO update', () => {
+  it('shall update user area entity', async () => {
+    const userArea = await UserAreaDAO.insert({
       fk_user_id: 2,
       area: 'Old Area',
       bonus: 10
     });
-    expect(userAreaBonus.area).toEqual('Old Area');
+    expect(userArea.area).toEqual('Old Area');
 
-    await UserAreaBonusDAO.update({
-      ...userAreaBonus,
+    await UserAreaDAO.update({
+      ...userArea,
       area: 'New Area',
       bonus: 20
     });
 
-    const data = await UserAreaBonusDAO.findMultiple();
+    const data = await UserAreaDAO.findMultiple();
     expect(data).toEqual([
       expect.objectContaining({
         id: 1,

@@ -3,7 +3,6 @@ import { TeamDAO } from '@src/database/dao/team/team-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { IngredientError } from '@src/domain/error/ingredient/ingredient-error.js';
-import { client } from '@src/services/api-service/login/login-service.js';
 import {
   deleteMember,
   deleteTeam,
@@ -11,6 +10,7 @@ import {
   upsertTeamMember,
   upsertTeamMeta
 } from '@src/services/api-service/team/team-service.js';
+import { client } from '@src/services/user-service/login-service/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
