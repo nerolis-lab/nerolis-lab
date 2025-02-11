@@ -1,4 +1,4 @@
-import { refresh, signup } from '@src/services/api-service/login/login-service.js';
+import { refresh, signup } from '@src/services/user-service/login-service/login-service.js';
 
 export default class LoginController {
   public async signup(body: { authorization_code: string }) {

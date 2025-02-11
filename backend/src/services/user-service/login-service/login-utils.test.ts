@@ -1,4 +1,4 @@
-import { generateFriendCode } from '@src/services/api-service/login/login-utils.js';
+import { generateFriendCode } from '@src/services/user-service/login-service/login-utils.js';
 import { describe, expect, it } from 'vitest';
 
 describe('generateFriendCode', () => {
