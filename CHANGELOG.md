@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.31.1...v1.32.0) (2025-02-11)
+
+
+### Features
+
+* user recipe and area APIs ([6736961](https://github.com/nerolis-lab/nerolis-lab/commit/67369614634813efe70e06867e8aa89276839e2f))
+
 ## [1.31.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.31.0...v1.31.1) (2025-02-10)
 
 # [1.31.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.2...v1.31.0) (2025-02-10)
