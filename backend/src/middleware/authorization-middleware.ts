@@ -1,6 +1,6 @@
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
-import { verifyAdmin, verifyExistingUser } from '@src/services/api-service/login/login-service.js';
+import { verifyAdmin, verifyExistingUser } from '@src/services/user-service/login-service/login-service.js';
 import type { NextFunction, Request, Response } from 'express';
 
 export interface AuthenticatedRequest extends Request<unknown, unknown, unknown, unknown> {
