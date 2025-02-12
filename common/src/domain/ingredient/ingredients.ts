@@ -21,7 +21,12 @@ export const GREENGRASS_SOYBEANS: Ingredient = createIngredient({
   longName: 'Greengrass Soybeans'
 });
 
-export const HONEY: Ingredient = createIngredient({ name: 'Honey', value: 101, taxedValue: 29.8, longName: 'Honey' });
+export const HONEY: Ingredient = createIngredient({
+  name: 'Honey',
+  value: 101,
+  taxedValue: 29.8,
+  longName: 'Honey'
+});
 
 export const BEAN_SAUSAGE: Ingredient = createIngredient({
   name: 'Sausage',
