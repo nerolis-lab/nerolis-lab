@@ -191,11 +191,11 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
-  MAX_RECIPE_BONUS,
   MAX_RECIPE_LEVEL,
   MathUtils,
   compactNumber,
   defaultZero,
+  ingredientBonusCache,
   mainskill,
   recipeLevelBonus,
   type MemberProduction
@@ -356,16 +356,14 @@ export default defineComponent({
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))
     },
     highestIngredientPower(memberProduction: MemberProduction) {
-      const recipeBonus = 1 + MAX_RECIPE_BONUS / 100
       const maxLevelRecipeMultiplier = recipeLevelBonus[MAX_RECIPE_LEVEL]
       const amount =
-        recipeBonus *
         maxLevelRecipeMultiplier *
         this.userStore.islandBonus *
-        memberProduction.produceTotal.ingredients.reduce(
-          (sum, cur) => sum + cur.amount * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER,
-          0
-        )
+        memberProduction.produceTotal.ingredients.reduce((sum, cur) => {
+          const ingredientBonus = 1 + (ingredientBonusCache.get(cur.ingredient.name) ?? 0) / 100
+          return sum + cur.amount * ingredientBonus * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER
+        }, 0)
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))
     },
     setIngredientOptions(option: string) {

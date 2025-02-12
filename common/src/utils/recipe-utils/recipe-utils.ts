@@ -94,10 +94,10 @@ function createRecipe(params: { name: string; ingredients: IngredientSet[]; bonu
 
 export function updateIngredientBonus(ingredientSets: IngredientSet[], bonus: number): void {
   for (const ingredientSet of ingredientSets) {
-    if (ingredientBonusCache.has(ingredientSet.ingredient.name)) {
-      ingredientBonusCache.set(ingredientSet.ingredient.name, bonus);
-    } else if (ingredientBonusCache.get(ingredientSet.ingredient.name) < bonus) {
-      ingredientBonusCache.set(ingredientSet.ingredient.name, bonus);
+    const ingredientName = ingredientSet.ingredient.name;
+    const currentBonus = ingredientBonusCache.get(ingredientName);
+    if (currentBonus === undefined || currentBonus < bonus) {
+      ingredientBonusCache.set(ingredientName, bonus);
     }
   }
 }

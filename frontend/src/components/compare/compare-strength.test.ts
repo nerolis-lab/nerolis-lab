@@ -9,9 +9,9 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
-  MAX_RECIPE_BONUS,
   MAX_RECIPE_LEVEL,
   berryPowerForLevel,
+  ingredientBonusCache,
   recipeLevelBonus,
   type MemberProduction
 } from 'sleepapi-common'
@@ -74,11 +74,13 @@ describe('CompareStrength', () => {
 
     // Check ingredient power range
     const highestIngredientValue = Math.floor(
-      (1 + MAX_RECIPE_BONUS / 100) *
-        recipeLevelBonus[MAX_RECIPE_LEVEL] *
+      recipeLevelBonus[MAX_RECIPE_LEVEL] *
         userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
-        mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount * cur.ingredient.value, 0)
+        mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
+          const ingredientBonus = 1 + (ingredientBonusCache.get(cur.ingredient.name) ?? 0) / 100
+          return sum + cur.amount * ingredientBonus * cur.ingredient.value
+        }, 0)
     )
     expect(wrapper.vm.highestIngredientPower(mockMemberProduction)).toEqual(highestIngredientValue)
 
@@ -139,14 +141,13 @@ describe('CompareStrength', () => {
 
     // Check ingredient power range
     const highestIngredientValue = Math.floor(
-      ((1 + MAX_RECIPE_BONUS / 100) *
-        recipeLevelBonus[MAX_RECIPE_LEVEL] *
+      (recipeLevelBonus[MAX_RECIPE_LEVEL] *
         userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
-        mockMemberProduction.produceTotal.ingredients.reduce(
-          (sum, cur) => sum + cur.amount * cur.ingredient.value,
-          0
-        )) /
+        mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
+          const ingredientBonus = 1 + (ingredientBonusCache.get(cur.ingredient.name) ?? 0) / 100
+          return sum + cur.amount * ingredientBonus * cur.ingredient.value
+        }, 0)) /
         3
     )
     expect(wrapper.vm.highestIngredientPower(mockMemberProduction)).toEqual(highestIngredientValue)
