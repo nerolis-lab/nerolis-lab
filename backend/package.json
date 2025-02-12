@@ -14,9 +14,7 @@
     "start": "npm run build && node ./dist/app.js",
     "dev": "bun i && bun --watch src/app.ts"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "devDependencies": {
     "@types/bun": "^1.1.17",
     "@types/cors": "^2.8.15",
