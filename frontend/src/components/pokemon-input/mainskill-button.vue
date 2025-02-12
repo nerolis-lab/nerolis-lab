@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
-import { type Pokemon, type PokemonInstanceExt } from 'sleepapi-common'
+import { type PokemonInstanceExt } from 'sleepapi-common'
 import type { PropType } from 'vue'
 
 export default {
@@ -59,11 +59,12 @@ export default {
   setup() {
     return { mainskillImage }
   },
-  data: () => ({
-    mainskillLevel: 1,
-    menu: false,
-    defaultValues: {} as Record<number, string>
-  }),
+  data(this: { pokemonInstance: PokemonInstanceExt }) {
+    return {
+      mainskillLevel: this.pokemonInstance.skillLevel,
+      menu: false
+    }
+  },
   computed: {
     skillName() {
       return this.pokemonInstance.pokemon.skill.name
@@ -76,26 +77,21 @@ export default {
     },
     pokemon() {
       return this.pokemonInstance.pokemon
+    },
+    defaultValues() {
+      return Array.from({ length: this.pokemon.skill.maxLevel }, (_, i) => i + 1).reduce(
+        (acc, val) => {
+          acc[val] = val.toString()
+          return acc
+        },
+        {} as Record<number, string>
+      )
     }
   },
   watch: {
     pokemon: {
-      handler(newPokemon: Pokemon) {
-        if (this.pokemonInstance.skillLevel > 0) {
-          this.mainskillLevel = Math.min(this.pokemonInstance.skillLevel, newPokemon.skill.maxLevel)
-        } else {
-          const nrOfEvolutions = newPokemon.previousEvolutions
-          this.mainskillLevel = 1 + nrOfEvolutions
-        }
-        this.$emit('update-skill-level', this.mainskillLevel)
-
-        this.defaultValues = Array.from({ length: newPokemon.skill.maxLevel }, (_, i) => i + 1).reduce(
-          (acc, val) => {
-            acc[val] = val.toString()
-            return acc
-          },
-          {} as Record<number, string>
-        )
+      handler() {
+        this.mainskillLevel = this.pokemonInstance.skillLevel
       }
     },
     mainskillLevel(newLevel: number) {

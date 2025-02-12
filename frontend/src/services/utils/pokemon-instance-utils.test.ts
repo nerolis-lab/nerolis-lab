@@ -27,22 +27,22 @@ const mockPokemonInstanceWithMeta: PokemonInstanceWithMeta = {
     { level: 25, subskill: 'Berry Finding S' }
   ],
   ingredients: [
-    { level: 0, ingredient: 'Apple' },
-    { level: 30, ingredient: 'Apple' },
-    { level: 60, ingredient: 'Apple' }
+    { level: 0, name: 'Apple', amount: 2 },
+    { level: 30, name: 'Apple', amount: 5 },
+    { level: 60, name: 'Apple', amount: 7 }
   ]
 }
 
 describe('toPokemonInstanceExt', () => {
   it('should convert a valid PokemonInstanceWithMeta to PokemonInstanceExt', () => {
     const result = PokemonInstanceUtils.toPokemonInstanceExt(mockPokemonInstanceWithMeta)
-    expect(result).toEqual({ ...mockPokemonInstanceExt, rp: 674 })
+    expect(result).toEqual({ ...mockPokemonInstanceExt, rp: 834 })
   })
 
   it('should throw an error if ingredient data is corrupt (not exactly 3)', () => {
-    const corruptInstance = {
+    const corruptInstance: PokemonInstanceWithMeta = {
       ...mockPokemonInstanceWithMeta,
-      ingredients: [{ level: 0, ingredient: 'incorrect' }]
+      ingredients: [{ level: 0, name: 'incorrect', amount: 2 }]
     }
 
     expect(() => PokemonInstanceUtils.toPokemonInstanceExt(corruptInstance)).toThrow('Received corrupt ingredient data')
@@ -72,9 +72,9 @@ describe('toUpsertTeamMemberRequest', () => {
   })
 
   it('should throw an error if ingredient data is corrupt (not exactly 3)', () => {
-    const corruptInstance = {
+    const corruptInstance: PokemonInstanceExt = {
       ...mockPokemonInstanceExt,
-      ingredients: [{ level: 0, ingredient: ingredient.BEAN_SAUSAGE }]
+      ingredients: [{ level: 0, ingredient: ingredient.BEAN_SAUSAGE, amount: 2 }]
     }
 
     expect(() => PokemonInstanceUtils.toUpsertTeamMemberRequest(corruptInstance)).toThrow(
@@ -113,9 +113,10 @@ describe('toPokemonInstanceIdentity', () => {
         level: subskill.level,
         subskill: subskill.subskill.name
       })),
-      ingredients: mockPokemonInstanceExt.ingredients.map((ingredient) => ({
-        level: ingredient.level,
-        ingredient: ingredient.ingredient.name
+      ingredients: mockPokemonInstanceExt.ingredients.map((ingredientSet) => ({
+        level: ingredientSet.level,
+        name: ingredientSet.ingredient.name,
+        amount: ingredientSet.amount
       })),
       carrySize: mockPokemonInstanceExt.carrySize,
       level: mockPokemonInstanceExt.level,

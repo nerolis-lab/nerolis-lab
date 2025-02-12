@@ -1,22 +1,17 @@
 import { config } from '@src/config/config.js';
-import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import {
   client,
-  deletePokemon,
   deleteUser,
-  getSavedPokemon,
   refresh,
   signup,
   updateUser,
-  upsertPokemon,
   verifyAdmin,
   verifyExistingUser
-} from '@src/services/api-service/login/login-service.js';
+} from '@src/services/user-service/login-service/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { PokemonInstanceWithMeta } from 'sleepapi-common';
 import { Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
@@ -276,140 +271,6 @@ describe('delete', () => {
   });
 });
 
-describe('getSavedPokemon', () => {
-  it("shall return a user's saved pokemon", async () => {
-    const user = await UserDAO.insert({
-      sub: 'some-sub',
-      external_id: uuid.v4(),
-      friend_code: 'TESTFC',
-      name: 'Existing user',
-      role: Roles.Default
-    });
-    const pkmnSaved = await PokemonDAO.insert({
-      ...basePokemon,
-      saved: true,
-      external_id: 'saved id',
-      fk_user_id: user.id
-    });
-    await PokemonDAO.insert({ ...basePokemon, saved: false, external_id: 'not saved id', fk_user_id: user.id });
-
-    expect((await getSavedPokemon(user)).map((pkmn) => pkmn.externalId)).toEqual([pkmnSaved.external_id]);
-  });
-});
-
-describe('upsertPokemon', () => {
-  const pokemonInstance: PokemonInstanceWithMeta = {
-    carrySize: 0,
-    externalId: 'ext id',
-    ingredients: [
-      { level: 0, ingredient: 'ing0' },
-      { level: 30, ingredient: 'ing30' },
-      { level: 60, ingredient: 'ing60' }
-    ],
-    level: 0,
-    name: 'name',
-    nature: 'nature',
-    pokemon: 'pokemon',
-    ribbon: 0,
-    saved: false,
-    shiny: false,
-    gender: 'female',
-    skillLevel: 0,
-    subskills: [],
-    version: 0
-  };
-  it('shall insert pokemon if not exists and saved is true', async () => {
-    const user = await UserDAO.insert({
-      sub: 'some-sub',
-      external_id: uuid.v4(),
-      name: 'Existing user',
-      friend_code: 'TESTFC',
-      role: Roles.Default
-    });
-
-    await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: true } });
-
-    expect(await PokemonDAO.findMultiple()).toHaveLength(1);
-  });
-
-  it('shall update pokemon if pre-exists', async () => {
-    const user = await UserDAO.insert({
-      sub: 'some-sub',
-      external_id: uuid.v4(),
-      friend_code: 'TESTFC',
-      name: 'Existing user',
-      role: Roles.Default
-    });
-
-    await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: true } });
-    await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: true } });
-
-    const pkmns = await PokemonDAO.findMultiple();
-    expect(pkmns).toHaveLength(1);
-    expect(pkmns[0].version).toBe(2); // it updated
-  });
-
-  it('shall delete pokemon if saved false and does not exist in any teams', async () => {
-    const user = await UserDAO.insert({
-      sub: 'some-sub',
-      external_id: uuid.v4(),
-      friend_code: 'TESTFC',
-      name: 'Existing user',
-      role: Roles.Default
-    });
-
-    await upsertPokemon({ user, pokemonInstance: { ...pokemonInstance, saved: false } });
-
-    expect(await PokemonDAO.findMultiple()).toHaveLength(0);
-  });
-});
-
-describe('deletePokemon', () => {
-  it('shall delete specific pokemon for user', async () => {
-    const user = await UserDAO.insert({
-      sub: 'some-sub',
-      external_id: uuid.v4(),
-      name: 'Existing user',
-      friend_code: 'TESTFC',
-      role: Roles.Default
-    });
-    const pkmn = await PokemonDAO.insert({
-      ...basePokemon,
-      saved: true,
-      external_id: 'saved id',
-      fk_user_id: user.id
-    });
-
-    expect(await PokemonDAO.findMultiple()).toHaveLength(1);
-
-    await deletePokemon({ user, externalId: pkmn.external_id });
-
-    expect(await PokemonDAO.findMultiple()).toHaveLength(0);
-  });
-
-  it('shall not delete if user id matches, but external id doesnt', async () => {
-    const user = await UserDAO.insert({
-      sub: 'some-sub',
-      external_id: uuid.v4(),
-      friend_code: 'TESTFC',
-      name: 'Existing user',
-      role: Roles.Default
-    });
-    await PokemonDAO.insert({
-      ...basePokemon,
-      saved: true,
-      external_id: 'saved id',
-      fk_user_id: user.id
-    });
-
-    expect(await PokemonDAO.findMultiple()).toHaveLength(1);
-
-    await deletePokemon({ user, externalId: 'incorrect' });
-
-    expect(await PokemonDAO.findMultiple()).toHaveLength(1);
-  });
-});
-
 describe('verifyAdmin', () => {
   it('should verify the access token and return the correct admin user', async () => {
     const accessToken = 'valid-access-token';
@@ -502,22 +363,3 @@ describe('updateUser', () => {
     );
   });
 });
-
-const basePokemon = {
-  shiny: false,
-  pokemon: 'Pikachu',
-  name: 'Sparky',
-  skill_level: 5,
-  carry_size: 10,
-  level: 25,
-  ribbon: 0,
-  nature: 'Brave',
-  subskill_10: 'Thunderbolt',
-  subskill_25: 'Quick Attack',
-  subskill_50: 'Iron Tail',
-  subskill_75: 'Electro Ball',
-  subskill_100: 'Thunder',
-  ingredient_0: 'Berry',
-  ingredient_30: 'Potion',
-  ingredient_60: 'Elixir'
-};

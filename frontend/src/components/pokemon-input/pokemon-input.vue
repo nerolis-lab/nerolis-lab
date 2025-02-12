@@ -142,11 +142,11 @@ import { useUserStore } from '@/stores/user-store'
 import {
   CarrySizeUtils,
   getPokemon,
-  mockPokemon,
+  getRandomGender,
+  ingredientIndex,
   nature,
   RP,
-  uuid,
-  type Ingredient,
+  type IngredientSet,
   type Pokemon,
   type PokemonGender,
   type PokemonInstanceExt,
@@ -169,15 +169,9 @@ export default defineComponent({
     GenderButton
   },
   props: {
-    pokemonFromPreExist: {
+    preSelectedPokemonInstance: {
       type: Object as PropType<PokemonInstanceExt>,
-      required: false,
-      default: undefined
-    },
-    pokemonFromSearch: {
-      type: undefined as PropType<Pokemon> | undefined,
-      required: false,
-      default: undefined
+      required: true
     }
   },
   emits: ['cancel', 'save'],
@@ -186,48 +180,25 @@ export default defineComponent({
     const userStore = useUserStore()
     return { teamStore, userStore }
   },
-  data: () => ({
-    pokemonInstance: {
-      version: 0,
-      externalId: '',
-      saved: false,
-      shiny: false,
-      gender: undefined,
-      pokemon: mockPokemon(),
-      name: '',
-      level: 60,
-      ribbon: 0,
-      carrySize: 0,
-      skillLevel: 0,
-      nature: nature.BASHFUL,
-      subskills: [],
-      ingredients: [],
-      rp: 0
-    } as PokemonInstanceExt
-  }),
+  data(this: { preSelectedPokemonInstance: PokemonInstanceExt }) {
+    return {
+      pokemonInstance: {
+        // used to avoid updating the original instance
+        ...JSON.parse(JSON.stringify(this.preSelectedPokemonInstance)),
+        pokemon: getPokemon(this.preSelectedPokemonInstance.pokemon.name)
+      } as PokemonInstanceExt
+    }
+  },
   watch: {
     pokemonInstance: {
       deep: true,
       handler(newPokemon: PokemonInstanceExt) {
         nextTick(() => {
-          const rp = new RP(newPokemon)
+          const rp = new RP({ ...newPokemon, ingredients: newPokemon.ingredients.filter(Boolean) })
           this.pokemonInstance.rp = rp.calc()
         })
       }
     }
-  },
-  mounted() {
-    if (this.pokemonFromPreExist) {
-      // if we don't reparse here then pokemonInstance gets linked to the original pokemonInstance and both get updated
-      this.pokemonInstance = {
-        ...JSON.parse(JSON.stringify(this.pokemonFromPreExist)),
-        pokemon: getPokemon(this.pokemonFromPreExist.pokemon.name)
-      }
-    } else if (this.pokemonFromSearch) {
-      this.pokemonInstance.pokemon = this.pokemonFromSearch
-      this.pokemonInstance.carrySize = CarrySizeUtils.maxCarrySize(this.pokemonFromSearch)
-      this.pokemonInstance.externalId = uuid.v4()
-    } else console.error('Missing both cached and search input mon, contact developer')
   },
   methods: {
     toggleSave() {
@@ -247,6 +218,14 @@ export default defineComponent({
     },
     updatePokemon(pokemon: Pokemon) {
       this.pokemonInstance.pokemon = pokemon
+      this.pokemonInstance.ingredients = [
+        { ...pokemon.ingredient0, level: 0 },
+        { ...pokemon.ingredient30[0], level: 30 },
+        { ...pokemon.ingredient60[0], level: 60 }
+      ]
+      this.pokemonInstance.skillLevel = Math.min(this.pokemonInstance.skillLevel, pokemon.skill.maxLevel)
+      this.pokemonInstance.gender = getRandomGender(pokemon)
+      this.pokemonInstance.carrySize = CarrySizeUtils.maxCarrySize(pokemon)
     },
     updateName(newName: string) {
       this.pokemonInstance.name = newName
@@ -257,15 +236,12 @@ export default defineComponent({
     updateCarry(newLimit: number) {
       this.pokemonInstance.carrySize = newLimit
     },
-    updateIngredient(params: { ingredient: Ingredient; ingredientLevel: number }) {
-      const ingredientToUpdate = this.pokemonInstance.ingredients.find((sub) => sub.level === params.ingredientLevel)
-      if (ingredientToUpdate) {
-        ingredientToUpdate.ingredient = params.ingredient
-      } else {
-        this.pokemonInstance.ingredients.push({
-          level: params.ingredientLevel,
-          ingredient: params.ingredient
-        })
+    updateIngredient(params: { ingredientSet: IngredientSet; ingredientLevel: number }) {
+      const index = ingredientIndex(params.ingredientLevel)
+      this.pokemonInstance.ingredients[index] = {
+        level: params.ingredientLevel,
+        ingredient: params.ingredientSet.ingredient,
+        amount: params.ingredientSet.amount
       }
     },
     updateSkillLevel(skillLevel: number) {

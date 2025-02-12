@@ -1,7 +1,7 @@
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import type { AuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import { validateAdmin, validateAuthHeader } from '@src/middleware/authorization-middleware.js';
-import * as loginService from '@src/services/api-service/login/login-service.js';
+import * as loginService from '@src/services/user-service/login-service/login-service.js';
 import type { NextFunction, Request, Response } from 'express';
 import { Roles, type Logger } from 'sleepapi-common';
 

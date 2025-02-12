@@ -1,3 +1,35 @@
+# [1.32.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.31.1...v1.32.0) (2025-02-11)
+
+
+### Features
+
+* user recipe and area APIs ([6736961](https://github.com/nerolis-lab/nerolis-lab/commit/67369614634813efe70e06867e8aa89276839e2f))
+
+## [1.31.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.31.0...v1.31.1) (2025-02-10)
+
+# [1.31.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.2...v1.31.0) (2025-02-10)
+
+
+### Features
+
+* adds clodsire and paldean wooper ([88e13f5](https://github.com/nerolis-lab/nerolis-lab/commit/88e13f55e4d6547afdea5e0470f3bf5e39885a38))
+
+## [1.30.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.1...v1.30.2) (2025-02-09)
+
+
+### Bug Fixes
+
+* update missed berry-light color in main ([7d31259](https://github.com/nerolis-lab/nerolis-lab/commit/7d3125963ed75a2f1b6245930cf3bed625f934ec))
+
+## [1.30.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.30.0...v1.30.1) (2025-02-09)
+
+# [1.30.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.1...v1.30.0) (2025-02-09)
+
+
+### Features
+
+* add ingredientset to API ([9344a01](https://github.com/nerolis-lab/nerolis-lab/commit/9344a018b1bef34b4deff43c51fbe71bb3595927))
+
 ## [1.29.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.29.0...v1.29.1) (2025-02-08)
 
 

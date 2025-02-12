@@ -10,7 +10,7 @@ describe('PokemonName', () => {
 
   beforeEach(() => {
     setActivePinia(createPinia())
-    const mockPokemon = createMockPokemon({ name: '' })
+    const mockPokemon = createMockPokemon({ name: 'Some name' })
     wrapper = mount(PokemonName, { props: { pokemonInstance: mockPokemon } })
   })
 
@@ -22,8 +22,7 @@ describe('PokemonName', () => {
 
   it('enables button and displays name when Pokémon is provided', async () => {
     const button = wrapper.find('button')
-    expect(button.text()).toBe('')
-    expect(wrapper.emitted('update-name')).toHaveLength(1) // emits random roll on mount and 2nd emit is manual name change
+    expect(button.text()).toBe('Some name')
   })
 
   it('opens edit dialog on button click', async () => {
@@ -59,8 +58,8 @@ describe('PokemonName', () => {
     expect(saveButton).not.toBeNull()
     saveButton.click()
 
-    expect(wrapper.emitted('update-name')).toHaveLength(2) // emits random roll on mount and 2nd emit is manual name change
-    expect(wrapper.emitted('update-name')![1]).toEqual(['NewName'])
+    expect(wrapper.emitted('update-name')).toHaveLength(1)
+    expect(wrapper.emitted('update-name')![0]).toEqual(['NewName'])
     expect(wrapper.vm.isEditDialogOpen).toBe(false)
   })
 

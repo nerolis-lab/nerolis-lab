@@ -15,6 +15,7 @@
  */
 
 import type { IngredientSet } from '../../domain/ingredient';
+import type { PokemonInstanceExt } from '../../domain/instance/pokemon-instance';
 import type { Nature } from '../../domain/nature/nature';
 import type { Pokemon } from '../../domain/pokemon';
 import {
@@ -29,7 +30,6 @@ import {
   RESEARCH_EXP_BONUS,
   SLEEP_EXP_BONUS
 } from '../../domain/subskill/subskills';
-import type { PokemonInstanceExt } from '../../domain/types/pokemon-instance';
 import { MathUtils } from '../../utils/math-utils';
 import { invertNatureFrequency } from '../../utils/nature-utils';
 import {
@@ -231,24 +231,14 @@ export class RP {
   }
 
   private filteredIngredientSet(pokemonInstance: PokemonInstanceWithoutRP): IngredientSet[] {
-    const { pokemon, ingredients, level } = pokemonInstance;
+    const { ingredients, level } = pokemonInstance;
+    const result: IngredientSet[] = [];
 
-    const ingredientSet: IngredientSet[] = [pokemon.ingredient0];
-
-    const ingredient30 = pokemon.ingredient30.find(
-      (ingList) => ingList.ingredient.name === ingredients.find((ing) => ing.level === 30)?.ingredient?.name
-    );
-    if (ingredient30 && level >= 30) {
-      ingredientSet.push(ingredient30);
+    for (const ingredientSet of ingredients) {
+      if (ingredientSet.level <= level) {
+        result.push(ingredientSet);
+      } else break;
     }
-
-    const ingredient60 = pokemon.ingredient60.find(
-      (ingList) => ingList.ingredient.name === ingredients.find((ing) => ing.level === 60)?.ingredient?.name
-    );
-    if (ingredient60 && level >= 60) {
-      ingredientSet.push(ingredient60);
-    }
-
-    return ingredientSet;
+    return result;
   }
 }

@@ -89,6 +89,9 @@ export function unsimplifyIngredientSet(ingredients: IngredientSetSimple[]): Ing
   return result;
 }
 
+export function ingredientIndex(level: number) {
+  return Math.floor(Math.min(level / 30, 2));
+}
 /**
  * Combines same ingredients in drop, e.g., [2 honey, 4 honey, 5 milk] => [6 honey, 5 milk]
  */

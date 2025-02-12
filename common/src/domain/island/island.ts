@@ -50,3 +50,4 @@ export const POWER_PLANT: Island = {
 };
 
 export const ISLANDS = [CYAN, TAUPE, SNOWDROP, LAPIS, POWER_PLANT];
+export type IslandShortName = 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant';

@@ -13,8 +13,20 @@ const pokemonProduction: MemberProductionExt = createMockMemberProductionExt({
     rp: 100,
     level: 5,
     ingredients: [
-      { ...mockIngredientSet({ amount: 2, ingredient: mockIngredient({ name: 'Ingredient A' }) }), level: 10 },
-      { ...mockIngredientSet({ amount: 2, ingredient: mockIngredient({ name: 'Ingredient B' }) }), level: 30 }
+      {
+        ...mockIngredientSet({
+          amount: 2,
+          ingredient: mockIngredient({ name: 'Ingredient A' })
+        }),
+        level: 10
+      },
+      {
+        ...mockIngredientSet({
+          amount: 2,
+          ingredient: mockIngredient({ name: 'Ingredient A' })
+        }),
+        level: 30
+      }
     ]
   }),
   production: createMockMemberProduction({
@@ -101,7 +113,13 @@ describe('MemberStats.vue', () => {
         rp: 100,
         level: 5,
         ingredients: [
-          { ...mockIngredientSet({ amount: 2, ingredient: mockIngredient({ name: 'Ingredient A' }) }), level: 10 }
+          {
+            ...mockIngredientSet({
+              amount: 2,
+              ingredient: mockIngredient({ name: 'Ingredient A' })
+            }),
+            level: 10
+          }
         ]
       }),
       production: createMockMemberProduction({

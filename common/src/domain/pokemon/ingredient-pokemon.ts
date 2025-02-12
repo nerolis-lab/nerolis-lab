@@ -558,6 +558,32 @@ export const WOOPER: Pokemon = {
   skill: CHARGE_ENERGY_S
 };
 
+export const WOOPER_PALDEAN: Pokemon = {
+  name: 'WOOPER_PALDEAN',
+  displayName: 'Wooper (Paldean Form)',
+  pokedexNumber: 194,
+  specialty: 'ingredient',
+  frequency: toSeconds(1, 46, 40),
+  ingredientPercentage: 20.9,
+  skillPercentage: 5.6,
+  berry: CHESTO,
+  genders: BALANCED_GENDER,
+  carrySize: 9,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: { amount: 2, ingredient: SOOTHING_CACAO },
+  ingredient30: [
+    { amount: 5, ingredient: SOOTHING_CACAO },
+    { amount: 4, ingredient: ROUSING_COFFEE }
+  ],
+  ingredient60: [
+    { amount: 7, ingredient: SOOTHING_CACAO },
+    { amount: 7, ingredient: ROUSING_COFFEE },
+    { amount: 9, ingredient: SOFT_POTATO }
+  ],
+  skill: CHARGE_ENERGY_S
+};
+
 export const QUAGSIRE: Pokemon = {
   ...evolvesFrom(WOOPER),
   name: 'QUAGSIRE',
@@ -1134,6 +1160,17 @@ export const QUAQUAVAL: Pokemon = {
   carrySize: 19
 };
 
+export const CLODSIRE: Pokemon = {
+  ...evolvesFrom(WOOPER_PALDEAN),
+  name: 'CLODSIRE',
+  displayName: 'Clodsire',
+  pokedexNumber: 980,
+  frequency: toSeconds(0, 58, 20),
+  ingredientPercentage: 20.8,
+  skillPercentage: 5.5,
+  carrySize: 20
+};
+
 export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   VENUSAUR,
   CHARIZARD,
@@ -1165,7 +1202,8 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   CROCALOR,
   SKELEDIRGE,
   QUAXWELL,
-  QUAQUAVAL
+  QUAQUAVAL,
+  CLODSIRE
 ];
 
 export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
@@ -1185,6 +1223,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   DRATINI,
   DRAGONAIR,
   WOOPER,
+  WOOPER_PALDEAN,
   LARVITAR,
   ARON,
   LAIRON,
