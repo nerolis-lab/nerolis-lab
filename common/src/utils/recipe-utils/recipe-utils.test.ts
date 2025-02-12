@@ -1,15 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import type { IngredientIndexToIntAmount } from '../../domain/ingredient/ingredient';
-import {
-  PURE_OIL,
-  ROUSING_COFFEE,
-  SLOWPOKE_TAIL,
-  SOFT_POTATO,
-  TOTAL_NUMBER_OF_INGREDIENTS
-} from '../../domain/ingredient/ingredients';
+import { TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 import { commonMocks } from '../../vitest';
 import { flatToIngredientSet, ingredientSetToIntFlat } from '../ingredient-utils';
-import { ingredientBonusCache, recipeCoverage, updateIngredientBonus } from './recipe-utils';
+import { recipeCoverage } from './recipe-utils';
 
 describe('recipeCoverage', () => {
   const createExpectedRemainingRecipe = (values: number[]): Int16Array => {
@@ -204,52 +198,5 @@ describe('calculateRecipeValue', () => {
     const valueLevel10 = calculateRecipeValue({ level: 10, ingredients, bonus: 10 });
 
     expect(valueLevel10).toBeGreaterThan(valueLevel1);
-  });
-});
-
-const mockRecipeList = [
-  {
-    name: 'MOCK_RECIPE_WEAK_BONUS_UNUPDATED',
-    ingredients: [
-      { amount: 10, ingredient: SLOWPOKE_TAIL },
-      { amount: 20, ingredient: SOFT_POTATO }
-    ],
-    bonus: 17.55
-  },
-  {
-    name: 'MOCK_RECIPE_WEAK_BONUS',
-    ingredients: [{ amount: 4, ingredient: PURE_OIL }],
-    bonus: 15.77
-  },
-  {
-    name: 'MOCK_RECIPE_STRONG_BONUS',
-    ingredients: [
-      { amount: 28, ingredient: ROUSING_COFFEE },
-      { amount: 22, ingredient: PURE_OIL }
-    ],
-    bonus: 61
-  }
-];
-
-describe('updateIngredientBonus', () => {
-  beforeEach(() => {
-    ingredientBonusCache.clear();
-  });
-
-  it('should correctly set the bonus for ingredients in recipes', () => {
-    mockRecipeList.forEach((recipe) => {
-      updateIngredientBonus(recipe.ingredients, recipe.bonus);
-    });
-
-    const expectedBonuses = {
-      Tail: 17.55,
-      Potato: 17.55,
-      Oil: 61,
-      Coffee: 61
-    };
-
-    for (const [ingredient, bonus] of Object.entries(expectedBonuses)) {
-      expect(ingredientBonusCache.get(ingredient)).toBe(bonus);
-    }
   });
 });

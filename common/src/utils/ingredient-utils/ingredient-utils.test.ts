@@ -6,10 +6,13 @@ import {
   HONEY,
   INGREDIENTS,
   MOOMOO_MILK,
+  ROUSING_COFFEE,
+  SOFT_POTATO,
   SOOTHING_CACAO
 } from '../../domain/ingredient/ingredients';
 import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
 import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
+import { commonMocks } from '../../vitest';
 import {
   calculateAveragePokemonIngredientSet,
   combineSameIngredientsInDrop,
@@ -18,6 +21,7 @@ import {
   getAllIngredientLists,
   getIngredient,
   getIngredientNames,
+  getMaxIngredientBonus,
   includesMagnet,
   ingredientIndex,
   ingredientSetToFloatFlat,
@@ -25,7 +29,8 @@ import {
   prettifyIngredientDrop,
   shortPrettifyIngredientDrop,
   simplifyIngredientSet,
-  unsimplifyIngredientSet
+  unsimplifyIngredientSet,
+  updateMaxIngredientBonus
 } from './ingredient-utils';
 
 describe('getIngredient', () => {
@@ -737,5 +742,46 @@ describe('ingredientIndex', () => {
   });
   it('shall return 2 for 100', () => {
     expect(ingredientIndex(100)).toBe(2);
+  });
+});
+
+const MOCK_SEAWEED = commonMocks.mockIngredient({
+  name: 'Seaweed',
+  value: 101
+});
+
+const mockRecipeList = [
+  commonMocks.recipe({
+    name: 'MOCK_RECIPE_MAX_BONUS_UPDATED',
+    ingredients: [{ amount: 1, ingredient: SOFT_POTATO }],
+    bonus: 70
+  }),
+  commonMocks.recipe({
+    name: 'MOCK_RECIPE_NEWLY_SET_BONUS',
+    ingredients: [
+      { amount: 1, ingredient: MOCK_SEAWEED },
+      { amount: 1, ingredient: ROUSING_COFFEE }
+    ],
+    bonus: 15.77
+  })
+];
+
+describe('updateIngredientBonus', () => {
+  it('should correctly set the bonus for ingredients in recipes', () => {
+    mockRecipeList.forEach((recipe) => {
+      updateMaxIngredientBonus(recipe.ingredients, recipe.bonus);
+    });
+
+    // ingredientBonusCache is populated upon startup, hence Coffee still at 61, and Tails at 25
+    const expectedBonuses = {
+      Potato: 70,
+      Seaweed: 15.77,
+      Coffee: 61,
+      Tail: 25
+    };
+
+    for (const [ingredientName, bonus] of Object.entries(expectedBonuses)) {
+      expect(getMaxIngredientBonus(ingredientName)).toBe(bonus);
+    }
   });
 });

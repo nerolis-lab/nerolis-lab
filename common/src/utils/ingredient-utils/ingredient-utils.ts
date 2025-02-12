@@ -15,6 +15,8 @@ export const ING_ID_LOOKUP: Record<string, number> = Object.fromEntries(
   INGREDIENTS.map((ingredient, index) => [ingredient.name, index])
 );
 
+const ingredientBonusCache = new Map<string, number>();
+
 export function getIngredientName(ingredient: Ingredient): string;
 export function getIngredientName(ingredient: number): string;
 export function getIngredientName(ingredient: Ingredient | number): string {
@@ -213,4 +215,18 @@ export function calculateAveragePokemonIngredientSet(
   const multiplier = 1 / ingredientsUnlocked;
   const dividedIngredients = Float32Array.from(ingredients, (value) => value * multiplier);
   return dividedIngredients;
+}
+
+export function updateMaxIngredientBonus(ingredientSets: IngredientSet[], bonus: number): void {
+  for (const ingredientSet of ingredientSets) {
+    const ingredientName = ingredientSet.ingredient.name;
+    const currentBonus = ingredientBonusCache.get(ingredientName);
+    if (currentBonus === undefined || currentBonus < bonus) {
+      ingredientBonusCache.set(ingredientName, bonus);
+    }
+  }
+}
+
+export function getMaxIngredientBonus(ingredientName: string): number {
+  return ingredientBonusCache.get(ingredientName) ?? 0;
 }
