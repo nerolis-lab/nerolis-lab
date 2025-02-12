@@ -195,7 +195,7 @@ import {
   MathUtils,
   compactNumber,
   defaultZero,
-  ingredientBonusCache,
+  getMaxIngredientBonus,
   mainskill,
   recipeLevelBonus,
   type MemberProduction
@@ -361,7 +361,7 @@ export default defineComponent({
         maxLevelRecipeMultiplier *
         this.userStore.islandBonus *
         memberProduction.produceTotal.ingredients.reduce((sum, cur) => {
-          const ingredientBonus = 1 + (ingredientBonusCache.get(cur.ingredient.name) ?? 0) / 100
+          const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
           return sum + cur.amount * ingredientBonus * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER
         }, 0)
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))

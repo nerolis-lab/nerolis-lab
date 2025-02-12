@@ -11,7 +11,7 @@ import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   MAX_RECIPE_LEVEL,
   berryPowerForLevel,
-  ingredientBonusCache,
+  getMaxIngredientBonus,
   recipeLevelBonus,
   type MemberProduction
 } from 'sleepapi-common'
@@ -78,7 +78,7 @@ describe('CompareStrength', () => {
         userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
-          const ingredientBonus = 1 + (ingredientBonusCache.get(cur.ingredient.name) ?? 0) / 100
+          const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
           return sum + cur.amount * ingredientBonus * cur.ingredient.value
         }, 0)
     )
@@ -145,7 +145,7 @@ describe('CompareStrength', () => {
         userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
-          const ingredientBonus = 1 + (ingredientBonusCache.get(cur.ingredient.name) ?? 0) / 100
+          const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
           return sum + cur.amount * ingredientBonus * cur.ingredient.value
         }, 0)) /
         3
