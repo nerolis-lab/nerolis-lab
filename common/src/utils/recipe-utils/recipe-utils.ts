@@ -90,16 +90,6 @@ function createRecipe(params: { name: string; ingredients: IngredientSet[]; bonu
   };
 }
 
-export function updateIngredientBonus(ingredientSets: IngredientSet[], bonus: number): void {
-  for (const ingredientSet of ingredientSets) {
-    if (ingredientBonusCache.has(ingredientSet.ingredient.name)) {
-      ingredientBonusCache.set(ingredientSet.ingredient.name, bonus);
-    } else if (ingredientBonusCache.get(ingredientSet.ingredient.name) < bonus) {
-      ingredientBonusCache.set(ingredientSet.ingredient.name, bonus);
-    }
-  }
-}
-
 export const recipeLevelBonus: { [level: number]: number } = {
   1: 1,
   2: 1.02,

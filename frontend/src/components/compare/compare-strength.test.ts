@@ -75,6 +75,7 @@ describe('CompareStrength', () => {
     // Check ingredient power range
     const highestIngredientValue = Math.floor(
       recipeLevelBonus[MAX_RECIPE_LEVEL] *
+      recipeLevelBonus[MAX_RECIPE_LEVEL] *
         userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
@@ -141,6 +142,7 @@ describe('CompareStrength', () => {
 
     // Check ingredient power range
     const highestIngredientValue = Math.floor(
+      (recipeLevelBonus[MAX_RECIPE_LEVEL] *
       (recipeLevelBonus[MAX_RECIPE_LEVEL] *
         userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
