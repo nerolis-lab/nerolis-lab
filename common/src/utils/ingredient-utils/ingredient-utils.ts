@@ -7,9 +7,12 @@ import type {
 } from '../../domain/ingredient/ingredient';
 import { INGREDIENTS, TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 import type { Pokemon } from '../../domain/pokemon/pokemon';
+import { Logger } from '../../prototype';
 import { emptyIngredientInventoryFloat, emptyIngredientInventoryInt } from '../flat-utils';
 import { MathUtils } from '../math-utils/math-utils';
 import { capitalize } from '../string-utils/string-utils';
+
+const logger = new Logger();
 
 export const ING_ID_LOOKUP: Record<string, number> = Object.fromEntries(
   INGREDIENTS.map((ingredient, index) => [ingredient.name, index])
@@ -228,5 +231,10 @@ export function updateMaxIngredientBonus(ingredientSets: IngredientSet[], bonus:
 }
 
 export function getMaxIngredientBonus(ingredientName: string): number {
-  return ingredientBonusCache.get(ingredientName) ?? 0;
+  const bonus = ingredientBonusCache.get(ingredientName);
+  if (bonus === undefined) {
+    logger.error(`Error: Max bonus for ingredient "${ingredientName}" not found.`);
+    return 0;
+  }
+  return bonus;
 }

@@ -772,12 +772,12 @@ describe('updateIngredientBonus', () => {
       updateMaxIngredientBonus(recipe.ingredients, recipe.bonus);
     });
 
-    // ingredientBonusCache is populated upon startup, hence Coffee still at 61, and Tails at 25
     const expectedBonuses = {
       Potato: 70,
       Seaweed: 15.77,
-      Coffee: 61,
-      Tail: 25
+      Coffee: 61, // ingredientBonusCache is populated upon startup
+      Tail: 25, // ingredientBonusCache is populated upon startup
+      Cheese: 0 // default to 0 if not in cache
     };
 
     for (const [ingredientName, bonus] of Object.entries(expectedBonuses)) {
