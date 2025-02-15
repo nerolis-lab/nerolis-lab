@@ -1,3 +1,10 @@
+# [1.33.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.32.0...v1.33.0) (2025-02-15)
+
+
+### Features
+
+* dynamic max ingredient bonuses instead of static ones ([b1d2cb0](https://github.com/nerolis-lab/nerolis-lab/commit/b1d2cb02ef075fc40070c75e668388a0a232eb2f))
+
 # [1.32.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.31.1...v1.32.0) (2025-02-11)
 
 
