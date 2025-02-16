@@ -27,6 +27,7 @@ import {
   CarrySizeUtils,
   MAX_POT_SIZE,
   MathUtils,
+  RandomUtils,
   berrySetToFlat,
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
@@ -64,6 +65,7 @@ export class MemberState {
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
   private voidHelps = 0;
+  private totalBerryStrength: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
 
   // stats
   private frequency0;
@@ -288,6 +290,15 @@ export class MemberState {
       this.totalAverageHelps += 1;
       this.helpsSinceLastCook += 1;
 
+      // Roll for berry vs ingredient
+      if (RandomUtils.roll(1 - this.ingredientPercentage)) {
+        // Berry drop
+        this.totalBerryStrength = this.totalBerryStrength._mapCombine(
+          this.averageProduce.berries._mapUnary((a) => a / (1 - this.ingredientPercentage)),
+          (current, add) => current + add
+        );
+      }
+
       return this.skillState.attemptSkill();
     }
 
@@ -311,16 +322,40 @@ export class MemberState {
 
         // if this help hits the inventory limit we split into what fits in bag and what gets spilled
         if (inventorySpace < this.averageProduceAmount) {
-          this.totalAverageHelps += inventorySpace / this.averageProduceAmount;
-          this.helpsSinceLastCook += inventorySpace / this.averageProduceAmount;
-          this.voidHelps += 1 - inventorySpace / this.averageProduceAmount;
+          const helpRatio = inventorySpace / this.averageProduceAmount;
+          this.totalAverageHelps += helpRatio;
+          this.helpsSinceLastCook += helpRatio;
+          this.voidHelps += 1 - helpRatio;
+
+          // Roll for berry vs ingredient with partial help
+          if (RandomUtils.roll(1 - this.ingredientPercentage)) {
+            // Berry drop
+            this.totalBerryStrength = this.totalBerryStrength._mapCombine(
+              this.averageProduce.berries._mapUnary((a) => helpRatio * a / (1 - this.ingredientPercentage)),
+              (current, add) => current + add
+            );
+          }
         } else {
           this.helpsSinceLastCook += 1;
           this.totalAverageHelps += 1;
+
+          // Roll for berry vs ingredient
+          if (RandomUtils.roll(1 - this.ingredientPercentage)) {
+            // Berry drop
+            this.totalBerryStrength = this.totalBerryStrength._mapCombine(
+              this.averageProduce.berries._mapUnary((a) => a / (1 - this.ingredientPercentage)),
+              (current, add) => current + add
+            );
+          }
         }
       } else {
         this.nightHelpsAfterSS += 1;
         this.totalSneakySnackHelps += 1;
+        // Sneaky snack always gives berries
+        this.totalBerryStrength = this.totalBerryStrength._mapCombine(
+          this.sneakySnackBerries,
+          (current, add) => current + add
+        );
       }
 
       this.nextHelp += frequency / 60;
@@ -370,7 +405,7 @@ export class MemberState {
   public results(iterations: number): MemberProduction {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
-    const totalHelpProduceFlat: ProduceFlat = {
+    const totalHelpProduceFlatOld: ProduceFlat = {
       berries: this.averageProduce.berries._mapCombine(
         this.sneakySnackBerries,
         (avgAmount, sneakyAmount) =>
@@ -380,6 +415,14 @@ export class MemberState {
         (ingredient) => (ingredient * this.totalAverageHelps) / iterations
       )
     };
+
+    const totalHelpProduceFlat: ProduceFlat = {
+      berries: this.totalBerryStrength._mapUnary((amount: number) => amount / iterations),
+      ingredients: this.averageProduce.ingredients._mapUnary(
+        (ingredient) => (ingredient * this.totalAverageHelps) / iterations
+      )
+    };
+
     const totalHelpProduce: Produce = {
       berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
       ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
@@ -468,11 +511,7 @@ export class MemberState {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.averageProduce.berries._mapCombine(
-        this.sneakySnackBerries,
-        (avgAmount, sneakyAmount) =>
-          (avgAmount * this.totalAverageHelps + sneakyAmount * this.totalSneakySnackHelps) / iterations
-      ),
+      berries: this.totalBerryStrength._mapUnary((amount: number) => amount / iterations),
       ingredients: this.averageProduce.ingredients._mapUnary(
         (ingredient) => (ingredient * this.totalAverageHelps) / iterations
       )
