@@ -157,7 +157,7 @@
 
         <TeamImpact :production-advanced-stats="memberWithProduction.production.advanced" />
 
-        <!-- <SkillBreakdown :pokemonProduction="memberWithProduction" /> -->
+        <SkillBreakdown :pokemonProduction="memberWithProduction" />
       </template>
     </v-window-item>
   </v-window>

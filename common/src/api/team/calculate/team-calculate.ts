@@ -1,12 +1,12 @@
 import type {
-    BerrySet,
-    IngredientIndexToFloatAmount,
-    IngredientSet,
-    MainskillUnit,
-    PokemonInstance,
-    PokemonWithIngredientsIndexed,
-    TeamMemberExt,
-    TeamSettings
+  BerrySet,
+  IngredientIndexToFloatAmount,
+  IngredientSet,
+  MainskillUnit,
+  PokemonInstance,
+  PokemonWithIngredientsIndexed,
+  TeamMemberExt,
+  TeamSettings
 } from '../../../domain';
 import type { Recipe } from '../../../domain/recipe/recipe';
 import type { Produce } from '../../production';
@@ -52,8 +52,8 @@ export interface MemberProductionAdvanced {
   totalRecovery: number;
   berryStrength: number;
   skillProcDistribution: Record<number, number>;
-  berryProductionPerDay: number[];
-  ingredientProductionPerDay: number[];
+  berryProductionDistribution: Record<number, number>;
+  ingredientProductionDistribution: Record<number, number>;
   dayPeriod: PeriodInfo;
   nightPeriod: PeriodInfo;
   frequencySplit: {

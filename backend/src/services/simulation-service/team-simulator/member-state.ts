@@ -5,6 +5,7 @@ import type {
   SkillActivationValue,
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import { calculateSkillProcDistribution } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-utils.js';
 import { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
@@ -469,9 +470,10 @@ export class MemberState {
     const fiveMinIntervalsTotalDay = iterations * (TimeUtils.durationInMinutes(this.dayPeriod) / 5);
     const fiveMinIntervalsTotalNight = iterations * (TimeUtils.durationInMinutes(this.nightPeriod) / 5);
 
-    // Get daily production data
-    const berryProductionPerDay = this.berryProductionPerDay.slice(1); // remove first wakeup
-    const ingredientProductionPerDay = this.ingredientProductionPerDay.slice(1); // remove first wakeup
+    // Calculate daily production distributions
+    const berryProductionDistribution = calculateSkillProcDistribution(this.berryProductionPerDay);
+    const ingredientProductionDistribution = calculateSkillProcDistribution(this.ingredientProductionPerDay);
+    console.log(berryProductionDistribution);
 
     return {
       produceTotal,
@@ -501,8 +503,8 @@ export class MemberState {
         totalRecovery: this.totalRecovery / iterations,
         morningProcs: this.morningProcs / iterations,
         skillProcDistribution,
-        berryProductionPerDay,
-        ingredientProductionPerDay,
+        berryProductionDistribution,
+        ingredientProductionDistribution,
         dayPeriod: {
           averageEnergy: this.energyIntervalsDay / fiveMinIntervalsTotalDay,
           averageFrequency: this.frequencyIntervalsDay / fiveMinIntervalsTotalDay,
