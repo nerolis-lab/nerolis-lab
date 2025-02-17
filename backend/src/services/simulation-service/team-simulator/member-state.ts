@@ -29,6 +29,7 @@ import {
   MathUtils,
   RandomUtils,
   berrySetToFlat,
+  calculateAveragePokemonIngredientSet,
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
   flatToBerrySet,
@@ -64,8 +65,9 @@ export class MemberState {
   private helpsSinceLastCook = 0;
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
+  private totalBerryHelps = 0;
+  private totalIngredientHelps = 0;
   private voidHelps = 0;
-  private totalBerryStrength: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
 
   // stats
   private frequency0;
@@ -78,6 +80,7 @@ export class MemberState {
   private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
   private averageProduceAmount: number;
   private averageProduce: ProduceFlat = getEmptyInventoryFloat();
+  private rawProduce: ProduceFlat = getEmptyInventoryFloat();
 
   // summary
   totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
@@ -148,6 +151,13 @@ export class MemberState {
       pokemon: member.pokemonWithIngredients.pokemon.name,
       ingredients: pokemonIngredientListFlat
     };
+
+    // Calculate probability-adjusted amounts for cooking
+    this.averageProduce = TeamSimulatorUtils.calculateAverageProduce(member);
+    this.averageProduceAmount = sumFlats(this.averageProduce.ingredients, this.averageProduce.berries);
+
+    // Calculate raw production amounts without probability adjustments
+    const avgIngredientList = calculateAveragePokemonIngredientSet(pokemonIngredientListFlat, member.settings.level);
     const memberBerryInList = berrySetToFlat([
       {
         amount: 1,
@@ -159,8 +169,11 @@ export class MemberState {
       member.pokemonWithIngredients.pokemon.specialty,
       member.settings.subskills
     );
-    this.averageProduce = TeamSimulatorUtils.calculateAverageProduce(member);
-    this.averageProduceAmount = sumFlats(this.averageProduce.ingredients, this.averageProduce.berries);
+
+    this.rawProduce = {
+      berries: Float32Array.from(memberBerryInList, (value) => value * berriesPerDrop),
+      ingredients: avgIngredientList
+    };
 
     this.sneakySnackBerries = memberBerryInList.map((amount) => (amount *= berriesPerDrop));
 
@@ -293,10 +306,10 @@ export class MemberState {
       // Roll for berry vs ingredient
       if (RandomUtils.roll(1 - this.ingredientPercentage)) {
         // Berry drop
-        this.totalBerryStrength = this.totalBerryStrength._mapCombine(
-          this.averageProduce.berries._mapUnary((a) => a / (1 - this.ingredientPercentage)),
-          (current, add) => current + add
-        );
+        this.totalBerryHelps += 1;
+      } else {
+        // Ingredient drop
+        this.totalIngredientHelps += 1;
       }
 
       return this.skillState.attemptSkill();
@@ -330,10 +343,10 @@ export class MemberState {
           // Roll for berry vs ingredient with partial help
           if (RandomUtils.roll(1 - this.ingredientPercentage)) {
             // Berry drop
-            this.totalBerryStrength = this.totalBerryStrength._mapCombine(
-              this.averageProduce.berries._mapUnary((a) => helpRatio * a / (1 - this.ingredientPercentage)),
-              (current, add) => current + add
-            );
+            this.totalBerryHelps += helpRatio;
+          } else {
+            // Ingredient drop
+            this.totalIngredientHelps += helpRatio;
           }
         } else {
           this.helpsSinceLastCook += 1;
@@ -342,20 +355,17 @@ export class MemberState {
           // Roll for berry vs ingredient
           if (RandomUtils.roll(1 - this.ingredientPercentage)) {
             // Berry drop
-            this.totalBerryStrength = this.totalBerryStrength._mapCombine(
-              this.averageProduce.berries._mapUnary((a) => a / (1 - this.ingredientPercentage)),
-              (current, add) => current + add
-            );
+            this.totalBerryHelps += 1;
+          } else {
+            // Ingredient drop
+            this.totalIngredientHelps += 1;
           }
         }
       } else {
         this.nightHelpsAfterSS += 1;
         this.totalSneakySnackHelps += 1;
         // Sneaky snack always gives berries
-        this.totalBerryStrength = this.totalBerryStrength._mapCombine(
-          this.sneakySnackBerries,
-          (current, add) => current + add
-        );
+        this.totalBerryHelps += 1;
       }
 
       this.nextHelp += frequency / 60;
@@ -405,21 +415,12 @@ export class MemberState {
   public results(iterations: number): MemberProduction {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
-    const totalHelpProduceFlatOld: ProduceFlat = {
-      berries: this.averageProduce.berries._mapCombine(
-        this.sneakySnackBerries,
-        (avgAmount, sneakyAmount) =>
-          (avgAmount * this.totalAverageHelps + sneakyAmount * this.totalSneakySnackHelps) / iterations
-      ),
-      ingredients: this.averageProduce.ingredients._mapUnary(
-        (ingredient) => (ingredient * this.totalAverageHelps) / iterations
-      )
-    };
-
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.totalBerryStrength._mapUnary((amount: number) => amount / iterations),
-      ingredients: this.averageProduce.ingredients._mapUnary(
-        (ingredient) => (ingredient * this.totalAverageHelps) / iterations
+      berries: this.rawProduce.berries._mapUnary(
+        (avgAmount) => (avgAmount * this.totalBerryHelps) / iterations
+      ),
+      ingredients: this.rawProduce.ingredients._mapUnary(
+        (ingredient) => (ingredient * this.totalIngredientHelps) / iterations
       )
     };
 
@@ -511,9 +512,11 @@ export class MemberState {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.totalBerryStrength._mapUnary((amount: number) => amount / iterations),
-      ingredients: this.averageProduce.ingredients._mapUnary(
-        (ingredient) => (ingredient * this.totalAverageHelps) / iterations
+      berries: this.rawProduce.berries._mapUnary(
+        (avgAmount) => (avgAmount * this.totalBerryHelps) / iterations
+      ),
+      ingredients: this.rawProduce.ingredients._mapUnary(
+        (ingredient) => (ingredient * this.totalIngredientHelps) / iterations
       )
     };
 
