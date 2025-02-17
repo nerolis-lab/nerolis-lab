@@ -41,19 +41,19 @@ export default class UserController {
 
   // User recipe level
   public async getUserRecipeLevels(user: DBUser) {
-    getRecipeLevels(user);
+    return getRecipeLevels(user);
   }
 
   public async upsertRecipeLevel(params: { user: DBUser; recipe: string; level: number }) {
-    upsertRecipeLevel(params);
+    return upsertRecipeLevel(params);
   }
 
   // User area bonus
   public async getUserAreaBonuses(user: DBUser) {
-    getAreaBonuses(user);
+    return getAreaBonuses(user);
   }
 
   public async upsertAreaBonus(params: { user: DBUser; area: string; bonus: number }) {
-    upsertAreaBonus(params);
+    return upsertAreaBonus(params);
   }
 }

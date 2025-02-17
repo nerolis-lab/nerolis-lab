@@ -24,4 +24,5 @@ export async function upsertRecipeLevel(params: { user: DBUser; recipe: string; 
     },
     filter: { fk_user_id: user.id, recipe }
   });
+  return { recipe, level };
 }

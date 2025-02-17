@@ -16,6 +16,12 @@ export function ingredientImage(rawName: string) {
   return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
 }
 
+// TEST:
+export function recipeImage(rawName: string) {
+  const name = rawName.toLowerCase()
+  return `/images/recipe/${name.replace(/[_]/g, '').toLowerCase()}.png`
+}
+
 export function userAvatar(): string {
   const userStore = useUserStore()
   const avatarStore = useAvatarStore()

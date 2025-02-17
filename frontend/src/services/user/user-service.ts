@@ -1,7 +1,13 @@
 import serverAxios from '@/router/server-axios'
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useUserStore } from '@/stores/user-store'
-import type { PokemonInstanceExt, PokemonInstanceWithMeta, User } from 'sleepapi-common'
+import type {
+  GetRecipeLevelsResponse,
+  PokemonInstanceExt,
+  PokemonInstanceWithMeta,
+  UpsertRecipeLevelRequest,
+  User
+} from 'sleepapi-common'
 
 class UserServiceImpl {
   public async getUserPokemon() {
@@ -32,6 +38,16 @@ class UserServiceImpl {
       role: response.role,
       avatar: response.avatar
     })
+  }
+
+  public async getRecipes(): Promise<GetRecipeLevelsResponse> {
+    const response = await serverAxios.get<GetRecipeLevelsResponse>('user/recipe')
+    return response.data
+  }
+
+  public async upsertRecipe(recipe: string, level: number) {
+    const response = await serverAxios.put<UpsertRecipeLevelRequest>('user/recipe', { recipe, level })
+    return response.data
   }
 }
 

@@ -1,3 +1,5 @@
+import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
+import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import { PokemonError } from '@src/domain/error/pokemon/pokemon-error.js';
@@ -7,6 +9,10 @@ import {
   calculatePokemonProduction,
   calculateTeam
 } from '@src/services/api-service/production/production-service.js';
+import {
+  defaultUserRecipes,
+  type UserRecipes
+} from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import * as tsoa from '@tsoa/runtime';
@@ -18,19 +24,25 @@ import type {
   IngredientSet,
   Pokemon,
   PokemonInstanceIdentity,
+  RecipeFlat,
   SingleProductionRequest,
   TeamMemberExt,
   TeamSettings,
   TeamSettingsExt
 } from 'sleepapi-common';
 import {
+  calculateRecipeValue,
   CarrySizeUtils,
+  curry,
+  dessert,
   getIngredient,
   getNature,
   getPokemon,
   ingredientSetToFloatFlat,
   limitSubSkillsToLevel,
-  mainskill
+  mainskill,
+  recipesToFlat,
+  salad
 } from 'sleepapi-common';
 const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
 
@@ -48,8 +60,9 @@ export default class ProductionController extends Controller {
     return calculatePokemonProduction(pokemon, parsedInput, body.ingredientSet, queryAsBoolean(includeAnalysis), 5000);
   }
 
-  public async calculateTeam(body: CalculateTeamRequest) {
-    const parsedInput = this.#parseTeamInput(body);
+  public async calculateTeam(body: CalculateTeamRequest, maybeUser?: DBUser) {
+    const userRecipes = await this.#parseUserRecipes(maybeUser);
+    const parsedInput = this.#parseTeamInput(body, userRecipes);
     return calculateTeam(parsedInput);
   }
 
@@ -117,13 +130,65 @@ export default class ProductionController extends Controller {
     return parsedMembers;
   }
 
-  #parseTeamInput(body: CalculateTeamRequest) {
+  #parseTeamInput(body: CalculateTeamRequest, userRecipes: UserRecipes) {
     const settings = this.#parseSettings({ settings: body.settings, includeCooking: true });
 
     return {
       settings,
-      members: this.#parseTeamMembers(body.members, settings.camp)
+      members: this.#parseTeamMembers(body.members, settings.camp),
+      userRecipes
     };
+  }
+
+  async #parseUserRecipes(maybeUser?: DBUser): Promise<UserRecipes> {
+    if (!maybeUser) {
+      return defaultUserRecipes();
+    } else {
+      const userRecipes = await UserRecipeDAO.findMultiple({ fk_user_id: maybeUser.id });
+
+      const curries: RecipeFlat[] = recipesToFlat(
+        curry.CURRIES.map((curry) => ({
+          ...curry,
+          valueMax: calculateRecipeValue({
+            bonus: curry.bonus,
+            ingredients: curry.ingredients,
+            level: userRecipes.find((userRecipe) => userRecipe.recipe === curry.name)?.level ?? 1
+          })
+        }))
+      );
+
+      const salads: RecipeFlat[] = recipesToFlat(
+        salad.SALADS.map((salad) => ({
+          ...salad,
+          valueMax: calculateRecipeValue({
+            bonus: salad.bonus,
+            ingredients: salad.ingredients,
+            level: userRecipes.find((userRecipe) => userRecipe.recipe === salad.name)?.level ?? 1
+          })
+        }))
+      );
+
+      const desserts: RecipeFlat[] = recipesToFlat(
+        dessert.DESSERTS.map((dessert) => ({
+          ...dessert,
+          valueMax: calculateRecipeValue({
+            bonus: dessert.bonus,
+            ingredients: dessert.ingredients,
+            level: userRecipes.find((userRecipe) => userRecipe.recipe === dessert.name)?.level ?? 1
+          })
+        }))
+      );
+
+      const sortedDesserts = desserts.sort((a, b) => b.valueMax - a.valueMax);
+      const sortedSalads = salads.sort((a, b) => b.valueMax - a.valueMax);
+      const sortedCurries = curries.sort((a, b) => b.valueMax - a.valueMax);
+
+      return {
+        curries: sortedCurries,
+        salads: sortedSalads,
+        desserts: sortedDesserts
+      };
+    }
   }
 
   #parseSettings(params: { settings: TeamSettings; includeCooking: boolean }): TeamSettingsExt {

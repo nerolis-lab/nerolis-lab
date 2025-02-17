@@ -6,6 +6,9 @@ import type { NextFunction, Request, Response } from 'express';
 export interface AuthenticatedRequest extends Request<unknown, unknown, unknown, unknown> {
   user: DBUser;
 }
+export interface MaybeAuthenticatedRequest extends Request<unknown, unknown, unknown, unknown> {
+  user?: DBUser;
+}
 
 export async function validateAuthHeader(req: Request, res: Response, next: NextFunction) {
   try {
@@ -21,6 +24,28 @@ export async function validateAuthHeader(req: Request, res: Response, next: Next
     (req as AuthenticatedRequest).user = user;
 
     next();
+  } catch (error) {
+    logger.error('Unauthorized: ' + error);
+    res.sendStatus(401);
+  }
+}
+
+export async function withMaybeUser(req: Request, res: Response, next: NextFunction) {
+  try {
+    const authHeader = req.headers?.authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      (req as MaybeAuthenticatedRequest).user = undefined;
+
+      next();
+    } else {
+      const accessToken = authHeader.split(' ')[1];
+      const user = await verifyExistingUser(accessToken);
+
+      (req as MaybeAuthenticatedRequest).user = user;
+
+      next();
+    }
   } catch (error) {
     logger.error('Unauthorized: ' + error);
     res.sendStatus(401);

@@ -1,3 +1,4 @@
+import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import type {
   CookedRecipeResult,
   CookingResult,
@@ -30,15 +31,16 @@ interface SkippedRecipe extends RecipeFlat {
   ingredientMissing: IngredientsMissing;
 }
 
-const allCurries: RecipeFlat[] = curry.CURRIES_FLAT.sort((a, b) => b.valueMax - a.valueMax);
-const allSalads: RecipeFlat[] = salad.SALADS_FLAT.sort((a, b) => b.valueMax - a.valueMax);
-const allDesserts: RecipeFlat[] = dessert.DESSERTS_FLAT.sort((a, b) => b.valueMax - a.valueMax);
 export class CookingState {
   private camp;
   private bonusPotSize = 0;
   private bonusCritChance = 0;
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
+
+  private userCurries: RecipeFlat[];
+  private userSalads: RecipeFlat[];
+  private userDesserts: RecipeFlat[];
 
   private cookedCurries: CookedRecipe[] = [];
   private cookedSalads: CookedRecipe[] = [];
@@ -57,7 +59,12 @@ export class CookingState {
   private currentSaladStockpile: IngredientIndexToFloatAmount;
   private currentDessertStockpile: IngredientIndexToFloatAmount;
 
-  constructor(settings: TeamSettingsExt) {
+  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes) {
+    const { curries, salads, desserts } = userRecipes;
+    this.userCurries = curries;
+    this.userSalads = salads;
+    this.userDesserts = desserts;
+
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
     this.currentCurryStockpile = settings.stockpiledIngredients.slice();
@@ -87,7 +94,7 @@ export class CookingState {
       this.totalWeekdayPotSize += currentPotSize;
     }
 
-    const potLimitedCurries = this.findRecipesWithinPotLimit(allCurries, currentPotSize, this.skippedCurries);
+    const potLimitedCurries = this.findRecipesWithinPotLimit(this.userCurries, currentPotSize, this.skippedCurries);
     const cookedCurry =
       this.cookRecipeType({
         availableRecipes: potLimitedCurries,
@@ -96,7 +103,7 @@ export class CookingState {
         currentStockpile: this.currentCurryStockpile
       }) ?? curry.MIXED_CURRY_FLAT;
 
-    const potLimitedSalads = this.findRecipesWithinPotLimit(allSalads, currentPotSize, this.skippedSalads);
+    const potLimitedSalads = this.findRecipesWithinPotLimit(this.userSalads, currentPotSize, this.skippedSalads);
     const cookedSalad =
       this.cookRecipeType({
         availableRecipes: potLimitedSalads,
@@ -105,7 +112,7 @@ export class CookingState {
         currentStockpile: this.currentSaladStockpile
       }) ?? salad.MIXED_SALAD_FLAT;
 
-    const potLimitedDesserts = this.findRecipesWithinPotLimit(allDesserts, currentPotSize, this.skippedDesserts);
+    const potLimitedDesserts = this.findRecipesWithinPotLimit(this.userDesserts, currentPotSize, this.skippedDesserts);
     const cookedDessert =
       this.cookRecipeType({
         availableRecipes: potLimitedDesserts,

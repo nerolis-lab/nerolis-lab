@@ -1,11 +1,12 @@
 import { mocks } from '@src/bun/index.js';
-import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
+import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
+import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { dessert, emptyIngredientInventoryFloat, ingredient, ingredientSetToFloatFlat } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
   it('shall cook the best recipe for which it has ingredients', () => {
-    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }), defaultUserRecipes());
 
     const ingsForMacaronsAndFlan = ingredientSetToFloatFlat([
       ...dessert.JIGGLYPUFFS_FRUITY_FLAN.ingredients,
@@ -24,7 +25,7 @@ describe('CookingState', () => {
   });
 
   it('shall fallback to mixed meal if team cant cook', () => {
-    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }), defaultUserRecipes());
 
     cookingState.cook(false);
 
@@ -47,7 +48,7 @@ describe('CookingState', () => {
   });
 
   it('shall cook mixed meal if team cant cook better', () => {
-    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }), defaultUserRecipes());
 
     cookingState.addIngredients(ingredientSetToFloatFlat([{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }]));
 
@@ -72,7 +73,7 @@ describe('CookingState', () => {
   });
 
   it('shall crit with max bonus on sunday', () => {
-    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }), defaultUserRecipes());
 
     cookingState.addIngredients(ingredientSetToFloatFlat(dessert.FLOWER_GIFT_MACARONS.ingredients));
     cookingState.addCritBonus(0.7);
@@ -89,7 +90,7 @@ describe('CookingState', () => {
   });
 
   it('shall be able to cook macarons with pot skill proc', () => {
-    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }));
+    const cookingState = new CookingState(mocks.teamSettingsExt({ camp: true }), defaultUserRecipes());
 
     cookingState.addIngredients(ingredientSetToFloatFlat(dessert.FLOWER_GIFT_MACARONS.ingredients));
     cookingState.addPotSize(30);
@@ -108,7 +109,8 @@ describe('CookingState', () => {
       { amount: 5, ingredient: ingredient.BEAN_SAUSAGE }
     ]);
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({ camp: true, stockpiledIngredients: initialStockpile })
+      mocks.teamSettingsExt({ camp: true, stockpiledIngredients: initialStockpile }),
+      defaultUserRecipes()
     );
 
     cookingState.addIngredients(ingredientSetToFloatFlat([{ amount: 5, ingredient: ingredient.SLOWPOKE_TAIL }]));

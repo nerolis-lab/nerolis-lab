@@ -3,6 +3,7 @@ import {
   calculatePokemonProduction,
   calculateTeam
 } from '@src/services/api-service/production/production-service.js';
+import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
@@ -93,7 +94,7 @@ describe('calculateTeam', () => {
       }
     ];
 
-    const result = calculateTeam({ members, settings }, 5000);
+    const result = calculateTeam({ members, settings, userRecipes: defaultUserRecipes() }, 5000);
 
     expect(result.members).toHaveLength(1);
     expect(result.members[0].produceTotal).toMatchInlineSnapshot(`

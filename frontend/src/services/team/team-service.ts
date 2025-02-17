@@ -9,7 +9,6 @@ import {
   type TeamInstance,
   type TeamProductionExt
 } from '@/types/member/instanced'
-import axios from 'axios'
 import {
   Optimal,
   berry,
@@ -143,7 +142,7 @@ class TeamServiceImpl {
       PokemonInstanceUtils.toPokemonInstanceIdentity(member)
     )
 
-    const response = await axios.post<CalculateTeamResponse>('/api/calculator/team', {
+    const response = await serverAxios.post<CalculateTeamResponse>('/calculator/team', {
       members: parsedMembers,
       settings
     })
@@ -208,7 +207,7 @@ class TeamServiceImpl {
       PokemonInstanceUtils.toPokemonInstanceIdentity(member)
     )
 
-    const response = await axios.post<CalculateIvResponse>('/api/calculator/iv', {
+    const response = await serverAxios.post<CalculateIvResponse>('/calculator/iv', {
       members: parsedMembers,
       variants: [berrySetup, ingredientSetup, skillSetup],
       settings

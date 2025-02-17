@@ -5,6 +5,7 @@ import {
   islandImage,
   mainskillImage,
   pokemonImage,
+  recipeImage,
   userAvatar
 } from '@/services/utils/image-utils'
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
@@ -133,5 +134,22 @@ describe('ingredientImage', () => {
   it('returns correct image path for other ingredients', () => {
     const result = ingredientImage('apple')
     expect(result).toBe('/images/ingredient/apple.png')
+  })
+})
+
+describe('recipeImage', () => {
+  it('returns correct image path for recipe names without underscores', () => {
+    const result = recipeImage('applepie')
+    expect(result).toBe('/images/recipe/applepie.png')
+  })
+
+  it('returns correct image path for recipe names with underscores', () => {
+    const result = recipeImage('apple_pie')
+    expect(result).toBe('/images/recipe/applepie.png')
+  })
+
+  it('returns correct image path for recipe names with multiple underscores', () => {
+    const result = recipeImage('apple_pie_with_cream')
+    expect(result).toBe('/images/recipe/applepiewithcream.png')
   })
 })

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { capitalize, compactNumber } from './string-utils';
+import { capitalize, compactNumber, localizeNumber } from './string-utils';
 
 describe('capitalize', () => {
   it('shall capitalize a word', () => {
@@ -28,5 +28,30 @@ describe('compactNumber', () => {
   it('should handle edge cases with rounding', () => {
     expect(compactNumber(1000001)).toEqual('1M');
     expect(compactNumber(1999999)).toEqual('2M');
+  });
+});
+
+describe('localizeNumber function', () => {
+  test('formats numbers correctly using default locale', () => {
+    expect(localizeNumber(1234)).toEqual('1,234'); // Assuming 'en-US' as the default locale
+    expect(localizeNumber(1000000)).toEqual('1,000,000');
+    expect(localizeNumber(42.9)).toEqual('43');
+    expect(localizeNumber(-1234)).toEqual('-1,234');
+  });
+
+  test('handles different user locales', () => {
+    vi.stubGlobal('navigator', { language: 'de-DE' });
+    expect(localizeNumber(1234)).toEqual('1.234'); // German uses dots as thousands separators
+
+    vi.stubGlobal('navigator', { language: 'fr-FR' });
+    expect(localizeNumber(1234)).toEqual('1 234'); // French uses a non-breaking space
+
+    vi.stubGlobal('navigator', { language: 'sv-SE' });
+    expect(localizeNumber(1234).replace(/\u00A0/g, ' ')).toBe('1 234'); // Normalize non-breaking space
+  });
+
+  test('falls back to en-US when navigator.language is undefined', () => {
+    vi.stubGlobal('navigator', {});
+    expect(localizeNumber(5678)).toEqual('5,678');
   });
 });

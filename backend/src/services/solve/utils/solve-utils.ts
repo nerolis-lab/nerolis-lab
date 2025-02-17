@@ -1,6 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import { ProgrammingError } from '@src/domain/error/programming/programming-error.js';
 import { calculateSimple, calculateTeam } from '@src/services/api-service/production/production-service.js';
+import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import type {
   IngredientProducers,
@@ -41,12 +42,16 @@ import {
   OPTIMAL_POKEDEX
 } from 'sleepapi-common';
 
-export function calculateProductionAll(params: { settings: SolveSettingsExt; userMembers: TeamMemberExt[] }): {
+export function calculateProductionAll(params: {
+  settings: SolveSettingsExt;
+  userMembers: TeamMemberExt[];
+  userRecipes: UserRecipes;
+}): {
   userProduction: SetCoverPokemonSetupWithSettings[];
   nonSupportProduction: SetCoverPokemonSetupWithSettings[];
   supportProduction: SetCoverPokemonSetupWithSettings[];
 } {
-  const { settings, userMembers } = params;
+  const { settings, userMembers, userRecipes } = params;
 
   const filteredPokedex = filterPokedex(userMembers);
 
@@ -61,21 +66,23 @@ export function calculateProductionAll(params: { settings: SolveSettingsExt; use
   });
 
   const userIncludedProduction = calculateTeam(
-    { settings: { ...settings, includeCooking: true }, members: userMembers },
+    { settings: { ...settings, includeCooking: true }, members: userMembers, userRecipes },
     1400
   );
 
   const nonSupportProductionStats = calculateNonSupportPokemon({
     nonSupportMembers,
     settings,
-    userMembers
+    userMembers,
+    userRecipes
   });
 
   const supportMembers = pokedexToMembers({ pokedex: supportMons, level: settings.level, camp: settings.camp });
   const supportProductionStats: SimpleTeamResult[] = calculateSupportPokemon({
     supportMembers,
     settings,
-    userMembers
+    userMembers,
+    userRecipes
   });
   const supportProduction = convertAAAToAllIngredientSets(
     supportProductionStats.map((member) => ({
@@ -195,8 +202,9 @@ export function calculateNonSupportPokemon(params: {
   nonSupportMembers: TeamMemberExt[];
   userMembers: TeamMemberExt[];
   settings: TeamSettingsExt;
+  userRecipes: UserRecipes;
 }): SimpleTeamResult[] {
-  const { nonSupportMembers, userMembers, settings } = params;
+  const { nonSupportMembers, userMembers, settings, userRecipes } = params;
 
   if (settings.includeCooking) {
     const [tastyChanceMembers, otherNonSupportMembersWithCookingMembers] = splitArrayByCondition(
@@ -209,7 +217,8 @@ export function calculateNonSupportPokemon(params: {
     );
     const otherNonSupportProductionStats = calculateSimple({
       settings: { ...settings, includeCooking: false },
-      members: [...userMembers, ...otherNonSupportMembers]
+      members: [...userMembers, ...otherNonSupportMembers],
+      userRecipes
     });
 
     // TODO: duplicated code for tasty chance and cooking power up, refactor
@@ -219,7 +228,8 @@ export function calculateNonSupportPokemon(params: {
 
       const tastyChanceTeamResults = calculateSimple({
         settings,
-        members: [...userMembers, tastyChanceMember]
+        members: [...userMembers, tastyChanceMember],
+        userRecipes
       });
       const tastyChanceMemberResult = tastyChanceTeamResults.find(
         (member) => member.member.settings.externalId === tastyChanceMember.settings.externalId
@@ -236,7 +246,8 @@ export function calculateNonSupportPokemon(params: {
 
       const cookingPowerUpTeamResults = calculateSimple({
         settings,
-        members: [...userMembers, cookingPowerUpMember]
+        members: [...userMembers, cookingPowerUpMember],
+        userRecipes
       });
       const cookingPowerUpMemberResult = cookingPowerUpTeamResults.find(
         (member) => member.member.settings.externalId === cookingPowerUpMember.settings.externalId
@@ -256,7 +267,8 @@ export function calculateNonSupportPokemon(params: {
   } else {
     return calculateSimple({
       settings: { ...settings, includeCooking: false },
-      members: [...userMembers, ...nonSupportMembers]
+      members: [...userMembers, ...nonSupportMembers],
+      userRecipes
     });
   }
 }
@@ -265,15 +277,18 @@ export function calculateSupportPokemon(params: {
   supportMembers: TeamMemberExt[];
   userMembers: TeamMemberExt[];
   settings: TeamSettingsExt;
+  userRecipes: UserRecipes;
 }): SimpleTeamResult[] {
-  const { supportMembers, userMembers, settings } = params;
+  const { supportMembers, userMembers, settings, userRecipes } = params;
+
   const supportProductionStats: SimpleTeamResult[] = [];
   for (let i = 0; i < supportMembers.length; ++i) {
     const supportMember = supportMembers[i];
     const emptyTeamSpace = MAX_TEAM_SIZE - (userMembers.length + 1); // user mons + the support member we're calculating
     const simpleResults = calculateSimple({
       settings: { ...settings, includeCooking: false },
-      members: [...userMembers, supportMember, ...bogusMembers(emptyTeamSpace)]
+      members: [...userMembers, supportMember, ...bogusMembers(emptyTeamSpace)],
+      userRecipes
     });
     const simpleResult = simpleResults.find(
       (result) =>

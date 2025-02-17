@@ -1,10 +1,11 @@
 import type { Recipe } from '../../../domain/recipe/recipe';
 import { mockIngredientSet } from '../ingredient/mock-ingredient-set';
 
-export function recipe(attrs?: Partial<Recipe>): Recipe {
+export function mockRecipe(attrs?: Partial<Recipe>): Recipe {
   return {
     bonus: 0,
-    name: 'Mock recipe',
+    name: 'MOCK_RECIPE',
+    displayName: 'Mock Recipe',
     nrOfIngredients: 0,
     ingredients: [mockIngredientSet()],
     type: 'curry',

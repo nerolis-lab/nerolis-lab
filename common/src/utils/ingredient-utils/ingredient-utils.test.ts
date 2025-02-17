@@ -751,12 +751,12 @@ const MOCK_SEAWEED = commonMocks.mockIngredient({
 });
 
 const mockRecipeList = [
-  commonMocks.recipe({
+  commonMocks.mockRecipe({
     name: 'MOCK_RECIPE_MAX_BONUS_UPDATED',
     ingredients: [{ amount: 1, ingredient: SOFT_POTATO }],
     bonus: 70
   }),
-  commonMocks.recipe({
+  commonMocks.mockRecipe({
     name: 'MOCK_RECIPE_NEWLY_SET_BONUS',
     ingredients: [
       { amount: 1, ingredient: MOCK_SEAWEED },

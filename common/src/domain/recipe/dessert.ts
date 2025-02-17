@@ -19,30 +19,35 @@ import type { Recipe, RecipeFlat } from './recipe';
 
 export const MIXED_JUICE = createDessert({
   name: 'MIXED_JUICE',
+  displayName: 'Mixed Juice',
   ingredients: [],
   bonus: 0
 });
 
 export const WARM_MOOMOO_MILK = createDessert({
   name: 'WARM_MOOMOO_MILK',
+  displayName: 'Warm Moomoo Milk',
   ingredients: [{ amount: 7, ingredient: MOOMOO_MILK }],
   bonus: 18.7
 });
 
 export const FANCY_APPLE_JUICE = createDessert({
   name: 'FANCY_APPLE_JUICE',
+  displayName: 'Fancy Apple Juice',
   ingredients: [{ amount: 8, ingredient: FANCY_APPLE }],
   bonus: 18.7
 });
 
 export const CRAFT_SODA_POP = createDessert({
   name: 'CRAFT_SODA_POP',
+  displayName: 'Craft Soda Pop',
   ingredients: [{ amount: 9, ingredient: HONEY }],
   bonus: 18.7
 });
 
 export const LUCKY_CHANT_APPLE_PIE = createDessert({
   name: 'LUCKY_CHANT_APPLE_PIE',
+  displayName: "'Lucky Chant' Apple Pie",
   ingredients: [
     { amount: 12, ingredient: FANCY_APPLE },
     { amount: 4, ingredient: MOOMOO_MILK }
@@ -52,6 +57,7 @@ export const LUCKY_CHANT_APPLE_PIE = createDessert({
 
 export const FLUFFY_SWEET_POTATOES = createDessert({
   name: 'FLUFFY_SWEET_POTATOES',
+  displayName: "'Fluffy' Sweet Potatoes",
   ingredients: [
     { amount: 9, ingredient: SOFT_POTATO },
     { amount: 5, ingredient: MOOMOO_MILK }
@@ -61,6 +67,7 @@ export const FLUFFY_SWEET_POTATOES = createDessert({
 
 export const EMBER_GINGER_TEA = createDessert({
   name: 'EMBER_GINGER_TEA',
+  displayName: "'Ember' Ginger Tea",
   ingredients: [
     { amount: 9, ingredient: WARMING_GINGER },
     { amount: 7, ingredient: FANCY_APPLE }
@@ -70,6 +77,7 @@ export const EMBER_GINGER_TEA = createDessert({
 
 export const CLOUD_NINE_SOY_CAKE = createDessert({
   name: 'CLOUD_NINE_SOY_CAKE',
+  displayName: "'Cloud Nine' Soy Cake",
   ingredients: [
     { amount: 8, ingredient: FANCY_EGG },
     { amount: 7, ingredient: GREENGRASS_SOYBEANS }
@@ -79,6 +87,7 @@ export const CLOUD_NINE_SOY_CAKE = createDessert({
 
 export const STALWART_VEGETABLE_JUICE = createDessert({
   name: 'STALWART_VEGETABLE_JUICE',
+  displayName: "'Stalwart' Vegetable Juice",
   ingredients: [
     { amount: 9, ingredient: SNOOZY_TOMATO },
     { amount: 7, ingredient: FANCY_APPLE }
@@ -88,6 +97,7 @@ export const STALWART_VEGETABLE_JUICE = createDessert({
 
 export const BIG_MALASADA = createDessert({
   name: 'BIG_MALASADA',
+  displayName: 'Big Malasada',
   ingredients: [
     { amount: 10, ingredient: PURE_OIL },
     { amount: 7, ingredient: MOOMOO_MILK },
@@ -98,6 +108,7 @@ export const BIG_MALASADA = createDessert({
 
 export const HUSTLE_PROTEIN_SMOOTHIE = createDessert({
   name: 'HUSTLE_PROTEIN_SMOOTHIE',
+  displayName: "'Hustle' Protein Smoothie",
   ingredients: [
     { amount: 15, ingredient: GREENGRASS_SOYBEANS },
     { amount: 8, ingredient: SOOTHING_CACAO }
@@ -107,6 +118,7 @@ export const HUSTLE_PROTEIN_SMOOTHIE = createDessert({
 
 export const HUGE_POWER_SOY_DONUTS = createDessert({
   name: 'HUGE_POWER_SOY_DONUTS',
+  displayName: "'Huge Power' Soy Donuts",
   ingredients: [
     { amount: 12, ingredient: PURE_OIL },
     { amount: 16, ingredient: GREENGRASS_SOYBEANS },
@@ -117,6 +129,7 @@ export const HUGE_POWER_SOY_DONUTS = createDessert({
 
 export const SWEET_SCENT_CHOCOLATE_CAKE = createDessert({
   name: 'SWEET_SCENT_CHOCOLATE_CAKE',
+  displayName: "'Sweet Scent' Chocolate Cake",
   ingredients: [
     { amount: 9, ingredient: HONEY },
     { amount: 8, ingredient: SOOTHING_CACAO },
@@ -127,6 +140,7 @@ export const SWEET_SCENT_CHOCOLATE_CAKE = createDessert({
 
 export const PETAL_DANCE_CHOCOLATE_TART = createDessert({
   name: 'PETAL_DANCE_CHOCOLATE_TART',
+  displayName: "'Petal Dance' Chocolate Tart",
   ingredients: [
     { amount: 11, ingredient: FANCY_APPLE },
     { amount: 11, ingredient: SOOTHING_CACAO }
@@ -136,6 +150,7 @@ export const PETAL_DANCE_CHOCOLATE_TART = createDessert({
 
 export const LOVELY_KISS_SMOOTHIE = createDessert({
   name: 'LOVELY_KISS_SMOOTHIE',
+  displayName: "'Lovely Kiss' Smoothie",
   ingredients: [
     { amount: 11, ingredient: FANCY_APPLE },
     { amount: 9, ingredient: MOOMOO_MILK },
@@ -147,6 +162,7 @@ export const LOVELY_KISS_SMOOTHIE = createDessert({
 
 export const STEADFAST_GINGER_COOKIES = createDessert({
   name: 'STEADFAST_GINGER_COOKIES',
+  displayName: "'Steadfast' Ginger Cookies",
   ingredients: [
     { amount: 14, ingredient: HONEY },
     { amount: 12, ingredient: WARMING_GINGER },
@@ -158,6 +174,7 @@ export const STEADFAST_GINGER_COOKIES = createDessert({
 
 export const NEROLIS_RESTORATIVE_TEA = createDessert({
   name: 'NEROLIS_RESTORATIVE_TEA',
+  displayName: "Neroli's Restorative Tea",
   ingredients: [
     { amount: 11, ingredient: WARMING_GINGER },
     { amount: 15, ingredient: FANCY_APPLE },
@@ -168,6 +185,7 @@ export const NEROLIS_RESTORATIVE_TEA = createDessert({
 
 export const EXPLOSION_POPCORN = createDessert({
   name: 'EXPLOSION_POPCORN',
+  displayName: "'Explosion' Popcorn",
   ingredients: [
     { amount: 15, ingredient: GREENGRASS_CORN },
     { amount: 14, ingredient: PURE_OIL },
@@ -178,6 +196,7 @@ export const EXPLOSION_POPCORN = createDessert({
 
 export const EARLY_BIRD_COFFEE_JELLY = createDessert({
   name: 'EARLY_BIRD_COFFEE_JELLY',
+  displayName: "'Early Bird' Coffee Jelly",
   ingredients: [
     { amount: 16, ingredient: ROUSING_COFFEE },
     { amount: 14, ingredient: MOOMOO_MILK },
@@ -188,6 +207,7 @@ export const EARLY_BIRD_COFFEE_JELLY = createDessert({
 
 export const MOLD_BREAKER_CORN_TIRAMISU = createDessert({
   name: 'MOLD_BREAKER_CORN_TIRAMISU',
+  displayName: "'Mold Breaker' Corn Tiramisu",
   ingredients: [
     { amount: 14, ingredient: ROUSING_COFFEE },
     { amount: 14, ingredient: GREENGRASS_CORN },
@@ -198,6 +218,7 @@ export const MOLD_BREAKER_CORN_TIRAMISU = createDessert({
 
 export const JIGGLYPUFFS_FRUITY_FLAN = createDessert({
   name: 'JIGGLYPUFFS_FRUITY_FLAN',
+  displayName: "Jigglypuff's Fruity Flan",
   ingredients: [
     { amount: 20, ingredient: HONEY },
     { amount: 15, ingredient: FANCY_EGG },
@@ -209,6 +230,7 @@ export const JIGGLYPUFFS_FRUITY_FLAN = createDessert({
 
 export const TEATIME_CORN_SCONES = createDessert({
   name: 'TEATIME_CORN_SCONES',
+  displayName: "'Teatime' Corn Scones",
   ingredients: [
     { amount: 20, ingredient: FANCY_APPLE },
     { amount: 20, ingredient: WARMING_GINGER },
@@ -220,6 +242,7 @@ export const TEATIME_CORN_SCONES = createDessert({
 
 export const FLOWER_GIFT_MACARONS = createDessert({
   name: 'FLOWER_GIFT_MACARONS',
+  displayName: "'Flower Gift' Macarons",
   ingredients: [
     { amount: 25, ingredient: SOOTHING_CACAO },
     { amount: 25, ingredient: FANCY_EGG },
@@ -231,6 +254,7 @@ export const FLOWER_GIFT_MACARONS = createDessert({
 
 export const ZING_ZAP_SPICED_COLA = createDessert({
   name: 'ZING_ZAP_SPICED_COLA',
+  displayName: "'Zing Zap' Spiced Cola",
   ingredients: [
     { amount: 35, ingredient: FANCY_APPLE },
     { amount: 20, ingredient: WARMING_GINGER },
@@ -242,6 +266,7 @@ export const ZING_ZAP_SPICED_COLA = createDessert({
 
 export const CLODSIRE_ECLAIR = createDessert({
   name: 'CLODSIRE_ECLAIR',
+  displayName: 'Clodsire Éclair',
   ingredients: [
     { amount: 30, ingredient: SOOTHING_CACAO },
     { amount: 26, ingredient: MOOMOO_MILK },
