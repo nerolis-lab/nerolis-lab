@@ -52,6 +52,8 @@ export interface MemberProductionAdvanced {
   totalRecovery: number;
   berryStrength: number;
   skillProcDistribution: Record<number, number>;
+  berryProductionPerDay: number[];
+  ingredientProductionPerDay: number[];
   dayPeriod: PeriodInfo;
   nightPeriod: PeriodInfo;
   frequencySplit: {

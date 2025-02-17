@@ -69,6 +69,12 @@ export class MemberState {
   private totalIngredientHelps = 0;
   private voidHelps = 0;
 
+  // Production distribution tracking
+  private berryProductionPerDay: number[] = [];
+  private ingredientProductionPerDay: number[] = [];
+  private currentDayBerryProduction = 0;
+  private currentDayIngredientProduction = 0;
+
   // stats
   private frequency0;
   private frequency1;
@@ -234,6 +240,12 @@ export class MemberState {
     };
     this.skillState.wakeup();
 
+    // Track daily production
+    this.berryProductionPerDay.push(this.currentDayBerryProduction);
+    this.ingredientProductionPerDay.push(this.currentDayIngredientProduction);
+    this.currentDayBerryProduction = 0;
+    this.currentDayIngredientProduction = 0;
+
     const missingEnergy = Math.max(0, 100 - this.currentEnergy);
     const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo));
     this.currentEnergy += recoveredEnergy;
@@ -307,9 +319,11 @@ export class MemberState {
       if (RandomUtils.roll(1 - this.ingredientPercentage)) {
         // Berry drop
         this.totalBerryHelps += 1;
+        this.currentDayBerryProduction += 1;
       } else {
         // Ingredient drop
         this.totalIngredientHelps += 1;
+        this.currentDayIngredientProduction += 1;
       }
 
       return this.skillState.attemptSkill();
@@ -455,6 +469,10 @@ export class MemberState {
     const fiveMinIntervalsTotalDay = iterations * (TimeUtils.durationInMinutes(this.dayPeriod) / 5);
     const fiveMinIntervalsTotalNight = iterations * (TimeUtils.durationInMinutes(this.nightPeriod) / 5);
 
+    // Get daily production data
+    const berryProductionPerDay = this.berryProductionPerDay.slice(1); // remove first wakeup
+    const ingredientProductionPerDay = this.ingredientProductionPerDay.slice(1); // remove first wakeup
+
     return {
       produceTotal,
       produceWithoutSkill: totalHelpProduce,
@@ -483,6 +501,8 @@ export class MemberState {
         totalRecovery: this.totalRecovery / iterations,
         morningProcs: this.morningProcs / iterations,
         skillProcDistribution,
+        berryProductionPerDay,
+        ingredientProductionPerDay,
         dayPeriod: {
           averageEnergy: this.energyIntervalsDay / fiveMinIntervalsTotalDay,
           averageFrequency: this.frequencyIntervalsDay / fiveMinIntervalsTotalDay,
