@@ -22,6 +22,7 @@
       <v-list-item prepend-icon="mdi-home" title="Home" to="/"></v-list-item>
       <v-list-item prepend-icon="mdi-calculator" title="Calculator" to="/calculator"></v-list-item>
       <v-list-item prepend-icon="mdi-compare-horizontal" title="Compare" to="/compare"></v-list-item>
+      <v-list-item prepend-icon="mdi-food" title="Recipes" to="/recipes"></v-list-item>
       <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings"></v-list-item>
       <v-list-item v-if="isAdmin" prepend-icon="mdi-shield-account" title="Admin" to="/admin"></v-list-item>
     </v-list>

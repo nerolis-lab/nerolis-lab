@@ -1,3 +1,5 @@
+import type { MaybeAuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
+import { withMaybeUser } from '@src/middleware/authorization-middleware.js';
 import { BaseRouter } from '@src/routes/base-router.js';
 import { calculatorPool } from '@src/services/worker/worker-pool.js';
 import type { Request, Response } from 'express';
@@ -39,11 +41,14 @@ class ProductionRouterImpl {
 
     BaseRouter.router.post(
       '/calculator/team',
+      withMaybeUser,
       async (req: Request<unknown, unknown, CalculateTeamRequest, unknown>, res: Response<CalculateTeamResponse>) => {
         try {
           logger.log('Entered /calculator/team');
 
-          const data = await calculatorPool.exec('calculateTeam', [req.body]);
+          const user = (req as MaybeAuthenticatedRequest).user;
+
+          const data = await calculatorPool.exec('calculateTeam', [req.body, user]);
 
           res.json(data);
         } catch (err) {

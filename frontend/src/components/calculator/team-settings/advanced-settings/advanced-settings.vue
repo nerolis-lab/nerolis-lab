@@ -95,62 +95,10 @@
           </v-col>
         </v-row>
 
-        <v-menu v-model="ingredientMenuOpen" :close-on-content-click="false">
-          <template #activator="{ props }">
-            <v-row dense>
-              <v-col>
-                <v-btn
-                  append-icon="mdi-chevron-down"
-                  color="secondary"
-                  aria-label="add ingredients"
-                  v-bind="props"
-                  class="w-100"
-                  @click="initializeMenuSelection"
-                >
-                  Add Ingredients
-                </v-btn>
-              </v-col>
-            </v-row>
-          </template>
-
-          <v-container class="bg-secondary-dark elevation-10">
-            <v-row dense class="grid-container" :class="isMobile ? 'mobile' : 'desktop'">
-              <v-card
-                v-for="(ingredient, index) in ingredientDefaultOptions"
-                class="grid-item"
-                :key="index"
-                :color="isMenuIngredientSelected(ingredient) ? 'secondary' : 'secondary-dark'"
-                :class="isMenuIngredientSelected(ingredient) ? 'elevation-0' : 'elevation-4'"
-                @click="toggleMenuIngredient(ingredient)"
-              >
-                <span v-if="!isMobile">{{ ingredient.ingredient.name }}</span>
-                <v-avatar size="40">
-                  <v-img :src="ingredientImage(ingredient.ingredient.name)" />
-                </v-avatar>
-              </v-card>
-            </v-row>
-
-            <v-row dense class="mt-2 justify-space-between flex-center w-100">
-              <v-col cols="5" class="flex-left">
-                <v-btn
-                  id="cancelButton"
-                  class="w-100"
-                  size="large"
-                  rounded="lg"
-                  color="secondary-medium-dark"
-                  @click="closeIngredientMenu"
-                >
-                  Cancel
-                </v-btn>
-              </v-col>
-              <v-col cols="5" class="flex-right">
-                <v-btn id="addButton" class="w-100" size="large" rounded="lg" color="primary" @click="addIngredients">
-                  Add
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-menu>
+        <IngredientSelection
+          :pre-selected-ingredients="stockpiledIngredients.map((m) => m.ingredient)"
+          @update-ingredients="addIngredients"
+        />
 
         <v-row class="mb-3">
           <v-divider />
@@ -341,6 +289,7 @@
 </template>
 
 <script lang="ts">
+import IngredientSelection from '@/components/custom-components/input/ingredient-selection/ingredient-selection.vue'
 import { useViewport } from '@/composables/viewport-composable'
 import { berryImage, ingredientImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -351,12 +300,12 @@ import {
   capitalize,
   getBerry,
   getIngredient,
-  ingredient,
   MAX_INGREDIENT_INVENTORY,
   MAX_STOCKPILED_BERRIES,
   MAX_TEAM_SIZE,
   uuid,
   type BerrySet,
+  type Ingredient,
   type IngredientSet
 } from 'sleepapi-common'
 import { defineComponent } from 'vue'
@@ -367,6 +316,9 @@ export interface BerrySetUnique extends BerrySet {
 
 export default defineComponent({
   name: 'AdvancedMenu',
+  components: {
+    IngredientSelection
+  },
   emits: ['save'],
   setup() {
     const teamStore = useTeamStore()
@@ -419,35 +371,16 @@ export default defineComponent({
     toggleAdvancedMenu() {
       this.advancedMenu = !this.advancedMenu
     },
-    initializeMenuSelection() {
-      this.menuSelectedIngredients = [...this.stockpiledIngredients]
-    },
-    closeIngredientMenu() {
-      this.ingredientMenuOpen = false
-    },
     highlightText(event: FocusEvent) {
       const target = event.target as HTMLInputElement
 
       setTimeout(() => target.select(), 1)
     },
-    isMenuIngredientSelected(ingredientSet: IngredientSet) {
-      return this.menuSelectedIngredients.some((selected) => selected.ingredient.name === ingredientSet.ingredient.name)
-    },
-    toggleMenuIngredient(ingredientSet: IngredientSet) {
-      const index = this.menuSelectedIngredients.findIndex(
-        (selected) => selected.ingredient.name === ingredientSet.ingredient.name
-      )
-      if (index !== -1) {
-        // Ingredient is already selected, so remove it
-        this.menuSelectedIngredients.splice(index, 1)
-      } else {
-        // Ingredient is not selected, so add it
-        this.menuSelectedIngredients.push(ingredientSet)
-      }
-    },
-    addIngredients() {
-      this.stockpiledIngredients = [...this.menuSelectedIngredients]
-      this.closeIngredientMenu()
+    addIngredients(ingredients: Ingredient[]) {
+      this.stockpiledIngredients = ingredients.map((ingredient) => ({
+        ingredient,
+        amount: this.stockpiledIngredients.find((i) => i.ingredient.name === ingredient.name)?.amount || 0
+      }))
     },
     initializeBerryMenuSelection() {
       this.menuSelectedBerries = [...this.stockpiledBerries]
@@ -475,6 +408,7 @@ export default defineComponent({
         name: ingredient.ingredient.name,
         amount: ingredient.amount
       }))
+      logger.debug(ingredients)
       const berries = this.stockpiledBerries.map((berry) => ({
         name: berry.berry.name,
         amount: berry.amount,
@@ -494,12 +428,6 @@ export default defineComponent({
     }
   },
   computed: {
-    ingredientDefaultOptions(): IngredientSet[] {
-      return ingredient.INGREDIENTS.map((ingredient) => ({
-        ingredient,
-        amount: 0
-      })).sort((a, b) => a.ingredient.name.localeCompare(b.ingredient.name))
-    },
     berryDefaultOptions(): BerrySetUnique[] {
       return berry.BERRIES.map((berry) => ({
         berry,

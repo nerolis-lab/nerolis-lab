@@ -5,7 +5,7 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
 import { createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
 import { createPinia, setActivePinia } from 'pinia'
 import {
   BULBASAUR,
@@ -20,26 +20,20 @@ import {
   type TeamSettings,
   type UpsertTeamMetaRequest
 } from 'sleepapi-common'
+
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-vi.mock('axios')
-const mockedAxios = vi.mocked(axios, true)
-
-vi.mock('@/router/server-axios', () => ({
-  default: {
-    put: vi.fn(() => ({ data: 'successful response' })),
-    get: vi.fn(() => ({ data: { teams: [] } })),
-    delete: vi.fn(() => undefined)
-  }
-}))
+let mockedServerAxios = new MockAdapter(serverAxios)
 
 beforeEach(async () => {
   setActivePinia(createPinia())
+  mockedServerAxios = new MockAdapter(serverAxios)
   uuid.v4 = vi.fn().mockReturnValue('0'.repeat(36))
 })
 
 afterEach(() => {
   vi.clearAllMocks()
+  mockedServerAxios.reset()
 })
 
 describe('createOrUpdateTeam', () => {
@@ -51,9 +45,15 @@ describe('createOrUpdateTeam', () => {
       wakeup: '06:00',
       recipeType: 'curry'
     }
+
+    mockedServerAxios.onPut('/team/meta/0').replyOnce(200, 'successful response')
     const res = await TeamService.createOrUpdateTeam(0, teamRequest)
 
-    expect(serverAxios.put).toHaveBeenCalledWith('team/meta/0', teamRequest)
+    const calls = mockedServerAxios.history.put
+    expect(calls).toHaveLength(1)
+
+    const lastCall = calls[0]
+    expect(lastCall.url).toBe('team/meta/0')
     expect(res).toMatchInlineSnapshot(`"successful response"`)
   })
 })
@@ -61,15 +61,22 @@ describe('createOrUpdateTeam', () => {
 describe('getTeams', () => {
   it('should call server to get teams', async () => {
     const mockTeamStore = useTeamStore()
+    mockedServerAxios.onGet('/team').replyOnce(200, { teams: [] })
+
     const res = await TeamService.getTeams()
 
-    expect(serverAxios.get).toHaveBeenCalledWith('team')
+    const calls = mockedServerAxios.history.get
+    expect(calls).toHaveLength(1)
+
+    const lastCall = calls[0]
+    expect(lastCall.url).toBe('team')
     expect(res).toHaveLength(mockTeamStore.maxAvailableTeams)
   })
 
   it('should return empty teams when no existing teams', async () => {
     const mockTeamStore = useTeamStore()
 
+    mockedServerAxios.onGet('/team').replyOnce(200, { teams: [] })
     const res = await TeamService.getTeams()
 
     expect(res).toHaveLength(mockTeamStore.maxAvailableTeams)
@@ -314,17 +321,29 @@ describe('createOrUpdateMember', () => {
 
 describe('removeMember', () => {
   it('should call server to delete a team member', async () => {
+    mockedServerAxios.onDelete('/team/1/member/2').replyOnce(200, { message: 'successful response' })
+
     await TeamService.removeMember({ teamIndex: 1, memberIndex: 2 })
 
-    expect(serverAxios.delete).toHaveBeenCalledWith('team/1/member/2')
+    const calls = mockedServerAxios.history.delete
+    expect(calls).toHaveLength(1)
+
+    const lastCall = calls[0]
+    expect(lastCall.url).toBe('team/1/member/2')
   })
 })
 
 describe('deleteTeam', () => {
   it('shall call server to delete a team', async () => {
+    mockedServerAxios.onDelete('/team/2').replyOnce(200, { message: 'successful response' })
+
     await TeamService.deleteTeam(2)
 
-    expect(serverAxios.delete).toHaveBeenCalledWith('team/2')
+    const calls = mockedServerAxios.history.delete
+    expect(calls).toHaveLength(1)
+
+    const lastCall = calls[0]
+    expect(lastCall.url).toBe('team/2')
   })
 })
 
@@ -338,36 +357,41 @@ describe('calculateProduction', () => {
       stockpiledIngredients: []
     }
 
-    mockedAxios.post.mockResolvedValueOnce({
-      data: {
-        members: [
-          {
-            produceTotal: {
-              berries: [{ amount: 10, berry: { name: 'Oran', type: 'normal', value: 5 }, level: 5 }],
-              ingredients: [
-                {
-                  amount: 3,
-                  ingredient: {
-                    longName: 'Honey',
-                    name: 'Honey',
-                    taxedValue: 10,
-                    value: 15
-                  }
+    mockedServerAxios.onPost('/calculator/team').replyOnce(200, {
+      members: [
+        {
+          produceTotal: {
+            berries: [{ amount: 10, berry: { name: 'Oran', type: 'normal', value: 5 }, level: 5 }],
+            ingredients: [
+              {
+                amount: 3,
+                ingredient: {
+                  longName: 'Honey',
+                  name: 'Honey',
+                  taxedValue: 10,
+                  value: 15
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        cooking: {
-          score: 50,
-          rank: 'S'
         }
+      ],
+      cooking: {
+        score: 50,
+        rank: 'S'
       }
     })
 
     const result = await TeamService.calculateProduction({ members, settings })
 
-    expect(mockedAxios.post).toHaveBeenCalledWith('/api/calculator/team', {
+    const postCalls = mockedServerAxios.history.post
+    expect(postCalls).toHaveLength(1)
+
+    const lastPostCall = postCalls[0]
+    expect(lastPostCall.url).toBe('/calculator/team')
+
+    const requestData = JSON.parse(lastPostCall.data)
+    expect(requestData).toEqual({
       members: members.map((member) => ({
         externalId: member.externalId,
         ribbon: member.ribbon,
@@ -442,33 +466,34 @@ describe('calculateIv', () => {
     pokemonStore.upsertLocalPokemon(currentMember)
     pokemonStore.upsertLocalPokemon(otherMember)
 
-    const responseVariant: MemberProductionBase =
-      // uuid.v4() is mocked to 0 repeat x36
-      {
-        externalId: uuid.v4(),
-        produceTotal: {
-          berries: [{ amount: 10, berry: currentMember.pokemon.berry, level: 1 }],
-          ingredients: []
-        },
-        skillProcs: 0,
-        pokemonWithIngredients: {
-          pokemon: currentMember.pokemon.name,
-          ingredients: new Int16Array()
-        }
+    const responseVariant: MemberProductionBase = {
+      externalId: uuid.v4(),
+      produceTotal: {
+        berries: [{ amount: 10, berry: currentMember.pokemon.berry, level: 1 }],
+        ingredients: []
+      },
+      skillProcs: 0,
+      pokemonWithIngredients: {
+        pokemon: currentMember.pokemon.name,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ingredients: [] as any
       }
+    }
     const response: CalculateIvResponse = {
       variants: [responseVariant]
     }
 
-    mockedAxios.post.mockResolvedValue({
-      data: {
-        ...response
-      }
-    })
+    mockedServerAxios.onPost('/calculator/iv').replyOnce(200, response)
 
     const result = await TeamService.calculateCurrentMemberIv()
 
-    expect(mockedAxios.post).toHaveBeenCalledWith('/api/calculator/iv', {
+    const postCalls = mockedServerAxios.history.post
+    expect(postCalls).toHaveLength(1)
+    const lastPostCall = postCalls[0]
+    expect(lastPostCall.url).toBe('/calculator/iv')
+
+    const requestData = JSON.parse(lastPostCall.data)
+    expect(requestData).toEqual({
       members: [
         {
           externalId: 'member2',
@@ -498,9 +523,6 @@ describe('calculateIv', () => {
       }
     })
 
-    // TODO: clean up
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [[, requestData]]: any = mockedAxios.post.mock.calls
     expect(requestData.variants).toHaveLength(3)
 
     expect(result).toEqual({

@@ -1,18 +1,33 @@
 import { MAX_RECIPE_LEVEL } from '../../domain/constants';
 import type { IngredientIndexToIntAmount, IngredientSet } from '../../domain/ingredient';
-import type { Recipe, RecipeFlat, RecipeType } from '../../domain/recipe';
+import { type Recipe, type RecipeFlat, type RecipeType } from '../../domain/recipe';
 import { emptyIngredientInventoryFloat } from '../../utils/flat-utils';
 import { ING_ID_LOOKUP, updateMaxIngredientBonus } from '../ingredient-utils/ingredient-utils';
 
-export function createCurry(params: { name: string; ingredients: IngredientSet[]; bonus: number }): Recipe {
+export function createCurry(params: {
+  name: string;
+  displayName: string;
+  ingredients: IngredientSet[];
+  bonus: number;
+}): Recipe {
   return createRecipe({ ...params, type: 'curry' });
 }
 
-export function createSalad(params: { name: string; ingredients: IngredientSet[]; bonus: number }): Recipe {
+export function createSalad(params: {
+  name: string;
+  displayName: string;
+  ingredients: IngredientSet[];
+  bonus: number;
+}): Recipe {
   return createRecipe({ ...params, type: 'salad' });
 }
 
-export function createDessert(params: { name: string; ingredients: IngredientSet[]; bonus: number }): Recipe {
+export function createDessert(params: {
+  name: string;
+  displayName: string;
+  ingredients: IngredientSet[];
+  bonus: number;
+}): Recipe {
   return createRecipe({ ...params, type: 'dessert' });
 }
 
@@ -75,12 +90,19 @@ export function recipeCoverage(recipe: Int16Array, ingredients: IngredientIndexT
   };
 }
 
-function createRecipe(params: { name: string; ingredients: IngredientSet[]; bonus: number; type: RecipeType }): Recipe {
-  const { name, ingredients, bonus, type } = params;
+function createRecipe(params: {
+  name: string;
+  displayName: string;
+  ingredients: IngredientSet[];
+  bonus: number;
+  type: RecipeType;
+}): Recipe {
+  const { name, displayName, ingredients, bonus, type } = params;
   const nrOfIngredients = ingredients.reduce((sum, cur) => sum + cur.amount, 0);
   updateMaxIngredientBonus(ingredients, bonus);
   return {
     name,
+    displayName,
     value: calculateRecipeValue({ level: 1, ingredients, bonus }),
     valueMax: calculateRecipeValue({ level: MAX_RECIPE_LEVEL, ingredients, bonus }),
     type,

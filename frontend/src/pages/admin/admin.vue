@@ -58,15 +58,9 @@ import { AdminService } from '@/services/admin/admin-service'
 import { DateUtils } from '@/services/utils/date/date-utils'
 import { userAvatar } from '@/services/utils/image-utils'
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
+import type { DataTableHeader } from '@/types/table/table-types'
 import type { User } from 'sleepapi-common'
 import { computed, defineComponent, onMounted, ref } from 'vue'
-
-type DataTableHeader = {
-  title: string
-  key: string
-  align?: 'start' | 'center' | 'end'
-  sortable?: boolean
-}
 
 export default defineComponent({
   name: 'AdminConsole',

@@ -22,30 +22,35 @@ import type { Recipe, RecipeFlat } from './recipe';
 
 export const MIXED_SALAD = createSalad({
   name: 'MIXED_SALAD',
+  displayName: 'Mixed Salad',
   ingredients: [],
   bonus: 0
 });
 
 export const FANCY_APPLE_SALAD = createSalad({
   name: 'FANCY_APPLE_SALAD',
+  displayName: 'Fancy Apple Salad',
   ingredients: [{ amount: 8, ingredient: FANCY_APPLE }],
   bonus: 18.7
 });
 
 export const BEAN_HAM_SALAD = createSalad({
   name: 'BEAN_HAM_SALAD',
+  displayName: 'Bean Ham Salad',
   ingredients: [{ amount: 8, ingredient: BEAN_SAUSAGE }],
   bonus: 18.7
 });
 
 export const SNOOZY_TOMATO_SALAD = createSalad({
   name: 'SNOOZY_TOMATO_SALAD',
+  displayName: 'Snoozy Tomato Salad',
   ingredients: [{ amount: 8, ingredient: SNOOZY_TOMATO }],
   bonus: 18.7
 });
 
 export const SNOW_CLOAK_CAESAR_SALAD = createSalad({
   name: 'SNOW_CLOAK_CAESAR_SALAD',
+  displayName: '"Snow Cloak" Caesar Salad',
   ingredients: [
     { amount: 10, ingredient: MOOMOO_MILK },
     { amount: 6, ingredient: BEAN_SAUSAGE }
@@ -55,6 +60,7 @@ export const SNOW_CLOAK_CAESAR_SALAD = createSalad({
 
 export const WATER_VEIL_TOFU_SALAD = createSalad({
   name: 'WATER_VEIL_TOFU_SALAD',
+  displayName: '"Water Veil" Tofu Salad',
   ingredients: [
     { amount: 15, ingredient: GREENGRASS_SOYBEANS },
     { amount: 9, ingredient: SNOOZY_TOMATO }
@@ -64,6 +70,7 @@ export const WATER_VEIL_TOFU_SALAD = createSalad({
 
 export const HEAT_WAVE_TOFU_SALAD = createSalad({
   name: 'HEAT_WAVE_TOFU_SALAD',
+  displayName: '"Heat Wave" Tofu Salad',
   ingredients: [
     { amount: 10, ingredient: GREENGRASS_SOYBEANS },
     { amount: 6, ingredient: FIERY_HERB }
@@ -73,6 +80,7 @@ export const HEAT_WAVE_TOFU_SALAD = createSalad({
 
 export const DAZZLING_APPLE_CHEESE_SALAD = createSalad({
   name: 'DAZZLING_APPLE_CHEESE_SALAD',
+  displayName: '"Dazzling" Apple Cheese Salad',
   ingredients: [
     { amount: 15, ingredient: FANCY_APPLE },
     { amount: 5, ingredient: MOOMOO_MILK },
@@ -83,6 +91,7 @@ export const DAZZLING_APPLE_CHEESE_SALAD = createSalad({
 
 export const FURY_ATTACK_CORN_SALAD = createSalad({
   name: 'FURY_ATTACK_CORN_SALAD',
+  displayName: '"Fury Attack" Corn Salad',
   ingredients: [
     { amount: 9, ingredient: GREENGRASS_CORN },
     { amount: 8, ingredient: PURE_OIL }
@@ -92,6 +101,7 @@ export const FURY_ATTACK_CORN_SALAD = createSalad({
 
 export const MOOMOO_CAPRESE_SALAD = createSalad({
   name: 'MOOMOO_CAPRESE_SALAD',
+  displayName: 'Moomoo Caprese Salad',
   ingredients: [
     { amount: 12, ingredient: MOOMOO_MILK },
     { amount: 6, ingredient: SNOOZY_TOMATO },
@@ -102,6 +112,7 @@ export const MOOMOO_CAPRESE_SALAD = createSalad({
 
 export const IMMUNITY_LEEK_SALAD = createSalad({
   name: 'IMMUNITY_LEEK_SALAD',
+  displayName: '"Immunity" Leek Salad',
   ingredients: [
     { amount: 10, ingredient: LARGE_LEEK },
     { amount: 5, ingredient: WARMING_GINGER }
@@ -111,6 +122,7 @@ export const IMMUNITY_LEEK_SALAD = createSalad({
 
 export const SUPERPOWER_EXTREME_SALAD = createSalad({
   name: 'SUPERPOWER_EXTREME_SALAD',
+  displayName: '"Superpower" Extreme Salad',
   ingredients: [
     { amount: 9, ingredient: BEAN_SAUSAGE },
     { amount: 6, ingredient: WARMING_GINGER },
@@ -122,6 +134,7 @@ export const SUPERPOWER_EXTREME_SALAD = createSalad({
 
 export const CONTRARY_CHOCOLATE_MEAT_SALAD = createSalad({
   name: 'CONTRARY_CHOCOLATE_MEAT_SALAD',
+  displayName: '"Contrary" Chocolate Meat Salad',
   ingredients: [
     { amount: 14, ingredient: SOOTHING_CACAO },
     { amount: 9, ingredient: BEAN_SAUSAGE }
@@ -131,6 +144,7 @@ export const CONTRARY_CHOCOLATE_MEAT_SALAD = createSalad({
 
 export const GLUTTONY_POTATO_SALAD = createSalad({
   name: 'GLUTTONY_POTATO_SALAD',
+  displayName: '"Gluttony" Potato Salad',
   ingredients: [
     { amount: 14, ingredient: SOFT_POTATO },
     { amount: 9, ingredient: FANCY_EGG },
@@ -142,6 +156,7 @@ export const GLUTTONY_POTATO_SALAD = createSalad({
 
 export const OVERHEAT_GINGER_SALAD = createSalad({
   name: 'OVERHEAT_GINGER_SALAD',
+  displayName: '"Overheat" Ginger Salad',
   ingredients: [
     { amount: 17, ingredient: FIERY_HERB },
     { amount: 10, ingredient: WARMING_GINGER },
@@ -152,6 +167,7 @@ export const OVERHEAT_GINGER_SALAD = createSalad({
 
 export const SPORE_MUSHROOM_SALAD = createSalad({
   name: 'SPORE_MUSHROOM_SALAD',
+  displayName: '"Spore" Mushroom Salad',
   ingredients: [
     { amount: 17, ingredient: TASTY_MUSHROOM },
     { amount: 8, ingredient: SNOOZY_TOMATO },
@@ -162,6 +178,7 @@ export const SPORE_MUSHROOM_SALAD = createSalad({
 
 export const CALM_MIND_FRUIT_SALAD = createSalad({
   name: 'CALM_MIND_FRUIT_SALAD',
+  displayName: '"Calm Mind" Fruit Salad',
   ingredients: [
     { amount: 21, ingredient: FANCY_APPLE },
     { amount: 16, ingredient: HONEY },
@@ -172,6 +189,7 @@ export const CALM_MIND_FRUIT_SALAD = createSalad({
 
 export const SLOWPOKE_TAIL_PEPPER_SALAD = createSalad({
   name: 'SLOWPOKE_TAIL_PEPPER_SALAD',
+  displayName: 'Slowpoke Tail Pepper Salad',
   ingredients: [
     { amount: 10, ingredient: SLOWPOKE_TAIL },
     { amount: 10, ingredient: FIERY_HERB },
@@ -182,6 +200,7 @@ export const SLOWPOKE_TAIL_PEPPER_SALAD = createSalad({
 
 export const NINJA_SALAD = createSalad({
   name: 'NINJA_SALAD',
+  displayName: 'Ninja Salad',
   ingredients: [
     { amount: 15, ingredient: LARGE_LEEK },
     { amount: 19, ingredient: GREENGRASS_SOYBEANS },
@@ -193,6 +212,7 @@ export const NINJA_SALAD = createSalad({
 
 export const CROSS_CHOP_SALAD = createSalad({
   name: 'CROSS_CHOP_SALAD',
+  displayName: '"Cross Chop" Salad',
   ingredients: [
     { amount: 20, ingredient: FANCY_EGG },
     { amount: 15, ingredient: BEAN_SAUSAGE },
@@ -204,6 +224,7 @@ export const CROSS_CHOP_SALAD = createSalad({
 
 export const GREENGRASS_SALAD = createSalad({
   name: 'GREENGRASS_SALAD',
+  displayName: 'Greengrass Salad',
   ingredients: [
     { amount: 22, ingredient: PURE_OIL },
     { amount: 17, ingredient: GREENGRASS_CORN },
@@ -215,6 +236,7 @@ export const GREENGRASS_SALAD = createSalad({
 
 export const DEFIANT_COFFEE_DRESSED_SALAD = createSalad({
   name: 'DEFIANT_COFFEE_DRESSED_SALAD',
+  displayName: "'Defiant' Coffee-Dressed Salad",
   ingredients: [
     { amount: 28, ingredient: ROUSING_COFFEE },
     { amount: 28, ingredient: BEAN_SAUSAGE },

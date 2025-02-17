@@ -1,6 +1,7 @@
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { setupAndRunProductionSimulation } from '@src/services/simulation-service/simulation-service.js';
-import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
+import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
+import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { getIngredientSet } from '@src/utils/production-utils/production-utils.js';
 import type {
@@ -130,10 +131,13 @@ export function calculatePokemonProduction(
 }
 
 // 5110 days is 14 years or 730 weeks
-export function calculateTeam(params: { settings: TeamSettingsExt; members: TeamMemberExt[] }, iterations = 5110) {
-  const { settings, members } = params;
+export function calculateTeam(
+  params: { settings: TeamSettingsExt; members: TeamMemberExt[]; userRecipes: UserRecipes },
+  iterations = 5110
+) {
+  const { settings, members, userRecipes } = params;
 
-  const cookingState = settings.includeCooking ? new CookingState(settings) : undefined;
+  const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes) : undefined;
   const teamSimulator = new TeamSimulator({ settings, members, cookingState });
 
   for (let i = 0; i < iterations; i++) {
@@ -143,10 +147,13 @@ export function calculateTeam(params: { settings: TeamSettingsExt; members: Team
   return teamSimulator.results();
 }
 
-export function calculateSimple(params: { settings: TeamSettingsExt; members: TeamMemberExt[] }, iterations = 700) {
-  const { settings, members } = params;
+export function calculateSimple(
+  params: { settings: TeamSettingsExt; members: TeamMemberExt[]; userRecipes: UserRecipes },
+  iterations = 700
+) {
+  const { settings, members, userRecipes } = params;
 
-  const cookingState = settings.includeCooking ? new CookingState(settings) : undefined;
+  const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes) : undefined;
   const teamSimulator = new TeamSimulator({
     settings,
     members,
