@@ -11,7 +11,7 @@
     persistent-hint
     @focus="highlightText"
     :rules="rules"
-    min-width="100"
+    min-width="50"
   ></v-text-field>
 </template>
 
