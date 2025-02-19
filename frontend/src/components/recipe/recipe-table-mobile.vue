@@ -98,16 +98,15 @@ export default defineComponent({
 
 .recipe-grid {
   display: grid;
-  grid-template-columns: 1fr auto; /* Left column takes remaining space, right is auto-sized */
-  grid-template-rows: auto auto auto; /* Three rows */
-  gap: 0px; /* Adds spacing between grid items */
-  align-items: center; /* Aligns items vertically */
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto;
+  gap: 0px;
+  align-items: center;
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* Ensures all items take the same width */
-  min-width: 100%; /* Forces all items in this column to match the widest one */
+  align-items: stretch;
 }
 </style>

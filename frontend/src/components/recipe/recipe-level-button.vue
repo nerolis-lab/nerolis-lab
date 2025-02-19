@@ -5,6 +5,7 @@
     :min="1"
     :max="MAX_RECIPE_LEVEL"
     hide-details
+    hide-spin-buttons
     bg-color="secondary"
     variant="outlined"
     density="compact"
