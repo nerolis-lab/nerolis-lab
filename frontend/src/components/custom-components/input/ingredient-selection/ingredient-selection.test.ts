@@ -23,7 +23,9 @@ describe('IngredientSelection', () => {
 
   beforeEach(() => {
     setActivePinia(createPinia())
-    wrapper = mount(IngredientSelection, {})
+    wrapper = mount(IngredientSelection, {
+      props: { preSelectedIngredients: mockIngredients }
+    })
   })
 
   afterEach(() => {
@@ -53,16 +55,16 @@ describe('IngredientSelection', () => {
     const button = wrapper.find('button')
     await button.trigger('click')
 
-    const ingredientCard = document.querySelectorAll('.grid-item')[1]
+    const ingredientCard = document.querySelectorAll('.grid-item')[1] // click 2nd ingredient which is milk
     expect(ingredientCard).toBeTruthy()
 
     ingredientCard!.dispatchEvent(new Event('click'))
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.selectedIngredients).toContainEqual(ingredient.INGREDIENTS[1])
+    expect(wrapper.vm.tempSelectedIngredients).toContainEqual(ingredient.INGREDIENTS[1])
 
     ingredientCard!.dispatchEvent(new Event('click'))
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.selectedIngredients).not.toContainEqual(mockIngredients[1])
+    expect(wrapper.vm.tempSelectedIngredients).not.toContainEqual(ingredient.INGREDIENTS[1])
   })
 
   it('resets ingredients when clear is clicked', async () => {
@@ -77,7 +79,7 @@ describe('IngredientSelection', () => {
     )
     clearButton!.dispatchEvent(new Event('click'))
     await wrapper.vm.$nextTick()
-    expect(wrapper.vm.selectedIngredients).toEqual([])
+    expect(wrapper.vm.tempSelectedIngredients).toEqual([])
   })
 
   it('restores preselected ingredients when cancel is clicked', async () => {
@@ -98,8 +100,8 @@ describe('IngredientSelection', () => {
     const button = wrapper.find('button')
     await button.trigger('click')
 
-    const addButton = document.querySelector('#addButton')
-    addButton!.dispatchEvent(new Event('click'))
+    const updateButton = document.querySelector('#updateButton')
+    updateButton!.dispatchEvent(new Event('click'))
     await wrapper.vm.$nextTick()
 
     expect(wrapper.emitted('updateIngredients')).toBeTruthy()
