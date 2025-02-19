@@ -63,8 +63,8 @@
           </v-btn>
         </v-col>
         <v-col cols="4" class="flex-right">
-          <v-btn id="addButton" class="w-100" size="large" rounded="lg" color="primary" @click="addIngredients">
-            Add
+          <v-btn id="updateButton" class="w-100" size="large" rounded="lg" color="primary" @click="updateIngredients">
+            Update
           </v-btn>
         </v-col>
       </v-row>
@@ -89,41 +89,43 @@ export default defineComponent({
   emits: ['updateIngredients'],
   setup(props, { emit }) {
     const ingredientMenuOpen = ref(false)
-    const selectedIngredients = ref(props.preSelectedIngredients)
+    const selectedIngredients = ref([...props.preSelectedIngredients])
+    const tempSelectedIngredients = ref([...props.preSelectedIngredients])
 
     function closeIngredientMenu() {
       ingredientMenuOpen.value = false
     }
 
     function cancelIngredients() {
-      selectedIngredients.value = [...props.preSelectedIngredients]
+      tempSelectedIngredients.value = [...selectedIngredients.value]
       closeIngredientMenu()
     }
 
     function resetIngredients() {
-      selectedIngredients.value = []
+      tempSelectedIngredients.value = []
     }
 
-    function addIngredients() {
+    function updateIngredients() {
+      selectedIngredients.value = [...tempSelectedIngredients.value]
       emit('updateIngredients', selectedIngredients.value)
       closeIngredientMenu()
     }
 
     function isMenuIngredientSelected(ingredient: Ingredient) {
-      return selectedIngredients.value.some((i) => i.name === ingredient.name)
+      return tempSelectedIngredients.value.some((i) => i.name === ingredient.name)
     }
 
     function toggleMenuIngredient(ingredient: Ingredient) {
       if (isMenuIngredientSelected(ingredient)) {
-        selectedIngredients.value = selectedIngredients.value.filter((i) => i.name !== ingredient.name)
+        tempSelectedIngredients.value = tempSelectedIngredients.value.filter((i) => i.name !== ingredient.name)
       } else {
-        selectedIngredients.value = [...selectedIngredients.value, ingredient]
+        tempSelectedIngredients.value = [...tempSelectedIngredients.value, ingredient]
       }
     }
 
     watch(ingredientMenuOpen, (isOpen) => {
       if (isOpen) {
-        selectedIngredients.value = [...props.preSelectedIngredients] // Reset on open
+        tempSelectedIngredients.value = [...selectedIngredients.value]
       }
     })
 
@@ -133,14 +135,15 @@ export default defineComponent({
       closeIngredientMenu,
       cancelIngredients,
       resetIngredients,
-      addIngredients,
+      updateIngredients,
       isMenuIngredientSelected,
       toggleMenuIngredient,
       ingredientMenuOpen,
       ingredientImage,
       ingredients: ingredient.INGREDIENTS,
       isMobile,
-      selectedIngredients
+      selectedIngredients,
+      tempSelectedIngredients
     }
   }
 })
