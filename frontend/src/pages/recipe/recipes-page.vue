@@ -60,6 +60,7 @@
               thumb-label
               color="accent"
               hide-details
+              @end="updatePotSize"
             />
           </v-col>
           <v-col cols="auto" class="ml-1 pa-0">
@@ -173,12 +174,16 @@ export default defineComponent({
     }
   },
   data() {
+    const minIngredients = Math.min(...RECIPES.map((m) => m.nrOfIngredients))
+    const maxIngredients = Math.max(...RECIPES.map((m) => m.nrOfIngredients))
     return {
       selectedSort: 'value',
+      sortAscending: false,
       searchQuery: '',
       selectedTypes: [] as string[],
       chips: ['curry', 'salad', 'dessert'] as RecipeType[],
-      potSizeRange: [7, 102], // TODO: not hard-code
+      potSizeRange: [minIngredients, maxIngredients],
+      filterPotSizeRange: [minIngredients, maxIngredients],
       filteredIngredients: [] as Ingredient[]
     }
   },
@@ -247,7 +252,8 @@ export default defineComponent({
 
       // **Filter by currentPotSize**
       filtered = filtered.filter(
-        (recipe) => recipe.nrOfIngredients <= this.potSizeRange[1] && recipe.nrOfIngredients >= this.potSizeRange[0]
+        (recipe) =>
+          recipe.nrOfIngredients <= this.filterPotSizeRange[1] && recipe.nrOfIngredients >= this.filterPotSizeRange[0]
       )
 
       // **Filter by Ingredients**
@@ -263,23 +269,33 @@ export default defineComponent({
       if (!this.isMobile) {
         return filtered.sort((a, b) => b.userStrength - a.userStrength)
       } else {
+        const order = this.sortAscending ? 1 : -1
+
         return [...filtered].sort((a, b) => {
+          let compareValue = 0
           switch (this.selectedSort) {
             case 'value':
-              return b.userStrength - a.userStrength
+              compareValue = a.userStrength - b.userStrength
+              break
             case 'baseValue':
-              return b.value - a.value
+              compareValue = a.value - b.value
+              break
             case 'level':
-              return b.level - a.level
+              compareValue = a.level - b.level
+              break
             case 'ingredientCount':
-              return b.nrOfIngredients - a.nrOfIngredients
+              compareValue = a.nrOfIngredients - b.nrOfIngredients
+              break
             case 'name':
-              return b.name.localeCompare(a.name)
+              compareValue = a.name.localeCompare(b.name)
+              break
             case 'recipeBonus':
-              return b.bonus - a.bonus
+              compareValue = a.bonus - b.bonus
+              break
             default:
-              return 0
+              compareValue = 0
           }
+          return compareValue * order
         })
       }
     },
@@ -290,10 +306,12 @@ export default defineComponent({
   },
   methods: {
     selectSort(newSort: string) {
-      if (newSort === 'level' && !this.loggedIn) {
-        return
+      if (this.selectedSort === newSort) {
+        this.sortAscending = !this.sortAscending
+      } else {
+        this.selectedSort = newSort
+        this.sortAscending = false
       }
-      this.selectedSort = newSort
     },
     updateRecipeLevel(recipe: UserRecipe, newLevel: number) {
       const index = this.userRecipes.findIndex((r) => r.name === recipe.name)
@@ -311,6 +329,9 @@ export default defineComponent({
     },
     updateFilteredIngredients(ingredients: Ingredient[]) {
       this.filteredIngredients = ingredients
+    },
+    updatePotSize() {
+      this.filterPotSizeRange = [...this.potSizeRange]
     }
   }
 })
