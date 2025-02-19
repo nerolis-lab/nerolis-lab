@@ -2,29 +2,40 @@
   <v-container class="pa-2">
     <v-row class="frosted-glass pa-2 flex-column" no-gutters>
       <!-- Title and sort -->
-      <v-row class="justify-space-between">
-        <v-col class="flex-left" :class="isMobile ? 'text-h5' : 'text-h4 font-weight-semibold'"> Recipes </v-col>
-        <v-col v-if="isMobile" class="flex-right">
-          <v-menu>
-            <template #activator="{ props }">
-              <v-btn append-icon="mdi-chevron-down" color="secondary" dark v-bind="props">
-                Sort: {{ currentSortLabel }}
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="option in computedSortOptions"
-                :key="option.value"
-                :disabled="option.disabled"
-                @click="option.disabled ? null : selectSort(option.value)"
-              >
-                <v-list-item-title>{{ option.title }}</v-list-item-title>
-                <v-list-item-subtitle :class="option.disabled ? 'text-primary' : ''">
-                  {{ option.description }}
-                </v-list-item-subtitle>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+      <v-row dense>
+        <v-col
+          class="d-flex flex-wrap justify-space-between"
+          :class="isMobile ? 'text-h5' : 'text-h4 font-weight-semibold'"
+        >
+          Recipes
+          <div v-if="isMobile">
+            <v-menu>
+              <template #activator="{ props }">
+                <v-btn
+                  :prepend-icon="sortAscending ? 'mdi-arrow-up' : 'mdi-arrow-down'"
+                  append-icon="mdi-chevron-down"
+                  color="secondary"
+                  dark
+                  v-bind="props"
+                >
+                  Sort: {{ currentSortLabel }}
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="option in computedSortOptions"
+                  :key="option.value"
+                  :disabled="option.disabled"
+                  @click="option.disabled ? null : selectSort(option.value)"
+                >
+                  <v-list-item-title>{{ option.title }}</v-list-item-title>
+                  <v-list-item-subtitle :class="option.disabled ? 'text-primary' : ''">
+                    {{ option.description }}
+                  </v-list-item-subtitle>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
         </v-col>
       </v-row>
 
@@ -122,7 +133,7 @@ import {
   type Recipe,
   type RecipeType
 } from 'sleepapi-common'
-import { capitalize, defineComponent, reactive, ref } from 'vue'
+import { capitalize, computed, defineComponent, reactive, ref } from 'vue'
 
 export type UserRecipe = Recipe & { level: number; userStrength: number }
 
@@ -134,6 +145,8 @@ export default defineComponent({
     const { isMobile, viewportWidth } = useViewport()
     const loggedIn = userStore.loggedIn
     const loading = ref(false)
+    const isTablet = computed(() => viewportWidth.value >= 600)
+
     const userRecipes: UserRecipe[] = reactive(
       RECIPES.map((recipe) => {
         const level = 1,
@@ -165,7 +178,7 @@ export default defineComponent({
 
     return {
       isMobile,
-      isTablet: viewportWidth.value >= 600,
+      isTablet,
       loggedIn,
       userRecipes,
       capitalize,
