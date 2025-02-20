@@ -187,7 +187,7 @@ export class MemberState {
 
     // Initialize ingredient sets from the Pokemon's actual ingredient list
     const ingredientList = member.pokemonWithIngredients.ingredientList;
-    
+
     // Level 0 ingredient is always the first one
     this.level0IngredientSet = ingredientList[0];
     this.possibleIngredientLevels.push(0);
@@ -300,7 +300,7 @@ export class MemberState {
     // Create a copy of the current day's production before pushing it
     const dayProduction = new Float32Array(this.currentDayIngredientProduction);
     this.ingredientProductionPerDay.push(dayProduction);
-    
+
     this.currentDayBerryProduction = 0;
     this.currentDayIngredientProduction = emptyIngredientInventoryFloat();
 
@@ -357,7 +357,7 @@ export class MemberState {
   public updateIngredientBag() {
     // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
     this.cookingState?.addIngredients(this.ingredientHelpsSinceLastCook);
-    
+
     // Reset ingredient amounts
     this.ingredientHelpsSinceLastCook = emptyIngredientInventoryFloat();
   }
@@ -385,11 +385,14 @@ export class MemberState {
         // Roll for which ingredient level (equal probability)
         const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
         let ingredientSet: IngredientSet | null = null;
-        if (roll === 2 && this.level60IngredientSet) { // Level 60
+        if (roll === 2 && this.level60IngredientSet) {
+          // Level 60
           ingredientSet = this.level60IngredientSet;
-        } else if (roll === 1 && this.level30IngredientSet) { // Level 30
+        } else if (roll === 1 && this.level30IngredientSet) {
+          // Level 30
           ingredientSet = this.level30IngredientSet;
-        } else { // Level 0
+        } else {
+          // Level 0
           ingredientSet = this.level0IngredientSet;
         }
 
@@ -431,11 +434,14 @@ export class MemberState {
         } else {
           // Ingredient drop - roll for which level (equal probability)
           const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
-          if (roll === 2 && this.level60IngredientSet) { // Level 60
+          if (roll === 2 && this.level60IngredientSet) {
+            // Level 60
             ingredientSet = this.level60IngredientSet;
-          } else if (roll === 1 && this.level30IngredientSet) { // Level 30
+          } else if (roll === 1 && this.level30IngredientSet) {
+            // Level 30
             ingredientSet = this.level30IngredientSet;
-          } else { // Level 0
+          } else {
+            // Level 0
             ingredientSet = this.level0IngredientSet;
           }
           if (ingredientSet) {
@@ -449,7 +455,7 @@ export class MemberState {
         const helpRatio = inventorySpace >= totalDropAmount ? 1 : inventorySpace / totalDropAmount;
         this.totalAverageHelps += helpRatio;
         this.helpsSinceLastCook += helpRatio;
-        
+
         if (isBerryDrop) {
           // Berry drop
           this.totalBerryHelps += helpRatio;
@@ -460,7 +466,7 @@ export class MemberState {
           this.currentDayIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += helpRatio * ingredientSet.amount;
         }
-        
+
         if (helpRatio < 1) {
           this.voidHelps += 1 - helpRatio;
         }
@@ -520,24 +526,25 @@ export class MemberState {
 
     // Calculate total help produce based on tracked help counts
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.berryDropAmounts._mapUnary(
-        (dropAmount) => (dropAmount * this.totalBerryHelps) / iterations
-      ),
+      berries: this.berryDropAmounts._mapUnary((dropAmount) => (dropAmount * this.totalBerryHelps) / iterations),
       ingredients: emptyIngredientInventoryFloat()
     };
 
     // Add ingredients based on tracked help counts
     if (this.level0IngredientSet) {
       const index0 = ING_ID_LOOKUP[this.level0IngredientSet.ingredient.name];
-      totalHelpProduceFlat.ingredients[index0] = this.level0IngredientSet.amount * this.totalIngredientHelps[index0] / iterations;
+      totalHelpProduceFlat.ingredients[index0] =
+        (this.level0IngredientSet.amount * this.totalIngredientHelps[index0]) / iterations;
     }
     if (this.level30IngredientSet) {
       const index30 = ING_ID_LOOKUP[this.level30IngredientSet.ingredient.name];
-      totalHelpProduceFlat.ingredients[index30] = this.level30IngredientSet.amount * this.totalIngredientHelps[index30] / iterations;
+      totalHelpProduceFlat.ingredients[index30] =
+        (this.level30IngredientSet.amount * this.totalIngredientHelps[index30]) / iterations;
     }
     if (this.level60IngredientSet) {
       const index60 = ING_ID_LOOKUP[this.level60IngredientSet.ingredient.name];
-      totalHelpProduceFlat.ingredients[index60] = this.level60IngredientSet.amount * this.totalIngredientHelps[index60] / iterations;
+      totalHelpProduceFlat.ingredients[index60] =
+        (this.level60IngredientSet.amount * this.totalIngredientHelps[index60]) / iterations;
     }
 
     const totalHelpProduce: Produce = {
@@ -586,7 +593,7 @@ export class MemberState {
     // Calculate daily production distributions
     const berryProductionDistribution = calculateSkillProcDistribution(this.berryProductionPerDay);
     const ingredientDistributions: { [ingredientName: string]: Record<number, number> } = {};
-    
+
     // Initialize distribution objects for each ingredient that was produced
     const usedIngredients = new Set<string>();
     if (this.level0IngredientSet) usedIngredients.add(this.level0IngredientSet.ingredient.name);
@@ -596,7 +603,7 @@ export class MemberState {
     for (const ingredientName of usedIngredients) {
       const ingredientId = ING_ID_LOOKUP[ingredientName];
       // Extract daily values for this ingredient from the Float32Arrays
-      const dailyValues = this.ingredientProductionPerDay.map(dayProduction => dayProduction[ingredientId]);
+      const dailyValues = this.ingredientProductionPerDay.map((dayProduction) => dayProduction[ingredientId]);
       ingredientDistributions[ingredientName] = calculateSkillProcDistribution(dailyValues);
     }
 
@@ -659,12 +666,8 @@ export class MemberState {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations);
 
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.berryDropAmounts._mapUnary(
-        (dropAmount) => (dropAmount * this.totalBerryHelps) / iterations
-      ),
-      ingredients: this.totalIngredientHelps._mapUnary(
-        (helps) => helps / iterations
-      )
+      berries: this.berryDropAmounts._mapUnary((dropAmount) => (dropAmount * this.totalBerryHelps) / iterations),
+      ingredients: this.totalIngredientHelps._mapUnary((helps) => helps / iterations)
     };
 
     const totalHelpProduce: Produce = {
