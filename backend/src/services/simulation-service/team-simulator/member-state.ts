@@ -168,8 +168,6 @@ export class MemberState {
       ingredients: pokemonIngredientListFlat
     };
 
-    console.log('Debug - Pokemon ingredients:', member.pokemonWithIngredients);
-
     // Pre-calculate ingredient amounts by level using IngredientSet and initialize tracking
     const allIngredients = [];
 
@@ -199,22 +197,13 @@ export class MemberState {
       this.level60IngredientSet = null;
     }
 
-    console.log('Debug - All ingredients:', allIngredients);
-
     // Initialize tracking for all ingredients
     for (const ing of allIngredients) {
       const ingName = ing.ingredient.name;
-      console.log(`Debug - Initializing tracking for ${ingName}`);
       this.ingredientProductionPerDay[ingName] = [];
       this.currentDayIngredientProduction[ingName] = 0;
       this.ingredientHelpsSinceLastCook[ingName] = 0;
     }
-
-    console.log('Debug - Initialized tracking:', {
-      perDay: this.ingredientProductionPerDay,
-      current: this.currentDayIngredientProduction,
-      helpsSince: this.ingredientHelpsSinceLastCook
-    });
 
     // Calculate raw production amounts without probability adjustments
     const avgIngredientList = calculateAveragePokemonIngredientSet(pokemonIngredientListFlat, member.settings.level);
