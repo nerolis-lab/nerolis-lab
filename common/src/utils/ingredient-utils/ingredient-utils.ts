@@ -1,9 +1,9 @@
 import type {
-    Ingredient,
-    IngredientIndexToFloatAmount,
-    IngredientIndexToIntAmount,
-    IngredientSet,
-    IngredientSetSimple
+  Ingredient,
+  IngredientIndexToFloatAmount,
+  IngredientIndexToIntAmount,
+  IngredientSet,
+  IngredientSetSimple
 } from '../../domain/ingredient/ingredient';
 import { INGREDIENTS, TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 import type { Pokemon } from '../../domain/pokemon/pokemon';
