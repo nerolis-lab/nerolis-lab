@@ -393,13 +393,13 @@ export class MemberState {
         const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
         if (roll === 2) { // Level 60
           this.level60IngredientHelpsSinceLastCook += 1;
-          this.currentDayLevel60IngredientProduction += 1;
+          this.currentDayLevel60IngredientProduction += this.level60IngredientSet!.amount;
         } else if (roll === 1) { // Level 30
           this.level30IngredientHelpsSinceLastCook += 1;
-          this.currentDayLevel30IngredientProduction += 1;
+          this.currentDayLevel30IngredientProduction += this.level30IngredientSet!.amount;
         } else { // Level 0
           this.level0IngredientHelpsSinceLastCook += 1;
-          this.currentDayLevel0IngredientProduction += 1;
+          this.currentDayLevel0IngredientProduction += this.level0IngredientSet.amount;
         }
       }
 
@@ -457,13 +457,13 @@ export class MemberState {
           this.totalIngredientHelps += helpRatio;
           if (ingredientLevelRoll === 2) { // Level 60
             this.level60IngredientHelpsSinceLastCook += helpRatio;
-            this.currentDayLevel60IngredientProduction += helpRatio;
+            this.currentDayLevel60IngredientProduction += helpRatio * this.level60IngredientSet!.amount;
           } else if (ingredientLevelRoll === 1) { // Level 30
             this.level30IngredientHelpsSinceLastCook += helpRatio;
-            this.currentDayLevel30IngredientProduction += helpRatio;
+            this.currentDayLevel30IngredientProduction += helpRatio * this.level30IngredientSet!.amount;
           } else { // Level 0
             this.level0IngredientHelpsSinceLastCook += helpRatio;
-            this.currentDayLevel0IngredientProduction += helpRatio;
+            this.currentDayLevel0IngredientProduction += helpRatio * this.level0IngredientSet.amount;
           }
         }
         
