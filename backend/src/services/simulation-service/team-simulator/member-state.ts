@@ -38,7 +38,6 @@ import {
   emptyIngredientInventoryFloat,
   flatToBerrySet,
   flatToIngredientSet,
-  getEmptyInventoryFloat,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
   multiplyProduce,
@@ -93,7 +92,7 @@ export class MemberState {
   public skillPercentage: number;
   private ingredientPercentage: number;
   private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
-  private rawProduce: ProduceFlat = getEmptyInventoryFloat();
+  private berryDropAmounts: Float32Array = new Float32Array();
   private berryDropAmount: number = 0;
 
   // summary
@@ -219,12 +218,8 @@ export class MemberState {
       member.settings.subskills
     );
 
-    this.rawProduce = {
-      berries: Float32Array.from(memberBerryInList, (value) => value * berriesPerDrop),
-      ingredients: avgIngredientList
-    };
-
-    this.berryDropAmount = Math.max(...this.rawProduce.berries);
+    this.berryDropAmounts = Float32Array.from(memberBerryInList, (value) => value * berriesPerDrop);
+    this.berryDropAmount = Math.max(...this.berryDropAmounts);
 
     this.sneakySnackBerries = memberBerryInList.map((amount) => (amount *= berriesPerDrop));
 
@@ -543,7 +538,7 @@ export class MemberState {
 
     // Calculate total help produce based on tracked help counts
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.rawProduce.berries._mapUnary(
+      berries: this.berryDropAmounts._mapUnary(
         (avgAmount) => (avgAmount * this.totalBerryHelps) / iterations
       ),
       ingredients: emptyIngredientInventoryFloat()
@@ -673,7 +668,7 @@ export class MemberState {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations);
 
     const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.rawProduce.berries._mapUnary(
+      berries: this.berryDropAmounts._mapUnary(
         (avgAmount) => (avgAmount * this.totalBerryHelps) / iterations
       ),
       ingredients: this.totalIngredientHelps._mapUnary(
