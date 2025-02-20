@@ -32,7 +32,6 @@ import {
   MathUtils,
   RandomUtils,
   berrySetToFlat,
-  calculateAveragePokemonIngredientSet,
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
   emptyIngredientInventoryFloat,
@@ -71,16 +70,23 @@ export class MemberState {
   private totalIngredientHelps = emptyIngredientInventoryFloat();
   private voidHelps = 0;
 
-  // Production distribution tracking
+  // We want to produce histograms showing the distribution of how many helps we
+  // got over the Monte Carlo simulations.  The way that MemberState is
+  // interacted with over the simulations is that we repeatedly run the sim
+  // with the *same* MemberState.  So we cannot have a single counter for
+  // number of helps.  Instead, we need a per-day counter, which we then shove
+  // into an array so we know exactly how much we produced each day.
   private berryProductionPerDay: number[] = [];
   private ingredientProductionPerDay: { [ingredientName: string]: number[] } = {};
   private currentDayBerryProduction = 0;
   private currentDayIngredientProduction: { [ingredientName: string]: number } = {};
 
-  // Ingredient tracking
+  // Precomputed information about what ingredients the pokemon can drop.
+  // Null if the Pokemon isn't leveled enough to unlock an ingredient.
   private level0IngredientSet: IngredientSet;
   private level30IngredientSet: IngredientSet | null = null;
   private level60IngredientSet: IngredientSet | null = null;
+  // Either [0], [0, 1] or [0, 1, 2]
   private possibleIngredientLevels: number[] = [];
 
   // stats
@@ -92,10 +98,16 @@ export class MemberState {
   public skillPercentage: number;
   private ingredientPercentage: number;
   private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
+
+  // Pre-compute how many berries the Pokemon produces per drop
   private berryDropAmounts: Float32Array = new Float32Array();
   private berryDropAmount: number = 0;
 
   // summary
+
+  // NB: Although this /looks/ like the total production over all Monte Carlo
+  // runs, it isn't; this is a special extra production variable that is
+  // modified by SkillState.
   totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
   totalRecovery = 0;
   wastedEnergy = 0;
@@ -118,7 +130,8 @@ export class MemberState {
   private totalHealedByMembers = 0;
   private totalHelpsByMembers = 0;
 
-  // Add help counters for each ingredient
+  // This is for tracking how many ingredients for each cook, it's reset every
+  // time we do a cook
   private ingredientHelpsSinceLastCook: { [ingredientName: string]: number } = {};
 
   constructor(params: {
@@ -205,7 +218,6 @@ export class MemberState {
     }
 
     // Calculate raw production amounts without probability adjustments
-    const avgIngredientList = calculateAveragePokemonIngredientSet(pokemonIngredientListFlat, member.settings.level);
     const memberBerryInList = berrySetToFlat([
       {
         amount: 1,
@@ -539,7 +551,7 @@ export class MemberState {
     // Calculate total help produce based on tracked help counts
     const totalHelpProduceFlat: ProduceFlat = {
       berries: this.berryDropAmounts._mapUnary(
-        (avgAmount) => (avgAmount * this.totalBerryHelps) / iterations
+        (dropAmount) => (dropAmount * this.totalBerryHelps) / iterations
       ),
       ingredients: emptyIngredientInventoryFloat()
     };
@@ -669,7 +681,7 @@ export class MemberState {
 
     const totalHelpProduceFlat: ProduceFlat = {
       berries: this.berryDropAmounts._mapUnary(
-        (avgAmount) => (avgAmount * this.totalBerryHelps) / iterations
+        (dropAmount) => (dropAmount * this.totalBerryHelps) / iterations
       ),
       ingredients: this.totalIngredientHelps._mapUnary(
         (helps) => helps / iterations
