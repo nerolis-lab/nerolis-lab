@@ -54,30 +54,19 @@
             <template v-slot:activator="{ props }">
               <v-icon v-bind="props" size="small" class="ml-1">mdi-information</v-icon>
             </template>
-            Distribution of ingredient quantities produced in each cycle, by level
+            Distribution of ingredient quantities produced in each cycle
           </v-tooltip>
         </v-card-title>
-        <div v-if="hasAnyIngredients">
-          <BarChart
-            v-if="hasLevel0Ingredients"
-            :chart-data="level0IngredientProdChartData"
-            :chart-options="level0IngredientProdChartOptions"
-            :chart-plugins="level0IngredientProdPlugins"
-            class="mb-2"
-          />
-          <BarChart
-            v-if="hasLevel30Ingredients"
-            :chart-data="level30IngredientProdChartData"
-            :chart-options="level30IngredientProdChartOptions"
-            :chart-plugins="level30IngredientProdPlugins"
-            class="mb-2"
-          />
-          <BarChart
-            v-if="hasLevel60Ingredients"
-            :chart-data="level60IngredientProdChartData"
-            :chart-options="level60IngredientProdChartOptions"
-            :chart-plugins="level60IngredientProdPlugins"
-          />
+        <div v-if="hasIngredients">
+          <template v-for="(chartData, ingredientName) in ingredientCharts" :key="ingredientName">
+            <div class="text-subtitle-2 text-center">{{ ingredientName }}</div>
+            <BarChart
+              :chart-data="chartData.data"
+              :chart-options="chartData.options"
+              :chart-plugins="chartData.plugins"
+              class="mb-4"
+            />
+          </template>
         </div>
         <div v-else class="text-center pa-4">No ingredient production data available</div>
       </v-card>
@@ -105,6 +94,9 @@ import {
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { defineComponent, type PropType, computed } from 'vue'
 import { useTheme } from 'vuetify'
+
+// Define a set of colors to cycle through for ingredient charts
+const INGREDIENT_COLORS = ['accent', 'info', 'success', 'warning', 'error']
 
 export default defineComponent({
   name: 'SkillBreakdown',
@@ -137,59 +129,56 @@ export default defineComponent({
       averageBerryProcsPlugin(props.pokemonProduction.production.advanced.berryStrength, colors.secondary)
     ]
 
-    // Check if each level of ingredients exists
-    const hasLevel0Ingredients = computed(() => {
-      const dist = props.pokemonProduction.production.advanced.level0IngredientDistribution
-      return dist != null && Object.keys(dist).length > 0 && Object.values(dist).some((v) => v > 0)
-    })
-    const hasLevel30Ingredients = computed(() => {
-      const dist = props.pokemonProduction.production.advanced.level30IngredientDistribution
-      return dist != null && Object.keys(dist).length > 0 && Object.values(dist).some((v) => v > 0)
-    })
-    const hasLevel60Ingredients = computed(() => {
-      const dist = props.pokemonProduction.production.advanced.level60IngredientDistribution
-      return dist != null && Object.keys(dist).length > 0 && Object.values(dist).some((v) => v > 0)
+    const hasIngredients = computed(() => {
+      const distributions = props.pokemonProduction.production.advanced.ingredientDistributions
+      console.log('Debug - Received ingredient distributions:', distributions)
+      return (
+        Object.keys(distributions).length > 0 &&
+        Object.values(distributions).some((dist) => Object.values(dist).some((v) => v > 0))
+      )
     })
 
-    const hasAnyIngredients = computed(
-      () => hasLevel0Ingredients.value || hasLevel30Ingredients.value || hasLevel60Ingredients.value
-    )
+    const ingredientCharts = computed(() => {
+      const distributions = props.pokemonProduction.production.advanced.ingredientDistributions
+      const charts: Record<string, { data: any; options: any; plugins: any }> = {}
 
-    // Level 0 ingredients
-    const level0IngredientProdChartData = computed(() =>
-      getIngredientProdChartData(
-        props.pokemonProduction.production.advanced.level0IngredientDistribution || {},
-        colors.accent
-      )
-    )
-    const level0IngredientProdChartOptions = getIngredientProdChartOptions('0')
-    const level0IngredientProdPlugins = [
-      averageIngredientProcsPlugin(props.pokemonProduction.production.advanced.ingredientPercentage, colors.accent)
-    ]
+      console.log('Debug - Creating charts for distributions:', distributions)
+      Object.entries(distributions).forEach(([ingredientName, distribution], index) => {
+        console.log(`Debug - Processing ingredient ${ingredientName}:`, distribution)
+        // Skip if distribution is not valid
+        if (!distribution || typeof distribution !== 'object') {
+          console.log(`Debug - Skipping invalid distribution for ${ingredientName}`)
+          return
+        }
 
-    // Level 30 ingredients
-    const level30IngredientProdChartData = computed(() =>
-      getIngredientProdChartData(
-        props.pokemonProduction.production.advanced.level30IngredientDistribution || {},
-        colors.info
-      )
-    )
-    const level30IngredientProdChartOptions = getIngredientProdChartOptions('30')
-    const level30IngredientProdPlugins = [
-      averageIngredientProcsPlugin(props.pokemonProduction.production.advanced.ingredientPercentage, colors.info)
-    ]
+        // Cycle through colors for different ingredients
+        const colorName = INGREDIENT_COLORS[index % INGREDIENT_COLORS.length]
+        const color = colors[colorName]
+        console.log(`Debug - Using color ${colorName} for ${ingredientName}`)
 
-    // Level 60 ingredients
-    const level60IngredientProdChartData = computed(() =>
-      getIngredientProdChartData(
-        props.pokemonProduction.production.advanced.level60IngredientDistribution || {},
-        colors.success
-      )
-    )
-    const level60IngredientProdChartOptions = getIngredientProdChartOptions('60')
-    const level60IngredientProdPlugins = [
-      averageIngredientProcsPlugin(props.pokemonProduction.production.advanced.ingredientPercentage, colors.success)
-    ]
+        // Convert distribution to Record<number, number>
+        const typedDistribution = Object.entries(distribution).reduce(
+          (acc, [key, value]) => {
+            acc[Number(key)] = Number(value)
+            return acc
+          },
+          {} as Record<number, number>
+        )
+        console.log(`Debug - Converted distribution for ${ingredientName}:`, typedDistribution)
+
+        charts[ingredientName] = {
+          data: getIngredientProdChartData(typedDistribution, color),
+          options: getIngredientProdChartOptions(ingredientName),
+          plugins: [
+            averageIngredientProcsPlugin(props.pokemonProduction.production.advanced.ingredientPercentage, color)
+          ]
+        }
+        console.log(`Debug - Created chart for ${ingredientName}:`, charts[ingredientName])
+      })
+
+      console.log('Debug - Final charts object:', charts)
+      return charts
+    })
 
     return {
       skillProcChartData,
@@ -198,19 +187,8 @@ export default defineComponent({
       berryProdChartData,
       berryProdChartOptions,
       berryProdPlugins,
-      hasAnyIngredients,
-      hasLevel0Ingredients,
-      hasLevel30Ingredients,
-      hasLevel60Ingredients,
-      level0IngredientProdChartData,
-      level0IngredientProdChartOptions,
-      level0IngredientProdPlugins,
-      level30IngredientProdChartData,
-      level30IngredientProdChartOptions,
-      level30IngredientProdPlugins,
-      level60IngredientProdChartData,
-      level60IngredientProdChartOptions,
-      level60IngredientProdPlugins
+      hasIngredients,
+      ingredientCharts
     }
   }
 })
