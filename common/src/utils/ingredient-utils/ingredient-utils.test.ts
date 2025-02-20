@@ -1,31 +1,31 @@
 import { describe, expect, it } from 'vitest';
 import type { IngredientSet, IngredientSetSimple } from '../../domain/ingredient/ingredient';
 import {
-  FANCY_APPLE,
-  FANCY_EGG,
-  HONEY,
-  INGREDIENTS,
-  MOOMOO_MILK,
-  SOOTHING_CACAO
+    FANCY_APPLE,
+    FANCY_EGG,
+    HONEY,
+    INGREDIENTS,
+    MOOMOO_MILK,
+    SOOTHING_CACAO
 } from '../../domain/ingredient/ingredients';
 import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
 import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
 import {
-  calculateAveragePokemonIngredientSet,
-  combineSameIngredientsInDrop,
-  emptyIngredientInventory,
-  flatToIngredientSet,
-  getAllIngredientLists,
-  getIngredient,
-  getIngredientNames,
-  includesMagnet,
-  ingredientIndex,
-  ingredientSetToFloatFlat,
-  ingredientSetToIntFlat,
-  prettifyIngredientDrop,
-  shortPrettifyIngredientDrop,
-  simplifyIngredientSet,
-  unsimplifyIngredientSet
+    calculateAveragePokemonIngredientSet,
+    combineSameIngredientsInDrop,
+    emptyIngredientInventory,
+    flatToIngredientSet,
+    getAllIngredientLists,
+    getIngredient,
+    getIngredientNames,
+    includesMagnet,
+    ingredientIndex,
+    ingredientSetToFloatFlat,
+    ingredientSetToIntFlat,
+    prettifyIngredientDrop,
+    shortPrettifyIngredientDrop,
+    simplifyIngredientSet,
+    unsimplifyIngredientSet
 } from './ingredient-utils';
 
 describe('getIngredient', () => {

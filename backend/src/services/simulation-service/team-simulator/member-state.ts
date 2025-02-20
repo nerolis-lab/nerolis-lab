@@ -13,6 +13,7 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   BerryIndexToFloatAmount,
   BerrySet,
+  IngredientSet,
   MemberProduction,
   MemberProductionBase,
   PokemonWithIngredientsIndexed,
@@ -26,6 +27,7 @@ import type {
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   CarrySizeUtils,
+  ING_ID_LOOKUP,
   MAX_POT_SIZE,
   MathUtils,
   RandomUtils,
@@ -33,14 +35,14 @@ import {
   calculateAveragePokemonIngredientSet,
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
+  emptyIngredientInventoryFloat,
   flatToBerrySet,
   flatToIngredientSet,
   getEmptyInventoryFloat,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
   multiplyProduce,
-  subskill,
-  sumFlats
+  subskill
 } from 'sleepapi-common';
 
 export class MemberState {
@@ -76,6 +78,12 @@ export class MemberState {
   private currentDayBerryProduction = 0;
   private currentDayIngredientProduction = 0;
 
+  // Ingredient tracking by level
+  private level0IngredientSet: IngredientSet;
+  private level30IngredientSet: IngredientSet | null;
+  private level60IngredientSet: IngredientSet | null;
+  private possibleIngredientLevels: number[] = [];
+
   // stats
   private frequency0;
   private frequency1;
@@ -85,9 +93,8 @@ export class MemberState {
   public skillPercentage: number;
   private ingredientPercentage: number;
   private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
-  private averageProduceAmount: number;
-  private averageProduce: ProduceFlat = getEmptyInventoryFloat();
   private rawProduce: ProduceFlat = getEmptyInventoryFloat();
+  private berryDropAmount: number = 0;
 
   // summary
   totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
@@ -111,6 +118,11 @@ export class MemberState {
   // team members support
   private totalHealedByMembers = 0;
   private totalHelpsByMembers = 0;
+
+  // Add help counters for each level (if not already present)
+  private level0IngredientHelpsSinceLastCook: number = 0;
+  private level30IngredientHelpsSinceLastCook: number = 0;
+  private level60IngredientHelpsSinceLastCook: number = 0;
 
   constructor(params: {
     member: TeamMemberExt;
@@ -159,9 +171,26 @@ export class MemberState {
       ingredients: pokemonIngredientListFlat
     };
 
-    // Calculate probability-adjusted amounts for cooking
-    this.averageProduce = TeamSimulatorUtils.calculateAverageProduce(member);
-    this.averageProduceAmount = sumFlats(this.averageProduce.ingredients, this.averageProduce.berries);
+    // Pre-calculate ingredient amounts by level using IngredientSet
+    const level0Ingredient = member.pokemonWithIngredients.pokemon.ingredient0;
+    this.level0IngredientSet = { ingredient: level0Ingredient.ingredient, amount: level0Ingredient.amount };
+    this.possibleIngredientLevels.push(0);
+
+    if (member.settings.level >= 30 && member.pokemonWithIngredients.pokemon.ingredient30.length > 0) {
+      const ing30 = member.pokemonWithIngredients.pokemon.ingredient30[0];
+      this.level30IngredientSet = { ingredient: ing30.ingredient, amount: ing30.amount };
+      this.possibleIngredientLevels.push(1);
+    } else {
+      this.level30IngredientSet = null;
+    }
+
+    if (member.settings.level >= 60 && member.pokemonWithIngredients.pokemon.ingredient60.length > 0) {
+      const ing60 = member.pokemonWithIngredients.pokemon.ingredient60[0];
+      this.level60IngredientSet = { ingredient: ing60.ingredient, amount: ing60.amount };
+      this.possibleIngredientLevels.push(2);
+    } else {
+      this.level60IngredientSet = null;
+    }
 
     // Calculate raw production amounts without probability adjustments
     const avgIngredientList = calculateAveragePokemonIngredientSet(pokemonIngredientListFlat, member.settings.level);
@@ -181,6 +210,8 @@ export class MemberState {
       berries: Float32Array.from(memberBerryInList, (value) => value * berriesPerDrop),
       ingredients: avgIngredientList
     };
+
+    this.berryDropAmount = Math.max(...this.rawProduce.berries);
 
     this.sneakySnackBerries = memberBerryInList.map((amount) => (amount *= berriesPerDrop));
 
@@ -298,9 +329,26 @@ export class MemberState {
   }
 
   public updateIngredientBag() {
-    const ingsSinceLastCook = this.averageProduce.ingredients._mapUnary((a) => a * this.helpsSinceLastCook);
-    this.cookingState?.addIngredients(ingsSinceLastCook);
-    this.helpsSinceLastCook = 0;
+    // Calculate total ingredients from each level's helps
+    const totalIngredients = emptyIngredientInventoryFloat();
+    // It feels like going through ING_ID_LOOKUP shouldn't be necessary,
+    // but ingredient doesn't seem to have the ID
+    const index0 = ING_ID_LOOKUP[this.level0IngredientSet.ingredient.name];
+    totalIngredients[index0] = this.level0IngredientSet.amount * this.level0IngredientHelpsSinceLastCook;
+    if (this.level30IngredientSet != null) {
+      const index30 = ING_ID_LOOKUP[this.level30IngredientSet.ingredient.name];
+      totalIngredients[index30] = this.level30IngredientSet.amount * this.level30IngredientHelpsSinceLastCook;
+    }
+    if (this.level60IngredientSet != null) {
+      const index60 = ING_ID_LOOKUP[this.level60IngredientSet.ingredient.name];
+      totalIngredients[index60] = this.level60IngredientSet.amount * this.level60IngredientHelpsSinceLastCook;
+    }
+    this.cookingState?.addIngredients(totalIngredients);
+    
+    // Reset help counters
+    this.level0IngredientHelpsSinceLastCook = 0;
+    this.level30IngredientHelpsSinceLastCook = 0;
+    this.level60IngredientHelpsSinceLastCook = 0;
   }
 
   public recoverMeal() {
@@ -325,6 +373,16 @@ export class MemberState {
         // Ingredient drop
         this.totalIngredientHelps += 1;
         this.currentDayIngredientProduction += 1;
+        
+        // Roll for which ingredient level (equal probability)
+        const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
+        if (roll === 2) { // Level 60
+          this.level60IngredientHelpsSinceLastCook += 1;
+        } else if (roll === 1) { // Level 30
+          this.level30IngredientHelpsSinceLastCook += 1;
+        } else { // Level 0
+          this.level0IngredientHelpsSinceLastCook += 1;
+        }
       }
 
       return this.skillState.attemptSkill();
@@ -346,35 +404,50 @@ export class MemberState {
         this.currentNightHelps += 1; // these run skill procs at wakeup
         this.nightHelpsBeforeSS += 1;
 
-        this.carriedAmount += this.averageProduceAmount;
-
-        // if this help hits the inventory limit we split into what fits in bag and what gets spilled
-        if (inventorySpace < this.averageProduceAmount) {
-          const helpRatio = inventorySpace / this.averageProduceAmount;
-          this.totalAverageHelps += helpRatio;
-          this.helpsSinceLastCook += helpRatio;
-          this.voidHelps += 1 - helpRatio;
-
-          // Roll for berry vs ingredient with partial help
-          if (RandomUtils.roll(1 - this.ingredientPercentage)) {
-            // Berry drop
-            this.totalBerryHelps += helpRatio;
-          } else {
-            // Ingredient drop
-            this.totalIngredientHelps += helpRatio;
-          }
+        // Calculate total drop amount for this help
+        let totalDropAmount = 0;
+        let isBerryDrop = false;
+        let ingredientLevelRoll: number | undefined;
+        if (RandomUtils.roll(1 - this.ingredientPercentage)) {
+          // Berry drop
+          totalDropAmount = this.berryDropAmount;
+          isBerryDrop = true;
         } else {
-          this.helpsSinceLastCook += 1;
-          this.totalAverageHelps += 1;
-
-          // Roll for berry vs ingredient
-          if (RandomUtils.roll(1 - this.ingredientPercentage)) {
-            // Berry drop
-            this.totalBerryHelps += 1;
-          } else {
-            // Ingredient drop
-            this.totalIngredientHelps += 1;
+          // Ingredient drop - roll for which level (equal probability)
+          ingredientLevelRoll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
+          if (ingredientLevelRoll === 2) { // Level 60
+            totalDropAmount = this.level60IngredientSet!.amount;
+          } else if (ingredientLevelRoll === 1) { // Level 30
+            totalDropAmount = this.level30IngredientSet!.amount;
+          } else { // Level 0
+            totalDropAmount = this.level0IngredientSet.amount;
           }
+        }
+
+        this.carriedAmount += totalDropAmount;
+
+        // Calculate how much of the help fits in the bag
+        const helpRatio = inventorySpace >= totalDropAmount ? 1 : inventorySpace / totalDropAmount;
+        this.totalAverageHelps += helpRatio;
+        this.helpsSinceLastCook += helpRatio;
+        
+        if (isBerryDrop) {
+          // Berry drop
+          this.totalBerryHelps += helpRatio;
+        } else {
+          // Ingredient drop
+          this.totalIngredientHelps += helpRatio;
+          if (ingredientLevelRoll === 2) { // Level 60
+            this.level60IngredientHelpsSinceLastCook += helpRatio;
+          } else if (ingredientLevelRoll === 1) { // Level 30
+            this.level30IngredientHelpsSinceLastCook += helpRatio;
+          } else { // Level 0
+            this.level0IngredientHelpsSinceLastCook += helpRatio;
+          }
+        }
+        
+        if (helpRatio < 1) {
+          this.voidHelps += 1 - helpRatio;
         }
       } else {
         this.nightHelpsAfterSS += 1;
@@ -446,9 +519,21 @@ export class MemberState {
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
 
     const spilledHelps = this.voidHelps + this.totalSneakySnackHelps;
-    const spilledIngredients = flatToIngredientSet(
-      this.averageProduce.ingredients._mapUnary((ingredient) => (ingredient * spilledHelps) / iterations)
-    );
+    // Calculate spilled ingredients based on level-specific ingredient amounts
+    const spilledIngredientsFlat = emptyIngredientInventoryFloat();
+    const combinedSpill: { [key: string]: number } = {};
+    combinedSpill[this.level0IngredientSet.ingredient.name] = this.level0IngredientSet.amount;
+    if (this.member.settings.level >= 30 && this.level30IngredientSet) {
+      combinedSpill[this.level30IngredientSet.ingredient.name] = this.level30IngredientSet.amount;
+    }
+    if (this.member.settings.level >= 60 && this.level60IngredientSet) {
+      combinedSpill[this.level60IngredientSet.ingredient.name] = this.level60IngredientSet.amount;
+    }
+    for (const ingredient in combinedSpill) {
+      const index = ING_ID_LOOKUP[ingredient];
+      spilledIngredientsFlat[index] = (combinedSpill[ingredient] * spilledHelps) / iterations;
+    }
+    const spilledIngredients = flatToIngredientSet(spilledIngredientsFlat);
 
     const sneakySnack: BerrySet = {
       berry: this.berry,
@@ -473,7 +558,6 @@ export class MemberState {
     // Calculate daily production distributions
     const berryProductionDistribution = calculateSkillProcDistribution(this.berryProductionPerDay);
     const ingredientProductionDistribution = calculateSkillProcDistribution(this.ingredientProductionPerDay);
-    console.log(berryProductionDistribution);
 
     return {
       produceTotal,
