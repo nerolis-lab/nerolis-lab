@@ -1,5 +1,6 @@
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import { ProgrammingError } from '@src/domain/error/programming/programming-error.js';
+import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { SetCover } from '@src/services/solve/set-cover.js';
 import type {
   SetCoverPokemonSetup,
@@ -87,8 +88,8 @@ class CookingTierlistImpl {
     return this.fromFile(settings, 'current');
   }
 
-  public async seed(settings: TierlistSettings) {
-    const data: PokemonWithRecipeContributionsRaw[] = this.generate(settings);
+  public async seed(settings: TierlistSettings, userRecipes: UserRecipes) {
+    const data: PokemonWithRecipeContributionsRaw[] = this.generate(settings, userRecipes);
 
     const combinedContributions: PokemonWithFinalContribution[] = [];
     for (let i = 0; i < data.length; ++i) {
@@ -138,7 +139,7 @@ class CookingTierlistImpl {
     return await fs.writeFile(filePath, fileContents, 'utf-8');
   }
 
-  private generate(settings: TierlistSettings) {
+  private generate(settings: TierlistSettings, userRecipes: UserRecipes) {
     const { level, camp } = settings;
     const solveSettings: SolveSettingsExt = {
       bedtime: this.bedtime,
@@ -152,7 +153,10 @@ class CookingTierlistImpl {
     // eslint-disable-next-line SleepAPILogger/no-console
     console.time('Tierlist default production');
 
-    const { productionMap: defaultProductionMap, setCoverSetups } = this.calculateProductionAll({ solveSettings });
+    const { productionMap: defaultProductionMap, setCoverSetups } = this.calculateProductionAll({
+      solveSettings,
+      userRecipes
+    });
     const defaultCache = new Map();
     const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient(setCoverSetups);
     const defaultSetCover = new SetCover(ingredientProducers, producersByIngredientIndex, defaultCache);
@@ -170,7 +174,8 @@ class CookingTierlistImpl {
           isSupport,
           pkmn,
           solveSettings,
-          defaultProductionMap
+          defaultProductionMap,
+          userRecipes
         });
 
       for (const pokemonWithIngredients of pokemonIngredientLists) {
@@ -221,18 +226,24 @@ class CookingTierlistImpl {
     return result;
   }
 
-  private calculateProductionAll(params: { solveSettings: SolveSettingsExt; supportMember?: TeamMemberExt }): {
+  private calculateProductionAll(params: {
+    solveSettings: SolveSettingsExt;
+    supportMember?: TeamMemberExt;
+    userRecipes: UserRecipes;
+  }): {
     productionMap: Map<string, SetCoverPokemonSetupWithSettings>;
     setCoverSetups: SetCoverPokemonSetupWithSettings[];
     userProduction: SetCoverPokemonSetupWithSettings;
   } {
-    const { solveSettings, supportMember } = params;
+    const { solveSettings, supportMember, userRecipes } = params;
+
     const productionMap: Map<string, SetCoverPokemonSetupWithSettings> = new Map();
     const setCoverSetups: SetCoverPokemonSetupWithSettings[] = [];
 
     const { userProduction, nonSupportProduction, supportProduction } = calculateProductionAll({
       settings: solveSettings,
-      userMembers: supportMember ? [supportMember] : []
+      userMembers: supportMember ? [supportMember] : [],
+      userRecipes
     });
 
     for (const production of [...nonSupportProduction, ...supportProduction]) {
@@ -247,13 +258,15 @@ class CookingTierlistImpl {
     pkmn: Pokemon;
     isSupport: boolean;
     solveSettings: SolveSettingsExt;
+    userRecipes: UserRecipes;
     defaultProductionMap: Map<string, SetCoverPokemonSetupWithSettings>;
   }): {
     supportProductionMap?: Map<string, SetCoverPokemonSetupWithSettings>;
     pokemonIngredientLists: SetCoverPokemonSetupWithSettings[];
     supportSetCoverSetups: SetCoverPokemonSetupWithSettings[];
   } {
-    const { pkmn, isSupport, solveSettings, defaultProductionMap } = params;
+    const { pkmn, isSupport, solveSettings, defaultProductionMap, userRecipes } = params;
+
     const pokemonIngredientLists: SetCoverPokemonSetupWithSettings[] = [];
 
     // if this is a support mon
@@ -275,7 +288,8 @@ class CookingTierlistImpl {
           includeCooking: false,
           stockpiledIngredients: emptyIngredientInventoryFloat()
         },
-        supportMember
+        supportMember,
+        userRecipes
       });
 
       pokemonIngredientLists.push(

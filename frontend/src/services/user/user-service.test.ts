@@ -61,3 +61,22 @@ describe('updateUser', () => {
     expect(userStore.setUserData).toHaveBeenCalled()
   })
 })
+
+describe('getRecipes', () => {
+  it('should call server to get recipes', async () => {
+    await UserService.getRecipes()
+
+    expect(serverAxios.get).toHaveBeenCalledWith('user/recipe')
+  })
+})
+
+describe('upsertRecipe', () => {
+  it('should call server to upsert recipe', async () => {
+    const mockRecipe = 'mock recipe'
+    const mockLevel = 1
+
+    await UserService.upsertRecipe(mockRecipe, mockLevel)
+
+    expect(serverAxios.put).toHaveBeenCalledWith('user/recipe', { recipe: mockRecipe, level: mockLevel })
+  })
+})

@@ -4,8 +4,6 @@ export const TASTY_CHANCE_S_CAP = 0.7;
 
 // recipe
 export const MAX_RECIPE_LEVEL = 60;
-// TODO: rework max recipe bonus to be per ingredient, slowpoke tail for example cant reach 48%
-export const MAX_RECIPE_BONUS = 61;
 
 // ingredient
 export const MAX_INGREDIENT_INVENTORY = 700;
@@ -15,6 +13,7 @@ export const MAX_POKEMON_LEVEL = 60;
 export const MAX_STOCKPILED_BERRIES = 999;
 
 // cooking
+export const MIN_POT_SIZE = 15;
 export const MAX_POT_SIZE = 69;
 export const MEALS_IN_DAY = 3;
 export const WEEKDAY_CRIT_CHANCE = 0.1;

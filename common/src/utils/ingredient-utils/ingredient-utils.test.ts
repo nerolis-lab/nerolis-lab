@@ -1,31 +1,36 @@
 import { describe, expect, it } from 'vitest';
 import type { IngredientSet, IngredientSetSimple } from '../../domain/ingredient/ingredient';
 import {
-    FANCY_APPLE,
-    FANCY_EGG,
-    HONEY,
-    INGREDIENTS,
-    MOOMOO_MILK,
-    SOOTHING_CACAO
+  FANCY_APPLE,
+  FANCY_EGG,
+  HONEY,
+  INGREDIENTS,
+  MOOMOO_MILK,
+  ROUSING_COFFEE,
+  SOFT_POTATO,
+  SOOTHING_CACAO
 } from '../../domain/ingredient/ingredients';
 import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
 import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
+import { commonMocks } from '../../vitest';
 import {
-    calculateAveragePokemonIngredientSet,
-    combineSameIngredientsInDrop,
-    emptyIngredientInventory,
-    flatToIngredientSet,
-    getAllIngredientLists,
-    getIngredient,
-    getIngredientNames,
-    includesMagnet,
-    ingredientIndex,
-    ingredientSetToFloatFlat,
-    ingredientSetToIntFlat,
-    prettifyIngredientDrop,
-    shortPrettifyIngredientDrop,
-    simplifyIngredientSet,
-    unsimplifyIngredientSet
+  calculateAveragePokemonIngredientSet,
+  combineSameIngredientsInDrop,
+  emptyIngredientInventory,
+  flatToIngredientSet,
+  getAllIngredientLists,
+  getIngredient,
+  getIngredientNames,
+  getMaxIngredientBonus,
+  includesMagnet,
+  ingredientIndex,
+  ingredientSetToFloatFlat,
+  ingredientSetToIntFlat,
+  prettifyIngredientDrop,
+  shortPrettifyIngredientDrop,
+  simplifyIngredientSet,
+  unsimplifyIngredientSet,
+  updateMaxIngredientBonus
 } from './ingredient-utils';
 
 describe('getIngredient', () => {
@@ -737,5 +742,46 @@ describe('ingredientIndex', () => {
   });
   it('shall return 2 for 100', () => {
     expect(ingredientIndex(100)).toBe(2);
+  });
+});
+
+const MOCK_SEAWEED = commonMocks.mockIngredient({
+  name: 'Seaweed',
+  value: 101
+});
+
+const mockRecipeList = [
+  commonMocks.mockRecipe({
+    name: 'MOCK_RECIPE_MAX_BONUS_UPDATED',
+    ingredients: [{ amount: 1, ingredient: SOFT_POTATO }],
+    bonus: 70
+  }),
+  commonMocks.mockRecipe({
+    name: 'MOCK_RECIPE_NEWLY_SET_BONUS',
+    ingredients: [
+      { amount: 1, ingredient: MOCK_SEAWEED },
+      { amount: 1, ingredient: ROUSING_COFFEE }
+    ],
+    bonus: 15.77
+  })
+];
+
+describe('updateIngredientBonus', () => {
+  it('should correctly set the bonus for ingredients in recipes', () => {
+    mockRecipeList.forEach((recipe) => {
+      updateMaxIngredientBonus(recipe.ingredients, recipe.bonus);
+    });
+
+    const expectedBonuses = {
+      Potato: 70,
+      Seaweed: 15.77,
+      Coffee: 61, // ingredientBonusCache is populated upon startup
+      Tail: 25, // ingredientBonusCache is populated upon startup
+      Cheese: 0 // default to 0 if not in cache
+    };
+
+    for (const [ingredientName, bonus] of Object.entries(expectedBonuses)) {
+      expect(getMaxIngredientBonus(ingredientName)).toBe(bonus);
+    }
   });
 });

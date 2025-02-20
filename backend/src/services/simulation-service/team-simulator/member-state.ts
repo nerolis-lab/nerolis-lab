@@ -1,6 +1,6 @@
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
-import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
+import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import type {
   SkillActivationValue,
   TeamSkillActivation

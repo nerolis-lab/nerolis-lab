@@ -1,5 +1,6 @@
 import { mocks } from '@src/bun/index.js';
 import * as productionService from '@src/services/api-service/production/production-service.js';
+import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import type { SetCoverPokemonSetupWithSettings } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
 import type { SolveRecipeResult } from '@src/services/solve/types/solution-types.js';
 import {
@@ -60,7 +61,8 @@ describe('solve-utils', () => {
 
       const result = calculateProductionAll({
         userMembers: userIncludedMembers,
-        settings
+        settings,
+        userRecipes: defaultUserRecipes()
       });
 
       const [supportMons] = splitArrayByCondition(OPTIMAL_POKEDEX, (pkmn) =>
@@ -182,7 +184,8 @@ Set {
       const result = calculateSupportPokemon({
         supportMembers: [supportPokemon1, supportPokemon2],
         userMembers: [],
-        settings: mocks.teamSettingsExt()
+        settings: mocks.teamSettingsExt(),
+        userRecipes: defaultUserRecipes()
       });
       expect(result).toHaveLength(2);
       expect(result[0].member.settings.externalId).toEqual(supportPokemon1.settings.externalId);
@@ -201,7 +204,8 @@ Set {
       const result = calculateSupportPokemon({
         supportMembers: [supportPokemon1],
         userMembers: [],
-        settings: mocks.teamSettingsExt()
+        settings: mocks.teamSettingsExt(),
+        userRecipes: defaultUserRecipes()
       });
       expect(result).toHaveLength(0);
       expect(simpleCalcSpy).toHaveBeenCalled();
@@ -231,7 +235,8 @@ Set {
       const result = calculateSupportPokemon({
         supportMembers: [supportPokemon1, supportPokemon2],
         userMembers: [userPokemon1, userPokemon2],
-        settings: mocks.teamSettingsExt()
+        settings: mocks.teamSettingsExt(),
+        userRecipes: defaultUserRecipes()
       });
       expect(result).toHaveLength(2);
       expect(result[0].member.settings.externalId).toEqual(supportPokemon1.settings.externalId);
@@ -269,7 +274,8 @@ Set {
       const result = calculateSupportPokemon({
         supportMembers: [supportPokemon1],
         userMembers: [],
-        settings: mocks.teamSettingsExt()
+        settings: mocks.teamSettingsExt(),
+        userRecipes: defaultUserRecipes()
       });
       expect(result).toHaveLength(1);
       expect(result[0].member.settings.externalId).toEqual(supportPokemon1.settings.externalId);
@@ -609,7 +615,8 @@ Set {
       const result = calculateNonSupportPokemon({
         nonSupportMembers,
         userMembers,
-        settings
+        settings,
+        userRecipes: defaultUserRecipes()
       });
 
       expect(result).toHaveLength(1);
@@ -644,7 +651,8 @@ Set {
       const result = calculateNonSupportPokemon({
         nonSupportMembers,
         userMembers,
-        settings
+        settings,
+        userRecipes: defaultUserRecipes()
       });
 
       expect(result).toHaveLength(2);

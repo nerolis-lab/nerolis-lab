@@ -7,6 +7,7 @@ import type {
 } from '../../domain/ingredient/ingredient';
 import { INGREDIENTS, TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 import type { Pokemon } from '../../domain/pokemon/pokemon';
+import '../../prototype/logger';
 import { emptyIngredientInventoryFloat, emptyIngredientInventoryInt } from '../flat-utils';
 import { MathUtils } from '../math-utils/math-utils';
 import { capitalize } from '../string-utils/string-utils';
@@ -14,6 +15,8 @@ import { capitalize } from '../string-utils/string-utils';
 export const ING_ID_LOOKUP: Record<string, number> = Object.fromEntries(
   INGREDIENTS.map((ingredient, index) => [ingredient.name, index])
 );
+
+const ingredientBonusCache = new Map<string, number>();
 
 export function getIngredientName(ingredient: Ingredient): string;
 export function getIngredientName(ingredient: number): string;
@@ -213,4 +216,23 @@ export function calculateAveragePokemonIngredientSet(
   const multiplier = 1 / ingredientsUnlocked;
   const dividedIngredients = Float32Array.from(ingredients, (value) => value * multiplier);
   return dividedIngredients;
+}
+
+export function updateMaxIngredientBonus(ingredientSets: IngredientSet[], bonus: number): void {
+  for (const ingredientSet of ingredientSets) {
+    const ingredientName = ingredientSet.ingredient.name;
+    const currentBonus = ingredientBonusCache.get(ingredientName);
+    if (currentBonus === undefined || currentBonus < bonus) {
+      ingredientBonusCache.set(ingredientName, bonus);
+    }
+  }
+}
+
+export function getMaxIngredientBonus(ingredientName: string): number {
+  const bonus = ingredientBonusCache.get(ingredientName);
+  if (bonus === undefined) {
+    logger.error(`Error: Max bonus for ingredient "${ingredientName}" not found.`);
+    return 0;
+  }
+  return bonus;
 }

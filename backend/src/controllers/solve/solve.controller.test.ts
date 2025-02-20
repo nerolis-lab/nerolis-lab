@@ -70,7 +70,7 @@ describe('solve.controller', () => {
 
     it('should map result to response correctly', () => {
       const result = mocks.solveRecipeResultWithSettings();
-      vimic(mealUtils, 'getMeal', () => mocks.recipe());
+      vimic(mealUtils, 'getMeal', () => mocks.mockRecipe());
 
       const mockedIngredientSet: common.IngredientSet[] = [
         mocks.mockIngredientSet({ amount: 10, ingredient: common.ingredient.FANCY_APPLE })

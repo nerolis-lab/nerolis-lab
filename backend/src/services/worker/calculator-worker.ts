@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import workerpool from 'workerpool';
 import ProductionController from '../../controllers/calculator/production.controller.js';
 import { WebsiteConverterService } from '../../services/website-converter/website-converter-service.js';
@@ -9,9 +10,9 @@ async function calculateProduction(name: string, body: any, includeAnalysis: boo
   return pretty ? WebsiteConverterService.toProductionCalculator(data) : data;
 }
 
-async function calculateTeam(body: any) {
+async function calculateTeam(body: any, maybeUser?: DBUser) {
   const controller = new ProductionController();
-  return await controller.calculateTeam(body);
+  return await controller.calculateTeam(body, maybeUser);
 }
 
 async function calculateIv(body: any) {

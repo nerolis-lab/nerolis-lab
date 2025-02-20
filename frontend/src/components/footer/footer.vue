@@ -33,6 +33,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .footer {
+  margin-top: 20px;
   background: none;
   border-top: 1px solid $secondary;
   @media (min-width: 360px) {

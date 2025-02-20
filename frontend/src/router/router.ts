@@ -4,25 +4,40 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 export enum RouteName {
   Home = 'Home',
+
   Calculator = 'Calculator',
   Compare = 'Compare',
+  Recipes = 'Recipes',
+
   Settings = 'Settings',
   Profile = 'Profile',
   // Friends = 'Friends',
   UserSettings = 'UserSettings',
+
   Beta = 'Beta',
+
   Admin = 'Admin',
+
   NotFound = 'NotFound'
 }
 
 const CalculatorPage = () => import('@/pages/calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
+const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
+
+// User
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
 // const FriendsPage = () => import('@/pages/friends/friends-page.vue')
 const UserSettingsPage = () => import('@/pages/user-settings-page.vue')
+
+// Misc
 const BetaPage = () => import('@/pages/beta/beta.vue')
+
+// Admin
 const AdminPage = () => import('@/pages/admin/admin.vue')
+
+// 404
 const NotFoundPage = () => import('@/pages/not-found/not-found-page.vue')
 
 const router = createRouter({
@@ -42,6 +57,11 @@ const router = createRouter({
       path: '/compare',
       name: RouteName.Compare,
       component: ComparisonPage
+    },
+    {
+      path: '/recipes',
+      name: RouteName.Recipes,
+      component: RecipesPage
     },
     {
       path: '/settings',

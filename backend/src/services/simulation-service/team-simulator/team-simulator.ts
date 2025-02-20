@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
+import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
 import type {
   SkillActivationValue,
