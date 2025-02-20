@@ -150,6 +150,9 @@
 					"name": {
 						"type": "string"
 					},
+					"displayName": {
+						"type": "string"
+					},
 					"ingredients": {
 						"items": {
 							"$ref": "#/components/schemas/IngredientSet"
@@ -178,6 +181,7 @@
 				},
 				"required": [
 					"name",
+					"displayName",
 					"ingredients",
 					"value",
 					"valueMax",
