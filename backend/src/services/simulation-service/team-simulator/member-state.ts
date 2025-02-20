@@ -398,7 +398,7 @@ export class MemberState {
 
         if (ingredientSet) {
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientHelps[ingredientId] += 1;
+          this.totalIngredientHelps[ingredientId] += ingredientSet.amount;
           this.currentDayIngredientProduction[ingredientId] += ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
         }
@@ -462,7 +462,7 @@ export class MemberState {
         } else if (ingredientSet) {
           // Ingredient drop
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientHelps[ingredientId] += helpRatio;
+          this.totalIngredientHelps[ingredientId] += helpRatio * ingredientSet.amount;
           this.currentDayIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += helpRatio * ingredientSet.amount;
         }
@@ -527,26 +527,10 @@ export class MemberState {
     // Calculate total help produce based on tracked help counts
     const totalHelpProduceFlat: ProduceFlat = {
       berries: this.berryDropAmounts._mapUnary((dropAmount) => (dropAmount * this.totalBerryHelps) / iterations),
-      ingredients: emptyIngredientInventoryFloat()
+      ingredients: this.totalIngredientHelps._mapUnary((amount) => amount / iterations)
     };
 
-    // Add ingredients based on tracked help counts
-    if (this.level0IngredientSet) {
-      const index0 = ING_ID_LOOKUP[this.level0IngredientSet.ingredient.name];
-      totalHelpProduceFlat.ingredients[index0] =
-        (this.level0IngredientSet.amount * this.totalIngredientHelps[index0]) / iterations;
-    }
-    if (this.level30IngredientSet) {
-      const index30 = ING_ID_LOOKUP[this.level30IngredientSet.ingredient.name];
-      totalHelpProduceFlat.ingredients[index30] =
-        (this.level30IngredientSet.amount * this.totalIngredientHelps[index30]) / iterations;
-    }
-    if (this.level60IngredientSet) {
-      const index60 = ING_ID_LOOKUP[this.level60IngredientSet.ingredient.name];
-      totalHelpProduceFlat.ingredients[index60] =
-        (this.level60IngredientSet.amount * this.totalIngredientHelps[index60]) / iterations;
-    }
-
+    // Remove redundant ingredient calculations since totalIngredientHelps already has the correct amounts
     const totalHelpProduce: Produce = {
       berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
       ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
@@ -667,7 +651,7 @@ export class MemberState {
 
     const totalHelpProduceFlat: ProduceFlat = {
       berries: this.berryDropAmounts._mapUnary((dropAmount) => (dropAmount * this.totalBerryHelps) / iterations),
-      ingredients: this.totalIngredientHelps._mapUnary((helps) => helps / iterations)
+      ingredients: this.totalIngredientHelps._mapUnary((amount) => amount / iterations)
     };
 
     const totalHelpProduce: Produce = {
