@@ -77,9 +77,10 @@ export class MemberState {
   // number of helps.  Instead, we need a per-day counter, which we then shove
   // into an array so we know exactly how much we produced each day.
   private berryProductionPerDay: number[] = [];
-  private ingredientProductionPerDay: { [ingredientName: string]: number[] } = {};
+  // Each element is a Float32Array representing all ingredients for that day
+  private ingredientProductionPerDay: Float32Array[] = [];
   private currentDayBerryProduction = 0;
-  private currentDayIngredientProduction: { [ingredientName: string]: number } = {};
+  private currentDayIngredientProduction = emptyIngredientInventoryFloat();
 
   // Precomputed information about what ingredients the pokemon can drop.
   // Null if the Pokemon isn't leveled enough to unlock an ingredient.
@@ -132,9 +133,8 @@ export class MemberState {
   private totalHealedByMembers = 0;
   private totalHelpsByMembers = 0;
 
-  // This is for tracking how many ingredients for each cook, it's reset every
-  // time we do a cook
-  private ingredientHelpsSinceLastCook: { [ingredientName: string]: number } = {};
+  // This tracks the actual amount of ingredients accumulated since last cook
+  private ingredientHelpsSinceLastCook = emptyIngredientInventoryFloat();
 
   constructor(params: {
     member: TeamMemberExt;
@@ -214,9 +214,10 @@ export class MemberState {
     // Initialize tracking for all ingredients
     for (const ing of allIngredients) {
       const ingName = ing.ingredient.name;
-      this.ingredientProductionPerDay[ingName] = [];
-      this.currentDayIngredientProduction[ingName] = 0;
-      this.ingredientHelpsSinceLastCook[ingName] = 0;
+      const ingredientId = ING_ID_LOOKUP[ingName];
+      // Initialize the current day tracking arrays
+      this.currentDayIngredientProduction[ingredientId] = 0;
+      this.ingredientHelpsSinceLastCook[ingredientId] = 0;
     }
 
     // Calculate raw production amounts without probability adjustments
@@ -296,14 +297,12 @@ export class MemberState {
 
     // Track daily production
     this.berryProductionPerDay.push(this.currentDayBerryProduction);
-    for (const [ingredientName, production] of Object.entries(this.currentDayIngredientProduction)) {
-      this.ingredientProductionPerDay[ingredientName].push(production);
-    }
+    // Create a copy of the current day's production before pushing it
+    const dayProduction = new Float32Array(this.currentDayIngredientProduction);
+    this.ingredientProductionPerDay.push(dayProduction);
     
     this.currentDayBerryProduction = 0;
-    for (const ingredientName in this.currentDayIngredientProduction) {
-      this.currentDayIngredientProduction[ingredientName] = 0;
-    }
+    this.currentDayIngredientProduction = emptyIngredientInventoryFloat();
 
     const missingEnergy = Math.max(0, 100 - this.currentEnergy);
     const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo));
@@ -356,32 +355,11 @@ export class MemberState {
   }
 
   public updateIngredientBag() {
-    // Calculate total ingredients from each level's helps
-    const totalIngredients = emptyIngredientInventoryFloat();
+    // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
+    this.cookingState?.addIngredients(this.ingredientHelpsSinceLastCook);
     
-    // Add up all ingredient helps
-    for (const [ingredientName, helps] of Object.entries(this.ingredientHelpsSinceLastCook)) {
-      const index = ING_ID_LOOKUP[ingredientName];
-      let amount = 0;
-      
-      // Find the matching ingredient set to get the amount
-      if (this.level0IngredientSet && this.level0IngredientSet.ingredient.name === ingredientName) {
-        amount = this.level0IngredientSet.amount;
-      } else if (this.level30IngredientSet && this.level30IngredientSet.ingredient.name === ingredientName) {
-        amount = this.level30IngredientSet.amount;
-      } else if (this.level60IngredientSet && this.level60IngredientSet.ingredient.name === ingredientName) {
-        amount = this.level60IngredientSet.amount;
-      }
-      
-      totalIngredients[index] = amount * helps;
-    }
-    
-    this.cookingState?.addIngredients(totalIngredients);
-    
-    // Reset help counters
-    for (const ingredientName in this.ingredientHelpsSinceLastCook) {
-      this.ingredientHelpsSinceLastCook[ingredientName] = 0;
-    }
+    // Reset ingredient amounts
+    this.ingredientHelpsSinceLastCook = emptyIngredientInventoryFloat();
   }
 
   public recoverMeal() {
@@ -416,13 +394,10 @@ export class MemberState {
         }
 
         if (ingredientSet) {
-          const ingredientName = ingredientSet.ingredient.name;
-          const ingredientId = ING_ID_LOOKUP[ingredientName];
+          const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
           this.totalIngredientHelps[ingredientId] += 1;
-          this.currentDayIngredientProduction[ingredientName] = 
-            (this.currentDayIngredientProduction[ingredientName] || 0) + ingredientSet.amount;
-          this.ingredientHelpsSinceLastCook[ingredientName] = 
-            (this.ingredientHelpsSinceLastCook[ingredientName] || 0) + 1;
+          this.currentDayIngredientProduction[ingredientId] += ingredientSet.amount;
+          this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
         }
       }
 
@@ -480,17 +455,10 @@ export class MemberState {
           this.totalBerryHelps += helpRatio;
         } else if (ingredientSet) {
           // Ingredient drop
-          const ingredientName = ingredientSet.ingredient.name;
-          const ingredientId = ING_ID_LOOKUP[ingredientName];
+          const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
           this.totalIngredientHelps[ingredientId] += helpRatio;
-          // Add to the current day's production array since it will be pushed to per-day tracking at wakeup
-          if (!this.ingredientProductionPerDay[ingredientName]) {
-            this.ingredientProductionPerDay[ingredientName] = [];
-          }
-          this.currentDayIngredientProduction[ingredientName] = 
-            (this.currentDayIngredientProduction[ingredientName] || 0) + helpRatio * ingredientSet.amount;
-          this.ingredientHelpsSinceLastCook[ingredientName] = 
-            (this.ingredientHelpsSinceLastCook[ingredientName] || 0) + helpRatio;
+          this.currentDayIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
+          this.ingredientHelpsSinceLastCook[ingredientId] += helpRatio * ingredientSet.amount;
         }
         
         if (helpRatio < 1) {
@@ -619,8 +587,17 @@ export class MemberState {
     const berryProductionDistribution = calculateSkillProcDistribution(this.berryProductionPerDay);
     const ingredientDistributions: { [ingredientName: string]: Record<number, number> } = {};
     
-    for (const [ingredientName, productions] of Object.entries(this.ingredientProductionPerDay)) {
-      ingredientDistributions[ingredientName] = calculateSkillProcDistribution(productions);
+    // Initialize distribution objects for each ingredient that was produced
+    const usedIngredients = new Set<string>();
+    if (this.level0IngredientSet) usedIngredients.add(this.level0IngredientSet.ingredient.name);
+    if (this.level30IngredientSet) usedIngredients.add(this.level30IngredientSet.ingredient.name);
+    if (this.level60IngredientSet) usedIngredients.add(this.level60IngredientSet.ingredient.name);
+
+    for (const ingredientName of usedIngredients) {
+      const ingredientId = ING_ID_LOOKUP[ingredientName];
+      // Extract daily values for this ingredient from the Float32Arrays
+      const dailyValues = this.ingredientProductionPerDay.map(dayProduction => dayProduction[ingredientId]);
+      ingredientDistributions[ingredientName] = calculateSkillProcDistribution(dailyValues);
     }
 
     return {
