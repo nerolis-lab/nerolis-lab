@@ -99,7 +99,9 @@ export class MemberState {
   private ingredientPercentage: number;
   private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
 
-  // Pre-compute how many berries the Pokemon produces per drop
+  // Pre-compute how many berries the Pokemon produces per drop.  Sometimes
+  // it's convenient to have the full one-hot array, other times its
+  // convenient to just the count.
   private berryDropAmounts: Float32Array = new Float32Array();
   private berryDropAmount: number = 0;
 
