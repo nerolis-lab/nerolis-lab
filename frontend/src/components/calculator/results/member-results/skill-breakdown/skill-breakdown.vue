@@ -117,16 +117,16 @@ export default defineComponent({
       getSkillProcChartData(props.pokemonProduction.production.advanced.skillProcDistribution, colors.primary)
     )
     const skillProcChartOptions = getSkillProcChartOptions()
-    const skillProcPlugins = [
-      averageSkillProcsPlugin(props.pokemonProduction.production.advanced.skillProcs, colors.primary)
+    const skillProcPlugins: any[] = [
+      //averageSkillProcsPlugin(props.pokemonProduction.production.advanced.skillProcs, colors.primary)
     ]
 
     const berryProdChartData = computed(() =>
       getBerryProdChartData(props.pokemonProduction.production.advanced.berryProductionDistribution, colors.secondary)
     )
     const berryProdChartOptions = getBerryProdChartOptions()
-    const berryProdPlugins = [
-      averageBerryProcsPlugin(props.pokemonProduction.production.advanced.berryStrength, colors.secondary)
+    const berryProdPlugins: any[] = [
+      //averageBerryProcsPlugin(props.pokemonProduction.production.advanced.berryStrength, colors.secondary)
     ]
 
     const hasIngredients = computed(() => {
@@ -170,7 +170,7 @@ export default defineComponent({
           data: getIngredientProdChartData(typedDistribution, color),
           options: getIngredientProdChartOptions(ingredientName),
           plugins: [
-            averageIngredientProcsPlugin(props.pokemonProduction.production.advanced.ingredientPercentage, color)
+            //averageIngredientProcsPlugin(props.pokemonProduction.production.advanced.ingredientPercentage, color)
           ]
         }
         console.log(`Debug - Created chart for ${ingredientName}:`, charts[ingredientName])
