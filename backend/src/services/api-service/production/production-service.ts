@@ -138,7 +138,7 @@ export function calculateTeam(
   const { settings, members, userRecipes } = params;
 
   const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes) : undefined;
-  const teamSimulator = new TeamSimulator({ settings, members, cookingState });
+  const teamSimulator = new TeamSimulator({ settings, members, cookingState, iterations });
 
   for (let i = 0; i < iterations; i++) {
     teamSimulator.simulate();
@@ -157,7 +157,8 @@ export function calculateSimple(
   const teamSimulator = new TeamSimulator({
     settings,
     members,
-    cookingState
+    cookingState,
+    iterations
   });
 
   for (let i = 0; i < iterations; i++) {
@@ -176,7 +177,7 @@ export function calculateIv(
   const variantResults: MemberProductionBase[] = [];
   for (const variant of variants) {
     const teamWithVariant = [variant, ...members];
-    const teamSimulator = new TeamSimulator({ settings, members: teamWithVariant });
+    const teamSimulator = new TeamSimulator({ settings, members: teamWithVariant, iterations });
 
     for (let i = 0; i < iterations; i++) {
       teamSimulator.simulate();

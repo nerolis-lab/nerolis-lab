@@ -49,8 +49,13 @@ export class TeamSimulator {
   private fullDayDuration = 1440;
   private energyDegradeCounter = -1; // -1 so it takes 3 iterations and first degrade is after 10 minutes, then 10 minutes between each
 
-  constructor(params: { settings: TeamSettingsExt; members: TeamMemberExt[]; cookingState?: CookingState }) {
-    const { settings, members, cookingState } = params;
+  constructor(params: {
+    settings: TeamSettingsExt;
+    members: TeamMemberExt[];
+    cookingState?: CookingState;
+    iterations: number;
+  }) {
+    const { settings, members, cookingState, iterations } = params;
 
     this.cookingState = cookingState;
 
@@ -82,7 +87,13 @@ export class TeamSimulator {
     this.mealTimes = mealTimes.map((time) => TimeUtils.timeToMinutesSinceStart(time, this.dayPeriod.start));
 
     for (const member of members) {
-      const memberState = new MemberState({ member, team: members, settings, cookingState: this.cookingState });
+      const memberState = new MemberState({
+        member,
+        team: members,
+        settings,
+        cookingState: this.cookingState,
+        iterations
+      });
       this.memberStates.push(memberState);
       if (!member.pokemonWithIngredients.pokemon.skill.isSkill(mockMainskill)) {
         this.memberStatesWithoutFillers.push(memberState);

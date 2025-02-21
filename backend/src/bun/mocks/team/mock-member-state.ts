@@ -8,6 +8,7 @@ export function memberState(attrs?: Partial<MemberState>): MemberState {
     settings: teamSettingsExt(),
     team: [teamMemberExt()],
     cookingState: undefined,
+    iterations: 1,
     ...attrs
   });
 }
