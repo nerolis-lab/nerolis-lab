@@ -142,9 +142,7 @@ export class MemberState {
     // Each iteration is one day
     this.totalDays = iterations;
     this.berryProductionPerDay = new Int16Array(iterations);
-    this.ingredientProductionPerDay = Array(iterations)
-      .fill(null)
-      .map(() => new Float32Array(ING_ID_LOOKUP.length));
+    this.ingredientProductionPerDay = Array(iterations).fill(null);
 
     this.camp = settings.camp;
     this.cookingState = cookingState;
@@ -296,7 +294,7 @@ export class MemberState {
     // Track daily production
     this.berryProductionPerDay[this.currentDay] = this.currentDayBerryProduction;
     // Copy current day's ingredient production to the array
-    this.ingredientProductionPerDay[this.currentDay].set(this.currentDayIngredientProduction);
+    this.ingredientProductionPerDay[this.currentDay] = this.currentDayIngredientProduction;
 
     // Increment day counter
     this.currentDay = (this.currentDay + 1) % this.totalDays;
