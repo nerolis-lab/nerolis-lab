@@ -83,10 +83,10 @@ export class MemberState {
   private currentDayIngredientProduction = emptyIngredientInventoryFloat();
 
   // Precomputed information about what ingredients the pokemon can drop.
-  // Null if the Pokemon isn't leveled enough to unlock an ingredient.
+  // Optional if the Pokemon isn't leveled enough to unlock an ingredient.
   private level0IngredientSet: IngredientSet;
-  private level30IngredientSet: IngredientSet | null = null;
-  private level60IngredientSet: IngredientSet | null = null;
+  private level30IngredientSet?: IngredientSet;
+  private level60IngredientSet?: IngredientSet;
   // Either [0], [0, 1] or [0, 1, 2]
   private possibleIngredientLevels: number[] = [];
 
@@ -198,8 +198,6 @@ export class MemberState {
       this.level30IngredientSet = ingredientList[1];
       this.possibleIngredientLevels.push(1);
       allIngredients.push(ingredientList[1]);
-    } else {
-      this.level30IngredientSet = null;
     }
 
     // Level 60 ingredient is third if available
@@ -207,8 +205,6 @@ export class MemberState {
       this.level60IngredientSet = ingredientList[2];
       this.possibleIngredientLevels.push(2);
       allIngredients.push(ingredientList[2]);
-    } else {
-      this.level60IngredientSet = null;
     }
 
     // Initialize tracking for all ingredients
