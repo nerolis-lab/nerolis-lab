@@ -13,6 +13,8 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   BerryIndexToFloatAmount,
   BerrySet,
+  IngredientIndexToFloatAmount,
+  IngredientIndexToIntAmount,
   IngredientSet,
   MemberProduction,
   MemberProductionBase,
@@ -34,6 +36,7 @@ import {
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
   emptyIngredientInventoryFloat,
+  emptyIngredientInventoryInt,
   flatToIngredientSet,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
@@ -65,13 +68,11 @@ export class MemberState {
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
   private totalBerryProduction = 0;
-  private totalIngredientProduction = emptyIngredientInventoryFloat();
+  private totalIngredientProduction: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
   private voidHelps = 0;
 
   private berryProductionPerDay: Int16Array;
-  private ingredientProductionPerDay: Float32Array[];
-  private currentDayBerryProduction = 0;
-  private currentDayIngredientProduction = emptyIngredientInventoryFloat();
+  private ingredientProductionPerDay: IngredientIndexToIntAmount[];
   private currentDay = 0;
   private totalDays: number;
 
@@ -96,7 +97,7 @@ export class MemberState {
   // Pre-compute how many berries the Pokemon produces per drop.  Sometimes
   // it's convenient to have the full one-hot array, other times its
   // convenient to just the count.
-  private berryDropAmounts: Float32Array = new Float32Array();
+  private berryDropAmounts: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
   private berryDropAmount: number = 0;
 
   // summary
@@ -142,7 +143,9 @@ export class MemberState {
     // Each iteration is one day
     this.totalDays = iterations;
     this.berryProductionPerDay = new Int16Array(iterations);
-    this.ingredientProductionPerDay = Array(iterations).fill(null);
+    this.ingredientProductionPerDay = Array(iterations)
+      .fill(null)
+      .map(() => emptyIngredientInventoryInt());
 
     this.camp = settings.camp;
     this.cookingState = cookingState;
@@ -211,8 +214,7 @@ export class MemberState {
     for (const ing of allIngredients) {
       const ingName = ing.ingredient.name;
       const ingredientId = ING_ID_LOOKUP[ingName];
-      // Initialize the current day tracking arrays
-      this.currentDayIngredientProduction[ingredientId] = 0;
+      // Initialize tracking
       this.ingredientHelpsSinceLastCook[ingredientId] = 0;
     }
 
@@ -291,16 +293,8 @@ export class MemberState {
     };
     this.skillState.wakeup();
 
-    // Track daily production
-    this.berryProductionPerDay[this.currentDay] = this.currentDayBerryProduction;
-    // Copy current day's ingredient production to the array
-    this.ingredientProductionPerDay[this.currentDay] = this.currentDayIngredientProduction;
-
     // Increment day counter
     this.currentDay = (this.currentDay + 1) % this.totalDays;
-
-    this.currentDayBerryProduction = 0;
-    this.currentDayIngredientProduction = emptyIngredientInventoryFloat();
 
     const missingEnergy = Math.max(0, 100 - this.currentEnergy);
     const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo));
@@ -377,7 +371,7 @@ export class MemberState {
       if (RandomUtils.roll(1 - this.ingredientPercentage)) {
         // Berry drop
         this.totalBerryProduction += this.berryDropAmount;
-        this.currentDayBerryProduction += this.berryDropAmount;
+        this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
       } else {
         // Ingredient drop
         // Roll for which ingredient level (equal probability)
@@ -397,7 +391,7 @@ export class MemberState {
         if (ingredientSet) {
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
           this.totalIngredientProduction[ingredientId] += ingredientSet.amount;
-          this.currentDayIngredientProduction[ingredientId] += ingredientSet.amount;
+          this.ingredientProductionPerDay[this.currentDay][ingredientId] += ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
         }
       }
@@ -457,12 +451,12 @@ export class MemberState {
         if (isBerryDrop) {
           // Berry drop
           this.totalBerryProduction += helpRatio * this.berryDropAmount;
-          this.currentDayBerryProduction += helpRatio * this.berryDropAmount;
+          this.berryProductionPerDay[this.currentDay] += helpRatio * this.berryDropAmount;
         } else if (ingredientSet) {
           // Ingredient drop
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
           this.totalIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
-          this.currentDayIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
+          this.ingredientProductionPerDay[this.currentDay][ingredientId] += helpRatio * ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += helpRatio * ingredientSet.amount;
         }
 
@@ -474,7 +468,7 @@ export class MemberState {
         this.totalSneakySnackHelps += 1;
         // Sneaky snack always gives berries
         this.totalBerryProduction += this.berryDropAmount;
-        this.currentDayBerryProduction += this.berryDropAmount;
+        this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
       }
 
       this.nextHelp += frequency / 60;
