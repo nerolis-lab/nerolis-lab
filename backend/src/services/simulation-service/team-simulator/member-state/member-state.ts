@@ -214,8 +214,6 @@ export class MemberState {
     for (const ing of allIngredients) {
       const ingName = ing.ingredient.name;
       const ingredientId = ING_ID_LOOKUP[ingName];
-      // Initialize tracking
-      this.ingredientHelpsSinceLastCook[ingredientId] = 0;
     }
 
     // Calculate raw production amounts without probability adjustments
