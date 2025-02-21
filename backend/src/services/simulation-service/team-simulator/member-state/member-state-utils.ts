@@ -1,4 +1,4 @@
-export function calculateSkillProcDistribution(data: number[]): Record<number, number> {
+export function calculateDistribution(data: number[]): Record<number, number> {
   if (data.length === 0) {
     return {};
   }

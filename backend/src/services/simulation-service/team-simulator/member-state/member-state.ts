@@ -1,11 +1,11 @@
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
+import { calculateDistribution } from '@src/services/simulation-service/team-simulator/member-state/member-state-utils.js';
 import type {
   SkillActivationValue,
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
-import { calculateSkillProcDistribution } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-utils.js';
 import { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
@@ -575,7 +575,7 @@ export class MemberState {
     const fiveMinIntervalsTotalNight = iterations * (TimeUtils.durationInMinutes(this.nightPeriod) / 5);
 
     // Calculate daily production distributions
-    const berryProductionDistribution = calculateSkillProcDistribution(this.berryProductionPerDay);
+    const berryProductionDistribution = calculateDistribution(this.berryProductionPerDay);
     const ingredientDistributions: { [ingredientName: string]: Record<number, number> } = {};
 
     // Initialize distribution objects for each ingredient that was produced
@@ -588,7 +588,7 @@ export class MemberState {
       const ingredientId = ING_ID_LOOKUP[ingredientName];
       // Extract daily values for this ingredient from the Float32Arrays
       const dailyValues = this.ingredientProductionPerDay.map((dayProduction) => dayProduction[ingredientId]);
-      ingredientDistributions[ingredientName] = calculateSkillProcDistribution(dailyValues);
+      ingredientDistributions[ingredientName] = calculateDistribution(dailyValues);
     }
 
     return {
