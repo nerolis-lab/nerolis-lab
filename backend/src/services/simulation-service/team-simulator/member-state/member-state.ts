@@ -18,7 +18,6 @@ import type {
   MemberProductionBase,
   PokemonWithIngredientsIndexed,
   Produce,
-  ProduceFlat,
   SimpleTeamResult,
   TeamMemberExt,
   TeamSettingsExt,
@@ -35,7 +34,6 @@ import {
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
   emptyIngredientInventoryFloat,
-  flatToBerrySet,
   flatToIngredientSet,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
@@ -66,21 +64,16 @@ export class MemberState {
   private helpsSinceLastCook = 0;
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
-  private totalBerryHelps = 0;
-  private totalIngredientHelps = emptyIngredientInventoryFloat();
+  private totalBerryProduction = 0;
+  private totalIngredientProduction = emptyIngredientInventoryFloat();
   private voidHelps = 0;
 
-  // We want to produce histograms showing the distribution of how many helps we
-  // got over the Monte Carlo simulations.  The way that MemberState is
-  // interacted with over the simulations is that we repeatedly run the sim
-  // with the *same* MemberState.  So we cannot have a single counter for
-  // number of helps.  Instead, we need a per-day counter, which we then shove
-  // into an array so we know exactly how much we produced each day.
-  private berryProductionPerDay: number[] = [];
-  // Each element is a Float32Array representing all ingredients for that day
-  private ingredientProductionPerDay: Float32Array[] = [];
+  private berryProductionPerDay: Int16Array;
+  private ingredientProductionPerDay: Float32Array[];
   private currentDayBerryProduction = 0;
   private currentDayIngredientProduction = emptyIngredientInventoryFloat();
+  private currentDay = 0;
+  private totalDays: number;
 
   // Precomputed information about what ingredients the pokemon can drop.
   // Optional if the Pokemon isn't leveled enough to unlock an ingredient.
@@ -141,8 +134,17 @@ export class MemberState {
     team: TeamMemberExt[];
     settings: TeamSettingsExt;
     cookingState: CookingState | undefined;
+    iterations: number;
   }) {
-    const { member, team, settings, cookingState } = params;
+    const { member, team, settings, cookingState, iterations } = params;
+
+    // Initialize the daily production arrays with the total number of days we'll simulate
+    // Each iteration is one day
+    this.totalDays = iterations;
+    this.berryProductionPerDay = new Int16Array(iterations);
+    this.ingredientProductionPerDay = Array(iterations)
+      .fill(null)
+      .map(() => new Float32Array(ING_ID_LOOKUP.length));
 
     this.camp = settings.camp;
     this.cookingState = cookingState;
@@ -292,10 +294,12 @@ export class MemberState {
     this.skillState.wakeup();
 
     // Track daily production
-    this.berryProductionPerDay.push(this.currentDayBerryProduction);
-    // Create a copy of the current day's production before pushing it
-    const dayProduction = new Float32Array(this.currentDayIngredientProduction);
-    this.ingredientProductionPerDay.push(dayProduction);
+    this.berryProductionPerDay[this.currentDay] = this.currentDayBerryProduction;
+    // Copy current day's ingredient production to the array
+    this.ingredientProductionPerDay[this.currentDay].set(this.currentDayIngredientProduction);
+
+    // Increment day counter
+    this.currentDay = (this.currentDay + 1) % this.totalDays;
 
     this.currentDayBerryProduction = 0;
     this.currentDayIngredientProduction = emptyIngredientInventoryFloat();
@@ -374,8 +378,8 @@ export class MemberState {
       // Roll for berry vs ingredient
       if (RandomUtils.roll(1 - this.ingredientPercentage)) {
         // Berry drop
-        this.totalBerryHelps += 1;
-        this.currentDayBerryProduction += 1;
+        this.totalBerryProduction += this.berryDropAmount;
+        this.currentDayBerryProduction += this.berryDropAmount;
       } else {
         // Ingredient drop
         // Roll for which ingredient level (equal probability)
@@ -394,7 +398,7 @@ export class MemberState {
 
         if (ingredientSet) {
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientHelps[ingredientId] += ingredientSet.amount;
+          this.totalIngredientProduction[ingredientId] += ingredientSet.amount;
           this.currentDayIngredientProduction[ingredientId] += ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
         }
@@ -454,11 +458,12 @@ export class MemberState {
 
         if (isBerryDrop) {
           // Berry drop
-          this.totalBerryHelps += helpRatio;
+          this.totalBerryProduction += helpRatio * this.berryDropAmount;
+          this.currentDayBerryProduction += helpRatio * this.berryDropAmount;
         } else if (ingredientSet) {
           // Ingredient drop
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientHelps[ingredientId] += helpRatio * ingredientSet.amount;
+          this.totalIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
           this.currentDayIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
           this.ingredientHelpsSinceLastCook[ingredientId] += helpRatio * ingredientSet.amount;
         }
@@ -470,7 +475,8 @@ export class MemberState {
         this.nightHelpsAfterSS += 1;
         this.totalSneakySnackHelps += 1;
         // Sneaky snack always gives berries
-        this.totalBerryHelps += 1;
+        this.totalBerryProduction += this.berryDropAmount;
+        this.currentDayBerryProduction += this.berryDropAmount;
       }
 
       this.nextHelp += frequency / 60;
@@ -521,15 +527,15 @@ export class MemberState {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
     // Calculate total help produce based on tracked help counts
-    const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.berryDropAmounts._mapUnary((dropAmount) => (dropAmount * this.totalBerryHelps) / iterations),
-      ingredients: this.totalIngredientHelps._mapUnary((amount) => amount / iterations)
-    };
-
-    // Remove redundant ingredient calculations since totalIngredientHelps already has the correct amounts
     const totalHelpProduce: Produce = {
-      berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
-      ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
+      berries: [
+        {
+          berry: this.berry,
+          level: this.level,
+          amount: this.totalBerryProduction / iterations
+        }
+      ],
+      ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
 
@@ -553,7 +559,11 @@ export class MemberState {
     const sneakySnack: BerrySet = {
       berry: this.berry,
       level: this.level,
-      amount: Math.max(...this.sneakySnackBerries._mutateUnary((a) => (a * this.totalSneakySnackHelps) / iterations))
+      amount: Math.max(
+        ...Array.from(this.sneakySnackBerries).map(
+          (value) => ((value as number) * this.totalSneakySnackHelps) / iterations
+        )
+      )
     };
 
     const {
@@ -645,14 +655,15 @@ export class MemberState {
   public ivResults(iterations: number): MemberProductionBase {
     const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations);
 
-    const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.berryDropAmounts._mapUnary((dropAmount) => (dropAmount * this.totalBerryHelps) / iterations),
-      ingredients: this.totalIngredientHelps._mapUnary((amount) => amount / iterations)
-    };
-
     const totalHelpProduce: Produce = {
-      berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
-      ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
+      berries: [
+        {
+          berry: this.berry,
+          level: this.level,
+          amount: this.totalBerryProduction / iterations
+        }
+      ],
+      ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
 
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);

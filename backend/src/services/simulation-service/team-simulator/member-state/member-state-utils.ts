@@ -1,4 +1,4 @@
-export function calculateDistribution(data: number[]): Record<number, number> {
+export function calculateDistribution(data: number[] | Int16Array | Float32Array): Record<number, number> {
   if (data.length === 0) {
     return {};
   }
