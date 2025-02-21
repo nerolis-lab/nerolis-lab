@@ -69,7 +69,7 @@ export class MemberState {
   private totalSneakySnackHelps = 0;
   private totalBerryProduction = 0;
   private totalIngredientProduction: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
-  private voidHelps = 0;
+  private voidIngredients: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
 
   private berryProductionPerDay: Int16Array;
   private ingredientProductionPerDay: IngredientIndexToIntAmount[];
@@ -410,65 +410,78 @@ export class MemberState {
       // update stats
       this.totalNightHelps += 1;
 
-      const inventorySpace = this.inventoryLimit - this.carriedAmount;
-      if (inventorySpace > 0) {
+      // Ignoring inventory space for now, calculate what the help would be
+      let totalDropAmount = 0;
+      let isBerryDrop = false;
+      let ingredientSet: IngredientSet | null = null;
+
+      if (RandomUtils.roll(1 - this.ingredientPercentage)) {
+        // Berry drop
+        totalDropAmount = this.berryDropAmount;
+        isBerryDrop = true;
+      } else {
+        // Ingredient drop - roll for which level (equal probability)
+        const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
+        if (roll === 2) {
+          // Level 60
+          ingredientSet = this.level60IngredientSet!;
+        } else if (roll === 1) {
+          // Level 30
+          ingredientSet = this.level30IngredientSet!;
+        } else {
+          // Level 0
+          ingredientSet = this.level0IngredientSet;
+        }
+        totalDropAmount = ingredientSet.amount;
+      }
+
+      const inventorySpace = Math.max(0, this.inventoryLimit - this.carriedAmount);
+
+      // Easy case, inventory not full
+      if (inventorySpace <= 0) {
+        // Sneaky-snacking case
+        this.nightHelpsAfterSS += 1;
+        this.totalSneakySnackHelps += 1;
+        // Sneaky snack always gives berries
+        this.totalBerryProduction += this.berryDropAmount;
+        this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
+        this.totalAverageHelps += 1;
+        this.helpsSinceLastCook += 1;
+
+        if (ingredientSet) {
+          // Track void ingredient drop
+          const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
+          this.voidIngredients[ingredientId] += totalDropAmount;
+        }
+      } else {
         this.currentNightHelps += 1; // these run skill procs at wakeup
         this.nightHelpsBeforeSS += 1;
 
-        // Calculate total drop amount for this help
-        let totalDropAmount = 0;
-        let isBerryDrop = false;
-        let ingredientSet: IngredientSet | null = null;
-        if (RandomUtils.roll(1 - this.ingredientPercentage)) {
-          // Berry drop
-          totalDropAmount = this.berryDropAmount;
-          isBerryDrop = true;
-        } else {
-          // Ingredient drop - roll for which level (equal probability)
-          const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
-          if (roll === 2 && this.level60IngredientSet) {
-            // Level 60
-            ingredientSet = this.level60IngredientSet;
-          } else if (roll === 1 && this.level30IngredientSet) {
-            // Level 30
-            ingredientSet = this.level30IngredientSet;
-          } else {
-            // Level 0
-            ingredientSet = this.level0IngredientSet;
-          }
-          if (ingredientSet) {
-            totalDropAmount = ingredientSet.amount;
-          }
-        }
-
-        this.carriedAmount += totalDropAmount;
+        this.carriedAmount += totalDropAmount; // we don't care if we overflow carriedAmount
 
         // Calculate how much of the help fits in the bag
         const helpRatio = inventorySpace >= totalDropAmount ? 1 : inventorySpace / totalDropAmount;
         this.totalAverageHelps += helpRatio;
         this.helpsSinceLastCook += helpRatio;
 
+        // Calculate how much of the help fits in the bag
+        const dropAmount = Math.min(totalDropAmount, inventorySpace);
+
         if (isBerryDrop) {
           // Berry drop
-          this.totalBerryProduction += helpRatio * this.berryDropAmount;
-          this.berryProductionPerDay[this.currentDay] += helpRatio * this.berryDropAmount;
+          this.totalBerryProduction += dropAmount;
+          this.berryProductionPerDay[this.currentDay] += dropAmount;
+
+          // I guess we don't care that much about void berries
         } else if (ingredientSet) {
           // Ingredient drop
           const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientProduction[ingredientId] += helpRatio * ingredientSet.amount;
-          this.ingredientProductionPerDay[this.currentDay][ingredientId] += helpRatio * ingredientSet.amount;
-          this.ingredientHelpsSinceLastCook[ingredientId] += helpRatio * ingredientSet.amount;
-        }
+          this.totalIngredientProduction[ingredientId] += dropAmount;
+          this.ingredientProductionPerDay[this.currentDay][ingredientId] += dropAmount;
+          this.ingredientHelpsSinceLastCook[ingredientId] += dropAmount;
 
-        if (helpRatio < 1) {
-          this.voidHelps += 1 - helpRatio;
+          this.voidIngredients[ingredientId] += totalDropAmount - dropAmount;
         }
-      } else {
-        this.nightHelpsAfterSS += 1;
-        this.totalSneakySnackHelps += 1;
-        // Sneaky snack always gives berries
-        this.totalBerryProduction += this.berryDropAmount;
-        this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
       }
 
       this.nextHelp += frequency / 60;
@@ -530,23 +543,6 @@ export class MemberState {
       ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
-
-    const spilledHelps = this.voidHelps + this.totalSneakySnackHelps;
-    // Calculate spilled ingredients based on level-specific ingredient amounts
-    const spilledIngredientsFlat = emptyIngredientInventoryFloat();
-    const combinedSpill: { [key: string]: number } = {};
-    combinedSpill[this.level0IngredientSet.ingredient.name] = this.level0IngredientSet.amount;
-    if (this.member.settings.level >= 30 && this.level30IngredientSet) {
-      combinedSpill[this.level30IngredientSet.ingredient.name] = this.level30IngredientSet.amount;
-    }
-    if (this.member.settings.level >= 60 && this.level60IngredientSet) {
-      combinedSpill[this.level60IngredientSet.ingredient.name] = this.level60IngredientSet.amount;
-    }
-    for (const ingredient in combinedSpill) {
-      const index = ING_ID_LOOKUP[ingredient];
-      spilledIngredientsFlat[index] = (combinedSpill[ingredient] * spilledHelps) / iterations;
-    }
-    const spilledIngredients = flatToIngredientSet(spilledIngredientsFlat);
 
     const sneakySnack: BerrySet = {
       berry: this.berry,
@@ -627,7 +623,7 @@ export class MemberState {
         nightPeriod: {
           averageEnergy: this.energyIntervalsNight / fiveMinIntervalsTotalNight,
           averageFrequency: this.frequencyIntervalsNight / fiveMinIntervalsTotalNight,
-          spilledIngredients
+          spilledIngredients: flatToIngredientSet(this.voidIngredients._mapUnary((amount) => amount / iterations))
         },
         frequencySplit: {
           zero: this.helpsAtFrequency0 / totalHelps,
