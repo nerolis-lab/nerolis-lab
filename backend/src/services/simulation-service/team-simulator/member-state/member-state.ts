@@ -706,21 +706,24 @@ export class MemberState {
   }
 
   private calculateFrequencyWithEnergy() {
-    if (this.currentEnergy >= 80) {
-      this.helpsAtFrequency80 += 1;
+    const energy = this.currentEnergy; // Cache the value to avoid multiple property accesses
+    if (energy >= 80) {
+      this.helpsAtFrequency80++;
       return this.frequency80;
-    } else if (this.currentEnergy >= 60) {
-      this.helpsAtFrequency60 += 1;
-      return this.frequency60;
-    } else if (this.currentEnergy >= 40) {
-      this.helpsAtFrequency40 += 1;
-      return this.frequency40;
-    } else if (this.currentEnergy >= 1) {
-      this.helpsAtFrequency1 += 1;
-      return this.frequency1;
-    } else {
-      this.helpsAtFrequency0 += 1;
-      return this.frequency0;
     }
+    if (energy >= 60) {
+      this.helpsAtFrequency60++;
+      return this.frequency60;
+    }
+    if (energy >= 40) {
+      this.helpsAtFrequency40++;
+      return this.frequency40;
+    }
+    if (energy >= 1) {
+      this.helpsAtFrequency1++;
+      return this.frequency1;
+    }
+    this.helpsAtFrequency0++;
+    return this.frequency0;
   }
 }
