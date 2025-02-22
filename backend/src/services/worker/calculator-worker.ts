@@ -10,7 +10,7 @@ async function calculateProduction(name: string, body: any, includeAnalysis: boo
   return pretty ? WebsiteConverterService.toProductionCalculator(data) : data;
 }
 
-async function calculateTeam(body: any, maybeUser?: DBUser) {
+export async function calculateTeam(body: any, maybeUser?: DBUser) {
   const controller = new ProductionController();
   return await controller.calculateTeam(body, maybeUser);
 }
