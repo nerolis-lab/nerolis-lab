@@ -133,7 +133,7 @@ export function calculatePokemonProduction(
 // 5110 days is 14 years or 730 weeks
 export function calculateTeam(
   params: { settings: TeamSettingsExt; members: TeamMemberExt[]; userRecipes: UserRecipes },
-  iterations = 5110
+  iterations = 51100
 ) {
   const { settings, members, userRecipes } = params;
 
