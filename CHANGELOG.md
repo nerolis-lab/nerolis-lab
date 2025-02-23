@@ -1,3 +1,10 @@
+# [1.36.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.35.0...v1.36.0) (2025-02-23)
+
+
+### Features
+
+* adds large desktop recipe page ([aaed909](https://github.com/nerolis-lab/nerolis-lab/commit/aaed909a5bc7fa98297ad9facf2ec7bfd6359e0f))
+
 # [1.35.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.34.0...v1.35.0) (2025-02-19)
 
 
