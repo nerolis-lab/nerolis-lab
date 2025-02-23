@@ -1,4 +1,3 @@
-<!-- NumberInput.vue -->
 <template>
   <v-text-field
     v-model.number="internalValue"
@@ -15,7 +14,8 @@
     :rules="rules"
     min-width="50"
     @focus="highlightText"
-    @blur="handleBlur"
+    @blur="handleUpdate"
+    @keyup.enter="handleUpdate"
   >
     <template v-if="showStatus" #append-inner>
       <v-progress-circular v-if="localLoading" indeterminate size="20" />
@@ -136,9 +136,15 @@ export default defineComponent({
       // Slight delay to avoid browser conflicts
       setTimeout(() => target.select(), 1)
     },
-    handleBlur() {
-      if ((this.min && this.internalValue < this.min) || (this.max && this.internalValue > this.max)) {
-        this.internalValue = this.min ?? this.max ?? 1
+    handleUpdate() {
+      if (
+        (this.min && this.internalValue < this.min) ||
+        (this.max && this.internalValue > this.max) ||
+        isNaN(this.internalValue) ||
+        this.internalValue === this.modelValue
+      ) {
+        this.internalValue = this.modelValue
+        return
       }
 
       this.$emit('update:modelValue', this.internalValue)

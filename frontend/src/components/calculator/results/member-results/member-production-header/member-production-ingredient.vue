@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
@@ -42,7 +42,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
     return { teamStore, MathUtils, isMobile }
   },
   computed: {

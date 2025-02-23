@@ -3,14 +3,14 @@
     <v-row
       class="frosted-glass pa-2 flex-column"
       :class="isLargeDesktop ? 'mr-3' : ''"
-      :style="isMobile ? '' : ['min-width: 500px', 'position: sticky', 'top: 80px']"
+      :style="isLargeDesktop ? ['min-width: 500px', 'position: sticky', 'top: 80px'] : ''"
       no-gutters
     >
       <!-- Title and sort -->
       <v-row dense>
         <v-col
           class="d-flex flex-wrap justify-space-between"
-          :class="isMobile ? 'text-h5' : 'text-h4 font-weight-semibold'"
+          :class="isMobile ? 'text-h5' : 'text-h5 font-weight-semibold'"
         >
           {{ isLargeDesktop ? 'Filters' : 'Recipes' }}
           <div v-if="isMobile">
@@ -68,10 +68,11 @@
           <v-col cols="auto" class="mx-1 pa-0">
             <NumberInput
               v-model="potSizeRange[0]"
-              label="min"
               style="max-width: 58px"
               :show-status="false"
               @update-number="updatePotSize"
+              :min="minIngredients"
+              :max="maxIngredients"
             />
           </v-col>
           <v-col class="pa-0">
@@ -90,10 +91,11 @@
           <v-col cols="auto" class="mx-1 pa-0">
             <NumberInput
               v-model="potSizeRange[1]"
-              label="max"
               style="max-width: 58px"
               :show-status="false"
               @update-number="updatePotSize"
+              :min="minIngredients"
+              :max="maxIngredients"
             />
           </v-col>
         </v-col>
@@ -141,7 +143,7 @@ import IngredientSelection from '@/components/custom-components/input/ingredient
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import RecipeTableDesktop from '@/components/recipe/recipe-table-desktop.vue'
 import RecipeTableMobile from '@/components/recipe/recipe-table-mobile.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import {
@@ -153,7 +155,7 @@ import {
   type Recipe,
   type RecipeType
 } from 'sleepapi-common'
-import { capitalize, computed, defineComponent, reactive, ref } from 'vue'
+import { capitalize, defineComponent, reactive, ref } from 'vue'
 
 export type UserRecipe = Recipe & { level: number; userStrength: number }
 
@@ -162,10 +164,9 @@ export default defineComponent({
   components: { RecipeTableDesktop, RecipeTableMobile, NumberInput, IngredientSelection },
   async setup() {
     const userStore = useUserStore()
-    const { isMobile, viewportWidth } = useViewport()
+    const { isMobile, isLargeDesktop } = useBreakpoint()
     const loggedIn = userStore.loggedIn
     const loading = ref(false)
-    const isLargeDesktop = computed(() => viewportWidth.value >= 1600)
 
     const userRecipes: UserRecipe[] = reactive(
       RECIPES.map((recipe) => {
@@ -219,7 +220,9 @@ export default defineComponent({
       chips: ['curry', 'salad', 'dessert'] as RecipeType[],
       potSizeRange: [minIngredients, maxIngredients],
       filterPotSizeRange: [minIngredients, maxIngredients],
-      filteredIngredients: [] as Ingredient[]
+      filteredIngredients: [] as Ingredient[],
+      minIngredients,
+      maxIngredients
     }
   },
   computed: {

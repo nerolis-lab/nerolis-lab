@@ -12,7 +12,7 @@
     class="compact-x"
   >
     <template #prepend-inner>
-      <span>Lv.</span>
+      <span class="font-weight-light">Lv.</span>
     </template>
   </NumberInput>
 </template>

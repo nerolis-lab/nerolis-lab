@@ -44,9 +44,9 @@ describe('PokemonName', () => {
   it('filters input correctly', async () => {
     await wrapper.setData({ isEditDialogOpen: true })
 
-    const textarea = document.querySelector('textarea') as HTMLTextAreaElement
-    textarea.value = 'Pokemon123'
-    textarea.dispatchEvent(new Event('input'))
+    const input = document.querySelector('#input-1') as HTMLInputElement
+    input.value = 'Pokemon123'
+    input.dispatchEvent(new Event('input'))
 
     expect(wrapper.vm.editedName).toBe('Pokemon123')
   })

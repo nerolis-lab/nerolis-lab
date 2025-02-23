@@ -7,8 +7,8 @@ import { RECIPES, calculateRecipeValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
-vi.mock('@/composables/viewport-composable', () => ({
-  useViewport: () => ({ isMobile: false, viewportWidth: 800 })
+vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
+  useBreakpoint: () => ({ isMobile: false, isLargeDesktop: false, viewportWidth: 800 })
 }))
 
 vi.mock('@/services/user/user-service', () => ({
