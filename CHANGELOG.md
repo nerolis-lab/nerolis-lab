@@ -1,3 +1,10 @@
+## [1.36.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.0...v1.36.1) (2025-02-23)
+
+
+### Bug Fixes
+
+* recipe page desktop margins ([0a4be5c](https://github.com/nerolis-lab/nerolis-lab/commit/0a4be5c40bd2ee6a7134a5a408832b67c20623aa))
+
 # [1.36.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.35.0...v1.36.0) (2025-02-23)
 
 
