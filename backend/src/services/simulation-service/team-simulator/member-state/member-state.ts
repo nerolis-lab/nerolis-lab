@@ -130,6 +130,19 @@ export class MemberState {
   // This tracks the actual amount of ingredients accumulated since last cook
   private ingredientHelpsSinceLastCook = emptyIngredientInventoryFloat();
 
+  // We roll a random number between 0 and 1, then:
+  //
+  //     berry   ing0   ing30   ing60
+  //  |--------|------|-------|--------| 1
+  //  |        |      |       | ingredient60Threshold
+  //  |        |      | ingredient30Threshold
+  //  |        | ingredient0Threshold
+  //  | 0
+  //
+  private ingredient0Threshold: number;
+  private ingredient30Threshold: number;
+  private ingredient60Threshold: number;
+
   constructor(params: {
     member: TeamMemberExt;
     team: TeamMemberExt[];
@@ -250,6 +263,21 @@ export class MemberState {
     this.team = team; // this needs updating when we add team rotation
     this.otherMembers = team.filter((m) => m.settings.externalId !== member.settings.externalId); // this needs updating when we add team rotation
     this.skillState = new SkillState(this);
+
+    this.ingredient0Threshold = 1 - this.ingredientPercentage;
+    if (this.level60IngredientSet) {
+      const ingredientChunk = this.ingredientPercentage / 3;
+      this.ingredient30Threshold = this.ingredient0Threshold + ingredientChunk;
+      this.ingredient60Threshold = this.ingredient30Threshold + ingredientChunk;
+    } else if (this.level30IngredientSet) {
+      const ingredientChunk = this.ingredientPercentage / 2;
+      this.ingredient30Threshold = this.ingredient0Threshold + ingredientChunk;
+      // NB: Math.random() is [0, 1) so 1.0 is never rolled
+      this.ingredient60Threshold = 1.0;
+    } else {
+      this.ingredient30Threshold = 1.0;
+      this.ingredient60Threshold = 1.0;
+    }
   }
 
   get level() {
@@ -365,33 +393,29 @@ export class MemberState {
       this.totalAverageHelps += 1;
       this.helpsSinceLastCook += 1;
 
-      // Roll for berry vs ingredient
-      if (RandomUtils.roll(1 - this.ingredientPercentage)) {
+      const roll = Math.random();
+
+      let ingredientSet: IngredientSet | null = null;
+      if (roll >= this.ingredient60Threshold) {
+        // Level 60
+        ingredientSet = this.level60IngredientSet!;
+      } else if (roll >= this.ingredient30Threshold) {
+        // Level 30
+        ingredientSet = this.level30IngredientSet!;
+      } else if (roll >= this.ingredient0Threshold) {
+        // Level 0
+        ingredientSet = this.level0IngredientSet;
+      } else {
         // Berry drop
         this.totalBerryProduction += this.berryDropAmount;
         this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
-      } else {
-        // Ingredient drop
-        // Roll for which ingredient level (equal probability)
-        const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
-        let ingredientSet: IngredientSet | null = null;
-        if (roll === 2 && this.level60IngredientSet) {
-          // Level 60
-          ingredientSet = this.level60IngredientSet;
-        } else if (roll === 1 && this.level30IngredientSet) {
-          // Level 30
-          ingredientSet = this.level30IngredientSet;
-        } else {
-          // Level 0
-          ingredientSet = this.level0IngredientSet;
-        }
+      }
 
-        if (ingredientSet) {
-          const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientProduction[ingredientId] += ingredientSet.amount;
-          this.ingredientProductionPerDay[this.currentDay][ingredientId] += ingredientSet.amount;
-          this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
-        }
+      if (ingredientSet) {
+        const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
+        this.totalIngredientProduction[ingredientId] += ingredientSet.amount;
+        this.ingredientProductionPerDay[this.currentDay][ingredientId] += ingredientSet.amount;
+        this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
       }
 
       return this.skillState.attemptSkill();
