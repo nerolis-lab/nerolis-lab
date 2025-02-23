@@ -1,3 +1,4 @@
+import ProductionController from '@src/controllers/calculator/production.controller.js';
 import type { MaybeAuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import { withMaybeUser } from '@src/middleware/authorization-middleware.js';
 import { BaseRouter } from '@src/routes/base-router.js';
@@ -7,7 +8,6 @@ import {
   type CalculateIvRequest,
   type CalculateIvResponse,
   type CalculateTeamRequest,
-  type CalculateTeamResponse,
   type SingleProductionRequest
 } from 'sleepapi-common';
 
@@ -42,13 +42,15 @@ class ProductionRouterImpl {
     BaseRouter.router.post(
       '/calculator/team',
       withMaybeUser,
-      async (req: Request<unknown, unknown, CalculateTeamRequest, unknown>, res: Response<CalculateTeamResponse>) => {
+      async (req: Request<unknown, unknown, CalculateTeamRequest, unknown>, res: Response) => {
         try {
           logger.log('Entered /calculator/team');
 
           const user = (req as MaybeAuthenticatedRequest).user;
 
-          const data = await calculatorPool.exec('calculateTeam', [req.body, user]);
+          // const data = await calculatorPool.exec('calculateTeam', [req.body, user]);
+          const controller = new ProductionController();
+          const data = await controller.calculateTeam(req.body, user);
 
           res.json(data);
         } catch (err) {
