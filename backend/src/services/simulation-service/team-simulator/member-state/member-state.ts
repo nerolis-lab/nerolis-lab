@@ -75,8 +75,7 @@ export class MemberState {
   private currentDay = 0;
   private totalDays: number;
 
-  // Precomputed information about what ingredients the pokemon can drop.
-  // Optional if the Pokemon isn't leveled enough to unlock an ingredient.
+  // ingredient sets
   private level0IngredientSet: IngredientSet;
   private level30IngredientSet?: IngredientSet;
   private level60IngredientSet?: IngredientSet;
@@ -91,9 +90,7 @@ export class MemberState {
   private ingredientPercentage: number;
   private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
 
-  // Pre-compute how many berries the Pokemon produces per drop.  Sometimes
-  // it's convenient to have the full one-hot array, other times its
-  // convenient to just the count.
+  // precomputed berry drop amounts
   private berryDropAmounts: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
   private berryDropAmount: number = 0;
 
@@ -140,7 +137,7 @@ export class MemberState {
   private ingredient30Threshold: number;
   private ingredient60Threshold: number;
 
-  // Add new properties to store pre-computed values
+  // precomputed ingredient ids and amounts
   private level0IngredientId: number;
   private level30IngredientId?: number;
   private level60IngredientId?: number;
