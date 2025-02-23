@@ -2,7 +2,7 @@ import ProductionController from '@src/controllers/calculator/production.control
 import type { MaybeAuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import { withMaybeUser } from '@src/middleware/authorization-middleware.js';
 import { BaseRouter } from '@src/routes/base-router.js';
-import { calculatorPool } from '@src/services/worker/worker-pool.js';
+//import { calculatorPool } from '@src/services/worker/worker-pool.js';
 import type { Request, Response } from 'express';
 import {
   type CalculateIvRequest,
@@ -30,7 +30,9 @@ class ProductionRouterImpl {
           const body = req.body;
           const { pretty, includeAnalysis = false } = req.query;
 
-          const result = await calculatorPool.exec('calculateProduction', [name, body, includeAnalysis, pretty]);
+          // const result = await calculatorPool.exec('calculateProduction', [name, body, includeAnalysis, pretty]);
+          const controller = new ProductionController();
+          const result = await controller.calculatePokemonProduction(name, body, includeAnalysis);
           res.json(result);
         } catch (err) {
           logger.error(err as Error);
@@ -66,7 +68,9 @@ class ProductionRouterImpl {
         try {
           logger.log('Entered /calculator/iv');
 
-          const data = await calculatorPool.exec('calculateIv', [req.body]);
+          // const data = await calculatorPool.exec('calculateIv', [req.body]);
+          const controller = new ProductionController();
+          const data = await controller.calculateIv(req.body);
 
           res.json(data);
         } catch (err) {
