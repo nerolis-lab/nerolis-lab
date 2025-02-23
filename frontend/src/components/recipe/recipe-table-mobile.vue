@@ -1,12 +1,12 @@
 <template>
-  <v-row dense>
+  <v-row dense class="frosted-glass mt-0 mx-0">
     <v-col v-for="(recipe, index) in recipes" :key="index" cols="12">
       <v-card rounded="xl" class="pa-2">
         <div class="recipe-grid">
           <!-- Row 1: Name (Left) / Chip (Right) -->
           <div class="ml-2 font-weight-semibold">{{ recipe.displayName }}</div>
           <div class="right-column">
-            <v-chip class="flex-center" variant="outlined" color="strength">
+            <v-chip class="flex-center text-body-1" variant="outlined" color="strength">
               <img src="/images/misc/strength.png" height="16" class="mr-1" />
               {{ localizeNumber(recipe.userStrength) }}
             </v-chip>

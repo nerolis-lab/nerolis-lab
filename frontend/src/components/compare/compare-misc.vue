@@ -98,14 +98,8 @@ import { defineComponent } from 'vue'
 import { berryImage, ingredientImage, pokemonImage } from '@/services/utils/image-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import type { DataTableHeader } from '@/types/vuetify/table/table-header'
 import { MathUtils } from 'sleepapi-common'
-
-type DataTableHeader = {
-  title: string
-  key: string
-  align?: 'start' | 'center' | 'end'
-  sortable?: boolean
-}
 
 export default defineComponent({
   name: 'CompareMisc',
