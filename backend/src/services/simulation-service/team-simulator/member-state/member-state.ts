@@ -140,6 +140,14 @@ export class MemberState {
   private ingredient30Threshold: number;
   private ingredient60Threshold: number;
 
+  // Add new properties to store pre-computed values
+  private level0IngredientId: number;
+  private level30IngredientId?: number;
+  private level60IngredientId?: number;
+  private level0IngredientAmount: number;
+  private level30IngredientAmount?: number;
+  private level60IngredientAmount?: number;
+
   constructor(params: {
     member: TeamMemberExt;
     team: TeamMemberExt[];
@@ -260,6 +268,20 @@ export class MemberState {
       this.ingredient30Threshold = 1.0;
       this.ingredient60Threshold = 1.0;
     }
+
+    // Pre-compute ingredient IDs and amounts
+    this.level0IngredientId = ING_ID_LOOKUP[this.level0IngredientSet.ingredient.name];
+    this.level0IngredientAmount = this.level0IngredientSet.amount;
+
+    if (this.level30IngredientSet) {
+      this.level30IngredientId = ING_ID_LOOKUP[this.level30IngredientSet.ingredient.name];
+      this.level30IngredientAmount = this.level30IngredientSet.amount;
+    }
+
+    if (this.level60IngredientSet) {
+      this.level60IngredientId = ING_ID_LOOKUP[this.level60IngredientSet.ingredient.name];
+      this.level60IngredientAmount = this.level60IngredientSet.amount;
+    }
   }
 
   get level() {
@@ -370,6 +392,7 @@ export class MemberState {
   public attemptDayHelp(currentMinutesSincePeriodStart: number): TeamSkillActivation[] {
     const frequency = this.calculateFrequencyWithEnergy();
     this.countFrequencyAndEnergyIntervals('day', frequency);
+
     if (currentMinutesSincePeriodStart >= this.nextHelp) {
       this.totalDayHelps += 1;
       this.totalAverageHelps += 1;
@@ -377,27 +400,26 @@ export class MemberState {
 
       const roll = Math.random();
 
-      let ingredientSet: IngredientSet | null = null;
+      // Simplified drop logic using pre-computed values
       if (roll >= this.ingredient60Threshold) {
         // Level 60
-        ingredientSet = this.level60IngredientSet!;
+        this.totalIngredientProduction[this.level60IngredientId!] += this.level60IngredientAmount!;
+        this.ingredientProductionPerDay[this.currentDay][this.level60IngredientId!] += this.level60IngredientAmount!;
+        this.ingredientHelpsSinceLastCook[this.level60IngredientId!] += this.level60IngredientAmount!;
       } else if (roll >= this.ingredient30Threshold) {
         // Level 30
-        ingredientSet = this.level30IngredientSet!;
+        this.totalIngredientProduction[this.level30IngredientId!] += this.level30IngredientAmount!;
+        this.ingredientProductionPerDay[this.currentDay][this.level30IngredientId!] += this.level30IngredientAmount!;
+        this.ingredientHelpsSinceLastCook[this.level30IngredientId!] += this.level30IngredientAmount!;
       } else if (roll >= this.ingredient0Threshold) {
         // Level 0
-        ingredientSet = this.level0IngredientSet;
+        this.totalIngredientProduction[this.level0IngredientId] += this.level0IngredientAmount;
+        this.ingredientProductionPerDay[this.currentDay][this.level0IngredientId] += this.level0IngredientAmount;
+        this.ingredientHelpsSinceLastCook[this.level0IngredientId] += this.level0IngredientAmount;
       } else {
         // Berry drop
         this.totalBerryProduction += this.berryDropAmount;
         this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
-      }
-
-      if (ingredientSet) {
-        const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-        this.totalIngredientProduction[ingredientId] += ingredientSet.amount;
-        this.ingredientProductionPerDay[this.currentDay][ingredientId] += ingredientSet.amount;
-        this.ingredientHelpsSinceLastCook[ingredientId] += ingredientSet.amount;
       }
 
       return this.skillState.attemptSkill();
@@ -417,22 +439,22 @@ export class MemberState {
       // Ignoring inventory space for now, calculate what the help would be
       let totalDropAmount = 0;
       let isBerryDrop = false;
-      let ingredientSet: IngredientSet | null = null;
+      let ingredientId: number | undefined;
 
       const roll = Math.random();
 
       if (roll >= this.ingredient60Threshold) {
         // Level 60
-        ingredientSet = this.level60IngredientSet!;
-        totalDropAmount = ingredientSet.amount;
+        totalDropAmount = this.level60IngredientAmount!;
+        ingredientId = this.level60IngredientId!;
       } else if (roll >= this.ingredient30Threshold) {
         // Level 30
-        ingredientSet = this.level30IngredientSet!;
-        totalDropAmount = ingredientSet.amount;
+        totalDropAmount = this.level30IngredientAmount!;
+        ingredientId = this.level30IngredientId!;
       } else if (roll >= this.ingredient0Threshold) {
         // Level 0
-        ingredientSet = this.level0IngredientSet;
-        totalDropAmount = ingredientSet.amount;
+        totalDropAmount = this.level0IngredientAmount;
+        ingredientId = this.level0IngredientId;
       } else {
         totalDropAmount = this.berryDropAmount;
         isBerryDrop = true;
@@ -451,10 +473,9 @@ export class MemberState {
         this.totalAverageHelps += 1;
         this.helpsSinceLastCook += 1;
 
-        if (ingredientSet) {
+        if (!isBerryDrop) {
           // Track void ingredient drop
-          const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.voidIngredients[ingredientId] += totalDropAmount;
+          this.voidIngredients[ingredientId!] += totalDropAmount;
         }
       } else {
         this.currentNightHelps += 1; // these run skill procs at wakeup
@@ -474,16 +495,13 @@ export class MemberState {
           // Berry drop
           this.totalBerryProduction += dropAmount;
           this.berryProductionPerDay[this.currentDay] += dropAmount;
-
-          // I guess we don't care that much about void berries
-        } else if (ingredientSet) {
+        } else {
           // Ingredient drop
-          const ingredientId = ING_ID_LOOKUP[ingredientSet.ingredient.name];
-          this.totalIngredientProduction[ingredientId] += dropAmount;
-          this.ingredientProductionPerDay[this.currentDay][ingredientId] += dropAmount;
-          this.ingredientHelpsSinceLastCook[ingredientId] += dropAmount;
+          this.totalIngredientProduction[ingredientId!] += dropAmount;
+          this.ingredientProductionPerDay[this.currentDay][ingredientId!] += dropAmount;
+          this.ingredientHelpsSinceLastCook[ingredientId!] += dropAmount;
 
-          this.voidIngredients[ingredientId] += totalDropAmount - dropAmount;
+          this.voidIngredients[ingredientId!] += totalDropAmount - dropAmount;
         }
       }
 
