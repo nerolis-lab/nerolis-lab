@@ -1,32 +1,24 @@
 <template>
-  <v-text-field
-    v-model.number="localLevel"
-    type="number"
+  <NumberInput
+    :model-value="localLevel"
+    :rules="[rules.minLevelRule, rules.maxLevelRule]"
+    @update-number="handleBlur"
     :min="1"
     :max="MAX_RECIPE_LEVEL"
-    hide-details
-    hide-spin-buttons
-    bg-color="secondary"
-    variant="outlined"
     density="compact"
+    min-width="100"
     :disabled="!loggedIn"
-    @focus="highlightText"
-    :rules="[rules.minLevelRule, rules.maxLevelRule]"
-    @blur="handleBlur"
     :loading="loading"
     class="compact-x"
-    min-width="100px"
   >
     <template #prepend-inner>
       <span>Lv.</span>
     </template>
-    <template #append-inner>
-      <v-icon size="20">mdi-pencil</v-icon>
-    </template>
-  </v-text-field>
+  </NumberInput>
 </template>
 
 <script lang="ts">
+import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import { useHighlightText } from '@/composables/highlight-text/use-highlight-text'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
@@ -35,6 +27,7 @@ import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'RecipeLevelEditor',
+  components: { NumberInput },
   props: {
     modelValue: {
       type: Number,
@@ -66,15 +59,14 @@ export default defineComponent({
       }
     )
 
-    async function handleBlur() {
-      if (!localLevel.value || localLevel.value < 1 || localLevel.value > MAX_RECIPE_LEVEL) {
-        localLevel.value = 1
-      }
+    async function handleBlur(newValue: number) {
       loading.value = true
       try {
-        await UserService.upsertRecipe(props.recipeName, localLevel.value)
-        emit('update:modelValue', localLevel.value)
-        emit('updateLevel', localLevel.value)
+        await UserService.upsertRecipe(props.recipeName, newValue)
+
+        setTimeout(() => {
+          emit('updateLevel', newValue)
+        }, 500)
       } catch (error) {
         console.error('Update failed', error)
         localLevel.value = props.modelValue

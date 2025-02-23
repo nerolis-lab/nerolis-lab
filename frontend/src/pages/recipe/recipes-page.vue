@@ -1,13 +1,18 @@
 <template>
-  <v-container class="pa-2">
-    <v-row class="frosted-glass pa-2 flex-column" no-gutters>
+  <v-container :class="!isLargeDesktop ? 'pa-2' : 'flex-top'">
+    <v-row
+      class="frosted-glass pa-2 flex-column"
+      :class="isLargeDesktop ? 'mr-3' : ''"
+      :style="isMobile ? '' : ['min-width: 500px', 'position: sticky', 'top: 80px']"
+      no-gutters
+    >
       <!-- Title and sort -->
       <v-row dense>
         <v-col
           class="d-flex flex-wrap justify-space-between"
           :class="isMobile ? 'text-h5' : 'text-h4 font-weight-semibold'"
         >
-          Recipes
+          {{ isLargeDesktop ? 'Filters' : 'Recipes' }}
           <div v-if="isMobile">
             <v-menu>
               <template #activator="{ props }">
@@ -50,19 +55,26 @@
             :variant="selectedTypes.includes(chip) ? 'elevated' : 'outlined'"
             :append-avatar="recipeTypeImage(chip)"
             :style="!selectedTypes.includes(chip) ? { color: `var(--${chip})` } : {}"
+            class="text-body-1"
           >
             {{ capitalize(chip) }}
           </v-chip>
         </v-chip-group>
       </v-row>
 
-      <v-row no-gutters class="flex-center my-1 w-100" :class="isMobile ? 'flex-column' : 'flex-row'">
-        <v-col :cols="isMobile ? '' : '6'" class="flex-nowrap flex-center">
+      <v-row no-gutters class="flex-left my-1 w-100 text-body-1" :class="isMobile ? 'flex-column' : 'flex-row'">
+        <v-col :cols="isMobile || isLargeDesktop ? '' : '6'" class="flex-nowrap flex-left">
           <v-col cols="auto" class="pa-0"> Size </v-col>
-          <v-col cols="auto" class="ml-2 pa-0">
-            <NumberInput :model-value="potSizeRange[0]" label="min" style="max-width: 58px" />
+          <v-col cols="auto" class="mx-1 pa-0">
+            <NumberInput
+              v-model="potSizeRange[0]"
+              label="min"
+              style="max-width: 58px"
+              :show-status="false"
+              @update-number="updatePotSize"
+            />
           </v-col>
-          <v-col class="ml-1 pa-0">
+          <v-col class="pa-0">
             <v-range-slider
               v-model="potSizeRange"
               :max="102"
@@ -72,14 +84,24 @@
               color="accent"
               hide-details
               @end="updatePotSize"
+              min-width="140px"
             />
           </v-col>
-          <v-col cols="auto" class="ml-1 pa-0">
-            <NumberInput :model-value="potSizeRange[1]" label="max" style="max-width: 58px" />
+          <v-col cols="auto" class="mx-1 pa-0">
+            <NumberInput
+              v-model="potSizeRange[1]"
+              label="max"
+              style="max-width: 58px"
+              :show-status="false"
+              @update-number="updatePotSize"
+            />
           </v-col>
         </v-col>
         <v-col cols="auto" class="flex-center" v-if="!isMobile" style="align-self: stretch"> </v-col>
-        <v-col class="flex-center" :class="isMobile ? 'mt-2' : 'ml-2'">
+      </v-row>
+
+      <v-row dense>
+        <v-col :cols="isMobile || isLargeDesktop ? '' : '6'">
           <IngredientSelection
             :pre-selected-ingredients="filteredIngredients"
             @update-ingredients="updateFilteredIngredients"
@@ -87,14 +109,14 @@
         </v-col>
       </v-row>
 
-      <v-row no-gutters :class="isMobile ? 'flex-column' : 'flex-row'">
-        <v-col :cols="isMobile ? '' : '6'" class="flex-left">
+      <v-row dense :class="isMobile ? 'flex-column' : 'flex-row'">
+        <v-col v-if="!isLargeDesktop" v:cols="isMobile ? '' : '6'" class="flex-left">
           <span class="text-strength">
             Setting your recipe levels here will affect calculations across Neroli's Lab
           </span>
         </v-col>
-        <v-col cols="1" class="flex-center" v-if="!isMobile" style="align-self: stretch"> </v-col>
-        <v-col :cols="isMobile ? '' : '5'" class="flex-right">
+        <v-col cols="1" class="flex-center" v-if="!isMobile && !isLargeDesktop" style="align-self: stretch"> </v-col>
+        <v-col :cols="isMobile || isLargeDesktop ? '' : '5'" class="flex-right">
           <v-text-field
             v-model="searchQuery"
             density="compact"
@@ -102,17 +124,15 @@
             color="secondary"
             hide-details
             clearable
-            class="ml-2"
             prepend-inner-icon="mdi-magnify"
             label="Search recipes..."
           />
         </v-col>
       </v-row>
-
-      <!-- Recipe table row -->
-      <RecipeTableMobile v-if="!isTablet" :recipes="filteredRecipes" @update-level="updateRecipeLevel" />
-      <RecipeTableDesktop v-else :recipes="filteredRecipes" @update-level="updateRecipeLevel" />
     </v-row>
+
+    <RecipeTableMobile v-if="isMobile" :recipes="filteredRecipes" @update-level="updateRecipeLevel" />
+    <RecipeTableDesktop v-else :recipes="filteredRecipes" @update-level="updateRecipeLevel" />
   </v-container>
 </template>
 
@@ -145,14 +165,16 @@ export default defineComponent({
     const { isMobile, viewportWidth } = useViewport()
     const loggedIn = userStore.loggedIn
     const loading = ref(false)
-    const isTablet = computed(() => viewportWidth.value >= 600)
+    const isLargeDesktop = computed(() => viewportWidth.value >= 1600)
 
     const userRecipes: UserRecipe[] = reactive(
       RECIPES.map((recipe) => {
-        const level = 1,
-          userStrength = recipe.value
+        const level = 1
+        const userStrength = recipe.value
+        const sortedIngredients = recipe.ingredients.sort((a, b) => a.ingredient.name.localeCompare(b.ingredient.name))
         return {
           ...recipe,
+          ingredients: sortedIngredients,
           userStrength,
           level
         }
@@ -178,7 +200,7 @@ export default defineComponent({
 
     return {
       isMobile,
-      isTablet,
+      isLargeDesktop,
       loggedIn,
       userRecipes,
       capitalize,
@@ -214,7 +236,7 @@ export default defineComponent({
           value: 'baseValue',
           label: 'Base Value',
           title: 'Base Value',
-          description: 'Base strength value',
+          description: 'Base strength value without recipe level',
           disabled: false
         },
         {
@@ -226,8 +248,8 @@ export default defineComponent({
         },
         {
           value: 'ingredientCount',
-          label: 'Ing. Count',
-          title: 'Ingredient Count',
+          label: 'Size',
+          title: 'Size',
           description: 'The number of ingredients in the recipe',
           disabled: false
         },

@@ -1,22 +1,37 @@
+<!-- NumberInput.vue -->
 <template>
   <v-text-field
-    v-model="internalValue"
-    :label="label"
+    v-model.number="internalValue"
     type="number"
-    :density="null"
+    :min="min"
+    :max="max"
+    :density="density"
+    :base-color="computedColor"
     variant="outlined"
     hide-details
     hide-spin-buttons
     single-line
     persistent-hint
-    @focus="highlightText"
     :rules="rules"
     min-width="50"
-  ></v-text-field>
+    @focus="highlightText"
+    @blur="handleBlur"
+  >
+    <template v-if="showStatus" #append-inner>
+      <v-progress-circular v-if="localLoading" indeterminate size="20" />
+      <v-icon v-else-if="confirmed" size="20" color="success"> mdi-check </v-icon>
+      <v-icon v-else size="20"> mdi-pencil </v-icon>
+    </template>
+
+    <template v-for="(_, name) in availableSlots" :key="name" #[name]="scope">
+      <slot :name="name" v-bind="scope"></slot>
+    </template>
+  </v-text-field>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import type { Density } from '@/types/vuetify/density'
+import { computed, defineComponent, type PropType, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'NumberInput',
@@ -25,21 +40,38 @@ export default defineComponent({
       type: Number,
       required: true
     },
-    label: {
-      type: String,
-      required: true
-    },
     rules: {
-      type: Array<(value: any) => boolean | string>,
+      type: Array as PropType<Array<(value: any) => boolean | string>>,
       default: () => []
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    min: {
+      type: Number,
+      default: undefined
+    },
+    max: {
+      type: Number,
+      default: undefined
+    },
+    density: {
+      type: String as PropType<Density>,
+      default: null
+    },
+    showStatus: {
+      type: Boolean,
+      default: true
     }
   },
-  setup(props, { emit }) {
+  emits: ['update-number', 'update:modelValue'],
+  setup(props, { slots }) {
     const internalValue = ref(props.modelValue)
-
-    watch(internalValue, (newValue) => {
-      emit('update:modelValue', newValue)
-    })
+    const confirmed = ref(false)
+    const localLoading = ref(props.loading)
+    let loadingStart: number | null = null
+    const minLoadingTime = 500
 
     watch(
       () => props.modelValue,
@@ -48,16 +80,73 @@ export default defineComponent({
       }
     )
 
+    const availableSlots = computed(() => {
+      const slotNames = Object.keys(slots).filter((name): name is string => name !== 'append-inner')
+      return slotNames.reduce(
+        (acc, name) => {
+          acc[name] = slots[name]
+          return acc
+        },
+        {} as Record<string, unknown>
+      )
+    })
+
+    watch(
+      () => props.loading,
+      (newVal) => {
+        if (newVal) {
+          loadingStart = Date.now()
+          localLoading.value = true
+        } else {
+          if (loadingStart !== null) {
+            const elapsed = Date.now() - loadingStart
+            const remaining = minLoadingTime - elapsed
+            if (remaining > 0) {
+              setTimeout(() => {
+                confirmed.value = true
+                localLoading.value = false
+              }, remaining)
+            } else {
+              confirmed.value = true
+              localLoading.value = false
+            }
+          } else {
+            confirmed.value = true
+            localLoading.value = false
+          }
+        }
+      }
+    )
+
+    const computedColor = computed(() => (confirmed.value ? 'success' : undefined))
+
     return {
-      internalValue
+      internalValue,
+      confirmed,
+      computedColor,
+      localLoading,
+      availableSlots,
+      loadingStart,
+      minLoadingTime
     }
   },
   methods: {
     highlightText(event: FocusEvent) {
       const target = event.target as HTMLInputElement
-
-      // Use a slight delay to avoid browser conflicts
+      // Slight delay to avoid browser conflicts
       setTimeout(() => target.select(), 1)
+    },
+    handleBlur() {
+      if ((this.min && this.internalValue < this.min) || (this.max && this.internalValue > this.max)) {
+        this.internalValue = this.min ?? this.max ?? 1
+      }
+
+      this.$emit('update:modelValue', this.internalValue)
+      this.$emit('update-number', this.internalValue)
+
+      setTimeout(() => {
+        this.confirmed = false
+      }, 2000)
     }
   }
 })

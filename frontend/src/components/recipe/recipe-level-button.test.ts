@@ -4,7 +4,6 @@ import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { MAX_RECIPE_LEVEL } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -55,25 +54,18 @@ describe('RecipeLevelEditor', () => {
     await input.setValue('8')
     await input.trigger('blur')
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')![0][0]).toBe(8)
-  })
+    await new Promise((resolve) => setTimeout(resolve, 550))
 
-  it('validates minimum and maximum level constraints', async () => {
-    const input = wrapper.find('input')
-    await input.setValue('0')
-    await input.trigger('blur')
-    expect(wrapper.vm.localLevel).toBe(1) // Should reset to 1
-
-    await input.setValue(`${MAX_RECIPE_LEVEL + 1}`)
-    await input.trigger('blur')
-    expect(wrapper.vm.localLevel).toBe(1) // Should reset to 1
+    expect(wrapper.emitted('updateLevel')).toBeTruthy()
+    expect(wrapper.emitted('updateLevel')![0][0]).toBe(8)
   })
 
   it('calls UserService.upsertRecipe on blur and updates level', async () => {
     const input = wrapper.find('input')
     await input.setValue('7')
     await input.trigger('blur')
+
+    await new Promise((resolve) => setTimeout(resolve, 550))
 
     expect(UserService.upsertRecipe).toHaveBeenCalledWith('Test Recipe', 7)
     expect(wrapper.emitted('updateLevel')).toBeTruthy()

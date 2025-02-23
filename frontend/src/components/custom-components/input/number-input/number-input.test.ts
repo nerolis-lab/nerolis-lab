@@ -27,12 +27,14 @@ describe('NumberInput', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('emits update:modelValue when value changes', async () => {
+  it('emits update-number when value changes', async () => {
     const input = wrapper.find('input')
+    expect(input.exists()).toBe(true)
     await input.setValue('123')
+    await input.trigger('blur')
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['123'])
+    expect(wrapper.emitted('update-number')).toBeTruthy()
+    expect(wrapper.emitted('update-number')![0]).toEqual([123])
   })
 
   it('applies validation rules', async () => {
