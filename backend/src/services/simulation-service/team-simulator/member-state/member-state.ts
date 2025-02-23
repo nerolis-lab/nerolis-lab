@@ -31,7 +31,6 @@ import {
   ING_ID_LOOKUP,
   MAX_POT_SIZE,
   MathUtils,
-  RandomUtils,
   berrySetToFlat,
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
@@ -81,8 +80,6 @@ export class MemberState {
   private level0IngredientSet: IngredientSet;
   private level30IngredientSet?: IngredientSet;
   private level60IngredientSet?: IngredientSet;
-  // Either [0], [0, 1] or [0, 1, 2]
-  private possibleIngredientLevels: number[] = [];
 
   // stats
   private frequency0;
@@ -198,35 +195,20 @@ export class MemberState {
       ingredients: pokemonIngredientListFlat
     };
 
-    // Pre-calculate ingredient amounts by level using IngredientSet and initialize tracking
-    const allIngredients = [];
-
     // Initialize ingredient sets from the Pokemon's actual ingredient list
     const ingredientList = member.pokemonWithIngredients.ingredientList;
 
     // Level 0 ingredient is always the first one
     this.level0IngredientSet = ingredientList[0];
-    this.possibleIngredientLevels.push(0);
-    allIngredients.push(ingredientList[0]);
 
     // Level 30 ingredient is second if available
     if (member.settings.level >= 30 && ingredientList.length > 1) {
       this.level30IngredientSet = ingredientList[1];
-      this.possibleIngredientLevels.push(1);
-      allIngredients.push(ingredientList[1]);
     }
 
     // Level 60 ingredient is third if available
     if (member.settings.level >= 60 && ingredientList.length > 2) {
       this.level60IngredientSet = ingredientList[2];
-      this.possibleIngredientLevels.push(2);
-      allIngredients.push(ingredientList[2]);
-    }
-
-    // Initialize tracking for all ingredients
-    for (const ing of allIngredients) {
-      const ingName = ing.ingredient.name;
-      const ingredientId = ING_ID_LOOKUP[ingName];
     }
 
     // Calculate raw production amounts without probability adjustments
@@ -437,24 +419,23 @@ export class MemberState {
       let isBerryDrop = false;
       let ingredientSet: IngredientSet | null = null;
 
-      if (RandomUtils.roll(1 - this.ingredientPercentage)) {
-        // Berry drop
+      const roll = Math.random();
+
+      if (roll >= this.ingredient60Threshold) {
+        // Level 60
+        ingredientSet = this.level60IngredientSet!;
+        totalDropAmount = ingredientSet.amount;
+      } else if (roll >= this.ingredient30Threshold) {
+        // Level 30
+        ingredientSet = this.level30IngredientSet!;
+        totalDropAmount = ingredientSet.amount;
+      } else if (roll >= this.ingredient0Threshold) {
+        // Level 0
+        ingredientSet = this.level0IngredientSet;
+        totalDropAmount = ingredientSet.amount;
+      } else {
         totalDropAmount = this.berryDropAmount;
         isBerryDrop = true;
-      } else {
-        // Ingredient drop - roll for which level (equal probability)
-        const roll = RandomUtils.randomElement(this.possibleIngredientLevels) ?? 0;
-        if (roll === 2) {
-          // Level 60
-          ingredientSet = this.level60IngredientSet!;
-        } else if (roll === 1) {
-          // Level 30
-          ingredientSet = this.level30IngredientSet!;
-        } else {
-          // Level 0
-          ingredientSet = this.level0IngredientSet;
-        }
-        totalDropAmount = ingredientSet.amount;
       }
 
       const inventorySpace = Math.max(0, this.inventoryLimit - this.carriedAmount);
