@@ -88,7 +88,6 @@ export class MemberState {
   private frequency80;
   public skillPercentage: number;
   private ingredientPercentage: number;
-  private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
 
   // precomputed berry drop amounts
   private berryDropAmounts: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
@@ -227,10 +226,8 @@ export class MemberState {
       member.settings.subskills
     );
 
-    this.berryDropAmounts = Float32Array.from(memberBerryInList, (value) => value * berriesPerDrop);
+    this.berryDropAmounts = memberBerryInList.map((amount: number) => amount * berriesPerDrop);
     this.berryDropAmount = Math.max(...this.berryDropAmounts);
-
-    this.sneakySnackBerries = memberBerryInList.map((amount) => (amount *= berriesPerDrop));
 
     const frequency = TeamSimulatorUtils.calculateHelpSpeedBeforeEnergy({
       member,
@@ -564,7 +561,7 @@ export class MemberState {
       berry: this.berry,
       level: this.level,
       amount: Math.max(
-        ...Array.from(this.sneakySnackBerries).map(
+        ...Array.from(this.berryDropAmounts).map(
           (value) => ((value as number) * this.totalSneakySnackHelps) / iterations
         )
       )
