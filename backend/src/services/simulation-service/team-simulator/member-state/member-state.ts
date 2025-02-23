@@ -96,10 +96,8 @@ export class MemberState {
 
   // summary
 
-  // NB: Although this /looks/ like the total production over all Monte Carlo
-  // runs, it isn't; this is a special extra production variable that is
-  // modified by SkillState.
-  totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
+  // TODO: move to skill-state
+  skillProduce: Produce = CarrySizeUtils.getEmptyInventory();
   totalRecovery = 0;
   wastedEnergy = 0;
   private energyIntervalsDay = 0;
@@ -547,7 +545,7 @@ export class MemberState {
   }
 
   public results(iterations: number): MemberProduction {
-    const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
+    const totalSkillProduce: Produce = multiplyProduce(this.skillProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
     // Calculate total help produce based on tracked help counts
     const totalHelpProduce: Produce = {
@@ -659,7 +657,7 @@ export class MemberState {
   }
 
   public ivResults(iterations: number): MemberProductionBase {
-    const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations);
+    const totalSkillProduce: Produce = multiplyProduce(this.skillProduce, 1 / iterations);
 
     const totalHelpProduce: Produce = {
       berries: [
@@ -684,7 +682,7 @@ export class MemberState {
   }
 
   public simpleResults(iterations: number): SimpleTeamResult {
-    const skillIngredients = ingredientSetToFloatFlat(multiplyProduce(this.totalProduce, 1 / iterations).ingredients);
+    const skillIngredients = ingredientSetToFloatFlat(multiplyProduce(this.skillProduce, 1 / iterations).ingredients);
 
     const { averageWeekdayPotSize, critMultiplier } = this.simpleCookingResults(iterations);
     const { skillProcs } = this.skillState.results(iterations);

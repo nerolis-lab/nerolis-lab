@@ -32,7 +32,7 @@ describe('IngredientMagnetSEffect', () => {
 
     expect(skillState.memberState.cookingState?.addIngredients).toHaveBeenCalledWith(magnetIngredientsFloat);
     expect(
-      skillState.memberState.totalProduce.ingredients.map(({ ingredient, amount }) => ({
+      skillState.memberState.skillProduce.ingredients.map(({ ingredient, amount }) => ({
         ingredient,
         amount: MathUtils.round(amount, 2)
       }))
