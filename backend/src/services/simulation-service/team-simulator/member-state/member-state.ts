@@ -92,7 +92,7 @@ export class MemberState {
 
   // precomputed berry drop amounts
   private berryDropAmounts: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
-  private berryDropAmount: number = 0;
+  private berryDropAmount = 0;
 
   // summary
 
