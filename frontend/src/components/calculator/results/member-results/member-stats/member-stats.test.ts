@@ -149,8 +149,8 @@ describe('MemberStats.vue', () => {
 describe('MemberStats.vue - Mobile Viewport', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
-    vi.mock('@/composables/viewport-composable', () => ({
-      useViewport: () => ({ isMobile: true })
+    vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
+      useBreakpoint: () => ({ isMobile: true })
     }))
   })
 

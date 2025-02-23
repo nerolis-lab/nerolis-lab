@@ -73,7 +73,7 @@
 </template>
 
 <script lang="ts">
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { ingredient, type Ingredient } from 'sleepapi-common'
 import { defineComponent, ref, watch } from 'vue'
@@ -129,7 +129,7 @@ export default defineComponent({
       }
     })
 
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     return {
       closeIngredientMenu,

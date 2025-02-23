@@ -290,7 +290,7 @@
 
 <script lang="ts">
 import IngredientSelection from '@/components/custom-components/input/ingredient-selection/ingredient-selection.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { berryImage, ingredientImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
@@ -322,7 +322,7 @@ export default defineComponent({
   emits: ['save'],
   setup() {
     const teamStore = useTeamStore()
-    const { isMobile, viewportWidth } = useViewport()
+    const { isMobile, viewportWidth } = useBreakpoint()
     return {
       teamStore,
       MAX_INGREDIENT_INVENTORY,

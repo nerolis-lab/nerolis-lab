@@ -147,7 +147,7 @@
 </template>
 
 <script lang="ts">
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { avatarImage, islandImage } from '@/services/utils/image-utils'
 import { TimeUtils } from '@/services/utils/time-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
@@ -162,7 +162,7 @@ export default defineComponent({
     const comparisonStore = useComparisonStore()
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     if (comparisonStore.currentTeam && comparisonStore.currentTeam.members.filter(Boolean).length >= MAX_TEAM_SIZE) {
       comparisonStore.teamIndex = undefined

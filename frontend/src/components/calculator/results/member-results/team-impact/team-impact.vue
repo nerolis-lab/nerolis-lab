@@ -205,7 +205,7 @@
 </template>
 
 <script lang="ts">
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -229,7 +229,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const { viewportWidth, isMobile } = useViewport()
+    const { viewportWidth, isMobile } = useBreakpoint()
 
     return { teamStore, pokemonStore, pokemonImage, viewportWidth, isMobile }
   },

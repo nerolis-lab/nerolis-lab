@@ -223,7 +223,7 @@ import TeamResults from '@/components/calculator/results/team-results.vue'
 import TeamName from '@/components/calculator/team-name.vue'
 import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import TeamSlot from '@/components/calculator/team-slot.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -245,7 +245,7 @@ export default defineComponent({
     const pokemonStore = usePokemonStore()
     const notificationStore = useNotificationStore()
 
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     return { userStore, teamStore, pokemonStore, notificationStore, isMobile }
   },

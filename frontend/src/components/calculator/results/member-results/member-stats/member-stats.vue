@@ -85,7 +85,7 @@
 
 <script lang="ts">
 import SkillDistribution from '@/components/calculator/results/member-results/member-stats/skill-distribution.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -132,7 +132,7 @@ export default defineComponent({
       MathUtils.round(props.pokemonProduction.production.advanced.nightPeriod?.averageEnergy, 1)
     )
 
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     return {
       teamStore,

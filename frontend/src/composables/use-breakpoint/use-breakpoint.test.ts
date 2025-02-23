@@ -1,17 +1,17 @@
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { defineComponent, nextTick } from 'vue'
 
 const TestComponent = defineComponent({
   setup() {
-    const { isMobile, viewportWidth } = useViewport()
-    return { isMobile, viewportWidth }
+    const { isMobile, viewportWidth, isLargeDesktop } = useBreakpoint()
+    return { isMobile, viewportWidth, isLargeDesktop }
   },
   template: '<div></div>'
 })
 
-describe('useViewport composable', () => {
+describe('useBreakpoint composable', () => {
   let wrapper: ReturnType<typeof mount>
 
   beforeEach(() => {
@@ -48,4 +48,27 @@ describe('useViewport composable', () => {
     expect(vm.viewportWidth).toBe(1200)
     expect(vm.isMobile).toBe(false)
   })
+})
+it('should correctly determine if the viewport is large desktop on mount', () => {
+  window.innerWidth = 1920
+  const wrapper = mount(TestComponent)
+  const vm = wrapper.vm as unknown as { isLargeDesktop: boolean; viewportWidth: number }
+  expect(vm.viewportWidth).toBe(1920)
+  expect(vm.isLargeDesktop).toBe(true)
+})
+
+it('should correctly determine if the viewport is not large desktop', async () => {
+  window.innerWidth = 1919
+  const wrapper = mount(TestComponent)
+  const vm = wrapper.vm as unknown as { isLargeDesktop: boolean; viewportWidth: number }
+  expect(vm.viewportWidth).toBe(1919)
+  expect(vm.isLargeDesktop).toBe(false)
+
+  window.innerWidth = 2000
+  window.dispatchEvent(new Event('resize'))
+  await flushPromises()
+  await nextTick()
+
+  expect(vm.viewportWidth).toBe(2000)
+  expect(vm.isLargeDesktop).toBe(true)
 })

@@ -8,7 +8,7 @@
   <v-dialog id="pokemonNameDialog" v-model="isEditDialogOpen" max-width="600px">
     <v-card title="Change Name">
       <v-card-text class="pt-4 pb-0">
-        <v-textarea
+        <v-text-field
           v-model="editedName"
           :rules="[
             (v: any) => (v || '').length <= maxNameLength || `Description must be ${maxNameLength} characters or less`
@@ -20,9 +20,10 @@
           label="Pokemon Name"
           class="compact-control"
           autofocus
+          variant="outlined"
           @focus="highlightText"
           @keydown.enter="saveEditDialog"
-        ></v-textarea>
+        ></v-text-field>
       </v-card-text>
       <v-card-actions class="pt-0">
         <v-btn id="rerollButton" icon @click="editedName = randomizeName()">

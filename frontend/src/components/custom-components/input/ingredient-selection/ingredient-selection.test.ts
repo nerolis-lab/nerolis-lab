@@ -5,8 +5,8 @@ import { createPinia, setActivePinia } from 'pinia'
 import { ingredient, mockIngredient, type Ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-vi.mock('@/composables/viewport-composable', () => ({
-  useViewport: () => ({ isMobile: false })
+vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
+  useBreakpoint: () => ({ isMobile: false })
 }))
 
 vi.mock('@/services/utils/image-utils', () => ({
