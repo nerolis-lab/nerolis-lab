@@ -4,18 +4,10 @@
       <v-col cols="12">
         <v-card class="pb-4">
           <v-row class="pt-4">
-            <v-col cols="12" class="flex-center text-h4"> User Settings </v-col>
+            <v-col cols="12" class="flex-center text-h4"> Settings </v-col>
           </v-row>
           <v-row>
             <v-divider />
-          </v-row>
-          <v-row>
-            <v-col cols="12" class="flex-center">
-              <span class="text-center"
-                >Neroli's Lab does not store personal information. We only store an identifier connected to your Google
-                account so we may recognize you between sessions.</span
-              >
-            </v-col>
           </v-row>
 
           <v-row>
@@ -32,19 +24,18 @@
             <v-col cols="12" class="flex-center flex-column">
               <span class="text-center">E-mail: {{ userStore.email ?? 'missing, log out and back in' }}</span>
               <span class="text-center font-weight-thin font-italic text-body-2 text-grey"
-                >This is only stored on your device, we do not store personal information</span
+                >This is only stored on your device. Neroli's Lab does not store your personal information, just an
+                identifier connected to your Google account to recognize you by.</span
               >
             </v-col>
           </v-row>
 
-          <v-row dense>
-            <v-spacer />
-
-            <v-col cols="5" class="flex-center">
+          <v-row dense class="mx-1">
+            <v-col cols="6" class="flex-center">
               <v-btn color="secondary" class="w-100" @click="logout">Logout</v-btn>
             </v-col>
 
-            <v-col cols="5" class="flex-center" stacked>
+            <v-col cols="6" class="flex-center" stacked>
               <v-btn color="warning" class="w-100" @click="showDeleteConfirmationDialog">Delete account</v-btn>
             </v-col>
 

@@ -12,7 +12,7 @@ export enum RouteName {
   Settings = 'Settings',
   Profile = 'Profile',
   // Friends = 'Friends',
-  UserSettings = 'UserSettings',
+  UserSettings = 'User Settings',
 
   Beta = 'Beta',
 
