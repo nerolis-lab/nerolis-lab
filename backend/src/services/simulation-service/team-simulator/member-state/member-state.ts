@@ -372,8 +372,8 @@ export class MemberState {
     // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
     this.cookingState?.addIngredients(this.ingredientsSinceLastCook);
 
-    // Reset ingredient amounts
-    this.ingredientsSinceLastCook = emptyIngredientInventoryFloat();
+    // Zero out the array instead of allocating a new one
+    this.ingredientsSinceLastCook.fill(0);
   }
 
   public recoverMeal() {
