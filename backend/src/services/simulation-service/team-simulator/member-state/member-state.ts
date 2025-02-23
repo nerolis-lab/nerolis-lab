@@ -120,7 +120,7 @@ export class MemberState {
   private totalHelpsByMembers = 0;
 
   // This tracks the actual amount of ingredients accumulated since last cook
-  private ingredientHelpsSinceLastCook = emptyIngredientInventoryFloat();
+  private ingredientsSinceLastCook = emptyIngredientInventoryFloat();
 
   // We roll a random number between 0 and 1, then:
   //
@@ -373,10 +373,10 @@ export class MemberState {
 
   public updateIngredientBag() {
     // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
-    this.cookingState?.addIngredients(this.ingredientHelpsSinceLastCook);
+    this.cookingState?.addIngredients(this.ingredientsSinceLastCook);
 
     // Reset ingredient amounts
-    this.ingredientHelpsSinceLastCook = emptyIngredientInventoryFloat();
+    this.ingredientsSinceLastCook = emptyIngredientInventoryFloat();
   }
 
   public recoverMeal() {
@@ -400,17 +400,17 @@ export class MemberState {
         // Level 60
         this.totalIngredientProduction[this.level60IngredientId!] += this.level60IngredientAmount!;
         this.ingredientProductionPerDay[this.currentDay][this.level60IngredientId!] += this.level60IngredientAmount!;
-        this.ingredientHelpsSinceLastCook[this.level60IngredientId!] += this.level60IngredientAmount!;
+        this.ingredientsSinceLastCook[this.level60IngredientId!] += this.level60IngredientAmount!;
       } else if (roll >= this.ingredient30Threshold) {
         // Level 30
         this.totalIngredientProduction[this.level30IngredientId!] += this.level30IngredientAmount!;
         this.ingredientProductionPerDay[this.currentDay][this.level30IngredientId!] += this.level30IngredientAmount!;
-        this.ingredientHelpsSinceLastCook[this.level30IngredientId!] += this.level30IngredientAmount!;
+        this.ingredientsSinceLastCook[this.level30IngredientId!] += this.level30IngredientAmount!;
       } else if (roll >= this.ingredient0Threshold) {
         // Level 0
         this.totalIngredientProduction[this.level0IngredientId] += this.level0IngredientAmount;
         this.ingredientProductionPerDay[this.currentDay][this.level0IngredientId] += this.level0IngredientAmount;
-        this.ingredientHelpsSinceLastCook[this.level0IngredientId] += this.level0IngredientAmount;
+        this.ingredientsSinceLastCook[this.level0IngredientId] += this.level0IngredientAmount;
       } else {
         // Berry drop
         this.totalBerryProduction += this.berryDropAmount;
@@ -494,7 +494,7 @@ export class MemberState {
           // Ingredient drop
           this.totalIngredientProduction[ingredientId!] += dropAmount;
           this.ingredientProductionPerDay[this.currentDay][ingredientId!] += dropAmount;
-          this.ingredientHelpsSinceLastCook[ingredientId!] += dropAmount;
+          this.ingredientsSinceLastCook[ingredientId!] += dropAmount;
 
           this.voidIngredients[ingredientId!] += totalDropAmount - dropAmount;
         }
