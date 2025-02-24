@@ -4,6 +4,7 @@ import fs from 'fs-extra'
 import { fileURLToPath, URL } from 'node:url'
 import path from 'path'
 import { defineConfig } from 'vite'
+import csp from 'vite-plugin-csp-guard'
 import type { ManifestOptions } from 'vite-plugin-pwa'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueDevTools from 'vite-plugin-vue-devtools'
@@ -126,7 +127,23 @@ export default defineConfig({
           console.warn('Avatar directory does not exist.')
         }
       }
-    }
+    },
+    csp({
+      dev: {
+        run: true,
+        outlierSupport: ['vue', 'less', 'scss']
+      },
+      policy: {
+        'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
+        'script-src': ["'self'", "'unsafe-inline'", "'strict-dynamic'", 'https:', 'https://gc.zgo.at/count.js'],
+        'script-src-elem': ["'self'", 'https://accounts.google.com/gsi/client', 'https://gc.zgo.at/count.js'],
+        'style-src': ["'self'"],
+        'style-src-elem': ['https://fonts.googleapis.com', 'https://accounts.google.com/gsi/style', "'unsafe-inline'"]
+      },
+      build: {
+        sri: true
+      }
+    })
   ],
   server: {
     host: true,
