@@ -9,6 +9,7 @@ import {
   calculatePokemonProduction,
   calculateTeam
 } from '@src/services/api-service/production/production-service.js';
+import type { UserRecipeFlat } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import {
   defaultUserRecipes,
   type UserRecipes
@@ -35,13 +36,13 @@ import {
   CarrySizeUtils,
   curry,
   dessert,
+  flatToIngredientSet,
   getIngredient,
   getNature,
   getPokemon,
   ingredientSetToFloatFlat,
   limitSubSkillsToLevel,
   mainskill,
-  recipesToFlat,
   salad
 } from 'sleepapi-common';
 const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
@@ -143,52 +144,34 @@ export default class ProductionController extends Controller {
   async #parseUserRecipes(maybeUser?: DBUser): Promise<UserRecipes> {
     if (!maybeUser) {
       return defaultUserRecipes();
-    } else {
-      const userRecipes = await UserRecipeDAO.findMultiple({ fk_user_id: maybeUser.id });
-
-      const curries: RecipeFlat[] = recipesToFlat(
-        curry.CURRIES.map((curry) => ({
-          ...curry,
-          valueMax: calculateRecipeValue({
-            bonus: curry.bonus,
-            ingredients: curry.ingredients,
-            level: userRecipes.find((userRecipe) => userRecipe.recipe === curry.name)?.level ?? 1
-          })
-        }))
-      );
-
-      const salads: RecipeFlat[] = recipesToFlat(
-        salad.SALADS.map((salad) => ({
-          ...salad,
-          valueMax: calculateRecipeValue({
-            bonus: salad.bonus,
-            ingredients: salad.ingredients,
-            level: userRecipes.find((userRecipe) => userRecipe.recipe === salad.name)?.level ?? 1
-          })
-        }))
-      );
-
-      const desserts: RecipeFlat[] = recipesToFlat(
-        dessert.DESSERTS.map((dessert) => ({
-          ...dessert,
-          valueMax: calculateRecipeValue({
-            bonus: dessert.bonus,
-            ingredients: dessert.ingredients,
-            level: userRecipes.find((userRecipe) => userRecipe.recipe === dessert.name)?.level ?? 1
-          })
-        }))
-      );
-
-      const sortedDesserts = desserts.sort((a, b) => b.valueMax - a.valueMax);
-      const sortedSalads = salads.sort((a, b) => b.valueMax - a.valueMax);
-      const sortedCurries = curries.sort((a, b) => b.valueMax - a.valueMax);
-
-      return {
-        curries: sortedCurries,
-        salads: sortedSalads,
-        desserts: sortedDesserts
-      };
     }
+
+    const userRecipes = await UserRecipeDAO.findMultiple({ fk_user_id: maybeUser.id });
+
+    const recipeLevelMap = new Map(userRecipes.map((recipe) => [recipe.recipe, recipe.level]));
+
+    const processRecipes = (recipeList: RecipeFlat[]): UserRecipeFlat[] => {
+      return recipeList
+        .map((recipe) => {
+          const level = recipeLevelMap.get(recipe.name) ?? 1;
+          return {
+            ...recipe,
+            level,
+            valueMax: calculateRecipeValue({
+              bonus: recipe.bonus,
+              ingredients: flatToIngredientSet(recipe.ingredients),
+              level
+            })
+          };
+        })
+        .sort((a, b) => b.valueMax - a.valueMax);
+    };
+
+    return {
+      curries: processRecipes(curry.CURRIES_FLAT),
+      salads: processRecipes(salad.SALADS_FLAT),
+      desserts: processRecipes(dessert.DESSERTS_FLAT)
+    };
   }
 
   #parseSettings(params: { settings: TeamSettings; includeCooking: boolean }): TeamSettingsExt {

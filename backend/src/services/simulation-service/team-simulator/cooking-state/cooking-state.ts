@@ -1,4 +1,7 @@
-import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
+import type {
+  UserRecipeFlat,
+  UserRecipes
+} from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import type {
   CookedRecipeResult,
   CookingResult,
@@ -23,6 +26,7 @@ interface CookedRecipe extends RecipeFlat {
   sunday: boolean;
   nrOfFiller: number;
   strength: number;
+  level: number;
 }
 type IngredientsMissing = Record<number, { count: number; totalAmountMissing: number }>;
 interface SkippedRecipe extends RecipeFlat {
@@ -38,9 +42,9 @@ export class CookingState {
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
 
-  private userCurries: RecipeFlat[];
-  private userSalads: RecipeFlat[];
-  private userDesserts: RecipeFlat[];
+  private userCurries: UserRecipeFlat[];
+  private userSalads: UserRecipeFlat[];
+  private userDesserts: UserRecipeFlat[];
 
   private cookedCurries: CookedRecipe[] = [];
   private cookedSalads: CookedRecipe[] = [];
@@ -221,7 +225,7 @@ export class CookingState {
   }
 
   private findRecipesWithinPotLimit(
-    recipes: RecipeFlat[],
+    recipes: UserRecipeFlat[],
     potSize: number,
     skippedRecipesGrouped: Map<string, SkippedRecipe>
   ): RecipeFlat[] {
@@ -310,7 +314,7 @@ export class CookingState {
     cookedRecipes: CookedRecipe[],
     skippedRecipesGrouped: Map<string, SkippedRecipe>
   ): CookedRecipeResult[] {
-    const recipeCounts = new Map<string, { recipe: RecipeFlat; count: number; sunday: number }>();
+    const recipeCounts = new Map<string, { recipe: UserRecipeFlat; count: number; sunday: number }>();
 
     for (const recipe of cookedRecipes) {
       const recipeName = recipe.name;
@@ -345,6 +349,7 @@ export class CookingState {
 
       cookedRecipeResults.push({
         recipe: { ...cookedRecipe.recipe, ingredients: flatToIngredientSet(cookedRecipe.recipe.ingredients) },
+        level: cookedRecipe.recipe.level,
         count: cookedRecipe.count,
         sunday: cookedRecipe.sunday,
         totalSkipped: skippedRecipe?.totalCount ?? 0,

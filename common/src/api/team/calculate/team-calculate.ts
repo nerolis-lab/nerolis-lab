@@ -85,6 +85,7 @@ export interface MemberProduction extends MemberProductionBase {
 
 export interface CookedRecipeResult {
   recipe: Recipe;
+  level: number;
   count: number;
   sunday: number;
   totalSkipped: number;
