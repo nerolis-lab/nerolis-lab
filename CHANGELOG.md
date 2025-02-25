@@ -1,3 +1,10 @@
+## [1.36.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.2...v1.36.3) (2025-02-25)
+
+
+### Bug Fixes
+
+* Add CSP rule for stats and disable SRI for now ([d767f15](https://github.com/nerolis-lab/nerolis-lab/commit/d767f15fde794bd822b9b0c43b842889299c7545))
+
 ## [1.36.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.1...v1.36.2) (2025-02-25)
 
 ## [1.36.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.0...v1.36.1) (2025-02-23)
