@@ -1,0 +1,8 @@
+---
+description: How to test
+globs: *.ts
+---
+
+# How to test
+
+- Many tests in this project are broken! Do not attempt to guess a test command.  Instead, ALWAYS test by running this command to call a known good test `npx vitest run src/services/api-service/production/production-service.test.ts -t "shall calculate production with uneven sleep times" --no-color`.
