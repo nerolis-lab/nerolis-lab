@@ -22,6 +22,7 @@ import type {
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import seedrandom from 'seedrandom';
 import type {
   CalculateTeamResponse,
   MemberProductionBase,
@@ -31,10 +32,11 @@ import type {
   Time,
   TimePeriod
 } from 'sleepapi-common';
-import { mockMainskill, RandomUtils } from 'sleepapi-common';
+import { mockMainskill } from 'sleepapi-common';
 
 export class TeamSimulator {
   private run = 0;
+  private rng: seedrandom.PRNG;
 
   private memberStates: MemberState[] = [];
   private memberStatesWithoutFillers: MemberState[] = [];
@@ -56,6 +58,9 @@ export class TeamSimulator {
     iterations: number;
   }) {
     const { settings, members, cookingState, iterations } = params;
+
+    // Initialize seedrandom with Alea algorithm
+    this.rng = seedrandom.alea('seed');
 
     this.cookingState = cookingState;
 
@@ -92,7 +97,8 @@ export class TeamSimulator {
         team: members,
         settings,
         cookingState: this.cookingState,
-        iterations
+        iterations,
+        rng: this.rng
       });
       this.memberStates.push(memberState);
       if (!member.pokemonWithIngredients.pokemon.skill.isSkill(mockMainskill)) {
@@ -264,8 +270,9 @@ export class TeamSimulator {
     const lowestEnergyMembers = sortedMembers.filter((mem) => mem.energy === lowestEnergy);
     const allMembers = this.memberStates;
 
-    const targetGroup = RandomUtils.roll(chanceTargetLowest) ? lowestEnergyMembers : allMembers;
-    return [RandomUtils.randomElement(targetGroup)].filter((member): member is MemberState => member !== undefined);
+    const targetGroup = this.rng() < chanceTargetLowest ? lowestEnergyMembers : allMembers;
+    const randomIndex = Math.floor(this.rng() * targetGroup.length);
+    return [targetGroup[randomIndex]].filter((member): member is MemberState => member !== undefined);
   }
 
   private collectInventory() {

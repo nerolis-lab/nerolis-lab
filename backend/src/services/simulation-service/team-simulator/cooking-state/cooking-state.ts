@@ -1,4 +1,5 @@
 import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
+import seedrandom from 'seedrandom';
 import type {
   CookedRecipeResult,
   CookingResult,
@@ -8,7 +9,6 @@ import type {
 } from 'sleepapi-common';
 import {
   MAX_POT_SIZE,
-  RandomUtils,
   curry,
   dessert,
   emptyIngredientInventoryFloat,
@@ -37,6 +37,7 @@ export class CookingState {
   private bonusCritChance = 0;
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
+  private rng: seedrandom.PRNG;
 
   private userCurries: RecipeFlat[];
   private userSalads: RecipeFlat[];
@@ -59,11 +60,12 @@ export class CookingState {
   private currentSaladStockpile: IngredientIndexToFloatAmount;
   private currentDessertStockpile: IngredientIndexToFloatAmount;
 
-  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes) {
+  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes, rng: seedrandom.PRNG | null = null) {
     const { curries, salads, desserts } = userRecipes;
     this.userCurries = curries;
     this.userSalads = salads;
     this.userDesserts = desserts;
+    this.rng = rng || seedrandom.alea('seed');
 
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
@@ -121,7 +123,7 @@ export class CookingState {
         currentStockpile: this.currentDessertStockpile
       }) ?? dessert.MIXED_JUICE_FLAT;
 
-    const extraTasty = RandomUtils.roll(currentCritChance);
+    const extraTasty = this.rng() < currentCritChance;
     const extraTastyFactor = extraTasty ? (sunday ? 3 : 2) : 1;
 
     if (extraTasty) {

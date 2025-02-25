@@ -10,6 +10,7 @@ import { SkillState } from '@src/services/simulation-service/team-simulator/skil
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type seedrandom from 'seedrandom';
 import type {
   BerryIndexToFloatAmount,
   BerrySet,
@@ -50,6 +51,7 @@ export class MemberState {
   cookingState?: CookingState;
   private skillState: SkillState;
   private camp: boolean;
+  private rng: seedrandom.PRNG;
 
   // quick lookups, static data
   private pokemonWithIngredients: PokemonWithIngredientsIndexed;
@@ -148,8 +150,11 @@ export class MemberState {
     settings: TeamSettingsExt;
     cookingState: CookingState | undefined;
     iterations: number;
+    rng: seedrandom.PRNG;
   }) {
-    const { member, team, settings, cookingState, iterations } = params;
+    const { member, team, settings, cookingState, iterations, rng } = params;
+
+    this.rng = rng;
 
     // Initialize the daily production arrays with the total number of days we'll simulate
     // Each iteration is one day
@@ -244,7 +249,7 @@ export class MemberState {
     this.member = member;
     this.team = team; // this needs updating when we add team rotation
     this.otherMembers = team.filter((m) => m.settings.externalId !== member.settings.externalId); // this needs updating when we add team rotation
-    this.skillState = new SkillState(this);
+    this.skillState = new SkillState(this, this.rng);
 
     this.ingredient0Threshold = 1 - this.ingredientPercentage;
     if (this.level60IngredientSet) {
@@ -390,7 +395,7 @@ export class MemberState {
       this.totalAverageHelps += 1;
       this.helpsSinceLastCook += 1;
 
-      const roll = Math.random();
+      const roll = this.rng();
 
       // Simplified drop logic using pre-computed values
       if (roll >= this.ingredient60Threshold) {
@@ -433,7 +438,7 @@ export class MemberState {
       let isBerryDrop = false;
       let ingredientId: number | undefined;
 
-      const roll = Math.random();
+      const roll = this.rng();
 
       if (roll >= this.ingredient60Threshold) {
         // Level 60

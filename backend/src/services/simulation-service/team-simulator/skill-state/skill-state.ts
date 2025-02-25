@@ -27,12 +27,14 @@ import type {
   SkillActivationValue,
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type seedrandom from 'seedrandom';
 import type { Mainskill, MemberSkillValue } from 'sleepapi-common';
-import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits, RandomUtils } from 'sleepapi-common';
+import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits } from 'sleepapi-common';
 
 export class SkillState {
   memberState: MemberState;
   skillEffects: Map<Mainskill, SkillEffect>;
+  rng: seedrandom.PRNG;
 
   // quick access
   private pityProcThreshold;
@@ -51,8 +53,9 @@ export class SkillState {
   private skillCrits = 0;
   private skillProcsPerDay: number[] = [];
 
-  constructor(memberState: MemberState) {
+  constructor(memberState: MemberState, rng: seedrandom.PRNG) {
     this.memberState = memberState;
+    this.rng = rng;
 
     this.skillEffects = new Map([
       [mainskill.BERRY_BURST, new BerryBurstEffect()],
@@ -86,7 +89,7 @@ export class SkillState {
     const activations: TeamSkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
 
-    if (this.helpsSinceLastSkillProc > this.pityProcThreshold || RandomUtils.roll(this.skillPercentage)) {
+    if (this.helpsSinceLastSkillProc > this.pityProcThreshold || this.rng() < this.skillPercentage) {
       this.todaysSkillProcs += 1;
       activations.push(this.activateSkill(this.skill));
     }

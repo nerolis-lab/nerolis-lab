@@ -4,6 +4,7 @@ import { CookingState } from '@src/services/simulation-service/team-simulator/co
 import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { getIngredientSet } from '@src/utils/production-utils/production-utils.js';
+import seedrandom from 'seedrandom';
 import type {
   CalculateIvResponse,
   DetailedProduce,
@@ -137,7 +138,8 @@ export function calculateTeam(
 ) {
   const { settings, members, userRecipes } = params;
 
-  const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes) : undefined;
+  const rng = seedrandom.alea('seed');
+  const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes, rng) : undefined;
   const teamSimulator = new TeamSimulator({ settings, members, cookingState, iterations });
 
   for (let i = 0; i < iterations; i++) {
