@@ -10,7 +10,7 @@ export function memberState(attrs?: Partial<MemberState>): MemberState {
     team: [teamMemberExt()],
     cookingState: undefined,
     iterations: 1,
-    rng: createPreGeneratedRandom('seed'),
+    rng: createPreGeneratedRandom(),
     ...attrs
   });
 }

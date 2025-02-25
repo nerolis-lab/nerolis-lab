@@ -60,8 +60,8 @@ export class TeamSimulator {
   }) {
     const { settings, members, cookingState, iterations } = params;
 
-    // Initialize with pre-generated random numbers instead of seedrandom.alea
-    this.rng = createPreGeneratedRandom('seed');
+    // Initialize with pre-generated random numbers
+    this.rng = createPreGeneratedRandom();
 
     this.cookingState = cookingState;
 

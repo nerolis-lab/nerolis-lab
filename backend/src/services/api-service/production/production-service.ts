@@ -138,7 +138,7 @@ export function calculateTeam(
 ) {
   const { settings, members, userRecipes } = params;
 
-  const rng = createPreGeneratedRandom('seed');
+  const rng = createPreGeneratedRandom();
   const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes, rng) : undefined;
   const teamSimulator = new TeamSimulator({ settings, members, cookingState, iterations });
 

@@ -4,5 +4,5 @@ import { SkillState } from '@src/services/simulation-service/team-simulator/skil
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 
 export function skillState(customState?: MemberState): SkillState {
-  return new SkillState(customState ?? memberState(), createPreGeneratedRandom('seed'));
+  return new SkillState(customState ?? memberState(), createPreGeneratedRandom());
 }

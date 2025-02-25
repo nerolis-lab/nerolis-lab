@@ -66,7 +66,7 @@ export class CookingState {
     this.userCurries = curries;
     this.userSalads = salads;
     this.userDesserts = desserts;
-    this.rng = rng || createPreGeneratedRandom('seed');
+    this.rng = rng || createPreGeneratedRandom();
 
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
