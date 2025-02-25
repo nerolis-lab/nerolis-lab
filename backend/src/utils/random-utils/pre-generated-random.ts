@@ -68,7 +68,7 @@ export class RandomNumberStore {
     if (!this.initialized) {
       this.initialize();
     }
-    return this.randomNumbers[index % this.size];
+    return this.randomNumbers[index];
   }
 
   /**
@@ -93,7 +93,7 @@ export function createPreGeneratedRandom(): PRNG {
   // Create the base random function
   const randomFn = function (): number {
     const value = store.getRandomNumber(index);
-    index = (index + 1) % store.getSize();
+    index = index + 1;
     return value;
   };
 
