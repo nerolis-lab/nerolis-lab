@@ -1,5 +1,6 @@
 import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
-import seedrandom from 'seedrandom';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import type { PRNG } from 'seedrandom';
 import type {
   CookedRecipeResult,
   CookingResult,
@@ -37,7 +38,7 @@ export class CookingState {
   private bonusCritChance = 0;
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
-  private rng: seedrandom.PRNG;
+  private rng: PRNG;
 
   private userCurries: RecipeFlat[];
   private userSalads: RecipeFlat[];
@@ -60,12 +61,12 @@ export class CookingState {
   private currentSaladStockpile: IngredientIndexToFloatAmount;
   private currentDessertStockpile: IngredientIndexToFloatAmount;
 
-  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes, rng: seedrandom.PRNG | null = null) {
+  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes, rng: PRNG | null = null) {
     const { curries, salads, desserts } = userRecipes;
     this.userCurries = curries;
     this.userSalads = salads;
     this.userDesserts = desserts;
-    this.rng = rng || seedrandom.alea('seed');
+    this.rng = rng || createPreGeneratedRandom('seed');
 
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;

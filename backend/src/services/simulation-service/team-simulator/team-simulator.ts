@@ -21,8 +21,9 @@ import type {
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import seedrandom from 'seedrandom';
+import type { PRNG } from 'seedrandom';
 import type {
   CalculateTeamResponse,
   MemberProductionBase,
@@ -36,7 +37,7 @@ import { mockMainskill } from 'sleepapi-common';
 
 export class TeamSimulator {
   private run = 0;
-  private rng: seedrandom.PRNG;
+  private rng: PRNG;
 
   private memberStates: MemberState[] = [];
   private memberStatesWithoutFillers: MemberState[] = [];
@@ -59,8 +60,8 @@ export class TeamSimulator {
   }) {
     const { settings, members, cookingState, iterations } = params;
 
-    // Initialize seedrandom with Alea algorithm
-    this.rng = seedrandom.alea('seed');
+    // Initialize with pre-generated random numbers instead of seedrandom.alea
+    this.rng = createPreGeneratedRandom('seed');
 
     this.cookingState = cookingState;
 
