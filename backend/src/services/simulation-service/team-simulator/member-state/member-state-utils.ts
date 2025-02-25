@@ -1,4 +1,6 @@
-export function calculateSkillProcDistribution(data: number[]): Record<number, number> {
+type NumericCollection = ArrayLike<number> & Iterable<number>;
+
+export function calculateDistribution(data: NumericCollection): Record<number, number> {
   if (data.length === 0) {
     return {};
   }

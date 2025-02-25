@@ -2,7 +2,7 @@ import { mocks } from '@src/bun/index.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
-import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';

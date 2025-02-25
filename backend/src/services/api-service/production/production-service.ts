@@ -3,6 +3,7 @@ import { setupAndRunProductionSimulation } from '@src/services/simulation-servic
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { getIngredientSet } from '@src/utils/production-utils/production-utils.js';
 import type {
   CalculateIvResponse,
@@ -137,8 +138,9 @@ export function calculateTeam(
 ) {
   const { settings, members, userRecipes } = params;
 
-  const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes) : undefined;
-  const teamSimulator = new TeamSimulator({ settings, members, cookingState });
+  const rng = createPreGeneratedRandom();
+  const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes, rng) : undefined;
+  const teamSimulator = new TeamSimulator({ settings, members, cookingState, iterations });
 
   for (let i = 0; i < iterations; i++) {
     teamSimulator.simulate();
@@ -157,7 +159,8 @@ export function calculateSimple(
   const teamSimulator = new TeamSimulator({
     settings,
     members,
-    cookingState
+    cookingState,
+    iterations
   });
 
   for (let i = 0; i < iterations; i++) {
@@ -176,7 +179,7 @@ export function calculateIv(
   const variantResults: MemberProductionBase[] = [];
   for (const variant of variants) {
     const teamWithVariant = [variant, ...members];
-    const teamSimulator = new TeamSimulator({ settings, members: teamWithVariant });
+    const teamSimulator = new TeamSimulator({ settings, members: teamWithVariant, iterations });
 
     for (let i = 0; i < iterations; i++) {
       teamSimulator.simulate();

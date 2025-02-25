@@ -1,5 +1,5 @@
 import { mocks } from '@src/bun/index.js';
-import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { BUTTERFREE, CarrySizeUtils, mainskill, NINETALES_ALOLAN } from 'sleepapi-common';

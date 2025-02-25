@@ -51,6 +51,8 @@ export interface MemberProductionAdvanced {
   morningProcs: number;
   totalRecovery: number;
   skillProcDistribution: Record<number, number>;
+  berryProductionDistribution: Record<number, number>;
+  ingredientDistributions: { [ingredientName: string]: Record<number, number> };
   dayPeriod: PeriodInfo;
   nightPeriod: PeriodInfo;
   frequencySplit: {

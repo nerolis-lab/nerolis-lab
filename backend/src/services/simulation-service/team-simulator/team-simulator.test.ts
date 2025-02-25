@@ -52,7 +52,7 @@ const mockMembers: TeamMemberExt[] = [
 
 describe('TeamSimulator', () => {
   it('shall return expected production from mocked pokemon', () => {
-    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers });
+    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, iterations: 1 });
 
     simulator.simulate();
 
@@ -66,7 +66,7 @@ describe('TeamSimulator', () => {
   });
 
   it('shall return expected variant production from mocked pokemon', () => {
-    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers });
+    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, iterations: 1 });
 
     simulator.simulate();
 
@@ -104,7 +104,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings, members });
+    const simulator = new TeamSimulator({ settings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -130,7 +130,7 @@ describe('TeamSimulator', () => {
     };
 
     const members: TeamMemberExt[] = [mockMember, mockMember, mockMember, mockMember, mockMember];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -175,7 +175,7 @@ describe('TeamSimulator', () => {
     };
 
     const members: TeamMemberExt[] = [mockMember, mockMemberSupport];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -212,7 +212,7 @@ describe('TeamSimulator', () => {
       mockMemberSupport,
       mockMemberSupport
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -247,7 +247,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -293,7 +293,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -314,7 +314,8 @@ describe('recoverMemberEnergy', () => {
   it("shall recover every member's energy", () => {
     const simulator = new TeamSimulator({
       settings: mockSettings,
-      members: mockMembers.concat(mockMembers)
+      members: mockMembers.concat(mockMembers),
+      iterations: 1
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
@@ -334,8 +335,8 @@ describe('recoverMemberEnergy', () => {
   it('shall recover member energy', () => {
     const simulator = new TeamSimulator({
       settings: mockSettings,
-      members: mockMembers.concat(mockMembers)
-
+      members: mockMembers.concat(mockMembers),
+      iterations: 1
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
     simulator.memberStates[0].recoverEnergy(100, simulator.memberStates[0]);

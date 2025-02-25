@@ -1,11 +1,12 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { METRONOME_SKILLS, RandomUtils } from 'sleepapi-common';
+import { METRONOME_SKILLS } from 'sleepapi-common';
 
 export class MetronomeEffect implements SkillEffect {
   activate(skillState: SkillState): TeamSkillActivation {
-    const selectedSkill = RandomUtils.randomElement(METRONOME_SKILLS);
+    const randomIndex = Math.floor(skillState.rng() * METRONOME_SKILLS.length);
+    const selectedSkill = METRONOME_SKILLS[randomIndex];
 
     const metronomedSkill = skillState.skillEffects.get(selectedSkill!)?.activate(skillState);
     if (!metronomedSkill) {
