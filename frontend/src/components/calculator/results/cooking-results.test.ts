@@ -49,6 +49,7 @@ describe('CookingResults', () => {
             cookedRecipes: [
               {
                 recipe: curry.INFERNO_CORN_KEEMA_CURRY,
+                level: 1,
                 count: 2,
                 sunday: 1,
                 ingredientLimited: [],
@@ -57,6 +58,7 @@ describe('CookingResults', () => {
               },
               {
                 recipe: curry.MILD_HONEY_CURRY,
+                level: 1,
                 count: 1,
                 sunday: 1,
                 ingredientLimited: [],
@@ -141,6 +143,7 @@ describe('CookingResults', () => {
             cookedRecipes: [
               {
                 recipe: curry.INFERNO_CORN_KEEMA_CURRY,
+                level: 1,
                 count: 2,
                 sunday: 1,
                 ingredientLimited: [],
@@ -172,6 +175,7 @@ describe('CookingResults', () => {
             cookedRecipes: [
               {
                 recipe: curry.INFERNO_CORN_KEEMA_CURRY,
+                level: 1,
                 count: 3,
                 sunday: 0,
                 ingredientLimited: [],
@@ -180,6 +184,7 @@ describe('CookingResults', () => {
               },
               {
                 recipe: curry.INFERNO_CORN_KEEMA_CURRY,
+                level: 1,
                 count: 5,
                 sunday: 0,
                 ingredientLimited: [],
@@ -227,6 +232,7 @@ describe('CookingResults', () => {
       count: 0,
       fullWeekPercentage: 0,
       recipe: curry.INFERNO_CORN_KEEMA_CURRY,
+      level: 1,
       sunday: 0,
       totalSkipped: 0,
       potLimited: { count: 1, averageMissing: 0 },
