@@ -34,7 +34,7 @@ export function createDessert(params: {
 export function recipesToFlat<T extends Recipe | Recipe[]>(recipes: T): T extends Recipe[] ? RecipeFlat[] : RecipeFlat {
   const recipeArray: Recipe[] = Array.isArray(recipes) ? recipes : [recipes];
 
-  const result = recipeArray.map((recipe) => {
+  const result: RecipeFlat[] = recipeArray.map((recipe) => {
     const ingredientsFlat = emptyIngredientInventoryFloat();
 
     recipe.ingredients.forEach((ingredientSet) => {
@@ -44,6 +44,7 @@ export function recipesToFlat<T extends Recipe | Recipe[]>(recipes: T): T extend
 
     return {
       name: recipe.name,
+      displayName: recipe.displayName,
       ingredients: ingredientsFlat,
       value: recipe.value,
       valueMax: recipe.valueMax,
