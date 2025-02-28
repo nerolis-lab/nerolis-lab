@@ -1,7 +1,7 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { CarrySizeUtils, RandomUtils, mainskill } from 'sleepapi-common';
+import { CarrySizeUtils, mainskill } from 'sleepapi-common';
 
 export class BerryBurstDisguiseEffect implements SkillEffect {
   activate(skillState: SkillState): TeamSkillActivation {
@@ -12,7 +12,7 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
     let critSelfAmount = 0;
     let critOtherAmount = 0;
 
-    if (!memberState.disguiseBusted && RandomUtils.roll(skill.critChance)) {
+    if (!memberState.disguiseBusted && skillState.rng() < skill.critChance) {
       memberState.disguiseBusted = true;
 
       // -1 because the crit value is the difference between 1x and 3x, so only 2x
@@ -32,7 +32,7 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
       level: memberState.level
     });
 
-    memberState.totalProduce = CarrySizeUtils.addToInventory(memberState.totalProduce, {
+    memberState.skillProduce = CarrySizeUtils.addToInventory(memberState.skillProduce, {
       ingredients: [],
       berries
     });

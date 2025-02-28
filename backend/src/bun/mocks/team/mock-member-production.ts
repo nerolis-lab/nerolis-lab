@@ -35,6 +35,8 @@ export function memberProductionAdvanced(attrs?: Partial<MemberProductionAdvance
     skillCrits: 0,
     skillCritValue: 0,
     skillPercentage: 0,
+    berryProductionDistribution: {},
+    ingredientDistributions: {},
     frequencySplit: {
       eighty: 0,
       sixty: 0,

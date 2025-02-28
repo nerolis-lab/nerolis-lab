@@ -19,8 +19,8 @@ export class IngredientMagnetSEffect implements SkillEffect {
 
     skillState.memberState.cookingState?.addIngredients(magnetIngredients);
 
-    skillState.memberState.totalProduce.ingredients = flatToIngredientSet(
-      ingredientSetToFloatFlat(skillState.memberState.totalProduce.ingredients)._mutateCombine(
+    skillState.memberState.skillProduce.ingredients = flatToIngredientSet(
+      ingredientSetToFloatFlat(skillState.memberState.skillProduce.ingredients)._mutateCombine(
         magnetIngredients,
         (a, b) => a + b
       )

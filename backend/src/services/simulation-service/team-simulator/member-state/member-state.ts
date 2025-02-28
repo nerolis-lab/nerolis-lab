@@ -1,6 +1,7 @@
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
+import { calculateDistribution } from '@src/services/simulation-service/team-simulator/member-state/member-state-utils.js';
 import type {
   SkillActivationValue,
   TeamSkillActivation
@@ -9,14 +10,18 @@ import { SkillState } from '@src/services/simulation-service/team-simulator/skil
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type {
   BerryIndexToFloatAmount,
   BerrySet,
+  IngredientIndexToFloatAmount,
+  IngredientIndexToIntAmount,
+  IngredientSet,
   MemberProduction,
   MemberProductionBase,
   PokemonWithIngredientsIndexed,
   Produce,
-  ProduceFlat,
   SimpleTeamResult,
   TeamMemberExt,
   TeamSettingsExt,
@@ -25,19 +30,19 @@ import type {
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   CarrySizeUtils,
+  ING_ID_LOOKUP,
   MAX_POT_SIZE,
   MathUtils,
   berrySetToFlat,
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
-  flatToBerrySet,
+  emptyIngredientInventoryFloat,
+  emptyIngredientInventoryInt,
   flatToIngredientSet,
-  getEmptyInventoryFloat,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
   multiplyProduce,
-  subskill,
-  sumFlats
+  subskill
 } from 'sleepapi-common';
 
 export class MemberState {
@@ -47,6 +52,7 @@ export class MemberState {
   cookingState?: CookingState;
   private skillState: SkillState;
   private camp: boolean;
+  private rng: PreGeneratedRandom;
 
   // quick lookups, static data
   private pokemonWithIngredients: PokemonWithIngredientsIndexed;
@@ -63,7 +69,19 @@ export class MemberState {
   private helpsSinceLastCook = 0;
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
-  private voidHelps = 0;
+  private totalBerryProduction = 0;
+  private totalIngredientProduction: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
+  private voidIngredients: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
+
+  private berryProductionPerDay: Int16Array;
+  private ingredientProductionPerDay: IngredientIndexToIntAmount[];
+  private currentDay = 0;
+  private totalDays: number;
+
+  // ingredient sets
+  private level0IngredientSet: IngredientSet;
+  private level30IngredientSet?: IngredientSet;
+  private level60IngredientSet?: IngredientSet;
 
   // stats
   private frequency0;
@@ -73,12 +91,15 @@ export class MemberState {
   private frequency80;
   public skillPercentage: number;
   private ingredientPercentage: number;
-  private sneakySnackBerries: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
-  private averageProduceAmount: number;
-  private averageProduce: ProduceFlat = getEmptyInventoryFloat();
+
+  // precomputed berry drop amounts
+  private berryDropAmounts: BerryIndexToFloatAmount = emptyBerryInventoryFloat();
+  private berryDropAmount = 0;
 
   // summary
-  totalProduce: Produce = CarrySizeUtils.getEmptyInventory();
+
+  // TODO: move to skill-state
+  skillProduce: Produce = CarrySizeUtils.getEmptyInventory();
   totalRecovery = 0;
   wastedEnergy = 0;
   private energyIntervalsDay = 0;
@@ -100,16 +121,55 @@ export class MemberState {
   private totalHealedByMembers = 0;
   private totalHelpsByMembers = 0;
 
+  // This tracks the actual amount of ingredients accumulated since last cook
+  private ingredientsSinceLastCook = emptyIngredientInventoryFloat();
+
+  // We roll a random number between 0 and 1, then:
+  //
+  //     berry   ing0   ing30   ing60
+  //  |--------|------|-------|--------| 1
+  //  |        |      |       | ingredient60Threshold
+  //  |        |      | ingredient30Threshold
+  //  |        | ingredient0Threshold
+  //  | 0
+  //
+  private ingredient0Threshold: number;
+  private ingredient30Threshold: number;
+  private ingredient60Threshold: number;
+  // Integer thresholds for uint8 comparisons (0-255)
+  private ingredient0ThresholdInt: number;
+  private ingredient30ThresholdInt: number;
+  private ingredient60ThresholdInt: number;
+
+  // precomputed ingredient ids and amounts
+  private level0IngredientId: number;
+  private level30IngredientId?: number;
+  private level60IngredientId?: number;
+  private level0IngredientAmount: number;
+  private level30IngredientAmount?: number;
+  private level60IngredientAmount?: number;
+
   constructor(params: {
     member: TeamMemberExt;
     team: TeamMemberExt[];
     settings: TeamSettingsExt;
     cookingState: CookingState | undefined;
+    iterations?: number;
+    rng?: PreGeneratedRandom;
   }) {
-    const { member, team, settings, cookingState } = params;
+    const { member, team, settings, cookingState, iterations = 1, rng } = params;
+
+    this.rng = rng || createPreGeneratedRandom();
+
+    // Initialize the daily production arrays with the total number of days we'll simulate
+    // Each iteration is one day
+    this.totalDays = iterations;
+    this.berryProductionPerDay = new Int16Array(iterations);
+    this.ingredientProductionPerDay = Array(iterations)
+      .fill(null)
+      .map(() => emptyIngredientInventoryInt());
 
     this.camp = settings.camp;
-
     this.cookingState = cookingState;
 
     // list already filtered for level
@@ -146,6 +206,24 @@ export class MemberState {
       pokemon: member.pokemonWithIngredients.pokemon.name,
       ingredients: pokemonIngredientListFlat
     };
+
+    // Initialize ingredient sets from the Pokemon's actual ingredient list
+    const ingredientList = member.pokemonWithIngredients.ingredientList;
+
+    // Level 0 ingredient is always the first one
+    this.level0IngredientSet = ingredientList[0];
+
+    // Level 30 ingredient is second if available
+    if (member.settings.level >= 30 && ingredientList.length > 1) {
+      this.level30IngredientSet = ingredientList[1];
+    }
+
+    // Level 60 ingredient is third if available
+    if (member.settings.level >= 60 && ingredientList.length > 2) {
+      this.level60IngredientSet = ingredientList[2];
+    }
+
+    // Calculate raw production amounts without probability adjustments
     const memberBerryInList = berrySetToFlat([
       {
         amount: 1,
@@ -157,10 +235,9 @@ export class MemberState {
       member.pokemonWithIngredients.pokemon.specialty,
       member.settings.subskills
     );
-    this.averageProduce = TeamSimulatorUtils.calculateAverageProduce(member);
-    this.averageProduceAmount = sumFlats(this.averageProduce.ingredients, this.averageProduce.berries);
 
-    this.sneakySnackBerries = memberBerryInList.map((amount) => (amount *= berriesPerDrop));
+    this.berryDropAmounts = memberBerryInList.map((amount: number) => amount * berriesPerDrop);
+    this.berryDropAmount = Math.max(...this.berryDropAmounts);
 
     const frequency = TeamSimulatorUtils.calculateHelpSpeedBeforeEnergy({
       member,
@@ -177,7 +254,41 @@ export class MemberState {
     this.member = member;
     this.team = team; // this needs updating when we add team rotation
     this.otherMembers = team.filter((m) => m.settings.externalId !== member.settings.externalId); // this needs updating when we add team rotation
-    this.skillState = new SkillState(this);
+    this.skillState = new SkillState(this, this.rng);
+
+    this.ingredient0Threshold = 1 - this.ingredientPercentage;
+    if (this.level60IngredientSet) {
+      const ingredientChunk = this.ingredientPercentage / 3;
+      this.ingredient30Threshold = this.ingredient0Threshold + ingredientChunk;
+      this.ingredient60Threshold = this.ingredient30Threshold + ingredientChunk;
+    } else if (this.level30IngredientSet) {
+      const ingredientChunk = this.ingredientPercentage / 2;
+      this.ingredient30Threshold = this.ingredient0Threshold + ingredientChunk;
+      // NB: Math.random() is [0, 1) so 1.0 is never rolled
+      this.ingredient60Threshold = 1.0;
+    } else {
+      this.ingredient30Threshold = 1.0;
+      this.ingredient60Threshold = 1.0;
+    }
+
+    // Pre-compute ingredient IDs and amounts
+    this.level0IngredientId = ING_ID_LOOKUP[this.level0IngredientSet.ingredient.name];
+    this.level0IngredientAmount = this.level0IngredientSet.amount;
+
+    if (this.level30IngredientSet) {
+      this.level30IngredientId = ING_ID_LOOKUP[this.level30IngredientSet.ingredient.name];
+      this.level30IngredientAmount = this.level30IngredientSet.amount;
+    }
+
+    if (this.level60IngredientSet) {
+      this.level60IngredientId = ING_ID_LOOKUP[this.level60IngredientSet.ingredient.name];
+      this.level60IngredientAmount = this.level60IngredientSet.amount;
+    }
+
+    // Integer thresholds for uint8 comparisons (0-255)
+    this.ingredient0ThresholdInt = Math.round(this.ingredient0Threshold * 255);
+    this.ingredient30ThresholdInt = Math.round(this.ingredient30Threshold * 255);
+    this.ingredient60ThresholdInt = Math.round(this.ingredient60Threshold * 255);
   }
 
   get level() {
@@ -218,6 +329,9 @@ export class MemberState {
       nature: this.member.settings.nature
     };
     this.skillState.wakeup();
+
+    // Increment day counter
+    this.currentDay = (this.currentDay + 1) % this.totalDays;
 
     const missingEnergy = Math.max(0, 100 - this.currentEnergy);
     const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo));
@@ -265,14 +379,18 @@ export class MemberState {
       this.totalHelpsByMembers += totalHelps;
     }
 
-    this.helpsSinceLastCook += totalHelps;
-    this.totalAverageHelps += totalHelps;
+    // Perform rolls for each help
+    for (let i = 0; i < totalHelps; i++) {
+      this.attemptDayHelpInner();
+    }
   }
 
   public updateIngredientBag() {
-    const ingsSinceLastCook = this.averageProduce.ingredients._mapUnary((a) => a * this.helpsSinceLastCook);
-    this.cookingState?.addIngredients(ingsSinceLastCook);
-    this.helpsSinceLastCook = 0;
+    // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
+    this.cookingState?.addIngredients(this.ingredientsSinceLastCook);
+
+    // Zero out the array instead of allocating a new one
+    this.ingredientsSinceLastCook.fill(0);
   }
 
   public recoverMeal() {
@@ -280,14 +398,43 @@ export class MemberState {
     this.currentEnergy += getMealRecoveryAmount(this.currentEnergy);
   }
 
+  public attemptDayHelpInner() {
+    this.totalDayHelps += 1;
+    this.totalAverageHelps += 1;
+    this.helpsSinceLastCook += 1;
+
+    // Use uint8 for direct integer comparison
+    const rollInt = this.rng.getUint8();
+
+    // Simplified drop logic using pre-computed integer thresholds
+    if (rollInt < this.ingredient0ThresholdInt) {
+      // Berry drop
+      this.totalBerryProduction += this.berryDropAmount;
+      this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
+    } else if (rollInt < this.ingredient30ThresholdInt) {
+      // Level 0
+      this.totalIngredientProduction[this.level0IngredientId] += this.level0IngredientAmount;
+      this.ingredientProductionPerDay[this.currentDay][this.level0IngredientId] += this.level0IngredientAmount;
+      this.ingredientsSinceLastCook[this.level0IngredientId] += this.level0IngredientAmount;
+    } else if (rollInt < this.ingredient60ThresholdInt) {
+      // Level 30
+      this.totalIngredientProduction[this.level30IngredientId!] += this.level30IngredientAmount!;
+      this.ingredientProductionPerDay[this.currentDay][this.level30IngredientId!] += this.level30IngredientAmount!;
+      this.ingredientsSinceLastCook[this.level30IngredientId!] += this.level30IngredientAmount!;
+    } else {
+      // Level 60
+      this.totalIngredientProduction[this.level60IngredientId!] += this.level60IngredientAmount!;
+      this.ingredientProductionPerDay[this.currentDay][this.level60IngredientId!] += this.level60IngredientAmount!;
+      this.ingredientsSinceLastCook[this.level60IngredientId!] += this.level60IngredientAmount!;
+    }
+  }
+
   public attemptDayHelp(currentMinutesSincePeriodStart: number): TeamSkillActivation[] {
     const frequency = this.calculateFrequencyWithEnergy();
     this.countFrequencyAndEnergyIntervals('day', frequency);
-    if (currentMinutesSincePeriodStart >= this.nextHelp) {
-      this.totalDayHelps += 1;
-      this.totalAverageHelps += 1;
-      this.helpsSinceLastCook += 1;
 
+    if (currentMinutesSincePeriodStart >= this.nextHelp) {
+      this.attemptDayHelpInner();
       return this.skillState.attemptSkill();
     }
 
@@ -302,25 +449,74 @@ export class MemberState {
       // update stats
       this.totalNightHelps += 1;
 
-      const inventorySpace = this.inventoryLimit - this.carriedAmount;
-      if (inventorySpace > 0) {
+      // Ignoring inventory space for now, calculate what the help would be
+      let totalDropAmount = 0;
+      let isBerryDrop = false;
+      let ingredientId: number | undefined;
+
+      // Use uint8 for direct integer comparison
+      const rollInt = this.rng.getUint8();
+
+      if (rollInt < this.ingredient0ThresholdInt) {
+        totalDropAmount = this.berryDropAmount;
+        isBerryDrop = true;
+      } else if (rollInt < this.ingredient30ThresholdInt) {
+        // Level 0
+        totalDropAmount = this.level0IngredientAmount;
+        ingredientId = this.level0IngredientId;
+      } else if (rollInt < this.ingredient60ThresholdInt) {
+        // Level 30
+        totalDropAmount = this.level30IngredientAmount!;
+        ingredientId = this.level30IngredientId!;
+      } else {
+        // Level 60
+        totalDropAmount = this.level60IngredientAmount!;
+        ingredientId = this.level60IngredientId!;
+      }
+
+      const inventorySpace = Math.max(0, this.inventoryLimit - this.carriedAmount);
+
+      // Easy case, inventory not full
+      if (inventorySpace <= 0) {
+        // Sneaky-snacking case
+        this.nightHelpsAfterSS += 1;
+        this.totalSneakySnackHelps += 1;
+        // Sneaky snack always gives berries
+        this.totalBerryProduction += this.berryDropAmount;
+        this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
+        this.totalAverageHelps += 1;
+        this.helpsSinceLastCook += 1;
+
+        if (!isBerryDrop) {
+          // Track void ingredient drop
+          this.voidIngredients[ingredientId!] += totalDropAmount;
+        }
+      } else {
         this.currentNightHelps += 1; // these run skill procs at wakeup
         this.nightHelpsBeforeSS += 1;
 
-        this.carriedAmount += this.averageProduceAmount;
+        this.carriedAmount += totalDropAmount; // we don't care if we overflow carriedAmount
 
-        // if this help hits the inventory limit we split into what fits in bag and what gets spilled
-        if (inventorySpace < this.averageProduceAmount) {
-          this.totalAverageHelps += inventorySpace / this.averageProduceAmount;
-          this.helpsSinceLastCook += inventorySpace / this.averageProduceAmount;
-          this.voidHelps += 1 - inventorySpace / this.averageProduceAmount;
+        // Calculate how much of the help fits in the bag
+        const helpRatio = inventorySpace >= totalDropAmount ? 1 : inventorySpace / totalDropAmount;
+        this.totalAverageHelps += helpRatio;
+        this.helpsSinceLastCook += helpRatio;
+
+        // Calculate how much of the help fits in the bag
+        const dropAmount = Math.min(totalDropAmount, inventorySpace);
+
+        if (isBerryDrop) {
+          // Berry drop
+          this.totalBerryProduction += dropAmount;
+          this.berryProductionPerDay[this.currentDay] += dropAmount;
         } else {
-          this.helpsSinceLastCook += 1;
-          this.totalAverageHelps += 1;
+          // Ingredient drop
+          this.totalIngredientProduction[ingredientId!] += dropAmount;
+          this.ingredientProductionPerDay[this.currentDay][ingredientId!] += dropAmount;
+          this.ingredientsSinceLastCook[ingredientId!] += dropAmount;
+
+          this.voidIngredients[ingredientId!] += totalDropAmount - dropAmount;
         }
-      } else {
-        this.nightHelpsAfterSS += 1;
-        this.totalSneakySnackHelps += 1;
       }
 
       this.nextHelp += frequency / 60;
@@ -368,33 +564,29 @@ export class MemberState {
   }
 
   public results(iterations: number): MemberProduction {
-    const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
+    const totalSkillProduce: Produce = multiplyProduce(this.skillProduce, 1 / iterations); // so far only skill value has been added to totalProduce
 
-    const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.averageProduce.berries._mapCombine(
-        this.sneakySnackBerries,
-        (avgAmount, sneakyAmount) =>
-          (avgAmount * this.totalAverageHelps + sneakyAmount * this.totalSneakySnackHelps) / iterations
-      ),
-      ingredients: this.averageProduce.ingredients._mapUnary(
-        (ingredient) => (ingredient * this.totalAverageHelps) / iterations
-      )
-    };
+    // Calculate total help produce based on tracked help counts
     const totalHelpProduce: Produce = {
-      berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
-      ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
+      berries: [
+        {
+          berry: this.berry,
+          level: this.level,
+          amount: this.totalBerryProduction / iterations
+        }
+      ],
+      ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
-
-    const spilledHelps = this.voidHelps + this.totalSneakySnackHelps;
-    const spilledIngredients = flatToIngredientSet(
-      this.averageProduce.ingredients._mapUnary((ingredient) => (ingredient * spilledHelps) / iterations)
-    );
 
     const sneakySnack: BerrySet = {
       berry: this.berry,
       level: this.level,
-      amount: Math.max(...this.sneakySnackBerries._mutateUnary((a) => (a * this.totalSneakySnackHelps) / iterations))
+      amount: Math.max(
+        ...Array.from(this.berryDropAmounts).map(
+          (value) => ((value as number) * this.totalSneakySnackHelps) / iterations
+        )
+      )
     };
 
     const {
@@ -410,6 +602,23 @@ export class MemberState {
     const totalHelps = (this.totalDayHelps + this.totalNightHelps) / iterations;
     const fiveMinIntervalsTotalDay = iterations * (TimeUtils.durationInMinutes(this.dayPeriod) / 5);
     const fiveMinIntervalsTotalNight = iterations * (TimeUtils.durationInMinutes(this.nightPeriod) / 5);
+
+    // Calculate daily production distributions
+    const berryProductionDistribution = calculateDistribution(this.berryProductionPerDay);
+    const ingredientDistributions: { [ingredientName: string]: Record<number, number> } = {};
+
+    // Initialize distribution objects for each ingredient that was produced
+    const usedIngredients = new Set<string>();
+    if (this.level0IngredientSet) usedIngredients.add(this.level0IngredientSet.ingredient.name);
+    if (this.level30IngredientSet) usedIngredients.add(this.level30IngredientSet.ingredient.name);
+    if (this.level60IngredientSet) usedIngredients.add(this.level60IngredientSet.ingredient.name);
+
+    for (const ingredientName of usedIngredients) {
+      const ingredientId = ING_ID_LOOKUP[ingredientName];
+      // Extract daily values for this ingredient from the Float32Arrays
+      const dailyValues = this.ingredientProductionPerDay.map((dayProduction) => dayProduction[ingredientId]);
+      ingredientDistributions[ingredientName] = calculateDistribution(dailyValues);
+    }
 
     return {
       produceTotal,
@@ -439,6 +648,8 @@ export class MemberState {
         totalRecovery: this.totalRecovery / iterations,
         morningProcs: this.morningProcs / iterations,
         skillProcDistribution,
+        berryProductionDistribution,
+        ingredientDistributions,
         dayPeriod: {
           averageEnergy: this.energyIntervalsDay / fiveMinIntervalsTotalDay,
           averageFrequency: this.frequencyIntervalsDay / fiveMinIntervalsTotalDay,
@@ -447,7 +658,7 @@ export class MemberState {
         nightPeriod: {
           averageEnergy: this.energyIntervalsNight / fiveMinIntervalsTotalNight,
           averageFrequency: this.frequencyIntervalsNight / fiveMinIntervalsTotalNight,
-          spilledIngredients
+          spilledIngredients: flatToIngredientSet(this.voidIngredients._mapUnary((amount) => amount / iterations))
         },
         frequencySplit: {
           zero: this.helpsAtFrequency0 / totalHelps,
@@ -465,22 +676,17 @@ export class MemberState {
   }
 
   public ivResults(iterations: number): MemberProductionBase {
-    const totalSkillProduce: Produce = multiplyProduce(this.totalProduce, 1 / iterations); // so far only skill value has been added to totalProduce
-
-    const totalHelpProduceFlat: ProduceFlat = {
-      berries: this.averageProduce.berries._mapCombine(
-        this.sneakySnackBerries,
-        (avgAmount, sneakyAmount) =>
-          (avgAmount * this.totalAverageHelps + sneakyAmount * this.totalSneakySnackHelps) / iterations
-      ),
-      ingredients: this.averageProduce.ingredients._mapUnary(
-        (ingredient) => (ingredient * this.totalAverageHelps) / iterations
-      )
-    };
+    const totalSkillProduce: Produce = multiplyProduce(this.skillProduce, 1 / iterations);
 
     const totalHelpProduce: Produce = {
-      berries: flatToBerrySet(totalHelpProduceFlat.berries, this.level),
-      ingredients: flatToIngredientSet(totalHelpProduceFlat.ingredients)
+      berries: [
+        {
+          berry: this.berry,
+          level: this.level,
+          amount: this.totalBerryProduction / iterations
+        }
+      ],
+      ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
 
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
@@ -495,7 +701,7 @@ export class MemberState {
   }
 
   public simpleResults(iterations: number): SimpleTeamResult {
-    const skillIngredients = ingredientSetToFloatFlat(multiplyProduce(this.totalProduce, 1 / iterations).ingredients);
+    const skillIngredients = ingredientSetToFloatFlat(multiplyProduce(this.skillProduce, 1 / iterations).ingredients);
 
     const { averageWeekdayPotSize, critMultiplier } = this.simpleCookingResults(iterations);
     const { skillProcs } = this.skillState.results(iterations);
@@ -537,21 +743,24 @@ export class MemberState {
   }
 
   private calculateFrequencyWithEnergy() {
-    if (this.currentEnergy >= 80) {
-      this.helpsAtFrequency80 += 1;
+    const energy = this.currentEnergy; // Cache the value to avoid multiple property accesses
+    if (energy >= 80) {
+      this.helpsAtFrequency80++;
       return this.frequency80;
-    } else if (this.currentEnergy >= 60) {
-      this.helpsAtFrequency60 += 1;
-      return this.frequency60;
-    } else if (this.currentEnergy >= 40) {
-      this.helpsAtFrequency40 += 1;
-      return this.frequency40;
-    } else if (this.currentEnergy >= 1) {
-      this.helpsAtFrequency1 += 1;
-      return this.frequency1;
-    } else {
-      this.helpsAtFrequency0 += 1;
-      return this.frequency0;
     }
+    if (energy >= 60) {
+      this.helpsAtFrequency60++;
+      return this.frequency60;
+    }
+    if (energy >= 40) {
+      this.helpsAtFrequency40++;
+      return this.frequency40;
+    }
+    if (energy >= 1) {
+      this.helpsAtFrequency1++;
+      return this.frequency1;
+    }
+    this.helpsAtFrequency0++;
+    return this.frequency0;
   }
 }

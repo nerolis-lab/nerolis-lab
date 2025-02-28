@@ -102,6 +102,8 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
         zero: 0
       },
       skillProcDistribution: {},
+      berryProductionDistribution: {},
+      ingredientDistributions: {},
       teamSupport: {
         energy: 0,
         helps: 0
