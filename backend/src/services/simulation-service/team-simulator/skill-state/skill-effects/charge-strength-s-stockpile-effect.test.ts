@@ -1,7 +1,7 @@
 import { mocks } from '@src/bun/index.js';
 import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill, mockPokemon, RandomUtils } from 'sleepapi-common';
+import { mainskill, mockPokemon } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('ChargeStrengthSStockpileSEffect', () => {
@@ -26,7 +26,7 @@ describe('ChargeStrengthSStockpileSEffect', () => {
   });
 
   it('should return correct activation when crit chance is triggered', () => {
-    vimic(RandomUtils, 'roll', () => true);
+    vimic(mockSkillState, 'rng', () => 0.01); // Return a value below the crit chance
 
     const result = effect.activate(mockSkillState);
 
@@ -40,7 +40,7 @@ describe('ChargeStrengthSStockpileSEffect', () => {
   it('should guarantee spit at max stocks', () => {
     const maxStockCount = mainskill.STOCKPILE_STRENGTH_STOCKS[1].length - 1;
     effect['currentStockpile'] = maxStockCount;
-    vimic(RandomUtils, 'roll', () => false);
+    vimic(mockSkillState, 'rng', () => 0.99); // Return a value above the crit chance
 
     const result = effect.activate(mockSkillState);
 
@@ -53,7 +53,7 @@ describe('ChargeStrengthSStockpileSEffect', () => {
 
   it('should increment currentStockpile when not full and crit chance is not triggered', () => {
     effect['currentStockpile'] = 0;
-    vimic(RandomUtils, 'roll', () => false);
+    vimic(mockSkillState, 'rng', () => 0.99); // Return a value above the crit chance
 
     effect.activate(mockSkillState);
 
@@ -62,7 +62,7 @@ describe('ChargeStrengthSStockpileSEffect', () => {
 
   it('should reset currentStockpile when crit chance is triggered', () => {
     effect['currentStockpile'] = 2;
-    vimic(RandomUtils, 'roll', () => true);
+    vimic(mockSkillState, 'rng', () => 0.01); // Return a value below the crit chance
 
     expect(effect['currentStockpile']).toBe(2);
     effect.activate(mockSkillState);

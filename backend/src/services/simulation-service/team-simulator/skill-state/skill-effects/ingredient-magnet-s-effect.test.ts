@@ -1,5 +1,5 @@
 import { mocks } from '@src/bun/index.js';
-import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import type { IngredientSet } from 'sleepapi-common';
@@ -32,7 +32,7 @@ describe('IngredientMagnetSEffect', () => {
 
     expect(skillState.memberState.cookingState?.addIngredients).toHaveBeenCalledWith(magnetIngredientsFloat);
     expect(
-      skillState.memberState.totalProduce.ingredients.map(({ ingredient, amount }) => ({
+      skillState.memberState.skillProduce.ingredients.map(({ ingredient, amount }) => ({
         ingredient,
         amount: MathUtils.round(amount, 2)
       }))

@@ -1,5 +1,5 @@
 import { mocks } from '@src/bun/index.js';
-import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { capitalize, mainskill, MAINSKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';

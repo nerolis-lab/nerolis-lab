@@ -1,26 +1,26 @@
 import type { ProduceFlat } from '../../api/production/produce';
-import { BERRIES } from '../../domain/berry/berries';
-import { INGREDIENTS } from '../../domain/ingredient/ingredients';
+import { TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
+import { TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
 
 export function initFloatArray(length: number) {
-  return Float32Array.from(Array(length).fill(0));
+  return new Float32Array(length);
 }
 export function initIntArray(length: number) {
-  return Int16Array.from(Array(length).fill(0));
+  return new Int16Array(length);
 }
 
 export function emptyIngredientInventoryFloat(): Float32Array {
-  return initFloatArray(INGREDIENTS.length);
+  return initFloatArray(TOTAL_NUMBER_OF_INGREDIENTS);
 }
 export function emptyIngredientInventoryInt(): Int16Array {
-  return initIntArray(INGREDIENTS.length);
+  return initIntArray(TOTAL_NUMBER_OF_INGREDIENTS);
 }
 
 export function emptyBerryInventoryFloat(): Float32Array {
-  return initFloatArray(BERRIES.length);
+  return initFloatArray(TOTAL_NUMBER_OF_BERRIES);
 }
 export function emptyBerryInventoryInt(): Int16Array {
-  return initIntArray(BERRIES.length);
+  return initIntArray(TOTAL_NUMBER_OF_BERRIES);
 }
 
 export function getEmptyInventoryFloat(): ProduceFlat {

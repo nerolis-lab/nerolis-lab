@@ -2,6 +2,7 @@ import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mainskill } from 'sleepapi-common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 
 describe('SkillCopyEffect', () => {
   let skillCopyEffect: SkillCopyEffect;
@@ -10,6 +11,7 @@ describe('SkillCopyEffect', () => {
   beforeEach(() => {
     skillCopyEffect = new SkillCopyEffect();
     skillState = {
+      rng: createPreGeneratedRandom(),
       memberState: {
         otherMembers: [
           {

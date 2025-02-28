@@ -1,5 +1,5 @@
 import { mocks } from '@src/bun/index.js';
-import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mainskill, MAX_TEAM_SIZE } from 'sleepapi-common';
