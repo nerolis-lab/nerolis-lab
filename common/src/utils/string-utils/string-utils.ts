@@ -11,3 +11,10 @@ export function compactNumber(num: number) {
     return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
   }
 }
+
+export function localizeNumber(num: number) {
+  const userLocale = navigator.language || 'en-US';
+  return new Intl.NumberFormat(userLocale, {
+    maximumFractionDigits: 0
+  }).format(num);
+}

@@ -1,10 +1,8 @@
 import type {
-  CookedRecipeResult,
-  CookingResult,
-  IngredientIndexToFloatAmount,
-  RecipeFlat,
-  TeamSettingsExt
-} from 'sleepapi-common';
+  UserRecipeFlat,
+  UserRecipes
+} from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
+import type { CookedRecipeResult, CookingResult, IngredientIndexToFloatAmount, TeamSettingsExt } from 'sleepapi-common';
 import {
   MAX_POT_SIZE,
   RandomUtils,
@@ -16,7 +14,7 @@ import {
   salad
 } from 'sleepapi-common';
 
-interface CookedRecipe extends RecipeFlat {
+interface CookedRecipe extends UserRecipeFlat {
   name: string;
   extraTasty: boolean;
   sunday: boolean;
@@ -24,21 +22,22 @@ interface CookedRecipe extends RecipeFlat {
   strength: number;
 }
 type IngredientsMissing = Record<number, { count: number; totalAmountMissing: number }>;
-interface SkippedRecipe extends RecipeFlat {
+interface SkippedRecipe extends UserRecipeFlat {
   totalCount: number;
   potMissing: { count: number; totalAmountMissing: number };
   ingredientMissing: IngredientsMissing;
 }
 
-const allCurries: RecipeFlat[] = curry.CURRIES_FLAT.sort((a, b) => b.valueMax - a.valueMax);
-const allSalads: RecipeFlat[] = salad.SALADS_FLAT.sort((a, b) => b.valueMax - a.valueMax);
-const allDesserts: RecipeFlat[] = dessert.DESSERTS_FLAT.sort((a, b) => b.valueMax - a.valueMax);
 export class CookingState {
   private camp;
   private bonusPotSize = 0;
   private bonusCritChance = 0;
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
+
+  private userCurries: UserRecipeFlat[];
+  private userSalads: UserRecipeFlat[];
+  private userDesserts: UserRecipeFlat[];
 
   private cookedCurries: CookedRecipe[] = [];
   private cookedSalads: CookedRecipe[] = [];
@@ -57,7 +56,12 @@ export class CookingState {
   private currentSaladStockpile: IngredientIndexToFloatAmount;
   private currentDessertStockpile: IngredientIndexToFloatAmount;
 
-  constructor(settings: TeamSettingsExt) {
+  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes) {
+    const { curries, salads, desserts } = userRecipes;
+    this.userCurries = curries;
+    this.userSalads = salads;
+    this.userDesserts = desserts;
+
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
     this.currentCurryStockpile = settings.stockpiledIngredients.slice();
@@ -87,32 +91,29 @@ export class CookingState {
       this.totalWeekdayPotSize += currentPotSize;
     }
 
-    const potLimitedCurries = this.findRecipesWithinPotLimit(allCurries, currentPotSize, this.skippedCurries);
-    const cookedCurry =
-      this.cookRecipeType({
-        availableRecipes: potLimitedCurries,
-        currentIngredients: this.currentCurryInventory,
-        skippedRecipesGrouped: this.skippedCurries,
-        currentStockpile: this.currentCurryStockpile
-      }) ?? curry.MIXED_CURRY_FLAT;
+    const potLimitedCurries = this.findRecipesWithinPotLimit(this.userCurries, currentPotSize, this.skippedCurries);
+    const cookedCurry = this.cookRecipeType({
+      availableRecipes: potLimitedCurries,
+      currentIngredients: this.currentCurryInventory,
+      skippedRecipesGrouped: this.skippedCurries,
+      currentStockpile: this.currentCurryStockpile
+    }) ?? { ...curry.MIXED_CURRY_FLAT, level: 1 };
 
-    const potLimitedSalads = this.findRecipesWithinPotLimit(allSalads, currentPotSize, this.skippedSalads);
-    const cookedSalad =
-      this.cookRecipeType({
-        availableRecipes: potLimitedSalads,
-        currentIngredients: this.currentSaladInventory,
-        skippedRecipesGrouped: this.skippedSalads,
-        currentStockpile: this.currentSaladStockpile
-      }) ?? salad.MIXED_SALAD_FLAT;
+    const potLimitedSalads = this.findRecipesWithinPotLimit(this.userSalads, currentPotSize, this.skippedSalads);
+    const cookedSalad = this.cookRecipeType({
+      availableRecipes: potLimitedSalads,
+      currentIngredients: this.currentSaladInventory,
+      skippedRecipesGrouped: this.skippedSalads,
+      currentStockpile: this.currentSaladStockpile
+    }) ?? { ...salad.MIXED_SALAD_FLAT, level: 1 };
 
-    const potLimitedDesserts = this.findRecipesWithinPotLimit(allDesserts, currentPotSize, this.skippedDesserts);
-    const cookedDessert =
-      this.cookRecipeType({
-        availableRecipes: potLimitedDesserts,
-        currentIngredients: this.currentDessertInventory,
-        skippedRecipesGrouped: this.skippedDesserts,
-        currentStockpile: this.currentDessertStockpile
-      }) ?? dessert.MIXED_JUICE_FLAT;
+    const potLimitedDesserts = this.findRecipesWithinPotLimit(this.userDesserts, currentPotSize, this.skippedDesserts);
+    const cookedDessert = this.cookRecipeType({
+      availableRecipes: potLimitedDesserts,
+      currentIngredients: this.currentDessertInventory,
+      skippedRecipesGrouped: this.skippedDesserts,
+      currentStockpile: this.currentDessertStockpile
+    }) ?? { ...dessert.MIXED_JUICE_FLAT, level: 1 };
 
     const extraTasty = RandomUtils.roll(currentCritChance);
     const extraTastyFactor = extraTasty ? (sunday ? 3 : 2) : 1;
@@ -157,11 +158,11 @@ export class CookingState {
   }
 
   private cookRecipeType(params: {
-    availableRecipes: RecipeFlat[];
+    availableRecipes: UserRecipeFlat[];
     currentIngredients: IngredientIndexToFloatAmount;
     skippedRecipesGrouped: Map<string, SkippedRecipe>;
     currentStockpile: IngredientIndexToFloatAmount;
-  }): RecipeFlat | undefined {
+  }): UserRecipeFlat | undefined {
     const { availableRecipes, currentIngredients, skippedRecipesGrouped, currentStockpile } = params;
 
     for (let recipeIndex = 0; recipeIndex < availableRecipes.length; ++recipeIndex) {
@@ -214,11 +215,11 @@ export class CookingState {
   }
 
   private findRecipesWithinPotLimit(
-    recipes: RecipeFlat[],
+    recipes: UserRecipeFlat[],
     potSize: number,
     skippedRecipesGrouped: Map<string, SkippedRecipe>
-  ): RecipeFlat[] {
-    const allowedRecipes: RecipeFlat[] = [];
+  ): UserRecipeFlat[] {
+    const allowedRecipes: UserRecipeFlat[] = [];
 
     for (const recipe of recipes) {
       const missingPotSize = recipe.nrOfIngredients - potSize;
@@ -236,7 +237,10 @@ export class CookingState {
     return allowedRecipes;
   }
 
-  private getOrInitSkippedRecipe(recipe: RecipeFlat, skippedRecipesGrouped: Map<string, SkippedRecipe>): SkippedRecipe {
+  private getOrInitSkippedRecipe(
+    recipe: UserRecipeFlat,
+    skippedRecipesGrouped: Map<string, SkippedRecipe>
+  ): SkippedRecipe {
     return (
       skippedRecipesGrouped.get(recipe.name) ??
       (() => {
@@ -303,7 +307,7 @@ export class CookingState {
     cookedRecipes: CookedRecipe[],
     skippedRecipesGrouped: Map<string, SkippedRecipe>
   ): CookedRecipeResult[] {
-    const recipeCounts = new Map<string, { recipe: RecipeFlat; count: number; sunday: number }>();
+    const recipeCounts = new Map<string, { recipe: UserRecipeFlat; count: number; sunday: number }>();
 
     for (const recipe of cookedRecipes) {
       const recipeName = recipe.name;
@@ -338,6 +342,7 @@ export class CookingState {
 
       cookedRecipeResults.push({
         recipe: { ...cookedRecipe.recipe, ingredients: flatToIngredientSet(cookedRecipe.recipe.ingredients) },
+        level: cookedRecipe.recipe.level,
         count: cookedRecipe.count,
         sunday: cookedRecipe.sunday,
         totalSkipped: skippedRecipe?.totalCount ?? 0,

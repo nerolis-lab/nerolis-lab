@@ -1,4 +1,4 @@
-import TeamName from '@/components/calculator/team-name.vue' // Adjust the import path as needed
+import TeamName from '@/components/calculator/team-name.vue'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'

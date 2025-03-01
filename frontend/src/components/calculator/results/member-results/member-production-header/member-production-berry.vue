@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -45,7 +45,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
     return { teamStore, MathUtils, berryImage, isMobile }
   },
   computed: {

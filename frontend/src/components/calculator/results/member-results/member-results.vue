@@ -172,8 +172,8 @@ import TeamImpact from '@/components/calculator/results/member-results/team-impa
 import RadarChart from '@/components/custom-components/charts/radar-chart.vue'
 import NatureModifiers from '@/components/pokemon-input/nature-modifiers.vue'
 import SpeechBubble from '@/components/speech-bubble/speech-bubble.vue'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useRandomPhrase } from '@/composables/use-random-phrase/use-random-phrase'
-import { useViewport } from '@/composables/viewport-composable'
 import { TeamService } from '@/services/team/team-service'
 import { rarityColor } from '@/services/utils/color-utils'
 import { avatarImage, berryImage, islandImage, mainskillImage } from '@/services/utils/image-utils'
@@ -202,7 +202,7 @@ export default defineComponent({
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
     const chartClipPath = ref('polygon(0% -10%, 50% -10%, 150% 100%, 0% 100%)')
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
     const currentMember = computed(() => {
       return teamStore.getCurrentTeam.production?.members[teamStore.getCurrentTeam.memberIndex] ?? null
     })

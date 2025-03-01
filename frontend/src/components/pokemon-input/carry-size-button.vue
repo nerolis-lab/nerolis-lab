@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import {
   calculateRibbonCarrySize,
   calculateSubskillCarrySize,
@@ -64,7 +64,7 @@ export default {
     }
   },
   setup() {
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
     return { isMobile }
   },
   computed: {

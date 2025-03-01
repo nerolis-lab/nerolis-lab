@@ -1,3 +1,49 @@
+## [1.36.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.3...v1.36.4) (2025-02-26)
+
+## [1.36.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.2...v1.36.3) (2025-02-25)
+
+
+### Bug Fixes
+
+* Add CSP rule for stats and disable SRI for now ([d767f15](https://github.com/nerolis-lab/nerolis-lab/commit/d767f15fde794bd822b9b0c43b842889299c7545))
+
+## [1.36.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.1...v1.36.2) (2025-02-25)
+
+## [1.36.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.0...v1.36.1) (2025-02-23)
+
+
+### Bug Fixes
+
+* recipe page desktop margins ([0a4be5c](https://github.com/nerolis-lab/nerolis-lab/commit/0a4be5c40bd2ee6a7134a5a408832b67c20623aa))
+
+# [1.36.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.35.0...v1.36.0) (2025-02-23)
+
+
+### Features
+
+* adds large desktop recipe page ([aaed909](https://github.com/nerolis-lab/nerolis-lab/commit/aaed909a5bc7fa98297ad9facf2ec7bfd6359e0f))
+
+# [1.35.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.34.0...v1.35.0) (2025-02-19)
+
+
+### Bug Fixes
+
+* ingredient selection updates on update only ([8b270e8](https://github.com/nerolis-lab/nerolis-lab/commit/8b270e8be4e1c8b71c3ec61387e8e0a14b52b90f))
+* recipe mobile tabe width on safari works ([45b3405](https://github.com/nerolis-lab/nerolis-lab/commit/45b34056e7aeb2a34927a2faaf89a71739a7ab96))
+* wraps sort button on tiny mobile ([d2d76ac](https://github.com/nerolis-lab/nerolis-lab/commit/d2d76ac78b1d6bac0f423667597088d15dbcd87d))
+
+
+### Features
+
+* adds asc/desc sort support ([707dd40](https://github.com/nerolis-lab/nerolis-lab/commit/707dd40984f2ffbfe4cb5edece003601bec6d6d1))
+
+# [1.34.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.33.0...v1.34.0) (2025-02-19)
+
+
+### Features
+
+* recipe page and user recipe level ([c294496](https://github.com/nerolis-lab/nerolis-lab/commit/c2944961431e12b42f457040c7147b89cb838818))
+
 # [1.33.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.32.0...v1.33.0) (2025-02-15)
 
 

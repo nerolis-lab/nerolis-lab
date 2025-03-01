@@ -122,7 +122,7 @@
 <script lang="ts">
 import PokemonSlotMenu from '@/components/pokemon-input/menus/pokemon-slot-menu.vue'
 import SpeechBubble from '@/components/speech-bubble/speech-bubble.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { rarityColor } from '@/services/utils/color-utils'
 import { avatarImage, pokemonImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -145,7 +145,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
 
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     return { teamStore, isMobile, rarityColor }
   },

@@ -155,7 +155,7 @@
 import { defineComponent } from 'vue'
 
 import StackedBar from '@/components/custom-components/stacked-bar.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -169,7 +169,7 @@ export default defineComponent({
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     return { teamStore, pokemonStore, userStore, isMobile }
   },

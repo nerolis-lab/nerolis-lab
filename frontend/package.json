@@ -47,6 +47,7 @@
     "typescript": "~5.4.0",
     "vimic": "^1.2.4",
     "vite": "^5.1.6",
+    "vite-plugin-csp-guard": "^2.0.1",
     "vite-plugin-pwa": "^0.20.0",
     "vite-plugin-vue-devtools": "^7.2.1",
     "vite-plugin-vuetify": "^2.0.3",

@@ -9,7 +9,7 @@ import { describe, expect, it } from 'vitest';
 describe('SolveService', () => {
   it('should return the user team if it solves the recipe alone', () => {
     const ingredientList = [mockIngredientSet({ amount: 1, ingredient: mockIngredient({ name: 'ingredient1' }) })];
-    const recipe: Recipe = mocks.recipe({
+    const recipe: Recipe = mocks.mockRecipe({
       ingredients: ingredientList
     });
     const member = mocks.teamMemberExt({

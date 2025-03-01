@@ -1,3 +1,5 @@
+import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
+import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import { PokemonError } from '@src/domain/error/pokemon/pokemon-error.js';
@@ -7,6 +9,11 @@ import {
   calculatePokemonProduction,
   calculateTeam
 } from '@src/services/api-service/production/production-service.js';
+import type { UserRecipeFlat } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
+import {
+  defaultUserRecipes,
+  type UserRecipes
+} from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import * as tsoa from '@tsoa/runtime';
@@ -18,19 +25,25 @@ import type {
   IngredientSet,
   Pokemon,
   PokemonInstanceIdentity,
+  RecipeFlat,
   SingleProductionRequest,
   TeamMemberExt,
   TeamSettings,
   TeamSettingsExt
 } from 'sleepapi-common';
 import {
+  calculateRecipeValue,
   CarrySizeUtils,
+  curry,
+  dessert,
+  flatToIngredientSet,
   getIngredient,
   getNature,
   getPokemon,
   ingredientSetToFloatFlat,
   limitSubSkillsToLevel,
-  mainskill
+  mainskill,
+  salad
 } from 'sleepapi-common';
 const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
 
@@ -48,8 +61,9 @@ export default class ProductionController extends Controller {
     return calculatePokemonProduction(pokemon, parsedInput, body.ingredientSet, queryAsBoolean(includeAnalysis), 5000);
   }
 
-  public async calculateTeam(body: CalculateTeamRequest) {
-    const parsedInput = this.#parseTeamInput(body);
+  public async calculateTeam(body: CalculateTeamRequest, maybeUser?: DBUser) {
+    const userRecipes = await this.#parseUserRecipes(maybeUser);
+    const parsedInput = this.#parseTeamInput(body, userRecipes);
     return calculateTeam(parsedInput);
   }
 
@@ -118,12 +132,46 @@ export default class ProductionController extends Controller {
     return parsedMembers;
   }
 
-  #parseTeamInput(body: CalculateTeamRequest) {
+  #parseTeamInput(body: CalculateTeamRequest, userRecipes: UserRecipes) {
     const settings = this.#parseSettings({ settings: body.settings, includeCooking: true });
 
     return {
       settings,
-      members: this.#parseTeamMembers(body.members, settings.camp)
+      members: this.#parseTeamMembers(body.members, settings.camp),
+      userRecipes
+    };
+  }
+
+  async #parseUserRecipes(maybeUser?: DBUser): Promise<UserRecipes> {
+    if (!maybeUser) {
+      return defaultUserRecipes();
+    }
+
+    const userRecipes = await UserRecipeDAO.findMultiple({ fk_user_id: maybeUser.id });
+
+    const recipeLevelMap = new Map(userRecipes.map((recipe) => [recipe.recipe, recipe.level]));
+
+    const processRecipes = (recipeList: RecipeFlat[]): UserRecipeFlat[] => {
+      return recipeList
+        .map((recipe) => {
+          const level = recipeLevelMap.get(recipe.name) ?? 1;
+          return {
+            ...recipe,
+            level,
+            valueMax: calculateRecipeValue({
+              bonus: recipe.bonus,
+              ingredients: flatToIngredientSet(recipe.ingredients),
+              level
+            })
+          };
+        })
+        .sort((a, b) => b.valueMax - a.valueMax);
+    };
+
+    return {
+      curries: processRecipes(curry.CURRIES_FLAT),
+      salads: processRecipes(salad.SALADS_FLAT),
+      desserts: processRecipes(dessert.DESSERTS_FLAT)
     };
   }
 

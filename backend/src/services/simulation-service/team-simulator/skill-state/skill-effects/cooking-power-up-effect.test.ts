@@ -1,5 +1,5 @@
 import { mocks } from '@src/bun/index.js';
-import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state.js';
+import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mainskill } from 'sleepapi-common';

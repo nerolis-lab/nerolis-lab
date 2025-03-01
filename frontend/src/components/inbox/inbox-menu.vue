@@ -47,7 +47,7 @@
 
 <script lang="ts">
 import FriendRequestNotification from '@/components/inbox/notifications/friend-request-notification.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { defineComponent, type Component } from 'vue'
 
@@ -59,7 +59,7 @@ export default defineComponent({
   name: 'InboxMenu',
   setup() {
     const notificationStore = useNotificationStore()
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
 
     return { notificationStore, isMobile }
   },

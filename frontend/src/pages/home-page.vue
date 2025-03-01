@@ -95,7 +95,7 @@
 
 <script lang="ts">
 import SneaselHomeIcon from '@/components/icons/sneasel-home-icon.vue'
-import { useViewport } from '@/composables/viewport-composable'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -103,7 +103,7 @@ export default defineComponent({
     SneaselHomeIcon
   },
   setup() {
-    const { isMobile } = useViewport()
+    const { isMobile } = useBreakpoint()
     return { isMobile }
   },
   data: () => ({

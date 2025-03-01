@@ -8,6 +8,7 @@ export function mockCookingResult(attrs?: Partial<CookingResult>): CookingResult
       cookedRecipes: [
         {
           recipe: curry.INFERNO_CORN_KEEMA_CURRY,
+          level: 1,
           count: 1,
           sunday: 0,
           totalSkipped: 0,
@@ -22,6 +23,7 @@ export function mockCookingResult(attrs?: Partial<CookingResult>): CookingResult
       cookedRecipes: [
         {
           recipe: salad.GREENGRASS_SALAD,
+          level: 1,
           count: 1,
           sunday: 0,
           totalSkipped: 0,
@@ -36,6 +38,7 @@ export function mockCookingResult(attrs?: Partial<CookingResult>): CookingResult
       cookedRecipes: [
         {
           recipe: dessert.FLOWER_GIFT_MACARONS,
+          level: 1,
           count: 1,
           sunday: 0,
           totalSkipped: 0,

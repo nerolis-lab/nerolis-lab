@@ -13,6 +13,7 @@ package-lock.json
 swagger.json
 CHANGELOG.md
 avatars.json
+CODEOWNERS
 
 # directories
 dist

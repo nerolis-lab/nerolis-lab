@@ -85,11 +85,16 @@
             class="expansion-panel"
             @click="toggleDetails(index)"
           >
-            <v-col cols="11" class="text-left" style="padding-left: 48px">
-              {{ cookedRecipe.recipe.name.replace(/[_]/g, ' ') }}
+            <v-col cols="auto" class="flex-center pa-0 ma-0">
+              <v-chip size="small" :color="teamStore.getCurrentTeam.recipeType" variant="tonal">
+                Lv. {{ cookedRecipe.level }}
+              </v-chip>
             </v-col>
-            <v-col cols="1">
-              <v-icon class="flex-right">
+            <v-col>
+              {{ cookedRecipe.recipe.displayName }}
+            </v-col>
+            <v-col cols="auto" class="flex-center">
+              <v-icon>
                 {{ cookedRecipe.showDetails ? 'mdi-minus' : 'mdi-plus' }}
               </v-icon>
             </v-col>
@@ -101,6 +106,10 @@
                 width="36"
                 height="36"
                 class="mr-2"
+                :style="{
+                  transform: 'scale(1.3)',
+                  transformOrigin: 'center'
+                }"
               />
               <v-progress-linear
                 v-model="cookedRecipe.weekdayPercentage"
