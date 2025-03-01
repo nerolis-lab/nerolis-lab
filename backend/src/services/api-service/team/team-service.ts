@@ -101,7 +101,7 @@ export async function upsertTeamMember(params: {
       is_sneaky_snacking: isSneakySnacking,
       member_index: memberIndex
     },
-    filter: { fk_team_id: updatedTeam.id, is_sneaky_snacking: isSneakySnacking, member_index: memberIndex }
+    filter: { fk_team_id: updatedTeam.id, member_index: memberIndex }
   });
 
   return {

@@ -319,6 +319,7 @@ describe('upsertTeamMember', () => {
       carrySize: 3,
       skillLevel: 2,
       nature: 'brave',
+      isSneakySnacking: false,
       subskills: [],
       ingredients: [
         { level: 0, name: 'apple', amount: 2 },
@@ -426,6 +427,7 @@ describe('upsertTeamMember', () => {
       carrySize: 5,
       skillLevel: 3,
       nature: 'bold',
+      isSneakySnacking: false,
       subskills: [
         { level: 10, subskill: 'quick-attack' },
         { level: 25, subskill: 'solar-beam' }
@@ -570,6 +572,7 @@ describe('upsertTeamMember', () => {
       carrySize: 5,
       skillLevel: 3,
       nature: 'bold',
+      isSneakySnacking: false,
       subskills: [
         { level: 10, subskill: 'quick-attack' },
         { level: 25, subskill: 'solar-beam' }
