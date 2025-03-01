@@ -47,10 +47,11 @@ export async function deleteTeam(index: number, user: DBUser) {
 export async function upsertTeamMember(params: {
   teamIndex: number;
   memberIndex: number;
+  isSneakySnacking: boolean;
   request: UpsertTeamMemberRequest;
   user: DBUser;
 }): Promise<UpsertTeamMemberResponse> {
-  const { teamIndex, memberIndex, request, user } = params;
+  const { teamIndex, memberIndex, isSneakySnacking, request, user } = params;
 
   const team = await TeamDAO.find({ fk_user_id: user.id, team_index: teamIndex });
   const updatedTeam = await TeamDAO.upsert({
@@ -94,12 +95,18 @@ export async function upsertTeamMember(params: {
   });
 
   const updatedMemberMeta = await TeamMemberDAO.upsert({
-    updated: { fk_pokemon_id: upsertedMember.id, fk_team_id: updatedTeam.id, member_index: memberIndex },
-    filter: { fk_team_id: updatedTeam.id, member_index: memberIndex }
+    updated: {
+      fk_pokemon_id: upsertedMember.id,
+      fk_team_id: updatedTeam.id,
+      is_sneaky_snacking: isSneakySnacking,
+      member_index: memberIndex
+    },
+    filter: { fk_team_id: updatedTeam.id, is_sneaky_snacking: isSneakySnacking, member_index: memberIndex }
   });
 
   return {
     memberIndex: updatedMemberMeta.member_index,
+    isSneakySnacking: updatedMemberMeta.is_sneaky_snacking,
     externalId: upsertedMember.external_id,
     version: upsertedMember.version,
     saved: upsertedMember.saved,

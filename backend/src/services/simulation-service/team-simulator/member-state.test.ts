@@ -42,6 +42,7 @@ const guaranteedSkillProcMember: TeamMemberExt = {
     level: 60,
     ribbon: 0,
     nature: nature.BASHFUL,
+    isSneakySnacking: false,
     skillLevel: 6,
     subskills: new Set(),
     externalId: 'some id'
@@ -55,6 +56,7 @@ const member: TeamMemberExt = {
     level: 60,
     ribbon: 0,
     nature: nature.BASHFUL,
+    isSneakySnacking: false,
     skillLevel: 6,
     subskills: new Set(),
     externalId: 'some id'
@@ -200,6 +202,7 @@ describe('startDay', () => {
         level: 60,
         ribbon: 0,
         nature: nature.MILD,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -221,6 +224,7 @@ describe('startDay', () => {
         level: 60,
         ribbon: 0,
         nature: nature.MILD,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -254,6 +258,7 @@ describe('startDay', () => {
         level: 60,
         ribbon: 0,
         nature: nature.MILD,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
         externalId: 'some id'
@@ -286,6 +291,7 @@ describe('recoverEnergy', () => {
         level: 60,
         ribbon: 0,
         nature: nature.MILD,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -575,6 +581,7 @@ describe('attemptDayHelp', () => {
         level: 60,
         ribbon: 0,
         nature: nature.BASHFUL,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -875,6 +882,7 @@ describe('attemptDayHelp', () => {
         level: 60,
         ribbon: 0,
         nature: nature.BASHFUL,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -932,6 +940,7 @@ describe('attemptNightHelp', () => {
         level: 60,
         ribbon: 0,
         nature: nature.BASHFUL,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'

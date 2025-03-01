@@ -9,6 +9,7 @@ export interface TeamMemberSettings {
   skillLevel: number;
   carrySize: number;
   ribbon: number;
+  isSneakySnacking: boolean;
   externalId: string;
 }
 export interface TeamMemberSettingsExt {
@@ -18,6 +19,7 @@ export interface TeamMemberSettingsExt {
   skillLevel: number;
   carrySize: number;
   ribbon: number;
+  isSneakySnacking: boolean;
   externalId: string;
 }
 

@@ -81,7 +81,7 @@ class TeamRouterImpl {
       validateAuthHeader,
       async (
         req: Request<
-          { teamIndex: string; memberIndex: string },
+          { teamIndex: string; memberIndex: string; isSneakySnacking: string },
           UpsertTeamMemberResponse,
           UpsertTeamMemberRequest,
           unknown
@@ -91,7 +91,7 @@ class TeamRouterImpl {
         try {
           logger.log('Entered PUT /team/:teamIndex/member/:memberIndex');
 
-          const { teamIndex, memberIndex } = req.params;
+          const { teamIndex, memberIndex, isSneakySnacking } = req.params;
 
           const user = (req as AuthenticatedRequest).user;
           if (!user) {
@@ -101,6 +101,7 @@ class TeamRouterImpl {
           const updatedMember = await controller.upsertMember({
             teamIndex: +teamIndex,
             memberIndex: +memberIndex,
+            isSneakySnacking: isSneakySnacking === 'true',
             request: req.body,
             user
           });

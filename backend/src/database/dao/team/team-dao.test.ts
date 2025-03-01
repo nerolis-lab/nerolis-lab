@@ -286,16 +286,19 @@ describe('findTeamsWithMembers', () => {
 
     // Team: [pika, pika, bulba]
     await TeamMemberDAO.insert({
+      is_sneaky_snacking: false,
       member_index: 0,
       fk_team_id: 1,
       fk_pokemon_id: 1
     });
     await TeamMemberDAO.insert({
+      is_sneaky_snacking: false,
       member_index: 1,
       fk_team_id: 1,
       fk_pokemon_id: 1
     });
     await TeamMemberDAO.insert({
+      is_sneaky_snacking: false,
       member_index: 2,
       fk_team_id: 1,
       fk_pokemon_id: 2

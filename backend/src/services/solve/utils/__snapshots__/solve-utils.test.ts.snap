@@ -4,6 +4,7 @@ exports[`solve-utils > bogusMembers > should create an array of mocked Pokémon 
 {
   "carrySize": 1,
   "externalId": "mock id",
+  "isSneakySnacking": false,
   "level": 1,
   "nature": {
     "energy": 1,

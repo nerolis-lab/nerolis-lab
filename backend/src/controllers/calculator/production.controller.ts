@@ -108,6 +108,7 @@ export default class ProductionController extends Controller {
             camp
           }),
           nature: getNature(member.nature),
+          isSneakySnacking: member.isSneakySnacking,
           skillLevel: member.skillLevel,
           subskills,
           externalId: member.externalId

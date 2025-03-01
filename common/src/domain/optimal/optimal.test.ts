@@ -29,7 +29,7 @@ describe('Optimal', () => {
   const mockedPokemon: Pokemon = { ...mockPokemon(), skill: baseSkill };
 
   it('should use the ribbon provided', () => {
-    const optimalBerry = Optimal.berry(mockedPokemon, 2);
+    const optimalBerry = Optimal.berry(mockedPokemon, false, 2);
 
     expect(optimalBerry).toEqual({
       subskills: [
@@ -42,6 +42,7 @@ describe('Optimal', () => {
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
       carrySize: mockedPokemon.carrySize,
+      isSneakySnacking: false,
       ribbon: 2
     });
   });
@@ -60,6 +61,7 @@ describe('Optimal', () => {
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
       carrySize: mockedPokemon.carrySize,
+      isSneakySnacking: true,
       ribbon: 4
     });
   });
@@ -78,6 +80,7 @@ describe('Optimal', () => {
       nature: QUIET,
       skillLevel: mockedPokemon.skill.maxLevel,
       carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+      isSneakySnacking: false,
       ribbon: 4
     });
   });
@@ -96,13 +99,14 @@ describe('Optimal', () => {
       nature: CAREFUL,
       skillLevel: mockedPokemon.skill.maxLevel,
       carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+      isSneakySnacking: false,
       ribbon: 4
     });
   });
 
   describe('toMemberSettings', () => {
     it('should return correct team member settings for given level', () => {
-      const optimalStats: Optimal = Optimal.berry(mockedPokemon, 2);
+      const optimalStats: Optimal = Optimal.berry(mockedPokemon, true, 2);
 
       const memberSettings = Optimal.toMemberSettings({
         stats: optimalStats,
@@ -113,6 +117,7 @@ describe('Optimal', () => {
       expect(memberSettings).toEqual({
         carrySize: mockedPokemon.carrySize,
         nature: ADAMANT,
+        isSneakySnacking: true,
         ribbon: 2,
         skillLevel: mockedPokemon.skill.maxLevel,
         subskills: new Set(optimalStats.subskills.slice(0, 3).map((subskill) => subskill.subskill.name)),
@@ -133,7 +138,8 @@ describe('Optimal', () => {
         nature: QUIET,
         skillLevel: mockedPokemon.skill.maxLevel,
         carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
-        ribbon: 0
+        ribbon: 0,
+        isSneakySnacking: false
       };
 
       const memberSettings = Optimal.toMemberSettings({
@@ -146,6 +152,7 @@ describe('Optimal', () => {
         carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
         nature: QUIET,
         ribbon: 0,
+        isSneakySnacking: false,
         skillLevel: mockedPokemon.skill.maxLevel,
         subskills: new Set(optimalStats.subskills.slice(0, 4).map((subskill) => subskill.subskill.name)),
         level: 75,
