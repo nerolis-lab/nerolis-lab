@@ -16,6 +16,7 @@ describe('TeamMemberDAO insert', () => {
     const teamMember = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
+      is_sneaky_snacking: false,
       member_index: 0
     });
     expect(teamMember).toBeDefined();
@@ -27,6 +28,7 @@ describe('TeamMemberDAO insert', () => {
     "fk_pokemon_id": 1,
     "fk_team_id": 1,
     "id": 1,
+    "is_sneaky_snacking": true,
     "member_index": 0,
     "version": 1,
   },
@@ -39,6 +41,7 @@ describe('TeamMemberDAO insert', () => {
       TeamMemberDAO.insert({
         fk_team_id: undefined as any,
         fk_pokemon_id: 1,
+        is_sneaky_snacking: false,
         member_index: 0
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.fk_team_id/);
@@ -49,9 +52,21 @@ describe('TeamMemberDAO insert', () => {
       TeamMemberDAO.insert({
         fk_team_id: 1,
         fk_pokemon_id: undefined as any,
+        is_sneaky_snacking: false,
         member_index: 0
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.fk_pokemon_id/);
+  });
+
+  it('shall fail to insert entity without is_sneaky_snacking', async () => {
+    await expect(
+      TeamMemberDAO.insert({
+        fk_team_id: 1,
+        fk_pokemon_id: 1,
+        is_sneaky_snacking: undefined as any,
+        member_index: 0
+      })
+    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.is_sneaky_snacking/);
   });
 
   it('shall fail to insert entity without member_index', async () => {
@@ -59,6 +74,7 @@ describe('TeamMemberDAO insert', () => {
       TeamMemberDAO.insert({
         fk_team_id: 1,
         fk_pokemon_id: 1,
+        is_sneaky_snacking: false,
         member_index: undefined as any
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.member_index/);
@@ -68,12 +84,14 @@ describe('TeamMemberDAO insert', () => {
     await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
+      is_sneaky_snacking: false,
       member_index: 0
     });
     await expect(
       TeamMemberDAO.insert({
         fk_team_id: 1,
         fk_pokemon_id: 2,
+        is_sneaky_snacking: false,
         member_index: 0
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: UNIQUE constraint failed: team_member.fk_team_id, team_member.member_index/);
@@ -85,6 +103,7 @@ describe('TeamMemberDAO update', () => {
     const teamMember = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
+      is_sneaky_snacking: false,
       member_index: 0
     });
     expect(teamMember.fk_pokemon_id).toEqual(1);
@@ -98,6 +117,7 @@ describe('TeamMemberDAO update', () => {
     "fk_pokemon_id": 2,
     "fk_team_id": 1,
     "id": 1,
+    "is_sneaky_snacking": true,
     "member_index": 0,
     "version": 2,
   },
@@ -109,11 +129,13 @@ describe('TeamMemberDAO update', () => {
     await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
+      is_sneaky_snacking: false,
       member_index: 0
     });
     const teamMemberB = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 2,
+      is_sneaky_snacking: false,
       member_index: 1
     });
 
@@ -128,6 +150,7 @@ describe('TeamMemberDAO delete', () => {
     const teamMember = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
+      is_sneaky_snacking: false,
       member_index: 0
     });
 

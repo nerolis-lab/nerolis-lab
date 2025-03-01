@@ -2,6 +2,7 @@ import type TeamController from '@src/controllers/team/team.controller.js';
 import type { AuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import { validateAuthHeader } from '@src/middleware/authorization-middleware.js';
 import { BaseRouter } from '@src/routes/base-router.js';
+import { queryAsBoolean } from '@src/utils/routing/routing-utils.js';
 import type { Request, Response } from 'express';
 import type {
   UpsertTeamMemberRequest,
@@ -92,6 +93,7 @@ class TeamRouterImpl {
           logger.log('Entered PUT /team/:teamIndex/member/:memberIndex');
 
           const { teamIndex, memberIndex } = req.params;
+          const { isSneakySnacking } = req.body;
 
           const user = (req as AuthenticatedRequest).user;
           if (!user) {
@@ -101,6 +103,7 @@ class TeamRouterImpl {
           const updatedMember = await controller.upsertMember({
             teamIndex: +teamIndex,
             memberIndex: +memberIndex,
+            isSneakySnacking: queryAsBoolean(isSneakySnacking),
             request: req.body,
             user
           });

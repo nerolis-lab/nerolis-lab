@@ -21,10 +21,11 @@ export interface Optimal {
   carrySize: number;
   skillLevel: number;
   ribbon: number;
+  isSneakySnacking: boolean;
 }
 
 class OptimalImpl {
-  public berry(pokemon: Pokemon, ribbon?: number): Optimal {
+  public berry(pokemon: Pokemon, isSneakySnacking?: boolean, ribbon?: number): Optimal {
     return {
       subskills: [
         { level: 10, subskill: BERRY_FINDING_S },
@@ -36,11 +37,12 @@ class OptimalImpl {
       nature: ADAMANT,
       skillLevel: pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize,
+      isSneakySnacking: isSneakySnacking ?? true,
       ribbon: ribbon ?? 4
     };
   }
 
-  public ingredient(pokemon: Pokemon, ribbon?: number): Optimal {
+  public ingredient(pokemon: Pokemon, isSneakySnacking?: boolean, ribbon?: number): Optimal {
     return {
       subskills: [
         { level: 10, subskill: INGREDIENT_FINDER_M },
@@ -52,10 +54,11 @@ class OptimalImpl {
       nature: QUIET,
       skillLevel: pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
+      isSneakySnacking: isSneakySnacking ?? false,
       ribbon: ribbon ?? 4
     };
   }
-  public skill(pokemon: Pokemon, ribbon?: number): Optimal {
+  public skill(pokemon: Pokemon, isSneakySnacking?: boolean, ribbon?: number): Optimal {
     return {
       subskills: [
         { level: 10, subskill: SKILL_TRIGGER_M },
@@ -67,6 +70,7 @@ class OptimalImpl {
       nature: CAREFUL,
       skillLevel: pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
+      isSneakySnacking: isSneakySnacking ?? false,
       ribbon: ribbon ?? 4
     };
   }
@@ -90,6 +94,7 @@ class OptimalImpl {
       nature: stats.nature,
       ribbon: stats.ribbon ?? 4,
       skillLevel: stats.skillLevel,
+      isSneakySnacking: stats.isSneakySnacking,
       subskills,
       level,
       externalId

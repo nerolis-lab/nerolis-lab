@@ -79,7 +79,7 @@ export default class SolveController {
   }
 
   private enrichMemberSettings(settings: TeamMemberSettings): TeamMemberSettingsExt {
-    const { level, carrySize, externalId, ribbon, skillLevel } = settings;
+    const { level, carrySize, externalId, ribbon, skillLevel, isSneakySnacking } = settings;
     const subskills = new Set(settings.subskills);
     const nature = getNature(settings.nature);
     return {
@@ -87,6 +87,7 @@ export default class SolveController {
       externalId,
       level,
       nature,
+      isSneakySnacking,
       ribbon,
       skillLevel,
       subskills

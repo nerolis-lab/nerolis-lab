@@ -33,6 +33,7 @@ export default class TeamController {
   public async upsertMember(params: {
     teamIndex: number;
     memberIndex: number;
+    isSneakySnacking: boolean;
     request: UpsertTeamMemberRequest;
     user: DBUser;
   }) {

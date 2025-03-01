@@ -43,6 +43,7 @@ const mockMembers: TeamMemberExt[] = [
       level: 60,
       ribbon: 0,
       nature: nature.BASHFUL,
+      isSneakySnacking: false,
       skillLevel: 6,
       subskills: new Set(),
       externalId: 'some id'
@@ -98,6 +99,7 @@ describe('TeamSimulator', () => {
           level: 60,
           ribbon: 0,
           nature: nature.MILD,
+          isSneakySnacking: false,
           skillLevel: 6,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
           externalId: 'some id'
@@ -123,6 +125,7 @@ describe('TeamSimulator', () => {
         level: 60,
         ribbon: 0,
         nature: nature.BASHFUL,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -153,6 +156,7 @@ describe('TeamSimulator', () => {
         level: 60,
         ribbon: 0,
         nature: nature.BASHFUL,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -168,6 +172,7 @@ describe('TeamSimulator', () => {
         level: 60,
         ribbon: 0,
         nature: nature.BASHFUL,
+        isSneakySnacking: false,
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id'
@@ -199,6 +204,7 @@ describe('TeamSimulator', () => {
         level: 60,
         ribbon: 0,
         nature: nature.ADAMANT,
+        isSneakySnacking: false,
         skillLevel: mainskill.ENERGY_FOR_EVERYONE.maxLevel,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
         externalId: 'some id'
@@ -241,6 +247,7 @@ describe('TeamSimulator', () => {
           level: 60,
           ribbon: 0,
           nature: nature.BASHFUL,
+          isSneakySnacking: false,
           skillLevel: 6,
           subskills: new Set(),
           externalId: 'some id'
@@ -287,6 +294,7 @@ describe('TeamSimulator', () => {
           level: 1,
           ribbon: 0,
           nature: nature.BASHFUL,
+          isSneakySnacking: false,
           skillLevel: 6,
           subskills: new Set(),
           externalId: 'some id'
