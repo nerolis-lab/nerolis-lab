@@ -1,3 +1,10 @@
+## [1.38.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.1...v1.38.2) (2025-03-04)
+
+
+### Bug Fixes
+
+* reset calculator cache on recipe level update ([21ff701](https://github.com/nerolis-lab/nerolis-lab/commit/21ff701736cfbf396fe52abdf16a373805ac5df6))
+
 ## [1.38.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.0...v1.38.1) (2025-03-04)
 
 
