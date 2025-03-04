@@ -1,3 +1,10 @@
+## [1.38.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.3...v1.38.4) (2025-03-04)
+
+
+### Bug Fixes
+
+* css scoped for misc page ([b3d6c90](https://github.com/nerolis-lab/nerolis-lab/commit/b3d6c907c6dc6fe30a5c2f513ad32a66298a4195))
+
 ## [1.38.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.2...v1.38.3) (2025-03-04)
 
 
