@@ -1,3 +1,10 @@
+## [1.38.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.0...v1.38.1) (2025-03-04)
+
+
+### Bug Fixes
+
+* clarify logged out text on recipes page ([f78f77e](https://github.com/nerolis-lab/nerolis-lab/commit/f78f77e2dad0f388f4c69e15a9c46530d59f0021))
+
 # [1.38.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.37.0...v1.38.0) (2025-03-04)
 
 
