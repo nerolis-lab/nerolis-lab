@@ -1,3 +1,10 @@
+# [1.37.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.4...v1.37.0) (2025-03-04)
+
+
+### Features
+
+* adds admin news creation component ([a192ff9](https://github.com/nerolis-lab/nerolis-lab/commit/a192ff9a48630daf2b0ff07f81470504e61c1c40))
+
 ## [1.36.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.3...v1.36.4) (2025-02-26)
 
 ## [1.36.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.2...v1.36.3) (2025-02-25)
