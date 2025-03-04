@@ -23,6 +23,11 @@
       <v-list-item prepend-icon="mdi-calculator" title="Calculator" to="/calculator"></v-list-item>
       <v-list-item prepend-icon="mdi-compare-horizontal" title="Compare" to="/compare"></v-list-item>
       <v-list-item prepend-icon="mdi-food" title="Recipes" to="/recipes"></v-list-item>
+
+      <v-list-item>
+        <v-divider />
+      </v-list-item>
+
       <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings"></v-list-item>
       <v-list-item v-if="isAdmin" prepend-icon="mdi-shield-account" title="Admin" to="/admin"></v-list-item>
     </v-list>
@@ -36,10 +41,6 @@ import InboxMenu from '@/components/inbox/inbox-menu.vue'
 import { useUserStore } from '@/stores/user-store'
 import { Roles } from 'sleepapi-common'
 import { defineComponent } from 'vue'
-import type { CallbackTypes } from 'vue3-google-login'
-
-// used because this is imported by AccountMenu from vue3-google-login and this component thinks it's importing a private type
-type _EnsureUsed = CallbackTypes.CodePopupResponse
 
 export default defineComponent({
   name: 'TheNavBar',

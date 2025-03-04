@@ -50,7 +50,7 @@
                 :key="tabItem.value"
                 :value="tabItem.value"
                 :data-index="index"
-                :class="[teamStore.tab === tabItem.value ? 'frosted-tab' : 'bg-surface', 'tab-item']"
+                :class="[teamStore.tab === tabItem.value ? 'frosted-glass-light' : 'bg-surface', 'tab-item']"
               >
                 {{ tabItem.label }}
               </v-tab>
@@ -145,7 +145,7 @@
                   :key="tabItem.value"
                   :value="tabItem.value"
                   :data-index="index"
-                  :class="[teamStore.tab === tabItem.value ? 'frosted-tab' : 'bg-surface', 'tab-item']"
+                  :class="[teamStore.tab === tabItem.value ? 'frosted-glass-light' : 'bg-surface', 'tab-item']"
                 >
                   {{ tabItem.label }}
                 </v-tab>
@@ -301,11 +301,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.frosted-tab {
-  background: rgba($surface, 0.2) !important;
-  backdrop-filter: blur(10px);
-}
-
 .tab-item {
   flex: 1;
 }
