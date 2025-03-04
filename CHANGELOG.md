@@ -1,3 +1,10 @@
+# [1.38.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.37.0...v1.38.0) (2025-03-04)
+
+
+### Features
+
+* combine settings pages ([5e1cfd7](https://github.com/nerolis-lab/nerolis-lab/commit/5e1cfd790680a3ccba75b6e92ed6fc025cbe5420))
+
 # [1.37.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.36.4...v1.37.0) (2025-03-04)
 
 
