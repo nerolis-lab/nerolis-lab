@@ -37,9 +37,6 @@
           @click="toggleMenu"
           >Friends</v-list-item
         > -->
-        <v-list-item :to="'/user-settings'" :disabled="!userStore.loggedIn" prepend-icon="mdi-cog" @click="toggleMenu"
-          >User Settings</v-list-item
-        >
       </v-list>
 
       <v-divider />
@@ -71,6 +68,8 @@ import { defineComponent } from 'vue'
 import type { CallbackTypes } from 'vue3-google-login'
 import { GoogleLogin } from 'vue3-google-login'
 
+export type CodePopupResponse = CallbackTypes.CodePopupResponse
+
 export default defineComponent({
   name: 'AccountMenu',
   components: {
@@ -86,7 +85,7 @@ export default defineComponent({
     menu: false
   }),
   methods: {
-    async callback(response: CallbackTypes.CodePopupResponse) {
+    async callback(response: CodePopupResponse) {
       const authCode = response.code
       if (authCode) {
         try {

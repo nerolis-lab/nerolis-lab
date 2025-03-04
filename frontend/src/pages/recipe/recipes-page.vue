@@ -146,18 +146,16 @@ import RecipeTableMobile from '@/components/recipe/recipe-table-mobile.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
+import type { UserRecipe } from '@/types/recipe/user-recipe'
 import {
   calculateRecipeValue,
   MAX_POT_SIZE,
   MIN_POT_SIZE,
   RECIPES,
   type Ingredient,
-  type Recipe,
   type RecipeType
 } from 'sleepapi-common'
 import { capitalize, defineComponent, reactive, ref } from 'vue'
-
-export type UserRecipe = Recipe & { level: number; userStrength: number }
 
 export default defineComponent({
   name: 'RecipesPage',

@@ -49,9 +49,9 @@
 <script lang="ts">
 import RecipeLevelButton from '@/components/recipe/recipe-level-button.vue'
 import { useHighlightText } from '@/composables/highlight-text/use-highlight-text'
-import { type UserRecipe } from '@/pages/recipe/recipes-page.vue'
 import { ingredientImage, recipeImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
+import type { UserRecipe } from '@/types/recipe/user-recipe'
 import { localizeNumber, MAX_RECIPE_LEVEL } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 

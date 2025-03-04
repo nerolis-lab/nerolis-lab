@@ -12,7 +12,6 @@ export enum RouteName {
   Settings = 'Settings',
   Profile = 'Profile',
   // Friends = 'Friends',
-  UserSettings = 'UserSettings',
 
   Beta = 'Beta',
 
@@ -29,7 +28,6 @@ const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
 // const FriendsPage = () => import('@/pages/friends/friends-page.vue')
-const UserSettingsPage = () => import('@/pages/user-settings-page.vue')
 
 // Misc
 const BetaPage = () => import('@/pages/beta/beta.vue')
@@ -78,11 +76,6 @@ const router = createRouter({
     //   name: RouteName.Friends,
     //   component: FriendsPage
     // },
-    {
-      path: '/user-settings',
-      name: RouteName.UserSettings,
-      component: UserSettingsPage
-    },
     {
       path: '/beta',
       name: RouteName.Beta,

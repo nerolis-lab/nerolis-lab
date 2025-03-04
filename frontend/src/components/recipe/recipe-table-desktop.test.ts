@@ -1,6 +1,6 @@
 import RecipeTableMobile from '@/components/recipe/recipe-table-mobile.vue'
-import type { UserRecipe } from '@/pages/recipe/recipes-page.vue'
 import { useUserStore } from '@/stores/user-store'
+import type { UserRecipe } from '@/types/recipe/user-recipe'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
