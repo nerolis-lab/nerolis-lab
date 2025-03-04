@@ -15,9 +15,11 @@ const DBNotificationSchema = Type.Composite([
     fk_receiver_id: Type.Number(),
 
     template: NotificationTypeSchema,
+    vfk_content_id: Type.Optional(Type.Number()),
 
     updated_at: Type.Optional(Type.Date()),
-    created_at: Type.Optional(Type.Date())
+    created_at: Type.Optional(Type.Date()),
+    external_id: Type.String({ minLength: 36, maxLength: 36 })
   })
 ]);
 export type DBNotification = Static<typeof DBNotificationSchema>;

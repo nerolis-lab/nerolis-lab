@@ -36,7 +36,7 @@ class StrengthServiceImpl {
   ) {
     const { skill, berries, favored, timeWindow } = params
 
-    if (considerEverythingStrength || skill.isUnit('strength')) {
+    if (considerEverythingStrength || skill.isUnit('strength') || skill.isUnit('metronome') || skill.isUnit('copy')) {
       return this.skillValue(params)
     } else if (skill.isUnit('berries')) {
       return this.berryStrength({ berries, favored, timeWindow })

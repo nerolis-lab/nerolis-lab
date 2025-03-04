@@ -7,7 +7,7 @@ import { DatabaseInsertError } from '@src/domain/error/database/database-error.j
 import type { Filter } from '@src/utils/database-utils/find-filter.js';
 import { inArray, like } from '@src/utils/database-utils/find-filter.js';
 import type { BaseUser, GetFriendsResponse } from 'sleepapi-common';
-import { NotificationType } from 'sleepapi-common';
+import { NotificationType, uuid } from 'sleepapi-common';
 
 class FriendServiceImpl {
   public async getFriends(user: DBUser): Promise<GetFriendsResponse> {
@@ -53,7 +53,8 @@ class FriendServiceImpl {
       return NotificationDAO.insert({
         fk_receiver_id: receiver.id,
         fk_sender_id: user.id,
-        template: NotificationType.FriendRequest
+        template: NotificationType.FriendRequest,
+        external_id: uuid.v4()
       });
     }
   }

@@ -3,15 +3,15 @@
 /**
  * @author Vuetify
  */
-type SelectItemKey<T> = keyof T | (string & {})
-type HeaderCellProps = Record<string, any>
-type FilterMatch = boolean | number | [number, number] | [number, number][]
-interface InternalItem<T = any> {
+export type SelectItemKey<T> = keyof T | (string & {})
+export type HeaderCellProps = Record<string, any>
+export type FilterMatch = boolean | number | [number, number] | [number, number][]
+export interface InternalItem<T = any> {
   value: any
   raw: T
 }
-type FilterFunction = (value: string, query: string, item?: InternalItem) => FilterMatch
-type DataTableCompareFunction<T = any> = (a: T, b: T) => number | null
+export type FilterFunction = (value: string, query: string, item?: InternalItem) => FilterMatch
+export type DataTableCompareFunction<T = any> = (a: T, b: T) => number | null
 
 export type DataTableHeader<T = Record<string, any>> = {
   key?: 'data-table-group' | 'data-table-select' | 'data-table-expand' | (string & {})

@@ -13,14 +13,13 @@ describe('monteCarlo', () => {
       pokemonWithAverageProduce,
       inventoryLimit: CarrySizeUtils.maxCarrySize(MOCKED_POKEMON),
       recoveryEvents: [],
-      skillPercentage: MOCKED_POKEMON.skillPercentage / 100,
+      skillPercentage: 1,
       skillLevel: 6,
       monteCarloIterations: 50
     });
 
     expect(dayHelps).toBe(102);
-    expect(averageDailySkillProcs).toBeGreaterThan(0);
-    expect(averageDailySkillProcs).toBeLessThan(3);
+    expect(averageDailySkillProcs).toBe(102);
     expect(averageNightlySkillProcOdds).toBeGreaterThan(0);
     expect(averageNightlySkillProcOdds).toBeLessThan(1);
   });

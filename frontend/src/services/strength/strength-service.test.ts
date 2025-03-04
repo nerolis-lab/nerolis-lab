@@ -59,6 +59,7 @@ describe('StrengthService', () => {
         favored: favoredBerries,
         timeWindow: mockTimeWindow
       })
+
       expect(skillValueSpy).toHaveBeenCalled()
     })
 
@@ -73,17 +74,6 @@ describe('StrengthService', () => {
         timeWindow: mockTimeWindow
       })
       expect(berryStrengthSpy).toHaveBeenCalled()
-    })
-
-    it('should return 0 for unsupported skill type', () => {
-      const strength = StrengthService.skillStrength({
-        skill: mainskill.SKILL_COPY,
-        amount: 10,
-        berries: mockBerrySet,
-        favored: favoredBerries,
-        timeWindow: mockTimeWindow
-      })
-      expect(strength).toBe(0)
     })
   })
 
