@@ -444,6 +444,11 @@ export const useTeamStore = defineStore('team', {
 
       this.updateTeam()
     },
+    clearCalculatorCache() {
+      for (const team of this.teams) {
+        team.production = undefined
+      }
+    },
     resetCurrentTeamIvs() {
       this.getCurrentTeam.memberIvs = {}
     },

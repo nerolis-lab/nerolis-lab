@@ -21,6 +21,7 @@
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import { useHighlightText } from '@/composables/highlight-text/use-highlight-text'
 import { UserService } from '@/services/user/user-service'
+import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { MAX_RECIPE_LEVEL } from 'sleepapi-common'
 import { defineComponent, ref, watch } from 'vue'
@@ -50,6 +51,7 @@ export default defineComponent({
     const loading = ref(false)
     const { highlightText } = useHighlightText()
     const userStore = useUserStore()
+    const teamStore = useTeamStore()
     const loggedIn = userStore.loggedIn
 
     watch(
@@ -71,6 +73,7 @@ export default defineComponent({
         console.error('Update failed', error)
         localLevel.value = props.modelValue
       } finally {
+        teamStore.clearCalculatorCache()
         loading.value = false
       }
     }
