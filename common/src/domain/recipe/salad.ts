@@ -236,7 +236,7 @@ export const GREENGRASS_SALAD = createSalad({
 
 export const DEFIANT_COFFEE_DRESSED_SALAD = createSalad({
   name: 'DEFIANT_COFFEE_DRESSED_SALAD',
-  displayName: "'Defiant' Coffee-Dressed Salad",
+  displayName: '"Defiant" Coffee-Dressed Salad',
   ingredients: [
     { amount: 28, ingredient: ROUSING_COFFEE },
     { amount: 28, ingredient: BEAN_SAUSAGE },
