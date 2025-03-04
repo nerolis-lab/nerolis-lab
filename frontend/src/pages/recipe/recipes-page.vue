@@ -16,14 +16,12 @@
           <div v-if="isMobile">
             <v-menu>
               <template #activator="{ props }">
-                <v-btn
-                  :prepend-icon="sortAscending ? 'mdi-arrow-up' : 'mdi-arrow-down'"
-                  append-icon="mdi-chevron-down"
-                  color="secondary"
-                  dark
-                  v-bind="props"
-                >
-                  Sort: {{ currentSortLabel }}
+                <v-btn color="secondary" v-bind="props">
+                  <span>Sort: {{ currentSortLabel }}</span>
+                  <v-divider vertical class="mx-2"></v-divider>
+                  <v-icon @click.stop="sortAscending = !sortAscending">
+                    {{ sortAscending ? 'mdi-arrow-up' : 'mdi-arrow-down' }}
+                  </v-icon>
                 </v-btn>
               </template>
               <v-list>
@@ -113,9 +111,10 @@
 
       <v-row dense :class="isMobile ? 'flex-column' : 'flex-row'">
         <v-col v-if="!isLargeDesktop" v:cols="isMobile ? '' : '6'" class="flex-left">
-          <span class="text-strength">
+          <template v-if="loggedIn">
             Setting your recipe levels here will affect calculations across Neroli's Lab
-          </span>
+          </template>
+          <template v-else> Please log in to configure your recipe levels </template>
         </v-col>
         <v-col cols="1" class="flex-center" v-if="!isMobile && !isLargeDesktop" style="align-self: stretch"> </v-col>
         <v-col :cols="isMobile || isLargeDesktop ? '' : '5'" class="flex-right">
