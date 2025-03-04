@@ -1,3 +1,10 @@
+## [1.38.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.2...v1.38.3) (2025-03-04)
+
+
+### Bug Fixes
+
+* desserts uses double quotation in names ([d480f00](https://github.com/nerolis-lab/nerolis-lab/commit/d480f00c3f6b9662afd7168d128f27ff8ee9898a))
+
 ## [1.38.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.1...v1.38.2) (2025-03-04)
 
 
