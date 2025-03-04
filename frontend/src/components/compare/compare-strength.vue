@@ -277,7 +277,7 @@ export default defineComponent({
           ? StrengthService.skillStrength(
               {
                 skill: memberPokemon.skill,
-                amount: memberProduction.skillAmount,
+                amount: memberProduction.skillValue['strength']?.amountToSelf ?? 0,
                 berries: memberProduction.produceFromSkill.berries.map((b) => ({
                   amount: b.amount,
                   berry: b.berry,

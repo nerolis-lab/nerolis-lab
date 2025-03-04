@@ -12,10 +12,6 @@ html {
   }
 }
 
-#app * {
-  transition: all 0.2s ease;
-}
-
 a.simple {
   color: $berry-light;
   transition: unset !important;

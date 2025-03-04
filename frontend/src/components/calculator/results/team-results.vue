@@ -207,10 +207,12 @@ export default defineComponent({
 
       return members.reduce((sum, memberProduction) => {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
+        const memberStrengthValue = memberProduction.skillValue['strength']?.amountToSelf ?? 0
+
         const memberSkillStrength = member
           ? StrengthService.skillStrength({
               skill: member.pokemon.skill,
-              amount: memberProduction.skillAmount,
+              amount: memberStrengthValue,
               berries: memberProduction.produceFromSkill.berries,
               favored: this.teamStore.getCurrentTeam.favoredBerries,
               timeWindow: 'WEEK'

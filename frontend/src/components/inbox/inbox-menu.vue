@@ -15,7 +15,7 @@
         offset-y="10"
       >
         <v-btn v-bind="props" size="48" id="navBarIcon" icon>
-          <v-icon size="32" color="accent">mdi-inbox-full</v-icon>
+          <v-icon size="32">mdi-inbox-full</v-icon>
         </v-btn>
       </v-badge>
 
@@ -47,12 +47,14 @@
 
 <script lang="ts">
 import FriendRequestNotification from '@/components/inbox/notifications/friend-request-notification.vue'
+import NewsNotification from '@/components/inbox/notifications/news/news-notification.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { defineComponent, type Component } from 'vue'
 
 export const notificationComponentMap: Record<string, Component> = {
-  FriendRequest: FriendRequestNotification
+  FriendRequest: FriendRequestNotification,
+  News: NewsNotification
 }
 
 export default defineComponent({

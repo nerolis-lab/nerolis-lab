@@ -5,7 +5,7 @@ import { createMockMemberProductionExt, createMockPokemon, createMockTeamProduct
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { berry } from 'sleepapi-common'
+import { berry, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -85,7 +85,12 @@ describe('TeamResults', () => {
 
               berries: [{ amount: 10, berry: berry.BELUE, level: 10 }]
             },
-            skillAmount: 400
+            skillValue: {
+              strength: {
+                amountToSelf: 400,
+                amountToTeam: 0
+              }
+            } as MemberSkillValue
           }
         }).production
       ]

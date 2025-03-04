@@ -59,11 +59,6 @@
     }
   },
   "extensions": {
-    "recommendations": [
-      "EditorConfig.EditorConfig",
-      "dbaeumer.vscode-eslint",
-      "esbenp.prettier-vscode",
-      "gruntfuggly.todo-tree"
-    ]
+    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "gruntfuggly.todo-tree"]
   }
 }

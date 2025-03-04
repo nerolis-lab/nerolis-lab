@@ -13,7 +13,8 @@ import {
   berryPowerForLevel,
   getMaxIngredientBonus,
   recipeLevelBonus,
-  type MemberProduction
+  type MemberProduction,
+  type MemberSkillValue
 } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -23,7 +24,9 @@ describe('CompareStrength', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
   const mockPokemon = createMockPokemon({ name: 'Ash', skillLevel: 1 })
-  const mockMemberProduction: MemberProduction = createMockMemberProduction()
+  const mockMemberProduction: MemberProduction = createMockMemberProduction({
+    skillValue: { strength: { amountToSelf: 100 } } as MemberSkillValue
+  })
 
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -158,7 +161,7 @@ describe('CompareStrength', () => {
     // Check skill value
     const skillValue = StrengthService.skillStrength({
       skill: member.pokemon.skill,
-      amount: mockMemberProduction.skillAmount,
+      amount: mockMemberProduction.skillValue['strength']?.amountToSelf ?? 0,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       favored: comparisonStore.currentTeam?.favoredBerries ?? [],
       timeWindow: '8H'

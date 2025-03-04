@@ -23,6 +23,7 @@ describe('FriendRequestNotification', () => {
       name: 'Test Sender',
       avatar: 'sender-avatar'
     },
+    externalId: '1',
     template: NotificationType.FriendRequest
   }
 

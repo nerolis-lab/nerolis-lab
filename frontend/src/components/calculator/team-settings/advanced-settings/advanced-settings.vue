@@ -408,7 +408,6 @@ export default defineComponent({
         name: ingredient.ingredient.name,
         amount: ingredient.amount
       }))
-      logger.debug(ingredients)
       const berries = this.stockpiledBerries.map((berry) => ({
         name: berry.berry.name,
         amount: berry.amount,

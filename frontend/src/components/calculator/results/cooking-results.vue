@@ -59,14 +59,16 @@
               {{ ingredient.amount }}
             </v-col>
 
-            <v-col cols="12" class="flex-center">
-              <span class="text-h6"> Weekly starting ingredients </span>
-            </v-col>
+            <template v-if="stockpiledIngredients.length > 0">
+              <v-col cols="12" class="flex-center">
+                <span class="text-h6"> Weekly starting ingredients </span>
+              </v-col>
 
-            <v-col v-for="(ingredient, i) in stockpiledIngredients" :key="i" class="flex-column flex-center" cols="2">
-              <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
-              {{ ingredient.amount }}
-            </v-col>
+              <v-col v-for="(ingredient, i) in stockpiledIngredients" :key="i" class="flex-column flex-center" cols="2">
+                <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
+                {{ ingredient.amount }}
+              </v-col>
+            </template>
           </v-row>
 
           <v-row class="flex-center" dense>

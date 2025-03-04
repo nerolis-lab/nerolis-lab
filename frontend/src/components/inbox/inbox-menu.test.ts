@@ -35,7 +35,8 @@ describe('InboxMenu', () => {
       {
         template: NotificationType.FriendRequest,
         sender: { name: 'Test Sender', friend_code: 'CODE1' },
-        receiver: { name: 'Test Receiver', friend_code: 'CODE2' }
+        receiver: { name: 'Test Receiver', friend_code: 'CODE2' },
+        externalId: '1'
       }
     ]
 

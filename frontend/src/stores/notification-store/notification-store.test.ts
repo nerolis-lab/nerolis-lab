@@ -17,12 +17,14 @@ describe('useNotificationStore', () => {
     {
       template: NotificationType.FriendRequest,
       sender: { name: 'Test Sender', friend_code: 'ABC123' },
-      receiver: { name: 'Test Receiver', friend_code: 'XYZ789' }
+      receiver: { name: 'Test Receiver', friend_code: 'XYZ789' },
+      externalId: '1'
     },
     {
       template: NotificationType.News,
       sender: { name: 'Another Sender', friend_code: 'DEF456' },
-      receiver: { name: 'Another Receiver', friend_code: 'UVW321' }
+      receiver: { name: 'Another Receiver', friend_code: 'UVW321' },
+      externalId: '1'
     }
   ]
 

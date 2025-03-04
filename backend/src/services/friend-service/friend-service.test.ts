@@ -63,7 +63,8 @@ describe('FriendService', () => {
       await NotificationDAO.insert({
         fk_sender_id: sender.id,
         fk_receiver_id: receiver.id,
-        template: NotificationType.FriendRequest
+        template: NotificationType.FriendRequest,
+        external_id: uuid.v4()
       });
 
       await FriendService.acceptRequest(receiver, 'SFC');
@@ -79,7 +80,8 @@ describe('FriendService', () => {
       await NotificationDAO.insert({
         fk_sender_id: sender.id,
         fk_receiver_id: receiver.id,
-        template: NotificationType.FriendRequest
+        template: NotificationType.FriendRequest,
+        external_id: uuid.v4()
       });
 
       await FriendService.declineRequest(receiver, 'SFC');
