@@ -16,7 +16,6 @@ export function ingredientImage(rawName: string) {
   return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
 }
 
-// TEST:
 export function recipeImage(rawName: string) {
   const name = rawName.toLowerCase()
   return `/images/recipe/${name.replace(/[_]/g, '').toLowerCase()}.png`
@@ -44,12 +43,19 @@ export function berryImage(berry: Berry) {
   return `/images/berries/${berry.name.toLowerCase()}.png`
 }
 
-export function islandImage(params: { favoredBerries: Berry[]; background: boolean }) {
-  const { favoredBerries, background } = params
-
-  const berryNames = favoredBerries.map((b) => b.name)
+export function islandImage(params: { favoredBerries?: Berry[]; background?: boolean; island?: island.Island }) {
+  const { favoredBerries, background = false, island: directIsland } = params
   const maybeBackground = background ? 'background-' : ''
 
+  if (directIsland) {
+    return `/images/island/${maybeBackground}${directIsland.shortName}.png`
+  }
+
+  if (!favoredBerries) {
+    return `/images/island/${maybeBackground}greengrass.png`
+  }
+
+  const berryNames = favoredBerries.map((b) => b.name)
   const arraysEqual = (arr1: string[], arr2: string[]) => {
     if (arr1.length !== arr2.length) return false
     return arr1.every((value, index) => value === arr2[index])

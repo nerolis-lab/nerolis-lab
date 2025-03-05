@@ -111,10 +111,10 @@
 
       <v-row dense :class="isMobile ? 'flex-column' : 'flex-row'">
         <v-col v-if="!isLargeDesktop" v:cols="isMobile ? '' : '6'" class="flex-left">
-          <template v-if="loggedIn">
+          <span v-if="loggedIn" class="text-strength text-body-1">
             Setting your recipe levels here will affect calculations across Neroli's Lab
-          </template>
-          <template v-else> Please log in to configure your recipe levels </template>
+          </span>
+          <span v-else class="text-strength text-body-1"> Please log in to configure your recipe levels </span>
         </v-col>
         <v-col cols="1" class="flex-center" v-if="!isMobile && !isLargeDesktop" style="align-self: stretch"> </v-col>
         <v-col :cols="isMobile || isLargeDesktop ? '' : '5'" class="flex-right">

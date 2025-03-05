@@ -1,9 +1,28 @@
 <template>
-  <v-container style="max-width: 600px">
+  <v-container>
     <v-row>
-      <v-col cols="12">
+      <!-- Desktop navigation buttons -->
+      <v-col v-if="!isMobile" cols="3">
+        <v-card class="frosted-glass fill-height">
+          <v-list bg-color="transparent" density="compact" class="py-0">
+            <v-list-item
+              v-for="(tab, index) in tabs"
+              :key="tab.value"
+              :active="activeTab === tab.value"
+              :data-index="index"
+              @click="activeTab = tab.value"
+              density="compact"
+            >
+              {{ tab.text }}
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-col>
+
+      <v-col :cols="isMobile ? 12 : 9">
         <v-card class="pb-4 frosted-glass">
-          <v-tabs v-model="activeTab" centered grow>
+          <!-- Mobile tabs -->
+          <v-tabs v-if="isMobile" v-model="activeTab" centered grow>
             <v-tab
               v-for="(tab, index) in tabs"
               :key="tab.value"
@@ -18,22 +37,7 @@
           <v-tabs-window v-model="activeTab">
             <!-- Game Tab -->
             <v-tabs-window-item value="game">
-              <v-row class="mt-4">
-                <v-col class="flex-center">
-                  <v-divider />
-                </v-col>
-                <v-col class="flex-center text-h6 text-no-wrap">Recipes</v-col>
-                <v-col class="flex-center">
-                  <v-divider />
-                </v-col>
-              </v-row>
-
-              <v-row dense>
-                <v-col cols="12" class="flex-center">
-                  <span>Set your recipe level: </span>
-                  <a class="btn-link" href="/recipes">Recipes</a>
-                </v-col>
-              </v-row>
+              <GameSettings />
             </v-tabs-window-item>
 
             <!-- Account Tab -->
@@ -131,7 +135,9 @@
 </template>
 
 <script lang="ts">
+import GameSettings from '@/components/settings/game-settings/game-settings.vue'
 import { success } from '@/components/snackbar/snackbar.vue'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { GoogleService } from '@/services/login/google-service'
 import { clearCacheKeepLogin } from '@/stores/store-service'
 import { useUserStore } from '@/stores/user-store'
@@ -140,11 +146,15 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'SettingsPage',
+  components: {
+    GameSettings
+  },
   setup() {
     const userStore = useUserStore()
     const versionStore = useVersionStore()
+    const { isMobile } = useBreakpoint()
 
-    return { userStore, versionStore }
+    return { userStore, versionStore, isMobile }
   },
   data() {
     return {

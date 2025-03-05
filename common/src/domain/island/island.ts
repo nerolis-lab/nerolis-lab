@@ -23,6 +23,11 @@ export interface Island {
   berries: Berry[];
 }
 
+export const GREENGRASS: Island = {
+  name: 'Greengrass Isle',
+  shortName: 'greengrass',
+  berries: []
+};
 export const CYAN: Island = {
   name: 'Cyan beach',
   shortName: 'cyan',

@@ -2,7 +2,7 @@ import router from '@/router/router'
 import { GoogleService } from '@/services/login/google-service'
 import { clearCacheAndLogout } from '@/stores/store-service'
 import { defineStore } from 'pinia'
-import { MAX_ISLAND_BONUS, Roles, type LoginResponse } from 'sleepapi-common'
+import { MAX_ISLAND_BONUS, Roles, island, type LoginResponse } from 'sleepapi-common'
 import { googleLogout } from 'vue3-google-login'
 
 export interface UserState {
@@ -13,6 +13,7 @@ export interface UserState {
   externalId: string | null
   friendCode?: string
   role: Roles
+  areaBonus: Record<island.IslandShortName, number>
 }
 
 export interface TokenInfo {
@@ -29,7 +30,11 @@ export const useUserStore = defineStore('user', {
       email: null,
       tokens: null,
       externalId: null,
-      role: Roles.Default
+      role: Roles.Default,
+      areaBonus: Object.fromEntries(island.ISLANDS.map((island) => [island.shortName, 0])) as Record<
+        island.IslandShortName,
+        number
+      >
     }
   },
   getters: {
@@ -40,6 +45,13 @@ export const useUserStore = defineStore('user', {
     migrate() {
       if (!this.role) {
         this.role = Roles.Default
+      }
+
+      if (!this.areaBonus) {
+        this.areaBonus = Object.fromEntries(island.ISLANDS.map((island) => [island.shortName, 0])) as Record<
+          island.IslandShortName,
+          number
+        >
       }
     },
     setUserData(userData: { name: string; avatar?: string; email: string; externalId: string; role: Roles }) {

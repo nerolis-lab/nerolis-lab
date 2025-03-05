@@ -13,6 +13,7 @@
     persistent-hint
     :rules="rules"
     min-width="50"
+    label=""
     @focus="highlightText"
     @blur="handleUpdate"
     @keyup.enter="handleUpdate"
@@ -81,8 +82,7 @@ export default defineComponent({
     )
 
     const availableSlots = computed(() => {
-      const slotNames = Object.keys(slots).filter((name): name is string => name !== 'append-inner')
-      return slotNames.reduce(
+      return Object.keys(slots).reduce(
         (acc, name) => {
           acc[name] = slots[name]
           return acc
