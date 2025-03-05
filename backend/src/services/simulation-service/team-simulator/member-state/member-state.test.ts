@@ -2,7 +2,7 @@ import { mocks } from '@src/bun/index.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
-import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
@@ -75,13 +75,15 @@ const cookingState: CookingState = new CookingState(settings, defaultUserRecipes
 describe('results', () => {
   it('should return correct results after multiple iterations', () => {
     const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
-    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
-    memberState.collectInventory();
+    for (let i = 0; i < 100; i++) {
+      memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+      memberState.collectInventory();
+    }
     const results = memberState.results(10);
 
     expect(results.produceTotal.berries.length).toBeGreaterThan(0);
     expect(results.produceTotal.ingredients.length).toBeGreaterThan(0);
-    expect(results.skillProcs).toBe(0.1);
+    expect(results.skillProcs).toBe(10);
   });
 
   it('should return zero results if no helps or skills are added', () => {
@@ -139,17 +141,19 @@ describe('ivResults', () => {
       team: [member],
       cookingState
     });
-    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
-    memberState.collectInventory();
+    for (let i = 0; i < 100; i++) {
+      memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+      memberState.collectInventory();
+    }
     const ivResults = memberState.ivResults(10);
 
     // we have had 1 help so total should be 1 berry and 5 apples
     // we then divide by 10 since we ran result for 10 days
     expect(ivResults.produceTotal.berries).toHaveLength(1);
-    expect(ivResults.produceTotal.berries[0].amount).toBeCloseTo(0.1);
+    expect(ivResults.produceTotal.berries[0].amount).toBeCloseTo(10.6); // approximately 10
 
     expect(ivResults.produceTotal.ingredients).toHaveLength(1);
-    expect(ivResults.produceTotal.ingredients[0].amount).toBe(0.5);
+    expect(ivResults.produceTotal.ingredients[0].amount).toBe(47); // approximately 50
 
     expect(ivResults.skillProcs).toBeGreaterThan(0);
   });
@@ -319,19 +323,27 @@ describe('addHelps', () => {
       {
         "advanced": {
           "averageHelps": 2,
+          "berryProductionDistribution": {
+            "2": 100,
+          },
           "carrySize": 10,
-          "dayHelps": 0,
+          "dayHelps": 2,
           "dayPeriod": {
             "averageEnergy": 0,
             "averageFrequency": 0,
             "spilledIngredients": [],
           },
           "frequencySplit": {
-            "eighty": NaN,
-            "fourty": NaN,
-            "one": NaN,
-            "sixty": NaN,
-            "zero": NaN,
+            "eighty": 0,
+            "fourty": 0,
+            "one": 0,
+            "sixty": 0,
+            "zero": 0,
+          },
+          "ingredientDistributions": {
+            "Tail": {
+              "0": 100,
+            },
           },
           "ingredientPercentage": 0.2,
           "maxFrequency": 1428.75,
@@ -362,7 +374,7 @@ describe('addHelps', () => {
             "energy": 0,
             "helps": 0,
           },
-          "totalHelps": 0,
+          "totalHelps": 2,
           "totalRecovery": 0,
           "wastedEnergy": 0,
         },
@@ -396,7 +408,7 @@ describe('addHelps', () => {
         "produceTotal": {
           "berries": [
             {
-              "amount": 1.600000023841858,
+              "amount": 2,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -405,22 +417,12 @@ describe('addHelps', () => {
               "level": 60,
             },
           ],
-          "ingredients": [
-            {
-              "amount": 0.4000000059604645,
-              "ingredient": {
-                "longName": "Slowpoke Tail",
-                "name": "Tail",
-                "taxedValue": 342,
-                "value": 342,
-              },
-            },
-          ],
+          "ingredients": [],
         },
         "produceWithoutSkill": {
           "berries": [
             {
-              "amount": 1.600000023841858,
+              "amount": 2,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -429,17 +431,7 @@ describe('addHelps', () => {
               "level": 60,
             },
           ],
-          "ingredients": [
-            {
-              "amount": 0.4000000059604645,
-              "ingredient": {
-                "longName": "Slowpoke Tail",
-                "name": "Tail",
-                "taxedValue": 342,
-                "value": 342,
-              },
-            },
-          ],
+          "ingredients": [],
         },
         "skillAmount": 0,
         "skillProcs": 0,
@@ -457,6 +449,9 @@ describe('addHelps', () => {
       {
         "advanced": {
           "averageHelps": 0,
+          "berryProductionDistribution": {
+            "0": 100,
+          },
           "carrySize": 10,
           "dayHelps": 0,
           "dayPeriod": {
@@ -470,6 +465,11 @@ describe('addHelps', () => {
             "one": NaN,
             "sixty": NaN,
             "zero": NaN,
+          },
+          "ingredientDistributions": {
+            "Tail": {
+              "0": 100,
+            },
           },
           "ingredientPercentage": 0.2,
           "maxFrequency": 1428.75,
@@ -536,7 +536,17 @@ describe('addHelps', () => {
           "ingredients": [],
         },
         "produceWithoutSkill": {
-          "berries": [],
+          "berries": [
+            {
+              "amount": 0,
+              "berry": {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              "level": 60,
+            },
+          ],
           "ingredients": [],
         },
         "skillAmount": 0,
@@ -592,6 +602,9 @@ describe('attemptDayHelp', () => {
       {
         "advanced": {
           "averageHelps": 1,
+          "berryProductionDistribution": {
+            "1": 100,
+          },
           "carrySize": 10,
           "dayHelps": 1,
           "dayPeriod": {
@@ -605,6 +618,11 @@ describe('attemptDayHelp', () => {
             "one": 0,
             "sixty": 1,
             "zero": 0,
+          },
+          "ingredientDistributions": {
+            "Tail": {
+              "0": 100,
+            },
           },
           "ingredientPercentage": 0.2,
           "maxFrequency": 1428.75,
@@ -669,7 +687,7 @@ describe('attemptDayHelp', () => {
         "produceTotal": {
           "berries": [
             {
-              "amount": 0.800000011920929,
+              "amount": 1,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -678,22 +696,12 @@ describe('attemptDayHelp', () => {
               "level": 60,
             },
           ],
-          "ingredients": [
-            {
-              "amount": 0.20000000298023224,
-              "ingredient": {
-                "longName": "Slowpoke Tail",
-                "name": "Tail",
-                "taxedValue": 342,
-                "value": 342,
-              },
-            },
-          ],
+          "ingredients": [],
         },
         "produceWithoutSkill": {
           "berries": [
             {
-              "amount": 0.800000011920929,
+              "amount": 1,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -702,17 +710,7 @@ describe('attemptDayHelp', () => {
               "level": 60,
             },
           ],
-          "ingredients": [
-            {
-              "amount": 0.20000000298023224,
-              "ingredient": {
-                "longName": "Slowpoke Tail",
-                "name": "Tail",
-                "taxedValue": 342,
-                "value": 342,
-              },
-            },
-          ],
+          "ingredients": [],
         },
         "skillAmount": 0,
         "skillProcs": 0,
@@ -734,6 +732,9 @@ describe('attemptDayHelp', () => {
       {
         "advanced": {
           "averageHelps": 0,
+          "berryProductionDistribution": {
+            "0": 100,
+          },
           "carrySize": 10,
           "dayHelps": 0,
           "dayPeriod": {
@@ -747,6 +748,11 @@ describe('attemptDayHelp', () => {
             "one": NaN,
             "sixty": Infinity,
             "zero": NaN,
+          },
+          "ingredientDistributions": {
+            "Tail": {
+              "0": 100,
+            },
           },
           "ingredientPercentage": 0.2,
           "maxFrequency": 1428.75,
@@ -813,7 +819,17 @@ describe('attemptDayHelp', () => {
           "ingredients": [],
         },
         "produceWithoutSkill": {
-          "berries": [],
+          "berries": [
+            {
+              "amount": 0,
+              "berry": {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              "level": 60,
+            },
+          ],
           "ingredients": [],
         },
         "skillAmount": 0,
@@ -948,6 +964,9 @@ describe('attemptNightHelp', () => {
       {
         "advanced": {
           "averageHelps": 1,
+          "berryProductionDistribution": {
+            "1": 100,
+          },
           "carrySize": 10,
           "dayHelps": 0,
           "dayPeriod": {
@@ -961,6 +980,11 @@ describe('attemptNightHelp', () => {
             "one": 0,
             "sixty": 0,
             "zero": 0,
+          },
+          "ingredientDistributions": {
+            "Tail": {
+              "0": 100,
+            },
           },
           "ingredientPercentage": 0.2,
           "maxFrequency": 1428.75,
@@ -1025,7 +1049,7 @@ describe('attemptNightHelp', () => {
         "produceTotal": {
           "berries": [
             {
-              "amount": 0.800000011920929,
+              "amount": 1,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -1034,22 +1058,12 @@ describe('attemptNightHelp', () => {
               "level": 60,
             },
           ],
-          "ingredients": [
-            {
-              "amount": 0.20000000298023224,
-              "ingredient": {
-                "longName": "Slowpoke Tail",
-                "name": "Tail",
-                "taxedValue": 342,
-                "value": 342,
-              },
-            },
-          ],
+          "ingredients": [],
         },
         "produceWithoutSkill": {
           "berries": [
             {
-              "amount": 0.800000011920929,
+              "amount": 1,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -1058,17 +1072,7 @@ describe('attemptNightHelp', () => {
               "level": 60,
             },
           ],
-          "ingredients": [
-            {
-              "amount": 0.20000000298023224,
-              "ingredient": {
-                "longName": "Slowpoke Tail",
-                "name": "Tail",
-                "taxedValue": 342,
-                "value": 342,
-              },
-            },
-          ],
+          "ingredients": [],
         },
         "skillAmount": 2066,
         "skillProcs": 1,

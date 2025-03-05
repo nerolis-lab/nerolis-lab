@@ -52,28 +52,28 @@ const mockMembers: TeamMemberExt[] = [
 
 describe('TeamSimulator', () => {
   it('shall return expected production from mocked pokemon', () => {
-    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers });
+    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, iterations: 1 });
 
     simulator.simulate();
 
     const result = simulator.results();
 
     expect(result.members).toHaveLength(1);
-    expect(result.members[0].produceTotal.berries[0].amount).toMatchInlineSnapshot(`35.400001525878906`);
-    expect(result.members[0].produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`8.600000381469727`);
+    expect(result.members[0].produceTotal.berries[0].amount).toMatchInlineSnapshot(`36`);
+    expect(result.members[0].produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`8`);
     expect(result.members[0].advanced.morningProcs).toBe(2);
     expect(result.members[0].skillProcs).toMatchInlineSnapshot(`35`);
   });
 
   it('shall return expected variant production from mocked pokemon', () => {
-    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers });
+    const simulator = new TeamSimulator({ settings: mockSettings, members: mockMembers, iterations: 1 });
 
     simulator.simulate();
 
     const result = simulator.ivResults(mockMembers[0].settings.externalId);
 
-    expect(result.produceTotal.berries[0].amount).toMatchInlineSnapshot(`35.400001525878906`);
-    expect(result.produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`8.600000381469727`);
+    expect(result.produceTotal.berries[0].amount).toMatchInlineSnapshot(`36`);
+    expect(result.produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`8`);
     expect(result.skillProcs).toMatchInlineSnapshot(`35`);
   });
 
@@ -104,15 +104,15 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings, members });
+    const simulator = new TeamSimulator({ settings, members, iterations: 1 });
 
     simulator.simulate();
 
     const result = simulator.results();
 
     expect(result.members).toHaveLength(1);
-    expect(result.members[0].produceTotal.berries[0].amount).toBeCloseTo(40.56281661987305);
-    expect(result.members[0].produceTotal.ingredients[0].amount).toBeCloseTo(92.89420318603516);
+    expect(result.members[0].produceTotal.berries[0].amount).toBeCloseTo(41);
+    expect(result.members[0].produceTotal.ingredients[0].amount).toBeCloseTo(96);
   });
 
   it('shall calculate team with multiple members', () => {
@@ -130,7 +130,7 @@ describe('TeamSimulator', () => {
     };
 
     const members: TeamMemberExt[] = [mockMember, mockMember, mockMember, mockMember, mockMember];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -138,11 +138,25 @@ describe('TeamSimulator', () => {
 
     expect(result.members).toHaveLength(5);
 
-    for (const member of result.members) {
-      expect(member.produceTotal.berries[0].amount).toEqual(35.400001525878906);
-      expect(member.produceTotal.ingredients[0].amount).toEqual(8.600000381469727);
-      expect(member.skillProcs).toEqual(35);
-    }
+    expect(result.members[0].produceTotal.berries[0].amount).toEqual(37);
+    expect(result.members[0].produceTotal.ingredients[0].amount).toEqual(7);
+    expect(result.members[0].skillProcs).toEqual(35);
+
+    expect(result.members[1].produceTotal.berries[0].amount).toEqual(32);
+    expect(result.members[1].produceTotal.ingredients[0].amount).toEqual(12);
+    expect(result.members[1].skillProcs).toEqual(35);
+
+    expect(result.members[2].produceTotal.berries[0].amount).toEqual(36);
+    expect(result.members[2].produceTotal.ingredients[0].amount).toEqual(8);
+    expect(result.members[2].skillProcs).toEqual(35);
+
+    expect(result.members[3].produceTotal.berries[0].amount).toEqual(36);
+    expect(result.members[3].produceTotal.ingredients[0].amount).toEqual(8);
+    expect(result.members[3].skillProcs).toEqual(35);
+
+    expect(result.members[4].produceTotal.berries[0].amount).toEqual(37);
+    expect(result.members[4].produceTotal.ingredients[0].amount).toEqual(7);
+    expect(result.members[4].skillProcs).toEqual(35);
   });
 
   it('team members shall affect each other', () => {
@@ -175,7 +189,7 @@ describe('TeamSimulator', () => {
     };
 
     const members: TeamMemberExt[] = [mockMember, mockMemberSupport];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -183,8 +197,8 @@ describe('TeamSimulator', () => {
 
     expect(result.members).toHaveLength(2);
 
-    expect(result.members[0].produceTotal.berries[0].amount).toMatchInlineSnapshot(`51`);
-    expect(result.members[0].produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`10`);
+    expect(result.members[0].produceTotal.berries[0].amount).toMatchInlineSnapshot(`50`);
+    expect(result.members[0].produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`11`);
     expect(result.members[0].skillProcs).toMatchInlineSnapshot(`42`);
   });
 
@@ -212,7 +226,7 @@ describe('TeamSimulator', () => {
       mockMemberSupport,
       mockMemberSupport
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -247,7 +261,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -293,7 +307,7 @@ describe('TeamSimulator', () => {
         }
       }
     ];
-    const simulator = new TeamSimulator({ settings: mockSettings, members });
+    const simulator = new TeamSimulator({ settings: mockSettings, members, iterations: 1 });
 
     simulator.simulate();
 
@@ -314,7 +328,8 @@ describe('recoverMemberEnergy', () => {
   it("shall recover every member's energy", () => {
     const simulator = new TeamSimulator({
       settings: mockSettings,
-      members: mockMembers.concat(mockMembers)
+      members: mockMembers.concat(mockMembers),
+      iterations: 1
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
@@ -334,8 +349,8 @@ describe('recoverMemberEnergy', () => {
   it('shall recover member energy', () => {
     const simulator = new TeamSimulator({
       settings: mockSettings,
-      members: mockMembers.concat(mockMembers)
-
+      members: mockMembers.concat(mockMembers),
+      iterations: 1
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
     simulator.memberStates[0].recoverEnergy(100, simulator.memberStates[0]);

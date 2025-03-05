@@ -15,13 +15,15 @@
  */
 
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
-import { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type {
   SkillActivationValue,
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type {
   CalculateTeamResponse,
   MemberProductionBase,
@@ -31,10 +33,11 @@ import type {
   Time,
   TimePeriod
 } from 'sleepapi-common';
-import { mockMainskill, RandomUtils } from 'sleepapi-common';
+import { mockMainskill } from 'sleepapi-common';
 
 export class TeamSimulator {
   private run = 0;
+  private rng: PreGeneratedRandom;
 
   private memberStates: MemberState[] = [];
   private memberStatesWithoutFillers: MemberState[] = [];
@@ -49,8 +52,17 @@ export class TeamSimulator {
   private fullDayDuration = 1440;
   private energyDegradeCounter = -1; // -1 so it takes 3 iterations and first degrade is after 10 minutes, then 10 minutes between each
 
-  constructor(params: { settings: TeamSettingsExt; members: TeamMemberExt[]; cookingState?: CookingState }) {
-    const { settings, members, cookingState } = params;
+  constructor(params: {
+    settings: TeamSettingsExt;
+    members: TeamMemberExt[];
+    cookingState?: CookingState;
+    iterations: number;
+    rng?: PreGeneratedRandom;
+  }) {
+    const { settings, members, cookingState, iterations, rng } = params;
+
+    // Initialize with pre-generated random numbers if not provided
+    this.rng = rng || createPreGeneratedRandom();
 
     this.cookingState = cookingState;
 
@@ -82,7 +94,14 @@ export class TeamSimulator {
     this.mealTimes = mealTimes.map((time) => TimeUtils.timeToMinutesSinceStart(time, this.dayPeriod.start));
 
     for (const member of members) {
-      const memberState = new MemberState({ member, team: members, settings, cookingState: this.cookingState });
+      const memberState = new MemberState({
+        member,
+        team: members,
+        settings,
+        cookingState: this.cookingState,
+        iterations,
+        rng: this.rng
+      });
       this.memberStates.push(memberState);
       if (!member.pokemonWithIngredients.pokemon.skill.isSkill(mockMainskill)) {
         this.memberStatesWithoutFillers.push(memberState);
@@ -253,8 +272,8 @@ export class TeamSimulator {
     const lowestEnergyMembers = sortedMembers.filter((mem) => mem.energy === lowestEnergy);
     const allMembers = this.memberStates;
 
-    const targetGroup = RandomUtils.roll(chanceTargetLowest) ? lowestEnergyMembers : allMembers;
-    return [RandomUtils.randomElement(targetGroup)].filter((member): member is MemberState => member !== undefined);
+    const targetGroup = this.rng() < chanceTargetLowest ? lowestEnergyMembers : allMembers;
+    return [this.rng.randomElement(targetGroup)].filter((member): member is MemberState => member !== undefined);
   }
 
   private collectInventory() {

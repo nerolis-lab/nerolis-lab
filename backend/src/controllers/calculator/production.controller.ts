@@ -16,7 +16,6 @@ import {
 } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { queryAsBoolean, queryAsNumber } from '@src/utils/routing/routing-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import * as tsoa from '@tsoa/runtime';
 import type {
   CalculateIvRequest,
   CalculateTeamRequest,
@@ -45,17 +44,9 @@ import {
   mainskill,
   salad
 } from 'sleepapi-common';
-const { Controller, Post, Path, Body, Query, Route, Tags } = tsoa;
 
-@Route('api/calculator')
-@Tags('calculator')
-export default class ProductionController extends Controller {
-  @Post('production/{name}')
-  public async calculatePokemonProduction(
-    @Path() name: string,
-    @Body() body: SingleProductionRequest,
-    @Query() includeAnalysis?: boolean
-  ) {
+export default class ProductionController {
+  public async calculatePokemonProduction(name: string, body: SingleProductionRequest, includeAnalysis?: boolean) {
     const pokemon = getPokemon(name);
     const parsedInput = this.#parseSingleProductionInput(pokemon, body);
     return calculatePokemonProduction(pokemon, parsedInput, body.ingredientSet, queryAsBoolean(includeAnalysis), 5000);

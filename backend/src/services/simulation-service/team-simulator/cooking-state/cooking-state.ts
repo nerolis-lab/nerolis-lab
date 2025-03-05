@@ -1,3 +1,5 @@
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type {
   UserRecipeFlat,
   UserRecipes
@@ -5,7 +7,6 @@ import type {
 import type { CookedRecipeResult, CookingResult, IngredientIndexToFloatAmount, TeamSettingsExt } from 'sleepapi-common';
 import {
   MAX_POT_SIZE,
-  RandomUtils,
   curry,
   dessert,
   emptyIngredientInventoryFloat,
@@ -34,6 +35,7 @@ export class CookingState {
   private bonusCritChance = 0;
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
+  private rng: PreGeneratedRandom;
 
   private userCurries: UserRecipeFlat[];
   private userSalads: UserRecipeFlat[];
@@ -56,11 +58,12 @@ export class CookingState {
   private currentSaladStockpile: IngredientIndexToFloatAmount;
   private currentDessertStockpile: IngredientIndexToFloatAmount;
 
-  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes) {
+  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes, rng: PreGeneratedRandom | null = null) {
     const { curries, salads, desserts } = userRecipes;
     this.userCurries = curries;
     this.userSalads = salads;
     this.userDesserts = desserts;
+    this.rng = rng || createPreGeneratedRandom();
 
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
@@ -115,7 +118,7 @@ export class CookingState {
       currentStockpile: this.currentDessertStockpile
     }) ?? { ...dessert.MIXED_JUICE_FLAT, level: 1 };
 
-    const extraTasty = RandomUtils.roll(currentCritChance);
+    const extraTasty = this.rng() < currentCritChance;
     const extraTastyFactor = extraTasty ? (sunday ? 3 : 2) : 1;
 
     if (extraTasty) {

@@ -1,5 +1,6 @@
 import { NotImplementedError } from '@src/domain/error/programming/not-implemented-error.js';
-import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import { calculateDistribution } from '@src/services/simulation-service/team-simulator/member-state/member-state-utils.js';
+import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-disguise-effect.js';
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-effect.js';
@@ -26,13 +27,14 @@ import type {
   SkillActivationValue,
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
-import { calculateSkillProcDistribution } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-utils.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type { Mainskill, MemberSkillValue } from 'sleepapi-common';
-import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits, RandomUtils } from 'sleepapi-common';
+import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits } from 'sleepapi-common';
 
 export class SkillState {
   memberState: MemberState;
   skillEffects: Map<Mainskill, SkillEffect>;
+  rng: PreGeneratedRandom;
 
   // quick access
   private pityProcThreshold;
@@ -51,8 +53,9 @@ export class SkillState {
   private skillCrits = 0;
   private skillProcsPerDay: number[] = [];
 
-  constructor(memberState: MemberState) {
+  constructor(memberState: MemberState, rng: PreGeneratedRandom) {
     this.memberState = memberState;
+    this.rng = rng;
 
     this.skillEffects = new Map([
       [mainskill.BERRY_BURST, new BerryBurstEffect()],
@@ -86,7 +89,7 @@ export class SkillState {
     const activations: TeamSkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
 
-    if (this.helpsSinceLastSkillProc > this.pityProcThreshold || RandomUtils.roll(this.skillPercentage)) {
+    if (this.helpsSinceLastSkillProc > this.pityProcThreshold || this.rng() < this.skillPercentage) {
       this.todaysSkillProcs += 1;
       activations.push(this.activateSkill(this.skill));
     }
@@ -124,7 +127,7 @@ export class SkillState {
       skillCrits: this.skillCrits / iterations,
       skillRegularValue: this.regularValue / iterations,
       skillCritValue: this.critValue / iterations,
-      skillProcDistribution: calculateSkillProcDistribution(skillProcsPerDay)
+      skillProcDistribution: calculateDistribution(skillProcsPerDay)
     };
   }
 

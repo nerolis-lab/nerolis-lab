@@ -1,8 +1,8 @@
 import { mocks } from '@src/bun/index.js';
-import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state.js';
+import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-disguise-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { CarrySizeUtils, mainskill, RandomUtils } from 'sleepapi-common';
+import { CarrySizeUtils, mainskill } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('BerryBurstDisguiseEffect', () => {
@@ -20,7 +20,7 @@ describe('BerryBurstDisguiseEffect', () => {
     const regularSelfAmount = 10;
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    vimic(RandomUtils, 'roll', () => false);
+    vimic(skillState, 'rng', () => 0.9);
     mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST_DISGUISE) - 1] =
       regularOtherAmount;
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
@@ -61,7 +61,7 @@ describe('BerryBurstDisguiseEffect', () => {
     const regularSelfAmount = 10;
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    vimic(RandomUtils, 'roll', () => true);
+    vimic(skillState, 'rng', () => 0.01);
     mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST_DISGUISE) - 1] =
       regularOtherAmount;
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
@@ -97,7 +97,7 @@ describe('BerryBurstDisguiseEffect', () => {
     memberState.otherMembers = [];
     const regularSelfAmount = 10;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    vimic(RandomUtils, 'roll', () => false);
+    vimic(skillState, 'rng', () => 0.9);
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstDisguiseEffect.activate(skillState);

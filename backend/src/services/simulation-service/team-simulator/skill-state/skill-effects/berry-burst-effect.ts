@@ -23,7 +23,7 @@ export class BerryBurstEffect implements SkillEffect {
       level: memberState.level
     });
 
-    memberState.totalProduce = CarrySizeUtils.addToInventory(memberState.totalProduce, {
+    memberState.skillProduce = CarrySizeUtils.addToInventory(memberState.skillProduce, {
       ingredients: [],
       berries
     });

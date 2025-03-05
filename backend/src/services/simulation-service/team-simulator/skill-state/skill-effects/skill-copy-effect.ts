@@ -1,11 +1,12 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill, mockPokemon, RandomUtils } from 'sleepapi-common';
+import { mainskill, mockPokemon } from 'sleepapi-common';
 
 export class SkillCopyEffect implements SkillEffect {
   activate(skillState: SkillState): TeamSkillActivation {
-    const selectedMember = RandomUtils.randomElement(skillState.memberState.otherMembers);
+    const otherMembers = skillState.memberState.otherMembers;
+    const selectedMember = otherMembers.length > 0 ? skillState.rng.randomElement(otherMembers) : undefined;
 
     let copiedSkill = selectedMember?.pokemonWithIngredients.pokemon.skill;
 

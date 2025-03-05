@@ -98,31 +98,31 @@ describe('calculateTeam', () => {
 
     expect(result.members).toHaveLength(1);
     expect(result.members[0].produceTotal).toMatchInlineSnapshot(`
-{
-  "berries": [
-    {
-      "amount": 39.98336410522461,
-      "berry": {
-        "name": "LUM",
-        "type": "bug",
-        "value": 24,
-      },
-      "level": 60,
-    },
-  ],
-  "ingredients": [
-    {
-      "amount": 90.93164825439453,
-      "ingredient": {
-        "longName": "Honey",
-        "name": "Honey",
-        "taxedValue": 29.8,
-        "value": 101,
-      },
-    },
-  ],
-}
-`);
+      {
+        "berries": [
+          {
+            "amount": 40.2152,
+            "berry": {
+              "name": "LUM",
+              "type": "bug",
+              "value": 24,
+            },
+            "level": 60,
+          },
+        ],
+        "ingredients": [
+          {
+            "amount": 90.94400024414062,
+            "ingredient": {
+              "longName": "Honey",
+              "name": "Honey",
+              "taxedValue": 29.8,
+              "value": 101,
+            },
+          },
+        ],
+      }
+    `);
   });
 });
 
