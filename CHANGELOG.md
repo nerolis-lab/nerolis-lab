@@ -1,3 +1,10 @@
+## [1.38.5](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.4...v1.38.5) (2025-03-05)
+
+
+### Bug Fixes
+
+* recipes link in settings to correct page ([7e5c32b](https://github.com/nerolis-lab/nerolis-lab/commit/7e5c32b623a30cb4604eab5c78e3b7ad80e43fd6))
+
 ## [1.38.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.3...v1.38.4) (2025-03-04)
 
 
