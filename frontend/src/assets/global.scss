@@ -30,6 +30,34 @@ a.simple {
   }
 }
 
+a.btn-link {
+  display: block;
+  text-decoration: none;
+  color: $berry-light;
+  position: relative;
+  border-bottom: 1px solid $berry-light;
+  padding: 0px 15px 0px 1px;
+  margin: 0 5px;
+}
+
+a.btn-link:hover,
+a.btn-link:active {
+  color: $berry;
+  border-color: $berry;
+}
+
+a.btn-link:visited {
+  color: $berry-light;
+}
+
+a.btn-link::after {
+  content: '\F0142';
+  font-family: 'Material Design Icons';
+  font-size: 20px;
+  position: absolute;
+  top: -2px;
+}
+
 .text-outline {
   text-shadow:
     -0.5px -0.5px 0 #000,

@@ -30,11 +30,8 @@
 
               <v-row dense>
                 <v-col cols="12" class="flex-center">
-                  <span class="mr-2">Set your recipe level: </span>
-                  <a class="simple" href="https://discord.gg/ndzTXRHWzK" target="_blank" rel="noopener noreferrer">
-                    <span>Recipes</span>
-                    <v-icon icon="mdi-chevron-right" size="x-small"></v-icon>
-                  </a>
+                  <span>Set your recipe level: </span>
+                  <a class="btn-link" href="/recipes">Recipes</a>
                 </v-col>
               </v-row>
             </v-tabs-window-item>
