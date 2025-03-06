@@ -1,3 +1,10 @@
+# [1.39.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.5...v1.39.0) (2025-03-06)
+
+
+### Features
+
+* Roll berry/ing helps individually instead of average ([20f1907](https://github.com/nerolis-lab/nerolis-lab/commit/20f1907b07844c5f0d4ac13d6f2d31d2960a5a4a))
+
 ## [1.38.5](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.4...v1.38.5) (2025-03-05)
 
 
