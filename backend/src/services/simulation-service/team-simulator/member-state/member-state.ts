@@ -152,9 +152,7 @@ export class MemberState {
     // Each iteration is one day
     this.totalDays = iterations;
     this.berryProductionPerDay = new Int16Array(iterations);
-    this.ingredientProductionPerDay = Array(iterations)
-      .fill(null)
-      .map(() => emptyIngredientInventoryInt());
+    this.ingredientProductionPerDay = Array.from({ length: iterations }, emptyIngredientInventoryInt);
 
     this.camp = settings.camp;
     this.cookingState = cookingState;
