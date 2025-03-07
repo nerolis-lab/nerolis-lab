@@ -16,6 +16,7 @@ import {
   subskill
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 
 const mockPokemonSet: PokemonWithIngredients = {
   pokemon: mockPokemon({
@@ -70,7 +71,7 @@ const settings: TeamSettingsExt = {
   stockpiledIngredients: emptyIngredientInventoryFloat()
 };
 
-const cookingState: CookingState = new CookingState(settings, defaultUserRecipes());
+const cookingState: CookingState = new CookingState(settings, defaultUserRecipes(), createPreGeneratedRandom());
 
 describe('results', () => {
   it('should return correct results after multiple iterations', () => {

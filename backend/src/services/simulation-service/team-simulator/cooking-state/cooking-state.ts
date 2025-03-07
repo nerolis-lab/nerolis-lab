@@ -1,4 +1,3 @@
-import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type {
   UserRecipeFlat,
@@ -58,12 +57,12 @@ export class CookingState {
   private currentSaladStockpile: IngredientIndexToFloatAmount;
   private currentDessertStockpile: IngredientIndexToFloatAmount;
 
-  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes, rng: PreGeneratedRandom | null = null) {
+  constructor(settings: TeamSettingsExt, userRecipes: UserRecipes, rng: PreGeneratedRandom) {
     const { curries, salads, desserts } = userRecipes;
     this.userCurries = curries;
     this.userSalads = salads;
     this.userDesserts = desserts;
-    this.rng = rng || createPreGeneratedRandom();
+    this.rng = rng;
 
     this.camp = settings.camp;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
