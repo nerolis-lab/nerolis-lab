@@ -13,7 +13,7 @@ import globals from 'globals';
 
 export default typescriptEslint.config(
   {
-    ignores: ['**/node_modules', '**/dist', '**/coverage', '**/.vscode', '**/dev-dist', '*.d.ts']
+    ignores: ['**/node_modules', '**/dist', '**/coverage', '**/.vscode', '**/dev-dist', '*.d.ts', '.venv/**']
   },
 
   // frontend-specific rules
