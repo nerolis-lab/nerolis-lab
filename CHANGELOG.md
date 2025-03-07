@@ -1,3 +1,10 @@
+## [1.39.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.39.1...v1.39.2) (2025-03-07)
+
+
+### Bug Fixes
+
+* recipes table desktop sorts displayName with alphanumeric only ([e9c5c13](https://github.com/nerolis-lab/nerolis-lab/commit/e9c5c13c16a522bb351c105a804efc10d229265e))
+
 ## [1.39.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.39.0...v1.39.1) (2025-03-07)
 
 
