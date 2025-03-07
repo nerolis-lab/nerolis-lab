@@ -1,3 +1,14 @@
+## [1.39.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.39.0...v1.39.1) (2025-03-07)
+
+
+### Bug Fixes
+
+* Hide .venv from eslint ([c8bb3d5](https://github.com/nerolis-lab/nerolis-lab/commit/c8bb3d52880f436fd6461330991ed0a79db20d42))
+* Make rng argument mandatory ([41d0eb5](https://github.com/nerolis-lab/nerolis-lab/commit/41d0eb542a7ee448ad907ee26d1a9cbd465c1a4a))
+* More idiomatic Array creation ([d6bfdc3](https://github.com/nerolis-lab/nerolis-lab/commit/d6bfdc3a7af70bf719fe8ed971b1b72f8ddb78ed))
+* Remove helpsSinceLastCook ([dee2664](https://github.com/nerolis-lab/nerolis-lab/commit/dee266490b692bc97939685297c385c3db2dc54d))
+* Remove unnecessary member variables ([d03ed06](https://github.com/nerolis-lab/nerolis-lab/commit/d03ed06ec7e5a9667c8f87080a227ffb3089355e))
+
 # [1.39.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.38.5...v1.39.0) (2025-03-06)
 
 
