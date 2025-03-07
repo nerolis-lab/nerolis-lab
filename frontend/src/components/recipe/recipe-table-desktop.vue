@@ -106,7 +106,15 @@ export default defineComponent({
     const headers = computed(() => {
       const baseHeaders: DataTableHeader[] = [
         { key: 'image', width: '50px', sortable: false },
-        { title: 'Name', key: 'displayName' },
+        {
+          title: 'Name',
+          key: 'displayName',
+          sort: (a: string, b: string) => {
+            const textA = a.replace(/[^\w\s]/gi, '').toLowerCase()
+            const textB = b.replace(/[^\w\s]/gi, '').toLowerCase()
+            return textA.localeCompare(textB)
+          }
+        },
         { title: 'Strength', key: 'userStrength', width: '130px', align: 'end' },
         { title: 'Size', key: 'nrOfIngredients', align: 'end' },
         { title: 'Bonus', key: 'bonus', align: 'end' },
