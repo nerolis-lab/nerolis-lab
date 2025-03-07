@@ -124,18 +124,6 @@ export class MemberState {
   // This tracks the actual amount of ingredients accumulated since last cook
   private ingredientsSinceLastCook = emptyIngredientInventoryFloat();
 
-  // We roll a random number between 0 and 1, then:
-  //
-  //     berry   ing0   ing30   ing60
-  //  |--------|------|-------|--------| 1
-  //  |        |      |       | ingredient60Threshold
-  //  |        |      | ingredient30Threshold
-  //  |        | ingredient0Threshold
-  //  | 0
-  //
-  private ingredient0Threshold: number;
-  private ingredient30Threshold: number;
-  private ingredient60Threshold: number;
   // Integer thresholds for uint8 comparisons (0-255)
   private ingredient0ThresholdInt: number;
   private ingredient30ThresholdInt: number;
@@ -256,19 +244,23 @@ export class MemberState {
     this.otherMembers = team.filter((m) => m.settings.externalId !== member.settings.externalId); // this needs updating when we add team rotation
     this.skillState = new SkillState(this, this.rng);
 
-    this.ingredient0Threshold = 1 - this.ingredientPercentage;
+    // Calculate thresholds locally
+    const ingredient0Threshold = 1 - this.ingredientPercentage;
+    let ingredient30Threshold: number;
+    let ingredient60Threshold: number;
+
     if (this.level60IngredientSet) {
       const ingredientChunk = this.ingredientPercentage / 3;
-      this.ingredient30Threshold = this.ingredient0Threshold + ingredientChunk;
-      this.ingredient60Threshold = this.ingredient30Threshold + ingredientChunk;
+      ingredient30Threshold = ingredient0Threshold + ingredientChunk;
+      ingredient60Threshold = ingredient30Threshold + ingredientChunk;
     } else if (this.level30IngredientSet) {
       const ingredientChunk = this.ingredientPercentage / 2;
-      this.ingredient30Threshold = this.ingredient0Threshold + ingredientChunk;
+      ingredient30Threshold = ingredient0Threshold + ingredientChunk;
       // NB: Math.random() is [0, 1) so 1.0 is never rolled
-      this.ingredient60Threshold = 1.0;
+      ingredient60Threshold = 1.0;
     } else {
-      this.ingredient30Threshold = 1.0;
-      this.ingredient60Threshold = 1.0;
+      ingredient30Threshold = 1.0;
+      ingredient60Threshold = 1.0;
     }
 
     // Pre-compute ingredient IDs and amounts
@@ -286,9 +278,9 @@ export class MemberState {
     }
 
     // Integer thresholds for uint8 comparisons (0-255)
-    this.ingredient0ThresholdInt = Math.round(this.ingredient0Threshold * 255);
-    this.ingredient30ThresholdInt = Math.round(this.ingredient30Threshold * 255);
-    this.ingredient60ThresholdInt = Math.round(this.ingredient60Threshold * 255);
+    this.ingredient0ThresholdInt = Math.round(ingredient0Threshold * 255);
+    this.ingredient30ThresholdInt = Math.round(ingredient30Threshold * 255);
+    this.ingredient60ThresholdInt = Math.round(ingredient60Threshold * 255);
   }
 
   get level() {
