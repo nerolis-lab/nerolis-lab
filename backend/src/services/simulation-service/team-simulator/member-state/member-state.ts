@@ -66,7 +66,6 @@ export class MemberState {
   private nightPeriod: TimePeriod;
   private fullDayDuration = 1440;
   private carriedAmount = 0;
-  private helpsSinceLastCook = 0;
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
   private totalBerryProduction = 0;
@@ -393,7 +392,6 @@ export class MemberState {
   public attemptDayHelpInner() {
     this.totalDayHelps += 1;
     this.totalAverageHelps += 1;
-    this.helpsSinceLastCook += 1;
 
     // Use uint8 for direct integer comparison
     const rollInt = this.rng.getUint8();
@@ -477,7 +475,6 @@ export class MemberState {
         this.totalBerryProduction += this.berryDropAmount;
         this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
         this.totalAverageHelps += 1;
-        this.helpsSinceLastCook += 1;
 
         if (!isBerryDrop) {
           // Track void ingredient drop
@@ -492,7 +489,6 @@ export class MemberState {
         // Calculate how much of the help fits in the bag
         const helpRatio = inventorySpace >= totalDropAmount ? 1 : inventorySpace / totalDropAmount;
         this.totalAverageHelps += helpRatio;
-        this.helpsSinceLastCook += helpRatio;
 
         // Calculate how much of the help fits in the bag
         const dropAmount = Math.min(totalDropAmount, inventorySpace);
