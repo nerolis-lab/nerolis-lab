@@ -3,7 +3,7 @@ import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { island } from 'sleepapi-common'
+import { CYAN } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -150,9 +150,9 @@ describe('TeamSettings', () => {
 
   it('shall update favoredBerries on emit', async () => {
     const teamStore = useTeamStore()
-    wrapper.vm.updateFavoredBerries(island.CYAN.berries)
+    wrapper.vm.updateFavoredBerries(CYAN.berries)
     await nextTick()
 
-    expect(teamStore.getCurrentTeam.favoredBerries).toEqual(island.CYAN.berries)
+    expect(teamStore.getCurrentTeam.favoredBerries).toEqual(CYAN.berries)
   })
 })

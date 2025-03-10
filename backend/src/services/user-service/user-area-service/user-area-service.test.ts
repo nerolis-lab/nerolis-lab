@@ -36,13 +36,13 @@ describe('getAreaBonuses', () => {
     });
 
     // Insert some area bonus records
-    await UserAreaDAO.insert({ fk_user_id: user.id, area: 'Forest', bonus: 10 });
-    await UserAreaDAO.insert({ fk_user_id: user.id, area: 'Mountain', bonus: 20 });
+    await UserAreaDAO.insert({ fk_user_id: user.id, area: 'greengrass', bonus: 10 });
+    await UserAreaDAO.insert({ fk_user_id: user.id, area: 'powerplant', bonus: 20 });
 
     const bonuses = await getAreaBonuses(user);
     expect(bonuses).toEqual({
-      Forest: 10,
-      Mountain: 20
+      greengrass: 10,
+      powerplant: 20
     });
   });
 });
@@ -57,9 +57,9 @@ describe('upsertAreaBonus', () => {
       role: Roles.Default
     });
 
-    await upsertAreaBonus({ user, area: 'Beach', bonus: 15 });
+    await upsertAreaBonus({ user, area: 'greengrass', bonus: 15 });
 
-    const records = await UserAreaDAO.findMultiple({ fk_user_id: user.id, area: 'Beach' });
+    const records = await UserAreaDAO.findMultiple({ fk_user_id: user.id, area: 'greengrass' });
     expect(records).toHaveLength(1);
     expect(records[0].bonus).toBe(15);
   });
@@ -73,8 +73,8 @@ describe('upsertAreaBonus', () => {
       role: Roles.Default
     });
 
-    await upsertAreaBonus({ user, area: 'City', bonus: 5 });
-    await upsertAreaBonus({ user, area: 'City', bonus: 12 });
+    await upsertAreaBonus({ user, area: 'greengrass', bonus: 5 });
+    await upsertAreaBonus({ user, area: 'greengrass', bonus: 12 });
 
     const records = await UserAreaDAO.findMultiple();
     expect(records).toHaveLength(1);

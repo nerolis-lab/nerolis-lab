@@ -78,7 +78,8 @@ describe('MemberProductionSkill', () => {
         (sum, cur) => (sum + cur.berry.name === MIMIKYU.berry.name ? cur.amount : 0),
         0
       ),
-      timeWindow: '24H'
+      timeWindow: '24H',
+      areaBonus: 1
     })
     const expectedTeam = StrengthService.skillValue({
       skill: mockMember.member.pokemon.skill,
@@ -86,7 +87,8 @@ describe('MemberProductionSkill', () => {
         (sum, cur) => (sum + cur.berry.name !== MIMIKYU.berry.name ? cur.amount : 0),
         0
       ),
-      timeWindow: '24H'
+      timeWindow: '24H',
+      areaBonus: 1
     })
     expect(totalSkillValue.at(0)?.text()).toContain(
       `${compactNumber(expectedValue)} ${MIMIKYU.berry.name.toLowerCase()}`

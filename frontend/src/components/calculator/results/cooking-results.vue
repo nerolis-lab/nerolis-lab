@@ -243,6 +243,7 @@ import { defineComponent } from 'vue'
 
 import Divider from '@/components/custom-components/divider/divider.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
+import { getIsland } from '@/services/utils/island/island-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -285,14 +286,20 @@ export default defineComponent({
       }
     },
     cookingStrength() {
-      const strength = Math.floor((this.currentRecipeTypeResult?.weeklyStrength ?? 0) * this.userStore.islandBonus)
+      const strength = Math.floor(
+        (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
+          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+      )
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
         maximumFractionDigits: 0
       }).format(strength)
     },
     sundayStrength() {
-      const strength = Math.floor((this.currentRecipeTypeResult?.sundayStrength ?? 0) * this.userStore.islandBonus)
+      const strength = Math.floor(
+        (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
+          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+      )
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
         maximumFractionDigits: 0
@@ -300,10 +307,12 @@ export default defineComponent({
     },
     weekdayStrength() {
       const weeklyStrength = Math.floor(
-        (this.currentRecipeTypeResult?.weeklyStrength ?? 0) * this.userStore.islandBonus
+        (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
+          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
       )
       const sundayStrength = Math.floor(
-        (this.currentRecipeTypeResult?.sundayStrength ?? 0) * this.userStore.islandBonus
+        (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
+          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
       )
 
       const strength = Math.floor(weeklyStrength - sundayStrength)

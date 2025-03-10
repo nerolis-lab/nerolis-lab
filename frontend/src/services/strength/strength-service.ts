@@ -1,12 +1,15 @@
-import { useUserStore } from '@/stores/user-store'
 import type { TimeWindowWeek } from '@/types/time/time-window'
 import type { Mainskill } from 'sleepapi-common'
 import { MathUtils, berryPowerForLevel, type Berry, type BerrySet } from 'sleepapi-common'
 
 class StrengthServiceImpl {
-  public berryStrength(params: { berries: BerrySet[]; favored: Berry[]; timeWindow: TimeWindowWeek }) {
-    const { berries, favored, timeWindow } = params
-    const userStore = useUserStore()
+  public berryStrength(params: {
+    berries: BerrySet[]
+    favored: Berry[]
+    timeWindow: TimeWindowWeek
+    areaBonus: number
+  }) {
+    const { berries, favored, timeWindow, areaBonus } = params
 
     const timeWindowFactor = this.timeWindowFactor(timeWindow)
 
@@ -18,7 +21,7 @@ class StrengthServiceImpl {
         producedBerry.amount *
         timeWindowFactor *
         berryPowerForLevel(producedBerry.berry, producedBerry.level) *
-        userStore.islandBonus *
+        areaBonus *
         favoredBerryMultiplier
     }
     return Math.floor(strength)
@@ -31,23 +34,23 @@ class StrengthServiceImpl {
       berries: BerrySet[]
       favored: Berry[]
       timeWindow: TimeWindowWeek
+      areaBonus: number
     },
     considerEverythingStrength = false
   ) {
-    const { skill, berries, favored, timeWindow } = params
+    const { skill, berries, favored, timeWindow, areaBonus } = params
 
     if (considerEverythingStrength || skill.isUnit('strength') || skill.isUnit('metronome') || skill.isUnit('copy')) {
       return this.skillValue(params)
     } else if (skill.isUnit('berries')) {
-      return this.berryStrength({ berries, favored, timeWindow })
+      return this.berryStrength({ berries, favored, timeWindow, areaBonus })
     }
 
     return 0
   }
 
-  public skillValue(params: { skill: Mainskill; amount: number; timeWindow: TimeWindowWeek }) {
-    const { skill, amount, timeWindow } = params
-    const userStore = useUserStore()
+  public skillValue(params: { skill: Mainskill; amount: number; timeWindow: TimeWindowWeek; areaBonus: number }) {
+    const { skill, amount, timeWindow, areaBonus } = params
 
     const isStrengthUnit = skill.isUnit('strength')
     const isShardsUnit = skill.isUnit('dream shards')
@@ -56,7 +59,7 @@ class StrengthServiceImpl {
 
     return MathUtils.round(
       isStrengthUnit
-        ? amount * userStore.islandBonus * this.timeWindowFactor(timeWindow)
+        ? amount * areaBonus * this.timeWindowFactor(timeWindow)
         : amount * this.timeWindowFactor(timeWindow),
       rounding
     )

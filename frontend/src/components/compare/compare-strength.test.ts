@@ -2,7 +2,6 @@ import CompareStrength from '@/components/compare/compare-strength.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { useUserStore } from '@/stores/user-store'
 import { createMockMemberProduction, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -46,7 +45,6 @@ describe('CompareStrength', () => {
   })
 
   it('renders member data correctly', async () => {
-    const userStore = useUserStore()
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
     const member = pokemonStore.getPokemon(mockPokemon.externalId)!
@@ -70,15 +68,12 @@ describe('CompareStrength', () => {
       berryPowerForLevel(
         mockMemberProduction.produceTotal.berries[0].berry,
         mockMemberProduction.produceTotal.berries[0].level
-      ) *
-      (mockMemberProduction.produceTotal.berries[0].amount ?? 1) *
-      userStore.islandBonus
+      ) * (mockMemberProduction.produceTotal.berries[0].amount ?? 1)
     expect(firstRowCells[1].text()).toContain(berryPower.toString())
 
     // Check ingredient power range
     const highestIngredientValue = Math.floor(
       recipeLevelBonus[MAX_RECIPE_LEVEL] *
-        userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
           const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
@@ -96,20 +91,20 @@ describe('CompareStrength', () => {
       amount: mockMemberProduction.skillAmount,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       favored: [],
-      timeWindow: '24H'
+      timeWindow: '24H',
+      areaBonus: 1
     })
-    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount * userStore.islandBonus))
+    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount))
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
     const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
     expect(firstRowCells[4].text()).toContain(totalPower.toString())
 
-    expect(totalPower).toEqual(30111)
+    expect(totalPower).toEqual(17206)
   })
 
   it('renders 8h time window correctly in data tab', async () => {
-    const userStore = useUserStore()
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
     comparisonStore.timeWindow = '8H'
@@ -137,7 +132,6 @@ describe('CompareStrength', () => {
         mockMemberProduction.produceTotal.berries[0].level
       ) *
         mockMemberProduction.produceTotal.berries[0].amount *
-        userStore.islandBonus *
         factor
     )
     expect(+firstRowCells[1].text()).toEqual(berryPower)
@@ -145,7 +139,6 @@ describe('CompareStrength', () => {
     // Check ingredient power range
     const highestIngredientValue = Math.floor(
       (recipeLevelBonus[MAX_RECIPE_LEVEL] *
-        userStore.islandBonus *
         AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
           const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
@@ -164,15 +157,16 @@ describe('CompareStrength', () => {
       amount: mockMemberProduction.skillValue['strength']?.amountToSelf ?? 0,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       favored: comparisonStore.currentTeam?.favoredBerries ?? [],
-      timeWindow: '8H'
+      timeWindow: '8H',
+      areaBonus: 1
     })
-    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount * userStore.islandBonus * factor))
+    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount * factor))
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
     const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
     expect(Math.abs(+firstRowCells[4].text())).toEqual(totalPower)
-    expect(totalPower).toEqual(10036)
+    expect(totalPower).toEqual(5735)
   })
 
   it('displays the correct number of headers', async () => {

@@ -3,7 +3,7 @@ export * from './constants';
 export * from './gender';
 export * from './ingredient';
 export * from './instance';
-export * as island from './island';
+export * from './island';
 export * from './mainskill';
 export * as nature from './nature';
 export * from './notification';

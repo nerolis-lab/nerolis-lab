@@ -41,7 +41,9 @@
 <script lang="ts">
 import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
+import { getIsland } from '@/services/utils/island/island-utils'
 import { useTeamStore } from '@/stores/team/team-store'
+import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils, compactNumber, ingredient } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
@@ -56,7 +58,8 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, MathUtils, mainskillImage }
+    const userStore = useUserStore()
+    return { userStore, teamStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -67,7 +70,8 @@ export default defineComponent({
         StrengthService.skillValue({
           skill: this.memberWithProduction.member.pokemon.skill,
           amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow
+          timeWindow: this.teamStore.timeWindow,
+          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
         })
       )
     },
@@ -77,7 +81,8 @@ export default defineComponent({
           StrengthService.skillValue({
             skill: this.memberWithProduction.member.pokemon.skill,
             amount: this.memberWithProduction.production.skillAmount,
-            timeWindow: this.teamStore.timeWindow
+            timeWindow: this.teamStore.timeWindow,
+            areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
           }) / ingredient.TOTAL_NUMBER_OF_INGREDIENTS,
           2
         )

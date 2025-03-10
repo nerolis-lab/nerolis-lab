@@ -158,6 +158,7 @@ import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { pokemonImage } from '@/services/utils/image-utils'
+import { getIsland } from '@/services/utils/island/island-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -184,7 +185,10 @@ export default defineComponent({
       }
     },
     cookingStrength() {
-      return (this.currentRecipeTypeResult?.weeklyStrength ?? 0) * this.userStore.islandBonus
+      return (
+        (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
+        this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+      )
     },
     berryStrength() {
       const members = this.teamStore.getCurrentTeam.production?.members || []
@@ -196,7 +200,8 @@ export default defineComponent({
         const berryStrength = StrengthService.berryStrength({
           favored: favoredBerries,
           berries,
-          timeWindow: 'WEEK'
+          timeWindow: 'WEEK',
+          areaBonus: this.userStore.islandBonus(getIsland(favoredBerries).shortName)
         })
 
         return sum + berryStrength
@@ -215,7 +220,8 @@ export default defineComponent({
               amount: memberStrengthValue,
               berries: memberProduction.produceFromSkill.berries,
               favored: this.teamStore.getCurrentTeam.favoredBerries,
-              timeWindow: 'WEEK'
+              timeWindow: 'WEEK',
+              areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
             })
           : 0
 
@@ -232,7 +238,8 @@ export default defineComponent({
         const berryStrength = StrengthService.berryStrength({
           favored: favoredBerries,
           berries: [{ berry, amount, level }],
-          timeWindow: '24H' // week multiplies it by 7, but this is already for a week
+          timeWindow: '24H', // week multiplies it by 7, but this is already for a week
+          areaBonus: this.userStore.islandBonus(getIsland(favoredBerries).shortName)
         })
 
         return sum + berryStrength
@@ -301,7 +308,8 @@ export default defineComponent({
         const berryStrength = StrengthService.berryStrength({
           berries: memberProduction.produceWithoutSkill.berries,
           favored: this.teamStore.getCurrentTeam.favoredBerries,
-          timeWindow: 'WEEK'
+          timeWindow: 'WEEK',
+          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
         })
 
         const skillStrength = StrengthService.skillStrength({
@@ -309,7 +317,8 @@ export default defineComponent({
           amount: memberProduction.skillAmount,
           berries: memberProduction.produceFromSkill.berries,
           favored: this.teamStore.getCurrentTeam.favoredBerries,
-          timeWindow: 'WEEK'
+          timeWindow: 'WEEK',
+          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
         })
 
         memberStrengths.push({

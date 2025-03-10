@@ -1,5 +1,6 @@
 import router from '@/router/router'
 import { GoogleService } from '@/services/login/google-service'
+import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import { createPinia, setActivePinia } from 'pinia'
 import { Roles } from 'sleepapi-common'
@@ -21,14 +22,34 @@ describe('User Store', () => {
     userStore.role = null as any
     expect(userStore.role).toBeNull()
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userStore.areaBonus = null as any
+    expect(userStore.areaBonus).toBeNull()
+
     userStore.migrate()
     expect(userStore.role).toBe(Roles.Default)
+    expect(userStore.areaBonus).toEqual({
+      cyan: 0,
+      greengrass: 0,
+      lapis: 0,
+      powerplant: 0,
+      snowdrop: 0,
+      taupe: 0
+    })
   })
 
   it('should have expected default state', () => {
     const userStore = useUserStore()
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": null,
         "email": null,
         "externalId": null,
@@ -52,6 +73,14 @@ describe('User Store', () => {
     })
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": "some avatar",
         "email": "some email",
         "externalId": "some id",
@@ -73,6 +102,14 @@ describe('User Store', () => {
 
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": null,
         "email": null,
         "externalId": null,
@@ -83,6 +120,81 @@ describe('User Store', () => {
           "expiryDate": 10,
           "refreshToken": "some refresh token",
         },
+      }
+    `)
+  })
+
+  it('setUserSettings should update user settings and area bonuses', () => {
+    const userStore = useUserStore()
+    userStore.setUserSettings({
+      name: 'new name',
+      avatar: 'new avatar',
+      role: Roles.Admin,
+      areaBonuses: {
+        cyan: 10,
+        greengrass: 20,
+        lapis: 30,
+        powerplant: 40,
+        snowdrop: 50,
+        taupe: 60
+      }
+    })
+
+    expect(userStore.$state).toMatchInlineSnapshot(`
+      {
+        "areaBonus": {
+          "cyan": 10,
+          "greengrass": 20,
+          "lapis": 30,
+          "powerplant": 40,
+          "snowdrop": 50,
+          "taupe": 60,
+        },
+        "avatar": "new avatar",
+        "email": null,
+        "externalId": null,
+        "name": "new name",
+        "role": "admin",
+        "tokens": null,
+      }
+    `)
+  })
+
+  it('syncUserSettings should fetch and update user settings', async () => {
+    UserService.getUserSettings = vi.fn().mockResolvedValue({
+      name: 'synced name',
+      avatar: 'synced avatar',
+      role: Roles.Admin,
+      areaBonuses: {
+        cyan: 15,
+        greengrass: 25,
+        lapis: 35,
+        powerplant: 45,
+        snowdrop: 55,
+        taupe: 65
+      }
+    })
+
+    const userStore = useUserStore()
+    await userStore.syncUserSettings()
+
+    expect(UserService.getUserSettings).toHaveBeenCalled()
+    expect(userStore.$state).toMatchInlineSnapshot(`
+      {
+        "areaBonus": {
+          "cyan": 15,
+          "greengrass": 25,
+          "lapis": 35,
+          "powerplant": 45,
+          "snowdrop": 55,
+          "taupe": 65,
+        },
+        "avatar": "synced avatar",
+        "email": null,
+        "externalId": null,
+        "name": "synced name",
+        "role": "admin",
+        "tokens": null,
       }
     `)
   })
@@ -104,6 +216,14 @@ describe('User Store', () => {
     userStore.$reset()
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": null,
         "email": null,
         "externalId": null,
@@ -132,6 +252,14 @@ describe('User Store', () => {
     expect(GoogleService.login).toHaveBeenCalledWith('some auth code')
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": "some avatar",
         "email": undefined,
         "externalId": undefined,
@@ -234,6 +362,14 @@ describe('User Store', () => {
 
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": null,
         "email": null,
         "externalId": null,

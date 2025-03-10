@@ -1,5 +1,10 @@
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import { deleteUser, getUser, updateUser } from '@src/services/user-service/login-service/login-service.js';
+import {
+  deleteUser,
+  getUser,
+  getUserSettings,
+  updateUser
+} from '@src/services/user-service/login-service/login-service.js';
 import { getAreaBonuses, upsertAreaBonus } from '@src/services/user-service/user-area-service/user-area-service.js';
 import {
   deletePokemon,
@@ -10,7 +15,7 @@ import {
   getRecipeLevels,
   upsertRecipeLevel
 } from '@src/services/user-service/user-recipe-service/user-recipe-service.js';
-import type { PokemonInstanceWithMeta, UpdateUserRequest } from 'sleepapi-common';
+import type { IslandShortName, PokemonInstanceWithMeta, UpdateUserRequest } from 'sleepapi-common';
 
 export default class UserController {
   // User
@@ -20,6 +25,10 @@ export default class UserController {
 
   public async updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {
     return updateUser(user, newSettings);
+  }
+
+  public async getUserSettings(user: DBUser) {
+    return getUserSettings(user);
   }
 
   public async deleteUser(user: DBUser) {
@@ -53,7 +62,7 @@ export default class UserController {
     return getAreaBonuses(user);
   }
 
-  public async upsertAreaBonus(params: { user: DBUser; area: string; bonus: number }) {
+  public async upsertAreaBonus(params: { user: DBUser; area: IslandShortName; bonus: number }) {
     return upsertAreaBonus(params);
   }
 }

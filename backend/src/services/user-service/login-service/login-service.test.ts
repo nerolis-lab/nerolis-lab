@@ -1,9 +1,11 @@
 import { config } from '@src/config/config.js';
+import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import {
   client,
   deleteUser,
+  getUserSettings,
   refresh,
   signup,
   updateUser,
@@ -359,6 +361,55 @@ describe('updateUser', () => {
         created_at: expect.any(Date),
         updated_at: expect.any(Date),
         last_login: expect.any(Date)
+      })
+    );
+  });
+});
+
+describe('getUserSettings', () => {
+  it('should return user settings', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      friend_code: 'TESTFC',
+      role: Roles.Default
+    });
+
+    const userSettings = await getUserSettings(user);
+
+    expect(userSettings).toEqual(
+      expect.objectContaining({
+        name: 'Existing user',
+        avatar: 'default',
+        role: 'default',
+        areaBonuses: {}
+      })
+    );
+  });
+
+  it('should return user settings with area bonuses', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      friend_code: 'TESTFC',
+      role: Roles.Default
+    });
+
+    await UserAreaDAO.insert({
+      fk_user_id: user.id,
+      area: 'cyan',
+      bonus: 75
+    });
+
+    const userSettings = await getUserSettings(user);
+
+    expect(userSettings).toEqual(
+      expect.objectContaining({
+        areaBonuses: {
+          cyan: 75
+        }
       })
     );
   });

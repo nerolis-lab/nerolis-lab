@@ -3,13 +3,21 @@ import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useUserStore } from '@/stores/user-store'
 import type {
   GetRecipeLevelsResponse,
+  IslandShortName,
   PokemonInstanceExt,
   PokemonInstanceWithMeta,
+  UpsertAreaBonusRequest,
   UpsertRecipeLevelRequest,
-  User
+  User,
+  UserSettingsResponse
 } from 'sleepapi-common'
 
 class UserServiceImpl {
+  public async getUserSettings() {
+    const response = await serverAxios.get<UserSettingsResponse>('user/settings')
+    return response.data
+  }
+
   public async getUserPokemon() {
     const response = await serverAxios.get<PokemonInstanceWithMeta[]>('user/pokemon')
 
@@ -47,6 +55,11 @@ class UserServiceImpl {
 
   public async upsertRecipe(recipe: string, level: number) {
     const response = await serverAxios.put<UpsertRecipeLevelRequest>('user/recipe', { recipe, level })
+    return response.data
+  }
+
+  public async upsertAreaBonus(shortName: IslandShortName, bonus: number) {
+    const response = await serverAxios.put<UpsertAreaBonusRequest>('user/area', { area: shortName, bonus })
     return response.data
   }
 }

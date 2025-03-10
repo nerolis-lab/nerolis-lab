@@ -2,12 +2,10 @@
   <v-row no-gutters class="frosted-glass">
     <v-col v-if="isLargeDesktop" class="flex-column d-flex pt-2 px-2">
       <span class="text-h4 font-weight-semibold pb-2">Recipes</span>
-      <span class="text-strength text-body-1">
-        <template v-if="loggedIn">
-          Setting your recipe levels here will affect calculations across Neroli's Lab
-        </template>
-        <template v-else> Please log in to configure your recipe levels </template>
+      <span v-if="loggedIn" class="text-strength text-body-1">
+        Setting your recipe levels here will affect calculations across Neroli's Lab
       </span>
+      <span v-else class="text-strength text-body-1"> Please log in to configure your recipe levels </span>
     </v-col>
     <v-data-table
       :items="reactiveRecipes"

@@ -63,7 +63,8 @@ describe('Moonlight details', () => {
     const expectedValue = StrengthService.skillValue({
       skill: mockMember.member.pokemon.skill,
       amount: mockMember.production.skillAmount,
-      timeWindow: '24H'
+      timeWindow: '24H',
+      areaBonus: 1
     })
     expect(totalSkillValue.text()).toContain(compactNumber(expectedValue))
   })

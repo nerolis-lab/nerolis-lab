@@ -84,6 +84,9 @@ export default defineComponent({
   data: () => ({
     menu: false
   }),
+  async mounted() {
+    await this.userStore.syncUserSettings()
+  },
   methods: {
     async callback(response: CodePopupResponse) {
       const authCode = response.code

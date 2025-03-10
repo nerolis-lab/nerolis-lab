@@ -186,6 +186,7 @@ import { defineComponent } from 'vue'
 import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage, pokemonImage } from '@/services/utils/image-utils'
+import { getIsland } from '@/services/utils/island/island-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
@@ -263,7 +264,10 @@ export default defineComponent({
           ? StrengthService.berryStrength({
               favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
               berries: memberProduction.produceWithoutSkill.berries,
-              timeWindow: this.comparisonStore.timeWindow
+              timeWindow: this.comparisonStore.timeWindow,
+              areaBonus: this.userStore.islandBonus(
+                getIsland(this.comparisonStore.currentTeam?.favoredBerries ?? []).shortName
+              )
             })
           : 0
 
@@ -284,7 +288,10 @@ export default defineComponent({
                   level: b.level
                 })),
                 favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
-                timeWindow: this.comparisonStore.timeWindow
+                timeWindow: this.comparisonStore.timeWindow,
+                areaBonus: this.userStore.islandBonus(
+                  getIsland(this.comparisonStore.currentTeam?.favoredBerries ?? []).shortName
+                )
               },
               true
             )
@@ -344,7 +351,11 @@ export default defineComponent({
     lowestIngredientPower(memberProduction: MemberProduction) {
       const amount = memberProduction.produceTotal.ingredients.reduce(
         (sum, cur) =>
-          sum + cur.amount * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER * this.userStore.islandBonus,
+          sum +
+          cur.amount *
+            cur.ingredient.value *
+            AVERAGE_WEEKLY_CRIT_MULTIPLIER *
+            this.userStore.islandBonus(getIsland(this.comparisonStore.currentTeam?.favoredBerries ?? []).shortName),
         0
       )
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))
@@ -353,7 +364,7 @@ export default defineComponent({
       const maxLevelRecipeMultiplier = recipeLevelBonus[MAX_RECIPE_LEVEL]
       const amount =
         maxLevelRecipeMultiplier *
-        this.userStore.islandBonus *
+        this.userStore.islandBonus(getIsland(this.comparisonStore.currentTeam?.favoredBerries ?? []).shortName) *
         memberProduction.produceTotal.ingredients.reduce((sum, cur) => {
           const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
           return sum + cur.amount * ingredientBonus * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER

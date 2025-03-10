@@ -29,13 +29,13 @@ describe('CookingResults', () => {
     await nextTick()
 
     const strengthSpan = wrapper.find('#weeklyStrength')
-    expect(strengthSpan.text()).toBe('1,750') // 1000 * 1.75
+    expect(strengthSpan.text()).toBe('1,000')
 
     const sundaySpan = wrapper.find('#sundayStrength')
-    expect(sundaySpan.text()).toBe('175') // 100 * 1.75
+    expect(sundaySpan.text()).toBe('100')
 
     const weekdaySpan = wrapper.find('#weekdayStrength')
-    expect(weekdaySpan.text()).toBe('1,575')
+    expect(weekdaySpan.text()).toBe('900')
   })
 
   it('renders progress bars for each recipe correctly', async () => {
@@ -129,7 +129,7 @@ describe('CookingResults', () => {
     })
 
     await nextTick()
-    expect(wrapper.vm.cookingStrength).toBe('5,250') // 3000 * 1.75
+    expect(wrapper.vm.cookingStrength).toBe('3,000')
   })
 
   it('toggles recipe details correctly', async () => {

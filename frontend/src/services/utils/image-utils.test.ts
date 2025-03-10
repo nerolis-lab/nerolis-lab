@@ -11,7 +11,7 @@ import {
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useUserStore } from '@/stores/user-store'
 import { createPinia, setActivePinia } from 'pinia'
-import { berry, island, mainskill, mockPokemon, type Pokemon } from 'sleepapi-common'
+import { berry, ISLANDS, mainskill, mockPokemon, type Pokemon } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
 const MOCK_POKEMON = mockPokemon()
@@ -84,7 +84,7 @@ describe('avatarImage', () => {
 })
 
 describe('islandImage', () => {
-  island.ISLANDS.forEach((island) => {
+  ISLANDS.forEach((island) => {
     it(`returns the correct image path for ${island.name} island`, () => {
       const imagePath = islandImage({ favoredBerries: island.berries, background: true })
       expect(imagePath).toBe(`/images/island/background-${island.shortName.toLowerCase()}.png`)
