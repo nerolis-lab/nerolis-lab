@@ -1,11 +1,18 @@
 import { config } from '@src/config/config.js';
+import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import { generateFriendCode } from '@src/services/user-service/login-service/login-utils.js';
 import type { TokenInfo } from 'google-auth-library';
 import { OAuth2Client } from 'google-auth-library';
-import type { LoginResponse, RefreshResponse, UpdateUserRequest } from 'sleepapi-common';
+import type {
+  IslandShortName,
+  LoginResponse,
+  RefreshResponse,
+  UpdateUserRequest,
+  UserSettingsResponse
+} from 'sleepapi-common';
 import { Roles, uuid } from 'sleepapi-common';
 
 interface DecodedUserData {
@@ -116,4 +123,20 @@ export async function updateUser(user: DBUser, newSettings: Partial<UpdateUserRe
 
 export async function deleteUser(user: DBUser) {
   UserDAO.delete({ id: user.id });
+}
+
+export async function getUserSettings(user: DBUser): Promise<UserSettingsResponse> {
+  const areaBonusesRaw = await UserAreaDAO.findMultiple({ fk_user_id: user.id });
+
+  const areaBonuses: Partial<Record<IslandShortName, number>> = {};
+  for (const areaBonus of areaBonusesRaw) {
+    areaBonuses[areaBonus.area] = areaBonus.bonus;
+  }
+
+  return {
+    name: user.name,
+    avatar: user.avatar ?? 'default',
+    role: user.role,
+    areaBonuses
+  };
 }

@@ -1,9 +1,9 @@
 import type { Static } from '@sinclair/typebox';
 import { Type } from '@sinclair/typebox';
 import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract-dao.js';
-import { island } from 'sleepapi-common';
+import { ISLANDS } from 'sleepapi-common';
 
-const islandShortNames = island.ISLANDS.map((island) => island.shortName);
+const islandShortNames = ISLANDS.map((island) => island.shortName);
 const IslandUnion = Type.Union(islandShortNames.map((shortName) => Type.Literal(shortName)));
 
 export const DBUserAreaSchema = Type.Composite([

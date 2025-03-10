@@ -18,9 +18,13 @@ vi.mock('vue3-google-login', () => ({
 
 describe('AccountMenu', () => {
   let wrapper: VueWrapper<InstanceType<typeof AccountMenu>>
+  let userStore: ReturnType<typeof useUserStore>
 
   beforeEach(() => {
     setActivePinia(createPinia())
+    userStore = useUserStore()
+    userStore.syncUserSettings = vi.fn().mockResolvedValue(undefined)
+
     wrapper = mount(AccountMenu)
   })
 
@@ -28,6 +32,11 @@ describe('AccountMenu', () => {
     if (wrapper) {
       wrapper.unmount()
     }
+  })
+
+  it('syncs user settings on mount', async () => {
+    await wrapper.vm.$nextTick()
+    expect(userStore.syncUserSettings).toHaveBeenCalled()
   })
 
   it('clicking activator should open menu', async () => {
@@ -102,6 +111,14 @@ describe('AccountMenu', () => {
     expect(wrapper.vm.userStore.loggedIn).toBe(true)
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": "default",
         "email": "some email",
         "externalId": "some id",
@@ -125,6 +142,14 @@ describe('AccountMenu', () => {
     expect(wrapper.vm.userStore.loggedIn).toBe(false)
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
+        "areaBonus": {
+          "cyan": 0,
+          "greengrass": 0,
+          "lapis": 0,
+          "powerplant": 0,
+          "snowdrop": 0,
+          "taupe": 0,
+        },
         "avatar": null,
         "email": null,
         "externalId": null,

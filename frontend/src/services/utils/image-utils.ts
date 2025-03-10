@@ -1,6 +1,16 @@
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useUserStore } from '@/stores/user-store'
-import { island, mainskill, type Berry, type Pokemon } from 'sleepapi-common'
+import {
+  CYAN,
+  LAPIS,
+  mainskill,
+  POWER_PLANT,
+  SNOWDROP,
+  TAUPE,
+  type Berry,
+  type Island,
+  type Pokemon
+} from 'sleepapi-common'
 
 export function mainskillImage(pokemon: Pokemon) {
   if (pokemon.skill.isSameOrModifiedVersion(mainskill.HELPER_BOOST)) {
@@ -16,7 +26,6 @@ export function ingredientImage(rawName: string) {
   return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
 }
 
-// TEST:
 export function recipeImage(rawName: string) {
   const name = rawName.toLowerCase()
   return `/images/recipe/${name.replace(/[_]/g, '').toLowerCase()}.png`
@@ -44,12 +53,19 @@ export function berryImage(berry: Berry) {
   return `/images/berries/${berry.name.toLowerCase()}.png`
 }
 
-export function islandImage(params: { favoredBerries: Berry[]; background: boolean }) {
-  const { favoredBerries, background } = params
-
-  const berryNames = favoredBerries.map((b) => b.name)
+export function islandImage(params: { favoredBerries?: Berry[]; background?: boolean; island?: Island }) {
+  const { favoredBerries, background = false, island: directIsland } = params
   const maybeBackground = background ? 'background-' : ''
 
+  if (directIsland) {
+    return `/images/island/${maybeBackground}${directIsland.shortName}.png`
+  }
+
+  if (!favoredBerries || favoredBerries.length === 0) {
+    return `/images/island/${maybeBackground}greengrass.png`
+  }
+
+  const berryNames = favoredBerries.map((b) => b.name)
   const arraysEqual = (arr1: string[], arr2: string[]) => {
     if (arr1.length !== arr2.length) return false
     return arr1.every((value, index) => value === arr2[index])
@@ -62,11 +78,11 @@ export function islandImage(params: { favoredBerries: Berry[]; background: boole
   const powerplantKey = `/images/island/${maybeBackground}powerplant.png`
 
   const berryImageMap = {
-    [cyanKey]: island.CYAN.berries,
-    [taupeKey]: island.TAUPE.berries,
-    [snowdropKey]: island.SNOWDROP.berries,
-    [lapisKey]: island.LAPIS.berries,
-    [powerplantKey]: island.POWER_PLANT.berries
+    [cyanKey]: CYAN.berries,
+    [taupeKey]: TAUPE.berries,
+    [snowdropKey]: SNOWDROP.berries,
+    [lapisKey]: LAPIS.berries,
+    [powerplantKey]: POWER_PLANT.berries
   }
 
   for (const [imagePath, islandberries] of Object.entries(berryImageMap)) {

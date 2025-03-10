@@ -1,12 +1,10 @@
 import { StrengthService } from '@/services/strength/strength-service'
-import { useUserStore } from '@/stores/user-store'
 import type { TimeWindowWeek } from '@/types/time/time-window'
 import { createPinia, setActivePinia } from 'pinia'
 import { MathUtils, berry, berryPowerForLevel, mainskill, type BerrySet } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('StrengthService', () => {
-  let userStore: ReturnType<typeof useUserStore>
   const mockBerrySet: BerrySet[] = [
     { berry: berry.BELUE, amount: 10, level: 5 },
     { berry: berry.SITRUS, amount: 20, level: 3 }
@@ -16,7 +14,6 @@ describe('StrengthService', () => {
 
   beforeEach(() => {
     setActivePinia(createPinia())
-    userStore = useUserStore()
   })
 
   describe('berryStrength', () => {
@@ -24,13 +21,14 @@ describe('StrengthService', () => {
       const strength = StrengthService.berryStrength({
         berries: mockBerrySet,
         favored: favoredBerries,
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
 
       const berries =
         mockBerrySet[0].amount * 2 * berryPowerForLevel(berry.BELUE, 5) +
         mockBerrySet[1].amount * 1 * berryPowerForLevel(berry.SITRUS, 3)
-      const expected = Math.floor(userStore.islandBonus * berries * 7)
+      const expected = Math.floor(berries * 7)
 
       expect(strength).toBe(expected)
     })
@@ -39,12 +37,13 @@ describe('StrengthService', () => {
       const strength = StrengthService.berryStrength({
         berries: mockBerrySet,
         favored: [],
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
       const berries =
         mockBerrySet[0].amount * 1 * berryPowerForLevel(berry.BELUE, 5) +
         mockBerrySet[1].amount * 1 * berryPowerForLevel(berry.SITRUS, 3)
-      const expected = Math.floor(userStore.islandBonus * berries * 7)
+      const expected = Math.floor(berries * 7)
       expect(strength).toBe(expected)
     })
   })
@@ -57,7 +56,8 @@ describe('StrengthService', () => {
         amount: 10,
         berries: mockBerrySet,
         favored: favoredBerries,
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
 
       expect(skillValueSpy).toHaveBeenCalled()
@@ -71,7 +71,8 @@ describe('StrengthService', () => {
         amount: 10,
         berries: mockBerrySet,
         favored: favoredBerries,
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
       expect(berryStrengthSpy).toHaveBeenCalled()
     })
@@ -83,9 +84,10 @@ describe('StrengthService', () => {
       const value = StrengthService.skillValue({
         skill: mainskill.CHARGE_STRENGTH_M,
         amount,
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
-      expect(value).toBe(Math.floor(amount * userStore.islandBonus * 7))
+      expect(value).toBe(Math.floor(amount * 7))
     })
 
     it('should calculate value for Dream Shards skill type', () => {
@@ -93,7 +95,8 @@ describe('StrengthService', () => {
       const value = StrengthService.skillValue({
         skill: mainskill.DREAM_SHARD_MAGNET_S,
         amount,
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
       expect(value).toBe(Math.floor(amount * 7))
     })
@@ -103,7 +106,8 @@ describe('StrengthService', () => {
       const value = StrengthService.skillValue({
         skill: mainskill.ENERGIZING_CHEER_S,
         amount,
-        timeWindow: mockTimeWindow
+        timeWindow: mockTimeWindow,
+        areaBonus: 1
       })
       expect(value).toBe(MathUtils.round(amount * 7, 1))
     })

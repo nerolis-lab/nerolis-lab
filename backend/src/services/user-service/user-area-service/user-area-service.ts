@@ -1,6 +1,6 @@
 import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import type { GetAreaBonusesResponse } from 'sleepapi-common';
+import type { GetAreaBonusesResponse, IslandShortName } from 'sleepapi-common';
 
 export async function getAreaBonuses(user: DBUser): Promise<GetAreaBonusesResponse> {
   const areaBonuses = await UserAreaDAO.findMultiple({ fk_user_id: user.id });
@@ -11,7 +11,7 @@ export async function getAreaBonuses(user: DBUser): Promise<GetAreaBonusesRespon
   }, {} as GetAreaBonusesResponse);
 }
 
-export async function upsertAreaBonus(params: { user: DBUser; area: string; bonus: number }) {
+export async function upsertAreaBonus(params: { user: DBUser; area: IslandShortName; bonus: number }) {
   const { user, area, bonus } = params;
 
   await UserAreaDAO.upsert({

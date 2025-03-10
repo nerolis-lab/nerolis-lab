@@ -38,7 +38,7 @@ describe('SettingsPage', () => {
     expect(wrapper.exists()).toBe(true)
 
     // Check tabs
-    const tabs = wrapper.findAll('.v-tab')
+    const tabs = wrapper.findAll('.v-list-item')
     expect(tabs.length).toBe(3) // Game, Account, Site tabs
 
     // Verify tab text content

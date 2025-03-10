@@ -9,7 +9,6 @@
     variant="outlined"
     hide-details
     hide-spin-buttons
-    single-line
     persistent-hint
     :rules="rules"
     min-width="50"
@@ -81,8 +80,7 @@ export default defineComponent({
     )
 
     const availableSlots = computed(() => {
-      const slotNames = Object.keys(slots).filter((name): name is string => name !== 'append-inner')
-      return slotNames.reduce(
+      return Object.keys(slots).reduce(
         (acc, name) => {
           acc[name] = slots[name]
           return acc

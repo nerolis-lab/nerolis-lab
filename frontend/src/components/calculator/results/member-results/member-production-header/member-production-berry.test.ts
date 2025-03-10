@@ -61,7 +61,8 @@ describe('MemberProductionBerry', () => {
     const currentBerryStrength = StrengthService.berryStrength({
       favored: teamStore.getCurrentTeam.favoredBerries,
       berries: mockMember.production.produceWithoutSkill.berries,
-      timeWindow: teamStore.timeWindow
+      timeWindow: teamStore.timeWindow,
+      areaBonus: 1
     })
     expect(strengthSpan?.text()).toBe(`${currentBerryStrength}`)
   })

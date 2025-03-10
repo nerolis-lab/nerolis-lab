@@ -4,7 +4,12 @@ import { validateAuthHeader } from '@src/middleware/authorization-middleware.js'
 import type { RequestBody } from '@src/routes/base-router.js';
 import { BaseRouter } from '@src/routes/base-router.js';
 import type { Request, Response } from 'express';
-import type { PokemonInstanceWithMeta, UpdateUserRequest, UpsertRecipeLevelRequest } from 'sleepapi-common';
+import type {
+  PokemonInstanceWithMeta,
+  UpdateUserRequest,
+  UpsertAreaBonusRequest,
+  UpsertRecipeLevelRequest
+} from 'sleepapi-common';
 
 class UserRouterImpl {
   public async register(controller: UserController) {
@@ -47,6 +52,25 @@ class UserRouterImpl {
         }
       }
     );
+
+    // user settings
+    BaseRouter.router.get('/user/settings', validateAuthHeader, async (req: Request, res: Response) => {
+      try {
+        logger.log('Entered /user/settings GET');
+
+        const user = (req as AuthenticatedRequest).user;
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        const data = await controller.getUserSettings(user);
+
+        res.json(data);
+      } catch (err) {
+        logger.error(err as Error);
+        res.status(500).send('Something went wrong');
+      }
+    });
 
     // User Pokémon
     BaseRouter.router.get('/user/pokemon', validateAuthHeader, async (req: Request, res: Response) => {
@@ -161,6 +185,46 @@ class UserRouterImpl {
           }
 
           await controller.upsertRecipeLevel({ user, recipe: req.body.recipe, level: req.body.level });
+
+          res.sendStatus(204);
+        } catch (err) {
+          logger.error(err as Error);
+          res.status(500).send('Something went wrong');
+        }
+      }
+    );
+
+    BaseRouter.router.get('/user/area', validateAuthHeader, async (req: Request, res: Response) => {
+      try {
+        logger.log('Entered /user/area GET');
+
+        const user = (req as AuthenticatedRequest).user;
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        const data = await controller.getUserAreaBonuses(user);
+
+        res.json(data);
+      } catch (err) {
+        logger.error(err as Error);
+        res.status(500).send('Something went wrong');
+      }
+    });
+
+    BaseRouter.router.put(
+      '/user/area',
+      validateAuthHeader,
+      async (req: RequestBody<UpsertAreaBonusRequest>, res: Response) => {
+        try {
+          logger.log('Entered /user/area PUT');
+
+          const user = (req as AuthenticatedRequest).user;
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          await controller.upsertAreaBonus({ user, area: req.body.area, bonus: req.body.bonus });
 
           res.sendStatus(204);
         } catch (err) {

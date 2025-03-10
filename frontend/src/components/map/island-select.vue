@@ -6,50 +6,32 @@
       </v-btn>
     </template>
 
-    <v-card title="Select island or berries">
+    <v-card>
       <v-container>
-        <v-row class="flex-center">
-          <v-col class="flex-center">
-            <v-btn icon color="transparent" size="64" aria-label="cyan island" @click="selectCyan">
+        <v-card-title class="mb-1 pl-0">Select island or berries</v-card-title>
+
+        <v-row>
+          <v-col
+            v-for="i in islands"
+            :key="i.shortName"
+            :cols="12 / Math.min(3, islands.length)"
+            class="flex-center flex-column text-center"
+          >
+            <v-btn icon color="transparent" size="64" :aria-label="`${i.shortName}`" @click="selectIsland(i)">
               <v-avatar size="64">
-                <v-img src="/images/island/cyan.png" alt="cyan icon" />
+                <v-img :src="`/images/island/${i.shortName}.png`" :alt="`${i.shortName} icon`" />
               </v-avatar>
             </v-btn>
-          </v-col>
-          <v-col class="flex-center">
-            <v-btn icon color="transparent" size="64" aria-label="taupe island" @click="selectTaupe">
-              <v-avatar size="64">
-                <v-img src="/images/island/taupe.png" alt="taupe icon" />
-              </v-avatar>
-            </v-btn>
+            <span class="text-body-1 text-no-wrap mt-1">{{ areaBonus(i) }}%</span>
           </v-col>
         </v-row>
 
-        <v-row>
-          <v-col class="flex-center">
-            <v-btn icon color="transparent" size="64" aria-label="snowdrop island" @click="selectSnowdrop">
-              <v-avatar size="64">
-                <v-img src="/images/island/snowdrop.png" alt="snowdrop icon" />
-              </v-avatar>
-            </v-btn>
-          </v-col>
-          <v-col class="flex-center">
-            <v-btn icon color="transparent" size="64" aria-label="lapis island" @click="selectLapis">
-              <v-avatar size="64">
-                <v-img src="/images/island/lapis.png" alt="lapis icon" />
-              </v-avatar>
-            </v-btn>
-          </v-col>
-          <v-col class="flex-center">
-            <v-btn icon color="transparent" size="64" aria-label="power plant island" @click="selectPowerPlant">
-              <v-avatar size="64">
-                <v-img src="/images/island/powerplant.png" alt="power plant icon" />
-              </v-avatar>
-            </v-btn>
-          </v-col>
+        <v-row dense class="pa-2">
+          <span>Set your area bonus: </span>
+          <a class="btn-link" href="/settings">Settings</a>
         </v-row>
 
-        <v-row>
+        <v-row dense>
           <v-col cols="12">
             <v-sheet color="secondary" rounded style="overflow-y: auto">
               <v-chip-group v-model="favoredBerries" column multiple selected-class="bg-primary">
@@ -87,7 +69,8 @@
 
 <script lang="ts">
 import { islandImage } from '@/services/utils/image-utils'
-import { berry, island, type Berry } from 'sleepapi-common'
+import { useUserStore } from '@/stores/user-store'
+import { berry, ISLANDS, type Berry, type Island } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -100,7 +83,8 @@ export default defineComponent({
   },
   emits: ['favored-berries'],
   setup() {
-    return { islandImage }
+    const userStore = useUserStore()
+    return { islandImage, userStore, islands: ISLANDS }
   },
   data: () => ({
     menu: false,
@@ -120,6 +104,9 @@ export default defineComponent({
     }
   },
   methods: {
+    areaBonus(island: Island): number {
+      return this.userStore.areaBonus[island.shortName]
+    },
     saveBerries() {
       this.menu = false
       this.updateBerries()
@@ -139,20 +126,8 @@ export default defineComponent({
     selectAll() {
       this.favoredBerries = this.berries
     },
-    selectCyan() {
-      this.favoredBerries = island.CYAN.berries
-    },
-    selectTaupe() {
-      this.favoredBerries = island.TAUPE.berries
-    },
-    selectSnowdrop() {
-      this.favoredBerries = island.SNOWDROP.berries
-    },
-    selectLapis() {
-      this.favoredBerries = island.LAPIS.berries
-    },
-    selectPowerPlant() {
-      this.favoredBerries = island.POWER_PLANT.berries
+    selectIsland(island: Island) {
+      this.favoredBerries = island.berries
     },
     updateBerries() {
       this.$emit('favored-berries', this.favoredBerries)

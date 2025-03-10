@@ -1,9 +1,10 @@
 import { findIslandForName } from '@src/utils/island-utils/island-utils.js';
-import { island } from 'sleepapi-common';
+import type { Island } from 'sleepapi-common';
+import { CYAN, ISLANDS } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('findIslandForName Function Tests', () => {
-  it.each(island.ISLANDS)('finds existing island "%s"', (island: island.Island) => {
+  it.each(ISLANDS)('finds existing island "%s"', (island: Island) => {
     const result = findIslandForName(island.name);
     expect(result).toEqual(island);
   });
@@ -11,7 +12,7 @@ describe('findIslandForName Function Tests', () => {
   it('is case-insensitive when finding an island', () => {
     const testName = 'CyAn BeAcH';
     const result = findIslandForName(testName);
-    expect(result).toEqual(island.CYAN);
+    expect(result).toEqual(CYAN);
   });
 
   it('shall return undefined for a non-existing island', () => {

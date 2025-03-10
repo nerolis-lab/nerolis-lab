@@ -14,7 +14,7 @@ describe('UserAreaDAO insert', () => {
   it('shall insert new user area entity', async () => {
     const userArea = await UserAreaDAO.insert({
       fk_user_id: 2,
-      area: 'Downtown',
+      area: 'greengrass',
       bonus: 15
     });
     expect(userArea).toBeDefined();
@@ -24,7 +24,7 @@ describe('UserAreaDAO insert', () => {
       expect.objectContaining({
         id: 1,
         fk_user_id: 2,
-        area: 'Downtown',
+        area: 'greengrass',
         bonus: 15,
         version: 1
       })
@@ -45,7 +45,7 @@ describe('UserAreaDAO insert', () => {
     await expect(
       UserAreaDAO.insert({
         fk_user_id: 2,
-        area: 'Downtown',
+        area: 'greengrass',
         bonus: undefined as any
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user_area.bonus/);
@@ -56,14 +56,14 @@ describe('UserAreaDAO update', () => {
   it('shall update user area entity', async () => {
     const userArea = await UserAreaDAO.insert({
       fk_user_id: 2,
-      area: 'Old Area',
+      area: 'powerplant',
       bonus: 10
     });
-    expect(userArea.area).toEqual('Old Area');
+    expect(userArea.area).toEqual('powerplant');
 
     await UserAreaDAO.update({
       ...userArea,
-      area: 'New Area',
+      area: 'lapis',
       bonus: 20
     });
 
@@ -72,7 +72,7 @@ describe('UserAreaDAO update', () => {
       expect.objectContaining({
         id: 1,
         fk_user_id: 2,
-        area: 'New Area',
+        area: 'lapis',
         bonus: 20,
         version: 2
       })

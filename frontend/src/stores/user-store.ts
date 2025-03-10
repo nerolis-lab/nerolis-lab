@@ -1,8 +1,9 @@
 import router from '@/router/router'
 import { GoogleService } from '@/services/login/google-service'
+import { UserService } from '@/services/user/user-service'
 import { clearCacheAndLogout } from '@/stores/store-service'
 import { defineStore } from 'pinia'
-import { MAX_ISLAND_BONUS, Roles, type LoginResponse } from 'sleepapi-common'
+import { ISLANDS, Roles, type IslandShortName, type LoginResponse, type UserSettingsResponse } from 'sleepapi-common'
 import { googleLogout } from 'vue3-google-login'
 
 export interface UserState {
@@ -13,6 +14,7 @@ export interface UserState {
   externalId: string | null
   friendCode?: string
   role: Roles
+  areaBonus: Record<IslandShortName, number>
 }
 
 export interface TokenInfo {
@@ -29,17 +31,25 @@ export const useUserStore = defineStore('user', {
       email: null,
       tokens: null,
       externalId: null,
-      role: Roles.Default
+      role: Roles.Default,
+      areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>
     }
   },
   getters: {
     loggedIn: (state) => state.tokens !== null,
-    islandBonus: () => 1 + MAX_ISLAND_BONUS / 100
+    islandBonus: (state) => (shortName: IslandShortName) => 1 + state.areaBonus[shortName] / 100
   },
   actions: {
     migrate() {
       if (!this.role) {
         this.role = Roles.Default
+      }
+
+      if (!this.areaBonus) {
+        this.areaBonus = Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<
+          IslandShortName,
+          number
+        >
       }
     },
     setUserData(userData: { name: string; avatar?: string; email: string; externalId: string; role: Roles }) {
@@ -51,6 +61,19 @@ export const useUserStore = defineStore('user', {
     },
     setTokens(tokens: TokenInfo) {
       this.tokens = tokens
+    },
+    setUserSettings(userSettings: UserSettingsResponse) {
+      this.name = userSettings.name
+      this.avatar = userSettings.avatar
+      this.role = userSettings.role
+
+      for (const [area, bonus] of Object.entries(userSettings.areaBonuses)) {
+        this.areaBonus[area as IslandShortName] = bonus
+      }
+    },
+    async syncUserSettings() {
+      const userSettings = await UserService.getUserSettings()
+      this.setUserSettings(userSettings)
     },
     async login(authCode: string) {
       const loginResponse: LoginResponse = await GoogleService.login(authCode)

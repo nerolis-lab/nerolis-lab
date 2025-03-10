@@ -17,6 +17,14 @@ vi.mock('@/router/server-axios', () => ({
 
 const mockPokemon = createMockPokemon()
 
+describe('getUserSettings', () => {
+  it('should call server to get user settings', async () => {
+    await UserService.getUserSettings()
+
+    expect(serverAxios.get).toHaveBeenCalledWith('user/settings')
+  })
+})
+
 describe('getUserPokemon', () => {
   it('should call server to get saved mons', async () => {
     await UserService.getUserPokemon()
@@ -78,5 +86,13 @@ describe('upsertRecipe', () => {
     await UserService.upsertRecipe(mockRecipe, mockLevel)
 
     expect(serverAxios.put).toHaveBeenCalledWith('user/recipe', { recipe: mockRecipe, level: mockLevel })
+  })
+})
+
+describe('upsertAreaBonus', () => {
+  it('should call server to upsert area bonus', async () => {
+    await UserService.upsertAreaBonus('cyan', 75)
+
+    expect(serverAxios.put).toHaveBeenCalledWith('user/area', { area: 'cyan', bonus: 75 })
   })
 })
