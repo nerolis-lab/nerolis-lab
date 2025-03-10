@@ -1,3 +1,10 @@
+# [1.40.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.39.2...v1.40.0) (2025-03-10)
+
+
+### Features
+
+* adds user area bonus configurability ([fb66377](https://github.com/nerolis-lab/nerolis-lab/commit/fb663777bed31428fa640d10475639269f690b80))
+
 ## [1.39.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.39.1...v1.39.2) (2025-03-07)
 
 
