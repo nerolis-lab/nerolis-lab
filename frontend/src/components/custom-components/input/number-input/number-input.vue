@@ -135,18 +135,19 @@ export default defineComponent({
       setTimeout(() => target.select(), 1)
     },
     handleUpdate() {
+      const numValue = Number(this.internalValue)
       if (
-        (this.min != null && this.internalValue < this.min) ||
-        (this.max != null && this.internalValue > this.max) ||
-        isNaN(this.internalValue) ||
-        this.internalValue === this.modelValue
+        (this.min != null && numValue < this.min) ||
+        (this.max != null && numValue > this.max) ||
+        isNaN(numValue) ||
+        numValue === this.modelValue
       ) {
         this.internalValue = this.modelValue
         return
       }
 
-      this.$emit('update:modelValue', this.internalValue)
-      this.$emit('update-number', this.internalValue)
+      this.$emit('update:modelValue', numValue)
+      this.$emit('update-number', numValue)
 
       setTimeout(() => {
         this.confirmed = false
