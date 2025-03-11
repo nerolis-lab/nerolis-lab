@@ -1,3 +1,11 @@
+## [1.40.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.40.1...v1.40.2) (2025-03-11)
+
+
+### Bug Fixes
+
+* compare strength data table shows non-strength skill values ([5237258](https://github.com/nerolis-lab/nerolis-lab/commit/5237258722ec5bff2ba551515aaf66f647d6e224))
+* number input component parses as number ([5cf7826](https://github.com/nerolis-lab/nerolis-lab/commit/5cf7826f80f53a2812bfedf5654ecd3c3f500739))
+
 ## [1.40.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.40.0...v1.40.1) (2025-03-11)
 
 
