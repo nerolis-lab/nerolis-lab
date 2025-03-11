@@ -26,10 +26,11 @@
           <NumberInput
             density="default"
             v-model="userStore.areaBonus[islandData.shortName]"
+            :rules="[rules.minBonusRule, rules.maxBonusRule]"
             :min="0"
-            :max="100"
-            @update-number="updateAreaBonus(islandData.shortName)"
+            :max="MAX_ISLAND_BONUS"
             :loading="loadingStates[islandData.shortName]"
+            @update-number="updateAreaBonus(islandData.shortName)"
           >
             <template #label>
               <span>Bonus</span>
@@ -64,13 +65,19 @@ import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { UserService } from '@/services/user/user-service'
 import { islandImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
-import { ISLANDS, type IslandShortName } from 'sleepapi-common'
+import { ISLANDS, MAX_ISLAND_BONUS, type IslandShortName } from 'sleepapi-common'
 import { computed, reactive } from 'vue'
+
+const userStore = useUserStore()
+
+const rules = {
+  minBonusRule: (value: number) => value >= 0 || 'Value must be at least 0',
+  maxBonusRule: (value: number) => value <= MAX_ISLAND_BONUS || `Value must be ${MAX_ISLAND_BONUS} or less`
+}
 
 const loadingStates = reactive(
   Object.fromEntries(ISLANDS.map((i) => [i.shortName, false])) as Record<IslandShortName, boolean>
 )
-const userStore = useUserStore()
 
 const islandBonusData = computed(() => {
   return ISLANDS.map((islandObj) => ({

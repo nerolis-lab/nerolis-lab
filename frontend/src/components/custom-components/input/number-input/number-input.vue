@@ -136,8 +136,8 @@ export default defineComponent({
     },
     handleUpdate() {
       if (
-        (this.min && this.internalValue < this.min) ||
-        (this.max && this.internalValue > this.max) ||
+        (this.min != null && this.internalValue < this.min) ||
+        (this.max != null && this.internalValue > this.max) ||
         isNaN(this.internalValue) ||
         this.internalValue === this.modelValue
       ) {
