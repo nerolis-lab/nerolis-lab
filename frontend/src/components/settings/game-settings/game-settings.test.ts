@@ -58,7 +58,7 @@ describe('AreaAndRecipeBonus', () => {
 
     numberInputs.forEach((input) => {
       expect(input.props('min')).toBe(0)
-      expect(input.props('max')).toBe(100)
+      expect(input.props('max')).toBe(75)
     })
   })
 
