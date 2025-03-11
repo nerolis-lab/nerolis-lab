@@ -55,7 +55,7 @@ export default defineComponent({
     currentBerryStrength() {
       return compactNumber(
         StrengthService.berryStrength({
-          favored: this.teamStore.getCurrentTeam.favoredBerries,
+          favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
           berries: this.memberWithProduction.production.produceWithoutSkill.berries,
           timeWindow: this.teamStore.timeWindow,
           areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)

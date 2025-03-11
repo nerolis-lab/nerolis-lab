@@ -176,16 +176,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.v-table > .v-table__wrapper > table > tbody > tr > td,
-.v-table > .v-table__wrapper > table > tbody > tr > th,
-.v-table > .v-table__wrapper > table > thead > tr > td,
-.v-table > .v-table__wrapper > table > thead > tr > th {
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > td),
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > th),
+:deep(.v-table > .v-table__wrapper > table > thead > tr > td),
+:deep(.v-table > .v-table__wrapper > table > thead > tr > th) {
   padding: 0 0px !important;
   padding-left: 0px !important;
 }
 
-.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child),
-.v-table > .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child)),
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > th:not(:last-child)) {
   border-right: 1px solid #dddddd87;
 }
 </style>
