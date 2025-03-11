@@ -1,3 +1,10 @@
+## [1.40.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.40.0...v1.40.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* adds rules that limit area bonus to game max ([aa1f244](https://github.com/nerolis-lab/nerolis-lab/commit/aa1f244feeee92121bf3354a17740c4452c30ffc))
+
 # [1.40.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.39.2...v1.40.0) (2025-03-10)
 
 
