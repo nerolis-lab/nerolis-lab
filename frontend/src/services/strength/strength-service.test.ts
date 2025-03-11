@@ -1,7 +1,7 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import type { TimeWindowWeek } from '@/types/time/time-window'
 import { createPinia, setActivePinia } from 'pinia'
-import { MathUtils, berry, berryPowerForLevel, mainskill, type BerrySet } from 'sleepapi-common'
+import { MathUtils, berry, berryPowerForLevel, mainskill, type BerrySet, type MemberSkillValue } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('StrengthService', () => {
@@ -20,7 +20,7 @@ describe('StrengthService', () => {
     it('should calculate strength correctly with favored berry multiplier', () => {
       const strength = StrengthService.berryStrength({
         berries: mockBerrySet,
-        favored: favoredBerries,
+        favoredBerries: favoredBerries,
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })
@@ -36,7 +36,7 @@ describe('StrengthService', () => {
     it('should calculate strength without favored berry multiplier', () => {
       const strength = StrengthService.berryStrength({
         berries: mockBerrySet,
-        favored: [],
+        favoredBerries: [],
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })
@@ -53,9 +53,9 @@ describe('StrengthService', () => {
       const skillValueSpy = vi.spyOn(StrengthService, 'skillValue')
       StrengthService.skillStrength({
         skill: mainskill.CHARGE_STRENGTH_M,
-        amount: 10,
+        skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
         berries: mockBerrySet,
-        favored: favoredBerries,
+        favoredBerries: favoredBerries,
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })
@@ -68,9 +68,9 @@ describe('StrengthService', () => {
 
       StrengthService.skillStrength({
         skill: mainskill.BERRY_BURST_DISGUISE,
-        amount: 10,
+        skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
         berries: mockBerrySet,
-        favored: favoredBerries,
+        favoredBerries: favoredBerries,
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })

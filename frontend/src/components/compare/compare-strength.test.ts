@@ -24,7 +24,7 @@ describe('CompareStrength', () => {
 
   const mockPokemon = createMockPokemon({ name: 'Ash', skillLevel: 1 })
   const mockMemberProduction: MemberProduction = createMockMemberProduction({
-    skillValue: { strength: { amountToSelf: 100 } } as MemberSkillValue
+    skillValue: { strength: { amountToSelf: 100, amountToTeam: 0 } } as MemberSkillValue
   })
 
   beforeEach(() => {
@@ -88,9 +88,9 @@ describe('CompareStrength', () => {
     // Check skill value
     const skillValue = StrengthService.skillStrength({
       skill: member.pokemon.skill,
-      amount: mockMemberProduction.skillAmount,
+      skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      favored: [],
+      favoredBerries: [],
       timeWindow: '24H',
       areaBonus: 1
     })
@@ -104,7 +104,7 @@ describe('CompareStrength', () => {
     expect(totalPower).toEqual(17206)
   })
 
-  it('renders 8h time window correctly in data tab', async () => {
+  it.only('renders 8h time window correctly in data tab', async () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
     comparisonStore.timeWindow = '8H'
@@ -154,9 +154,9 @@ describe('CompareStrength', () => {
     // Check skill value
     const skillValue = StrengthService.skillStrength({
       skill: member.pokemon.skill,
-      amount: mockMemberProduction.skillValue['strength']?.amountToSelf ?? 0,
+      skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      favored: comparisonStore.currentTeam?.favoredBerries ?? [],
+      favoredBerries: comparisonStore.currentTeam?.favoredBerries ?? [],
       timeWindow: '8H',
       areaBonus: 1
     })

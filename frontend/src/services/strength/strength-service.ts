@@ -1,21 +1,46 @@
 import type { TimeWindowWeek } from '@/types/time/time-window'
-import type { Mainskill } from 'sleepapi-common'
+import type { Mainskill, MemberSkillValue } from 'sleepapi-common'
 import { MathUtils, berryPowerForLevel, type Berry, type BerrySet } from 'sleepapi-common'
 
 class StrengthServiceImpl {
-  public berryStrength(params: {
+  /**
+   * @returns the combined strength of the berry skill and strength skill values
+   */
+  public skillStrength(params: {
+    skill: Mainskill
+    skillValues: MemberSkillValue
     berries: BerrySet[]
-    favored: Berry[]
+    favoredBerries: Berry[]
     timeWindow: TimeWindowWeek
     areaBonus: number
   }) {
-    const { berries, favored, timeWindow, areaBonus } = params
+    const { skill, skillValues, timeWindow, areaBonus } = params
+
+    const strengthSkillValue = skillValues['strength'] ?? { amountToSelf: 0, amountToTeam: 0 }
+
+    const berrySkillStrength = this.berryStrength(params)
+    const skillStrength = this.skillValue({
+      skill,
+      amount: strengthSkillValue.amountToSelf + strengthSkillValue.amountToTeam,
+      timeWindow,
+      areaBonus
+    })
+    return berrySkillStrength + skillStrength
+  }
+
+  public berryStrength(params: {
+    berries: BerrySet[]
+    favoredBerries: Berry[]
+    timeWindow: TimeWindowWeek
+    areaBonus: number
+  }) {
+    const { berries, favoredBerries, timeWindow, areaBonus } = params
 
     const timeWindowFactor = this.timeWindowFactor(timeWindow)
 
     let strength = 0
     for (const producedBerry of berries) {
-      const favoredBerryMultiplier = favored.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
+      const favoredBerryMultiplier = favoredBerries.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
 
       strength +=
         producedBerry.amount *
@@ -25,28 +50,6 @@ class StrengthServiceImpl {
         favoredBerryMultiplier
     }
     return Math.floor(strength)
-  }
-
-  public skillStrength(
-    params: {
-      skill: Mainskill
-      amount: number
-      berries: BerrySet[]
-      favored: Berry[]
-      timeWindow: TimeWindowWeek
-      areaBonus: number
-    },
-    considerEverythingStrength = false
-  ) {
-    const { skill, berries, favored, timeWindow, areaBonus } = params
-
-    if (considerEverythingStrength || skill.isUnit('strength') || skill.isUnit('metronome') || skill.isUnit('copy')) {
-      return this.skillValue(params)
-    } else if (skill.isUnit('berries')) {
-      return this.berryStrength({ berries, favored, timeWindow, areaBonus })
-    }
-
-    return 0
   }
 
   public skillValue(params: { skill: Mainskill; amount: number; timeWindow: TimeWindowWeek; areaBonus: number }) {

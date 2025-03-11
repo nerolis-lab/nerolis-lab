@@ -59,7 +59,7 @@ describe('MemberProductionBerry', () => {
     const strengthSpan = wrapper.findAll('span.font-weight-medium').at(1)
     const teamStore = useTeamStore()
     const currentBerryStrength = StrengthService.berryStrength({
-      favored: teamStore.getCurrentTeam.favoredBerries,
+      favoredBerries: teamStore.getCurrentTeam.favoredBerries,
       berries: mockMember.production.produceWithoutSkill.berries,
       timeWindow: teamStore.timeWindow,
       areaBonus: 1

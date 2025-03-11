@@ -160,7 +160,7 @@
                   <div>{{ item.energyPerMember }}</div>
                 </div>
                 <div v-else>
-                  {{ item.skillStrength }}
+                  {{ item.skillValue }}
                 </div>
               </div>
             </div>
@@ -255,6 +255,10 @@ export default defineComponent({
     },
     members() {
       const production = []
+      const favoredBerries = this.comparisonStore.currentTeam?.favoredBerries ?? []
+      const areaBonus = this.userStore.islandBonus(getIsland(favoredBerries).shortName)
+      const timeWindow = this.comparisonStore.timeWindow
+
       for (const memberProduction of this.comparisonStore.members) {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
         if (!member) continue
@@ -262,12 +266,10 @@ export default defineComponent({
 
         const berryPower = this.showBerries
           ? StrengthService.berryStrength({
-              favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
+              favoredBerries,
               berries: memberProduction.produceWithoutSkill.berries,
-              timeWindow: this.comparisonStore.timeWindow,
-              areaBonus: this.userStore.islandBonus(
-                getIsland(this.comparisonStore.currentTeam?.favoredBerries ?? []).shortName
-              )
+              timeWindow,
+              areaBonus
             })
           : 0
 
@@ -278,23 +280,25 @@ export default defineComponent({
             : 0
 
         const skillStrength = this.showSkills
-          ? StrengthService.skillStrength(
-              {
-                skill: memberPokemon.skill,
-                amount: memberProduction.skillValue['strength']?.amountToSelf ?? 0,
-                berries: memberProduction.produceFromSkill.berries.map((b) => ({
-                  amount: b.amount,
-                  berry: b.berry,
-                  level: b.level
-                })),
-                favored: this.comparisonStore.currentTeam?.favoredBerries ?? [],
-                timeWindow: this.comparisonStore.timeWindow,
-                areaBonus: this.userStore.islandBonus(
-                  getIsland(this.comparisonStore.currentTeam?.favoredBerries ?? []).shortName
-                )
-              },
-              true
-            )
+          ? StrengthService.skillStrength({
+              skill: memberPokemon.skill,
+              skillValues: memberProduction.skillValue,
+              berries: memberProduction.produceFromSkill.berries,
+              favoredBerries,
+              timeWindow,
+              areaBonus
+            })
+          : 0
+
+        const skillValue = this.showSkills
+          ? StrengthService.skillValue({
+              skill: memberPokemon.skill,
+              amount:
+                memberProduction.skillValue[memberPokemon.skill.unit].amountToSelf +
+                memberProduction.skillValue[memberPokemon.skill.unit].amountToTeam,
+              timeWindow,
+              areaBonus
+            })
           : 0
         const total = Math.floor(berryPower + ingredientPower + skillStrength)
 
@@ -311,6 +315,7 @@ export default defineComponent({
           ingredientCompact: compactNumber(ingredientPower),
           skill: memberPokemon.skill,
           skillStrength,
+          skillValue,
           skillCompact: skillStrength > 0 ? compactNumber(skillStrength) : '',
           energyPerMember: memberPokemon.skill.isUnit('energy') ? this.energyPerMember(memberProduction) : 0,
           total,
@@ -392,16 +397,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.v-table > .v-table__wrapper > table > tbody > tr > td,
-.v-table > .v-table__wrapper > table > tbody > tr > th,
-.v-table > .v-table__wrapper > table > thead > tr > td,
-.v-table > .v-table__wrapper > table > thead > tr > th {
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > td),
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > th),
+:deep(.v-table > .v-table__wrapper > table > thead > tr > td),
+:deep(.v-table > .v-table__wrapper > table > thead > tr > th) {
   padding: 0 0px !important;
   padding-left: 0px !important;
 }
 
-.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child),
-.v-table > .v-table__wrapper > table > tbody > tr > th:not(:last-child) {
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child)),
+:deep(.v-table > .v-table__wrapper > table > tbody > tr > th:not(:last-child)) {
   border-right: 1px solid #dddddd87;
 }
 

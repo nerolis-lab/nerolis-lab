@@ -198,7 +198,7 @@ export default defineComponent({
         const { berries } = member.produceWithoutSkill
 
         const berryStrength = StrengthService.berryStrength({
-          favored: favoredBerries,
+          favoredBerries: favoredBerries,
           berries,
           timeWindow: 'WEEK',
           areaBonus: this.userStore.islandBonus(getIsland(favoredBerries).shortName)
@@ -212,14 +212,13 @@ export default defineComponent({
 
       return members.reduce((sum, memberProduction) => {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
-        const memberStrengthValue = memberProduction.skillValue['strength']?.amountToSelf ?? 0
 
         const memberSkillStrength = member
           ? StrengthService.skillStrength({
               skill: member.pokemon.skill,
-              amount: memberStrengthValue,
+              skillValues: memberProduction.skillValue,
               berries: memberProduction.produceFromSkill.berries,
-              favored: this.teamStore.getCurrentTeam.favoredBerries,
+              favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
               timeWindow: 'WEEK',
               areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
             })
@@ -236,7 +235,7 @@ export default defineComponent({
         const berry = getBerry(name)
 
         const berryStrength = StrengthService.berryStrength({
-          favored: favoredBerries,
+          favoredBerries: favoredBerries,
           berries: [{ berry, amount, level }],
           timeWindow: '24H', // week multiplies it by 7, but this is already for a week
           areaBonus: this.userStore.islandBonus(getIsland(favoredBerries).shortName)
@@ -307,16 +306,16 @@ export default defineComponent({
 
         const berryStrength = StrengthService.berryStrength({
           berries: memberProduction.produceWithoutSkill.berries,
-          favored: this.teamStore.getCurrentTeam.favoredBerries,
+          favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
           timeWindow: 'WEEK',
           areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
         })
 
         const skillStrength = StrengthService.skillStrength({
           skill: member.pokemon.skill,
-          amount: memberProduction.skillAmount,
+          skillValues: memberProduction.skillValue,
           berries: memberProduction.produceFromSkill.berries,
-          favored: this.teamStore.getCurrentTeam.favoredBerries,
+          favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
           timeWindow: 'WEEK',
           areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
         })
