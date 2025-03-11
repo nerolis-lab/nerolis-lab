@@ -26,6 +26,7 @@
           <NumberInput
             density="default"
             v-model="userStore.areaBonus[islandData.shortName]"
+            :disabled="!isLoggedIn"
             :rules="[rules.minBonusRule, rules.maxBonusRule]"
             :min="0"
             :max="MAX_ISLAND_BONUS"
@@ -69,6 +70,7 @@ import { ISLANDS, MAX_ISLAND_BONUS, type IslandShortName } from 'sleepapi-common
 import { computed, reactive } from 'vue'
 
 const userStore = useUserStore()
+const isLoggedIn = computed(() => userStore.loggedIn)
 
 const rules = {
   minBonusRule: (value: number) => value >= 0 || 'Value must be at least 0',

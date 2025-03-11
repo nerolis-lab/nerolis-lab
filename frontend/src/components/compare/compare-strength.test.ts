@@ -104,7 +104,7 @@ describe('CompareStrength', () => {
     expect(totalPower).toEqual(17206)
   })
 
-  it.only('renders 8h time window correctly in data tab', async () => {
+  it('renders 8h time window correctly in data tab', async () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
     comparisonStore.timeWindow = '8H'
