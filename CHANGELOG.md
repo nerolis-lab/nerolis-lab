@@ -1,3 +1,10 @@
+# [1.41.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.40.2...v1.41.0) (2025-03-13)
+
+
+### Features
+
+* adds user pot size setting ([bda2b25](https://github.com/nerolis-lab/nerolis-lab/commit/bda2b253d6d0be0d569e791034ededf13e0d78b6))
+
 ## [1.40.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.40.1...v1.40.2) (2025-03-11)
 
 
