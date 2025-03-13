@@ -25,6 +25,7 @@ import {
   getNature,
   getPokemon,
   ingredientSetToIntFlat,
+  MAX_POT_SIZE,
   MAX_TEAM_SIZE
 } from 'sleepapi-common';
 
@@ -74,7 +75,8 @@ export default class SolveController {
       bedtime,
       wakeup,
       includeCooking: false,
-      stockpiledIngredients: emptyIngredientInventoryFloat()
+      stockpiledIngredients: emptyIngredientInventoryFloat(),
+      potSize: MAX_POT_SIZE // TODO: support custom in future
     };
   }
 

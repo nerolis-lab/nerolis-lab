@@ -3,7 +3,8 @@ import {
   deleteUser,
   getUser,
   getUserSettings,
-  updateUser
+  updateUser,
+  upsertUserSettings
 } from '@src/services/user-service/login-service/login-service.js';
 import { getAreaBonuses, upsertAreaBonus } from '@src/services/user-service/user-area-service/user-area-service.js';
 import {
@@ -29,6 +30,10 @@ export default class UserController {
 
   public async getUserSettings(user: DBUser) {
     return getUserSettings(user);
+  }
+
+  public async upsertUserSettings(user: DBUser, potSize: number) {
+    return upsertUserSettings(user, potSize);
   }
 
   public async deleteUser(user: DBUser) {

@@ -16,7 +16,16 @@ import {
 import { joinPath } from '@src/utils/file-utils/file-utils.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import type { IngredientSetSimple, Pokemon, Recipe, TeamMemberSettings, TierlistSettings } from 'sleepapi-common';
+import type {
+  IngredientSetSimple,
+  Pokemon,
+  Recipe,
+  SolveSettingsExt,
+  TeamMemberExt,
+  TeamMemberSettings,
+  TierlistSettings,
+  Time
+} from 'sleepapi-common';
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   emptyIngredientInventoryFloat,
@@ -27,16 +36,14 @@ import {
   ingredientSetToIntFlat,
   mainskill,
   MathUtils,
+  MAX_POT_SIZE,
   MAX_RECIPE_LEVEL,
   MAX_TEAM_SIZE,
   OPTIMAL_POKEDEX,
   recipeCoverage,
   recipeLevelBonus,
   RECIPES,
-  simplifyIngredientSet,
-  type SolveSettingsExt,
-  type TeamMemberExt,
-  type Time
+  simplifyIngredientSet
 } from 'sleepapi-common';
 
 export interface RecipeContribution {
@@ -147,7 +154,8 @@ class CookingTierlistImpl {
       level,
       wakeup: this.wakeup,
       includeCooking: true,
-      stockpiledIngredients: emptyIngredientInventoryFloat()
+      stockpiledIngredients: emptyIngredientInventoryFloat(),
+      potSize: MAX_POT_SIZE
     };
     let counter = 0;
     // eslint-disable-next-line SleepAPILogger/no-console

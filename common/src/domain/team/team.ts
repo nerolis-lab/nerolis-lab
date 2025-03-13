@@ -15,6 +15,7 @@ export interface TeamSettingsExt {
   wakeup: Time;
   includeCooking: boolean;
   stockpiledIngredients: IngredientIndexToFloatAmount;
+  potSize: number;
 }
 
 export interface TeamSolution {

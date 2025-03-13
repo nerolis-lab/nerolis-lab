@@ -15,6 +15,7 @@ export interface UserState {
   friendCode?: string
   role: Roles
   areaBonus: Record<IslandShortName, number>
+  potSize: number
 }
 
 export interface TokenInfo {
@@ -32,7 +33,8 @@ export const useUserStore = defineStore('user', {
       tokens: null,
       externalId: null,
       role: Roles.Default,
-      areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>
+      areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>,
+      potSize: 15
     }
   },
   getters: {
@@ -51,6 +53,10 @@ export const useUserStore = defineStore('user', {
           number
         >
       }
+
+      if (!this.potSize) {
+        this.potSize = 15
+      }
     },
     setUserData(userData: { name: string; avatar?: string; email: string; externalId: string; role: Roles }) {
       this.name = userData.name
@@ -66,6 +72,7 @@ export const useUserStore = defineStore('user', {
       this.name = userSettings.name
       this.avatar = userSettings.avatar
       this.role = userSettings.role
+      this.potSize = userSettings.potSize
 
       for (const [area, bonus] of Object.entries(userSettings.areaBonuses)) {
         this.areaBonus[area as IslandShortName] = bonus

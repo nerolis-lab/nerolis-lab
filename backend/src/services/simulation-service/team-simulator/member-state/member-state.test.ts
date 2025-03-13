@@ -4,6 +4,7 @@ import { CookingState } from '@src/services/simulation-service/team-simulator/co
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
@@ -11,12 +12,12 @@ import {
   emptyIngredientInventoryFloat,
   ingredient,
   mainskill,
+  MAX_POT_SIZE,
   mockPokemon,
   nature,
   subskill
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
-import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 
 const mockPokemonSet: PokemonWithIngredients = {
   pokemon: mockPokemon({
@@ -68,7 +69,8 @@ const settings: TeamSettingsExt = {
   wakeup: TimeUtils.parseTime('06:00'),
   camp: false,
   includeCooking: true,
-  stockpiledIngredients: emptyIngredientInventoryFloat()
+  stockpiledIngredients: emptyIngredientInventoryFloat(),
+  potSize: MAX_POT_SIZE
 };
 
 const cookingState: CookingState = new CookingState(settings, defaultUserRecipes(), createPreGeneratedRandom());

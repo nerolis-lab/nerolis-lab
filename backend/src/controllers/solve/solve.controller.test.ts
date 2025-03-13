@@ -3,7 +3,6 @@ import SolveController from '@src/controllers/solve/solve.controller.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import * as mealUtils from '@src/utils/meal-utils/meal-utils.js';
 import * as common from 'sleepapi-common';
-import { nature } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('solve.controller', () => {
@@ -26,7 +25,8 @@ describe('solve.controller', () => {
         bedtime: mocks.bedtime(),
         wakeup: mocks.wakeup(),
         includeCooking: false,
-        stockpiledIngredients: common.emptyIngredientInventoryFloat()
+        stockpiledIngredients: common.emptyIngredientInventoryFloat(),
+        potSize: common.MAX_POT_SIZE
       });
     });
 
@@ -49,13 +49,13 @@ describe('solve.controller', () => {
     it('should enrich member settings with valid inputs', () => {
       const settings = mocks.teamMemberSettings();
 
-      const natureMock = vimic(common, 'getNature', () => nature.BASHFUL);
+      const natureMock = vimic(common, 'getNature', () => common.nature.BASHFUL);
 
       const enrichMemberSettings = controller._testAccess().enrichMemberSettings;
       const result = enrichMemberSettings({ ...settings });
 
       expect(natureMock).toHaveBeenCalledWith(settings.nature);
-      expect(result).toEqual({ ...settings, nature: nature.BASHFUL, subskills: new Set() });
+      expect(result).toEqual({ ...settings, nature: common.nature.BASHFUL, subskills: new Set() });
 
       natureMock.mockRestore();
     });

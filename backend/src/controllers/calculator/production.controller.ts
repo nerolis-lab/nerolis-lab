@@ -1,4 +1,5 @@
 import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
@@ -42,6 +43,7 @@ import {
   ingredientSetToFloatFlat,
   limitSubSkillsToLevel,
   mainskill,
+  MIN_POT_SIZE,
   salad
 } from 'sleepapi-common';
 
@@ -54,18 +56,18 @@ export default class ProductionController {
 
   public async calculateTeam(body: CalculateTeamRequest, maybeUser?: DBUser) {
     const userRecipes = await this.#parseUserRecipes(maybeUser);
-    const parsedInput = this.#parseTeamInput(body, userRecipes);
+    const parsedInput = await this.#parseTeamInput(body, userRecipes, maybeUser);
     return calculateTeam(parsedInput);
   }
 
   public async calculateIv(body: CalculateIvRequest) {
-    const parsedInput = this.#parseIvInput(body);
+    const parsedInput = await this.#parseIvInput(body);
     return calculateIv(parsedInput);
   }
 
-  #parseIvInput(body: CalculateIvRequest) {
+  async #parseIvInput(body: CalculateIvRequest) {
     const { members, variants } = body;
-    const settings = this.#parseSettings({ settings: body.settings, includeCooking: false });
+    const settings = await this.#parseSettings({ settings: body.settings, includeCooking: false });
 
     if (members.length > 4) {
       throw new BadRequestError(
@@ -86,44 +88,8 @@ export default class ProductionController {
     };
   }
 
-  #parseTeamMembers(members: PokemonInstanceIdentity[], camp: boolean) {
-    const parsedMembers: TeamMemberExt[] = [];
-    for (const member of members) {
-      const pokemon = getPokemon(member.pokemon);
-      const subskills = new Set(
-        member.subskills.filter((subskill) => subskill.level <= member.level).map((subskill) => subskill.subskill)
-      );
-
-      parsedMembers.push({
-        pokemonWithIngredients: {
-          pokemon,
-          ingredientList: this.#getIngredientSet({
-            pokemon,
-            level: member.level,
-            ingredients: member.ingredients
-          })
-        },
-        settings: {
-          level: member.level,
-          ribbon: member.ribbon,
-          carrySize: CarrySizeUtils.calculateCarrySize({
-            baseWithEvolutions: member.carrySize,
-            subskillsLevelLimited: subskills,
-            ribbon: member.ribbon,
-            camp
-          }),
-          nature: getNature(member.nature),
-          skillLevel: member.skillLevel,
-          subskills,
-          externalId: member.externalId
-        }
-      });
-    }
-    return parsedMembers;
-  }
-
-  #parseTeamInput(body: CalculateTeamRequest, userRecipes: UserRecipes) {
-    const settings = this.#parseSettings({ settings: body.settings, includeCooking: true });
+  async #parseTeamInput(body: CalculateTeamRequest, userRecipes: UserRecipes, maybeUser?: DBUser) {
+    const settings = await this.#parseSettings({ settings: body.settings, includeCooking: true, maybeUser });
 
     return {
       settings,
@@ -165,8 +131,12 @@ export default class ProductionController {
     };
   }
 
-  #parseSettings(params: { settings: TeamSettings; includeCooking: boolean }): TeamSettingsExt {
-    const { settings, includeCooking } = params;
+  async #parseSettings(params: {
+    settings: TeamSettings;
+    includeCooking: boolean;
+    maybeUser?: DBUser;
+  }): Promise<TeamSettingsExt> {
+    const { settings, includeCooking, maybeUser } = params;
     const camp = queryAsBoolean(settings.camp);
     const bedtime = TimeUtils.parseTime(settings.bedtime);
     const wakeup = TimeUtils.parseTime(settings.wakeup);
@@ -189,13 +159,52 @@ export default class ProductionController {
       })) ?? []
     );
 
+    const potSize = maybeUser ? (await UserSettingsDAO.get({ fk_user_id: maybeUser.id })).pot_size : MIN_POT_SIZE;
+
     return {
       camp,
       bedtime,
       wakeup,
       includeCooking,
-      stockpiledIngredients
+      stockpiledIngredients,
+      potSize
     };
+  }
+
+  #parseTeamMembers(members: PokemonInstanceIdentity[], camp: boolean) {
+    const parsedMembers: TeamMemberExt[] = [];
+    for (const member of members) {
+      const pokemon = getPokemon(member.pokemon);
+      const subskills = new Set(
+        member.subskills.filter((subskill) => subskill.level <= member.level).map((subskill) => subskill.subskill)
+      );
+
+      parsedMembers.push({
+        pokemonWithIngredients: {
+          pokemon,
+          ingredientList: this.#getIngredientSet({
+            pokemon,
+            level: member.level,
+            ingredients: member.ingredients
+          })
+        },
+        settings: {
+          level: member.level,
+          ribbon: member.ribbon,
+          carrySize: CarrySizeUtils.calculateCarrySize({
+            baseWithEvolutions: member.carrySize,
+            subskillsLevelLimited: subskills,
+            ribbon: member.ribbon,
+            camp
+          }),
+          nature: getNature(member.nature),
+          skillLevel: member.skillLevel,
+          subskills,
+          externalId: member.externalId
+        }
+      });
+    }
+    return parsedMembers;
   }
 
   #getIngredientSet(params: { pokemon: Pokemon; level: number; ingredients: IngredientInstance[] }): IngredientSet[] {

@@ -26,6 +26,10 @@ describe('User Store', () => {
     userStore.areaBonus = null as any
     expect(userStore.areaBonus).toBeNull()
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    userStore.potSize = null as any
+    expect(userStore.potSize).toBeNull()
+
     userStore.migrate()
     expect(userStore.role).toBe(Roles.Default)
     expect(userStore.areaBonus).toEqual({
@@ -36,6 +40,7 @@ describe('User Store', () => {
       snowdrop: 0,
       taupe: 0
     })
+    expect(userStore.potSize).toBe(15)
   })
 
   it('should have expected default state', () => {
@@ -54,6 +59,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "potSize": 15,
         "role": "default",
         "tokens": null,
       }
@@ -85,6 +91,7 @@ describe('User Store', () => {
         "email": "some email",
         "externalId": "some id",
         "name": "some name",
+        "potSize": 15,
         "role": "default",
         "tokens": null,
       }
@@ -114,6 +121,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "potSize": 15,
         "role": "default",
         "tokens": {
           "accessToken": "some access token",
@@ -137,7 +145,8 @@ describe('User Store', () => {
         powerplant: 40,
         snowdrop: 50,
         taupe: 60
-      }
+      },
+      potSize: 25
     })
 
     expect(userStore.$state).toMatchInlineSnapshot(`
@@ -154,6 +163,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "new name",
+        "potSize": 25,
         "role": "admin",
         "tokens": null,
       }
@@ -172,7 +182,8 @@ describe('User Store', () => {
         powerplant: 45,
         snowdrop: 55,
         taupe: 65
-      }
+      },
+      potSize: 30
     })
 
     const userStore = useUserStore()
@@ -193,6 +204,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "synced name",
+        "potSize": 30,
         "role": "admin",
         "tokens": null,
       }
@@ -228,6 +240,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "potSize": 15,
         "role": "default",
         "tokens": null,
       }
@@ -264,6 +277,7 @@ describe('User Store', () => {
         "email": undefined,
         "externalId": undefined,
         "name": "some name",
+        "potSize": 15,
         "role": "default",
         "tokens": {
           "accessToken": "some access token",
@@ -374,6 +388,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "potSize": 15,
         "role": "default",
         "tokens": null,
       }

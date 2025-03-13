@@ -9,6 +9,7 @@ import type {
   UpsertAreaBonusRequest,
   UpsertRecipeLevelRequest,
   User,
+  UserSettingsRequest,
   UserSettingsResponse
 } from 'sleepapi-common'
 
@@ -60,6 +61,11 @@ class UserServiceImpl {
 
   public async upsertAreaBonus(shortName: IslandShortName, bonus: number) {
     const response = await serverAxios.put<UpsertAreaBonusRequest>('user/area', { area: shortName, bonus })
+    return response.data
+  }
+
+  public async upsertUserSettings(potSize: number) {
+    const response = await serverAxios.put<UserSettingsRequest>('user/settings', { potSize })
     return response.data
   }
 }

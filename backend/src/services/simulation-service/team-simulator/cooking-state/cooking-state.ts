@@ -1,18 +1,10 @@
-import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type {
   UserRecipeFlat,
   UserRecipes
 } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type { CookedRecipeResult, CookingResult, IngredientIndexToFloatAmount, TeamSettingsExt } from 'sleepapi-common';
-import {
-  MAX_POT_SIZE,
-  curry,
-  dessert,
-  emptyIngredientInventoryFloat,
-  flatToIngredientSet,
-  ingredient,
-  salad
-} from 'sleepapi-common';
+import { curry, dessert, emptyIngredientInventoryFloat, flatToIngredientSet, ingredient, salad } from 'sleepapi-common';
 
 interface CookedRecipe extends UserRecipeFlat {
   name: string;
@@ -35,6 +27,7 @@ export class CookingState {
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
   private rng: PreGeneratedRandom;
+  private userPotSize: number;
 
   private userCurries: UserRecipeFlat[];
   private userSalads: UserRecipeFlat[];
@@ -65,6 +58,7 @@ export class CookingState {
     this.rng = rng;
 
     this.camp = settings.camp;
+    this.userPotSize = settings.potSize;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
     this.currentCurryStockpile = settings.stockpiledIngredients.slice();
     this.currentSaladStockpile = settings.stockpiledIngredients.slice();
@@ -268,7 +262,7 @@ export class CookingState {
   }
 
   private currentPotSize(sunday: boolean): number {
-    const basePotSize = MAX_POT_SIZE * (sunday ? 2 : 1);
+    const basePotSize = this.userPotSize * (sunday ? 2 : 1);
     const potSizeWithCPU = basePotSize + this.bonusPotSize;
     return Math.round(this.camp ? potSizeWithCPU * 1.5 : potSizeWithCPU);
   }

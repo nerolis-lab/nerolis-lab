@@ -8,6 +8,7 @@ export function teamSettingsExt(attrs?: Partial<TeamSettingsExt>): TeamSettingsE
     camp: false,
     includeCooking: false,
     stockpiledIngredients: mockIngredientSetFloatIndexed(),
+    potSize: 15,
     ...attrs
   };
 }

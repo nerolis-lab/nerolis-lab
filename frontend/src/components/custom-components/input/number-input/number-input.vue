@@ -12,6 +12,7 @@
     persistent-hint
     :rules="rules"
     min-width="50"
+    :suffix="suffix"
     @focus="highlightText"
     @blur="handleUpdate"
     @keyup.enter="handleUpdate"
@@ -19,7 +20,7 @@
     <template v-if="showStatus" #append-inner>
       <v-progress-circular v-if="localLoading" indeterminate size="20" />
       <v-icon v-else-if="confirmed" size="20" color="success"> mdi-check </v-icon>
-      <v-icon v-else size="20"> mdi-pencil </v-icon>
+      <v-icon v-else size="20"> {{ appendIcon }} </v-icon>
     </template>
 
     <template v-for="(_, name) in availableSlots" :key="name" #[name]="scope">
@@ -62,6 +63,14 @@ export default defineComponent({
     showStatus: {
       type: Boolean,
       default: true
+    },
+    appendIcon: {
+      type: String,
+      default: 'mdi-pencil'
+    },
+    suffix: {
+      type: String,
+      default: null
     }
   },
   emits: ['update-number', 'update:modelValue'],

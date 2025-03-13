@@ -1,5 +1,6 @@
 import { config } from '@src/config/config.js';
 import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import {
@@ -9,12 +10,13 @@ import {
   refresh,
   signup,
   updateUser,
+  upsertUserSettings,
   verifyAdmin,
   verifyExistingUser
 } from '@src/services/user-service/login-service/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { Roles, uuid } from 'sleepapi-common';
+import { MIN_POT_SIZE, Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
@@ -376,6 +378,11 @@ describe('getUserSettings', () => {
       role: Roles.Default
     });
 
+    await UserSettingsDAO.insert({
+      fk_user_id: user.id,
+      pot_size: MIN_POT_SIZE
+    });
+
     const userSettings = await getUserSettings(user);
 
     expect(userSettings).toEqual(
@@ -383,7 +390,8 @@ describe('getUserSettings', () => {
         name: 'Existing user',
         avatar: 'default',
         role: 'default',
-        areaBonuses: {}
+        areaBonuses: {},
+        potSize: MIN_POT_SIZE
       })
     );
   });
@@ -395,6 +403,11 @@ describe('getUserSettings', () => {
       name: 'Existing user',
       friend_code: 'TESTFC',
       role: Roles.Default
+    });
+
+    await UserSettingsDAO.insert({
+      fk_user_id: user.id,
+      pot_size: MIN_POT_SIZE
     });
 
     await UserAreaDAO.insert({
@@ -410,6 +423,108 @@ describe('getUserSettings', () => {
         areaBonuses: {
           cyan: 75
         }
+      })
+    );
+  });
+});
+
+describe('upsertUserSettings', () => {
+  it('should insert user settings when they do not exist', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      friend_code: 'TESTFC',
+      role: Roles.Default
+    });
+
+    expect(await UserSettingsDAO.findMultiple()).toEqual([]);
+
+    await upsertUserSettings(user, 2000);
+
+    const settings = await UserSettingsDAO.findMultiple();
+    expect(settings).toHaveLength(1);
+    expect(settings[0]).toEqual(
+      expect.objectContaining({
+        fk_user_id: user.id,
+        pot_size: 2000
+      })
+    );
+  });
+
+  it('should update user settings when they already exist', async () => {
+    const user = await UserDAO.insert({
+      sub: 'some-sub',
+      external_id: uuid.v4(),
+      name: 'Existing user',
+      friend_code: 'TESTFC',
+      role: Roles.Default
+    });
+
+    await UserSettingsDAO.insert({
+      fk_user_id: user.id,
+      pot_size: MIN_POT_SIZE
+    });
+
+    let settings = await UserSettingsDAO.findMultiple();
+    expect(settings).toHaveLength(1);
+    expect(settings[0].pot_size).toBe(MIN_POT_SIZE);
+
+    const newPotSize = 3000;
+    await upsertUserSettings(user, newPotSize);
+
+    settings = await UserSettingsDAO.findMultiple();
+    expect(settings).toHaveLength(1);
+    expect(settings[0]).toEqual(
+      expect.objectContaining({
+        fk_user_id: user.id,
+        pot_size: newPotSize
+      })
+    );
+  });
+
+  it('should handle multiple users with different settings', async () => {
+    uuid.v4 = vi
+      .fn()
+      .mockReturnValueOnce('00000000-0000-0000-0000-000000000001')
+      .mockReturnValueOnce('00000000-0000-0000-0000-000000000002');
+
+    const user1 = await UserDAO.insert({
+      sub: 'user1-sub',
+      external_id: uuid.v4(),
+      name: 'User One',
+      friend_code: 'TEST01',
+      role: Roles.Default
+    });
+
+    const user2 = await UserDAO.insert({
+      sub: 'user2-sub',
+      external_id: uuid.v4(),
+      name: 'User Two',
+      friend_code: 'TEST02',
+      role: Roles.Default
+    });
+
+    await upsertUserSettings(user1, 2000);
+    await upsertUserSettings(user2, 3000);
+
+    const settings = await UserSettingsDAO.findMultiple();
+    expect(settings).toHaveLength(2);
+
+    const user1Settings = settings.find((s) => s.fk_user_id === user1.id);
+    const user2Settings = settings.find((s) => s.fk_user_id === user2.id);
+
+    expect(user1Settings).toEqual(
+      expect.objectContaining({
+        fk_user_id: user1.id,
+        pot_size: 2000
+      })
+    );
+
+    expect(user2Settings).toEqual(
+      expect.objectContaining({
+        fk_user_id: user2.id,
+        pot_size: 3000
       })
     );
   });
