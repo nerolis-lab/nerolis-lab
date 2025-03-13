@@ -1,3 +1,10 @@
+## [1.41.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.0...v1.41.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* pot size defaults to min size ([c6f5907](https://github.com/nerolis-lab/nerolis-lab/commit/c6f59075f260731afdf6ef22eaf7e940843f9acd))
+
 # [1.41.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.40.2...v1.41.0) (2025-03-13)
 
 
