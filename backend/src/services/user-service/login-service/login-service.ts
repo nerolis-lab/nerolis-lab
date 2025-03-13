@@ -14,7 +14,7 @@ import type {
   UpdateUserRequest,
   UserSettingsResponse
 } from 'sleepapi-common';
-import { Roles, uuid } from 'sleepapi-common';
+import { MIN_POT_SIZE, Roles, uuid } from 'sleepapi-common';
 
 interface DecodedUserData {
   sub: string;
@@ -134,8 +134,8 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
     areaBonuses[areaBonus.area] = areaBonus.bonus;
   }
 
-  const userSettings = await UserSettingsDAO.get({ fk_user_id: user.id });
-  const potSize = userSettings.pot_size;
+  const userSettings = await UserSettingsDAO.find({ fk_user_id: user.id });
+  const potSize = userSettings?.pot_size ?? MIN_POT_SIZE;
 
   return {
     name: user.name,
