@@ -25,6 +25,7 @@ export function solveSettingsExt(attrs?: Partial<SolveSettingsExt>): SolveSettin
     level: 0,
     includeCooking: false,
     stockpiledIngredients: mockIngredientSetFloatIndexed(),
+    potSize: 15,
     ...attrs
   };
 }

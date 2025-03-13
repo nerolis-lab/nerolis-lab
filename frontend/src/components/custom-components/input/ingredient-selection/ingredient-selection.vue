@@ -10,7 +10,7 @@
             v-bind="props"
             class="w-100"
           >
-            <span v-if="selectedIngredients.length === 0"> Filter ingredients </span>
+            <span v-if="selectedIngredients.length === 0"> Ingredients </span>
             <div v-else-if="selectedIngredients.length < 6" class="flex-center flex-nowrap">
               <span class="mr-2">Includes: </span>
               <v-img

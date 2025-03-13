@@ -8,7 +8,8 @@ import type {
   PokemonInstanceWithMeta,
   UpdateUserRequest,
   UpsertAreaBonusRequest,
-  UpsertRecipeLevelRequest
+  UpsertRecipeLevelRequest,
+  UserSettingsRequest
 } from 'sleepapi-common';
 
 class UserRouterImpl {
@@ -71,6 +72,28 @@ class UserRouterImpl {
         res.status(500).send('Something went wrong');
       }
     });
+
+    BaseRouter.router.put(
+      '/user/settings',
+      validateAuthHeader,
+      async (req: RequestBody<UserSettingsRequest>, res: Response) => {
+        try {
+          logger.log('Entered /user/settings PUT');
+
+          const user = (req as AuthenticatedRequest).user;
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          await controller.upsertUserSettings(user, req.body.potSize);
+
+          res.sendStatus(204);
+        } catch (err) {
+          logger.error(err as Error);
+          res.status(500).send('Something went wrong');
+        }
+      }
+    );
 
     // User Pokémon
     BaseRouter.router.get('/user/pokemon', validateAuthHeader, async (req: Request, res: Response) => {

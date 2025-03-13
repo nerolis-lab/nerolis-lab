@@ -123,6 +123,7 @@ describe('AccountMenu', () => {
         "email": "some email",
         "externalId": "some id",
         "name": "some name",
+        "potSize": 15,
         "role": "default",
         "tokens": {
           "accessToken": "access token",
@@ -154,6 +155,7 @@ describe('AccountMenu', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
+        "potSize": 15,
         "role": "default",
         "tokens": null,
       }

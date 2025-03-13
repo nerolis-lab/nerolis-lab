@@ -96,3 +96,24 @@ describe('upsertAreaBonus', () => {
     expect(serverAxios.put).toHaveBeenCalledWith('user/area', { area: 'cyan', bonus: 75 })
   })
 })
+
+describe('upsertUserSettings', () => {
+  it('should call server to upsert user settings with pot size', async () => {
+    const potSize = 2000
+
+    await UserService.upsertUserSettings(potSize)
+
+    expect(serverAxios.put).toHaveBeenCalledWith('user/settings', { potSize })
+  })
+
+  it('should return the response data from the server', async () => {
+    const potSize = 3000
+    const mockResponse = { success: true }
+
+    vi.mocked(serverAxios.put).mockResolvedValueOnce({ data: mockResponse })
+
+    const result = await UserService.upsertUserSettings(potSize)
+
+    expect(result).toEqual(mockResponse)
+  })
+})

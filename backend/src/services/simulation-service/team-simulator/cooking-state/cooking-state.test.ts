@@ -1,14 +1,20 @@
 import { mocks } from '@src/bun/index.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
-import { dessert, emptyIngredientInventoryFloat, ingredient, ingredientSetToFloatFlat } from 'sleepapi-common';
-import { describe, expect, it } from 'vitest';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import {
+  dessert,
+  emptyIngredientInventoryFloat,
+  ingredient,
+  ingredientSetToFloatFlat,
+  MAX_POT_SIZE
+} from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
   it('shall cook the best recipe for which it has ingredients', () => {
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({ camp: true }),
+      mocks.teamSettingsExt({ camp: true, potSize: MAX_POT_SIZE }),
       defaultUserRecipes(),
       createPreGeneratedRandom()
     );
@@ -23,10 +29,10 @@ describe('CookingState', () => {
 
     const result = cookingState.results(1);
     expect(result.dessert.cookedRecipes.map((r) => r.recipe.name)).toMatchInlineSnapshot(`
-[
-  "FLOWER_GIFT_MACARONS",
-]
-`);
+      [
+        "FLOWER_GIFT_MACARONS",
+      ]
+    `);
   });
 
   it('shall fallback to mixed meal if team cant cook', () => {
@@ -87,7 +93,7 @@ describe('CookingState', () => {
 
   it('shall crit with max bonus on sunday', () => {
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({ camp: true }),
+      mocks.teamSettingsExt({ camp: true, potSize: MAX_POT_SIZE }),
       defaultUserRecipes(),
       createPreGeneratedRandom()
     );
@@ -108,7 +114,7 @@ describe('CookingState', () => {
 
   it('shall be able to cook macarons with pot skill proc', () => {
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({ camp: true }),
+      mocks.teamSettingsExt({ camp: true, potSize: MAX_POT_SIZE }),
       defaultUserRecipes(),
       createPreGeneratedRandom()
     );

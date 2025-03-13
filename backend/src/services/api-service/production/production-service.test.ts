@@ -12,6 +12,7 @@ import {
   CHARMANDER,
   emptyIngredientInventoryFloat,
   ingredient,
+  MIN_POT_SIZE,
   nature,
   PINSIR,
   subskill
@@ -69,7 +70,8 @@ describe('calculateTeam', () => {
       wakeup: TimeUtils.parseTime('06:01'),
       camp: false,
       includeCooking: false,
-      stockpiledIngredients: emptyIngredientInventoryFloat()
+      stockpiledIngredients: emptyIngredientInventoryFloat(),
+      potSize: MIN_POT_SIZE
     };
 
     const members: TeamMemberExt[] = [
@@ -133,7 +135,8 @@ describe('calculateIv', () => {
       wakeup: TimeUtils.parseTime('06:00'),
       camp: true,
       includeCooking: false,
-      stockpiledIngredients: emptyIngredientInventoryFloat()
+      stockpiledIngredients: emptyIngredientInventoryFloat(),
+      potSize: MIN_POT_SIZE
     };
 
     const members: TeamMemberExt[] = [

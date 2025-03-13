@@ -1,5 +1,6 @@
 import { config } from '@src/config/config.js';
 import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
@@ -133,10 +134,22 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
     areaBonuses[areaBonus.area] = areaBonus.bonus;
   }
 
+  const userSettings = await UserSettingsDAO.get({ fk_user_id: user.id });
+  const potSize = userSettings.pot_size;
+
   return {
     name: user.name,
     avatar: user.avatar ?? 'default',
     role: user.role,
-    areaBonuses
+    areaBonuses,
+    potSize
   };
+}
+
+export async function upsertUserSettings(user: DBUser, potSize: number) {
+  await UserSettingsDAO.upsert({
+    updated: { fk_user_id: user.id, pot_size: potSize },
+    filter: { fk_user_id: user.id }
+  });
+  return;
 }

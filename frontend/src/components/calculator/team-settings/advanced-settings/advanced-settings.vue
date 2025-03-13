@@ -174,7 +174,7 @@
                   class="w-100"
                   @click="initializeBerryMenuSelection"
                 >
-                  Add Berries
+                  Berries
                 </v-btn>
               </v-col>
             </v-row>
