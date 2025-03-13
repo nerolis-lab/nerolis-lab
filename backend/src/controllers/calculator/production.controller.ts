@@ -159,7 +159,13 @@ export default class ProductionController {
       })) ?? []
     );
 
-    const potSize = maybeUser ? (await UserSettingsDAO.get({ fk_user_id: maybeUser.id })).pot_size : MIN_POT_SIZE;
+    let potSize = MIN_POT_SIZE;
+    if (maybeUser) {
+      const userSettings = await UserSettingsDAO.find({ fk_user_id: maybeUser.id });
+      if (userSettings) {
+        potSize = userSettings.pot_size;
+      }
+    }
 
     return {
       camp,
