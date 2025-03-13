@@ -1,3 +1,10 @@
+## [1.41.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.1...v1.41.2) (2025-03-13)
+
+
+### Bug Fixes
+
+* pot size defaults on mount refresh ([2b45bf8](https://github.com/nerolis-lab/nerolis-lab/commit/2b45bf851bc38c2dacd1e12d7401377033592829))
+
 ## [1.41.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.0...v1.41.1) (2025-03-13)
 
 
