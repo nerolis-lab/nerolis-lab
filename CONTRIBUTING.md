@@ -13,7 +13,7 @@ We're always open to suggestions regarding improvements to the code standard or 
 
 It's better to have a sub-optimal code standard in place, but have all of the code follow this code standard than have more optimal code standard in some places and different code standard in others.
 
-The goal is for everyone to get familiar with the code standard and recognize patterns regardless of which part of Sleep API you're working on.
+The goal is for everyone to get familiar with the code standard and recognize patterns regardless of which part of Neroli's Lab you're working on.
 
 ## Quality Assurance
 
@@ -31,7 +31,7 @@ git commit -m "feat: short description of your task"
 
 ## Pull requests
 
-Please open your pull requests to the develop branch. Please rebase merge your commits to the develop branch. The develop branch requires linear history (no merge commits). You can do this directly from your PR on Github.
+Please open your pull requests to the develop branch. Please rebase merge your commits to the develop branch. The develop branch requires linear history (no merge commits). You can do this directly from your PR on Github. For more information on linear history, please read our [linear history document](./LINEAR_HISTORY.md)
 
 ## Contributing outside code
 
@@ -41,4 +41,4 @@ Thank you!
 
 [conventional]: https://www.conventionalcommits.org/
 [good first issues]: https://github.com/SleepAPI/SleepAPI/contribute
-[Discord]: https://discord.gg/w97qFff8n4
+[Discord]: https://discord.gg/ndzTXRHWzK

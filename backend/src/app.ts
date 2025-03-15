@@ -76,7 +76,7 @@ async function main() {
   app.use(morgan('tiny')); // TODO: replace morgan with custom HTTP log
   app.use(cors(options));
   app.use('/api', BaseRouter.router);
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customSiteTitle: 'Sleep API' }));
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customSiteTitle: "Neroli's Lab" }));
   app.use(express.static(joinPath('assets', import.meta.url)));
   app.get('/', (req: Request, res: Response) => {
     try {

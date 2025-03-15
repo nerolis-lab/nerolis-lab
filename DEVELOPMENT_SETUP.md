@@ -7,7 +7,7 @@ The project acts as a monorepo where each module is individually deployed. It's 
 | common      | A shared module between backend and frontend. This exists so we may share entities like API types without the need of re-implementing them in both backend/frontend                                                                 |
 | backend     | This deployment exposes the public API running at [api.sleepapi][api.sleepapi], this API is used by our frontend website at [Neroli's Lab][nerolislab]. The backend is where the simulations, number-crunching and rankings happen. |
 | frontend    | The frontend of Neroli's Lab, hosted as a static web application.                                                                                                                                                                   |
-| bot         | A work-in-progress Discord bot. Currently this just sets up a basic ping command, but it is deployed and hosted 24/7. There are plans to expand this with functionality from Sleep API.                                             |
+| bot         | A work-in-progress Discord bot. Currently this just sets up a basic ping command, but it is deployed and hosted 24/7. There are plans to expand this with functionality from Neroli's Lab.                                          |
 
 |
 

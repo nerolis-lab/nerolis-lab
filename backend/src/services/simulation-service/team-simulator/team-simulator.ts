@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 Sleep API Authors
+ * Copyright 2025 Neroli's Lab Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,9 +21,9 @@ import type {
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import type {
   CalculateTeamResponse,
   MemberProductionBase,

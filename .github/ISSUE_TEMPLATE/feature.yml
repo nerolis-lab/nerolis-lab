@@ -7,7 +7,7 @@ body:
       label: Details
       description: Go ahead, dump your ideas in here!
       placeholder: |-
-        Sleep API should make me my morning coffee..
+        Neroli's Lab should make me my morning coffee..
     validations:
       required: false
   - type: markdown
