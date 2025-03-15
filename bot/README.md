@@ -1,8 +1,8 @@
-# Sleep API - Bot
+# Neroli's Lab - Discord Bot
 
 This is a project in its early days. Currently it only exposes a health-check API and responds to a simple ping slash command.
 
-The Discord bot is written in Typescript with [Discord.js][discord.js] so we can keep a unified code standard for Sleep API. This would also allow us to easier share code between deployments if needed.
+The Discord bot is written in Typescript with [Discord.js][discord.js] so we can keep a unified code standard for Neroli's Lab. This would also allow us to easier share code between deployments if needed.
 
 There is currently no development Discord server setup where you can start a development version of the bot to test. Therefore you're going to need to create an own bot application and enter the secret information in your local environment config.
 

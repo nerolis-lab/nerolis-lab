@@ -1,4 +1,4 @@
-name: Sleep API - CI
+name: Neroli's Lab - CI
 
 on:
   push:
