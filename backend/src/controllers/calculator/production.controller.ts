@@ -43,7 +43,7 @@ import {
   ingredientSetToFloatFlat,
   limitSubSkillsToLevel,
   mainskill,
-  MIN_POT_SIZE,
+  MAX_POT_SIZE,
   salad
 } from 'sleepapi-common';
 
@@ -159,7 +159,7 @@ export default class ProductionController {
       })) ?? []
     );
 
-    let potSize = MIN_POT_SIZE;
+    let potSize = MAX_POT_SIZE;
     if (maybeUser) {
       const userSettings = await UserSettingsDAO.find({ fk_user_id: maybeUser.id });
       if (userSettings) {

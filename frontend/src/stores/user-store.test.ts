@@ -3,7 +3,7 @@ import { GoogleService } from '@/services/login/google-service'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import { createPinia, setActivePinia } from 'pinia'
-import { Roles } from 'sleepapi-common'
+import { MAX_POT_SIZE, Roles } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { googleLogout } from 'vue3-google-login'
 
@@ -40,7 +40,7 @@ describe('User Store', () => {
       snowdrop: 0,
       taupe: 0
     })
-    expect(userStore.potSize).toBe(15)
+    expect(userStore.potSize).toBe(MAX_POT_SIZE)
   })
 
   it('should have expected default state', () => {
@@ -59,7 +59,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
-        "potSize": 15,
+        "potSize": ${MAX_POT_SIZE},
         "role": "default",
         "tokens": null,
       }
@@ -91,7 +91,7 @@ describe('User Store', () => {
         "email": "some email",
         "externalId": "some id",
         "name": "some name",
-        "potSize": 15,
+        "potSize": ${MAX_POT_SIZE},
         "role": "default",
         "tokens": null,
       }
@@ -121,7 +121,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
-        "potSize": 15,
+        "potSize": ${MAX_POT_SIZE},
         "role": "default",
         "tokens": {
           "accessToken": "some access token",
@@ -240,7 +240,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
-        "potSize": 15,
+        "potSize": ${MAX_POT_SIZE},
         "role": "default",
         "tokens": null,
       }
@@ -277,7 +277,7 @@ describe('User Store', () => {
         "email": undefined,
         "externalId": undefined,
         "name": "some name",
-        "potSize": 15,
+        "potSize": ${MAX_POT_SIZE},
         "role": "default",
         "tokens": {
           "accessToken": "some access token",
@@ -388,7 +388,7 @@ describe('User Store', () => {
         "email": null,
         "externalId": null,
         "name": "Guest",
-        "potSize": 15,
+        "potSize": ${MAX_POT_SIZE},
         "role": "default",
         "tokens": null,
       }

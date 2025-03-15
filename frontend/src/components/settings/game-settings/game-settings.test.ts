@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { ISLANDS, type IslandShortName } from 'sleepapi-common'
+import { ISLANDS, MAX_POT_SIZE, type IslandShortName } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -157,7 +157,7 @@ describe('AreaAndRecipeBonus', () => {
       .filter((input) => !input.props('suffix'))
       .at(0)
 
-    expect(userStore.potSize).toBe(15)
+    expect(userStore.potSize).toBe(MAX_POT_SIZE)
 
     userStore.potSize = 30
     await potSizeInput?.vm.$emit('update-number')
