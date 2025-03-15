@@ -76,7 +76,7 @@ export default class SolveController {
       wakeup,
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
-      potSize: MAX_POT_SIZE // TODO: support custom in future
+      potSize: MAX_POT_SIZE // doesn't matter since we're solving a specific recipe
     };
   }
 

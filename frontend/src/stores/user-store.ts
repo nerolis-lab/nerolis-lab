@@ -3,7 +3,14 @@ import { GoogleService } from '@/services/login/google-service'
 import { UserService } from '@/services/user/user-service'
 import { clearCacheAndLogout } from '@/stores/store-service'
 import { defineStore } from 'pinia'
-import { ISLANDS, Roles, type IslandShortName, type LoginResponse, type UserSettingsResponse } from 'sleepapi-common'
+import {
+  ISLANDS,
+  MAX_POT_SIZE,
+  Roles,
+  type IslandShortName,
+  type LoginResponse,
+  type UserSettingsResponse
+} from 'sleepapi-common'
 import { googleLogout } from 'vue3-google-login'
 
 export interface UserState {
@@ -34,7 +41,7 @@ export const useUserStore = defineStore('user', {
       externalId: null,
       role: Roles.Default,
       areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>,
-      potSize: 15
+      potSize: MAX_POT_SIZE
     }
   },
   getters: {
@@ -55,7 +62,7 @@ export const useUserStore = defineStore('user', {
       }
 
       if (!this.potSize) {
-        this.potSize = 15
+        this.potSize = MAX_POT_SIZE
       }
     },
     setUserData(userData: { name: string; avatar?: string; email: string; externalId: string; role: Roles }) {

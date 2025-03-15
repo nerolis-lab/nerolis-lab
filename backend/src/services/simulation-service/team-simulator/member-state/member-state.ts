@@ -9,9 +9,9 @@ import type {
 import { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { getMealRecoveryAmount } from '@src/utils/meal-utils/meal-utils.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   BerryIndexToFloatAmount,
   BerrySet,
