@@ -1,3 +1,10 @@
+# [1.42.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.4...v1.42.0) (2025-03-17)
+
+
+### Features
+
+* adds munna and musharna ([abd01d3](https://github.com/nerolis-lab/nerolis-lab/commit/abd01d38d5353364e523e151e91f16c4eeae2482))
+
 ## [1.41.4](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.3...v1.41.4) (2025-03-15)
 
 ## [1.41.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.2...v1.41.3) (2025-03-15)
