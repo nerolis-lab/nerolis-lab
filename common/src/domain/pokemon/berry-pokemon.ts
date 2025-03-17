@@ -10,6 +10,7 @@ import {
   GREPA,
   LEPPA,
   LUM,
+  MAGO,
   ORAN,
   PAMTRE,
   PECHA,
@@ -31,6 +32,7 @@ import {
   LARGE_LEEK,
   MOOMOO_MILK,
   PURE_OIL,
+  ROUSING_COFFEE,
   SNOOZY_TOMATO,
   SOFT_POTATO,
   SOOTHING_CACAO,
@@ -43,6 +45,7 @@ import {
   CHARGE_STRENGTH_S,
   CHARGE_STRENGTH_S_RANGE,
   DREAM_SHARD_MAGNET_S,
+  DREAM_SHARD_MAGNET_S_RANGE,
   ENERGIZING_CHEER_S,
   EXTRA_HELPFUL_S,
   INGREDIENT_MAGNET_S,
@@ -932,6 +935,43 @@ export const WEAVILE: Pokemon = {
   carrySize: 21
 };
 
+export const MUNNA: Pokemon = {
+  name: 'MUNNA',
+  displayName: 'Munna',
+  pokedexNumber: 517,
+  specialty: 'berry',
+  frequency: toSeconds(1, 35, 0),
+  ingredientPercentage: 19.7,
+  skillPercentage: 4.3,
+  berry: MAGO,
+  genders: BALANCED_GENDER,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: { amount: 1, ingredient: MOOMOO_MILK },
+  ingredient30: [
+    { amount: 2, ingredient: MOOMOO_MILK },
+    { amount: 2, ingredient: HONEY }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: MOOMOO_MILK },
+    { amount: 3, ingredient: HONEY },
+    { amount: 2, ingredient: ROUSING_COFFEE }
+  ],
+  skill: DREAM_SHARD_MAGNET_S_RANGE
+};
+
+export const MUSHARNA: Pokemon = {
+  ...evolvesFrom(MUNNA),
+  name: 'MUSHARNA',
+  displayName: 'Musharna',
+  pokedexNumber: 518,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 18.8,
+  skillPercentage: 4.1,
+  carrySize: 24
+};
+
 export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   BUTTERFREE,
   RATICATE,
@@ -955,7 +995,8 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   ALTARIA,
   BANETTE,
   WALREIN,
-  WEAVILE
+  WEAVILE,
+  MUSHARNA
 ];
 
 export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
@@ -985,7 +1026,8 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   SWABLU,
   SHUPPET,
   SPHEAL,
-  SEALEO
+  SEALEO,
+  MUNNA
 ];
 
 export const ALL_BERRY_SPECIALISTS: Pokemon[] = [...OPTIMAL_BERRY_SPECIALISTS, ...INFERIOR_BERRY_SPECIALISTS];
