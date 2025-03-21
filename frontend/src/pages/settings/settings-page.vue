@@ -47,7 +47,7 @@
                   <v-divider />
                 </v-col>
                 <v-col cols="auto" class="flex-center text-h6 text-strength" style="text-wrap: nowrap"
-                  >Account settings</v-col
+                  >Account Settings</v-col
                 >
                 <v-col class="flex-center">
                   <v-divider />
@@ -56,7 +56,7 @@
               <v-row dense>
                 <v-col cols="12" class="flex-center flex-column">
                   <span class="text-center">E-mail: {{ userStore.email ?? 'missing, log out and back in' }}</span>
-                  <span class="text-center font-weight-thin font-italic text-body-2 text-grey">
+                  <span class="text-center fine-print">
                     This is only stored on your device. Neroli's Lab does not store your personal information, just an
                     identifier connected to your Google account to recognize you by.
                   </span>
@@ -78,7 +78,7 @@
                 <v-col class="flex-center">
                   <v-divider />
                 </v-col>
-                <v-col cols="auto" class="flex-center text-h6 text-no-wrap text-strength">Cache settings</v-col>
+                <v-col cols="auto" class="flex-center text-h6 text-no-wrap text-strength">Cache Settings</v-col>
                 <v-col class="flex-center">
                   <v-divider />
                 </v-col>
