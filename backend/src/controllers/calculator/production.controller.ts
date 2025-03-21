@@ -29,7 +29,8 @@ import type {
   SingleProductionRequest,
   TeamMemberExt,
   TeamSettings,
-  TeamSettingsExt
+  TeamSettingsExt,
+  Ingredient
 } from 'sleepapi-common';
 import {
   calculateRecipeValue,
@@ -44,7 +45,8 @@ import {
   limitSubSkillsToLevel,
   mainskill,
   MAX_POT_SIZE,
-  salad
+  salad,
+  ingredient
 } from 'sleepapi-common';
 
 export default class ProductionController {
@@ -167,14 +169,28 @@ export default class ProductionController {
       }
     }
 
-    return {
+    // Convert excluded ingredients from names to indices
+    const excludedIngredients = new Set<number>();
+    if (settings.excludedIngredients) {
+      for (const name of settings.excludedIngredients) {
+        const ing = getIngredient(name);
+        const index = ingredient.INGREDIENTS.findIndex((i: Ingredient) => i.name === ing.name);
+        if (index !== -1) {
+          excludedIngredients.add(index);
+        }
+      }
+    }
+
+    const result = {
       camp,
       bedtime,
       wakeup,
       includeCooking,
       stockpiledIngredients,
-      potSize
-    };
+      potSize,
+      excludedIngredients: excludedIngredients.size > 0 ? excludedIngredients : undefined
+    } satisfies TeamSettingsExt;
+    return result;
   }
 
   #parseTeamMembers(members: PokemonInstanceIdentity[], camp: boolean) {

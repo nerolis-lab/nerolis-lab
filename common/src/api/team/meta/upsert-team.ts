@@ -10,6 +10,7 @@ export interface UpsertTeamMetaRequest {
   favoredBerries?: string[];
   stockpiledIngredients?: IngredientSetSimple[];
   stockpiledBerries?: BerrySetSimple[];
+  excludedIngredients?: string[];
 }
 
 export interface UpsertTeamMetaResponse {
@@ -23,4 +24,5 @@ export interface UpsertTeamMetaResponse {
   favoredBerries?: string[];
   stockpiledIngredients?: IngredientSetSimple[];
   stockpiledBerries?: BerrySetSimple[];
+  excludedIngredients?: string[];
 }

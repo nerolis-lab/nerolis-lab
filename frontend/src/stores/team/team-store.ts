@@ -344,7 +344,8 @@ export const useTeamStore = defineStore('team', {
         camp: this.teams[teamIndex].camp,
         bedtime: this.teams[teamIndex].bedtime,
         wakeup: this.teams[teamIndex].wakeup,
-        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients
+        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients,
+        excludedIngredients: this.teams[teamIndex].excludedIngredients
       }
       this.teams[teamIndex].production = await TeamService.calculateProduction({
         members,
@@ -417,10 +418,15 @@ export const useTeamStore = defineStore('team', {
       await this.calculateProduction(this.currentIndex)
       this.resetCurrentTeamIvs() // reset after production is available
     },
-    async updateStockpile(params: { ingredients: IngredientSetSimple[]; berries: BerrySetSimple[] }) {
-      const { ingredients, berries } = params
+    async updateStockpile(params: {
+      ingredients: IngredientSetSimple[]
+      berries: BerrySetSimple[]
+      excludedIngredients: string[]
+    }) {
+      const { ingredients, berries, excludedIngredients } = params
       this.getCurrentTeam.stockpiledIngredients = ingredients
       this.getCurrentTeam.stockpiledBerries = berries
+      this.getCurrentTeam.excludedIngredients = excludedIngredients
 
       this.updateTeam()
       await this.calculateProduction(this.currentIndex)

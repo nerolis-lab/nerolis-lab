@@ -104,6 +104,41 @@
           <v-divider />
         </v-row>
 
+        <!-- Add Excluded Ingredients Section -->
+        <v-row dense>
+          <v-col class="w-100">
+            <span class="text-h6 text-no-wrap mb-2">Excluded Ingredients</span>
+            <div class="text-subtitle-2 text-grey">Recipes containing these ingredients will not be cooked</div>
+          </v-col>
+        </v-row>
+
+        <v-row v-for="(ingredient, index) in excludedIngredients" :key="index" dense>
+          <v-col class="flex-center">
+            <v-avatar size="32" class="mr-2">
+              <v-img :src="ingredientImage(ingredient.name)" />
+            </v-avatar>
+            <span>{{ ingredient.name }}</span>
+          </v-col>
+          <v-col :class="[isMobile ? '' : 'mr-6']" :cols="isMobile ? 'auto' : ''">
+            <v-btn
+              variant="flat"
+              icon="mdi-close-circle"
+              density="comfortable"
+              @click="excludedIngredients.splice(index, 1)"
+            >
+            </v-btn>
+          </v-col>
+        </v-row>
+
+        <IngredientSelection
+          :pre-selected-ingredients="excludedIngredients"
+          @update-ingredients="updateExcludedIngredients"
+        />
+
+        <v-row class="mb-3">
+          <v-divider />
+        </v-row>
+
         <v-row v-for="(berrySet, index) in stockpiledBerries" :key="index" no-gutters>
           <v-col>
             <v-text-field
@@ -306,7 +341,8 @@ import {
   uuid,
   type BerrySet,
   type Ingredient,
-  type IngredientSet
+  type IngredientSet,
+  type Ingredient as IngredientType
 } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
@@ -353,7 +389,8 @@ export default defineComponent({
         `Value must be ${MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS} or less`,
       minLevelRule: (value: number) => value >= 1 || 'Value must be at least 1',
       maxLevelRule: (value: number) => value <= 100 || 'Value must be 100 or less'
-    }
+    },
+    excludedIngredients: [] as Ingredient[],
   }),
   methods: {
     loadStockpileFromTeam() {
@@ -367,6 +404,7 @@ export default defineComponent({
         level: berry.level,
         uuid: uuid.v4()
       }))
+      this.excludedIngredients = this.teamStore.getCurrentTeam.excludedIngredients?.map(name => getIngredient(name)) ?? []
     },
     toggleAdvancedMenu() {
       this.advancedMenu = !this.advancedMenu
@@ -403,6 +441,9 @@ export default defineComponent({
       this.stockpiledBerries = [...this.menuSelectedBerries]
       this.closeBerryMenu()
     },
+    updateExcludedIngredients(ingredients: Ingredient[]) {
+      this.excludedIngredients = ingredients
+    },
     save() {
       const ingredients = this.stockpiledIngredients.map((ingredient) => ({
         name: ingredient.ingredient.name,
@@ -413,8 +454,9 @@ export default defineComponent({
         amount: berry.amount,
         level: berry.level
       }))
+      const excludedIngredients = this.excludedIngredients.map(ing => ing.name)
 
-      this.$emit('save', { ingredients, berries })
+      this.$emit('save', { ingredients, berries, excludedIngredients })
       this.toggleAdvancedMenu()
     },
     shouldHideDetails(params: { amount: number; min: number; max: number }): boolean {

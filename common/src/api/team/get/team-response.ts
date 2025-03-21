@@ -12,6 +12,7 @@ export interface GetTeamResponse {
   favoredBerries?: string[];
   stockpiledBerries?: BerrySetSimple[];
   stockpiledIngredients?: IngredientSetSimple[];
+  excludedIngredients?: string[];
   version: number;
 
   members: MemberInstance[];
