@@ -35,7 +35,12 @@ describe('AccountMenu', () => {
   })
 
   it('syncs user settings on mount', async () => {
-    await wrapper.vm.$nextTick()
+    userStore.setTokens({
+      accessToken: 'access token',
+      refreshToken: 'refresh token',
+      expiryDate: 10
+    })
+    wrapper = mount(AccountMenu) // re-mount after setting user as logged in
     expect(userStore.syncUserSettings).toHaveBeenCalled()
   })
 

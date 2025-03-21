@@ -85,7 +85,9 @@ export default defineComponent({
     menu: false
   }),
   async mounted() {
-    await this.userStore.syncUserSettings()
+    if (this.userStore.loggedIn) {
+      await this.userStore.syncUserSettings()
+    }
   },
   methods: {
     async callback(response: CodePopupResponse) {
