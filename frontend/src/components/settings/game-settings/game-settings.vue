@@ -77,8 +77,8 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-4 flex-center">
-      <v-col cols="auto" class="flex-center">
+    <v-row dense class="mt-4 flex-top">
+      <v-col cols="auto">
         <v-btn icon @click="setPotSize(MIN_POT_SIZE)">Min</v-btn>
       </v-col>
       <v-col cols="auto" class="flex-center">
@@ -93,6 +93,7 @@
           :loading="loadingPotSize"
           @update-number="updatePotSize"
           density="comfortable"
+          :hide-details="false"
         >
           <template #label>Size</template>
         </NumberInput>
