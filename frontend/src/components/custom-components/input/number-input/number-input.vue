@@ -4,14 +4,15 @@
     type="number"
     :min="min"
     :max="max"
+    :step="step"
     :density="density"
     :base-color="computedColor"
     variant="outlined"
     hide-details
     hide-spin-buttons
     persistent-hint
-    :rules="rules"
-    min-width="50"
+    :rules="combinedRules"
+    :min-width="suffix ? '55' : '50'"
     :suffix="suffix"
     @focus="highlightText"
     @blur="handleUpdate"
@@ -56,6 +57,10 @@ export default defineComponent({
       type: Number,
       default: undefined
     },
+    step: {
+      type: Number,
+      default: undefined
+    },
     density: {
       type: String as PropType<Density>,
       default: null
@@ -80,6 +85,7 @@ export default defineComponent({
     const localLoading = ref(props.loading)
     let loadingStart: number | null = null
     const minLoadingTime = 500
+    const isReverting = ref(false)
 
     watch(
       () => props.modelValue,
@@ -98,28 +104,79 @@ export default defineComponent({
       )
     })
 
+    // Automatic rules based on min/max/step props
+    const autoRules = computed(() => {
+      const rules: Array<(value: any) => boolean | string> = []
+
+      if (props.min !== undefined) {
+        rules.push((value: number) => value >= props.min! || `Value must be ${props.min!} or more`)
+      }
+
+      if (props.max !== undefined) {
+        rules.push((value: number) => value <= props.max! || `Value must be ${props.max!} or less`)
+      }
+
+      if (props.step !== undefined) {
+        rules.push((value: number) => {
+          if (isNaN(value)) return true
+
+          // Calculate base for step validation
+          const base = props.min !== undefined ? props.min : 0
+
+          // Check if value is at correct step from base
+          const isValid = (value - base) % props.step! === 0
+
+          return isValid || `Value must be in increments of ${props.step!} from ${base}`
+        })
+      }
+
+      return rules
+    })
+
+    // Combine auto rules with prop rules
+    const combinedRules = computed(() => {
+      return [...autoRules.value, ...props.rules]
+    })
+
+    // Check if current value violates any rules
+    const checkRules = (value: number): boolean => {
+      for (const rule of combinedRules.value) {
+        const result = rule(value)
+        if (typeof result === 'string') {
+          return false
+        }
+      }
+      return true
+    }
+
     watch(
       () => props.loading,
       (newVal) => {
         if (newVal) {
+          confirmed.value = false
           loadingStart = Date.now()
           localLoading.value = true
         } else {
+          const completeLoading = () => {
+            localLoading.value = false
+            confirmed.value = true
+
+            setTimeout(() => {
+              confirmed.value = false
+            }, 2000)
+          }
+
           if (loadingStart !== null) {
             const elapsed = Date.now() - loadingStart
             const remaining = minLoadingTime - elapsed
+
             if (remaining > 0) {
-              setTimeout(() => {
-                confirmed.value = true
-                localLoading.value = false
-              }, remaining)
+              setTimeout(completeLoading, remaining)
             } else {
-              confirmed.value = true
-              localLoading.value = false
+              completeLoading()
             }
           } else {
-            confirmed.value = true
-            localLoading.value = false
+            completeLoading()
           }
         }
       }
@@ -134,7 +191,10 @@ export default defineComponent({
       localLoading,
       availableSlots,
       loadingStart,
-      minLoadingTime
+      minLoadingTime,
+      combinedRules,
+      checkRules,
+      isReverting
     }
   },
   methods: {
@@ -145,22 +205,26 @@ export default defineComponent({
     },
     handleUpdate() {
       const numValue = Number(this.internalValue)
-      if (
-        (this.min != null && numValue < this.min) ||
-        (this.max != null && numValue > this.max) ||
-        isNaN(numValue) ||
-        numValue === this.modelValue
-      ) {
-        this.internalValue = this.modelValue
+
+      // If value is not valid according to our rules
+      if (isNaN(numValue) || !this.checkRules(numValue)) {
+        if (!this.isReverting) {
+          this.isReverting = true
+          setTimeout(() => {
+            this.internalValue = this.modelValue
+            this.isReverting = false
+          }, 500)
+        }
+        return
+      }
+
+      // Don't emit if value hasn't changed
+      if (numValue === this.modelValue) {
         return
       }
 
       this.$emit('update:modelValue', numValue)
       this.$emit('update-number', numValue)
-
-      setTimeout(() => {
-        this.confirmed = false
-      }, 2000)
     }
   }
 })
