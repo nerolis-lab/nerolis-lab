@@ -1,3 +1,10 @@
+## [1.42.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.2...v1.42.3) (2025-03-22)
+
+
+### Bug Fixes
+
+* adds support for hiding details on number input ([9f0927e](https://github.com/nerolis-lab/nerolis-lab/commit/9f0927e72622465221b39ef20f90f8a05917614a))
+
 ## [1.42.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.1...v1.42.2) (2025-03-22)
 
 
