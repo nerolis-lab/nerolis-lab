@@ -1,3 +1,10 @@
+## [1.42.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.1...v1.42.2) (2025-03-22)
+
+
+### Bug Fixes
+
+* improves NumberInput error handling ([7dc8583](https://github.com/nerolis-lab/nerolis-lab/commit/7dc8583d36cfc681a0566ef3194be927a20d694a))
+
 ## [1.42.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.0...v1.42.1) (2025-03-21)
 
 # [1.42.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.41.4...v1.42.0) (2025-03-17)
