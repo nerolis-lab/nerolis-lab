@@ -89,7 +89,7 @@
           v-model="userStore.potSize"
           :min="MIN_POT_SIZE"
           :max="MAX_POT_SIZE"
-          :rules="[rules.minPotSizeRule, rules.maxPotSizeRule, rules.stepPotSizeRule]"
+          :step="3"
           :loading="loadingPotSize"
           @update-number="updatePotSize"
           density="comfortable"
@@ -130,10 +130,7 @@ const isLoggedIn = computed(() => userStore.loggedIn)
 
 const rules = {
   minBonusRule: (value: number) => value >= 0 || 'Value must be at least 0',
-  maxBonusRule: (value: number) => value <= MAX_ISLAND_BONUS || `Value must be ${MAX_ISLAND_BONUS} or less`,
-  minPotSizeRule: (value: number) => value >= MIN_POT_SIZE || `Value must be ${MIN_POT_SIZE} or more`,
-  maxPotSizeRule: (value: number) => value <= MAX_POT_SIZE || `Value must be ${MAX_POT_SIZE} or less`,
-  stepPotSizeRule: (value: number) => value % 3 === 0 || 'Value must be a multiple of 3'
+  maxBonusRule: (value: number) => value <= MAX_ISLAND_BONUS || `Value must be ${MAX_ISLAND_BONUS} or less`
 }
 
 const loadingStates = reactive(
@@ -175,14 +172,22 @@ async function updatePotSize() {
 
 function increasePotSize() {
   if (userStore.potSize < MAX_POT_SIZE) {
-    userStore.potSize += 3
+    if (userStore.potSize + 3 > MAX_POT_SIZE) {
+      userStore.potSize = MAX_POT_SIZE
+    } else {
+      userStore.potSize += 3
+    }
     updatePotSize()
   }
 }
 
 function decreasePotSize() {
   if (userStore.potSize > MIN_POT_SIZE) {
-    userStore.potSize -= 3
+    if (userStore.potSize - 3 < MIN_POT_SIZE) {
+      userStore.potSize = MIN_POT_SIZE
+    } else {
+      userStore.potSize -= 3
+    }
     updatePotSize()
   }
 }
