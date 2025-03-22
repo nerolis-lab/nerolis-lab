@@ -8,7 +8,7 @@
     :density="density"
     :base-color="computedColor"
     variant="outlined"
-    hide-details
+    :hide-details="hideDetails"
     hide-spin-buttons
     persistent-hint
     :rules="combinedRules"
@@ -76,6 +76,10 @@ export default defineComponent({
     suffix: {
       type: String,
       default: null
+    },
+    hideDetails: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['update-number', 'update:modelValue'],
@@ -84,8 +88,7 @@ export default defineComponent({
     const confirmed = ref(false)
     const localLoading = ref(props.loading)
     let loadingStart: number | null = null
-    const minLoadingTime = 500
-    const isReverting = ref(false)
+    const minLoadingTime = 2000
 
     watch(
       () => props.modelValue,
@@ -193,8 +196,7 @@ export default defineComponent({
       loadingStart,
       minLoadingTime,
       combinedRules,
-      checkRules,
-      isReverting
+      checkRules
     }
   },
   methods: {
@@ -206,20 +208,8 @@ export default defineComponent({
     handleUpdate() {
       const numValue = Number(this.internalValue)
 
-      // If value is not valid according to our rules
-      if (isNaN(numValue) || !this.checkRules(numValue)) {
-        if (!this.isReverting) {
-          this.isReverting = true
-          setTimeout(() => {
-            this.internalValue = this.modelValue
-            this.isReverting = false
-          }, 500)
-        }
-        return
-      }
-
       // Don't emit if value hasn't changed
-      if (numValue === this.modelValue) {
+      if (numValue === this.modelValue || isNaN(numValue) || !this.checkRules(numValue)) {
         return
       }
 
@@ -229,3 +219,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" scoped>
+:deep(.v-input__details) {
+  padding-inline: 0px !important;
+  text-align: center !important;
+}
+</style>
