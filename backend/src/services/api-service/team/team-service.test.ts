@@ -224,7 +224,8 @@ describe('getTeams', () => {
           wakeup: '06:00',
           version: 1,
           recipeType: 'curry',
-          favoredBerries: undefined
+          favoredBerries: undefined,
+          excludedIngredients: []
         },
         {
           index: 1,
@@ -235,7 +236,8 @@ describe('getTeams', () => {
           members: [],
           version: 1,
           recipeType: 'curry',
-          favoredBerries: undefined
+          favoredBerries: undefined,
+          excludedIngredients: []
         }
       ]
     });
@@ -289,7 +291,8 @@ describe('getTeams', () => {
           wakeup: '06:00',
           version: 1,
           recipeType: 'curry',
-          favoredBerries: undefined
+          favoredBerries: undefined,
+          excludedIngredients: []
         }
       ]
     });

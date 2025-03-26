@@ -28,6 +28,7 @@ export class CookingState {
   private totalWeekdayPotSize = 0;
   private rng: PreGeneratedRandom;
   private userPotSize: number;
+  private excludedIngredients?: Set<number>;
 
   private userCurries: UserRecipeFlat[];
   private userSalads: UserRecipeFlat[];
@@ -59,6 +60,7 @@ export class CookingState {
 
     this.camp = settings.camp;
     this.userPotSize = settings.potSize;
+    this.excludedIngredients = settings.excludedIngredients;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
     this.currentCurryStockpile = settings.stockpiledIngredients.slice();
     this.currentSaladStockpile = settings.stockpiledIngredients.slice();
@@ -92,7 +94,8 @@ export class CookingState {
       availableRecipes: potLimitedCurries,
       currentIngredients: this.currentCurryInventory,
       skippedRecipesGrouped: this.skippedCurries,
-      currentStockpile: this.currentCurryStockpile
+      currentStockpile: this.currentCurryStockpile,
+      excludedIngredients: this.excludedIngredients
     }) ?? { ...curry.MIXED_CURRY_FLAT, level: 1 };
 
     const potLimitedSalads = this.findRecipesWithinPotLimit(this.userSalads, currentPotSize, this.skippedSalads);
@@ -100,7 +103,8 @@ export class CookingState {
       availableRecipes: potLimitedSalads,
       currentIngredients: this.currentSaladInventory,
       skippedRecipesGrouped: this.skippedSalads,
-      currentStockpile: this.currentSaladStockpile
+      currentStockpile: this.currentSaladStockpile,
+      excludedIngredients: this.excludedIngredients
     }) ?? { ...salad.MIXED_SALAD_FLAT, level: 1 };
 
     const potLimitedDesserts = this.findRecipesWithinPotLimit(this.userDesserts, currentPotSize, this.skippedDesserts);
@@ -108,7 +112,8 @@ export class CookingState {
       availableRecipes: potLimitedDesserts,
       currentIngredients: this.currentDessertInventory,
       skippedRecipesGrouped: this.skippedDesserts,
-      currentStockpile: this.currentDessertStockpile
+      currentStockpile: this.currentDessertStockpile,
+      excludedIngredients: this.excludedIngredients
     }) ?? { ...dessert.MIXED_JUICE_FLAT, level: 1 };
 
     const extraTasty = this.rng() < currentCritChance;
@@ -158,8 +163,10 @@ export class CookingState {
     currentIngredients: IngredientIndexToFloatAmount;
     skippedRecipesGrouped: Map<string, SkippedRecipe>;
     currentStockpile: IngredientIndexToFloatAmount;
+    excludedIngredients?: Set<number>;
   }): UserRecipeFlat | undefined {
-    const { availableRecipes, currentIngredients, skippedRecipesGrouped, currentStockpile } = params;
+    const { availableRecipes, currentIngredients, skippedRecipesGrouped, currentStockpile, excludedIngredients } =
+      params;
 
     for (let recipeIndex = 0; recipeIndex < availableRecipes.length; ++recipeIndex) {
       const recipe = availableRecipes[recipeIndex];
@@ -171,6 +178,15 @@ export class CookingState {
       // First pass: validate that we can cook the recipe and compute what's missing
       for (let i = 0; i < recipe.ingredients.length; i++) {
         const requiredAmount = recipe.ingredients[i];
+
+        // Skip recipes that use excluded ingredients
+        if (excludedIngredients?.has(i) && requiredAmount > 0) {
+          canCook = false;
+          ingredientMissing[i].count += 1;
+          ingredientMissing[i].totalAmountMissing += requiredAmount;
+          break;
+        }
+
         const availableInventory = currentIngredients[i];
         const availableStockpile = currentStockpile[i];
 

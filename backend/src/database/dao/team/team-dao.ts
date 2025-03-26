@@ -24,7 +24,8 @@ const DBTeamSchema = Type.Composite([
     recipe_type: Type.Union([Type.Literal('curry'), Type.Literal('salad'), Type.Literal('dessert')]),
     favored_berries: Type.Optional(Type.String()),
     stockpiled_ingredients: Type.Optional(Type.String()),
-    stockpiled_berries: Type.Optional(Type.String())
+    stockpiled_berries: Type.Optional(Type.String()),
+    excluded_ingredients: Type.Optional(Type.String())
   })
 ]);
 export type DBTeam = Static<typeof DBTeamSchema>;
@@ -91,7 +92,8 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         stockpiledBerries: this.stringToStockpile(team.stockpiled_berries, true),
         stockpiledIngredients: this.stringToStockpile(team.stockpiled_ingredients, false),
         version: team.version,
-        members
+        members,
+        excludedIngredients: this.stringToExcludedIngredients(team.excluded_ingredients)
       });
     }
     return teamsWithMembers;
@@ -117,6 +119,21 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
 
       return isBerry ? { ...base, level: Number(level) } : base;
     });
+  }
+
+  public excludedIngredientsToString(ingredients: string[] | undefined): string {
+    return ingredients ? JSON.stringify(ingredients) : '';
+  }
+
+  public stringToExcludedIngredients(ingredientsString: string | undefined): string[] {
+    if (!ingredientsString) {
+      return [];
+    }
+    try {
+      return JSON.parse(ingredientsString);
+    } catch {
+      return [];
+    }
   }
 }
 

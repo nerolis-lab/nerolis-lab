@@ -971,7 +971,7 @@ describe('updateStockpile', () => {
     const ingredients = [mockIngredientSetSimple({ amount: 10 })]
     const berries = [mockBerrySetSimple({ amount: 5 })]
 
-    await teamStore.updateStockpile({ ingredients, berries })
+    await teamStore.updateStockpile({ ingredients, berries, excludedIngredients: [] })
 
     expect(teamStore.getCurrentTeam.stockpiledIngredients).toEqual(ingredients)
     expect(teamStore.getCurrentTeam.stockpiledBerries).toEqual(berries)
@@ -986,7 +986,7 @@ describe('updateStockpile', () => {
 
     teamStore.calculateProduction = vi.fn()
 
-    await teamStore.updateStockpile({ ingredients, berries })
+    await teamStore.updateStockpile({ ingredients, berries, excludedIngredients: [] })
 
     expect(teamStore.calculateProduction).toHaveBeenCalled()
   })

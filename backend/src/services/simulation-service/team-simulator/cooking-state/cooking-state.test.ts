@@ -151,4 +151,24 @@ describe('CookingState', () => {
 
     expect(cookingState['currentDessertStockpile']).toEqual(initialStockpile);
   });
+
+  it('shall not cook recipes with excluded ingredients', () => {
+    const excludedIngredients = new Set([ingredient.INGREDIENTS.findIndex((i) => i.name === 'HONEY')]);
+    const cookingState = new CookingState(
+      mocks.teamSettingsExt({ camp: true, potSize: MAX_POT_SIZE, excludedIngredients }),
+      defaultUserRecipes(),
+      createPreGeneratedRandom()
+    );
+
+    const ingsForMacaronsAndFlan = ingredientSetToFloatFlat([
+      ...dessert.JIGGLYPUFFS_FRUITY_FLAN.ingredients,
+      ...dessert.FLOWER_GIFT_MACARONS.ingredients
+    ]);
+    cookingState.addIngredients(ingsForMacaronsAndFlan);
+
+    cookingState.cook(false);
+
+    const result = cookingState.results(1);
+    expect(result.dessert.cookedRecipes.map((r) => r.recipe.name)).not.toContain('JIGGLYPUFFS_FRUITY_FLAN');
+  });
 });

@@ -47,6 +47,7 @@ export interface TeamInstance {
   members: (string | undefined)[]
   memberIvs: Record<string, PerformanceDetails | undefined>
   production?: TeamProductionExt
+  excludedIngredients?: string[]
 }
 
 // TODO: exists in common, clean up

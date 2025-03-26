@@ -5,6 +5,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
   {
     "bedtime": "21:30",
     "camp": false,
+    "excludedIngredients": [],
     "favoredBerries": undefined,
     "index": 0,
     "members": [
