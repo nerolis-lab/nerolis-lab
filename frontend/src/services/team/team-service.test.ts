@@ -126,6 +126,7 @@ describe('getTeams', () => {
             carrySize: 3,
             skillLevel: 2,
             nature: 'brave',
+            sneakySnacking: false,
             subskills: [],
             ingredients: [
               { level: 0, name: ingredient.FANCY_APPLE.name, amount: 2 },
@@ -273,6 +274,7 @@ describe('createOrUpdateMember', () => {
       level: member.level,
       carrySize: member.carrySize,
       skillLevel: member.skillLevel,
+      sneakySnacking: member.sneakySnacking,
       nature: member.nature.name,
       subskills: member.subskills.map((subskill) => ({
         level: subskill.level,
@@ -306,6 +308,7 @@ describe('createOrUpdateMember', () => {
       carrySize: member.carrySize,
       skillLevel: member.skillLevel,
       nature: member.nature.name,
+      sneakySnacking: member.sneakySnacking,
       subskills: member.subskills.map((subskill) => ({
         level: subskill.level,
         subskill: subskill.subskill.name
@@ -399,6 +402,7 @@ describe('calculateProduction', () => {
         level: member.level,
         carrySize: member.carrySize,
         skillLevel: member.skillLevel,
+        sneakySnacking: member.sneakySnacking,
         nature: member.nature.name,
         subskills: member.subskills.map((s) => ({ level: s.level, subskill: s.subskill.name })),
         ingredients: member.ingredients.map((i) => ({
@@ -502,6 +506,7 @@ describe('calculateIv', () => {
           level: otherMember.level,
           carrySize: otherMember.carrySize,
           skillLevel: otherMember.skillLevel,
+          sneakySnacking: otherMember.sneakySnacking,
           nature: otherMember.nature.name,
           subskills: otherMember.subskills.map((s) => ({
             level: s.level,

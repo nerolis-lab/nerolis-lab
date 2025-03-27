@@ -94,6 +94,7 @@ describe('calculateAverageProduce', () => {
         ribbon: 0,
         skillLevel: 0,
         nature: optimalSettings.nature,
+        sneakySnacking: optimalSettings.sneakySnacking,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 2)),
         level: 29,
         externalId: 'optimal'
@@ -114,6 +115,7 @@ describe('calculateAverageProduce', () => {
         ribbon: 0,
         skillLevel: 0,
         nature: optimalSettings.nature,
+        sneakySnacking: optimalSettings.sneakySnacking,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 2)),
         level: 30,
         externalId: 'optimal'
@@ -134,6 +136,7 @@ describe('calculateAverageProduce', () => {
         ribbon: 0,
         skillLevel: 0,
         nature: optimalSettings.nature,
+        sneakySnacking: optimalSettings.sneakySnacking,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 3)),
         level: 60,
         externalId: 'optimal'
@@ -154,6 +157,7 @@ describe('calculateAverageProduce', () => {
         ribbon: 0,
         skillLevel: 0,
         nature: optimalSettings.nature,
+        sneakySnacking: optimalSettings.sneakySnacking,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 4)),
         level: 75,
         externalId: 'optimal'
@@ -171,6 +175,7 @@ describe('calculateAverageProduce', () => {
         ribbon: 0,
         skillLevel: 0,
         nature: optimalSettings.nature,
+        sneakySnacking: optimalSettings.sneakySnacking,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name)),
         level: 100,
         externalId: 'optimal'

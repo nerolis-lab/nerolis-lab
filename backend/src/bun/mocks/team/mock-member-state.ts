@@ -9,6 +9,7 @@ export function memberState(attrs?: Partial<MemberState>): MemberState {
     settings: teamSettingsExt(),
     team: [teamMemberExt()],
     cookingState: undefined,
+    sneakySnacking: false,
     iterations: 1,
     rng: createPreGeneratedRandom(),
     ...attrs

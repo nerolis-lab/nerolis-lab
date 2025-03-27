@@ -162,6 +162,7 @@ exports[`PokemonSearch > selects Pokémon correctly 1`] = `
   "saved": false,
   "shiny": false,
   "skillLevel": 2,
+  "sneakySnacking:" false,
   "subskills": [],
   "version": 0,
 }
@@ -329,6 +330,7 @@ exports[`PokemonSearch > selects Pokémon correctly 2`] = `
   "saved": false,
   "shiny": false,
   "skillLevel": 2,
+  "sneakySnacking": false,
   "subskills": [],
   "version": 0,
 }
