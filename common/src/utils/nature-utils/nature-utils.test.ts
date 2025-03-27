@@ -88,6 +88,6 @@ describe('invertNatureFrequency', () => {
     expect(invertNatureFrequency(ADAMANT)).toBe(0.9);
   });
   it('shall invert MODEST to 1.1', () => {
-    expect(invertNatureFrequency(MODEST)).toBe(1.1);
+    expect(invertNatureFrequency(MODEST)).toBe(1.075);
   });
 });

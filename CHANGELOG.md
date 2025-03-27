@@ -1,3 +1,10 @@
+# [1.43.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.3...v1.43.0) (2025-03-26)
+
+
+### Features
+
+* buffs speed down natures ([3ee044d](https://github.com/nerolis-lab/nerolis-lab/commit/3ee044d05b887b9f25b1f913c2d0eb6849c5a50a))
+
 ## [1.42.3](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.2...v1.42.3) (2025-03-22)
 
 

@@ -92,7 +92,6 @@ class TeamRouterImpl {
           logger.log('Entered PUT /team/:teamIndex/member/:memberIndex');
 
           const { teamIndex, memberIndex } = req.params;
-          const { sneakySnacking } = req.body;
 
           const user = (req as AuthenticatedRequest).user;
           if (!user) {
