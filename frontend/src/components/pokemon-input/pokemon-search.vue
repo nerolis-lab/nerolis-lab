@@ -60,6 +60,7 @@ export default {
         carrySize: CarrySizeUtils.maxCarrySize(pkmn),
         skillLevel: pkmn.previousEvolutions + 1,
         nature: nature.BASHFUL,
+        sneakySnacking: false,
         subskills: [],
         ingredients: [
           { ...pkmn.ingredient0, level: 0 },

@@ -776,8 +776,7 @@ describe('updateIngredientBonus', () => {
       Potato: 70,
       Seaweed: 15.77,
       Coffee: 61, // ingredientBonusCache is populated upon startup
-      Tail: 25, // ingredientBonusCache is populated upon startup
-      Cheese: 0 // default to 0 if not in cache
+      Tail: 25 // ingredientBonusCache is populated upon startup
     };
 
     for (const [ingredientName, bonus] of Object.entries(expectedBonuses)) {

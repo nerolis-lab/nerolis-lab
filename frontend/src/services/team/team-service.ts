@@ -189,17 +189,17 @@ class TeamServiceImpl {
 
     const berrySetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({
       ...currentMember,
-      ...Optimal.berry(currentMember.pokemon, currentMember.ribbon),
+      ...Optimal.berry(currentMember.pokemon, currentMember.sneakySnacking, currentMember.ribbon),
       externalId: uuid.v4()
     })
     const ingredientSetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({
       ...currentMember,
-      ...Optimal.ingredient(currentMember.pokemon, currentMember.ribbon),
+      ...Optimal.ingredient(currentMember.pokemon, currentMember.sneakySnacking, currentMember.ribbon),
       externalId: uuid.v4()
     })
     const skillSetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({
       ...currentMember,
-      ...Optimal.skill(currentMember.pokemon, currentMember.ribbon),
+      ...Optimal.skill(currentMember.pokemon, currentMember.sneakySnacking, currentMember.ribbon),
       externalId: uuid.v4()
     })
 

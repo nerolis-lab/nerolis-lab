@@ -56,6 +56,7 @@ describe('upsertPokemon', () => {
     shiny: false,
     gender: 'female',
     skillLevel: 0,
+    sneakySnacking: false,
     subskills: [],
     version: 0
   };

@@ -38,6 +38,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "saved": true,
         "shiny": false,
         "skillLevel": 5,
+        "sneakySnacking": false,
         "subskills": [
           {
             "level": 10,
@@ -92,6 +93,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "saved": true,
         "shiny": false,
         "skillLevel": 5,
+        "sneakySnacking": false,
         "subskills": [
           {
             "level": 10,
@@ -146,6 +148,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "saved": true,
         "shiny": false,
         "skillLevel": 5,
+        "sneakySnacking": false,
         "subskills": [
           {
             "level": 10,

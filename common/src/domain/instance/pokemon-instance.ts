@@ -29,10 +29,11 @@ export interface PokemonInstanceMeta {
   gender: PokemonGender;
   name: string;
 }
-export type PokemonInstanceWithMeta = PokemonInstance & PokemonInstanceMeta;
+export type PokemonInstanceWithMeta = PokemonInstance & PokemonInstanceMeta & { sneakySnacking: boolean };
 
 export interface PokemonInstanceExt
   extends PokemonInstanceBase<Pokemon, Nature, SubskillInstanceExt, IngredientInstanceExt>,
     PokemonInstanceMeta {
   rp: number;
+  sneakySnacking: boolean;
 }

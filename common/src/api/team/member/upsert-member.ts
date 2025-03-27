@@ -4,4 +4,5 @@ export type UpsertTeamMemberRequest = PokemonInstanceWithMeta;
 
 export interface UpsertTeamMemberResponse extends PokemonInstanceWithMeta {
   memberIndex: number;
+  sneakySnacking: boolean;
 }

@@ -22,6 +22,7 @@ const mockPokemonInstanceWithMeta: PokemonInstanceWithMeta = {
   carrySize: mockPokemonInstanceExt.carrySize,
   skillLevel: mockPokemonInstanceExt.skillLevel,
   nature: mockPokemonInstanceExt.nature.name,
+  sneakySnacking: mockPokemonInstanceExt.sneakySnacking,
   subskills: [
     { level: 10, subskill: 'Helping Bonus' },
     { level: 25, subskill: 'Berry Finding S' }
@@ -36,7 +37,7 @@ const mockPokemonInstanceWithMeta: PokemonInstanceWithMeta = {
 describe('toPokemonInstanceExt', () => {
   it('should convert a valid PokemonInstanceWithMeta to PokemonInstanceExt', () => {
     const result = PokemonInstanceUtils.toPokemonInstanceExt(mockPokemonInstanceWithMeta)
-    expect(result).toEqual({ ...mockPokemonInstanceExt, rp: 834 })
+    expect(result).toEqual({ ...mockPokemonInstanceExt, rp: 834, sneakySnacking: false })
   })
 
   it('should throw an error if ingredient data is corrupt (not exactly 3)', () => {
@@ -122,6 +123,7 @@ describe('toPokemonInstanceIdentity', () => {
       level: mockPokemonInstanceExt.level,
       ribbon: mockPokemonInstanceExt.ribbon,
       skillLevel: mockPokemonInstanceExt.skillLevel,
+      sneakySnacking: mockPokemonInstanceExt.sneakySnacking,
       externalId: mockPokemonInstanceExt.externalId
     })
   })

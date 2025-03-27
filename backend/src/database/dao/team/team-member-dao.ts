@@ -7,6 +7,7 @@ const DBTeamMemberSchema = Type.Composite([
   Type.Object({
     fk_team_id: Type.Number(),
     fk_pokemon_id: Type.Number(),
+    sneaky_snacking: Type.Boolean(),
     member_index: Type.Number()
   })
 ]);

@@ -46,6 +46,7 @@ const guaranteedSkillProcMember: TeamMemberExt = {
     ribbon: 0,
     nature: nature.BASHFUL,
     skillLevel: 6,
+    sneakySnacking: false,
     subskills: new Set(),
     externalId: 'some id'
   }
@@ -59,6 +60,7 @@ const member: TeamMemberExt = {
     ribbon: 0,
     nature: nature.BASHFUL,
     skillLevel: 6,
+    sneakySnacking: false,
     subskills: new Set(),
     externalId: 'some id'
   }
@@ -77,7 +79,13 @@ const cookingState: CookingState = new CookingState(settings, defaultUserRecipes
 
 describe('results', () => {
   it('should return correct results after multiple iterations', () => {
-    const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      member: guaranteedSkillProcMember,
+      settings,
+      sneakySnacking: false,
+      team: [member],
+      cookingState
+    });
     for (let i = 0; i < 100; i++) {
       memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
       memberState.collectInventory();
@@ -90,7 +98,7 @@ describe('results', () => {
   });
 
   it('should return zero results if no helps or skills are added', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     const results = memberState.results(10);
 
     expect(results.produceTotal.berries.length).toBe(0);
@@ -102,7 +110,13 @@ describe('results', () => {
 
 describe('simpleResults', () => {
   it('should return correct simple results', () => {
-    const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      member: guaranteedSkillProcMember,
+      settings,
+      sneakySnacking: false,
+      team: [member],
+      cookingState
+    });
     memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
     memberState.collectInventory();
     const simpleResults = memberState.simpleResults(10);
@@ -112,7 +126,7 @@ describe('simpleResults', () => {
   });
 
   it('should return zero simple results if no helps or skills are added', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
 
     const simpleResults = memberState.simpleResults(10);
 
@@ -141,6 +155,7 @@ describe('ivResults', () => {
         settings: { ...guaranteedSkillProcMember.settings, level: 1 }
       },
       settings,
+      sneakySnacking: false,
       team: [member],
       cookingState
     });
@@ -162,7 +177,7 @@ describe('ivResults', () => {
   });
 
   it('should return zero iv results if no helps or skills are added', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     const ivResults = memberState.ivResults(10);
 
     expect(ivResults.produceTotal.berries.length).toBe(0);
@@ -172,7 +187,7 @@ describe('ivResults', () => {
 });
 
 describe('MemberState init', () => {
-  const memberState = new MemberState({ member, settings, team: [member], cookingState });
+  const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
 
   it('shall return expected team size', () => {
     expect(memberState.teamSize).toBe(1);
@@ -193,7 +208,7 @@ describe('MemberState init', () => {
 
 describe('startDay', () => {
   it('shall recover full sleep', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -209,12 +224,13 @@ describe('startDay', () => {
         ribbon: 0,
         nature: nature.MILD,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -230,6 +246,7 @@ describe('startDay', () => {
         ribbon: 0,
         nature: nature.MILD,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
@@ -237,7 +254,7 @@ describe('startDay', () => {
 
     const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -245,7 +262,7 @@ describe('startDay', () => {
   });
 
   it('shall recover max up to 100 if member has residual energy from day before', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(50, memberState);
     expect(memberState.energy).toBe(50);
@@ -263,12 +280,13 @@ describe('startDay', () => {
         ribbon: 0,
         nature: nature.MILD,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
         externalId: 'some id'
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -278,7 +296,7 @@ describe('startDay', () => {
 
 describe('recoverEnergy', () => {
   it('shall recover energy from e4e', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(18, memberState);
     expect(memberState.energy).toBe(18);
@@ -295,19 +313,20 @@ describe('recoverEnergy', () => {
         ribbon: 0,
         nature: nature.MILD,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(50, memberState);
     expect(memberState.energy).toBe(44);
   });
 
   it('shall recover max 150 energy', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(200, memberState);
     expect(memberState.energy).toBe(150);
@@ -318,7 +337,7 @@ describe('recoverEnergy', () => {
 
 describe('addHelps', () => {
   it('shall add 1 average produce help', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.addHelps({ regular: 1, crit: 1 }, memberState);
     memberState.collectInventory();
 
@@ -444,7 +463,7 @@ describe('addHelps', () => {
   });
 
   it('shall not add produce if adding 0 helps', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.addHelps({ regular: 0, crit: 0 }, memberState);
     memberState.collectInventory();
 
@@ -562,14 +581,14 @@ describe('addHelps', () => {
 
 describe('recoverMeal', () => {
   it('shall recover energy from cooking', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverMeal();
     expect(memberState.energy).toBe(5);
   });
 
   it('shall recover no energy from cooking at 150 energy', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(150, memberState);
     expect(memberState.energy).toBe(150);
@@ -590,12 +609,13 @@ describe('attemptDayHelp', () => {
         ribbon: 0,
         nature: nature.BASHFUL,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(0);
@@ -725,7 +745,7 @@ describe('attemptDayHelp', () => {
   it('shall not perform a help if time has not passed scheduled help time', () => {
     const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(-1);
@@ -845,7 +865,7 @@ describe('attemptDayHelp', () => {
   it('shall schedule the next help', () => {
     const settings: TeamSettingsExt = mocks.teamSettingsExt();
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(0);
@@ -874,6 +894,7 @@ describe('attemptDayHelp', () => {
     const memberState = new MemberState({
       member: guaranteedSkillProcMember,
       settings,
+      sneakySnacking: false,
       team: [guaranteedSkillProcMember],
       cookingState
     });
@@ -896,11 +917,12 @@ describe('attemptDayHelp', () => {
         ribbon: 0,
         nature: nature.BASHFUL,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
     };
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     // fill inv
@@ -912,7 +934,7 @@ describe('attemptDayHelp', () => {
 
 describe('attemptNightHelp', () => {
   it('shall not perform night help if the time has not passed scheduled time', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(-1);
@@ -922,7 +944,7 @@ describe('attemptNightHelp', () => {
   });
 
   it('shall add 1 night help', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(0);
@@ -932,7 +954,13 @@ describe('attemptNightHelp', () => {
 
   it('shall add any excess helps to sneaky snacking, and shall not roll skill proc on those', () => {
     const noCarryMember: TeamMemberExt = { ...member, settings: { ...member.settings, carrySize: 0 } };
-    const memberState = new MemberState({ member: noCarryMember, settings, team: [noCarryMember], cookingState });
+    const memberState = new MemberState({
+      member: noCarryMember,
+      settings,
+      sneakySnacking: false,
+      team: [noCarryMember],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(0);
@@ -953,11 +981,12 @@ describe('attemptNightHelp', () => {
         ribbon: 0,
         nature: nature.BASHFUL,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
     };
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(0);
@@ -1092,7 +1121,7 @@ describe('attemptNightHelp', () => {
 
 describe('degradeEnergy', () => {
   it('shall degrade energy by 1', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(100, memberState);
     memberState.degradeEnergy();
@@ -1100,7 +1129,7 @@ describe('degradeEnergy', () => {
   });
 
   it('shall degrade by less than 1 if less than 1 energy left total', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(0.1, memberState);
     memberState.degradeEnergy();
@@ -1108,7 +1137,7 @@ describe('degradeEnergy', () => {
   });
 
   it('shall not degrade if energy at 0', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.degradeEnergy();
     expect(memberState.energy).toBe(0);
@@ -1117,7 +1146,7 @@ describe('degradeEnergy', () => {
 
 describe('wasteEnergy', () => {
   it('should count wasted energy', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.wasteEnergy(10);
     expect(memberState.results(1).advanced.wastedEnergy).toBe(10);
   });
@@ -1125,7 +1154,7 @@ describe('wasteEnergy', () => {
 
 describe('addSkillValue', () => {
   it('should count regular and crit value', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({ member, settings, sneakySnacking: false, team: [member], cookingState });
     memberState.addSkillValue({ regular: 10, crit: 20 });
     expect(memberState.results(1).advanced.skillCritValue).toBe(20);
     expect(memberState.results(1).skillAmount).toBe(30);

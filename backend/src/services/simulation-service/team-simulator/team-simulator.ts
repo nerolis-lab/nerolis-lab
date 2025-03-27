@@ -42,6 +42,7 @@ export class TeamSimulator {
   private memberStates: MemberState[] = [];
   private memberStatesWithoutFillers: MemberState[] = [];
   private cookingState?: CookingState = undefined;
+  private sneakySnacking = false;
 
   private timeIntervals: Time[] = [];
   private dayPeriod: TimePeriod;
@@ -98,6 +99,7 @@ export class TeamSimulator {
         member,
         team: members,
         settings,
+        sneakySnacking: this.sneakySnacking,
         cookingState: this.cookingState,
         iterations,
         rng: this.rng

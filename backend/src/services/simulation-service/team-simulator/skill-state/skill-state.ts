@@ -87,6 +87,11 @@ export class SkillState {
   // // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
   public attemptSkill(): TeamSkillActivation[] {
     const activations: TeamSkillActivation[] = [];
+
+    if (this.memberState.sneakySnacking === true) {
+      return activations;
+    }
+
     this.helpsSinceLastSkillProc += 1;
 
     if (this.helpsSinceLastSkillProc > this.pityProcThreshold || this.rng() < this.skillPercentage) {

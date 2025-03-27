@@ -90,6 +90,7 @@ describe('calculateTeam', () => {
           ribbon: 0,
           nature: nature.MILD,
           skillLevel: 6,
+          sneakySnacking: false,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
           externalId: 'some id'
         }
@@ -151,6 +152,7 @@ describe('calculateIv', () => {
           ribbon: 0,
           nature: nature.JOLLY,
           skillLevel: 4,
+          sneakySnacking: false,
           subskills: new Set([subskill.HELPING_SPEED_S.name]),
           externalId: 'bulbasaur-1'
         }
@@ -169,6 +171,7 @@ describe('calculateIv', () => {
           ribbon: 0,
           nature: nature.BRAVE,
           skillLevel: 3,
+          sneakySnacking: false,
           subskills: new Set([subskill.SKILL_TRIGGER_S.name]),
           externalId: 'charmander-variant'
         }

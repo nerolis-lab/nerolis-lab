@@ -182,7 +182,9 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
     const pokemonWithIngredients: PokemonWithIngredients = { pokemon: pkmn, ingredientList: AAA };
 
     const isSupportSkillMon = pkmn.specialty === 'skill' && INGREDIENT_SUPPORT_MAINSKILLS_SET.has(pkmn.skill.name);
-    const optimalSettings: Optimal = isSupportSkillMon ? Optimal.skill(pkmn, 4) : Optimal.ingredient(pkmn, 4);
+    const optimalSettings: Optimal = isSupportSkillMon
+      ? Optimal.skill(pkmn, false, 4)
+      : Optimal.ingredient(pkmn, false, 4);
     const settings = Optimal.toMemberSettings({ stats: optimalSettings, level, externalId: pkmn.name });
 
     // TODO: this should probably be moved to member-state constructor

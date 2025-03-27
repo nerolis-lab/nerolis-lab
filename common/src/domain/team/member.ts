@@ -7,6 +7,7 @@ export interface TeamMemberSettings {
   nature: string;
   subskills: string[];
   skillLevel: number;
+  sneakySnacking: boolean;
   carrySize: number;
   ribbon: number;
   externalId: string;
@@ -16,6 +17,7 @@ export interface TeamMemberSettingsExt {
   nature: Nature;
   subskills: Set<string>;
   skillLevel: number;
+  sneakySnacking: boolean;
   carrySize: number;
   ribbon: number;
   externalId: string;

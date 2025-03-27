@@ -30,6 +30,7 @@ class PokemonInstanceUtilsImpl {
       ribbon: pokemonInstance.ribbon,
       carrySize: pokemonInstance.carrySize,
       skillLevel: pokemonInstance.skillLevel,
+      sneakySnacking: pokemonInstance.sneakySnacking,
       nature: getNature(pokemonInstance.nature),
       subskills: pokemonInstance.subskills.map((instancedSubskill) => ({
         level: instancedSubskill.level,
@@ -66,6 +67,7 @@ class PokemonInstanceUtilsImpl {
       ribbon: instancedPokemon.ribbon,
       carrySize: instancedPokemon.carrySize,
       skillLevel: instancedPokemon.skillLevel,
+      sneakySnacking: instancedPokemon.sneakySnacking,
       nature: instancedPokemon.nature.name,
       subskills: instancedPokemon.subskills.map((instancedSubskill) => ({
         level: instancedSubskill.level,
@@ -96,6 +98,7 @@ class PokemonInstanceUtilsImpl {
       level: pokemonInstance.level,
       ribbon: pokemonInstance.ribbon,
       skillLevel: pokemonInstance.skillLevel,
+      sneakySnacking: pokemonInstance.sneakySnacking,
       externalId: pokemonInstance.externalId
     }
   }

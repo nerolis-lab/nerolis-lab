@@ -67,6 +67,7 @@ export class MemberState {
   private fullDayDuration = 1440;
   private carriedAmount = 0;
   private totalAverageHelps = 0;
+  public sneakySnacking: boolean;
   private totalSneakySnackHelps = 0;
   private totalBerryProduction = 0;
   private totalIngredientProduction: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
@@ -140,6 +141,7 @@ export class MemberState {
     member: TeamMemberExt;
     team: TeamMemberExt[];
     settings: TeamSettingsExt;
+    sneakySnacking: boolean;
     cookingState: CookingState | undefined;
     iterations?: number;
     rng?: PreGeneratedRandom;
@@ -177,8 +179,15 @@ export class MemberState {
 
     this.nextHelp = this.fullDayDuration; // set to 1440, first start of day subtracts 1440
 
-    this.skillPercentage = TeamSimulatorUtils.calculateSkillPercentage(member);
-    this.ingredientPercentage = TeamSimulatorUtils.calculateIngredientPercentage(member);
+    this.sneakySnacking = member.settings.sneakySnacking;
+
+    if (this.sneakySnacking === true) {
+      this.skillPercentage = 0;
+      this.ingredientPercentage = 0;
+    } else {
+      this.skillPercentage = TeamSimulatorUtils.calculateSkillPercentage(member);
+      this.ingredientPercentage = TeamSimulatorUtils.calculateIngredientPercentage(member);
+    }
 
     const ingredientsUnlocked = Math.min(Math.floor(member.settings.level / 30) + 1, 3);
     member.pokemonWithIngredients.ingredientList = member.pokemonWithIngredients.ingredientList.slice(

@@ -94,8 +94,13 @@ export async function upsertTeamMember(params: {
   });
 
   const updatedMemberMeta = await TeamMemberDAO.upsert({
-    updated: { fk_pokemon_id: upsertedMember.id, fk_team_id: updatedTeam.id, member_index: memberIndex },
-    filter: { fk_team_id: updatedTeam.id, member_index: memberIndex }
+    updated: {
+      fk_pokemon_id: upsertedMember.id,
+      fk_team_id: updatedTeam.id,
+      sneaky_snacking: request.sneakySnacking,
+      member_index: memberIndex
+    },
+    filter: { fk_team_id: updatedTeam.id, sneaky_snacking: request.sneakySnacking, member_index: memberIndex }
   });
 
   return {
@@ -112,6 +117,7 @@ export async function upsertTeamMember(params: {
     carrySize: upsertedMember.carry_size,
     skillLevel: upsertedMember.skill_level,
     nature: upsertedMember.nature,
+    sneakySnacking: updatedMemberMeta.sneaky_snacking,
     subskills: request.subskills,
     ingredients: request.ingredients
   };

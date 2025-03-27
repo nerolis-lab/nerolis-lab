@@ -13,6 +13,7 @@ import type { Produce } from '../../production';
 
 export interface PokemonInstanceIdentity extends PokemonInstance {
   externalId: string;
+  sneakySnacking: boolean;
 }
 
 export interface CalculateTeamRequest {
