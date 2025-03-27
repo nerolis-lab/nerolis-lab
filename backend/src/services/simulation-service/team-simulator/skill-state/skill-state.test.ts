@@ -1,5 +1,6 @@
 import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
+import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { capitalize, mainskill, MAINSKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -146,5 +147,22 @@ describe('SkillState', () => {
     skillState.wakeup();
     expect(skillState['todaysSkillProcs']).toBe(0);
     expect(skillState['skillProcsPerDay']).toEqual([0]);
+  });
+
+  it('should skip all skill activation when sneakySnacking is true', () => {
+    mockMemberState.sneakySnacking = true;
+
+    const activations: TeamSkillActivation[] = skillState.attemptSkill();
+    expect(activations).toEqual([]);
+  });
+
+  it('should allow pity proc activation when sneakySnacking is false', () => {
+    mockMemberState.sneakySnacking = false;
+
+    skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = mainskill.BERRY_BURST;
+    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'];
+
+    const activations: TeamSkillActivation[] = skillState.attemptSkill();
+    expect(activations.length).toBeGreaterThan(0);
   });
 });

@@ -205,6 +205,7 @@ export default class ProductionController {
           }),
           nature: getNature(member.nature),
           skillLevel: member.skillLevel,
+          sneakySnacking: member.sneakySnacking,
           subskills,
           externalId: member.externalId
         }

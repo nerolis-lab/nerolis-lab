@@ -44,6 +44,7 @@ const mockMembers: TeamMemberExt[] = [
       ribbon: 0,
       nature: nature.BASHFUL,
       skillLevel: 6,
+      sneakySnacking: false,
       subskills: new Set(),
       externalId: 'some id'
     }
@@ -99,6 +100,7 @@ describe('TeamSimulator', () => {
           ribbon: 0,
           nature: nature.MILD,
           skillLevel: 6,
+          sneakySnacking: false,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
           externalId: 'some id'
         }
@@ -124,6 +126,7 @@ describe('TeamSimulator', () => {
         ribbon: 0,
         nature: nature.BASHFUL,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
@@ -168,6 +171,7 @@ describe('TeamSimulator', () => {
         ribbon: 0,
         nature: nature.BASHFUL,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
@@ -183,6 +187,7 @@ describe('TeamSimulator', () => {
         ribbon: 0,
         nature: nature.BASHFUL,
         skillLevel: 6,
+        sneakySnacking: false,
         subskills: new Set(),
         externalId: 'some id'
       }
@@ -214,6 +219,7 @@ describe('TeamSimulator', () => {
         ribbon: 0,
         nature: nature.ADAMANT,
         skillLevel: mainskill.ENERGY_FOR_EVERYONE.maxLevel,
+        sneakySnacking: false,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
         externalId: 'some id'
       }
@@ -256,6 +262,7 @@ describe('TeamSimulator', () => {
           ribbon: 0,
           nature: nature.BASHFUL,
           skillLevel: 6,
+          sneakySnacking: false,
           subskills: new Set(),
           externalId: 'some id'
         }
@@ -302,6 +309,7 @@ describe('TeamSimulator', () => {
           ribbon: 0,
           nature: nature.BASHFUL,
           skillLevel: 6,
+          sneakySnacking: false,
           subskills: new Set(),
           externalId: 'some id'
         }

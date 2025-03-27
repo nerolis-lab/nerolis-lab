@@ -20,6 +20,7 @@ export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWith
     skillLevel: pkmn.skill_level,
     nature: pkmn.nature,
     subskills: PokemonDAO.filterFilledSubskills(pkmn),
+    sneakySnacking: false,
     ingredients: PokemonDAO.filterChosenIngredientList(pkmn)
   }));
 }

@@ -319,6 +319,7 @@ describe('upsertTeamMember', () => {
       carrySize: 3,
       skillLevel: 2,
       nature: 'brave',
+      sneakySnacking: false,
       subskills: [],
       ingredients: [
         { level: 0, name: 'apple', amount: 2 },
@@ -343,6 +344,7 @@ describe('upsertTeamMember', () => {
       carrySize: 3,
       skillLevel: 2,
       nature: 'brave',
+      sneakySnacking: false,
       subskills: [],
       ingredients: [
         { level: 0, name: 'apple', amount: 2 },
@@ -380,6 +382,7 @@ describe('upsertTeamMember', () => {
       {
         fk_team_id: 1,
         fk_pokemon_id: 1,
+        sneaky_snacking: false,
         member_index: 0,
         id: 1,
         version: 1
@@ -424,6 +427,7 @@ describe('upsertTeamMember', () => {
       carrySize: 5,
       skillLevel: 3,
       nature: 'bold',
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: 'quick-attack' },
         { level: 25, subskill: 'solar-beam' }
@@ -484,6 +488,7 @@ describe('upsertTeamMember', () => {
       carrySize: 5,
       skillLevel: 3,
       nature: 'bold',
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: 'quick-attack' },
         { level: 25, subskill: 'solar-beam' }
@@ -520,10 +525,11 @@ describe('upsertTeamMember', () => {
       version: 2
     });
 
-    expect(await TeamMemberDAO.get({ fk_team_id: 1, member_index: 0 })).toEqual({
+    expect(await TeamMemberDAO.get({ fk_team_id: 1, sneaky_snacking: false, member_index: 0 })).toEqual({
       fk_team_id: 1,
       fk_pokemon_id: 1,
       member_index: 0,
+      sneaky_snacking: false,
       id: 1,
       version: 1
     });
@@ -566,6 +572,7 @@ describe('upsertTeamMember', () => {
       carrySize: 5,
       skillLevel: 3,
       nature: 'bold',
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: 'quick-attack' },
         { level: 25, subskill: 'solar-beam' }
@@ -623,7 +630,12 @@ describe('deleteMember', () => {
       ingredient_60: 'pearl'
     });
 
-    await TeamMemberDAO.insert({ fk_team_id: team.id, fk_pokemon_id: pokemon.id, member_index: 0 });
+    await TeamMemberDAO.insert({
+      fk_team_id: team.id,
+      fk_pokemon_id: pokemon.id,
+      sneaky_snacking: false,
+      member_index: 0
+    });
 
     await deleteMember({ teamIndex: 0, memberIndex: 0, user });
 
@@ -672,7 +684,12 @@ describe('deleteMember', () => {
       ingredient_60: 'pearl'
     });
 
-    await TeamMemberDAO.insert({ fk_team_id: team.id, fk_pokemon_id: pokemon.id, member_index: 0 });
+    await TeamMemberDAO.insert({
+      fk_team_id: team.id,
+      fk_pokemon_id: pokemon.id,
+      sneaky_snacking: false,
+      member_index: 0
+    });
 
     await deleteMember({ teamIndex: 0, memberIndex: 0, user });
 
@@ -730,13 +747,23 @@ describe('deleteMember', () => {
       ingredient_60: 'pearl'
     });
 
-    await TeamMemberDAO.insert({ fk_team_id: team1.id, fk_pokemon_id: pokemon.id, member_index: 0 });
-    await TeamMemberDAO.insert({ fk_team_id: team2.id, fk_pokemon_id: pokemon.id, member_index: 1 });
+    await TeamMemberDAO.insert({
+      fk_team_id: team1.id,
+      fk_pokemon_id: pokemon.id,
+      sneaky_snacking: false,
+      member_index: 0
+    });
+    await TeamMemberDAO.insert({
+      fk_team_id: team2.id,
+      fk_pokemon_id: pokemon.id,
+      sneaky_snacking: false,
+      member_index: 1
+    });
 
     await deleteMember({ teamIndex: 0, memberIndex: 0, user });
 
     expect(await TeamMemberDAO.findMultiple()).toEqual([
-      { fk_team_id: team2.id, fk_pokemon_id: pokemon.id, member_index: 1, id: 2, version: 1 }
+      { fk_team_id: team2.id, fk_pokemon_id: pokemon.id, member_index: 1, sneaky_snacking: false, id: 2, version: 1 }
     ]);
     expect(await PokemonDAO.findMultiple()).toEqual([pokemon]);
   });
@@ -787,6 +814,7 @@ describe('deleteTeam', () => {
     await TeamMemberDAO.insert({
       fk_pokemon_id: pkmn.id,
       fk_team_id: team.id,
+      sneaky_snacking: false,
       member_index: 0
     });
 
@@ -867,6 +895,7 @@ describe('deleteTeam', () => {
     await TeamMemberDAO.insert({
       fk_pokemon_id: pkmn.id,
       fk_team_id: team.id,
+      sneaky_snacking: false,
       member_index: 0
     });
 

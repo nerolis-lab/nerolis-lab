@@ -39,6 +39,7 @@ describe('RP', () => {
       ribbon: 0,
       nature: QUIET,
       skillLevel: 1,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: INGREDIENT_FINDER_M },
         { level: 25, subskill: INGREDIENT_FINDER_S },
@@ -75,6 +76,7 @@ describe('RP', () => {
       ribbon: 0,
       nature: JOLLY,
       skillLevel: 7,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: SKILL_TRIGGER_M },
@@ -104,6 +106,7 @@ describe('RP', () => {
       ribbon: 2,
       nature: MILD,
       skillLevel: 2,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: HELPING_BONUS },
         { level: 25, subskill: SKILL_TRIGGER_S }
@@ -132,6 +135,7 @@ describe('RP', () => {
       ribbon: 4,
       nature: SASSY,
       skillLevel: 6,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: HELPING_BONUS },
         { level: 25, subskill: SKILL_TRIGGER_M },
@@ -161,6 +165,7 @@ describe('RP', () => {
       ribbon: 0,
       nature: QUIET,
       skillLevel: 1,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: INGREDIENT_FINDER_M },
         { level: 25, subskill: INGREDIENT_FINDER_S },
@@ -192,6 +197,7 @@ describe('RP', () => {
       ribbon: 0,
       nature: LONELY,
       skillLevel: 7,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: SKILL_TRIGGER_M },
@@ -223,6 +229,7 @@ describe('RP', () => {
       ribbon: 0,
       nature: NAUGHTY,
       skillLevel: 4,
+      sneakySnacking: false,
       subskills: [
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: SLEEP_EXP_BONUS },
