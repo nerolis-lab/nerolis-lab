@@ -1,5 +1,6 @@
 import type { Nature } from '../../domain/nature';
 import { NATURES } from '../../domain/nature';
+import { MathUtils } from '../math-utils';
 
 export function getNature(name: string) {
   const nat: Nature | undefined = NATURES.find((nature) => nature.name.toUpperCase() === name.toUpperCase());
@@ -14,11 +15,5 @@ export function getNatureNames() {
 }
 
 export function invertNatureFrequency(nature: Nature) {
-  let result = 1;
-  if (nature.frequency === 0.9) {
-    result = 1.1;
-  } else if (nature.frequency === 1.1) {
-    result = 0.9;
-  }
-  return result;
+  return MathUtils.round(2 - nature.frequency, 3);
 }
