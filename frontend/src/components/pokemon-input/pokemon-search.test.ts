@@ -2,7 +2,6 @@ import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
 import { faker } from '@faker-js/faker/locale/en'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { PIKACHU, RandomUtils, uuid } from 'sleepapi-common'
 import { vimic } from 'vimic'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -31,7 +30,6 @@ describe('PokemonSearch', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonSearch>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(PokemonSearch, {
       props: {
         memberIndex: 0

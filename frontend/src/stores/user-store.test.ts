@@ -1,10 +1,9 @@
 import router from '@/router/router'
-import { GoogleService } from '@/services/login/google-service'
+import { AuthService } from '@/services/login/auth-service'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
-import { createPinia, setActivePinia } from 'pinia'
-import { MAX_POT_SIZE, Roles } from 'sleepapi-common'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { AuthProvider, commonMocks, MAX_POT_SIZE, Roles } from 'sleepapi-common'
+import { describe, expect, it, vi } from 'vitest'
 import { googleLogout } from 'vue3-google-login'
 
 vi.mock('vue3-google-login', () => ({
@@ -12,10 +11,6 @@ vi.mock('vue3-google-login', () => ({
 }))
 
 describe('User Store', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   it('should migrate the store', () => {
     const userStore = useUserStore()
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,27 +50,44 @@ describe('User Store', () => {
           "snowdrop": 0,
           "taupe": 0,
         },
+        "auth": null,
         "avatar": null,
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
+        "potSize": 69,
         "role": "default",
-        "tokens": null,
       }
     `)
 
     expect(userStore.loggedIn).toBeFalsy()
   })
 
-  it('setUserData should update the name and avatar', () => {
+  it('setInitialLoginData should update the name and avatar', () => {
     const userStore = useUserStore()
-    userStore.setUserData({
+    userStore.setInitialLoginData({
       name: 'some name',
       avatar: 'some avatar',
-      email: 'some email',
       externalId: 'some id',
-      role: Roles.Default
+      role: Roles.Default,
+      friendCode: 'some friend code',
+      auth: {
+        activeProvider: AuthProvider.Google,
+        linkedProviders: {
+          [AuthProvider.Google]: {
+            linked: true,
+            identifier: 'some-email'
+          },
+          [AuthProvider.Discord]: {
+            linked: false
+          }
+        },
+        tokens: {
+          accessToken: 'some access token',
+          refreshToken: 'some refresh token',
+          expiryDate: 0
+        }
+      }
     })
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
@@ -86,48 +98,30 @@ describe('User Store', () => {
           "powerplant": 0,
           "snowdrop": 0,
           "taupe": 0,
+        },
+        "auth": {
+          "activeProvider": "google",
+          "linkedProviders": {
+            "discord": {
+              "linked": false,
+            },
+            "google": {
+              "identifier": "some-email",
+              "linked": true,
+            },
+          },
+          "tokens": {
+            "accessToken": "some access token",
+            "expiryDate": 0,
+            "refreshToken": "some refresh token",
+          },
         },
         "avatar": "some avatar",
-        "email": "some email",
         "externalId": "some id",
+        "friendCode": "some friend code",
         "name": "some name",
-        "potSize": ${MAX_POT_SIZE},
+        "potSize": 69,
         "role": "default",
-        "tokens": null,
-      }
-    `)
-  })
-
-  it('setTokens should update the token info', () => {
-    const userStore = useUserStore()
-
-    userStore.setTokens({
-      accessToken: 'some access token',
-      refreshToken: 'some refresh token',
-      expiryDate: 10
-    })
-
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
-        "avatar": null,
-        "email": null,
-        "externalId": null,
-        "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
-        "role": "default",
-        "tokens": {
-          "accessToken": "some access token",
-          "expiryDate": 10,
-          "refreshToken": "some refresh token",
-        },
       }
     `)
   })
@@ -159,13 +153,13 @@ describe('User Store', () => {
           "snowdrop": 50,
           "taupe": 60,
         },
+        "auth": null,
         "avatar": "new avatar",
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "new name",
         "potSize": 25,
         "role": "admin",
-        "tokens": null,
       }
     `)
   })
@@ -200,31 +194,20 @@ describe('User Store', () => {
           "snowdrop": 55,
           "taupe": 65,
         },
+        "auth": null,
         "avatar": "synced avatar",
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "synced name",
         "potSize": 30,
         "role": "admin",
-        "tokens": null,
       }
     `)
   })
 
   it('reset should return name and avatar to defaults', () => {
     const userStore = useUserStore()
-    userStore.setUserData({
-      name: 'some name',
-      avatar: 'some avatar',
-      email: 'some email',
-      externalId: 'some id',
-      role: Roles.Default
-    })
-    userStore.setTokens({
-      accessToken: 'some access token',
-      refreshToken: 'some refresh token',
-      expiryDate: 10
-    })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     userStore.$reset()
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
@@ -236,22 +219,26 @@ describe('User Store', () => {
           "snowdrop": 0,
           "taupe": 0,
         },
+        "auth": null,
         "avatar": null,
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
+        "potSize": 69,
         "role": "default",
-        "tokens": null,
       }
     `)
   })
 
   it('should call Google on login and update user data', async () => {
-    GoogleService.login = vi.fn().mockResolvedValue({
-      access_token: 'some access token',
-      refresh_token: 'some refresh token',
-      expiry_date: '10',
+    AuthService.login = vi.fn().mockResolvedValue({
+      auth: {
+        google: {
+          access_token: 'some access token',
+          refresh_token: 'some refresh token',
+          expiry_date: '10'
+        }
+      },
       name: 'some name',
       avatar: 'some avatar',
       role: 'default'
@@ -260,78 +247,97 @@ describe('User Store', () => {
     router.go = vi.fn()
 
     const userStore = useUserStore()
-    await userStore.login('some auth code')
+    await userStore.login('some auth code', AuthProvider.Google, 'http://localhost:3000')
 
-    expect(GoogleService.login).toHaveBeenCalledWith('some auth code')
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
-        "avatar": "some avatar",
-        "email": undefined,
-        "externalId": undefined,
-        "name": "some name",
-        "potSize": ${MAX_POT_SIZE},
-        "role": "default",
-        "tokens": {
-          "accessToken": "some access token",
-          "expiryDate": "10",
-          "refreshToken": "some refresh token",
-        },
-      }
-    `)
-    expect(router.go).toHaveBeenCalledWith(0)
+    expect(AuthService.login).toHaveBeenCalledWith('some auth code', 'google', 'http://localhost:3000')
   })
 
   it('should refresh tokens if expired', async () => {
-    GoogleService.refresh = vi.fn().mockResolvedValue({
+    AuthService.refresh = vi.fn().mockResolvedValue({
       access_token: 'new access token',
       expiry_date: 10
     })
 
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'old access token',
-      refreshToken: 'old refresh token',
-      expiryDate: -10
-    })
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'some-email'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'old access token',
+            refreshToken: 'old refresh token',
+            expiryDate: -10
+          }
+        }
+      })
+    )
 
     await userStore.refresh()
 
-    expect(GoogleService.refresh).toHaveBeenCalledWith('old refresh token')
-    expect(userStore.tokens).toMatchObject({
-      accessToken: 'new access token',
-      refreshToken: 'old refresh token',
-      expiryDate: 10
+    expect(AuthService.refresh).toHaveBeenCalledWith('old refresh token', 'google', undefined)
+    expect(userStore.auth).toMatchObject({
+      activeProvider: 'google',
+      linkedProviders: {
+        google: {
+          linked: true
+        },
+        discord: {
+          linked: false
+        }
+      },
+      tokens: {
+        accessToken: 'new access token',
+        refreshToken: 'old refresh token',
+        expiryDate: 10
+      }
     })
   })
 
   it('should not refresh tokens if not expired', async () => {
-    GoogleService.refresh = vi.fn()
+    AuthService.refresh = vi.fn()
 
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: Date.now() + 3600 * 1000 // 1 hour later
-    })
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'some-email'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'old access token',
+            refreshToken: 'old refresh token',
+            expiryDate: Date.now() + 3600 * 1000 // 1 hour later
+          }
+        }
+      })
+    )
 
     await userStore.refresh()
 
-    expect(GoogleService.refresh).not.toHaveBeenCalled()
+    expect(AuthService.refresh).not.toHaveBeenCalled()
   })
 
   it('should clear user data if no tokens are available', async () => {
     const userStore = useUserStore()
     userStore.$reset = vi.fn()
 
-    userStore.tokens = null
+    userStore.auth = null
 
     await userStore.refresh()
 
@@ -339,14 +345,30 @@ describe('User Store', () => {
   })
 
   it('should logout on refresh error', async () => {
-    GoogleService.refresh = vi.fn().mockRejectedValue(new Error('Refresh error'))
+    AuthService.refresh = vi.fn().mockRejectedValue(new Error('Refresh error'))
 
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: -10
-    })
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'some-email'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'old access token',
+            refreshToken: 'old refresh token',
+            expiryDate: -10
+          }
+        }
+      })
+    )
 
     userStore.logout = vi.fn()
 
@@ -355,22 +377,35 @@ describe('User Store', () => {
     expect(userStore.logout).toHaveBeenCalled()
   })
 
-  it('should clean up on logout', () => {
+  it('should clean up on logout', async () => {
     router.push = vi.fn()
 
     const userStore = useUserStore()
-    userStore.setUserData({
-      name: 'some name',
-      avatar: 'some avatar',
-      email: 'some email',
-      externalId: 'some id',
-      role: Roles.Default
-    })
-    userStore.setTokens({
-      accessToken: 'some access token',
-      refreshToken: 'some refresh token',
-      expiryDate: 10
-    })
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        name: 'some name',
+        avatar: 'some avatar',
+        externalId: 'some id',
+        role: Roles.Default,
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'some-email'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'old access token',
+            refreshToken: 'old refresh token',
+            expiryDate: -10
+          }
+        }
+      })
+    )
 
     userStore.logout()
 
@@ -384,13 +419,13 @@ describe('User Store', () => {
           "snowdrop": 0,
           "taupe": 0,
         },
+        "auth": null,
         "avatar": null,
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "Guest",
         "potSize": ${MAX_POT_SIZE},
         "role": "default",
-        "tokens": null,
       }
     `)
     expect(googleLogout).toHaveBeenCalled()

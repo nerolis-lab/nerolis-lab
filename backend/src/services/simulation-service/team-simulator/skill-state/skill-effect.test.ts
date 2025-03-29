@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import { describe, expect, it } from 'vitest';
 
 class MockSkillEffect implements SkillEffect {

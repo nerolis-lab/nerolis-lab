@@ -224,5 +224,6 @@ export default defineComponent({
 :deep(.v-input__details) {
   padding-inline: 0px !important;
   text-align: center !important;
+  font-size: 14px !important;
 }
 </style>

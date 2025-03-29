@@ -1,8 +1,9 @@
-import { mocks } from '@src/bun/index.js';
 import SolveController from '@src/controllers/solve/solve.controller.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import * as mealUtils from '@src/utils/meal-utils/meal-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import * as common from 'sleepapi-common';
+import { commonMocks } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('solve.controller', () => {
@@ -70,12 +71,12 @@ describe('solve.controller', () => {
 
     it('should map result to response correctly', () => {
       const result = mocks.solveRecipeResultWithSettings();
-      vimic(mealUtils, 'getMeal', () => mocks.mockRecipe());
+      vimic(mealUtils, 'getMeal', () => commonMocks.mockRecipe());
 
       const mockedIngredientSet: common.IngredientSet[] = [
-        mocks.mockIngredientSet({ amount: 10, ingredient: common.ingredient.FANCY_APPLE })
+        commonMocks.mockIngredientSet({ amount: 10, ingredient: common.ingredient.FANCY_APPLE })
       ];
-      const mockedPokemon = common.mockPokemon();
+      const mockedPokemon = commonMocks.mockPokemon();
 
       const flatToIngredientSetMock = vimic(common, 'flatToIngredientSet', () => mockedIngredientSet);
       const getPokemonMock = vimic(common, 'getPokemon', () => mockedPokemon);
@@ -97,7 +98,7 @@ describe('solve.controller', () => {
             member: {
               pokemonWithIngredients: {
                 pokemon: mockedPokemon,
-                ingredientList: [common.mockIngredientSet()]
+                ingredientList: [commonMocks.mockIngredientSet()]
               },
               settings: member.settings
             }

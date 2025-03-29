@@ -4,7 +4,6 @@ import type { MemberProductionExt } from '@/types/member/instanced'
 import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { ESPEON, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
@@ -15,7 +14,6 @@ describe('ChargeStrengthMDetails', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionSkill, {
       props: {
         memberWithProduction: mockMember

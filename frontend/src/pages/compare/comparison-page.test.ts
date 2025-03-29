@@ -9,7 +9,6 @@ import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import type { TeamProductionExt } from '@/types/member/instanced'
 import { createMockMemberProduction, createMockPokemon, createMockTeamProduction } from '@/vitest'
-import { createPinia, setActivePinia } from 'pinia'
 import { nextTick } from 'vue'
 
 vi.mock('@/services/production/production-service')
@@ -23,7 +22,6 @@ describe('ComparisonPage', () => {
   const mockMemberProduction: MemberProduction = createMockMemberProduction()
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
 

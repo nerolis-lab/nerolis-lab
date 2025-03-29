@@ -1,6 +1,5 @@
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import NumberInput from './number-input.vue'
 
@@ -8,7 +7,6 @@ describe('NumberInput', () => {
   let wrapper: VueWrapper<InstanceType<typeof NumberInput>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(NumberInput, {
       props: {
         modelValue: 42,

@@ -1,4 +1,3 @@
-import { mocks } from '@src/bun/index.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
@@ -6,21 +5,22 @@ import { MemberState } from '@src/services/simulation-service/team-simulator/mem
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   berry,
+  commonMocks,
   emptyIngredientInventoryFloat,
   ingredient,
   mainskill,
   MAX_POT_SIZE,
-  mockPokemon,
   nature,
   subskill
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 const mockPokemonSet: PokemonWithIngredients = {
-  pokemon: mockPokemon({
+  pokemon: commonMocks.mockPokemon({
     carrySize: 10,
     frequency: 3600,
     ingredient0: { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
@@ -130,7 +130,7 @@ describe('ivResults', () => {
       member: {
         ...guaranteedSkillProcMember,
         pokemonWithIngredients: {
-          pokemon: mockPokemon({
+          pokemon: commonMocks.mockPokemon({
             specialty: 'berry',
             ingredientPercentage: 50,
             skillPercentage: 100,

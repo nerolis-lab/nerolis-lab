@@ -1,8 +1,8 @@
+import type { SolveRecipeResult, SolveRecipeResultWithSettings } from '@src/services/solve/types/solution-types.js';
 import {
   solveRecipeSolution,
   solveRecipeSolutionWithSettings
-} from '@src/bun/mocks/solve/mock-solve-recipe-solution.js';
-import type { SolveRecipeResult, SolveRecipeResultWithSettings } from '@src/services/solve/types/solution-types.js';
+} from '@src/vitest/mocks/solve/mock-solve-recipe-solution.js';
 
 export function solveRecipeResult(attrs?: Partial<SolveRecipeResult>): SolveRecipeResult {
   return {

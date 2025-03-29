@@ -1,5 +1,7 @@
+import { DISCORD_REDIRECT_URI } from '@/services/login/discord-service'
 import { useUserStore } from '@/stores/user-store'
 import axios, { type AxiosInstance } from 'axios'
+import type { UserHeader } from 'sleepapi-common'
 
 const serverAxios: AxiosInstance = axios.create({
   baseURL: '/api/',
@@ -9,9 +11,16 @@ const serverAxios: AxiosInstance = axios.create({
 serverAxios.interceptors.request.use(
   async (config) => {
     const userStore = useUserStore()
-    if (userStore.tokens) {
+    if (userStore.auth) {
       await userStore.refresh()
-      config.headers.Authorization = `Bearer ${userStore.tokens.accessToken}`
+      const userHeader: UserHeader = {
+        Authorization: `Bearer ${userStore.auth.tokens.accessToken}`,
+        Provider: userStore.auth.activeProvider,
+        Redirect: DISCORD_REDIRECT_URI
+      }
+      config.headers.Authorization = userHeader.Authorization
+      config.headers.Provider = userHeader.Provider
+      config.headers.Redirect = userHeader.Redirect
     }
     return config
   },

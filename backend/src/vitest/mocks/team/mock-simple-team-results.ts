@@ -1,6 +1,6 @@
-import { teamMemberExt } from '@src/bun/mocks/team/mock-team-member-ext.js';
+import { teamMemberExt } from '@src/vitest/mocks/team/mock-team-member-ext.js';
 import type { SimpleTeamResult } from 'sleepapi-common';
-import { mockIngredientSetFloatIndexed } from 'sleepapi-common';
+import { commonMocks } from 'sleepapi-common';
 
 export function simpleTeamResult(attrs?: Partial<SimpleTeamResult>): SimpleTeamResult {
   return {
@@ -8,7 +8,7 @@ export function simpleTeamResult(attrs?: Partial<SimpleTeamResult>): SimpleTeamR
     critMultiplier: 2,
     ingredientPercentage: 20,
     member: teamMemberExt(),
-    skillIngredients: mockIngredientSetFloatIndexed(),
+    skillIngredients: commonMocks.mockIngredientSetFloatIndexed(),
     skillProcs: 0,
     totalHelps: 0,
     ...attrs

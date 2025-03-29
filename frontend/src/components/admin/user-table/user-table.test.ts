@@ -2,7 +2,6 @@ import AdminConsole from '@/pages/admin/admin.vue'
 import { AdminService } from '@/services/admin/admin-service'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 vi.mock('@/services/admin/admin-service')
@@ -10,8 +9,6 @@ vi.mock('@/services/admin/admin-service')
 describe('UserTable.vue', () => {
   let wrapper: VueWrapper<InstanceType<typeof AdminConsole>>
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     AdminService.getUsers = vi.fn().mockImplementation(() => ({
       getUsers: vi.fn().mockResolvedValue({ users: [] })
     }))

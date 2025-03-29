@@ -6,7 +6,6 @@ import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { ENTEI, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
@@ -20,7 +19,6 @@ describe('MemberProductionSkill', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
     const mockPokemon = createMockPokemon({ pokemon: ENTEI })
     teamStore = useTeamStore()
     teamStore.teams = createMockTeams(1, { members: [mockPokemon.externalId] })

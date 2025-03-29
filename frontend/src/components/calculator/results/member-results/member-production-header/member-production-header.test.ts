@@ -5,7 +5,6 @@ import MemberProductionSkill from '@/components/calculator/results/member-result
 import { createMockMemberProductionExt } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = createMockMemberProductionExt()
@@ -14,7 +13,6 @@ describe('MemberProductionHeader', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionHeader>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionHeader, {
       props: {
         member: mockMember

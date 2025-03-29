@@ -1,7 +1,6 @@
 import AdminPage from '@/pages/admin/admin.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 // Mock the imported components
@@ -23,7 +22,6 @@ describe('AdminPage.vue', () => {
   let wrapper: VueWrapper<InstanceType<typeof AdminPage>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(AdminPage)
   })
 

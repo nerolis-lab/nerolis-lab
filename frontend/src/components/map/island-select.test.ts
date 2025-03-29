@@ -1,7 +1,6 @@
 import IslandSelect from '@/components/map/island-select.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { berry, CYAN, LAPIS, POWER_PLANT, SNOWDROP, TAUPE } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
@@ -9,7 +8,6 @@ describe('IslandSelect', () => {
   let wrapper: VueWrapper<InstanceType<typeof IslandSelect>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(IslandSelect, {
       props: {
         previousBerries: []

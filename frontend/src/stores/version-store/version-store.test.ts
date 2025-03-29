@@ -1,19 +1,13 @@
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
-import { createPinia, setActivePinia } from 'pinia'
 import 'sleepapi-common'
-// import { vimic } from 'vimic'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useVersionStore } from './version-store'
 
 const MOCK_APP_VERSION = '2.0.0'
 
 describe('useVersionStore', () => {
-  // let mockDebug: MockInstance
-
   beforeEach(() => {
     vi.stubGlobal('APP_VERSION', MOCK_APP_VERSION)
-    setActivePinia(createPinia())
-    // mockDebug = vimic(logger, 'debug')
   })
 
   it('initializes with correct version', () => {
@@ -42,7 +36,6 @@ describe('useVersionStore', () => {
     expect(versionStore.version).toBe('1.0.0')
     versionStore.updateVersion()
     expect(versionStore.version).toBe(MOCK_APP_VERSION)
-    // expect(mockDebug).toHaveBeenCalledWith('Client updating version: 1.0.0 -> 2.0.0')
     expect(avatarStore.loadAvatars).toHaveBeenCalled()
   })
 })

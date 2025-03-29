@@ -3,8 +3,7 @@ import { useUserStore } from '@/stores/user-store'
 import type { UserRecipe } from '@/types/recipe/user-recipe'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { mockRecipe } from 'sleepapi-common'
+import { commonMocks } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/composables/highlight-text/use-highlight-text', () => ({
@@ -19,13 +18,18 @@ describe('RecipeTableMobile', () => {
   let wrapper: VueWrapper<InstanceType<typeof RecipeTableMobile>>
 
   const mockRecipes: UserRecipe[] = [
-    { ...mockRecipe({ displayName: 'Mocked Dish' }), userStrength: 100, level: 3, nrOfIngredients: 3, bonus: 15 }
+    {
+      ...commonMocks.mockRecipe({ displayName: 'Mocked Dish' }),
+      userStrength: 100,
+      level: 3,
+      nrOfIngredients: 3,
+      bonus: 15
+    }
   ]
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     wrapper = mount(RecipeTableMobile, {
       props: {

@@ -1,15 +1,14 @@
 import CarrySizeButton from '@/components/pokemon-input/carry-size-button.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { mockPokemon, subskill, type Pokemon, type PokemonInstanceExt, type SubskillInstanceExt } from 'sleepapi-common'
+import { commonMocks, subskill, type Pokemon, type PokemonInstanceExt, type SubskillInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('CarrySizeButton', () => {
   let wrapper: VueWrapper<InstanceType<typeof CarrySizeButton>>
 
   const initialPokemon = {
-    pokemon: mockPokemon(), //base carry size 0
+    pokemon: commonMocks.mockPokemon(), //base carry size 0
     carrySize: 0,
     level: 50,
     subskills: [] as SubskillInstanceExt[]
@@ -22,8 +21,6 @@ describe('CarrySizeButton', () => {
   } as Pokemon
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     wrapper = mount(CarrySizeButton, {
       props: {
         memberIndex: 0,

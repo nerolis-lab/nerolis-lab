@@ -1,4 +1,5 @@
 import HomePage from '@/pages/home-page.vue'
+import { AuthProvider } from 'sleepapi-common'
 
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -16,6 +17,8 @@ export enum RouteName {
   Beta = 'Beta',
 
   Admin = 'Admin',
+
+  Discord = 'Discord',
 
   NotFound = 'NotFound'
 }
@@ -88,6 +91,11 @@ const router = createRouter({
       meta: { requiresAdmin: true }
     },
     {
+      path: '/discord',
+      name: RouteName.Discord,
+      component: HomePage
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: RouteName.NotFound,
       component: NotFoundPage
@@ -96,6 +104,46 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  // TODO: break out to a service
+  // Handle Discord OAuth callback
+  if (to.path === '/discord' || to.name === RouteName.Discord) {
+    try {
+      // Get the code from URL
+      const code = to.query.code as string
+      const error = to.query.error as string
+
+      if (error) {
+        logger.error(`Discord authentication error: ${error}`)
+        next({ name: RouteName.Home })
+        return
+      }
+
+      if (!code) {
+        logger.error('No authorization code provided')
+        next({ name: RouteName.Home })
+        return
+      }
+
+      // Import userStore and login
+      const { useUserStore } = await import('@/stores/user-store')
+      const userStore = useUserStore()
+
+      // Use the same redirectUri that was used for the initial request
+      const redirectUri = `${window.location.origin}/discord`
+
+      // Login with Discord
+      await userStore.login(code, AuthProvider.Discord, redirectUri)
+
+      // Continue to home page
+      next({ name: RouteName.Home })
+    } catch (error) {
+      logger.error(`Discord login failed: ${error instanceof Error ? error.message : String(error)}`)
+      next({ name: RouteName.Home })
+    }
+    return
+  }
+
+  // Handle admin routes
   if (to.meta.requiresAdmin) {
     const { AdminService } = await import('@/services/admin/admin-service')
     const { useUserStore } = await import('@/stores/user-store')

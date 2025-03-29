@@ -4,9 +4,9 @@ import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-d
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import {
-  client,
   deleteUser,
   getUserSettings,
+  googleClient,
   refresh,
   signup,
   updateUser,
@@ -16,7 +16,7 @@ import {
 } from '@src/services/user-service/login-service/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { MIN_POT_SIZE, Roles, uuid } from 'sleepapi-common';
+import { AuthProvider, commonMocks, MIN_POT_SIZE, Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
@@ -28,22 +28,22 @@ vimic(global.logger, 'info');
 
 describe('signup', () => {
   it('should call google API with correct credentials', async () => {
-    client.getToken = vi.fn().mockResolvedValue({
+    googleClient.getToken = vi.fn().mockResolvedValue({
       tokens: {
         refresh_token: 'some-refresh-token',
         access_token: 'some-access-token',
         expiry_date: 10
       }
     });
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockResolvedValue({
       data: {
         sub: 'some-sub',
         email: 'some-email'
       }
     });
 
-    const loginResponse = await signup('some-auth-code');
+    const loginResponse = await signup({ provider: AuthProvider.Google, authorization_code: 'some-auth-code' });
 
     expect(await UserDAO.findMultiple()).toEqual([
       expect.objectContaining({
@@ -60,32 +60,46 @@ describe('signup', () => {
       })
     ]);
 
-    expect(loginResponse).toMatchInlineSnapshot(`
-      {
-        "access_token": "some-access-token",
-        "avatar": undefined,
-        "email": "some-email",
-        "expiry_date": 10,
-        "externalId": "00000000-0000-0000-0000-000000000000",
-        "name": "New user",
-        "refresh_token": "some-refresh-token",
-        "role": "default",
-      }
-    `);
-    expect(client.getToken).toHaveBeenCalledWith({ code: 'some-auth-code', redirect_uri: 'postmessage' });
-    expect(client.setCredentials).toHaveBeenCalledWith({ access_token: 'some-access-token' });
+    expect(loginResponse).toEqual({
+      auth: {
+        activeProvider: 'google',
+        linkedProviders: {
+          google: {
+            identifier: 'some-email',
+            linked: true
+          },
+          discord: {
+            linked: false
+          }
+        },
+        tokens: {
+          accessToken: 'some-access-token',
+          expiryDate: 10,
+          refreshToken: 'some-refresh-token'
+        }
+      },
+      avatar: undefined,
+      externalId: '00000000-0000-0000-0000-000000000000',
+      friendCode: expect.any(String),
+      name: 'New user',
+      role: 'default'
+    });
+    expect(googleClient.getToken).toHaveBeenCalledWith({ code: 'some-auth-code', redirect_uri: 'postmessage' });
+    expect(googleClient.setCredentials).toHaveBeenCalledWith({ access_token: 'some-access-token' });
   });
 
   it('should throw an error if google response is missing tokens', async () => {
-    client.getToken = vi.fn().mockResolvedValue({
+    googleClient.getToken = vi.fn().mockResolvedValue({
       tokens: {}
     });
 
-    await expect(() => signup('some-auth-code')).rejects.toThrow(AuthorizationError);
+    await expect(() => signup({ provider: AuthProvider.Google, authorization_code: 'some-auth-code' })).rejects.toThrow(
+      AuthorizationError
+    );
   });
 
   it('should handle existing user correctly', async () => {
-    client.getToken = vi.fn().mockResolvedValue({
+    googleClient.getToken = vi.fn().mockResolvedValue({
       tokens: {
         refresh_token: 'some-refresh-token',
         access_token: 'some-access-token',
@@ -93,8 +107,8 @@ describe('signup', () => {
       }
     });
 
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockResolvedValue({
       data: {
         sub: 'some-sub',
         email: 'some-email'
@@ -109,7 +123,7 @@ describe('signup', () => {
       role: Roles.Default
     });
 
-    const loginResponse = await signup('some-auth-code');
+    const loginResponse = await signup({ provider: AuthProvider.Google, authorization_code: 'some-auth-code' });
 
     expect(await UserDAO.findMultiple()).toEqual([
       expect.objectContaining({
@@ -129,13 +143,27 @@ describe('signup', () => {
 
     expect(loginResponse).toMatchInlineSnapshot(`
       {
-        "access_token": "some-access-token",
+        "auth": {
+          "activeProvider": "google",
+          "linkedProviders": {
+            "discord": {
+              "linked": false,
+            },
+            "google": {
+              "identifier": "some-email",
+              "linked": true,
+            },
+          },
+          "tokens": {
+            "accessToken": "some-access-token",
+            "expiryDate": 10,
+            "refreshToken": "some-refresh-token",
+          },
+        },
         "avatar": undefined,
-        "email": "some-email",
-        "expiry_date": 10,
         "externalId": "00000000-0000-0000-0000-000000000000",
+        "friendCode": "TESTFC",
         "name": "Existing user",
-        "refresh_token": "some-refresh-token",
         "role": "default",
       }
     `);
@@ -144,15 +172,15 @@ describe('signup', () => {
 
 describe('refresh', () => {
   it('should refresh the access token successfully', async () => {
-    client.setCredentials = vi.fn();
-    client.getAccessToken = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.getAccessToken = vi.fn().mockResolvedValue({
       token: 'new-access-token'
     });
-    client.credentials = {
+    googleClient.credentials = {
       expiry_date: 10
     };
 
-    const refreshResponse = await refresh('some-refresh-token');
+    const refreshResponse = await refresh({ provider: AuthProvider.Google, refresh_token: 'some-refresh-token' });
 
     expect(refreshResponse).toMatchInlineSnapshot(`
 {
@@ -161,16 +189,18 @@ describe('refresh', () => {
 }
 `);
 
-    expect(client.setCredentials).toHaveBeenCalledWith({ refresh_token: 'some-refresh-token' });
-    expect(client.getAccessToken).toHaveBeenCalled();
+    expect(googleClient.setCredentials).toHaveBeenCalledWith({ refresh_token: 'some-refresh-token' });
+    expect(googleClient.getAccessToken).toHaveBeenCalled();
   });
 
   it('should throw an error if Google API fails to provide a new access token', async () => {
-    client.setCredentials = vi.fn();
-    client.getAccessToken = vi.fn().mockResolvedValue({ token: null });
-    client.credentials = {};
+    googleClient.setCredentials = vi.fn();
+    googleClient.getAccessToken = vi.fn().mockResolvedValue({ token: null });
+    googleClient.credentials = {};
 
-    await expect(() => refresh('some-refresh-token')).rejects.toThrow('Failed to refresh access token');
+    await expect(() => refresh({ provider: AuthProvider.Google, refresh_token: 'some-refresh-token' })).rejects.toThrow(
+      'Failed to refresh Google access token'
+    );
   });
 });
 
@@ -181,8 +211,8 @@ describe('verify', () => {
       sub: 'some-sub',
       aud: config.GOOGLE_CLIENT_ID
     };
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockResolvedValue({
       data: userInfo
     });
     await UserDAO.insert({
@@ -193,7 +223,7 @@ describe('verify', () => {
       role: Roles.Default
     });
 
-    const user = await verifyExistingUser(accessToken);
+    const user = await verifyExistingUser(commonMocks.userHeader({ Authorization: accessToken }));
 
     expect(user).toEqual(
       expect.objectContaining({
@@ -210,49 +240,40 @@ describe('verify', () => {
       })
     );
 
-    expect(client.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
-    expect(client.request).toHaveBeenCalledWith({
+    expect(googleClient.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
+    expect(googleClient.request).toHaveBeenCalledWith({
       url: `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
     });
   });
 
   it('should throw an error if token info does not match the expected client ID', async () => {
-    const accessToken = 'invalid-access-token';
-    const userInfo = {
-      sub: 'some-sub',
-      aud: 'wrong-client-id'
-    };
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn();
 
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
-      data: userInfo
-    });
-
-    await expect(() => verifyExistingUser(accessToken)).rejects.toThrow('Token was not issued from this server');
+    await expect(() => verifyExistingUser(commonMocks.userHeader())).rejects.toThrow(
+      'Missing sub in Google token info response'
+    );
   });
 
   it('should handle Google API request failure', async () => {
-    const accessToken = 'valid-access-token';
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockRejectedValue(new Error('Google API request failed'));
 
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockRejectedValue(new Error('Google API request failed'));
-
-    await expect(() => verifyExistingUser(accessToken)).rejects.toThrow('Google API request failed');
+    await expect(() => verifyExistingUser(commonMocks.userHeader())).rejects.toThrow('Google API request failed');
   });
 
   it('should throw an error if user is not found in the database', async () => {
-    const accessToken = 'valid-access-token';
     const userInfo = {
       sub: 'some-sub',
       aud: config.GOOGLE_CLIENT_ID
     };
 
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockResolvedValue({
       data: userInfo
     });
 
-    await expect(() => verifyExistingUser(accessToken)).rejects.toThrowErrorMatchingInlineSnapshot(
+    await expect(() => verifyExistingUser(commonMocks.userHeader())).rejects.toThrowErrorMatchingInlineSnapshot(
       `[DatabaseNotFoundError: Unable to find entry in user with filter [{"sub":"some-sub"}]]`
     );
   });
@@ -282,8 +303,8 @@ describe('verifyAdmin', () => {
       sub: 'some-sub',
       aud: config.GOOGLE_CLIENT_ID
     };
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockResolvedValue({
       data: userInfo
     });
     await UserDAO.insert({
@@ -294,7 +315,7 @@ describe('verifyAdmin', () => {
       role: Roles.Admin
     });
 
-    const user = await verifyAdmin(accessToken);
+    const user = await verifyAdmin(commonMocks.userHeader({ Authorization: accessToken }));
 
     expect(user).toEqual(
       expect.objectContaining({
@@ -311,20 +332,19 @@ describe('verifyAdmin', () => {
       })
     );
 
-    expect(client.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
-    expect(client.request).toHaveBeenCalledWith({
+    expect(googleClient.setCredentials).toHaveBeenCalledWith({ access_token: accessToken });
+    expect(googleClient.request).toHaveBeenCalledWith({
       url: `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
     });
   });
 
   it('should throw an error if user is not an admin', async () => {
-    const accessToken = 'valid-access-token';
     const userInfo = {
       sub: 'some-sub',
       aud: config.GOOGLE_CLIENT_ID
     };
-    client.setCredentials = vi.fn();
-    client.request = vi.fn().mockResolvedValue({
+    googleClient.setCredentials = vi.fn();
+    googleClient.request = vi.fn().mockResolvedValue({
       data: userInfo
     });
     await UserDAO.insert({
@@ -335,7 +355,7 @@ describe('verifyAdmin', () => {
       role: Roles.Default
     });
 
-    await expect(() => verifyAdmin(accessToken)).rejects.toThrow('User is not an admin');
+    await expect(() => verifyAdmin(commonMocks.userHeader())).rejects.toThrow('User is not an admin');
   });
 });
 
@@ -383,7 +403,7 @@ describe('getUserSettings', () => {
       pot_size: MIN_POT_SIZE
     });
 
-    const userSettings = await getUserSettings(user);
+    const userSettings = await getUserSettings(user, commonMocks.userHeader());
 
     expect(userSettings).toEqual(
       expect.objectContaining({
@@ -416,7 +436,7 @@ describe('getUserSettings', () => {
       bonus: 75
     });
 
-    const userSettings = await getUserSettings(user);
+    const userSettings = await getUserSettings(user, commonMocks.userHeader());
 
     expect(userSettings).toEqual(
       expect.objectContaining({

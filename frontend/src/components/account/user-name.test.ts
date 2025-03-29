@@ -2,7 +2,6 @@ import UserName from '@/components/account/user-name.vue'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('UserName.vue', () => {
@@ -10,8 +9,6 @@ describe('UserName.vue', () => {
   let userStore: ReturnType<typeof useUserStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     userStore = useUserStore()
 
     userStore.name = 'John Doe'

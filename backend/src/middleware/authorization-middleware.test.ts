@@ -50,6 +50,8 @@ describe('validateAuthHeader middleware', () => {
 
   it('should call next if Authorization header is valid and token is verified', async () => {
     req.headers!.authorization = 'Bearer validtoken';
+    req.headers!.provider = 'google';
+
     const mockUser: DBUser = {
       id: 1,
       version: 1,
@@ -72,6 +74,7 @@ describe('validateAuthHeader middleware', () => {
 
   it('should respond with 401 if token verification fails', async () => {
     req.headers!.authorization = 'Bearer invalidtoken';
+    req.headers!.provider = 'google';
 
     const spy = vi.spyOn(loginService, 'verifyExistingUser');
     spy.mockRejectedValue(new Error('Invalid token'));
@@ -81,6 +84,18 @@ describe('validateAuthHeader middleware', () => {
     expect(next).not.toHaveBeenCalled();
     expect(logger.error).toHaveBeenCalledWith('Unauthorized: Error: Invalid token');
     spy.mockRestore();
+  });
+
+  it('should respond with 401 if redirect is not provided for discord', async () => {
+    req.headers!.authorization = 'Bearer validtoken';
+    req.headers!.provider = 'discord';
+
+    await validateAuthHeader(req as Request, res as Response, next);
+    expect(res.sendStatus).toHaveBeenCalledWith(401);
+    expect(next).not.toHaveBeenCalled();
+    expect(logger.error).toHaveBeenCalledWith(
+      'Unauthorized: AuthorizationError: Invalid redirect, Discord requires a redirect URI'
+    );
   });
 });
 
@@ -120,6 +135,8 @@ describe('validateAdmin middleware', () => {
 
   it('should respond with 401 if Authorization header does not start with Bearer', async () => {
     req.headers!.authorization = 'Basic token';
+    req.headers!.provider = 'google';
+
     await validateAdmin(req as Request, res as Response, next);
     expect(res.sendStatus).toHaveBeenCalledWith(401);
 
@@ -129,6 +146,8 @@ describe('validateAdmin middleware', () => {
 
   it('should call next if Authorization header is valid and token is verified', async () => {
     req.headers!.authorization = 'Bearer validtoken';
+    req.headers!.provider = 'google';
+
     const mockUser: DBUser = {
       id: 1,
       version: 1,
@@ -151,6 +170,7 @@ describe('validateAdmin middleware', () => {
 
   it('should respond with 401 if token verification fails', async () => {
     req.headers!.authorization = 'Bearer invalidtoken';
+    req.headers!.provider = 'google';
 
     const spy = vi.spyOn(loginService, 'verifyAdmin');
     spy.mockRejectedValue(new Error('Invalid token'));
@@ -206,6 +226,7 @@ describe('withMaybeUser middleware', () => {
 
   it('should set user if Authorization header is valid and token is verified', async () => {
     req.headers!.authorization = 'Bearer validtoken';
+    req.headers!.provider = 'google';
     const mockUser: DBUser = {
       id: 1,
       version: 1,
@@ -227,7 +248,7 @@ describe('withMaybeUser middleware', () => {
 
   it('should respond with 401 if token verification fails', async () => {
     req.headers!.authorization = 'Bearer invalidtoken';
-
+    req.headers!.provider = 'google';
     const spy = vi.spyOn(loginService, 'verifyExistingUser');
     spy.mockRejectedValue(new Error('Invalid token'));
 

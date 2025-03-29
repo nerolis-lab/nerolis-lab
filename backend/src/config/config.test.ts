@@ -13,6 +13,8 @@ describe('config', () => {
   "DB_PASS": undefined,
   "DB_PORT": undefined,
   "DB_USER": undefined,
+  "DISCORD_CLIENT_ID": undefined,
+  "DISCORD_CLIENT_SECRET": undefined,
   "GENERATE_TIERLIST": false,
   "GOOGLE_CLIENT_ID": undefined,
   "GOOGLE_CLIENT_SECRET": undefined,
@@ -36,6 +38,8 @@ describe('config', () => {
     process.env.ROLLBACK_BATCHES = '3';
     process.env.GOOGLE_CLIENT_ID = 'some-google-id';
     process.env.GOOGLE_CLIENT_SECRET = 'some-google-secret';
+    process.env.DISCORD_CLIENT_ID = 'some-discord-id';
+    process.env.DISCORD_CLIENT_SECRET = 'some-discord-secret';
 
     expect(backendConfig.config).toMatchInlineSnapshot(`
 {
@@ -44,6 +48,8 @@ describe('config', () => {
   "DB_PASS": "some-pass",
   "DB_PORT": "1",
   "DB_USER": "some-user",
+  "DISCORD_CLIENT_ID": "some-discord-id",
+  "DISCORD_CLIENT_SECRET": "some-discord-secret",
   "GENERATE_TIERLIST": false,
   "GOOGLE_CLIENT_ID": "some-google-id",
   "GOOGLE_CLIENT_SECRET": "some-google-secret",

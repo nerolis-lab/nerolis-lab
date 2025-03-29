@@ -1,4 +1,4 @@
-import { berry } from '@src/bun/mocks/berry/mock-berry.js';
+import { berry } from '@src/vitest/mocks/berry/mock-berry.js';
 import type { BerrySet } from 'sleepapi-common';
 
 // TODO: exists in common, clean up

@@ -55,11 +55,62 @@
               </v-row>
               <v-row dense>
                 <v-col cols="12" class="flex-center flex-column">
-                  <span class="text-center">E-mail: {{ userStore.email ?? 'missing, log out and back in' }}</span>
-                  <span class="text-center fine-print">
-                    This is only stored on your device. Neroli's Lab does not store your personal information, just an
-                    identifier connected to your Google account to recognize you by.
-                  </span>
+                  <span class="text-center text-subtitle-1 font-weight-bold mb-2">Linked Accounts</span>
+
+                  <!-- Google Auth Provider -->
+                  <div class="d-flex align-center justify-space-between py-1 w-100" style="max-width: 400px">
+                    <div class="d-flex align-center">
+                      <v-icon class="mr-2" color="error">mdi-google</v-icon>
+                      <span>Google</span>
+                    </div>
+                    <div>
+                      <v-btn
+                        v-if="userStore.isGoogleLinked"
+                        color="error"
+                        variant="outlined"
+                        size="small"
+                        @click="confirmUnlinkProvider(AuthProvider.Google)"
+                        :disabled="userStore.numberOfLinkedProviders <= 1"
+                      >
+                        Unlink
+                      </v-btn>
+                      <v-btn v-else color="success" variant="outlined" size="small" @click="googleCallback">
+                        Link
+                      </v-btn>
+                    </div>
+                  </div>
+
+                  <!-- Discord Auth Provider -->
+                  <div class="d-flex align-center justify-space-between py-1 w-100" style="max-width: 400px">
+                    <div class="d-flex align-center">
+                      <v-icon class="mr-2" color="#5865F2">mdi-discord</v-icon>
+                      <span>Discord</span>
+                    </div>
+                    <div>
+                      <!-- TODO: confirm do you really want to unlink, note that if you unlink you will be logged out from Neroli's Lab-->
+                      <v-btn
+                        v-if="userStore.isDiscordLinked"
+                        color="error"
+                        variant="outlined"
+                        size="small"
+                        @click="confirmUnlinkProvider(AuthProvider.Discord)"
+                        :disabled="userStore.numberOfLinkedProviders <= 1"
+                      >
+                        Unlink
+                      </v-btn>
+                      <v-btn v-else color="success" variant="outlined" size="small" @click="loginWithDiscord">
+                        Link
+                      </v-btn>
+                    </div>
+                  </div>
+
+                  <div
+                    v-if="userStore.numberOfLinkedProviders <= 1"
+                    class="text-caption text-center mt-2 w-100"
+                    style="max-width: 400px"
+                  >
+                    You can't unlink your last provider. To delete your account entirely, use the button below.
+                  </div>
                 </v-col>
               </v-row>
               <v-row dense class="mx-1 mt-4">
@@ -133,6 +184,22 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- Unlink Provider Confirmation Dialog -->
+    <v-dialog v-model="unlinkDialog" max-width="500">
+      <v-card>
+        <v-card-title class="headline">Confirm Unlinking Provider</v-card-title>
+        <v-card-text>
+          Are you sure you want to unlink your {{ providerToUnlink === 'google' ? 'Google' : 'Discord' }} account? You
+          can always link it again later.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn @click="unlinkDialog = false">Cancel</v-btn>
+          <v-btn color="error" @click="unlinkProvider">Unlink</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -140,10 +207,13 @@
 import GameSettings from '@/components/settings/game-settings/game-settings.vue'
 import { success } from '@/components/snackbar/snackbar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import { GoogleService } from '@/services/login/google-service'
+import { AuthService } from '@/services/login/auth-service'
+import { loginWithDiscord } from '@/services/login/discord-service'
+import { googleCallback } from '@/services/login/google-service'
 import { clearCacheKeepLogin } from '@/stores/store-service'
 import { useUserStore } from '@/stores/user-store'
 import { useVersionStore } from '@/stores/version-store/version-store'
+import { AuthProvider } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -156,12 +226,14 @@ export default defineComponent({
     const versionStore = useVersionStore()
     const { isMobile } = useBreakpoint()
 
-    return { userStore, versionStore, isMobile }
+    return { userStore, versionStore, isMobile, loginWithDiscord, googleCallback, AuthProvider }
   },
   data() {
     return {
       activeTab: 'game',
       deleteDialog: false,
+      unlinkDialog: false,
+      providerToUnlink: null as AuthProvider | null,
       tabs: [
         { value: 'game', text: 'Game' },
         { value: 'account', text: 'Account' },
@@ -185,8 +257,24 @@ export default defineComponent({
     },
     async confirmDeleteAccount() {
       this.closeDialog()
-      await GoogleService.delete()
+      await AuthService.delete()
       this.userStore.logout()
+    },
+    confirmUnlinkProvider(provider: AuthProvider) {
+      this.providerToUnlink = provider
+      this.unlinkDialog = true
+    },
+    async unlinkProvider() {
+      if (this.providerToUnlink) {
+        try {
+          await this.userStore.unlinkProvider(this.providerToUnlink)
+          success(`${this.providerToUnlink === 'google' ? 'Google' : 'Discord'} account unlinked successfully!`)
+        } catch (error) {
+          console.error(`Error unlinking ${this.providerToUnlink} account:`, error)
+        }
+        this.unlinkDialog = false
+        this.providerToUnlink = null
+      }
     }
   }
 })

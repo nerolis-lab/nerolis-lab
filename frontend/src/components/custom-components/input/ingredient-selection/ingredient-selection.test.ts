@@ -1,8 +1,7 @@
 import IngredientSelection from '@/components/custom-components/input/ingredient-selection/ingredient-selection.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { ingredient, mockIngredient, type Ingredient } from 'sleepapi-common'
+import { commonMocks, ingredient, type Ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
@@ -16,13 +15,12 @@ vi.mock('@/services/utils/image-utils', () => ({
 describe('IngredientSelection', () => {
   let wrapper: VueWrapper<InstanceType<typeof IngredientSelection>>
   const mockIngredients: Ingredient[] = [
-    mockIngredient({ name: 'Berry' }),
-    mockIngredient({ name: 'Honey' }),
-    mockIngredient({ name: 'Mushroom' })
+    commonMocks.mockIngredient({ name: 'Berry' }),
+    commonMocks.mockIngredient({ name: 'Honey' }),
+    commonMocks.mockIngredient({ name: 'Mushroom' })
   ]
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(IngredientSelection, {
       props: { preSelectedIngredients: mockIngredients }
     })

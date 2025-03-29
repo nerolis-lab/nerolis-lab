@@ -1,7 +1,6 @@
 import { clearCacheKeepLogin } from '@/stores/store-service'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import SettingsPage from './settings-page.vue'
 
@@ -14,16 +13,13 @@ vi.mock('@/components/snackbar/snackbar.vue', () => ({
 }))
 
 vi.mock('@/services/login/google-service', () => ({
-  GoogleService: {
-    delete: vi.fn().mockResolvedValue(undefined)
-  }
+  googleCallback: vi.fn()
 }))
 
 describe('SettingsPage', () => {
   let wrapper: VueWrapper<InstanceType<typeof SettingsPage>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(SettingsPage)
   })
 

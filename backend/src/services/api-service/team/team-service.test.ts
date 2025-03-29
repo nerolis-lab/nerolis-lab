@@ -10,7 +10,7 @@ import {
   upsertTeamMember,
   upsertTeamMeta
 } from '@src/services/api-service/team/team-service.js';
-import { client } from '@src/services/user-service/login-service/login-service.js';
+import { googleClient } from '@src/services/user-service/login-service/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
@@ -22,7 +22,7 @@ DaoFixture.init({ recreateDatabasesBeforeEachTest: true, enforceForeignKeyConstr
 
 beforeEach(() => {
   vimic(uuid, 'v4', () => '0'.repeat(36));
-  MockService.init({ TeamDAO, PokemonDAO, TeamMemberDAO, UserDAO, client });
+  MockService.init({ TeamDAO, PokemonDAO, TeamMemberDAO, UserDAO, client: googleClient });
 });
 
 afterEach(() => {

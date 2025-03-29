@@ -5,7 +5,6 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { createMockMemberProduction, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   MAX_RECIPE_LEVEL,
@@ -28,7 +27,6 @@ describe('CompareStrength', () => {
   })
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
     wrapper = mount(CompareStrength, {})

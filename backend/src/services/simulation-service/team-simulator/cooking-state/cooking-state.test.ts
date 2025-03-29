@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import { mocks } from '@src/vitest/index.js';
 import {
   dessert,
   emptyIngredientInventoryFloat,

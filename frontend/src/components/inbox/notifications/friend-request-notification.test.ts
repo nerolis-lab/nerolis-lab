@@ -3,7 +3,6 @@ import { FriendService } from '@/services/friend-service/friend-service'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { NotificationType, type UserNotification } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
@@ -28,8 +27,6 @@ describe('FriendRequestNotification', () => {
   }
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     notificationStore = useNotificationStore()
 
     wrapper = mount(FriendRequestNotification, {

@@ -30,6 +30,7 @@ const darkTheme: ThemeDefinition = {
     accent: '#9A95C3',
 
     strength: '#FFB81F',
+    supporter: '#FFB81F',
 
     natureUp: 'FF683A',
     natureDown: '2BA0ED',
@@ -89,7 +90,7 @@ registerChartJS()
 app.use(vuetify)
 app.use(router)
 app.use(vue3GoogleLogin, {
-  clientId: '983013278971-m60s443rk30e8sjk04aof0ltaanogck0.apps.googleusercontent.com'
+  clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID
 })
 
 app.mount('#app')

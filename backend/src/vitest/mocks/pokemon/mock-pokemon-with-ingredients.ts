@@ -1,10 +1,10 @@
 import type { PokemonWithIngredients, PokemonWithIngredientsIndexed } from 'sleepapi-common';
-import { mockIngredientSet, mockPokemon } from 'sleepapi-common';
+import { commonMocks } from 'sleepapi-common';
 
 export function pokemonWithIngredients(attrs?: Partial<PokemonWithIngredients>): PokemonWithIngredients {
   return {
-    pokemon: mockPokemon(),
-    ingredientList: [mockIngredientSet()],
+    pokemon: commonMocks.mockPokemon(),
+    ingredientList: [commonMocks.mockIngredientSet()],
     ...attrs
   };
 }
@@ -13,7 +13,7 @@ export function pokemonWithIngredientsIndexed(
   attrs?: Partial<PokemonWithIngredientsIndexed>
 ): PokemonWithIngredientsIndexed {
   return {
-    pokemon: mockPokemon().name,
+    pokemon: commonMocks.mockPokemon().name,
     ingredients: new Int16Array(),
     ...attrs
   };

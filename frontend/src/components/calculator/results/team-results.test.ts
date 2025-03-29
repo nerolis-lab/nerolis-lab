@@ -4,7 +4,6 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProductionExt, createMockPokemon, createMockTeamProduction } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { berry, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -13,7 +12,6 @@ describe('TeamResults', () => {
   let wrapper: VueWrapper<InstanceType<typeof TeamResults>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(TeamResults)
   })
 

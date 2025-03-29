@@ -4,7 +4,6 @@ import { createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { subskill } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import TeamSlot from './team-slot.vue'
@@ -15,7 +14,6 @@ describe('TeamSlot', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     teamStore = useTeamStore()
     pokemonStore = usePokemonStore()
 

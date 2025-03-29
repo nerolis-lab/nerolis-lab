@@ -2,7 +2,6 @@
 import Announcements from '@/components/admin/news-editor/announcements.vue'
 import { NotificationService } from '@/services/notification-service/notification-service'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import type { NewsNotification } from 'sleepapi-common'
 import { NotificationType } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -69,7 +68,6 @@ describe('Announcements.vue', () => {
   ]
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     vi.clearAllMocks()
 
     vi.mocked(NotificationService.getNewsHistory).mockResolvedValue(mockNewsHistory)

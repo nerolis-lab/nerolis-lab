@@ -6,12 +6,9 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { createMockMemberProduction, createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-beforeEach(() => {
-  setActivePinia(createPinia())
-})
+beforeEach(() => {})
 
 describe('Store Service', () => {
   it('should clear cache and logout', () => {

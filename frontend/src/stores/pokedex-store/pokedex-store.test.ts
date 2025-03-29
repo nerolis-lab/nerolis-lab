@@ -1,14 +1,9 @@
 import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
-import { createPinia, setActivePinia } from 'pinia'
 import { COMPLETE_POKEDEX } from 'sleepapi-common'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { capitalize } from 'vue'
 
 describe('Pokedex Store', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   it('should have the expected default state', () => {
     const pokedexStore = usePokedexStore()
 

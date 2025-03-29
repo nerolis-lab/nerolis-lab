@@ -1,5 +1,5 @@
-import { pokemonWithIngredients } from '@src/bun/mocks/pokemon/mock-pokemon-with-ingredients.js';
-import { teamMemberSettingsExt } from '@src/bun/mocks/team/mock-team-member-settings-ext.js';
+import { pokemonWithIngredients } from '@src/vitest/mocks/pokemon/mock-pokemon-with-ingredients.js';
+import { teamMemberSettingsExt } from '@src/vitest/mocks/team/mock-team-member-settings-ext.js';
 import type { TeamMemberExt } from 'sleepapi-common';
 
 export function teamMemberExt(attrs?: Partial<TeamMemberExt>): TeamMemberExt {

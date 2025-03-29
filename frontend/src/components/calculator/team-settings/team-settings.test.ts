@@ -2,7 +2,6 @@ import TeamSettings from '@/components/calculator/team-settings/team-settings.vu
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { CYAN } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
@@ -11,7 +10,6 @@ describe('TeamSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof TeamSettings>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(TeamSettings)
   })
 

@@ -1,4 +1,5 @@
 import { findPokemon } from '@/stores/avatar-store/avatar-utils'
+import { useUserStore } from '@/stores/user-store'
 import { defineStore } from 'pinia'
 
 export interface AvatarState {
@@ -25,12 +26,16 @@ export const useAvatarStore = defineStore('avatar', {
         return relativePath ? `/images/avatar/${relativePath}` : '/images/avatar/default.png'
       },
     getBasePokemonAvatars: (state) => {
+      const userStore = useUserStore()
+
       const result: Avatar[] = [
         { name: 'default', path: state.avatars['default'], displayName: 'Default', pokedexNumber: 0 }
       ]
 
       const basePokemon = Object.entries(state.avatars)
-        .filter(([name, path]) => path.includes('portrait/') && !name.includes('shiny'))
+        .filter(
+          ([name, path]) => path.includes(`${userStore.isSupporter ? '' : 'portrait'}/`) && !name.includes('shiny')
+        )
         .map(([name, path]) => {
           const pokemon = findPokemon(name)
           return {

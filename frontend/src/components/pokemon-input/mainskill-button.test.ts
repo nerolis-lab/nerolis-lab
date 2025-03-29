@@ -3,7 +3,6 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import type { Mainskill } from 'sleepapi-common'
 import { GENGAR, createBaseSkill, type PokemonInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -14,7 +13,6 @@ describe('MainskillButton', () => {
   const mockPokemon = createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
     wrapper = mount(MainskillButton, {

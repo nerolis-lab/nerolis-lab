@@ -2,7 +2,6 @@ import PokemonButton from '@/components/pokemon-input/pokemon-button.vue'
 import { createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { ABOMASNOW, PIKACHU } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
@@ -30,7 +29,6 @@ describe('PokemonButton', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonButton>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     const mockPokemon = createMockPokemon({ pokemon: ABOMASNOW })
     wrapper = mount(PokemonButton, {
       props: {

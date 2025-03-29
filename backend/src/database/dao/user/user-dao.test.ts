@@ -75,18 +75,6 @@ describe('UserDAO insert', () => {
     ]);
   });
 
-  it('shall fail to insert entity without sub', async () => {
-    await expect(
-      UserDAO.insert({
-        friend_code: generateFriendCode(),
-        external_id: uuid.v4(),
-        name: 'some-name',
-        sub: undefined as any,
-        role: Roles.Default
-      })
-    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.sub/);
-  });
-
   it('shall fail to insert entity without external_id', async () => {
     await expect(
       UserDAO.insert({

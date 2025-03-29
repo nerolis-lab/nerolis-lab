@@ -1,7 +1,7 @@
 <template>
   <v-btn
     variant="text"
-    class="text-subtitle-1 bg-primary"
+    :class="['text-subtitle-1', userStore.isSupporter ? 'bg-strength' : 'bg-primary']"
     :text="userStore.name"
     @click="openEditDialog"
     :disabled="!userStore.loggedIn"
@@ -16,9 +16,7 @@
       <v-card-text class="pt-4 pb-0">
         <v-textarea
           v-model="editedName"
-          :rules="[
-            (v: any) => (v || '').length <= maxNameLength || `Description must be ${maxNameLength} characters or less`
-          ]"
+          :rules="[(v: any) => (v || '').length <= maxNameLength || `Name must be ${maxNameLength} characters or less`]"
           :counter="maxNameLength"
           clearable
           rows="2"

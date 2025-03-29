@@ -1,6 +1,6 @@
-import { berrySet } from '@src/bun/mocks/berry/mock-berry-set.js';
-import { pokemonWithIngredientsIndexed } from '@src/bun/mocks/pokemon/mock-pokemon-with-ingredients.js';
-import { produce } from '@src/bun/mocks/produce/mock-produce.js';
+import { berrySet } from '@src/vitest/mocks/berry/mock-berry-set.js';
+import { pokemonWithIngredientsIndexed } from '@src/vitest/mocks/pokemon/mock-pokemon-with-ingredients.js';
+import { produce } from '@src/vitest/mocks/produce/mock-produce.js';
 import type { MemberSkillValue } from 'sleepapi-common';
 import { mainskillUnits, type MemberProduction, type MemberProductionAdvanced } from 'sleepapi-common';
 

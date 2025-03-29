@@ -4,7 +4,6 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProductionExt } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = createMockMemberProductionExt()
@@ -13,7 +12,6 @@ describe('MemberProductionIngredient', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionIngredient>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionIngredient, {
       props: {
         memberWithProduction: mockMember

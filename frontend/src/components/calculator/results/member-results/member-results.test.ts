@@ -7,7 +7,6 @@ import { createMockMemberProduction, createMockPokemon, createMockTeamProduction
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -20,7 +19,6 @@ describe('MemberResults', () => {
   const mockPokemon = createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     teamStore = useTeamStore()
     pokemonStore = usePokemonStore()
 

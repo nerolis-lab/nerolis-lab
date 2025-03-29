@@ -4,7 +4,6 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { createMockMemberProduction, createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { MathUtils, ingredient, type MemberProduction } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -17,7 +16,6 @@ describe('CompareMisc', () => {
   const mockMemberProduction: MemberProduction = createMockMemberProduction()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
     wrapper = mount(CompareMisc)

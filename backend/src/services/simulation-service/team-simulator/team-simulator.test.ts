@@ -1,15 +1,15 @@
-import { mocks } from '@src/bun/index.js';
 import type { SkillActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   PINSIR,
   RandomUtils,
   calculatePityProcThreshold,
+  commonMocks,
   ingredient,
   mainskill,
-  mockPokemon,
   nature,
   subskill
 } from 'sleepapi-common';
@@ -17,7 +17,7 @@ import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
 const mockpokemonWithIngredients: PokemonWithIngredients = {
-  pokemon: mockPokemon({
+  pokemon: commonMocks.mockPokemon({
     carrySize: 10,
     frequency: 3600,
     ingredient0: { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
@@ -288,7 +288,7 @@ describe('TeamSimulator', () => {
         pokemonWithIngredients: {
           ...mockpokemonWithIngredients,
           pokemon: {
-            ...mockPokemon(),
+            ...commonMocks.mockPokemon(),
             skill: mainskill.BERRY_BURST_DISGUISE,
             // one help every ~12 hours, final x2 multiplication is to account for energy frequency
             frequency: 60 * 60 * 12 * 2,

@@ -4,7 +4,6 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('CompareSettings', () => {
@@ -12,7 +11,6 @@ describe('CompareSettings', () => {
   const mockPokemon = createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(CompareSettings)
   })
 

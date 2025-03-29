@@ -1,5 +1,4 @@
 import { NotificationService } from '@/services/notification-service/notification-service'
-import { createPinia, setActivePinia } from 'pinia'
 import { NotificationType, type UserNotification } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useNotificationStore } from './notification-store'
@@ -29,7 +28,6 @@ describe('useNotificationStore', () => {
   ]
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     store = useNotificationStore()
 
     vi.clearAllMocks()

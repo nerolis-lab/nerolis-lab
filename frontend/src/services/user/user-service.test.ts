@@ -3,7 +3,7 @@ import { UserService } from '@/services/user/user-service'
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useUserStore } from '@/stores/user-store'
 import { createMockPokemon } from '@/vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { commonMocks } from 'sleepapi-common'
 import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/router/server-axios', () => ({
@@ -52,21 +52,19 @@ describe('deletePokemon', () => {
 })
 
 describe('updateUser', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+  beforeEach(() => {})
 
   it('should call server to update user and update store', async () => {
-    const updatedUser = { name: 'New Name' }
+    const updatedUser = commonMocks.user({ name: 'New Name' })
+
+    vi.mocked(serverAxios.patch).mockResolvedValue({ data: updatedUser })
 
     const userStore = useUserStore()
-    userStore.setUserData = vi.fn()
 
     await UserService.updateUser(updatedUser)
 
     expect(serverAxios.patch).toHaveBeenCalledWith('user', updatedUser)
-
-    expect(userStore.setUserData).toHaveBeenCalled()
+    expect(userStore.name).toBe(updatedUser.name)
   })
 })
 

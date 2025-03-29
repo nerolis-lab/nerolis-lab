@@ -18,6 +18,8 @@ export class BackendConfig {
       DB_PASS,
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
+      DISCORD_CLIENT_ID,
+      DISCORD_CLIENT_SECRET,
       GENERATE_TIERLIST
     } = process.env;
 
@@ -40,6 +42,8 @@ export class BackendConfig {
       DB_PASS,
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
+      DISCORD_CLIENT_ID,
+      DISCORD_CLIENT_SECRET,
       GENERATE_TIERLIST: GENERATE_TIERLIST === 'true'
     };
   }

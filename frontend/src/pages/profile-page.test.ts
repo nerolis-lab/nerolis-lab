@@ -2,7 +2,6 @@ import ProfilePage from '@/pages/profile-page.vue'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockUserStoreData = {
@@ -16,7 +15,6 @@ describe('ProfilePage', () => {
   let userStore: ReturnType<typeof useUserStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     userStore = useUserStore()
     userStore.$patch(mockUserStoreData)
     wrapper = mount(ProfilePage)

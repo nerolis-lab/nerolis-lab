@@ -8,7 +8,7 @@ import { createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
+import { commonMocks } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -18,7 +18,6 @@ describe('Team section', () => {
   registerChartJS()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(createMockPokemon())
     wrapper = mount(TeamSection)
@@ -42,7 +41,7 @@ describe('Team section', () => {
 
   it('navigates teams on button clicks', async () => {
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     const teamStore = useTeamStore()
     teamStore.currentIndex = 0
     teamStore.teams = createMockTeams(2)

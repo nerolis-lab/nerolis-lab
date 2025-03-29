@@ -10,11 +10,10 @@ import {
 } from '@/services/utils/image-utils'
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useUserStore } from '@/stores/user-store'
-import { createPinia, setActivePinia } from 'pinia'
-import { berry, ISLANDS, mainskill, mockPokemon, type Pokemon } from 'sleepapi-common'
+import { berry, commonMocks, ISLANDS, mainskill, type Pokemon } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
-const MOCK_POKEMON = mockPokemon()
+const MOCK_POKEMON = commonMocks.mockPokemon()
 describe('mainskillImage', () => {
   it('returns correct image path for HELPER_BOOST skill', () => {
     const mockPokemon: Pokemon = {
@@ -104,9 +103,7 @@ describe('berryImage', () => {
 })
 
 describe('userAvatar', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+  beforeEach(() => {})
 
   it('returns the correct avatar path from the avatar store', () => {
     const userStore = useUserStore()

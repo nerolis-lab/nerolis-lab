@@ -3,13 +3,10 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProduction } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
 import { type MemberProduction } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-beforeEach(() => {
-  setActivePinia(createPinia())
-})
+beforeEach(() => {})
 
 const mockMemberProduction: MemberProduction = createMockMemberProduction()
 

@@ -5,8 +5,7 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { createMockMemberProduction, createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
-import { DOMAIN_VERSION } from 'sleepapi-common'
+import { commonMocks, DOMAIN_VERSION } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -21,9 +20,7 @@ describe('Pokemon Store', () => {
   const externalId = 'external-id'
   const mockPokemon = createMockPokemon({ externalId, saved: false })
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+  beforeEach(() => {})
 
   it('should have expected default state', () => {
     const pokemonStore = usePokemonStore()
@@ -133,7 +130,7 @@ describe('Pokemon Store', () => {
   it('should call server to upsert pokemon if user logged in', async () => {
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     UserService.upsertPokemon = vi.fn().mockResolvedValue({})
 
@@ -145,7 +142,7 @@ describe('Pokemon Store', () => {
   it('should call server to delete pokemon if user logged in', async () => {
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     UserService.deletePokemon = vi.fn().mockResolvedValue({})
 

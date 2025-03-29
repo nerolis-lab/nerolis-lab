@@ -1,4 +1,3 @@
-import { mocks } from '@src/bun/index.js';
 import { ProgrammingError } from '@src/domain/error/programming/programming-error.js';
 import { calculateSimple, calculateTeam } from '@src/services/api-service/production/production-service.js';
 import type { UserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
@@ -15,6 +14,7 @@ import type {
   SolveRecipeSolutionWithSettings
 } from '@src/services/solve/types/solution-types.js';
 import { convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import type {
   IngredientIndexToFloatAmount,
   IngredientSet,

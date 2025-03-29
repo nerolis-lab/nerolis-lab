@@ -5,17 +5,7 @@ import { useUserStore } from '@/stores/user-store'
 import type { PerformanceDetails, TeamInstance } from '@/types/member/instanced'
 import { createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
-import {
-  berry,
-  LEAFEON,
-  mockBerrySetSimple,
-  mockIngredientSetSimple,
-  subskill,
-  uuid,
-  WIGGLYTUFF,
-  type PokemonInstanceExt
-} from 'sleepapi-common'
+import { berry, commonMocks, LEAFEON, subskill, uuid, WIGGLYTUFF, type PokemonInstanceExt } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -29,9 +19,7 @@ vi.mock('@/services/team/team-service', () => ({
   }
 }))
 
-beforeEach(() => {
-  setActivePinia(createPinia())
-})
+beforeEach(() => {})
 
 describe('Team Store', () => {
   const externalId = 'external-id'
@@ -85,11 +73,7 @@ describe('Team Store', () => {
   it('should populate teams correctly when user is logged in', async () => {
     const teamStore = useTeamStore()
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'token1',
-      expiryDate: 10,
-      refreshToken: 'token2'
-    })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     const pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
@@ -362,8 +346,7 @@ describe('Team Store', () => {
   it('deleteTeam shall call server to delete team if user logged in', () => {
     const teamStore = useTeamStore()
     const userStore = useUserStore()
-
-    userStore.setTokens({ accessToken: 'at', expiryDate: 0, refreshToken: 'rt' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     const team1: TeamInstance = {
       index: 0,
@@ -396,14 +379,10 @@ describe('duplicateMember', () => {
 
   it('should duplicate member to the first open slot', async () => {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
     const pokemonStore = usePokemonStore()
 
-    userStore.setTokens({
-      accessToken: 'token1',
-      expiryDate: 10,
-      refreshToken: 'token2'
-    })
+    const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     teamStore.teams = [
       {
         index: 0,
@@ -499,13 +478,9 @@ describe('duplicateMember', () => {
 describe('removeMember', () => {
   it('should remove member', async () => {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
 
-    userStore.setTokens({
-      accessToken: 'token1',
-      expiryDate: 10,
-      refreshToken: 'token2'
-    })
+    const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     const member2 = uuid.v4()
     const member4 = uuid.v4()
@@ -663,10 +638,9 @@ describe('updateSleep', () => {
 describe('updateFavoredBerries', () => {
   it('updateFavoredBerries shall update berries and call server', async () => {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
 
-    userStore.setTokens({ accessToken: 'at', expiryDate: 0, refreshToken: 'rt' })
-    await nextTick()
+    const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     teamStore.updateTeam = vi.fn()
 
@@ -679,10 +653,9 @@ describe('updateFavoredBerries', () => {
 describe('updateRecipeType', () => {
   it('updateRecipeType shall update the recipe type and call server', async () => {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
 
-    userStore.setTokens({ accessToken: 'at', expiryDate: 0, refreshToken: 'rt' })
-    await nextTick()
+    const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     teamStore.updateTeam = vi.fn()
 
@@ -962,14 +935,15 @@ describe('updateStockpile', () => {
     const teamStore = useTeamStore()
     const userStore = useUserStore()
 
-    userStore.setTokens({ accessToken: 'at', expiryDate: 0, refreshToken: 'rt' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+
     await nextTick()
 
     teamStore.updateTeam = vi.fn()
     teamStore.calculateProduction = vi.fn()
 
-    const ingredients = [mockIngredientSetSimple({ amount: 10 })]
-    const berries = [mockBerrySetSimple({ amount: 5 })]
+    const ingredients = [commonMocks.mockIngredientSetSimple({ amount: 10 })]
+    const berries = [commonMocks.mockBerrySetSimple({ amount: 5 })]
 
     await teamStore.updateStockpile({ ingredients, berries })
 
@@ -981,8 +955,8 @@ describe('updateStockpile', () => {
 
   it('should call calculateProduction after updating stockpile', async () => {
     const teamStore = useTeamStore()
-    const ingredients = [mockIngredientSetSimple({ amount: 10 })]
-    const berries = [mockBerrySetSimple({ amount: 5 })]
+    const ingredients = [commonMocks.mockIngredientSetSimple({ amount: 10 })]
+    const berries = [commonMocks.mockBerrySetSimple({ amount: 5 })]
 
     teamStore.calculateProduction = vi.fn()
 

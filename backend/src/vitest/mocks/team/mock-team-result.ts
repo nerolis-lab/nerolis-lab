@@ -1,4 +1,4 @@
-import { cookingResult } from '@src/bun/mocks/team/mock-cooking-result.js';
+import { cookingResult } from '@src/vitest/mocks/team/mock-cooking-result.js';
 import type { TeamResults } from 'sleepapi-common';
 
 export function teamResults(attrs?: Partial<TeamResults>): TeamResults {

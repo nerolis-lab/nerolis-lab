@@ -4,7 +4,6 @@ import { createMockTeamProduction } from '@/vitest'
 import { mockCookingResult } from '@/vitest/mocks/calculator/mock-cooking-result'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { curry, ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -13,7 +12,6 @@ describe('CookingResults', () => {
   let wrapper: VueWrapper<InstanceType<typeof CookingResults>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(CookingResults)
   })
 

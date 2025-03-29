@@ -1,26 +1,18 @@
-import serverAxios from '@/router/server-axios'
-import axios from 'axios'
-import type { LoginResponse, RefreshResponse } from 'sleepapi-common'
+import { useUserStore } from '@/stores/user-store'
+import { AuthProvider } from 'sleepapi-common'
+import type { CallbackTypes } from 'vue3-google-login'
 
-class GoogleServiceImpl {
-  public async login(authorization_code: string): Promise<LoginResponse> {
-    const response = await axios.post<LoginResponse>('/api/login/signup', {
-      authorization_code
-    })
+export type CodePopupResponse = CallbackTypes.CodePopupResponse
 
-    return response.data
-  }
-
-  public async refresh(refresh_token: string): Promise<RefreshResponse> {
-    const response = await axios.post<RefreshResponse>('/api/login/refresh', {
-      refresh_token
-    })
-
-    return response.data
-  }
-
-  public async delete() {
-    await serverAxios.delete('/user')
+export async function googleCallback(response: CodePopupResponse) {
+  const userStore = useUserStore()
+  const authCode = response.code
+  if (authCode) {
+    try {
+      await userStore.login(authCode, AuthProvider.Google)
+    } catch {
+      logger.error('Google login failed')
+      userStore.logout()
+    }
   }
 }
-export const GoogleService = new GoogleServiceImpl()

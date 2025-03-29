@@ -1,6 +1,6 @@
-import { mocks } from '@src/bun/index.js';
 import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import { mainskill } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 

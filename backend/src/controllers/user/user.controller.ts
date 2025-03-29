@@ -1,7 +1,6 @@
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import {
   deleteUser,
-  getUser,
   getUserSettings,
   updateUser,
   upsertUserSettings
@@ -16,20 +15,15 @@ import {
   getRecipeLevels,
   upsertRecipeLevel
 } from '@src/services/user-service/user-recipe-service/user-recipe-service.js';
-import type { IslandShortName, PokemonInstanceWithMeta, UpdateUserRequest } from 'sleepapi-common';
+import type { IslandShortName, PokemonInstanceWithMeta, UpdateUserRequest, UserHeader } from 'sleepapi-common';
 
 export default class UserController {
-  // User
-  public async getUser(user: DBUser) {
-    return getUser(user);
-  }
-
   public async updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {
     return updateUser(user, newSettings);
   }
 
-  public async getUserSettings(user: DBUser) {
-    return getUserSettings(user);
+  public async getUserSettings(user: DBUser, userHeader: UserHeader) {
+    return getUserSettings(user, userHeader);
   }
 
   public async upsertUserSettings(user: DBUser, potSize: number) {

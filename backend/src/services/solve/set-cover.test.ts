@@ -1,4 +1,3 @@
-import { mocks } from '@src/bun/index.js';
 import { SetCover } from '@src/services/solve/set-cover.js';
 import type {
   IngredientProducers,
@@ -7,8 +6,9 @@ import type {
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
 import type { RecipeSolutions, SubRecipeMeta } from '@src/services/solve/types/solution-types.js';
 import * as setCoverUtils from '@src/services/solve/utils/set-cover-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import type { IngredientIndexToIntAmount, IngredientSet } from 'sleepapi-common';
-import { ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
+import { commonMocks, ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import type { Mock } from 'vitest';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -25,10 +25,10 @@ describe('SetCover', () => {
 
   beforeEach(() => {
     mockedCornKeema = [
-      mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.WARMING_GINGER }),
-      mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.BEAN_SAUSAGE }),
-      mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN }),
-      mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.FIERY_HERB })
+      commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.WARMING_GINGER }),
+      commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.BEAN_SAUSAGE }),
+      commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN }),
+      commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.FIERY_HERB })
     ];
 
     recipeWithSpotsLeft = new Int16Array(ingredient.TOTAL_NUMBER_OF_INGREDIENTS + 1);
@@ -104,8 +104,8 @@ describe('SetCover', () => {
           ingredients: ingredientSetToIntFlat([])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.WARMING_GINGER }),
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.BEAN_SAUSAGE })
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.WARMING_GINGER }),
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.BEAN_SAUSAGE })
         ])
       });
       const dragonite: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -114,8 +114,8 @@ describe('SetCover', () => {
           ingredients: ingredientSetToIntFlat([])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.FIERY_HERB }),
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN })
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.FIERY_HERB }),
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN })
         ])
       });
       ingredientProducers = [tyranitar, dragonite];
@@ -185,11 +185,11 @@ Int16Array [
         pokemonSet: {
           pokemon: 'member1',
           ingredients: ingredientSetToIntFlat([
-            mocks.mockIngredientSet({ amount: 1, ingredient: ingredient.FANCY_APPLE })
+            commonMocks.mockIngredientSet({ amount: 1, ingredient: ingredient.FANCY_APPLE })
           ])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
+          commonMocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
         ])
       });
       ingredientProducers = [appleProducer];
@@ -225,11 +225,11 @@ Int16Array [
         pokemonSet: {
           pokemon: 'member1',
           ingredients: ingredientSetToIntFlat([
-            mocks.mockIngredientSet({ amount: 1, ingredient: ingredient.FANCY_APPLE })
+            commonMocks.mockIngredientSet({ amount: 1, ingredient: ingredient.FANCY_APPLE })
           ])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
+          commonMocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
         ])
       });
       ingredientProducers = [appleProducer];
@@ -273,8 +273,8 @@ Int16Array [
           ingredients: ingredientSetToIntFlat([])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.WARMING_GINGER }),
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.BEAN_SAUSAGE })
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.WARMING_GINGER }),
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.BEAN_SAUSAGE })
         ])
       });
       const dragonite: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -283,8 +283,8 @@ Int16Array [
           ingredients: ingredientSetToIntFlat([])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.FIERY_HERB }),
-          mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN })
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.FIERY_HERB }),
+          commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.GREENGRASS_CORN })
         ])
       });
 
@@ -346,11 +346,11 @@ Int16Array [
         pokemonSet: {
           pokemon: 'member1',
           ingredients: ingredientSetToIntFlat([
-            mocks.mockIngredientSet({ amount: 1, ingredient: ingredient.FANCY_APPLE })
+            commonMocks.mockIngredientSet({ amount: 1, ingredient: ingredient.FANCY_APPLE })
           ])
         },
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
+          commonMocks.mockIngredientSet({ amount: 5, ingredient: ingredient.FANCY_APPLE })
         ])
       });
       ingredientProducers = [appleProducer];

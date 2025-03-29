@@ -2,7 +2,6 @@ import CompareSlot from '@/components/compare/compare-slot.vue'
 import { createMockPokemon } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { subskill, type PokemonInstanceExt } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -16,8 +15,6 @@ describe('CompareSlot', () => {
   })
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     wrapper = mount(CompareSlot, {
       props: {
         pokemonInstance,

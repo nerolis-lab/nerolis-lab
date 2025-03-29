@@ -6,7 +6,6 @@ import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
 import { createMockPokemon } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import MockAdapter from 'axios-mock-adapter'
-import { createPinia, setActivePinia } from 'pinia'
 import {
   BULBASAUR,
   ingredient,
@@ -26,7 +25,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 let mockedServerAxios = new MockAdapter(serverAxios)
 
 beforeEach(async () => {
-  setActivePinia(createPinia())
   mockedServerAxios = new MockAdapter(serverAxios)
   uuid.v4 = vi.fn().mockReturnValue('0'.repeat(36))
 })

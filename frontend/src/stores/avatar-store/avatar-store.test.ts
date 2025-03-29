@@ -1,12 +1,7 @@
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
-import { createPinia, setActivePinia } from 'pinia'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 describe('Avatar Store', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   it('should initialize with empty avatars', () => {
     const store = useAvatarStore()
     expect(store.avatars).toEqual({})

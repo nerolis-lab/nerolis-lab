@@ -1,5 +1,4 @@
 import { FriendService } from '@/services/friend-service/friend-service'
-import { createPinia, setActivePinia } from 'pinia'
 import type { BaseUser } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useFriendStore } from './friend-store'
@@ -25,7 +24,6 @@ describe('useFriendStore', () => {
   ]
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     store = useFriendStore()
     vi.clearAllMocks()
   })
