@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "test": "vitest --run --coverage",
     "test-watch": "vitest --changed",
-    "type-check": "vue-tsc --build --force"
+    "type-check": "vue-tsc --build --force",
+    "type-watch": "vue-tsc --noEmit --watch"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",

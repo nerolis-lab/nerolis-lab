@@ -2,6 +2,8 @@ import { mocks } from '@src/bun/index.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { MealTimes } from 'sleepapi-common';
 import {
   dessert,
   emptyIngredientInventoryFloat,
@@ -12,6 +14,26 @@ import {
 import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
+  it('shall include provided meal times in results', () => {
+    const cookingState = new CookingState(
+      mocks.teamSettingsExt({ camp: true }),
+      defaultUserRecipes(),
+      createPreGeneratedRandom()
+    );
+
+    const mealTimes: MealTimes = {
+      breakfast: TimeUtils.parseTime('08:00'),
+      lunch: TimeUtils.parseTime('14:00'),
+      dinner: TimeUtils.parseTime('20:00')
+    };
+
+    cookingState.setMealTimes(mealTimes);
+
+    const result = cookingState.results(1);
+
+    expect(result.mealTimes).toEqual(mealTimes);
+  });
+
   it('shall cook the best recipe for which it has ingredients', () => {
     const cookingState = new CookingState(
       mocks.teamSettingsExt({ camp: true, potSize: MAX_POT_SIZE }),
@@ -28,6 +50,7 @@ describe('CookingState', () => {
     cookingState.cook(false);
 
     const result = cookingState.results(1);
+
     expect(result.dessert.cookedRecipes.map((r) => r.recipe.name)).toMatchInlineSnapshot(`
       [
         "FLOWER_GIFT_MACARONS",

@@ -2,6 +2,7 @@ import TeamResults from '@/components/calculator/results/team-results.vue'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { createMockMemberProductionExt, createMockPokemon, createMockTeamProduction } from '@/vitest'
+import { mockCookingResult } from '@/vitest/mocks/calculator/mock-cooking-result'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
@@ -36,7 +37,8 @@ describe('TeamResults', () => {
           },
           salad: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
           dessert: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
-          critInfo: createMockTeamProduction().team.cooking!.critInfo
+          critInfo: createMockTeamProduction().team.cooking!.critInfo,
+          mealTimes: mockCookingResult().mealTimes
         },
         berries: [],
         ingredients: []
@@ -66,7 +68,12 @@ describe('TeamResults', () => {
           },
           salad: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
           dessert: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
-          critInfo: createMockTeamProduction().team.cooking!.critInfo
+          critInfo: createMockTeamProduction().team.cooking!.critInfo,
+          mealTimes: {
+            breakfast: { hour: 8, minute: 0, second: 0 },
+            lunch: { hour: 12, minute: 0, second: 0 },
+            dinner: { hour: 18, minute: 0, second: 0 }
+          }
         },
         berries: [],
         ingredients: []

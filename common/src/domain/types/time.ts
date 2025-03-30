@@ -8,3 +8,9 @@ export interface TimePeriod {
   start: Time;
   end: Time;
 }
+
+export interface MealTimes {
+  breakfast?: Time;
+  lunch?: Time;
+  dinner?: Time;
+}

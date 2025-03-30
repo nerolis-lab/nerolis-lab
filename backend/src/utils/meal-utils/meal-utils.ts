@@ -1,6 +1,6 @@
 import { MealError } from '@src/domain/error/meal/meal-error.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { Recipe, Time, TimePeriod } from 'sleepapi-common';
+import type { MealTimes, Recipe, Time, TimePeriod } from 'sleepapi-common';
 import { RECIPES } from 'sleepapi-common';
 
 export function getMeal(name: string) {
@@ -32,68 +32,44 @@ export function getMealsForFilter(params: {
   return maxPotSize ? recipesWithBonus.filter((m) => m.nrOfIngredients <= maxPotSize) : recipesWithBonus;
 }
 
-export function getDefaultMealTimes(dayPeriod: TimePeriod): Time[] {
+export function getDefaultMealTimes(dayPeriod: TimePeriod): { meals: MealTimes; sorted: Time[] } {
   const breakfastWindow: TimePeriod = {
     start: TimeUtils.parseTime('04:00'),
-    end: TimeUtils.parseTime('11:59')
+    end: TimeUtils.parseTime('12:00')
   };
   const lunchWindow: TimePeriod = {
     start: TimeUtils.parseTime('12:00'),
-    end: TimeUtils.parseTime('17:59')
+    end: TimeUtils.parseTime('18:00')
   };
   const dinnerWindow: TimePeriod = {
     start: TimeUtils.parseTime('18:00'),
-    end: TimeUtils.parseTime('03:59')
+    end: TimeUtils.parseTime('04:00')
   };
 
   const mealTimes: Time[] = [];
 
-  if (
-    TimeUtils.timeWithinPeriod(breakfastWindow.start, dayPeriod) ||
-    TimeUtils.timeWithinPeriod(breakfastWindow.end, dayPeriod)
-  ) {
-    const beforeWindowEndOrBedtime = TimeUtils.isAfterOrEqualWithinPeriod({
-      currentTime: dayPeriod.end,
-      eventTime: breakfastWindow.end,
-      period: dayPeriod
-    })
-      ? breakfastWindow.end
-      : dayPeriod.end;
+  const latestBreakfastTime = TimeUtils.getLatestMinuteInOverlap(breakfastWindow, dayPeriod);
+  const latestLunchTime = TimeUtils.getLatestMinuteInOverlap(lunchWindow, dayPeriod);
+  const latestDinnerTime = TimeUtils.getLatestMinuteInOverlap(dinnerWindow, dayPeriod);
 
-    mealTimes.push(beforeWindowEndOrBedtime);
+  if (latestBreakfastTime) {
+    mealTimes.push(latestBreakfastTime);
+  }
+  if (latestLunchTime) {
+    mealTimes.push(latestLunchTime);
+  }
+  if (latestDinnerTime) {
+    mealTimes.push(latestDinnerTime);
   }
 
-  if (
-    TimeUtils.timeWithinPeriod(lunchWindow.start, dayPeriod) ||
-    TimeUtils.timeWithinPeriod(lunchWindow.end, dayPeriod)
-  ) {
-    const beforeWindowEndOrBedtime = TimeUtils.isAfterOrEqualWithinPeriod({
-      currentTime: dayPeriod.end,
-      eventTime: lunchWindow.end,
-      period: dayPeriod
-    })
-      ? lunchWindow.end
-      : dayPeriod.end;
-
-    mealTimes.push(beforeWindowEndOrBedtime);
-  }
-
-  if (
-    TimeUtils.timeWithinPeriod(dinnerWindow.start, dayPeriod) ||
-    TimeUtils.timeWithinPeriod(dinnerWindow.end, dayPeriod)
-  ) {
-    const beforeWindowEndOrBedtime = TimeUtils.isAfterOrEqualWithinPeriod({
-      currentTime: dayPeriod.end,
-      eventTime: dinnerWindow.end,
-      period: dayPeriod
-    })
-      ? dinnerWindow.end
-      : dayPeriod.end;
-
-    mealTimes.push(beforeWindowEndOrBedtime);
-  }
-
-  return mealTimes.sort((a, b) => TimeUtils.sortTimesForPeriod(a, b, dayPeriod));
+  return {
+    meals: {
+      breakfast: latestBreakfastTime,
+      lunch: latestLunchTime,
+      dinner: latestDinnerTime
+    },
+    sorted: mealTimes.sort((a, b) => TimeUtils.sortTimesForPeriod(a, b, dayPeriod))
+  };
 }
 
 export function getMealRecoveryAmount(currentEnergy: number) {

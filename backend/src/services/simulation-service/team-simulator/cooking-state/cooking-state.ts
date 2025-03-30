@@ -3,7 +3,13 @@ import type {
   UserRecipes
 } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import type { CookedRecipeResult, CookingResult, IngredientIndexToFloatAmount, TeamSettingsExt } from 'sleepapi-common';
+import type {
+  CookedRecipeResult,
+  CookingResult,
+  IngredientIndexToFloatAmount,
+  MealTimes,
+  TeamSettingsExt
+} from 'sleepapi-common';
 import { curry, dessert, emptyIngredientInventoryFloat, flatToIngredientSet, ingredient, salad } from 'sleepapi-common';
 
 interface CookedRecipe extends UserRecipeFlat {
@@ -28,6 +34,7 @@ export class CookingState {
   private totalWeekdayPotSize = 0;
   private rng: PreGeneratedRandom;
   private userPotSize: number;
+  private mealTimes: MealTimes = {};
 
   private userCurries: UserRecipeFlat[];
   private userSalads: UserRecipeFlat[];
@@ -77,6 +84,10 @@ export class CookingState {
       this.currentSaladInventory[i] += ingredients[i];
       this.currentDessertInventory[i] += ingredients[i];
     }
+  }
+
+  public setMealTimes(mealTimes: MealTimes) {
+    this.mealTimes = mealTimes;
   }
 
   public cook(sunday: boolean) {
@@ -295,7 +306,8 @@ export class CookingState {
           this.cookedCurries.length,
         averageCritChancePerCook: this.totalCritChance / this.cookedCurries.length,
         averageWeekdayPotSize: this.totalWeekdayPotSize / (this.cookedCurries.length * (6 / 7)) // only weekdays
-      }
+      },
+      mealTimes: this.mealTimes
     };
   }
 

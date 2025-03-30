@@ -169,28 +169,29 @@ describe('getMealsForFilter', () => {
 describe('getDefaultMealTimes', () => {
   it('shall return default meal times late in each window', () => {
     const mealTimes = getDefaultMealTimes(MOCKED_MAIN_SLEEP);
-    const prettifiedTimes = mealTimes.map((t) => TimeUtils.prettifyTime(t));
-    expect(prettifiedTimes).toMatchInlineSnapshot(`
-[
-  "11:59:00",
-  "17:59:00",
-  "21:30:00",
-]
-`);
+    expect(mealTimes).toEqual({
+      meals: {
+        breakfast: TimeUtils.parseTime('11:59'),
+        lunch: TimeUtils.parseTime('17:59'),
+        dinner: TimeUtils.parseTime('21:29')
+      },
+      sorted: [TimeUtils.parseTime('11:59'), TimeUtils.parseTime('17:59'), TimeUtils.parseTime('21:29')]
+    });
   });
 
-  it('shall skip dinner if we are sleeping', () => {
+  it('shall skip dinner if we go to sleep at dinner time', () => {
     const mealTimes = getDefaultMealTimes({
       start: TimeUtils.parseTime('06:00'),
-      end: TimeUtils.parseTime('17:00')
+      end: TimeUtils.parseTime('18:00')
     });
-    const prettifiedTimes = mealTimes.map((t) => TimeUtils.prettifyTime(t));
-    expect(prettifiedTimes).toMatchInlineSnapshot(`
-[
-  "11:59:00",
-  "17:00:00",
-]
-`);
+
+    expect(mealTimes).toEqual({
+      meals: {
+        breakfast: TimeUtils.parseTime('11:59'),
+        lunch: TimeUtils.parseTime('17:59')
+      },
+      sorted: [TimeUtils.parseTime('11:59'), TimeUtils.parseTime('17:59')]
+    });
   });
 
   it('shall work with night schedule', () => {
@@ -198,14 +199,14 @@ describe('getDefaultMealTimes', () => {
       start: TimeUtils.parseTime('17:00'),
       end: TimeUtils.parseTime('05:00')
     });
-    const prettifiedTimes = mealTimes.map((t) => TimeUtils.prettifyTime(t));
-    expect(prettifiedTimes).toMatchInlineSnapshot(`
-[
-  "17:59:00",
-  "03:59:00",
-  "05:00:00",
-]
-`);
+    expect(mealTimes).toEqual({
+      meals: {
+        breakfast: TimeUtils.parseTime('04:59'),
+        lunch: TimeUtils.parseTime('17:59'),
+        dinner: TimeUtils.parseTime('03:59')
+      },
+      sorted: [TimeUtils.parseTime('17:59'), TimeUtils.parseTime('03:59'), TimeUtils.parseTime('04:59')]
+    });
   });
 });
 

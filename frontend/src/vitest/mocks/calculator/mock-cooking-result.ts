@@ -52,6 +52,23 @@ export function mockCookingResult(attrs?: Partial<CookingResult>): CookingResult
       averageCritChancePerCook: 20,
       averageCritMultiplierPerCook: 1.2
     },
+    mealTimes: {
+      breakfast: {
+        hour: 8,
+        minute: 0,
+        second: 0
+      },
+      lunch: {
+        hour: 12,
+        minute: 0,
+        second: 0
+      },
+      dinner: {
+        hour: 18,
+        minute: 0,
+        second: 0
+      }
+    },
     ...attrs
   }
 }

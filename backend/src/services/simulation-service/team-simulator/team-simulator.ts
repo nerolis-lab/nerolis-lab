@@ -47,7 +47,7 @@ export class TeamSimulator {
   private dayPeriod: TimePeriod;
   private nightPeriod: TimePeriod;
   private nightStartMinutes: number;
-  private mealTimes: number[];
+  private mealTimeMinutesSinceStart: number[];
   private cookedMealsCounter = 0;
   private fullDayDuration = 1440;
   private energyDegradeCounter = -1; // -1 so it takes 3 iterations and first degrade is after 10 minutes, then 10 minutes between each
@@ -91,7 +91,10 @@ export class TeamSimulator {
     this.nightStartMinutes = TimeUtils.timeToMinutesSinceStart(this.nightPeriod.start, this.dayPeriod.start);
 
     const mealTimes = getDefaultMealTimes(dayPeriod);
-    this.mealTimes = mealTimes.map((time) => TimeUtils.timeToMinutesSinceStart(time, this.dayPeriod.start));
+    this.cookingState?.setMealTimes(mealTimes.meals);
+    this.mealTimeMinutesSinceStart = mealTimes.sorted.map((time) =>
+      TimeUtils.timeToMinutesSinceStart(time, this.dayPeriod.start)
+    );
 
     for (const member of members) {
       const memberState = new MemberState({
@@ -197,7 +200,7 @@ export class TeamSimulator {
   }
 
   private attemptCooking(currentMinutesSincePeriodStart: number) {
-    if (currentMinutesSincePeriodStart >= this.mealTimes[this.cookedMealsCounter]) {
+    if (currentMinutesSincePeriodStart >= this.mealTimeMinutesSinceStart[this.cookedMealsCounter]) {
       for (const member of this.memberStates) {
         member.updateIngredientBag();
         member.recoverMeal();

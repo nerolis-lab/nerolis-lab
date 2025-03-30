@@ -118,7 +118,7 @@ export function setupAndRunProductionSimulation(params: {
     erb: countErbUsers(erb, subskills)
   };
 
-  const mealTimes = getDefaultMealTimes(daySleepInfo.period);
+  const mealTimes = getDefaultMealTimes(daySleepInfo.period).sorted;
 
   const berriesPerDrop = calculateNrOfBerriesPerDrop(pokemonSet.pokemon.specialty, subskills);
   const sneakySnackBerries: BerrySet[] = [

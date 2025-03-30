@@ -12,7 +12,8 @@
     "test-watch": "vitest --changed",
     "compile": "bun x tsc --noEmit",
     "start": "npm run build && node ./dist/app.js",
-    "dev": "bun i && bun --watch src/app.ts"
+    "dev": "bun i && bun --watch src/app.ts",
+    "type-watch": "bun x tsc --noEmit --watch"
   },
   "files": ["dist"],
   "devDependencies": {

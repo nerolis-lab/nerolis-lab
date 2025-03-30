@@ -79,7 +79,12 @@ describe('CookingResults', () => {
             sundayStrength: 0,
             weeklyStrength: 0
           },
-          critInfo: createMockTeamProduction().team.cooking!.critInfo
+          critInfo: createMockTeamProduction().team.cooking!.critInfo,
+          mealTimes: {
+            breakfast: { hour: 8, minute: 0, second: 0 },
+            lunch: { hour: 12, minute: 0, second: 0 },
+            dinner: { hour: 18, minute: 0, second: 0 }
+          }
         }
       }
     })
