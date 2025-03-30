@@ -266,6 +266,125 @@ describe('timeWithinPeriod', () => {
   });
 });
 
+describe('time period overlap', () => {
+  const time = (str: string): Time => TimeUtils.parseTime(str);
+
+  const period = (start: string, end: string): TimePeriod => ({
+    start: time(start),
+    end: time(end)
+  });
+
+  describe('getTimePeriodOverlap', () => {
+    const eightToFour = period('08:00', '16:00');
+
+    const nineToFive = period('09:00', '17:00');
+
+    const afterWork = period('17:00', '23:00');
+
+    const justNight = period('23:00', '03:00');
+
+    const nightBeforeToNoon = period('23:00', '12:00');
+
+    const earlyMorning = period('00:00', '06:00');
+
+    const lateNight = period('22:00', '02:00');
+
+    const fullDay = period('00:00', '00:00');
+
+    it('should handle same-day overlap', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(eightToFour, nineToFive);
+
+      expect(overlap).toEqual([period('09:00', '16:00')]);
+    });
+
+    it('should handle no overlap', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(eightToFour, afterWork);
+
+      expect(overlap).toEqual([]);
+    });
+
+    it('should handle period crossing midnight with overlap after midnight', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(justNight, earlyMorning);
+
+      expect(overlap).toEqual([period('00:00', '03:00')]);
+    });
+
+    it('should handle period crossing midnight with overlap before midnight', () => {
+      const shortBeforeMidnight = period('21:00', '22:30');
+
+      const overlap = TimeUtils.getTimePeriodOverlap(shortBeforeMidnight, lateNight);
+      expect(overlap).toEqual([period('22:00', '22:30')]);
+    });
+
+    it('should handle both periods crossing midnight', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(justNight, lateNight);
+
+      expect(overlap).toEqual([period('23:00', '02:00')]);
+    });
+
+    it('should handle period spanning most of the day', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(nightBeforeToNoon, eightToFour);
+
+      expect(overlap).toEqual([period('08:00', '12:00')]);
+    });
+
+    it('should return same when periods match exactly', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(eightToFour, eightToFour);
+
+      expect(overlap).toEqual([eightToFour]);
+    });
+
+    it('should return smaller period when one period completely contains another', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(nightBeforeToNoon, justNight);
+
+      expect(overlap).toEqual([justNight]);
+    });
+
+    it('should return null when periods touch but do not overlap', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(nightBeforeToNoon, afterWork);
+      expect(overlap).toEqual([]);
+    });
+
+    it('should return the full second period when one is a 24-hour period', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(fullDay, eightToFour);
+      expect(overlap).toEqual([eightToFour]);
+    });
+
+    it('should return full day when both periods are 24 hours', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(fullDay, fullDay);
+      expect(overlap).toEqual([fullDay]);
+    });
+
+    it('should handle 24-hour period with second period overlapping midnight', () => {
+      const overlap = TimeUtils.getTimePeriodOverlap(fullDay, nightBeforeToNoon);
+
+      expect(overlap).toEqual([nightBeforeToNoon]);
+    });
+  });
+
+  describe('getLatestMinuteInOverlap', () => {
+    it('returns the latest full minute from a single overlap segment', () => {
+      const result = TimeUtils.getLatestMinuteInOverlap(period('10:00', '12:00'), period('11:00', '13:00'));
+      expect(result).toEqual(time('11:59'));
+    });
+
+    it('returns the latest full minute from a merged wraparound overlap', () => {
+      const result = TimeUtils.getLatestMinuteInOverlap(period('23:00', '03:00'), period('00:00', '02:00'));
+      expect(result).toEqual(time('01:59'));
+    });
+
+    it('returns undefined when there is no overlap', () => {
+      const result = TimeUtils.getLatestMinuteInOverlap(period('08:00', '10:00'), period('12:00', '14:00'));
+      expect(result).toBeUndefined();
+    });
+
+    it('floors the latest second to the start of the minute', () => {
+      const result = TimeUtils.getLatestMinuteInOverlap(period('09:00', '10:00'), period('09:00', '10:00'));
+      expect(result).toEqual(time('09:59'));
+    });
+  });
+});
+
 describe('TimeUtils.addTime', () => {
   it('adds times without overflow correctly', () => {
     const time1 = { hour: 10, minute: 20, second: 30 };

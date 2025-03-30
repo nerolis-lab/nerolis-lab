@@ -40,14 +40,14 @@ a.btn-link {
   margin: 0 5px;
 }
 
+a.btn-link:visited {
+  color: $berry-light;
+}
+
 a.btn-link:hover,
 a.btn-link:active {
   color: $berry;
   border-color: $berry;
-}
-
-a.btn-link:visited {
-  color: $berry-light;
 }
 
 a.btn-link::after {

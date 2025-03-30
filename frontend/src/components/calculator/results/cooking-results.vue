@@ -49,34 +49,65 @@
 
           <Divider />
 
+          <v-row v-if="mealTimes" class="flex-center" dense>
+            <v-col cols="12" class="flex-center">
+              <span class="text-h6 text-center"> Daily meal times </span>
+            </v-col>
+            <v-col v-for="meal in ['breakfast', 'lunch', 'dinner']" cols="12" class="meal-time">
+              <v-img
+                v-if="mealTimes[meal as keyof typeof mealTimes]"
+                src="/images/misc/pot.png"
+                width="20"
+                height="20"
+                contain
+              />
+              <v-img
+                v-if="!mealTimes[meal as keyof typeof mealTimes]"
+                src="/images/subskill/erb.png"
+                width="20"
+                height="20"
+                contain
+              />
+              {{ mealTimeText(meal, mealTimes[meal as keyof typeof mealTimes]) }}
+            </v-col>
+          </v-row>
+
+          <Divider />
+
           <v-row class="flex-center" dense>
             <v-col cols="12" class="flex-center">
-              <span class="text-h6"> Daily team ingredients </span>
+              <span class="text-h6 text-center"> Daily team ingredients </span>
             </v-col>
 
-            <v-col v-for="(ingredient, i) in teamIngredients" :key="i" class="flex-column flex-center" cols="2">
-              <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
-              {{ ingredient.amount }}
-            </v-col>
-
-            <template v-if="stockpiledIngredients.length > 0">
-              <v-col cols="12" class="flex-center">
-                <span class="text-h6"> Weekly starting ingredients </span>
-              </v-col>
-
-              <v-col v-for="(ingredient, i) in stockpiledIngredients" :key="i" class="flex-column flex-center" cols="2">
+            <v-col cols="12" class="flex-center ingredient-list">
+              <div v-for="(ingredient, i) in teamIngredients" :key="i" class="ingredient">
                 <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
                 {{ ingredient.amount }}
-              </v-col>
-            </template>
+              </div>
+            </v-col>
           </v-row>
+
+          <template v-if="stockpiledIngredients.length > 0">
+            <v-row class="flex-center" dense>
+              <v-col cols="12" class="flex-center">
+                <span class="text-h6 text-center"> Weekly starting ingredients </span>
+              </v-col>
+
+              <v-col cols="12" class="flex-center ingredient-list">
+                <div v-for="(ingredient, i) in stockpiledIngredients" :key="i" class="ingredient">
+                  <v-img :src="`${ingredient.image}`" width="30" height="30" contain />
+                  {{ ingredient.amount }}
+                </div>
+              </v-col>
+            </v-row>
+          </template>
 
           <v-row class="flex-center" dense>
             <v-col cols="12" class="w-100">
               <v-divider />
             </v-col>
             <v-col cols="12" class="flex-center py-3">
-              <span class="text-h6"> Split of recipes cooked </span>
+              <span class="text-h6 text-center"> Split of recipes cooked </span>
             </v-col>
           </v-row>
 
@@ -244,15 +275,18 @@ import { defineComponent } from 'vue'
 import Divider from '@/components/custom-components/divider/divider.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { getIsland } from '@/services/utils/island/island-utils'
+import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import {
   MathUtils,
+  capitalize,
   combineSameIngredientsInDrop,
   ingredient,
   type CookedRecipeResult,
-  type RecipeTypeResult
+  type RecipeTypeResult,
+  type Time
 } from 'sleepapi-common'
 
 export interface CookedRecipeResultDetails extends CookedRecipeResult {
@@ -283,6 +317,14 @@ export default defineComponent({
         return team.production?.team.cooking?.salad
       } else {
         return team.production?.team.cooking?.dessert
+      }
+    },
+    mealTimes() {
+      const mealTimes = this.teamStore.getCurrentTeam.production?.team.cooking?.mealTimes
+      return {
+        breakfast: mealTimes?.breakfast,
+        lunch: mealTimes?.lunch,
+        dinner: mealTimes?.dinner
       }
     },
     cookingStrength() {
@@ -394,6 +436,12 @@ export default defineComponent({
     round(num: number) {
       return MathUtils.round(num, 2)
     },
+    mealTimeText(mealName: string, time: Time | null | undefined) {
+      if (!time) {
+        return `You slept through ${mealName}!`
+      }
+      return `${capitalize(mealName)}: ${TimeUtils.prettifyTime(time).slice(0, 5)}`
+    },
     hasBeenSkipped(recipe: CookedRecipeResultDetails) {
       return recipe.potLimited.count > 0 || recipe.ingredientLimited.some((ing) => ing.count > 0)
     }
@@ -410,5 +458,38 @@ export default defineComponent({
 .expansion-panel:hover {
   background-color: rgba(0, 0, 0, 0.15);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.meal-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding-top: 0px;
+
+  .v-img {
+    flex-grow: 0;
+  }
+}
+
+.ingredient-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 75px;
+    flex-shrink: 0;
+    flex-grow: 1;
+    max-width: 110px;
+
+    @media (max-width: 600px) {
+      flex-basis: 50px;
+    }
+  }
 }
 </style>

@@ -3,6 +3,22 @@ import { MathUtils, type Time, type TimePeriod } from 'sleepapi-common';
 // TODO: can probably remove a lot in Sleep API 2.0import { MathUtils } from 'sleepapi-common';
 
 class TimeUtilsImpl {
+  private readonly SECONDS_IN_HOUR = 3600;
+  private readonly SECONDS_IN_MINUTE = 60;
+  private readonly SECONDS_IN_DAY = 24 * this.SECONDS_IN_HOUR;
+
+  private timeToSeconds(time: Time): number {
+    return time.hour * this.SECONDS_IN_HOUR + time.minute * this.SECONDS_IN_MINUTE + time.second;
+  }
+
+  public secondsToTime(seconds: number): Time {
+    const safeSeconds = seconds % this.SECONDS_IN_DAY; // wrap 86400 to 0
+    const s = Math.floor(safeSeconds % 60);
+    const m = Math.floor((safeSeconds / 60) % 60);
+    const h = Math.floor((safeSeconds / 3600) % 24);
+    return { hour: h, minute: m, second: s };
+  }
+
   public checkTimeout(params: { startTime: number; timeout: number }): boolean {
     const { startTime, timeout } = params;
     if (Date.now() - startTime >= timeout) {
@@ -67,22 +83,94 @@ class TimeUtilsImpl {
   }
 
   public timeWithinPeriod(time: Time, period: TimePeriod): boolean {
-    const SECONDS_IN_HOUR = 3600;
-    const SECONDS_IN_MINUTE = 60;
+    const timeInSeconds = this.timeToSeconds(time);
+    const startTimeInSeconds = this.timeToSeconds(period.start);
+    const endTimeInSeconds = this.timeToSeconds(period.end);
 
-    // Convert times to a comparable format (seconds since midnight)
-    const timeInSeconds = time.hour * SECONDS_IN_HOUR + time.minute * SECONDS_IN_MINUTE + time.second;
-    const startTimeInSeconds =
-      period.start.hour * SECONDS_IN_HOUR + period.start.minute * SECONDS_IN_MINUTE + period.start.second;
-    const endTimeInSeconds =
-      period.end.hour * SECONDS_IN_HOUR + period.end.minute * SECONDS_IN_MINUTE + period.end.second;
-
-    // Handle period spanning over midnight
     if (startTimeInSeconds <= endTimeInSeconds) {
       return timeInSeconds >= startTimeInSeconds && timeInSeconds <= endTimeInSeconds;
     } else {
       return timeInSeconds >= startTimeInSeconds || timeInSeconds <= endTimeInSeconds;
     }
+  }
+
+  public getTimePeriodOverlap(a: TimePeriod, b: TimePeriod): TimePeriod[] {
+    const aStartSec = this.timeToSeconds(a.start);
+    const aEndSec = this.timeToSeconds(a.end);
+    const bStartSec = this.timeToSeconds(b.start);
+    const bEndSec = this.timeToSeconds(b.end);
+
+    const aSegmentsInSeconds = this.splitTimePeriodAcrossMidnight(aStartSec, aEndSec);
+    const bSegmentsInSeconds = this.splitTimePeriodAcrossMidnight(bStartSec, bEndSec);
+
+    let overlaps: [number, number][] = [];
+
+    for (const [aStart, aEnd] of aSegmentsInSeconds) {
+      for (const [bStart, bEnd] of bSegmentsInSeconds) {
+        const start = Math.max(aStart, bStart);
+        const end = Math.min(aEnd, bEnd);
+        if (start < end) {
+          overlaps.push([start, end]);
+        }
+      }
+    }
+
+    overlaps = this.mergeContiguousTimePeriods(overlaps);
+
+    return overlaps.map(([start, end]) => ({
+      start: this.secondsToTime(start),
+      end: this.secondsToTime(end)
+    }));
+  }
+
+  private mergeContiguousTimePeriods(periods: [number, number][]): [number, number][] {
+    if (periods.length <= 1) return periods;
+
+    const sorted = [...periods].sort((a, b) => a[0] - b[0]);
+    const merged: [number, number][] = [];
+
+    let [start, end] = sorted[0];
+
+    for (let i = 1; i < sorted.length; i++) {
+      const [nextStart, nextEnd] = sorted[i];
+
+      if (end === nextStart) {
+        end = nextEnd;
+      } else {
+        merged.push([start, end]);
+        start = nextStart;
+        end = nextEnd;
+      }
+    }
+
+    merged.push([start, end]);
+
+    // wraparound if one ends at 86400 and the next starts at 0
+    const wrapsAround = merged.length > 1 && merged[merged.length - 1][1] === this.SECONDS_IN_DAY && merged[0][0] === 0;
+
+    if (wrapsAround) {
+      const wrapMerged: [number, number] = [
+        merged[merged.length - 1][0], // last segment start
+        merged[0][1] // first segment end
+      ];
+
+      return [wrapMerged, ...merged.slice(1, -1)];
+    }
+
+    return merged;
+  }
+
+  public getLatestMinuteInOverlap(a: TimePeriod, b: TimePeriod): Time | undefined {
+    const overlaps = this.getTimePeriodOverlap(a, b);
+
+    if (overlaps.length === 0) return undefined;
+
+    const latestSecond = Math.max(...overlaps.map((period) => this.timeToSeconds(period.end))) - 1;
+
+    return {
+      ...this.secondsToTime(latestSecond),
+      second: 0
+    };
   }
 
   public sortTimesForPeriod(time1: Time, time2: Time, period: TimePeriod): number {
@@ -200,19 +288,6 @@ class TimeUtilsImpl {
     return periods;
   }
 
-  public secondsToTime(seconds: number): Time {
-    const hours = Math.floor(seconds / 3600);
-    seconds %= 3600;
-    const minutes = Math.floor(seconds / 60);
-    seconds %= 60;
-
-    return {
-      hour: hours,
-      minute: minutes,
-      second: seconds
-    };
-  }
-
   public parseTime(time: string): Time {
     const [hour, minute] = time.split(':').map((t) => +t);
     return {
@@ -232,6 +307,20 @@ class TimeUtilsImpl {
 
   public getMySQLNow() {
     return new Date().toISOString().slice(0, 19).replace('T', ' ');
+  }
+
+  private splitTimePeriodAcrossMidnight(startSec: number, endSec: number): [number, number][] {
+    // treat equal start and end as full 24-hour period
+    if (startSec === endSec) {
+      return [[0, this.SECONDS_IN_DAY]];
+    }
+
+    return startSec < endSec
+      ? [[startSec, endSec]]
+      : [
+          [startSec, this.SECONDS_IN_DAY],
+          [0, endSec]
+        ];
   }
 }
 

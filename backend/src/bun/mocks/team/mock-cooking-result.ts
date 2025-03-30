@@ -10,6 +10,7 @@ export function cookingResult(attrs?: Partial<CookingResult>): CookingResult {
       averageCritMultiplierPerCook: 0,
       averageWeekdayPotSize: 0
     },
+    mealTimes: {},
     ...attrs
   };
 }

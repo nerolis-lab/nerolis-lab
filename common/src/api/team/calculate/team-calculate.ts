@@ -3,6 +3,7 @@ import type {
   IngredientIndexToFloatAmount,
   IngredientSet,
   MainskillUnit,
+  MealTimes,
   PokemonInstance,
   PokemonWithIngredientsIndexed,
   TeamMemberExt,
@@ -111,6 +112,7 @@ export interface CookingResult {
     averageCritChancePerCook: number;
     averageWeekdayPotSize: number;
   };
+  mealTimes: MealTimes;
 }
 
 export interface CalculateTeamResponse {
