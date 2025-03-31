@@ -1,5 +1,6 @@
 import { BERRIES, TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
 import type { Berry, BerrySet } from '../../domain/berry/berry';
+import type { Pokemon } from '../../domain/pokemon/pokemon';
 import { MathUtils } from '../math-utils/math-utils';
 
 export const BERRY_ID_LOOKUP: Record<string, number> = Object.fromEntries(
@@ -61,4 +62,19 @@ export function emptyBerryInventory(): BerrySet[] {
 // TODO: remove in Sleep api 2?
 export function prettifyBerries(berries: BerrySet[], separator = ', '): string {
   return berries.map(({ amount, berry }) => `${MathUtils.round(amount, 1)} ${berry.name}`).join(separator);
+}
+
+export function uniqueMembersWithBerry(params: { berry: Berry; members: Pokemon[] }) {
+  const { berry, members } = params;
+  const { count } = members.reduce(
+    (accumulator, cur) => {
+      if (cur.berry.name === berry.name && !accumulator.names.has(cur.name)) {
+        accumulator.names.add(cur.name);
+        accumulator.count += 1;
+      }
+      return accumulator;
+    },
+    { count: 0, names: new Set<string>() }
+  );
+  return count;
 }

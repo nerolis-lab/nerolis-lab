@@ -46,7 +46,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils, compactNumber, mainskill } from 'sleepapi-common'
+import { MathUtils, compactNumber, mainskill, uniqueMembersWithBerry } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -64,22 +64,12 @@ export default defineComponent({
   },
   computed: {
     skillValuePerProc() {
-      const { count } = this.teamStore.getCurrentTeam.members.reduce(
-        (accumulator, cur) => {
-          if (cur) {
-            const memberPokemon = this.pokemonStore.getPokemon(cur)?.pokemon
-            if (
-              memberPokemon?.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
-              !accumulator.names.has(memberPokemon.name)
-            ) {
-              accumulator.names.add(memberPokemon.name)
-              accumulator.count += 1
-            }
-          }
-          return accumulator
-        },
-        { count: 0, names: new Set<string>() }
-      )
+      const count = uniqueMembersWithBerry({
+        berry: this.memberWithProduction.member.pokemon.berry,
+        members: this.teamStore.getCurrentTeam.members
+          .filter(Boolean)
+          .map((member) => this.pokemonStore.getPokemon(member!)!.pokemon)
+      })
       const uniqueHelps =
         mainskill.HELPER_BOOST_UNIQUE_BOOST_TABLE[count - 1][this.memberWithProduction.member.skillLevel - 1]
       return (

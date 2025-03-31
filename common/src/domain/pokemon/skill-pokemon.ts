@@ -20,6 +20,7 @@ import {
 } from '../berry/berries';
 import {
   BALANCED_GENDER,
+  FEMALE_ONLY,
   GENDER_UNKNOWN,
   MALE_ONLY,
   SEVEN_EIGHTHS_MALE,
@@ -57,6 +58,7 @@ import {
   DREAM_SHARD_MAGNET_S_RANGE,
   ENERGIZING_CHEER_S,
   ENERGY_FOR_EVERYONE,
+  ENERGY_FOR_EVERYONE_LUNAR_BLESSING,
   EXTRA_HELPFUL_S,
   HELPER_BOOST,
   INGREDIENT_MAGNET_S,
@@ -933,6 +935,32 @@ export const GALLADE: Pokemon = {
   skill: EXTRA_HELPFUL_S
 };
 
+export const CRESSELIA: Pokemon = {
+  name: 'CRESSELIA',
+  displayName: 'Cresselia',
+  pokedexNumber: 488,
+  specialty: 'skill',
+  frequency: toSeconds(0, 38, 20),
+  ingredientPercentage: 23.9,
+  skillPercentage: 4.1,
+  berry: MAGO,
+  genders: FEMALE_ONLY,
+  carrySize: 22,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredient0: { amount: 1, ingredient: WARMING_GINGER },
+  ingredient30: [
+    { amount: 2, ingredient: WARMING_GINGER },
+    { amount: 2, ingredient: SOOTHING_CACAO }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: WARMING_GINGER },
+    { amount: 3, ingredient: SOOTHING_CACAO },
+    { amount: 4, ingredient: SNOOZY_TOMATO }
+  ],
+  skill: ENERGY_FOR_EVERYONE_LUNAR_BLESSING
+};
+
 export const RUFFLET: Pokemon = {
   name: 'RUFFLET',
   displayName: 'Rufflet',
@@ -1112,6 +1140,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   LEAFEON,
   GLACEON,
   GALLADE,
+  CRESSELIA,
   BRAVIARY,
   SYLVEON,
   DEDENNE,

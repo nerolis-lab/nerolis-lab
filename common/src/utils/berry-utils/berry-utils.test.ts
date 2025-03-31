@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Berry, BerrySet } from '../../domain/berry';
 import { BELUE, BERRIES, ORAN, TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
+import { commonMocks } from '../../vitest';
 import {
   berryPowerForLevel,
   berrySetToFlat,
@@ -9,7 +10,8 @@ import {
   getBerry,
   multiplyBerries,
   prettifyBerries,
-  roundBerries
+  roundBerries,
+  uniqueMembersWithBerry
 } from './berry-utils';
 
 const testBerry: Berry = { name: 'Oran', value: 10, type: 'water' };
@@ -131,5 +133,26 @@ describe('getBerry', () => {
 
   it('throws an error for an invalid berry name', () => {
     expect(() => getBerry('InvalidBerry')).toThrow('Berry InvalidBerry not found');
+  });
+});
+
+describe('uniqueMembersWithBerry', () => {
+  it('shall support all duplicates', () => {
+    const member = commonMocks.mockPokemon({ berry: BELUE });
+    expect(uniqueMembersWithBerry({ berry: BELUE, members: [member, member, member] })).toBe(1);
+  });
+
+  it('shall count unique members', () => {
+    const member1 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 1' });
+    const member2 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 2' });
+    const member3 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 3' });
+    expect(uniqueMembersWithBerry({ berry: BELUE, members: [member1, member2, member3] })).toBe(3);
+  });
+
+  it('shall ignore any duplicates', () => {
+    const member1 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 1' });
+    const member2 = commonMocks.mockPokemon({ berry: ORAN, name: 'Member 2' });
+    const member3 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 3' });
+    expect(uniqueMembersWithBerry({ berry: BELUE, members: [member1, member2, member3, member1, member2] })).toBe(2);
   });
 });

@@ -221,6 +221,7 @@ export class TeamSimulator {
     }
   }
 
+  // TODO: we probably can't rely on isUnit much longer, now what Cresselia introduced mixed units. We need to TeamSkillActivation to include the unit and multiple units per activation
   private activateTeamSkill(result: TeamSkillActivation, invoker: MemberState) {
     if (result.teamValue) {
       if (result.skill.isUnit('helps')) {

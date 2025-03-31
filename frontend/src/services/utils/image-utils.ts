@@ -16,7 +16,8 @@ export function mainskillImage(pokemon: Pokemon) {
   if (pokemon.skill.isSameOrModifiedVersion(mainskill.HELPER_BOOST)) {
     return `/images/type/${pokemon.berry.type}.png`
   } else {
-    const maybeModifier = pokemon.skill.modifier.type === 'Base' ? '' : `${pokemon.skill.modifier.type.toLowerCase()}_`
+    const maybeModifier =
+      pokemon.skill.modifier.type === 'Base' ? '' : `${pokemon.skill.modifier.type.replace(/ /g, '_').toLowerCase()}_`
     return `/images/mainskill/${maybeModifier}${pokemon.skill.unit}.png`
   }
 }

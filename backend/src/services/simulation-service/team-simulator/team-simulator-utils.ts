@@ -1,5 +1,5 @@
 import { calculateHelpSpeedBeforeEnergy } from '@src/services/calculator/help/help-calculator.js';
-import type { Berry, ProduceFlat, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import type { ProduceFlat, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   berrySetToFlat,
   calculateAveragePokemonIngredientSet,
@@ -71,24 +71,6 @@ class TeamSimulatorUtilsImpl {
         count++;
       }
     }
-    return count;
-  }
-
-  public uniqueMembersWithBerry(params: { berry: Berry; members: TeamMemberExt[] }) {
-    const { berry, members } = params;
-    const { count } = members.reduce(
-      (accumulator, cur) => {
-        if (
-          cur.pokemonWithIngredients.pokemon.berry.name === berry.name &&
-          !accumulator.names.has(cur.pokemonWithIngredients.pokemon.name)
-        ) {
-          accumulator.names.add(cur.pokemonWithIngredients.pokemon.name);
-          accumulator.count += 1;
-        }
-        return accumulator;
-      },
-      { count: 0, names: new Set<string>() }
-    );
     return count;
   }
 }
