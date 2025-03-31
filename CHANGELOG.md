@@ -1,3 +1,10 @@
+# [1.44.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.43.1...v1.44.0) (2025-03-31)
+
+
+### Features
+
+* adds Cresselia and Lunar Blessing ([bc97937](https://github.com/nerolis-lab/nerolis-lab/commit/bc97937c30223c0dffa1e1629ea79fb48f2e5390))
+
 ## [1.43.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.43.0...v1.43.1) (2025-03-31)
 
 
