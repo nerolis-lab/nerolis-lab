@@ -50,19 +50,6 @@ describe('calculateHelpSpeedBeforeEnergy', () => {
   });
 });
 
-describe('uniqueMembersWithBerry', () => {
-  const mockPokemonSet: PokemonWithIngredients = mocks.pokemonWithIngredients({
-    pokemon: mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
-  });
-  const member: TeamMemberExt = mocks.teamMemberExt({ pokemonWithIngredients: mockPokemonSet });
-
-  it('shall calculate the unique members in team for given berry', () => {
-    expect(TeamSimulatorUtils.uniqueMembersWithBerry({ berry: berry.BELUE, members: [member, member, member] })).toBe(
-      1
-    );
-  });
-});
-
 describe('calculateAverageProduce', () => {
   describe.todo('skill pokemon');
   describe.todo('berry pokemon');

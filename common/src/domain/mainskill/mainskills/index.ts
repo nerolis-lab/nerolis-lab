@@ -9,6 +9,7 @@ export * from './cooking-power-up-s';
 export * from './dream-shard-magnet-s';
 export * from './energizing-cheer-s';
 export * from './energy-for-everyone';
+export * from './energy-for-everyone-lunar-blessing';
 export * from './extra-helpful-s';
 export * from './helper-boost';
 export * from './ingredient-magnet-s';

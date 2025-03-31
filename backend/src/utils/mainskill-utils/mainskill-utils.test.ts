@@ -6,30 +6,31 @@ import { describe, expect, it } from 'vitest';
 describe('getMainskillNames', () => {
   it('shall get all mainskill names', () => {
     expect(getMainskillNames()).toMatchInlineSnapshot(`
-[
-  "Berry Burst",
-  "Disguise (Berry Burst)",
-  "Charge Energy S",
-  "Moonlight (Charge Energy S)",
-  "Charge Strength M",
-  "Charge Strength S",
-  "Charge Strength S Range",
-  "Stockpile (Charge Strength S)",
-  "Cooking Power-up S",
-  "Dream Shard Magnet S",
-  "Dream Shard Magnet S Range",
-  "Energizing Cheer S",
-  "Energy For Everyone",
-  "Extra Helpful S",
-  "Helper Boost",
-  "Ingredient Magnet S",
-  "Metronome",
-  "Skill Copy",
-  "Mimic (Skill Copy)",
-  "Transform (Skill Copy)",
-  "Tasty Chance S",
-]
-`);
+      [
+        "Berry Burst",
+        "Disguise (Berry Burst)",
+        "Charge Energy S",
+        "Moonlight (Charge Energy S)",
+        "Charge Strength M",
+        "Charge Strength S",
+        "Charge Strength S Range",
+        "Stockpile (Charge Strength S)",
+        "Cooking Power-up S",
+        "Dream Shard Magnet S",
+        "Dream Shard Magnet S Range",
+        "Energizing Cheer S",
+        "Energy For Everyone",
+        "Lunar Blessing (Energy For Everyone)",
+        "Extra Helpful S",
+        "Helper Boost",
+        "Ingredient Magnet S",
+        "Metronome",
+        "Skill Copy",
+        "Mimic (Skill Copy)",
+        "Transform (Skill Copy)",
+        "Tasty Chance S",
+      ]
+    `);
   });
 });
 

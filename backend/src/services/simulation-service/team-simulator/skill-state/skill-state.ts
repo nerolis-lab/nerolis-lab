@@ -15,6 +15,7 @@ import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-s
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
 import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
+import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
@@ -71,6 +72,7 @@ export class SkillState {
       [mainskill.DREAM_SHARD_MAGNET_S_RANGE, new DreamShardMagnetSRangeEffect()],
       [mainskill.ENERGIZING_CHEER_S, new EnergizingCheerSEffect()],
       [mainskill.ENERGY_FOR_EVERYONE, new EnergyForEveryoneEffect()],
+      [mainskill.ENERGY_FOR_EVERYONE_LUNAR_BLESSING, new EnergyForEveryoneLunarBlessingEffect()],
       [mainskill.EXTRA_HELPFUL_S, new ExtraHelpfulSEffect()],
       [mainskill.HELPER_BOOST, new HelperBoostEffect()],
       [mainskill.INGREDIENT_MAGNET_S, new IngredientMagnetSEffect()],
@@ -166,6 +168,7 @@ export class SkillState {
     const teamRegular = defaultZero(activation.teamValue?.regular);
     const teamCrit = defaultZero(activation.teamValue?.crit);
 
+    // only add self value directly, team value is added after team feedback in addValue
     this.regularValue += selfRegular;
     this.critValue += selfCrit;
 
