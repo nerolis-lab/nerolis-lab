@@ -1,3 +1,10 @@
+## [1.43.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.43.0...v1.43.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* meals being skipped if only awake for middle of meal window ([ed073ef](https://github.com/nerolis-lab/nerolis-lab/commit/ed073ef628437537f390e57ae0d4b532f71eec12))
+
 # [1.43.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.42.3...v1.43.0) (2025-03-26)
 
 
