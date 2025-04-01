@@ -15,39 +15,32 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="mx-2 justify-space-between">
-      <v-col v-for="islandData in islandBonusData" :key="islandData.shortName" :cols="isMobile ? '12' : '5'">
-        <v-row dense class="flex-center">
-          <v-col cols="auto">
-            <v-avatar size="54" class="mr-2">
-              <v-img :src="islandImage({ island: islandData.island })" />
-            </v-avatar>
-          </v-col>
+    <v-row dense class="mx-2 justify-space-around">
+      <div class="area-and-bonus" v-for="islandData in islandBonusData">
+        <v-avatar size="54" class="mr-2 area-image">
+          <v-img :src="islandImage({ island: islandData.island })" />
+        </v-avatar>
 
-          <v-col>
-            <span class="mr-2">{{ islandData.island.name }}</span>
-          </v-col>
+        <div class="mr-2 area-name">{{ islandData.island.name }}</div>
 
-          <v-col cols="auto">
-            <NumberInput
-              density="default"
-              v-model="userStore.areaBonus[islandData.shortName]"
-              :disabled="!isLoggedIn"
-              :rules="[rules.minBonusRule, rules.maxBonusRule]"
-              :min="0"
-              :max="MAX_ISLAND_BONUS"
-              :loading="loadingStates[islandData.shortName]"
-              append-icon=""
-              suffix="%"
-              @update-number="updateAreaBonus(islandData.shortName)"
-            >
-              <template #label>
-                <span>Bonus</span>
-              </template>
-            </NumberInput>
-          </v-col>
-        </v-row>
-      </v-col>
+        <NumberInput
+          class="area-bonus-input"
+          density="default"
+          v-model="userStore.areaBonus[islandData.shortName]"
+          :disabled="!isLoggedIn"
+          :rules="[rules.minBonusRule, rules.maxBonusRule]"
+          :min="0"
+          :max="MAX_ISLAND_BONUS"
+          :loading="loadingStates[islandData.shortName]"
+          append-icon=""
+          suffix="%"
+          @update-number="updateAreaBonus(islandData.shortName)"
+        >
+          <template #label>
+            <span>Bonus</span>
+          </template>
+        </NumberInput>
+      </div>
     </v-row>
 
     <v-row class="mt-4">
@@ -62,7 +55,7 @@
 
     <v-row dense>
       <v-col cols="12" class="flex-center">
-        <span>Set your recipe level: </span>
+        <span>Set your recipe levels: </span>
         <a class="btn-link" href="/recipes">Recipes</a>
       </v-col>
     </v-row>
@@ -202,5 +195,26 @@ function setPotSize(size: number) {
 <style lang="scss" scoped>
 .pot-size-input {
   max-width: 100px;
+}
+
+.area-and-bonus {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: 400px;
+
+  @media (max-width: 340px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .area-name {
+    flex: 1 1 auto;
+  }
+
+  .area-bonus-input {
+    flex: 0 0 auto;
+  }
 }
 </style>
