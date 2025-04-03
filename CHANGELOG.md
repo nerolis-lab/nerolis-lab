@@ -1,3 +1,10 @@
+## [1.44.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.44.1...v1.44.2) (2025-04-03)
+
+
+### Bug Fixes
+
+* replace cached sleep score with store value ([cddaf54](https://github.com/nerolis-lab/nerolis-lab/commit/cddaf54a0c5cfeb21f1214a35c70b08d96513a38))
+
 ## [1.44.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.44.0...v1.44.1) (2025-04-03)
 
 
