@@ -1,3 +1,10 @@
+## [1.44.1](https://github.com/nerolis-lab/nerolis-lab/compare/v1.44.0...v1.44.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* area bonus settings layout scaling for all screen sizes ([be3af6b](https://github.com/nerolis-lab/nerolis-lab/commit/be3af6befe4b1a933e28f574805542f492afc8be))
+
 # [1.44.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.43.1...v1.44.0) (2025-03-31)
 
 
