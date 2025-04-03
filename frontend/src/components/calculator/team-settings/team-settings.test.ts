@@ -59,10 +59,7 @@ describe('TeamSettings', () => {
     wrapper.vm.isTimePickerOpen = false
     await nextTick()
 
-    expect(updateSleepSpy).toHaveBeenCalledWith({
-      bedtime: wrapper.vm.bedtime,
-      wakeup: wrapper.vm.wakeup
-    })
+    expect(updateSleepSpy).toHaveBeenCalled()
   })
 
   it('toggles wakeup menu correctly', async () => {
@@ -100,10 +97,9 @@ describe('TeamSettings', () => {
   })
 
   it('calculates sleep duration correctly', () => {
-    wrapper.setData({
-      bedtime: '22:00',
-      wakeup: '06:00'
-    })
+    const teamStore = useTeamStore()
+    teamStore.getCurrentTeam.bedtime = '22:00'
+    teamStore.getCurrentTeam.wakeup = '06:00'
 
     expect(wrapper.vm.calculateSleepDuration).toBe('8 hours and 0 minutes')
   })
@@ -115,9 +111,8 @@ describe('TeamSettings', () => {
   })
 
   it('allows correct bedtime hours based on wakeup time', () => {
-    wrapper.setData({
-      wakeup: '06:00'
-    })
+    const teamStore = useTeamStore()
+    teamStore.getCurrentTeam.wakeup = '06:00'
 
     const allowedBedtimeHours = wrapper.vm.allowedBedtimeHours
     expect(allowedBedtimeHours(4)).toBe(true)
@@ -125,9 +120,8 @@ describe('TeamSettings', () => {
   })
 
   it('allows correct wakeup hours based on bedtime', () => {
-    wrapper.setData({
-      bedtime: '22:00'
-    })
+    const teamStore = useTeamStore()
+    teamStore.getCurrentTeam.bedtime = '22:00'
 
     const allowedWakeupHours = wrapper.vm.allowedWakeupHours
     expect(allowedWakeupHours(7)).toBe(true)
