@@ -650,7 +650,9 @@ describe('updateSleep', () => {
     teamStore.updateTeam = vi.fn()
     teamStore.calculateProduction = vi.fn()
 
-    await teamStore.updateSleep({ bedtime: '23:00', wakeup: '07:00' })
+    teamStore.getCurrentTeam.bedtime = '23:00'
+    teamStore.getCurrentTeam.wakeup = '07:00'
+    await teamStore.updateSleep()
     expect(teamStore.getCurrentTeam.bedtime).toEqual('23:00')
     expect(teamStore.getCurrentTeam.wakeup).toEqual('07:00')
 

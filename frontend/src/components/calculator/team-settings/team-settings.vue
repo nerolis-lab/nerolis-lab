@@ -211,14 +211,18 @@ export default defineComponent({
     isTimePickerOpen: false,
     isWakeupOpen: false,
     isBedtimeOpen: false,
-    wakeup: '06:00',
-    bedtime: '21:30',
     updatedWakeup: null,
     updatedBedtime: null
   }),
   computed: {
     camp() {
       return this.teamStore.getCurrentTeam.camp
+    },
+    bedtime() {
+      return this.teamStore.getCurrentTeam.bedtime
+    },
+    wakeup() {
+      return this.teamStore.getCurrentTeam.wakeup
     },
     calculateSleepDuration(): string {
       const [bedHour, bedMinute] = this.bedtime.split(':').map(Number)
@@ -248,13 +252,11 @@ export default defineComponent({
   },
   watch: {
     isTimePickerOpen(newValue) {
+      // only update server when the menu is closed
       if (newValue === false) {
-        this.updateSleep()
+        this.teamStore.updateSleep()
       }
     }
-  },
-  mounted() {
-    ;(this.bedtime = this.teamStore.getCurrentTeam.bedtime), (this.wakeup = this.teamStore.getCurrentTeam.wakeup)
   },
   methods: {
     async toggleCamp() {
@@ -281,19 +283,16 @@ export default defineComponent({
     toggleWakeupMenu() {
       this.isWakeupOpen = !this.isWakeupOpen
       if (this.updatedWakeup) {
-        this.wakeup = this.updatedWakeup
+        this.teamStore.getCurrentTeam.wakeup = this.updatedWakeup
         this.updatedWakeup = null
       }
     },
     toggleBedtimeMenu() {
       this.isBedtimeOpen = !this.isBedtimeOpen
       if (this.updatedBedtime) {
-        this.bedtime = this.updatedBedtime
+        this.teamStore.getCurrentTeam.bedtime = this.updatedBedtime
         this.updatedBedtime = null
       }
-    },
-    async updateSleep() {
-      await this.teamStore.updateSleep({ bedtime: this.bedtime, wakeup: this.wakeup })
     },
     async updateStockpile(params: { ingredients: IngredientSetSimple[]; berries: BerrySetSimple[] }) {
       await this.teamStore.updateStockpile(params)
@@ -306,8 +305,8 @@ export default defineComponent({
       return Math.abs(hour - wakeupHour) > 1
     },
     allowedWakeupHours(hour: number) {
-      const wakeupHour = +this.bedtime.split(':')[0]
-      return Math.abs(hour - wakeupHour) > 1
+      const bedtimeHour = +this.bedtime.split(':')[0]
+      return Math.abs(hour - bedtimeHour) > 1
     },
     updateFavoredBerries(berries: Berry[]) {
       this.teamStore.updateFavoredBerries(berries)

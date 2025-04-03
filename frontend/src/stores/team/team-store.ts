@@ -425,11 +425,7 @@ export const useTeamStore = defineStore('team', {
       this.updateTeam()
       await this.calculateProduction(this.currentIndex)
     },
-    async updateSleep(params: { bedtime: string; wakeup: string }) {
-      const { bedtime, wakeup } = params
-      this.getCurrentTeam.bedtime = bedtime
-      this.getCurrentTeam.wakeup = wakeup
-
+    async updateSleep() {
       this.updateTeam()
       await this.calculateProduction(this.currentIndex)
       this.resetCurrentTeamIvs() // reset after production is available
