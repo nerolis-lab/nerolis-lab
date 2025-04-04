@@ -1,3 +1,10 @@
+# [1.45.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.44.2...v1.45.0) (2025-04-04)
+
+
+### Features
+
+* adds support for dev database ([788b4ec](https://github.com/nerolis-lab/nerolis-lab/commit/788b4ec5ac33b01c1f0f19f7874e7a2e0992d991))
+
 ## [1.44.2](https://github.com/nerolis-lab/nerolis-lab/compare/v1.44.1...v1.44.2) (2025-04-03)
 
 
