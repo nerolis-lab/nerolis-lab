@@ -18,7 +18,8 @@ export class BackendConfig {
       DB_PASS,
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
-      GENERATE_TIERLIST
+      GENERATE_TIERLIST,
+      DATABASE_NAME
     } = process.env;
 
     if (DATABASE_MIGRATION && DATABASE_MIGRATION !== 'UP' && DATABASE_MIGRATION !== 'DOWN') {
@@ -40,7 +41,8 @@ export class BackendConfig {
       DB_PASS,
       GOOGLE_CLIENT_ID,
       GOOGLE_CLIENT_SECRET,
-      GENERATE_TIERLIST: GENERATE_TIERLIST === 'true'
+      GENERATE_TIERLIST: GENERATE_TIERLIST === 'true',
+      DATABASE_NAME: DATABASE_NAME ?? 'pokemonsleep'
     };
   }
 }

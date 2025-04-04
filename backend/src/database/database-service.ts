@@ -24,7 +24,7 @@ class DatabaseServiceImpl {
           port: +port,
           user,
           password,
-          database: 'pokemonsleep'
+          database: config.DATABASE_NAME
         },
         migrations: {
           loadExtensions: ['.js', '.ts']
