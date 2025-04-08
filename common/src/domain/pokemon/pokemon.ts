@@ -6,6 +6,7 @@ import type { Berry } from '../berry/berry';
 import type { GenderRatio } from '../gender';
 import type { IngredientIndexToIntAmount, IngredientSet } from '../ingredient/ingredient';
 import type { Mainskill } from '../mainskill/mainskill';
+import { ALL_ALL_SPECIALISTS, INFERIOR_ALL_SPECIALISTS, OPTIMAL_ALL_SPECIALISTS } from './all-pokemon';
 import { ALL_BERRY_SPECIALISTS, INFERIOR_BERRY_SPECIALISTS, OPTIMAL_BERRY_SPECIALISTS } from './berry-pokemon';
 import {
   ALL_INGREDIENT_SPECIALISTS,
@@ -14,7 +15,7 @@ import {
 } from './ingredient-pokemon';
 import { ALL_SKILL_SPECIALISTS, INFERIOR_SKILL_SPECIALISTS, OPTIMAL_SKILL_SPECIALISTS } from './skill-pokemon';
 
-export type PokemonSpecialty = 'berry' | 'ingredient' | 'skill';
+export type PokemonSpecialty = 'berry' | 'ingredient' | 'skill' | 'all';
 export interface Pokemon {
   name: string;
   displayName: string;
@@ -59,17 +60,20 @@ export type PokemonWithIngredients = {
 export const OPTIMAL_POKEDEX: Pokedex = [
   ...OPTIMAL_BERRY_SPECIALISTS,
   ...OPTIMAL_INGREDIENT_SPECIALISTS,
-  ...OPTIMAL_SKILL_SPECIALISTS
+  ...OPTIMAL_SKILL_SPECIALISTS,
+  ...OPTIMAL_ALL_SPECIALISTS
 ];
 
 export const INFERIOR_POKEDEX: Pokedex = [
   ...INFERIOR_BERRY_SPECIALISTS,
   ...INFERIOR_INGREDIENT_SPECIALISTS,
-  ...INFERIOR_SKILL_SPECIALISTS
+  ...INFERIOR_SKILL_SPECIALISTS,
+  ...INFERIOR_ALL_SPECIALISTS
 ];
 
 export const COMPLETE_POKEDEX: Pokedex = [
   ...ALL_BERRY_SPECIALISTS,
   ...ALL_INGREDIENT_SPECIALISTS,
-  ...ALL_SKILL_SPECIALISTS
+  ...ALL_SKILL_SPECIALISTS,
+  ...ALL_ALL_SPECIALISTS
 ];

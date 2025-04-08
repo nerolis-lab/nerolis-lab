@@ -110,7 +110,7 @@ function comparisonChart(
   let optimalForSpecialty = optimalBerrySetup;
   if (specialty === 'ingredient') {
     optimalForSpecialty = optimalIngredientSetup;
-  } else if (specialty === 'skill') {
+  } else if (specialty === 'skill' || specialty === 'all') {
     optimalForSpecialty = optimalSkillSetup;
   }
   datasets.push(

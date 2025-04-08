@@ -4,6 +4,7 @@ import {
   ABSOL,
   CATERPIE,
   CHARIZARD,
+  DARKRAI,
   DEDENNE,
   DRAGONITE,
   FLAREON,
@@ -102,6 +103,7 @@ describe('calculatePityProcThreshold', () => {
     expect(calculatePityProcThreshold(MAGNEZONE)).toBe(46);
     expect(calculatePityProcThreshold(FLAREON)).toBe(53);
     expect(calculatePityProcThreshold(RAIKOU)).toBe(68);
+    expect(calculatePityProcThreshold(DARKRAI)).toBe(49);
   });
 
   it('shall calculate correct threshold for berry and ingredient pokemon', () => {
@@ -150,6 +152,10 @@ describe('calculateNrOfBerriesPerDrop', () => {
 
   it('shall give 3 berries for berry specialty with BFS', () => {
     expect(calculateNrOfBerriesPerDrop('berry', new Set([BERRY_FINDING_S.name]))).toBe(3);
+  });
+
+  it('shall give 3 berries for all specialty with BFS', () => {
+    expect(calculateNrOfBerriesPerDrop('all', new Set([BERRY_FINDING_S.name]))).toBe(3);
   });
 
   it('shall give 1 berry for ingredient specialty', () => {

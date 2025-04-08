@@ -6,6 +6,7 @@ import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-effect.js';
 import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s-effect.js';
 import { ChargeEnergySMoonlightEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s-moonlight-effect.js';
+import { ChargeStrengthMBadDreamsEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m-bad-dreams-effect.js';
 import { ChargeStrengthMEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m-effect.js';
 import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-effect.js';
 import { ChargeStrengthSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-range-effect.js';
@@ -29,7 +30,7 @@ import type {
   TeamSkillActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import type { Mainskill, MemberSkillValue } from 'sleepapi-common';
+import type { Mainskill, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
 import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits } from 'sleepapi-common';
 
 export class SkillState {
@@ -64,6 +65,7 @@ export class SkillState {
       [mainskill.CHARGE_ENERGY_S, new ChargeEnergySEffect()],
       [mainskill.CHARGE_ENERGY_S_MOONLIGHT, new ChargeEnergySMoonlightEffect()],
       [mainskill.CHARGE_STRENGTH_M, new ChargeStrengthMEffect()],
+      [mainskill.CHARGE_STRENGTH_M_BAD_DREAMS, new ChargeStrengthMBadDreamsEffect()],
       [mainskill.CHARGE_STRENGTH_S, new ChargeStrengthSEffect()],
       [mainskill.CHARGE_STRENGTH_S_RANGE, new ChargeStrengthSRangeEffect()],
       [mainskill.CHARGE_STRENGTH_S_STOCKPILE, new ChargeStrengthSStockpileEffect()],
@@ -109,6 +111,13 @@ export class SkillState {
     this.critValue += value.crit;
   }
 
+  public addSkillValue(params: { unit: MainskillUnit; amountToSelf: number; amountToTeam: number }) {
+    const { unit, amountToSelf, amountToTeam } = params;
+    const entry = this.skillValue[unit];
+    entry.amountToSelf += amountToSelf;
+    entry.amountToTeam += amountToTeam;
+  }
+
   public results(iterations: number) {
     const skillProcsPerDay = this.skillProcsPerDay.slice(1); // remove first wakeup when nothing has happened yet
     return {
@@ -116,7 +125,7 @@ export class SkillState {
       skillValue: Object.fromEntries(
         Object.entries(this.skillValue)
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          .filter(([d_, value]) => value.amountToSelf > 0 || value.amountToTeam > 0)
+          .filter(([d_, value]) => value.amountToSelf !== 0 || value.amountToTeam !== 0)
           .map(([key, value]) => [
             key,
             {

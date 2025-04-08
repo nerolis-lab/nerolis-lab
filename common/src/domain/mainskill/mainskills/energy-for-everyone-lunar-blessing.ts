@@ -1,3 +1,4 @@
+import { MAX_SKILL_LEVEL } from '../../constants';
 import type { Mainskill } from '../mainskill';
 import { INGREDIENT_SUPPORT_MAINSKILLS, MAINSKILLS } from '../mainskill';
 import { LunarBlessing } from '../modifier';
@@ -6,6 +7,7 @@ import { ENERGY_FOR_EVERYONE } from './energy-for-everyone';
 const critChance = 0;
 export const ENERGY_FOR_EVERYONE_LUNAR_BLESSING: Mainskill = LunarBlessing(ENERGY_FOR_EVERYONE, critChance, {
   amount: [3, 4, 5, 7, 9, 11],
+  maxLevel: MAX_SKILL_LEVEL - 1,
   description:
     'Restores some Energy to all helper Pokémon on your team plus gives ? of each of the Berries other Pokémon on your team collect.',
   RP: [1400, 1991, 2747, 3791, 5234, 7232]

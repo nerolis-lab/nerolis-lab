@@ -9,13 +9,14 @@ export interface PokedexState {
 
 export const usePokedexStore = defineStore('pokedex', {
   state: (): PokedexState => {
-    const categories = ['ingredient', 'berry', 'skill']
+    const categories = ['ingredient', 'berry', 'skill', 'all']
     const completePokedex = [...COMPLETE_POKEDEX].sort((a, b) => a.displayName.localeCompare(b.displayName))
 
     const categorizedPokedex: { [key: string]: string[] } = {
       ingredient: [],
       berry: [],
-      skill: []
+      skill: [],
+      all: []
     }
 
     for (const pkmn of completePokedex) {

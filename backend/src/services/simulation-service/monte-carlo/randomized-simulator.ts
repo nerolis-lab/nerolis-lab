@@ -111,7 +111,7 @@ export function randomizedSimulation(params: {
         }
       }
       skillProcsNight += 1;
-      if (skillProcsNight === 2 || pokemon.specialty !== 'skill') {
+      if (skillProcsNight === 2 || (pokemon.specialty !== 'skill' && pokemon.specialty !== 'all')) {
         break;
       }
     }

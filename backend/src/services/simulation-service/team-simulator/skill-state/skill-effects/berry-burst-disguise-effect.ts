@@ -21,9 +21,9 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
     }
 
     const berries = memberState.otherMembers.map((member) => ({
-      berry: member.pokemonWithIngredients.pokemon.berry,
+      berry: member.berry,
       amount: regularOtherAmount + critOtherAmount,
-      level: member.settings.level
+      level: member.level
     }));
 
     berries.push({

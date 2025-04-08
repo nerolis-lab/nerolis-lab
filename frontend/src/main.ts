@@ -49,6 +49,7 @@ const darkTheme: ThemeDefinition = {
     berry: '#b297e7',
     'berry-light': '#d9ccf5',
     skill: '#ff616e',
+    all: '#ffffff',
 
     energy: '#31e571',
     help: '#ffbd2f',
