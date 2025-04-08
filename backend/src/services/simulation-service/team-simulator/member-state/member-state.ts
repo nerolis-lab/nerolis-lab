@@ -48,7 +48,7 @@ import {
 export class MemberState {
   member: TeamMemberExt;
   team: TeamMemberExt[];
-  otherMembers: TeamMemberExt[];
+  otherMembers: MemberState[] = [];
   cookingState?: CookingState;
   private skillState: SkillState;
   private camp: boolean;
@@ -238,7 +238,6 @@ export class MemberState {
 
     this.member = member;
     this.team = team; // this needs updating when we add team rotation
-    this.otherMembers = team.filter((m) => m.settings.externalId !== member.settings.externalId); // this needs updating when we add team rotation
     this.skillState = new SkillState(this, this.rng);
 
     // Calculate thresholds locally
@@ -544,9 +543,10 @@ export class MemberState {
     return bankedSkillProcs;
   }
 
-  public degradeEnergy() {
-    const energyToDegrade = Math.min(1, this.currentEnergy);
+  public degradeEnergy(amount?: number) {
+    const energyToDegrade = Math.min(amount ?? 1, this.currentEnergy);
     this.currentEnergy = Math.max(0, MathUtils.round(this.currentEnergy - energyToDegrade, 2));
+    return energyToDegrade;
   }
 
   public results(iterations: number): MemberProduction {

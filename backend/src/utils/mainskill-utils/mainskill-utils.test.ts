@@ -12,6 +12,7 @@ describe('getMainskillNames', () => {
         "Charge Energy S",
         "Moonlight (Charge Energy S)",
         "Charge Strength M",
+        "Bad Dreams (Charge Strength M)",
         "Charge Strength S",
         "Charge Strength S Range",
         "Stockpile (Charge Strength S)",

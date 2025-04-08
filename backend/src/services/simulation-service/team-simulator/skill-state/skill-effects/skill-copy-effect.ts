@@ -8,7 +8,7 @@ export class SkillCopyEffect implements SkillEffect {
     const otherMembers = skillState.memberState.otherMembers;
     const selectedMember = otherMembers.length > 0 ? skillState.rng.randomElement(otherMembers) : undefined;
 
-    let copiedSkill = selectedMember?.pokemonWithIngredients.pokemon.skill;
+    let copiedSkill = selectedMember?.skill;
 
     if (copiedSkill?.isSameOrModifiedVersion(mainskill.SKILL_COPY) || !copiedSkill) {
       copiedSkill = mainskill.CHARGE_STRENGTH_S;

@@ -77,7 +77,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     });
 
     Object.defineProperty(memberState, 'otherMembers', {
-      get: () => team.slice(1)
+      get: () => team.slice(1).map((member) => mocks.memberState({ member }))
     });
 
     vimic(commonModule, 'uniqueMembersWithBerry', () => unique);
@@ -138,7 +138,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     });
 
     Object.defineProperty(memberState, 'otherMembers', {
-      get: () => largeTeam.slice(1)
+      get: () => largeTeam.slice(1).map((member) => mocks.memberState({ member }))
     });
 
     vimic(skillState, 'skillLevel', () => skillLevel);

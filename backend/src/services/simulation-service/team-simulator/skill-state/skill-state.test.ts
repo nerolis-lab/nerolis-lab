@@ -45,6 +45,23 @@ describe('SkillState', () => {
     expect(skillState['critValue']).toBe(5);
   });
 
+  it('should add skill value correctly', () => {
+    const unit = 'energy';
+    const amountToSelf = 15;
+    const amountToTeam = 10;
+
+    skillState.addSkillValue({ unit, amountToSelf, amountToTeam });
+
+    expect(skillState['skillValue'][unit].amountToSelf).toBe(15);
+    expect(skillState['skillValue'][unit].amountToTeam).toBe(10);
+
+    // Add more to the same unit
+    skillState.addSkillValue({ unit, amountToSelf: 5, amountToTeam: 8 });
+
+    expect(skillState['skillValue'][unit].amountToSelf).toBe(20);
+    expect(skillState['skillValue'][unit].amountToTeam).toBe(18);
+  });
+
   it('should return correct results', () => {
     const iterations = 100;
     const regularValue = 100;

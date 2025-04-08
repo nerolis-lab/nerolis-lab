@@ -3,6 +3,7 @@ export * from './berry-burst-disguise';
 export * from './charge-energy-s';
 export * from './charge-energy-s-moonlight';
 export * from './charge-strength-m';
+export * from './charge-strength-m-bad-dreams';
 export * from './charge-strength-s';
 export * from './charge-strength-s-stockpile';
 export * from './cooking-power-up-s';

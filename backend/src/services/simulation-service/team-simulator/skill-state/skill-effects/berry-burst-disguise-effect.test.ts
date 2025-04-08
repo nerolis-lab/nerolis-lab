@@ -36,9 +36,9 @@ describe('BerryBurstDisguiseEffect', () => {
         ingredients: [],
         berries: [
           ...memberState.otherMembers.map((member) => ({
-            berry: member.pokemonWithIngredients.pokemon.berry,
+            berry: member.berry,
             amount: regularOtherAmount,
-            level: member.settings.level
+            level: member.level
           })),
           {
             berry: memberState.berry,

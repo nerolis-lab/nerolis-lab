@@ -110,6 +110,9 @@ export class TeamSimulator {
         this.memberStatesWithoutFillers.push(memberState);
       }
     }
+    this.memberStates.forEach((memberState, _, allMembers) => {
+      memberState.otherMembers = allMembers.filter((other) => other.id !== memberState.id);
+    });
   }
 
   public simulate() {
