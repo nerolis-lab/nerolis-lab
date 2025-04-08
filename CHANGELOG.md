@@ -1,3 +1,10 @@
+# [1.46.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.45.0...v1.46.0) (2025-04-08)
+
+
+### Features
+
+* adds Darkrai ([9099fef](https://github.com/nerolis-lab/nerolis-lab/commit/9099fef802d1f660bcc618cedce406d6b7381a28))
+
 # [1.45.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.44.2...v1.45.0) (2025-04-04)
 
 
