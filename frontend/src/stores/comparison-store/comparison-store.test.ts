@@ -1,17 +1,14 @@
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProduction } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
 import { type MemberProduction } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-beforeEach(() => {
-  setActivePinia(createPinia())
-})
+beforeEach(() => {})
 
-const mockMemberProduction: MemberProduction = createMockMemberProduction()
+const mockMemberProduction: MemberProduction = mocks.createMockMemberProduction()
 
 describe('getMemberProduction', () => {
   it('shall return undefined if pokemon not found', () => {
@@ -70,20 +67,17 @@ describe('removeMember', () => {
   })
 })
 
-describe('migrate', () => {
+describe('invalidateCache', () => {
   it('shall set domainVersion if not already set', () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.domainVersion = 0
-    comparisonStore.migrate()
+    comparisonStore.invalidateCache()
     expect(comparisonStore.domainVersion).toBeGreaterThan(0)
   })
-})
-
-describe('outdate', () => {
   it('shall reset the store and set domainVersion', async () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
-    comparisonStore.outdate()
+    comparisonStore.invalidateCache()
     expect(comparisonStore.members).toHaveLength(0)
     expect(comparisonStore.domainVersion).toBeGreaterThan(0)
   })

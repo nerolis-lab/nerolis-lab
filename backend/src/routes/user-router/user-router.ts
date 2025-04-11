@@ -23,9 +23,10 @@ class UserRouterImpl {
           throw new Error('User not found');
         }
 
-        const data = await controller.getUser(user);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { google_id, discord_id, patreon_id, ...rest } = user;
 
-        res.json(data);
+        res.json(rest);
       } catch (err) {
         logger.error(err as Error);
         res.status(500).send('Something went wrong');
@@ -59,12 +60,12 @@ class UserRouterImpl {
       try {
         logger.log('Entered /user/settings GET');
 
-        const user = (req as AuthenticatedRequest).user;
+        const authentication = req as AuthenticatedRequest;
+        const user = authentication.user;
         if (!user) {
           throw new Error('User not found');
         }
-
-        const data = await controller.getUserSettings(user);
+        const data = await controller.getUserSettings(user, authentication.userHeader);
 
         res.json(data);
       } catch (err) {

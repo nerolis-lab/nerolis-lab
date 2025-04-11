@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill, mockPokemon } from 'sleepapi-common';
+import { mocks } from '@src/vitest/index.js';
+import { commonMocks, mainskill } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('ChargeStrengthSStockpileSEffect', () => {
@@ -14,7 +14,7 @@ describe('ChargeStrengthSStockpileSEffect', () => {
       mocks.memberState({
         member: mocks.teamMemberExt({
           pokemonWithIngredients: mocks.pokemonWithIngredients({
-            pokemon: mockPokemon({ skill: mainskill.CHARGE_STRENGTH_S_STOCKPILE })
+            pokemon: commonMocks.mockPokemon({ skill: mainskill.CHARGE_STRENGTH_S_STOCKPILE })
           })
         })
       })

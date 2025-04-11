@@ -1,10 +1,9 @@
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { subskill } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import TeamSlot from './team-slot.vue'
@@ -15,11 +14,10 @@ describe('TeamSlot', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     teamStore = useTeamStore()
     pokemonStore = usePokemonStore()
 
-    const mockPokemon = createMockPokemon({ level: 50 })
+    const mockPokemon = mocks.createMockPokemon({ level: 50 })
     teamStore.teams = createMockTeams(1, { members: [mockPokemon.externalId] })
     pokemonStore.upsertLocalPokemon(mockPokemon)
     wrapper = mount(TeamSlot, {
@@ -97,7 +95,7 @@ describe('TeamSlot', () => {
   })
 
   it('does not display speech bubble when not a leader', async () => {
-    const mockPokemon = createMockPokemon({ level: 50 })
+    const mockPokemon = mocks.createMockPokemon({ level: 50 })
     teamStore.teams = createMockTeams(1, {
       members: [mockPokemon.externalId, 'Member that is not leader']
     })
@@ -114,7 +112,7 @@ describe('TeamSlot', () => {
   })
 
   it('displays correct subskill badges', () => {
-    const mockPokemon = createMockPokemon({
+    const mockPokemon = mocks.createMockPokemon({
       level: 50,
       subskills: [
         { level: 10, subskill: subskill.HELPING_BONUS },

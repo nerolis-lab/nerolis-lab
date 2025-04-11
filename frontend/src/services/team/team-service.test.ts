@@ -3,10 +3,9 @@ import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import MockAdapter from 'axios-mock-adapter'
-import { createPinia, setActivePinia } from 'pinia'
 import {
   BULBASAUR,
   ingredient,
@@ -26,7 +25,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 let mockedServerAxios = new MockAdapter(serverAxios)
 
 beforeEach(async () => {
-  setActivePinia(createPinia())
   mockedServerAxios = new MockAdapter(serverAxios)
   uuid.v4 = vi.fn().mockReturnValue('0'.repeat(36))
 })
@@ -238,7 +236,7 @@ describe('createOrUpdateMember', () => {
   it('should call server to create or update a member and return the updated member', async () => {
     const teamIndex = 0
     const memberIndex = 0
-    const member: PokemonInstanceExt = createMockPokemon()
+    const member: PokemonInstanceExt = mocks.createMockPokemon()
     serverAxios.put = vi.fn().mockResolvedValueOnce({
       data: {
         index: 1,
@@ -289,7 +287,7 @@ describe('createOrUpdateMember', () => {
   it('should handle server error when updating a member', async () => {
     const teamIndex = 0
     const memberIndex = 0
-    const member = createMockPokemon()
+    const member = mocks.createMockPokemon()
     serverAxios.put = vi.fn().mockRejectedValueOnce(new Error('Server error'))
 
     await expect(TeamService.createOrUpdateMember({ teamIndex, memberIndex, member })).rejects.toThrow('Server error')
@@ -349,7 +347,7 @@ describe('deleteTeam', () => {
 
 describe('calculateProduction', () => {
   it('should call server to calculate team production', async () => {
-    const members: PokemonInstanceExt[] = [createMockPokemon()]
+    const members: PokemonInstanceExt[] = [mocks.createMockPokemon()]
     const settings: TeamSettings = {
       camp: false,
       bedtime: '21:00',
@@ -456,8 +454,8 @@ describe('calculateIv', () => {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
 
-    const currentMember = createMockPokemon({ externalId: 'member1' })
-    const otherMember = createMockPokemon({ externalId: 'member2' })
+    const currentMember = mocks.createMockPokemon({ externalId: 'member1' })
+    const otherMember = mocks.createMockPokemon({ externalId: 'member2' })
 
     teamStore.teams = createMockTeams(1, {
       members: [currentMember.externalId, otherMember.externalId]

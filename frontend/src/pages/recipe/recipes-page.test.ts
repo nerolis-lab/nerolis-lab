@@ -2,8 +2,7 @@ import RecipesPage from '@/pages/recipe/recipes-page.vue'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { RECIPES, calculateRecipeValue } from 'sleepapi-common'
+import { RECIPES, calculateRecipeValue, commonMocks } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -22,9 +21,8 @@ describe('RecipesPage', () => {
   let recipesPage: VueWrapper<InstanceType<typeof RecipesPage>>
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     wrapper = mount({
       template: '<Suspense><RecipesPage /></Suspense>',

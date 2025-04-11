@@ -2,14 +2,12 @@ import TeamName from '@/components/calculator/team-name.vue'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('TeamSlotName', () => {
   let wrapper: VueWrapper<InstanceType<typeof TeamName>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(TeamName)
   })
 

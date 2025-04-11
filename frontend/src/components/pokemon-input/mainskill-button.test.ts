@@ -1,9 +1,8 @@
 import MainskillButton from '@/components/pokemon-input/mainskill-button.vue'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import type { Mainskill } from 'sleepapi-common'
 import { GENGAR, createBaseSkill, type PokemonInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -11,10 +10,9 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 describe('MainskillButton', () => {
   let wrapper: VueWrapper<InstanceType<typeof MainskillButton>>
   let pokemonStore: ReturnType<typeof usePokemonStore>
-  const mockPokemon = createMockPokemon()
+  const mockPokemon = mocks.createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
     wrapper = mount(MainskillButton, {
@@ -31,7 +29,7 @@ describe('MainskillButton', () => {
   it('renders correctly with provided data', async () => {
     wrapper = mount(MainskillButton, {
       props: {
-        pokemonInstance: createMockPokemon({ pokemon: GENGAR, skillLevel: 3 })
+        pokemonInstance: mocks.createMockPokemon({ pokemon: GENGAR, skillLevel: 3 })
       }
     })
     expect(wrapper.find('.responsive-text').text()).toBe('Charge Strength S RangeLv.3')

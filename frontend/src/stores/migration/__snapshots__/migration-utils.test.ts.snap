@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`migration-utils > getMigrations > should return migrations sorted by version 1`] = `
+[
+  {
+    "description": "Sets up initial baseline version.",
+    "up": [Function],
+    "version": 1,
+  },
+  {
+    "description": "Adds support for multiple providers.",
+    "up": [Function],
+    "version": 2,
+  },
+]
+`;

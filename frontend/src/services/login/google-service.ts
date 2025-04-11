@@ -1,26 +1,37 @@
-import serverAxios from '@/router/server-axios'
-import axios from 'axios'
-import type { LoginResponse, RefreshResponse } from 'sleepapi-common'
+import { useUserStore } from '@/stores/user-store'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
-class GoogleServiceImpl {
-  public async login(authorization_code: string): Promise<LoginResponse> {
-    const response = await axios.post<LoginResponse>('/api/login/signup', {
-      authorization_code
-    })
+export const GOOGLE_REDIRECT_URI = `${window.location.origin}/google`
 
-    return response.data
-  }
+export function getGoogleAuthCode(currentRoute: RouteLocationNormalizedLoaded) {
+  const GOOGLE_OAUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
+  const GOOGLE_CALLBACK_URL = GOOGLE_REDIRECT_URI
+  const GOOGLE_OAUTH_SCOPES = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+  ]
 
-  public async refresh(refresh_token: string): Promise<RefreshResponse> {
-    const response = await axios.post<RefreshResponse>('/api/login/refresh', {
-      refresh_token
-    })
+  const params = new URLSearchParams({
+    client_id: GOOGLE_CLIENT_ID,
+    redirect_uri: GOOGLE_CALLBACK_URL,
+    response_type: 'code',
+    access_type: 'offline',
+    prompt: 'consent',
+    scope: GOOGLE_OAUTH_SCOPES.join(' '),
+    state: currentRoute.fullPath
+  })
 
-    return response.data
-  }
+  const GOOGLE_OAUTH_CONSENT_SCREEN_URL = `${GOOGLE_OAUTH_URL}?${params.toString()}`
+  window.location.href = GOOGLE_OAUTH_CONSENT_SCREEN_URL
+}
 
-  public async delete() {
-    await serverAxios.delete('/user')
+export async function loginWithGoogle(currentRoute: RouteLocationNormalizedLoaded) {
+  const userStore = useUserStore()
+  try {
+    getGoogleAuthCode(currentRoute)
+  } catch {
+    logger.error('Google login failed')
+    userStore.logout()
   }
 }
-export const GoogleService = new GoogleServiceImpl()

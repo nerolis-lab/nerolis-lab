@@ -2,7 +2,7 @@
   <v-container style="max-width: 600px">
     <v-row>
       <v-col cols="12">
-        <v-card class="pb-4">
+        <v-card rounded="xl" class="pb-4 frosted-glass" :class="{ 'supporter-card': userStore.isSupporter }">
           <v-row class="pt-4">
             <v-col cols="12" class="flex-center text-h4"> Profile </v-col>
           </v-row>
@@ -35,6 +35,7 @@
               <v-divider />
             </v-col>
           </v-row>
+
           <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
               <span class="text-center font-weight-bold">User ID: </span>
@@ -43,7 +44,38 @@
               <span class="text-center">{{ userStore.externalId }}</span>
             </v-col>
           </v-row>
+
+          <v-row dense class="flex-center">
+            <v-col cols="auto" class="flex-center">
+              <span class="text-center font-weight-bold">Supporter status: </span>
+            </v-col>
+            <v-col cols="auto" class="flex-center">
+              <span :class="['text-center', userStore.isSupporter ? 'text-supporter' : 'text-grey']">{{
+                userStore.isSupporter ? 'Active' : 'Inactive'
+              }}</span>
+            </v-col>
+          </v-row>
+
+          <v-row v-if="userStore.isSupporter" dense class="flex-center">
+            <v-col cols="auto" class="flex-center">
+              <span class="text-center font-weight-bold">Supporter since: </span>
+            </v-col>
+            <v-col cols="auto" class="flex-center">
+              <span :class="['text-center', userStore.isSupporter ? 'text-supporter' : 'text-grey']">{{
+                userStore.supporterSince
+              }}</span>
+            </v-col>
+          </v-row>
         </v-card>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="userStore.isSupporter">
+      <v-col cols="12">
+        <div class="d-flex align-center justify-center">
+          <v-icon class="mr-2" color="supporter">mdi-star</v-icon>
+          <span class="font-weight-bold text-supporter">Thank you for your support!</span>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -53,9 +85,8 @@
 import UserAvatar from '@/components/account/user-avatar.vue'
 import UserName from '@/components/account/user-name.vue'
 import { UserService } from '@/services/user/user-service'
-import { userAvatar } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'ProfilePage',
@@ -65,6 +96,8 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
+    const userAvatar = computed(() => userStore.avatar)
+
     return { userStore, userAvatar }
   },
   methods: {
@@ -79,7 +112,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.avatar-badge .v-badge__badge {
-  box-shadow: 0 1px 1px #000;
+.supporter-card {
+  box-shadow: 0 4px 20px rgba(var(--v-theme-strength), 0.3) !important;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 25px rgba(var(--v-theme-strength), 0.4) !important;
+  }
 }
 </style>

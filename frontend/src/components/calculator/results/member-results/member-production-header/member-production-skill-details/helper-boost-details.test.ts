@@ -2,16 +2,15 @@ import MemberProductionSkill from '@/components/calculator/results/member-result
 import { StrengthService } from '@/services/strength/strength-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { ENTEI, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: ENTEI, skillLevel: 6 })
+const mockMember = mocks.createMockMemberProductionExt({
+  member: mocks.createMockPokemon({ pokemon: ENTEI, skillLevel: 6 })
 })
 
 describe('MemberProductionSkill', () => {
@@ -20,8 +19,7 @@ describe('MemberProductionSkill', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
-    const mockPokemon = createMockPokemon({ pokemon: ENTEI })
+    const mockPokemon = mocks.createMockPokemon({ pokemon: ENTEI })
     teamStore = useTeamStore()
     teamStore.teams = createMockTeams(1, { members: [mockPokemon.externalId] })
     pokemonStore = usePokemonStore()

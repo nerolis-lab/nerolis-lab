@@ -2,17 +2,16 @@ import MemberProductionBerry from '@/components/calculator/results/member-result
 import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { GENGAR, MathUtils, berry } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: GENGAR }),
+const mockMember = mocks.createMockMemberProductionExt({
+  member: mocks.createMockPokemon({ pokemon: GENGAR }),
   production: {
-    ...createMockMemberProductionExt().production,
+    ...mocks.createMockMemberProductionExt().production,
     produceWithoutSkill: {
       berries: [{ amount: 20, berry: berry.BLUK, level: 1 }],
       ingredients: []
@@ -24,7 +23,6 @@ describe('MemberProductionBerry', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionBerry>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionBerry, {
       props: {
         memberWithProduction: mockMember

@@ -4,11 +4,11 @@ import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
+import { commonMocks } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -18,9 +18,8 @@ describe('Team section', () => {
   registerChartJS()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
-    pokemonStore.upsertLocalPokemon(createMockPokemon())
+    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
     wrapper = mount(TeamSection)
   })
 
@@ -42,7 +41,7 @@ describe('Team section', () => {
 
   it('navigates teams on button clicks', async () => {
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     const teamStore = useTeamStore()
     teamStore.currentIndex = 0
     teamStore.teams = createMockTeams(2)
@@ -69,7 +68,7 @@ describe('Team section', () => {
 
   it('switches between tabs correctly', async () => {
     const teamStore = useTeamStore()
-    const mockPokemon = createMockPokemon()
+    const mockPokemon = mocks.createMockPokemon()
     // need team size 2 because otherwise tabs are not shown, we dont show tabs for team with 1 member
     teamStore.teams = createMockTeams(1, {
       members: [mockPokemon.externalId, mockPokemon.externalId]

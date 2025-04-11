@@ -1,6 +1,6 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -9,8 +9,8 @@ import { CRESSELIA, MathUtils, compactNumber } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 import LunarBlessingEnergyForEveryoneDetails from './lunar-blessing-energy-for-everyone-details.vue'
 
-const mockMember = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: CRESSELIA, skillLevel: 6 })
+const mockMember = mocks.createMockMemberProductionExt({
+  member: mocks.createMockPokemon({ pokemon: CRESSELIA, skillLevel: 6 })
 })
 
 describe('LunarBlessingEnergyForEveryoneDetails', () => {

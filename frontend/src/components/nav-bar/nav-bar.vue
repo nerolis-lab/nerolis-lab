@@ -65,7 +65,7 @@ export default defineComponent({
 }
 
 .beta-tag {
-  color: $skill;
+  color: $primary;
   font-style: italic;
   font-size: 16px;
   margin: -6px 0 0 5px;

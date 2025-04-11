@@ -19,8 +19,8 @@ export const DARKRAI: Pokemon = {
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredient0: { amount: 2, ingredient: BEAN_SAUSAGE },
-  ingredient30: [{ amount: 0, ingredient: BEAN_SAUSAGE }],
-  ingredient60: [{ amount: 0, ingredient: BEAN_SAUSAGE }],
+  ingredient30: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
+  ingredient60: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
   skill: CHARGE_STRENGTH_M_BAD_DREAMS
 };
 

@@ -2,9 +2,9 @@ import IngredientButton from '@/components/pokemon-input/ingredient-button.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
+  commonMocks,
   GENGAR,
   ingredient,
-  mockIngredientSet,
   PIKACHU,
   PINSIR,
   type IngredientInstanceExt,
@@ -59,9 +59,9 @@ describe('IngredientButton', () => {
       pokemonInstance: {
         ...mockPokemon,
         ingredients: [
-          { ...mockIngredientSet(), level: 0 },
-          { ...mockIngredientSet(), level: 30 },
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
+          { ...commonMocks.mockIngredientSet(), level: 0 },
+          { ...commonMocks.mockIngredientSet(), level: 30 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
         ]
       }
     })
@@ -82,9 +82,9 @@ describe('IngredientButton', () => {
         ...mockPokemon,
         pokemon: PINSIR,
         ingredients: [
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 0 },
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 30 },
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 0 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 30 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
         ]
       }
     })
@@ -108,9 +108,9 @@ describe('IngredientButton', () => {
         ...mockPokemon,
         pokemon: PINSIR,
         ingredients: [
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 0 },
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 30 },
-          { ...mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 0 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 30 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.HONEY }), level: 60 }
         ]
       }
     })
@@ -157,9 +157,9 @@ describe('IngredientButton', () => {
         ...mockPokemon,
         pokemon: GENGAR,
         ingredients: [
-          { ...mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 0 },
-          { ...mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 30 },
-          { ...mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 60 }
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 0 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 30 },
+          { ...commonMocks.mockIngredientSet({ ingredient: ingredient.FIERY_HERB }), level: 60 }
         ]
       }
     })

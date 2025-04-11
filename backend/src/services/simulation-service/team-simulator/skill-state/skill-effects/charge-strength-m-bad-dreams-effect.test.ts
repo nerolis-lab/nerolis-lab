@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { ChargeStrengthMBadDreamsEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m-bad-dreams-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import { berry, mainskill } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it, vi } from 'vitest';

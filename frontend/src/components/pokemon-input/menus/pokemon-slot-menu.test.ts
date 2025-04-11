@@ -2,10 +2,9 @@ import PokemonSlotMenu from '@/components/pokemon-input/menus/pokemon-slot-menu.
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi, vitest } from 'vitest'
 
 vi.mock('@/services/team/team-service', () => ({
@@ -23,10 +22,9 @@ describe('TeamSlotMenu', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
   let userStore: ReturnType<typeof useUserStore>
 
-  const mockPokemon = createMockPokemon()
+  const mockPokemon = mocks.createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(PokemonSlotMenu, {
       props: {
         show: true,
@@ -61,7 +59,7 @@ describe('TeamSlotMenu', () => {
   })
 
   it('disables save button when user is not logged in', async () => {
-    userStore.tokens = null
+    userStore.auth = null
     pokemonStore.upsertLocalPokemon(mockPokemon)
     teamStore.teams[0].members[0] = mockPokemon.externalId // so isEmpty is false and we can see button
     await wrapper.setProps({ show: true, pokemonFromPreExist: mockPokemon })

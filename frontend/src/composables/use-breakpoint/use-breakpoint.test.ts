@@ -17,7 +17,8 @@ describe('useBreakpoint composable', () => {
   beforeEach(() => {
     Object.defineProperty(window, 'innerWidth', {
       writable: true,
-      value: 800
+      value: 800,
+      configurable: true
     })
 
     wrapper = mount(TestComponent)

@@ -38,18 +38,8 @@ export function clearCacheKeepLogin() {
   comparisonStore.$reset()
 }
 
-export function migrateStores() {
+export async function migrateSite() {
   const versionStore = useVersionStore()
-  const teamStore = useTeamStore()
-  const comparisonStore = useComparisonStore()
-  const userStore = useUserStore()
-  const pokemonStore = usePokemonStore()
-
-  if (versionStore.updateFound) {
-    versionStore.updateVersion()
-  }
-  pokemonStore.migrate()
-  teamStore.migrate()
-  comparisonStore.migrate()
-  userStore.migrate()
+  await versionStore.migrate()
+  versionStore.invalidateCache()
 }

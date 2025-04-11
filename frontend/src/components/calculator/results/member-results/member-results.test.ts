@@ -3,11 +3,10 @@ import { registerChartJS } from '@/components/custom-components/charts/register-
 import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProduction, createMockPokemon, createMockTeamProduction } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -17,14 +16,13 @@ describe('MemberResults', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
   registerChartJS()
 
-  const mockPokemon = createMockPokemon()
+  const mockPokemon = mocks.createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     teamStore = useTeamStore()
     pokemonStore = usePokemonStore()
 
-    pokemonStore.upsertLocalPokemon(createMockPokemon())
+    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
     teamStore.teams = createMockTeams()
 
     wrapper = mount(MemberResults)
@@ -60,19 +58,19 @@ describe('MemberResults', () => {
 
   it('changes window item correctly', async () => {
     TeamService.calculateCurrentMemberIv = vi.fn().mockResolvedValue({
-      optimalBerry: createMockMemberProduction(),
-      optimalIngredient: createMockMemberProduction(),
-      optimalSkill: createMockMemberProduction()
+      optimalBerry: mocks.createMockMemberProduction(),
+      optimalIngredient: mocks.createMockMemberProduction(),
+      optimalSkill: mocks.createMockMemberProduction()
     })
 
     pokemonStore.upsertLocalPokemon({ ...mockPokemon, externalId: 'mon1' })
     pokemonStore.upsertLocalPokemon({ ...mockPokemon, externalId: 'mon2' })
     teamStore.teams = createMockTeams(1, {
       members: ['mon1', 'mon2'],
-      production: createMockTeamProduction({
+      production: mocks.createMockTeamProduction({
         members: [
-          createMockMemberProduction({ externalId: 'mon1' }),
-          createMockMemberProduction({ externalId: 'mon2' })
+          mocks.createMockMemberProduction({ externalId: 'mon1' }),
+          mocks.createMockMemberProduction({ externalId: 'mon2' })
         ]
       })
     })
