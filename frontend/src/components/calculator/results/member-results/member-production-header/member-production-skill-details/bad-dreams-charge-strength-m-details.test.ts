@@ -1,15 +1,15 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { DARKRAI, MathUtils, compactNumber, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-const mockMember: MemberProductionExt = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: DARKRAI })
+const mockMember: MemberProductionExt = mocks.createMockMemberProductionExt({
+  member: mocks.createMockPokemon({ pokemon: DARKRAI })
 })
 
 const skillValue: MemberSkillValue = mockMember.production.skillValue
@@ -82,7 +82,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   })
 
   it('displays the correct total energy degraded', () => {
-    const totalEnergyDegraded = wrapper.find('.font-weight-medium.text-error.text-no-wrap.text-center.ml-1')
+    const totalEnergyDegraded = wrapper.find('.font-weight-medium.text-error-3.text-no-wrap.text-center.ml-1')
     expect(totalEnergyDegraded.text()).toContain('-24%')
   })
 })

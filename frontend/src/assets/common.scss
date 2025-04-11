@@ -23,10 +23,24 @@
   justify-content: center;
 }
 
+.flex-top-left {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
 .flex-bottom {
   display: flex;
   align-items: flex-end;
   justify-content: center;
+}
+
+.flex-200w {
+  flex: 0 0 200px;
+}
+
+.flex-800w {
+  flex: 0 0 800px;
 }
 
 // debug

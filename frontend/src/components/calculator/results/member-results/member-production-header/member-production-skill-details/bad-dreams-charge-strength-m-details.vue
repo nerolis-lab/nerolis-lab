@@ -35,7 +35,7 @@
     <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img src="/images/unit/energy.png" height="20" width="20"></v-img>
-        <span class="font-weight-medium text-error text-no-wrap text-center ml-1">
+        <span class="font-weight-medium text-error-3 text-no-wrap text-center ml-1">
           {{ totalEnergyDegraded }}% total</span
         >
       </div>
@@ -80,7 +80,6 @@ export default defineComponent({
       )
     },
     totalEnergyDegraded() {
-      logger.debug(JSON.stringify(this.memberWithProduction.production.skillValue))
       return MathUtils.round(this.memberWithProduction.production.skillValue?.energy?.amountToTeam ?? 0, 1)
     },
     timeWindowFactor() {

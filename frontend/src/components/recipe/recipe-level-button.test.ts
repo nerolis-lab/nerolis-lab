@@ -3,7 +3,7 @@ import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
+import { commonMocks } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -20,9 +20,8 @@ describe('RecipeLevelEditor', () => {
   let wrapper: VueWrapper<InstanceType<typeof RecipeLevelEditor>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     wrapper = mount(RecipeLevelEditor, {
       props: {

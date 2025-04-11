@@ -1,6 +1,6 @@
 <template>
   <v-row dense class="frosted-glass mt-0 mx-0">
-    <v-col v-for="(recipe, index) in recipes" :key="recipe.name" cols="12">
+    <v-col v-for="(recipe, index) in recipes" :key="recipe.name" cols="12" class="px-2">
       <v-card rounded="xl" class="pa-2">
         <div class="recipe-grid">
           <!-- Row 1: Name (Left) / Chip (Right) -->

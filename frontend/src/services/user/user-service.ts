@@ -40,13 +40,10 @@ class UserServiceImpl {
     const response = (await serverAxios.patch<User>(`user`, updated)).data
     const userStore = useUserStore()
 
-    userStore.setUserData({
-      name: response.name,
-      email: userStore.email!,
-      externalId: response.external_id,
-      role: response.role,
-      avatar: response.avatar
-    })
+    userStore.name = response.name
+    userStore.externalId = response.external_id
+    userStore.role = response.role
+    userStore.avatar = response.avatar ?? 'default'
   }
 
   public async getRecipes(): Promise<GetRecipeLevelsResponse> {

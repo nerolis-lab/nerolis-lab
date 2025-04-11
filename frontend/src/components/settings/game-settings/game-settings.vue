@@ -1,115 +1,95 @@
 <template>
   <template v-if="!isLoggedIn">
-    <v-row dense class="mx-2 mt-4">
-      <v-col class="flex-center"> Changing your game settings requires you to be logged in. </v-col>
-    </v-row>
+    <SettingsCard title="Game Settings" icon="mdi-information">
+      <p class="text-body-2 mb-4">Changing your game settings requires you to be logged in.</p>
+    </SettingsCard>
   </template>
+
   <template v-else>
-    <v-row class="mt-4">
-      <v-col class="flex-center">
-        <v-divider />
-      </v-col>
-      <v-col cols="auto" class="flex-center text-h6 text-no-wrap text-strength">Area Bonus</v-col>
-      <v-col class="flex-center">
-        <v-divider />
-      </v-col>
-    </v-row>
+    <div class="game-settings-container">
+      <SettingsCard title="Area Bonus" icon="mdi-map-marker">
+        <v-row dense class="mx-2 flex-left">
+          <div class="area-and-bonus" v-for="islandData in islandBonusData" :key="islandData.shortName">
+            <v-avatar size="54" class="mr-2 area-image">
+              <v-img :src="islandImage({ island: islandData.island })" />
+            </v-avatar>
 
-    <v-row dense class="mx-2 justify-space-around">
-      <div class="area-and-bonus" v-for="islandData in islandBonusData">
-        <v-avatar size="54" class="mr-2 area-image">
-          <v-img :src="islandImage({ island: islandData.island })" />
-        </v-avatar>
+            <div class="mr-2 area-name">{{ islandData.island.name }}</div>
 
-        <div class="mr-2 area-name">{{ islandData.island.name }}</div>
+            <NumberInput
+              class="area-bonus-input"
+              density="default"
+              v-model="userStore.areaBonus[islandData.shortName]"
+              :disabled="!isLoggedIn"
+              :rules="[rules.minBonusRule, rules.maxBonusRule]"
+              :min="0"
+              :max="MAX_ISLAND_BONUS"
+              :loading="loadingStates[islandData.shortName]"
+              append-icon=""
+              suffix="%"
+              @update-number="updateAreaBonus(islandData.shortName)"
+            >
+              <template #label>
+                <span>Bonus</span>
+              </template>
+            </NumberInput>
+          </div>
+        </v-row>
+      </SettingsCard>
 
-        <NumberInput
-          class="area-bonus-input"
-          density="default"
-          v-model="userStore.areaBonus[islandData.shortName]"
-          :disabled="!isLoggedIn"
-          :rules="[rules.minBonusRule, rules.maxBonusRule]"
-          :min="0"
-          :max="MAX_ISLAND_BONUS"
-          :loading="loadingStates[islandData.shortName]"
-          append-icon=""
-          suffix="%"
-          @update-number="updateAreaBonus(islandData.shortName)"
-        >
-          <template #label>
-            <span>Bonus</span>
-          </template>
-        </NumberInput>
-      </div>
-    </v-row>
+      <SettingsCard title="Recipe Bonus" icon="mdi-chef-hat">
+        <v-row dense>
+          <v-col cols="12" class="flex-left">
+            <span>Set your recipe levels: </span>
+            <a class="btn-link" href="/recipes">Recipes</a>
+          </v-col>
+        </v-row>
+      </SettingsCard>
 
-    <v-row class="mt-4">
-      <v-col class="flex-center">
-        <v-divider />
-      </v-col>
-      <v-col cols="auto" class="flex-center text-h6 text-no-wrap text-strength">Recipe Bonus</v-col>
-      <v-col class="flex-center">
-        <v-divider />
-      </v-col>
-    </v-row>
+      <SettingsCard title="Pot Size" icon="mdi-pot">
+        <v-row dense class="flex-top-left">
+          <v-col cols="auto">
+            <v-btn icon @click="setPotSize(MIN_POT_SIZE)">Min</v-btn>
+          </v-col>
+          <v-col cols="auto" class="flex-center">
+            <v-btn icon="mdi-minus" @click="decreasePotSize" />
+          </v-col>
+          <v-col class="pot-size-input">
+            <NumberInput
+              v-model="userStore.potSize"
+              :min="MIN_POT_SIZE"
+              :max="MAX_POT_SIZE"
+              :step="3"
+              :loading="loadingPotSize"
+              @update-number="updatePotSize"
+              density="comfortable"
+              :hide-details="false"
+            >
+              <template #label>Size</template>
+            </NumberInput>
+          </v-col>
+          <v-col cols="auto" class="flex-center">
+            <v-btn icon="mdi-plus" @click="increasePotSize" />
+          </v-col>
+          <v-col cols="auto" class="flex-center">
+            <v-btn icon @click="setPotSize(MAX_POT_SIZE)">Max</v-btn>
+          </v-col>
+        </v-row>
 
-    <v-row dense>
-      <v-col cols="12" class="flex-center">
-        <span>Set your recipe levels: </span>
-        <a class="btn-link" href="/recipes">Recipes</a>
-      </v-col>
-    </v-row>
-
-    <v-row class="mt-4">
-      <v-col class="flex-center">
-        <v-divider />
-      </v-col>
-      <v-col cols="auto" class="flex-center text-h6 text-no-wrap text-strength">Pot Size</v-col>
-      <v-col class="flex-center">
-        <v-divider />
-      </v-col>
-    </v-row>
-
-    <v-row dense class="mt-4 flex-top">
-      <v-col cols="auto">
-        <v-btn icon @click="setPotSize(MIN_POT_SIZE)">Min</v-btn>
-      </v-col>
-      <v-col cols="auto" class="flex-center">
-        <v-btn icon="mdi-minus" @click="decreasePotSize" />
-      </v-col>
-      <v-col class="pot-size-input">
-        <NumberInput
-          v-model="userStore.potSize"
-          :min="MIN_POT_SIZE"
-          :max="MAX_POT_SIZE"
-          :step="3"
-          :loading="loadingPotSize"
-          @update-number="updatePotSize"
-          density="comfortable"
-          :hide-details="false"
-        >
-          <template #label>Size</template>
-        </NumberInput>
-      </v-col>
-      <v-col cols="auto" class="flex-center">
-        <v-btn icon="mdi-plus" @click="increasePotSize" />
-      </v-col>
-      <v-col cols="auto" class="flex-center">
-        <v-btn icon @click="setPotSize(MAX_POT_SIZE)">Max</v-btn>
-      </v-col>
-    </v-row>
-
-    <v-row dense>
-      <v-col cols="12" class="flex-center text-center fine-print">
-        Calculations will use this as your baseline and apply any relevant bonuses, such as Good Camp Tickets or Pokémon
-        skills, on top of this.
-      </v-col>
-    </v-row>
+        <v-row dense>
+          <v-col cols="12" class="fine-print">
+            Calculations will use this as your baseline and apply any relevant bonuses, such as Good Camp Tickets or
+            Pokémon skills, on top of this.
+          </v-col>
+        </v-row>
+      </SettingsCard>
+    </div>
   </template>
 </template>
 
 <script setup lang="ts">
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
+import SettingsCard from '@/components/settings/settings-card.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { UserService } from '@/services/user/user-service'
 import { islandImage } from '@/services/utils/image-utils'
@@ -195,6 +175,12 @@ function setPotSize(size: number) {
 <style lang="scss" scoped>
 .pot-size-input {
   max-width: 100px;
+}
+
+.game-settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .area-and-bonus {

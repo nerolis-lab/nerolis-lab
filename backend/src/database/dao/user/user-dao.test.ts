@@ -22,7 +22,7 @@ describe('UserDAO insert', () => {
   it('shall insert new entity', async () => {
     const user = await UserDAO.insert({
       friend_code: generateFriendCode(),
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       name: 'some-name',
       role: Roles.Default
@@ -41,7 +41,7 @@ describe('UserDAO insert', () => {
         last_login: expect.any(Date),
         name: 'some-name',
         role: 'default',
-        sub: 'some-sub',
+        google_id: 'some-google_id',
         updated_at: expect.any(Date),
         version: 1
       })
@@ -50,7 +50,7 @@ describe('UserDAO insert', () => {
 
   it('shall auto-generate friend_code as default', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       name: 'some-name',
       role: Roles.Default
@@ -68,23 +68,11 @@ describe('UserDAO insert', () => {
         last_login: expect.any(Date),
         name: 'some-name',
         role: 'default',
-        sub: 'some-sub',
+        google_id: 'some-google_id',
         updated_at: expect.any(Date),
         version: 1
       })
     ]);
-  });
-
-  it('shall fail to insert entity without sub', async () => {
-    await expect(
-      UserDAO.insert({
-        friend_code: generateFriendCode(),
-        external_id: uuid.v4(),
-        name: 'some-name',
-        sub: undefined as any,
-        role: Roles.Default
-      })
-    ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.sub/);
   });
 
   it('shall fail to insert entity without external_id', async () => {
@@ -93,17 +81,17 @@ describe('UserDAO insert', () => {
         friend_code: generateFriendCode(),
         external_id: undefined as any,
         name: 'some-name',
-        sub: 'some-sub',
+        google_id: 'some-google_id',
         role: Roles.Default
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: user.external_id/);
   });
 
-  it('shall fail to insert entity with sub that already exists', async () => {
+  it('shall fail to insert entity with google_id that already exists', async () => {
     await UserDAO.insert({
       friend_code: generateFriendCode(),
       external_id: uuid.v4(),
-      sub: 'sub1',
+      google_id: 'google_id1',
       name: 'some-name',
       role: Roles.Default
     });
@@ -111,7 +99,7 @@ describe('UserDAO insert', () => {
       UserDAO.insert({
         friend_code: generateFriendCode(),
         external_id: uuid.v4(),
-        sub: 'sub1',
+        google_id: 'google_id2',
         name: 'some-name',
         role: Roles.Default
       })
@@ -123,7 +111,7 @@ describe('UserDAO update', () => {
   it('shall update entity', async () => {
     const user = await UserDAO.insert({
       friend_code: generateFriendCode(),
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       name: 'some-name',
       role: Roles.Default
@@ -143,7 +131,7 @@ describe('UserDAO update', () => {
         last_login: expect.any(Date),
         name: 'updated-name',
         role: 'default',
-        sub: 'some-sub',
+        google_id: 'some-google_id',
         updated_at: expect.any(Date),
         version: 2
       })

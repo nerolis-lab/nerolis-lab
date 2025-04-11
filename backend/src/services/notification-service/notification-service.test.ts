@@ -15,7 +15,7 @@ const createUser = async (name: string, friend_code: string) => {
     name,
     friend_code,
     role: Roles.Default,
-    sub: uuid.v4()
+    google_id: uuid.v4()
   });
 };
 

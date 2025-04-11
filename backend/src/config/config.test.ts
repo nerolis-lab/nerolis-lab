@@ -9,15 +9,19 @@ describe('config', () => {
     expect(backendConfig.config).toMatchInlineSnapshot(`
       {
         "DATABASE_MIGRATION": undefined,
-        "DATABASE_NAME": "pokemonsleep",
-        "DB_HOST": undefined,
-        "DB_PASS": undefined,
-        "DB_PORT": undefined,
-        "DB_USER": undefined,
+        "DATABASE_NAME": "Missing env variable for DATABASE_NAME, you can add it to backend/.env",
+        "DB_HOST": "Missing env variable for DB_HOST, you can add it to backend/.env",
+        "DB_PASS": "Missing env variable for DB_PASS, you can add it to backend/.env",
+        "DB_PORT": "Missing env variable for DB_PORT, you can add it to backend/.env",
+        "DB_USER": "Missing env variable for DB_USER, you can add it to backend/.env",
+        "DISCORD_CLIENT_ID": "Missing env variable for DISCORD_CLIENT_ID, you can add it to backend/.env",
+        "DISCORD_CLIENT_SECRET": "Missing env variable for DISCORD_CLIENT_SECRET, you can add it to backend/.env",
         "GENERATE_TIERLIST": false,
-        "GOOGLE_CLIENT_ID": undefined,
-        "GOOGLE_CLIENT_SECRET": undefined,
+        "GOOGLE_CLIENT_ID": "Missing env variable for GOOGLE_CLIENT_ID, you can add it to backend/.env",
+        "GOOGLE_CLIENT_SECRET": "Missing env variable for GOOGLE_CLIENT_SECRET, you can add it to backend/.env",
         "NODE_ENV": "DEV",
+        "PATREON_CLIENT_ID": "Missing env variable for PATREON_CLIENT_ID, you can add it to backend/.env",
+        "PATREON_CLIENT_SECRET": "Missing env variable for PATREON_CLIENT_SECRET, you can add it to backend/.env",
         "PORT": 3000,
         "ROLLBACK_BATCHES": undefined,
       }
@@ -38,6 +42,10 @@ describe('config', () => {
     process.env.ROLLBACK_BATCHES = '3';
     process.env.GOOGLE_CLIENT_ID = 'some-google-id';
     process.env.GOOGLE_CLIENT_SECRET = 'some-google-secret';
+    process.env.DISCORD_CLIENT_ID = 'some-discord-id';
+    process.env.DISCORD_CLIENT_SECRET = 'some-discord-secret';
+    process.env.PATREON_CLIENT_ID = 'some-patreon-id';
+    process.env.PATREON_CLIENT_SECRET = 'some-patreon-secret';
 
     expect(backendConfig.config).toMatchInlineSnapshot(`
       {
@@ -47,10 +55,14 @@ describe('config', () => {
         "DB_PASS": "some-pass",
         "DB_PORT": "1",
         "DB_USER": "some-user",
+        "DISCORD_CLIENT_ID": "some-discord-id",
+        "DISCORD_CLIENT_SECRET": "some-discord-secret",
         "GENERATE_TIERLIST": false,
         "GOOGLE_CLIENT_ID": "some-google-id",
         "GOOGLE_CLIENT_SECRET": "some-google-secret",
         "NODE_ENV": "DEV",
+        "PATREON_CLIENT_ID": "some-patreon-id",
+        "PATREON_CLIENT_SECRET": "some-patreon-secret",
         "PORT": "2",
         "ROLLBACK_BATCHES": 3,
       }

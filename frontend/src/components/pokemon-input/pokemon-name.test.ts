@@ -1,16 +1,14 @@
 import PokemonName from '@/components/pokemon-input/pokemon-name.vue'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('PokemonName', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonName>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-    const mockPokemon = createMockPokemon({ name: 'Some name' })
+    const mockPokemon = mocks.createMockPokemon({ name: 'Some name' })
     wrapper = mount(PokemonName, { props: { pokemonInstance: mockPokemon } })
   })
 
@@ -26,7 +24,7 @@ describe('PokemonName', () => {
   })
 
   it('opens edit dialog on button click', async () => {
-    const mockPokemon = createMockPokemon({ name: 'Bernard' })
+    const mockPokemon = mocks.createMockPokemon({ name: 'Bernard' })
     await wrapper.setProps({ pokemonInstance: mockPokemon })
 
     const button = wrapper.find('button')
@@ -64,7 +62,7 @@ describe('PokemonName', () => {
   })
 
   it('rerolls name correctly', async () => {
-    const mockPokemon = createMockPokemon({ name: 'Bernard' })
+    const mockPokemon = mocks.createMockPokemon({ name: 'Bernard' })
     await wrapper.setProps({ pokemonInstance: mockPokemon })
     await wrapper.setData({ isEditDialogOpen: true })
 

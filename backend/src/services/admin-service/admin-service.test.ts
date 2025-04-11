@@ -19,7 +19,7 @@ afterEach(() => {
 describe('getUsers', () => {
   it('shall return all users', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'some-name',

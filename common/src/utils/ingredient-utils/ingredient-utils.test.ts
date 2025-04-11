@@ -12,6 +12,7 @@ import {
 } from '../../domain/ingredient/ingredients';
 import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
 import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
+import type { Logger } from '../../prototype/logger/logger';
 import { commonMocks } from '../../vitest';
 import {
   calculateAveragePokemonIngredientSet,
@@ -767,6 +768,12 @@ const mockRecipeList = [
 ];
 
 describe('updateIngredientBonus', () => {
+  beforeEach(() => {
+    global.logger = {
+      error: vi.fn()
+    } as unknown as Logger;
+  });
+
   it('should correctly set the bonus for ingredients in recipes', () => {
     mockRecipeList.forEach((recipe) => {
       updateMaxIngredientBonus(recipe.ingredients, recipe.bonus);
@@ -783,5 +790,6 @@ describe('updateIngredientBonus', () => {
     for (const [ingredientName, bonus] of Object.entries(expectedBonuses)) {
       expect(getMaxIngredientBonus(ingredientName)).toBe(bonus);
     }
+    expect(global.logger.error).toHaveBeenCalledWith('Error: Max bonus for ingredient "Cheese" not found.');
   });
 });

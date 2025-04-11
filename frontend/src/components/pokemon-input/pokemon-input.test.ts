@@ -1,12 +1,11 @@
 import PokemonInput from '@/components/pokemon-input/pokemon-input.vue'
 import { useUserStore } from '@/stores/user-store'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import {
   CarrySizeUtils,
-  mockIngredientSet,
+  commonMocks,
   nature,
   RandomUtils,
   SNEASEL,
@@ -21,11 +20,9 @@ describe('PokemonInput', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonInput>>
   console.error = vi.fn()
 
-  const preExistingMon: PokemonInstanceExt = createMockPokemon()
+  const preExistingMon: PokemonInstanceExt = mocks.createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     wrapper = mount(PokemonInput, {
       props: {
         preSelectedPokemonInstance: preExistingMon
@@ -57,11 +54,7 @@ describe('PokemonInput', () => {
 
   it('toggles save state correctly if logged in', async () => {
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'token1',
-      expiryDate: 10,
-      refreshToken: 'token2'
-    })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     const saveButton = wrapper.find('#saveIcon')
     expect(wrapper.vm.pokemonInstance.saved).toBe(false)
 
@@ -126,7 +119,7 @@ describe('PokemonInput', () => {
   })
 
   it('updates ingredient correctly', async () => {
-    const testIngredient = mockIngredientSet()
+    const testIngredient = commonMocks.mockIngredientSet()
     wrapper.vm.updateIngredient({ ingredientSet: testIngredient, ingredientLevel: 0 })
     expect(wrapper.vm.pokemonInstance.ingredients[0]).toEqual({ ...testIngredient, level: 0 })
   })

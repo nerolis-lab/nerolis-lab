@@ -48,13 +48,60 @@ describe('prettifyTime', () => {
 })
 
 describe('sleepScore', () => {
-  it('calculates sleep score correctly', () => {
+  it('calculates sleep score correctly for 8 hours', () => {
     expect(
       TimeUtils.sleepScore({
         bedtime: '22:00',
         wakeup: '06:00'
       })
     ).toBe(94) // 8 hours of sleep
+  })
+
+  it('calculates sleep score correctly for 4 hours and 15 minutes', () => {
+    expect(
+      TimeUtils.sleepScore({
+        bedtime: '22:00',
+        wakeup: '02:15'
+      })
+    ).toBe(50) // 4 hours and 15 minutes of sleep
+  })
+
+  it('calculates sleep score correctly for full night', () => {
+    expect(
+      TimeUtils.sleepScore({
+        bedtime: '22:00',
+        wakeup: '06:30'
+      })
+    ).toBe(100) // 8.5 hours of sleep
+  })
+
+  it('calulcates sleep score for sleepless night', () => {
+    expect(
+      TimeUtils.sleepScore({
+        bedtime: '22:00',
+        wakeup: '22:00'
+      })
+    ).toBe(0) // no sleep
+  })
+
+  it('caps sleep score at 100', () => {
+    expect(
+      TimeUtils.sleepScore({
+        bedtime: '22:00',
+        wakeup: '10:00'
+      })
+    ).toBe(100) // 12 hours of sleep
+  })
+
+  it('calculates sleep score correctly for 1 hour and 15 minutes', () => {
+    expect(
+      Math.round(
+        TimeUtils.sleepScore({
+          bedtime: '22:00',
+          wakeup: '23:15'
+        })
+      )
+    ).toBe(15) // 1 hour and 15 minutes of sleep
   })
 })
 
@@ -77,5 +124,88 @@ describe('prettifySeconds', () => {
 
   it('shall format correctly if only minutes 0', () => {
     expect(TimeUtils.prettifySeconds(3601)).toBe('01h 00m 01s')
+  })
+})
+
+describe('calculateSleepDuration', () => {
+  it('formats 8 hours correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '06:00'
+      })
+    ).toBe('8 hours')
+  })
+
+  it('formats 4 hours and 15 minutes correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '02:15'
+      })
+    ).toBe('4 hours and 15 minutes')
+  })
+
+  it('formats 8 hours and 30 minutes correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '06:30'
+      })
+    ).toBe('8 hours and 30 minutes')
+  })
+
+  it('formats no sleep correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '22:00'
+      })
+    ).toBe('0 minutes')
+  })
+
+  it('formats long sleep correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '10:00'
+      })
+    ).toBe('12 hours')
+  })
+
+  it('formats 1 hour and 15 minutes correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '23:15'
+      })
+    ).toBe('1 hour and 15 minutes')
+  })
+
+  it('handles crossing midnight correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '23:30',
+        wakeup: '00:15'
+      })
+    ).toBe('45 minutes')
+  })
+
+  it('formats single hour correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '23:00'
+      })
+    ).toBe('1 hour')
+  })
+
+  it('formats single minute correctly', () => {
+    expect(
+      TimeUtils.calculateSleepDuration({
+        bedtime: '22:00',
+        wakeup: '22:01'
+      })
+    ).toBe('1 minute')
   })
 })

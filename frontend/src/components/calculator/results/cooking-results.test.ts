@@ -1,10 +1,9 @@
 import CookingResults, { type CookedRecipeResultDetails } from '@/components/calculator/results/cooking-results.vue'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockTeamProduction } from '@/vitest'
+import { mocks } from '@/vitest'
 import { mockCookingResult } from '@/vitest/mocks/calculator/mock-cooking-result'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { curry, ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -13,7 +12,6 @@ describe('CookingResults', () => {
   let wrapper: VueWrapper<InstanceType<typeof CookingResults>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(CookingResults)
   })
 
@@ -25,7 +23,7 @@ describe('CookingResults', () => {
 
   it('renders correctly with initial data', async () => {
     const teamStore = useTeamStore()
-    teamStore.getCurrentTeam.production = createMockTeamProduction()
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction()
     await nextTick()
 
     const strengthSpan = wrapper.find('#weeklyStrength')
@@ -40,7 +38,7 @@ describe('CookingResults', () => {
 
   it('renders progress bars for each recipe correctly', async () => {
     const teamStore = useTeamStore()
-    teamStore.getCurrentTeam.production = createMockTeamProduction({
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction({
       team: {
         berries: [],
         ingredients: [],
@@ -79,7 +77,7 @@ describe('CookingResults', () => {
             sundayStrength: 0,
             weeklyStrength: 0
           },
-          critInfo: createMockTeamProduction().team.cooking!.critInfo,
+          critInfo: mocks.createMockTeamProduction().team.cooking!.critInfo,
           mealTimes: {
             breakfast: { hour: 8, minute: 0, second: 0 },
             lunch: { hour: 12, minute: 0, second: 0 },
@@ -102,7 +100,7 @@ describe('CookingResults', () => {
 
   it('renders daily team ingredients section correctly', async () => {
     const teamStore = useTeamStore()
-    teamStore.getCurrentTeam.production = createMockTeamProduction({
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction({
       team: {
         ingredients: [
           { amount: 5, ingredient: ingredient.SNOOZY_TOMATO },
@@ -126,9 +124,9 @@ describe('CookingResults', () => {
 
   it('computes and formats cookingStrength correctly', async () => {
     const teamStore = useTeamStore()
-    teamStore.getCurrentTeam.production = createMockTeamProduction({
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction({
       team: {
-        ...createMockTeamProduction().team,
+        ...mocks.createMockTeamProduction().team,
         cooking: mockCookingResult({ curry: { cookedRecipes: [], sundayStrength: 0, weeklyStrength: 3000 } })
       }
     })
@@ -140,9 +138,9 @@ describe('CookingResults', () => {
   it('toggles recipe details correctly', async () => {
     const teamStore = useTeamStore()
 
-    teamStore.getCurrentTeam.production = createMockTeamProduction({
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction({
       team: {
-        ...createMockTeamProduction().team,
+        ...mocks.createMockTeamProduction().team,
         cooking: mockCookingResult({
           curry: {
             cookedRecipes: [
@@ -171,9 +169,9 @@ describe('CookingResults', () => {
 
   it('calculates total cooks correctly', async () => {
     const teamStore = useTeamStore()
-    teamStore.getCurrentTeam.production = createMockTeamProduction({
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction({
       team: {
-        ...createMockTeamProduction().team,
+        ...mocks.createMockTeamProduction().team,
         cooking: {
           ...mockCookingResult(),
           curry: {

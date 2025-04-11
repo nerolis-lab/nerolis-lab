@@ -1,48 +1,11 @@
 import router from '@/router/router'
-import { GoogleService } from '@/services/login/google-service'
+import { AuthService } from '@/services/login/auth-service'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
-import { createPinia, setActivePinia } from 'pinia'
-import { MAX_POT_SIZE, Roles } from 'sleepapi-common'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { googleLogout } from 'vue3-google-login'
-
-vi.mock('vue3-google-login', () => ({
-  googleLogout: vi.fn()
-}))
+import { AuthProvider, commonMocks, Roles } from 'sleepapi-common'
+import { describe, expect, it, vi } from 'vitest'
 
 describe('User Store', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
-  it('should migrate the store', () => {
-    const userStore = useUserStore()
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    userStore.role = null as any
-    expect(userStore.role).toBeNull()
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    userStore.areaBonus = null as any
-    expect(userStore.areaBonus).toBeNull()
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    userStore.potSize = null as any
-    expect(userStore.potSize).toBeNull()
-
-    userStore.migrate()
-    expect(userStore.role).toBe(Roles.Default)
-    expect(userStore.areaBonus).toEqual({
-      cyan: 0,
-      greengrass: 0,
-      lapis: 0,
-      powerplant: 0,
-      snowdrop: 0,
-      taupe: 0
-    })
-    expect(userStore.potSize).toBe(MAX_POT_SIZE)
-  })
-
   it('should have expected default state', () => {
     const userStore = useUserStore()
     expect(userStore.$state).toMatchInlineSnapshot(`
@@ -55,58 +18,157 @@ describe('User Store', () => {
           "snowdrop": 0,
           "taupe": 0,
         },
+        "auth": null,
         "avatar": null,
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
+        "potSize": 69,
         "role": "default",
-        "tokens": null,
+        "supporterSince": null,
       }
     `)
 
     expect(userStore.loggedIn).toBeFalsy()
   })
 
-  it('setUserData should update the name and avatar', () => {
-    const userStore = useUserStore()
-    userStore.setUserData({
-      name: 'some name',
-      avatar: 'some avatar',
-      email: 'some email',
-      externalId: 'some id',
-      role: Roles.Default
+  describe('Getters', () => {
+    it('should correctly identify admin status', () => {
+      const userStore = useUserStore()
+      expect(userStore.isAdmin).toBe(false)
+
+      userStore.role = Roles.Admin
+      expect(userStore.isAdmin).toBe(true)
     })
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
-        "avatar": "some avatar",
-        "email": "some email",
-        "externalId": "some id",
-        "name": "some name",
-        "potSize": ${MAX_POT_SIZE},
-        "role": "default",
-        "tokens": null,
-      }
-    `)
+
+    it('should correctly identify supporter status', () => {
+      const userStore = useUserStore()
+      expect(userStore.isSupporter).toBe(false)
+
+      userStore.role = Roles.Supporter
+      expect(userStore.isSupporter).toBe(true)
+    })
+
+    it('should correctly identify admin or supporter status', () => {
+      const userStore = useUserStore()
+      expect(userStore.isAdminOrSupporter).toBe(false)
+
+      userStore.role = Roles.Admin
+      expect(userStore.isAdminOrSupporter).toBe(true)
+
+      userStore.role = Roles.Supporter
+      expect(userStore.isAdminOrSupporter).toBe(true)
+
+      userStore.role = Roles.Default
+      expect(userStore.isAdminOrSupporter).toBe(false)
+    })
+
+    it('should return correct role data', () => {
+      const userStore = useUserStore()
+
+      // Default role
+      expect(userStore.roleData).toEqual({
+        color: 'surface',
+        icon: '',
+        text: ''
+      })
+
+      userStore.role = Roles.Admin
+      expect(userStore.roleData).toEqual({
+        color: 'primary',
+        icon: 'mdi-crown',
+        text: 'Admin'
+      })
+
+      userStore.role = Roles.Supporter
+      expect(userStore.roleData).toEqual({
+        color: 'supporter',
+        icon: 'mdi-heart',
+        text: 'Supporter'
+      })
+    })
+
+    it('should count number of linked providers', () => {
+      const userStore = useUserStore()
+      expect(userStore.numberOfLinkedProviders).toBe(0)
+
+      userStore.setInitialLoginData(
+        commonMocks.loginResponse({
+          auth: {
+            activeProvider: AuthProvider.Google,
+            linkedProviders: {
+              [AuthProvider.Google]: { linked: true, identifier: 'test@example.com' },
+              [AuthProvider.Discord]: { linked: true },
+              [AuthProvider.Patreon]: { linked: false }
+            },
+            tokens: {
+              accessToken: 'token',
+              refreshToken: 'refresh',
+              expiryDate: 0
+            }
+          }
+        })
+      )
+      expect(userStore.numberOfLinkedProviders).toBe(2)
+    })
+
+    it('should check if provider is linked', () => {
+      const userStore = useUserStore()
+      expect(userStore.isProviderLinked(AuthProvider.Google)).toBe(false)
+
+      userStore.setInitialLoginData(
+        commonMocks.loginResponse({
+          auth: {
+            activeProvider: AuthProvider.Google,
+            linkedProviders: {
+              [AuthProvider.Google]: { linked: true, identifier: 'test@example.com' },
+              [AuthProvider.Discord]: { linked: false },
+              [AuthProvider.Patreon]: { linked: true }
+            },
+            tokens: {
+              accessToken: 'token',
+              refreshToken: 'refresh',
+              expiryDate: 0
+            }
+          }
+        })
+      )
+
+      expect(userStore.isProviderLinked(AuthProvider.Google)).toBe(true)
+      expect(userStore.isProviderLinked(AuthProvider.Discord)).toBe(false)
+      expect(userStore.isProviderLinked(AuthProvider.Patreon)).toBe(true)
+    })
   })
 
-  it('setTokens should update the token info', () => {
+  it('setInitialLoginData should update the name and avatar', () => {
     const userStore = useUserStore()
-
-    userStore.setTokens({
-      accessToken: 'some access token',
-      refreshToken: 'some refresh token',
-      expiryDate: 10
+    userStore.setInitialLoginData({
+      name: 'some name',
+      avatar: 'some avatar',
+      externalId: 'some id',
+      role: Roles.Default,
+      friendCode: 'some friend code',
+      auth: {
+        activeProvider: AuthProvider.Google,
+        linkedProviders: {
+          [AuthProvider.Google]: {
+            linked: true,
+            identifier: 'some-email'
+          },
+          [AuthProvider.Discord]: {
+            linked: false
+          },
+          [AuthProvider.Patreon]: {
+            linked: false
+          }
+        },
+        tokens: {
+          accessToken: 'some access token',
+          refreshToken: 'some refresh token',
+          expiryDate: 0
+        }
+      }
     })
-
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
         "areaBonus": {
@@ -117,17 +179,33 @@ describe('User Store', () => {
           "snowdrop": 0,
           "taupe": 0,
         },
-        "avatar": null,
-        "email": null,
-        "externalId": null,
-        "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
-        "role": "default",
-        "tokens": {
-          "accessToken": "some access token",
-          "expiryDate": 10,
-          "refreshToken": "some refresh token",
+        "auth": {
+          "activeProvider": "google",
+          "linkedProviders": {
+            "discord": {
+              "linked": false,
+            },
+            "google": {
+              "identifier": "some-email",
+              "linked": true,
+            },
+            "patreon": {
+              "linked": false,
+            },
+          },
+          "tokens": {
+            "accessToken": "some access token",
+            "expiryDate": 0,
+            "refreshToken": "some refresh token",
+          },
         },
+        "avatar": "some avatar",
+        "externalId": "some id",
+        "friendCode": "some friend code",
+        "name": "some name",
+        "potSize": 69,
+        "role": "default",
+        "supporterSince": null,
       }
     `)
   })
@@ -146,7 +224,8 @@ describe('User Store', () => {
         snowdrop: 50,
         taupe: 60
       },
-      potSize: 25
+      potSize: 25,
+      supporterSince: '2024-01-01'
     })
 
     expect(userStore.$state).toMatchInlineSnapshot(`
@@ -159,13 +238,14 @@ describe('User Store', () => {
           "snowdrop": 50,
           "taupe": 60,
         },
+        "auth": null,
         "avatar": "new avatar",
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "new name",
         "potSize": 25,
         "role": "admin",
-        "tokens": null,
+        "supporterSince": "2024-01-01",
       }
     `)
   })
@@ -183,7 +263,8 @@ describe('User Store', () => {
         snowdrop: 55,
         taupe: 65
       },
-      potSize: 30
+      potSize: 30,
+      supporterSince: '2024-02-01'
     })
 
     const userStore = useUserStore()
@@ -200,31 +281,21 @@ describe('User Store', () => {
           "snowdrop": 55,
           "taupe": 65,
         },
+        "auth": null,
         "avatar": "synced avatar",
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "synced name",
         "potSize": 30,
         "role": "admin",
-        "tokens": null,
+        "supporterSince": "2024-02-01",
       }
     `)
   })
 
   it('reset should return name and avatar to defaults', () => {
     const userStore = useUserStore()
-    userStore.setUserData({
-      name: 'some name',
-      avatar: 'some avatar',
-      email: 'some email',
-      externalId: 'some id',
-      role: Roles.Default
-    })
-    userStore.setTokens({
-      accessToken: 'some access token',
-      refreshToken: 'some refresh token',
-      expiryDate: 10
-    })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     userStore.$reset()
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
@@ -236,22 +307,27 @@ describe('User Store', () => {
           "snowdrop": 0,
           "taupe": 0,
         },
+        "auth": null,
         "avatar": null,
-        "email": null,
         "externalId": null,
+        "friendCode": null,
         "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
+        "potSize": 69,
         "role": "default",
-        "tokens": null,
+        "supporterSince": null,
       }
     `)
   })
 
   it('should call Google on login and update user data', async () => {
-    GoogleService.login = vi.fn().mockResolvedValue({
-      access_token: 'some access token',
-      refresh_token: 'some refresh token',
-      expiry_date: '10',
+    AuthService.login = vi.fn().mockResolvedValue({
+      auth: {
+        google: {
+          access_token: 'some access token',
+          refresh_token: 'some refresh token',
+          expiry_date: '10'
+        }
+      },
       name: 'some name',
       avatar: 'some avatar',
       role: 'default'
@@ -260,140 +336,76 @@ describe('User Store', () => {
     router.go = vi.fn()
 
     const userStore = useUserStore()
-    await userStore.login('some auth code')
+    await userStore.login({
+      authCode: 'some auth code',
+      provider: AuthProvider.Google,
+      originalRoute: 'http://localhost:3000/original',
+      redirectUri: 'http://localhost:3000/patreon'
+    })
 
-    expect(GoogleService.login).toHaveBeenCalledWith('some auth code')
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
-        "avatar": "some avatar",
-        "email": undefined,
-        "externalId": undefined,
-        "name": "some name",
-        "potSize": ${MAX_POT_SIZE},
-        "role": "default",
-        "tokens": {
-          "accessToken": "some access token",
-          "expiryDate": "10",
-          "refreshToken": "some refresh token",
-        },
-      }
-    `)
-    expect(router.go).toHaveBeenCalledWith(0)
+    expect(AuthService.login).toHaveBeenCalledWith('some auth code', 'google', 'http://localhost:3000/patreon')
   })
 
   it('should refresh tokens if expired', async () => {
-    GoogleService.refresh = vi.fn().mockResolvedValue({
+    AuthService.refresh = vi.fn().mockResolvedValue({
       access_token: 'new access token',
       expiry_date: 10
     })
 
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'old access token',
-      refreshToken: 'old refresh token',
-      expiryDate: -10
-    })
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'some-email'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            },
+            [AuthProvider.Patreon]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'old access token',
+            refreshToken: 'refresh token',
+            expiryDate: Date.now() - 1000 // expired
+          }
+        }
+      })
+    )
 
     await userStore.refresh()
 
-    expect(GoogleService.refresh).toHaveBeenCalledWith('old refresh token')
-    expect(userStore.tokens).toMatchObject({
-      accessToken: 'new access token',
-      refreshToken: 'old refresh token',
-      expiryDate: 10
-    })
+    expect(AuthService.refresh).toHaveBeenCalledWith('refresh token', 'google', undefined)
+    expect(userStore.auth?.tokens.accessToken).toBe('new access token')
+    expect(userStore.auth?.tokens.refreshToken).toBe('refresh token')
+    expect(userStore.auth?.tokens.expiryDate).toBe(10)
   })
 
-  it('should not refresh tokens if not expired', async () => {
-    GoogleService.refresh = vi.fn()
+  describe('unlinkProvider', () => {
+    it('should call auth service and logout', async () => {
+      AuthService.unlinkProvider = vi.fn()
+      const userStore = useUserStore()
+      const logoutSpy = vi.spyOn(userStore, 'logout')
 
-    const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: Date.now() + 3600 * 1000 // 1 hour later
+      await userStore.unlinkProvider(AuthProvider.Google)
+
+      expect(AuthService.unlinkProvider).toHaveBeenCalledWith(AuthProvider.Google)
+      expect(logoutSpy).toHaveBeenCalled()
     })
 
-    await userStore.refresh()
+    it('should handle errors', async () => {
+      AuthService.unlinkProvider = vi.fn().mockRejectedValue(new Error('Failed to unlink'))
+      const userStore = useUserStore()
+      const logoutSpy = vi.spyOn(userStore, 'logout')
 
-    expect(GoogleService.refresh).not.toHaveBeenCalled()
-  })
-
-  it('should clear user data if no tokens are available', async () => {
-    const userStore = useUserStore()
-    userStore.$reset = vi.fn()
-
-    userStore.tokens = null
-
-    await userStore.refresh()
-
-    expect(userStore.$reset).toHaveBeenCalled()
-  })
-
-  it('should logout on refresh error', async () => {
-    GoogleService.refresh = vi.fn().mockRejectedValue(new Error('Refresh error'))
-
-    const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: -10
+      await expect(userStore.unlinkProvider(AuthProvider.Google)).rejects.toThrow('Failed to unlink')
+      expect(AuthService.unlinkProvider).toHaveBeenCalledWith(AuthProvider.Google)
+      expect(logoutSpy).not.toHaveBeenCalled()
     })
-
-    userStore.logout = vi.fn()
-
-    await userStore.refresh()
-
-    expect(userStore.logout).toHaveBeenCalled()
-  })
-
-  it('should clean up on logout', () => {
-    router.push = vi.fn()
-
-    const userStore = useUserStore()
-    userStore.setUserData({
-      name: 'some name',
-      avatar: 'some avatar',
-      email: 'some email',
-      externalId: 'some id',
-      role: Roles.Default
-    })
-    userStore.setTokens({
-      accessToken: 'some access token',
-      refreshToken: 'some refresh token',
-      expiryDate: 10
-    })
-
-    userStore.logout()
-
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
-        "avatar": null,
-        "email": null,
-        "externalId": null,
-        "name": "Guest",
-        "potSize": ${MAX_POT_SIZE},
-        "role": "default",
-        "tokens": null,
-      }
-    `)
-    expect(googleLogout).toHaveBeenCalled()
-    expect(router.push).toHaveBeenCalledWith('/')
   })
 })

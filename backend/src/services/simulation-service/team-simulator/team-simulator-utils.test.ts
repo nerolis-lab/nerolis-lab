@@ -1,12 +1,12 @@
-import { mocks } from '@src/bun/index.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamMemberSettingsExt } from 'sleepapi-common';
-import { berry, ingredient, mockPokemon, nature, Optimal } from 'sleepapi-common';
+import { berry, commonMocks, ingredient, nature, Optimal } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculateSkillPercentage', () => {
   const mockPokemonSet: PokemonWithIngredients = mocks.pokemonWithIngredients({
-    pokemon: mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
+    pokemon: commonMocks.mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
   });
   const member: TeamMemberExt = mocks.teamMemberExt({ pokemonWithIngredients: mockPokemonSet });
 
@@ -19,7 +19,7 @@ describe('calculateSkillPercentage', () => {
 
 describe('calculateIngredientPercentage', () => {
   const mockPokemonSet: PokemonWithIngredients = mocks.pokemonWithIngredients({
-    pokemon: mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
+    pokemon: commonMocks.mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
   });
   const member: TeamMemberExt = mocks.teamMemberExt({ pokemonWithIngredients: mockPokemonSet });
 
@@ -35,7 +35,7 @@ describe('calculateIngredientPercentage', () => {
 
 describe('calculateHelpSpeedBeforeEnergy', () => {
   const mockPokemonSet: PokemonWithIngredients = mocks.pokemonWithIngredients({
-    pokemon: mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
+    pokemon: commonMocks.mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
   });
   const member: TeamMemberExt = mocks.teamMemberExt({ pokemonWithIngredients: mockPokemonSet });
 
@@ -56,7 +56,7 @@ describe('calculateAverageProduce', () => {
 
   describe('ingredient Pokémon', () => {
     const mockTyranitar: PokemonWithIngredients = mocks.pokemonWithIngredients({
-      pokemon: mockPokemon({
+      pokemon: commonMocks.mockPokemon({
         frequency: 2700,
         ingredientPercentage: 26.6,
         skillPercentage: 5.2,
@@ -67,9 +67,9 @@ describe('calculateAverageProduce', () => {
         carrySize: 19
       }),
       ingredientList: [
-        mocks.mockIngredientSet({ amount: 2, ingredient: ingredient.WARMING_GINGER }),
-        mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.WARMING_GINGER }),
-        mocks.mockIngredientSet({ amount: 7, ingredient: ingredient.WARMING_GINGER })
+        commonMocks.mockIngredientSet({ amount: 2, ingredient: ingredient.WARMING_GINGER }),
+        commonMocks.mockIngredientSet({ amount: 5, ingredient: ingredient.WARMING_GINGER }),
+        commonMocks.mockIngredientSet({ amount: 7, ingredient: ingredient.WARMING_GINGER })
       ]
     });
     const member: TeamMemberExt = mocks.teamMemberExt({ pokemonWithIngredients: mockTyranitar });
@@ -175,7 +175,7 @@ describe('calculateAverageProduce', () => {
 
 describe('countMembersWithSubskill', () => {
   const mockPokemonSet: PokemonWithIngredients = mocks.pokemonWithIngredients({
-    pokemon: mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
+    pokemon: commonMocks.mockPokemon({ frequency: 3600, ingredientPercentage: 20, skillPercentage: 2 })
   });
   const member1: TeamMemberExt = mocks.teamMemberExt({
     pokemonWithIngredients: mockPokemonSet,

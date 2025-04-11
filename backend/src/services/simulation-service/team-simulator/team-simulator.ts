@@ -24,16 +24,16 @@ import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type {
-  CalculateTeamResponse,
-  MemberProductionBase,
-  SimpleTeamResult,
-  TeamMemberExt,
-  TeamSettingsExt,
-  Time,
-  TimePeriod
+import {
+  commonMocks,
+  type CalculateTeamResponse,
+  type MemberProductionBase,
+  type SimpleTeamResult,
+  type TeamMemberExt,
+  type TeamSettingsExt,
+  type Time,
+  type TimePeriod
 } from 'sleepapi-common';
-import { mockMainskill } from 'sleepapi-common';
 
 export class TeamSimulator {
   private run = 0;
@@ -106,7 +106,7 @@ export class TeamSimulator {
         rng: this.rng
       });
       this.memberStates.push(memberState);
-      if (!member.pokemonWithIngredients.pokemon.skill.isSkill(mockMainskill)) {
+      if (!member.pokemonWithIngredients.pokemon.skill.isSkill(commonMocks.mockMainskill)) {
         this.memberStatesWithoutFillers.push(memberState);
       }
     }

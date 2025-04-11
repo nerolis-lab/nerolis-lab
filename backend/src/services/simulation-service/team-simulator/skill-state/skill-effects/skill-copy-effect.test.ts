@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
+import { mocks } from '@src/vitest/index.js';
 import type { Mainskill } from 'sleepapi-common';
 import { mainskill } from 'sleepapi-common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';

@@ -1,11 +1,10 @@
 import TeamResults from '@/components/calculator/results/team-results.vue'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProductionExt, createMockPokemon, createMockTeamProduction } from '@/vitest'
+import { mocks } from '@/vitest'
 import { mockCookingResult } from '@/vitest/mocks/calculator/mock-cooking-result'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { berry, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -14,7 +13,6 @@ describe('TeamResults', () => {
   let wrapper: VueWrapper<InstanceType<typeof TeamResults>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(TeamResults)
   })
 
@@ -37,7 +35,7 @@ describe('TeamResults', () => {
           },
           salad: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
           dessert: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
-          critInfo: createMockTeamProduction().team.cooking!.critInfo,
+          critInfo: mocks.createMockTeamProduction().team.cooking!.critInfo,
           mealTimes: mockCookingResult().mealTimes
         },
         berries: [],
@@ -56,7 +54,7 @@ describe('TeamResults', () => {
   it('renders the stacked bar with correct percentages', async () => {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    pokemonStore.upsertLocalPokemon(createMockPokemon())
+    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
 
     teamStore.getCurrentTeam.production = {
       team: {
@@ -68,7 +66,7 @@ describe('TeamResults', () => {
           },
           salad: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
           dessert: { weeklyStrength: 0, sundayStrength: 0, cookedRecipes: [] },
-          critInfo: createMockTeamProduction().team.cooking!.critInfo,
+          critInfo: mocks.createMockTeamProduction().team.cooking!.critInfo,
           mealTimes: {
             breakfast: { hour: 8, minute: 0, second: 0 },
             lunch: { hour: 12, minute: 0, second: 0 },
@@ -79,9 +77,9 @@ describe('TeamResults', () => {
         ingredients: []
       },
       members: [
-        createMockMemberProductionExt({
+        mocks.createMockMemberProductionExt({
           production: {
-            ...createMockMemberProductionExt().production,
+            ...mocks.createMockMemberProductionExt().production,
             produceTotal: {
               ingredients: [],
 
@@ -118,7 +116,7 @@ describe('TeamResults', () => {
   it('renders member progress bars correctly', async () => {
     const teamStore = useTeamStore()
 
-    teamStore.getCurrentTeam.production = createMockTeamProduction()
+    teamStore.getCurrentTeam.production = mocks.createMockTeamProduction()
     await nextTick()
 
     const progressBars = wrapper.findAll('#memberBar')
