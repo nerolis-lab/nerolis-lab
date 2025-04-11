@@ -1,18 +1,16 @@
 import CompareSettings from '@/components/compare/compare-settings.vue'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('CompareSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof CompareSettings>>
-  const mockPokemon = createMockPokemon()
+  const mockPokemon = mocks.createMockPokemon()
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(CompareSettings)
   })
 

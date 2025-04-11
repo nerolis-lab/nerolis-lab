@@ -1,21 +1,23 @@
-import { mocks } from '@src/bun/index.js';
 import { SolveService } from '@src/services/solve/solve-service.js';
 import type { SolveRecipeInput } from '@src/services/solve/types/solution-types.js';
 import * as solveUtils from '@src/services/solve/utils/solve-utils.js';
-import { mainskill, mockIngredient, mockIngredientSet, mockPokemon, type Recipe } from 'sleepapi-common';
+import { mocks } from '@src/vitest/index.js';
+import { commonMocks, mainskill, type Recipe } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
 describe('SolveService', () => {
   it('should return the user team if it solves the recipe alone', () => {
-    const ingredientList = [mockIngredientSet({ amount: 1, ingredient: mockIngredient({ name: 'ingredient1' }) })];
-    const recipe: Recipe = mocks.mockRecipe({
+    const ingredientList = [
+      commonMocks.mockIngredientSet({ amount: 1, ingredient: commonMocks.mockIngredient({ name: 'ingredient1' }) })
+    ];
+    const recipe: Recipe = commonMocks.mockRecipe({
       ingredients: ingredientList
     });
     const member = mocks.teamMemberExt({
       pokemonWithIngredients: mocks.pokemonWithIngredients({
         ingredientList,
-        pokemon: mockPokemon({ skill: mainskill.BERRY_BURST })
+        pokemon: commonMocks.mockPokemon({ skill: mainskill.BERRY_BURST })
       })
     });
     vimic(solveUtils, 'calculateProductionAll', () => ({

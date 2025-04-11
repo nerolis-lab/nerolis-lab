@@ -1,6 +1,6 @@
 <template>
   <v-btn icon size="100" @click="openEditDialog">
-    <v-badge icon="mdi-pencil" color="primary" offset-x="10" offset-y="10" class="avatar-badge">
+    <v-badge icon="mdi-pencil" :color="userStore.roleData.color" offset-x="10" offset-y="10">
       <v-avatar size="100" color="secondary">
         <v-img :src="userAvatar()" height="100" width="100"></v-img>
       </v-avatar>
@@ -50,6 +50,7 @@
 <script lang="ts">
 import { userAvatar } from '@/services/utils/image-utils'
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
+import { useUserStore } from '@/stores/user-store'
 import { computed, ref } from 'vue'
 
 export default {
@@ -57,6 +58,7 @@ export default {
   emits: ['update-avatar'],
 
   setup(_, { emit }) {
+    const userStore = useUserStore()
     const avatarStore = useAvatarStore()
     const isEditDialogOpen = ref(false)
     const searchQuery = ref('')
@@ -98,7 +100,8 @@ export default {
       userAvatar,
       avatarStore,
       searchQuery,
-      filteredAvatars
+      filteredAvatars,
+      userStore
     }
   }
 }

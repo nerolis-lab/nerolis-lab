@@ -1,34 +1,30 @@
 import router from '@/router/router'
-import { GoogleService } from '@/services/login/google-service'
+import { AuthService } from '@/services/login/auth-service'
+import { DISCORD_REDIRECT_URI } from '@/services/login/discord-service'
 import { UserService } from '@/services/user/user-service'
 import { clearCacheAndLogout } from '@/stores/store-service'
 import { defineStore } from 'pinia'
 import {
+  AuthProvider,
   ISLANDS,
   MAX_POT_SIZE,
   Roles,
+  type AuthProviders,
   type IslandShortName,
   type LoginResponse,
   type UserSettingsResponse
 } from 'sleepapi-common'
-import { googleLogout } from 'vue3-google-login'
 
 export interface UserState {
   name: string
   avatar: string | null
-  email: string | null
-  tokens: TokenInfo | null
   externalId: string | null
-  friendCode?: string
+  friendCode: string | null
+  auth: AuthProviders | null
   role: Roles
   areaBonus: Record<IslandShortName, number>
   potSize: number
-}
-
-export interface TokenInfo {
-  expiryDate: number
-  accessToken: string
-  refreshToken: string
+  supporterSince: string | null
 }
 
 export const useUserStore = defineStore('user', {
@@ -36,44 +32,45 @@ export const useUserStore = defineStore('user', {
     return {
       name: 'Guest',
       avatar: null,
-      email: null,
-      tokens: null,
       externalId: null,
+      friendCode: null,
       role: Roles.Default,
       areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>,
-      potSize: MAX_POT_SIZE
+      potSize: MAX_POT_SIZE,
+      auth: null,
+      supporterSince: null
     }
   },
   getters: {
-    loggedIn: (state) => state.tokens !== null,
-    islandBonus: (state) => (shortName: IslandShortName) => 1 + state.areaBonus[shortName] / 100
+    loggedIn: (state) => state.auth != null,
+    islandBonus: (state) => (shortName: IslandShortName) => 1 + state.areaBonus[shortName] / 100,
+    isAdmin: (state) => state.role === Roles.Admin,
+    isSupporter: (state) => state.role === Roles.Supporter,
+    isAdminOrSupporter: (state) => state.role === Roles.Admin || state.role === Roles.Supporter,
+    roleData: (state) => {
+      return {
+        color: state.role === Roles.Admin ? 'primary' : state.role === Roles.Supporter ? 'supporter' : 'surface',
+        icon: state.role === Roles.Admin ? 'mdi-crown' : state.role === Roles.Supporter ? 'mdi-heart' : '',
+        text: state.role === Roles.Admin ? 'Admin' : state.role === Roles.Supporter ? 'Supporter' : ''
+      }
+    },
+    numberOfLinkedProviders: (state) => {
+      return state.auth?.linkedProviders
+        ? Object.values(state.auth.linkedProviders).filter((provider) => provider.linked).length
+        : 0
+    },
+    isProviderLinked: (state) => (provider: AuthProvider) => {
+      return state.auth?.linkedProviders?.[provider]?.linked === true
+    }
   },
   actions: {
-    migrate() {
-      if (!this.role) {
-        this.role = Roles.Default
-      }
-
-      if (!this.areaBonus) {
-        this.areaBonus = Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<
-          IslandShortName,
-          number
-        >
-      }
-
-      if (!this.potSize) {
-        this.potSize = MAX_POT_SIZE
-      }
-    },
-    setUserData(userData: { name: string; avatar?: string; email: string; externalId: string; role: Roles }) {
-      this.name = userData.name
-      this.avatar = userData.avatar ?? 'default'
-      this.email = userData.email
-      this.externalId = userData.externalId
-      this.role = userData.role
-    },
-    setTokens(tokens: TokenInfo) {
-      this.tokens = tokens
+    setInitialLoginData(serverData: LoginResponse) {
+      this.name = serverData.name
+      this.avatar = serverData.avatar ?? 'default'
+      this.externalId = serverData.externalId
+      this.role = serverData.role
+      this.friendCode = serverData.friendCode
+      this.auth = serverData.auth
     },
     setUserSettings(userSettings: UserSettingsResponse) {
       this.name = userSettings.name
@@ -84,41 +81,39 @@ export const useUserStore = defineStore('user', {
       for (const [area, bonus] of Object.entries(userSettings.areaBonuses)) {
         this.areaBonus[area as IslandShortName] = bonus
       }
+
+      this.supporterSince = userSettings.supporterSince ?? null
     },
     async syncUserSettings() {
       const userSettings = await UserService.getUserSettings()
       this.setUserSettings(userSettings)
     },
-    async login(authCode: string) {
-      const loginResponse: LoginResponse = await GoogleService.login(authCode)
-      this.setTokens({
-        accessToken: loginResponse.access_token,
-        refreshToken: loginResponse.refresh_token,
-        expiryDate: loginResponse.expiry_date
-      })
-      this.setUserData({
-        name: loginResponse.name,
-        avatar: loginResponse.avatar,
-        email: loginResponse.email,
-        externalId: loginResponse.externalId,
-        role: loginResponse.role
-      })
+    async login(params: { authCode: string; provider: AuthProvider; originalRoute: string; redirectUri?: string }) {
+      const { authCode, provider, originalRoute, redirectUri } = params
+      const loginResponse = await AuthService.login(authCode, provider, redirectUri)
 
-      // Refresh the current page
-      router.go(0)
+      this.setInitialLoginData(loginResponse)
+
+      router.push(originalRoute)
+    },
+    async unlinkProvider(provider: AuthProvider) {
+      await AuthService.unlinkProvider(provider)
+      this.logout() // will wipe cache and logout
     },
     async refresh() {
       try {
-        const tokens = this.tokens
-        if (tokens?.expiryDate) {
+        if (this.auth) {
+          const { tokens, activeProvider } = this.auth
           if (Date.now() > tokens.expiryDate) {
             const { refreshToken } = tokens
-            const { access_token, expiry_date } = await GoogleService.refresh(refreshToken)
-            this.setTokens({
+            const redirectUri = activeProvider === AuthProvider.Discord ? DISCORD_REDIRECT_URI : undefined
+
+            const { access_token, expiry_date } = await AuthService.refresh(refreshToken, activeProvider, redirectUri)
+            this.auth.tokens = {
               accessToken: access_token,
               refreshToken,
               expiryDate: expiry_date
-            })
+            }
           }
         } else {
           this.logout()
@@ -129,7 +124,6 @@ export const useUserStore = defineStore('user', {
     },
     logout() {
       clearCacheAndLogout()
-      googleLogout()
       router.push('/')
     }
   },

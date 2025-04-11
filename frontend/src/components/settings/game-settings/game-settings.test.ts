@@ -3,8 +3,15 @@ import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { delay, ISLANDS, MAX_ISLAND_BONUS, MAX_POT_SIZE, MIN_POT_SIZE, type IslandShortName } from 'sleepapi-common'
+import {
+  commonMocks,
+  delay,
+  ISLANDS,
+  MAX_ISLAND_BONUS,
+  MAX_POT_SIZE,
+  MIN_POT_SIZE,
+  type IslandShortName
+} from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -19,18 +26,12 @@ describe('GameSettings', () => {
   let userStore: ReturnType<typeof useUserStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
-
     userStore = useUserStore()
     userStore.areaBonus = Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<
       IslandShortName,
       number
     >
-    userStore.setTokens({
-      accessToken: 'test',
-      refreshToken: 'test',
-      expiryDate: 0
-    })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     wrapper = mount(GameSettings)
     vi.useFakeTimers()

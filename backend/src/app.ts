@@ -106,9 +106,11 @@ async function main() {
   FriendRouter.register(new FriendController());
   NotificationRouter.register(new NotificationController());
 
-  app.listen(config.PORT, async () => {
-    logger.info(`Server is running at ${config.PORT}`);
-  });
+  return app;
 }
 
-export default main();
+export const app = await main();
+
+app.listen(config.PORT, async () => {
+  logger.info(`Server is running at ${config.PORT}`);
+});

@@ -1,6 +1,6 @@
 import PokeboxList from '@/components/pokemon-input/menus/pokebox-list.vue'
 import { UserService } from '@/services/user/user-service'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { type PokemonInstanceExt } from 'sleepapi-common'
@@ -15,7 +15,7 @@ vi.mock('@/services/user/user-service', () => ({
 describe('PokeboxList', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokeboxList>>
 
-  const mockPokemon: PokemonInstanceExt = createMockPokemon()
+  const mockPokemon: PokemonInstanceExt = mocks.createMockPokemon()
 
   beforeEach(async () => {
     UserService.getUserPokemon = vi.fn().mockResolvedValue([mockPokemon])

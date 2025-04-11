@@ -12,7 +12,7 @@
     "build-only": "vite build",
     "preview": "vite preview",
     "test": "vitest --run --coverage",
-    "test-watch": "vitest --changed",
+    "test-watch": "vitest --watch",
     "type-check": "vue-tsc --build --force",
     "type-watch": "vue-tsc --noEmit --watch"
   },
@@ -26,8 +26,7 @@
     "pinia-plugin-persistedstate": "^3.2.1",
     "vue": "^3.4.21",
     "vue-chartjs": "^5.3.1",
-    "vue-router": "4.4.0",
-    "vue3-google-login": "^2.0.26"
+    "vue-router": "4.4.0"
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",

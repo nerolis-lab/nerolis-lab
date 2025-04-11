@@ -1,9 +1,9 @@
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { ingredient, subskill, type PokemonInstanceExt, type PokemonInstanceWithMeta } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
-const mockPokemonInstanceExt: PokemonInstanceExt = createMockPokemon({
+const mockPokemonInstanceExt: PokemonInstanceExt = mocks.createMockPokemon({
   subskills: [
     { level: 10, subskill: subskill.HELPING_BONUS },
     { level: 25, subskill: subskill.BERRY_FINDING_S }
@@ -103,7 +103,7 @@ describe('toUpsertTeamMemberRequest', () => {
 
 describe('toPokemonInstanceIdentity', () => {
   it('should convert a valid PokemonInstanceExt to PokemonInstanceIdentity', () => {
-    const mockPokemonInstanceExt: PokemonInstanceExt = createMockPokemon()
+    const mockPokemonInstanceExt: PokemonInstanceExt = mocks.createMockPokemon()
     const result = PokemonInstanceUtils.toPokemonInstanceIdentity(mockPokemonInstanceExt)
 
     expect(result).toEqual({

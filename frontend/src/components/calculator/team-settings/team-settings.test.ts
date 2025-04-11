@@ -2,7 +2,6 @@ import TeamSettings from '@/components/calculator/team-settings/team-settings.vu
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { CYAN } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
@@ -11,7 +10,6 @@ describe('TeamSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof TeamSettings>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(TeamSettings)
   })
 
@@ -94,14 +92,6 @@ describe('TeamSettings', () => {
     bedtimeButton.click()
 
     expect(wrapper.vm.isBedtimeOpen).toBe(true)
-  })
-
-  it('calculates sleep duration correctly', () => {
-    const teamStore = useTeamStore()
-    teamStore.getCurrentTeam.bedtime = '22:00'
-    teamStore.getCurrentTeam.wakeup = '06:00'
-
-    expect(wrapper.vm.calculateSleepDuration).toBe('8 hours and 0 minutes')
   })
 
   it('allows correct step for minutes in time picker', () => {

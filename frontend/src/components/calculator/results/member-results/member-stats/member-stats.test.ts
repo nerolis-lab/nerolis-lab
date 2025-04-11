@@ -1,37 +1,36 @@
 import MemberStats from '@/components/calculator/results/member-results/member-stats/member-stats.vue'
 import SkillDistribution from '@/components/calculator/results/member-results/member-stats/skill-distribution.vue'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { createMockMemberProduction, createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { mockIngredient, mockIngredientSet } from 'sleepapi-common'
+import { commonMocks } from 'sleepapi-common'
 import { describe, expect, it, vi } from 'vitest'
 
 // Create a dummy production with additional properties: level, ingredient list, and dayPeriod values
-const pokemonProduction: MemberProductionExt = createMockMemberProductionExt({
-  member: createMockPokemon({
+const pokemonProduction: MemberProductionExt = mocks.createMockMemberProductionExt({
+  member: mocks.createMockPokemon({
     rp: 100,
     level: 5,
     ingredients: [
       {
-        ...mockIngredientSet({
+        ...commonMocks.mockIngredientSet({
           amount: 2,
-          ingredient: mockIngredient({ name: 'Ingredient A' })
+          ingredient: commonMocks.mockIngredient({ name: 'Ingredient A' })
         }),
         level: 10
       },
       {
-        ...mockIngredientSet({
+        ...commonMocks.mockIngredientSet({
           amount: 2,
-          ingredient: mockIngredient({ name: 'Ingredient A' })
+          ingredient: commonMocks.mockIngredient({ name: 'Ingredient A' })
         }),
         level: 30
       }
     ]
   }),
-  production: createMockMemberProduction({
+  production: mocks.createMockMemberProduction({
     advanced: {
-      ...createMockMemberProduction().advanced,
+      ...mocks.createMockMemberProduction().advanced,
       carrySize: 50,
       dayPeriod: {
         averageFrequency: 120,
@@ -41,7 +40,9 @@ const pokemonProduction: MemberProductionExt = createMockMemberProductionExt({
       nightPeriod: {
         averageEnergy: 0,
         averageFrequency: 60,
-        spilledIngredients: [mockIngredientSet({ amount: 10, ingredient: mockIngredient({ name: 'Mock Ing' }) })]
+        spilledIngredients: [
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: commonMocks.mockIngredient({ name: 'Mock Ing' }) })
+        ]
       },
       maxFrequency: 3600
     }
@@ -49,9 +50,7 @@ const pokemonProduction: MemberProductionExt = createMockMemberProductionExt({
 })
 
 describe('MemberStats.vue', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+  beforeEach(() => {})
 
   it('renders RP correctly', () => {
     const wrapper = mount(MemberStats, { props: { pokemonProduction } })
@@ -108,23 +107,23 @@ describe('MemberStats.vue', () => {
 
   it('does not render spilled ingredients section when none exist', () => {
     // Create a production with no spilled ingredients
-    const productionWithoutSpilled: MemberProductionExt = createMockMemberProductionExt({
-      member: createMockPokemon({
+    const productionWithoutSpilled: MemberProductionExt = mocks.createMockMemberProductionExt({
+      member: mocks.createMockPokemon({
         rp: 100,
         level: 5,
         ingredients: [
           {
-            ...mockIngredientSet({
+            ...commonMocks.mockIngredientSet({
               amount: 2,
-              ingredient: mockIngredient({ name: 'Ingredient A' })
+              ingredient: commonMocks.mockIngredient({ name: 'Ingredient A' })
             }),
             level: 10
           }
         ]
       }),
-      production: createMockMemberProduction({
+      production: mocks.createMockMemberProduction({
         advanced: {
-          ...createMockMemberProduction().advanced,
+          ...mocks.createMockMemberProduction().advanced,
           carrySize: 50,
           dayPeriod: {
             averageFrequency: 120,
@@ -148,7 +147,6 @@ describe('MemberStats.vue', () => {
 
 describe('MemberStats.vue - Mobile Viewport', () => {
   beforeEach(() => {
-    setActivePinia(createPinia())
     vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
       useBreakpoint: () => ({ isMobile: true })
     }))

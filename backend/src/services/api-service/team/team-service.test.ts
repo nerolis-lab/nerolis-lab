@@ -10,23 +10,16 @@ import {
   upsertTeamMember,
   upsertTeamMeta
 } from '@src/services/api-service/team/team-service.js';
-import { client } from '@src/services/user-service/login-service/login-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
 import { Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true, enforceForeignKeyConstraints: true });
 
 beforeEach(() => {
   vimic(uuid, 'v4', () => '0'.repeat(36));
-  MockService.init({ TeamDAO, PokemonDAO, TeamMemberDAO, UserDAO, client });
-});
-
-afterEach(() => {
-  MockService.restore();
 });
 
 describe('upsertTeam', () => {
@@ -35,7 +28,7 @@ describe('upsertTeam', () => {
       external_id: 'user id',
       name: 'name',
       friend_code: 'TESTFC',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -71,7 +64,7 @@ describe('upsertTeam', () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       friend_code: 'TESTFC',
       role: Roles.Default
     });
@@ -116,7 +109,7 @@ describe('upsertTeam', () => {
       external_id: 'user id',
       name: 'name',
       friend_code: 'TESTFC',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -174,7 +167,7 @@ describe('getTeams', () => {
       id: 1,
       version: 1,
       name: 'some name',
-      sub: 'some sub',
+      google_id: 'google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       role: Roles.Default
@@ -188,7 +181,7 @@ describe('getTeams', () => {
       external_id: 'user id',
       name: 'name',
       friend_code: 'TESTFC',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -246,14 +239,14 @@ describe('getTeams', () => {
       external_id: 'ext id 1',
       name: 'name1',
       friend_code: 'TESTF2',
-      sub: 'sub1',
+      google_id: 'google_id1',
       role: Roles.Default
     });
     const user2 = await UserDAO.insert({
       external_id: 'ext id 2',
       name: 'name2',
       friend_code: 'TESTF1',
-      sub: 'sub2',
+      google_id: 'google_id2',
       role: Roles.Default
     });
 
@@ -302,7 +295,7 @@ describe('upsertTeamMember', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -407,7 +400,7 @@ describe('upsertTeamMember', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -549,7 +542,7 @@ describe('upsertTeamMember', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -587,7 +580,7 @@ describe('deleteMember', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -636,7 +629,7 @@ describe('deleteMember', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -685,7 +678,7 @@ describe('deleteMember', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -748,7 +741,7 @@ describe('deleteTeam', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -803,7 +796,7 @@ describe('deleteTeam', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 
@@ -828,7 +821,7 @@ describe('deleteTeam', () => {
       external_id: 'user id',
       friend_code: 'TESTFC',
       name: 'name',
-      sub: 'sub',
+      google_id: 'google_id',
       role: Roles.Default
     });
 

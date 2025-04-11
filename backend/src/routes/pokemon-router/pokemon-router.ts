@@ -37,7 +37,6 @@ class PokemonRouterImpl {
       '/pokemon/:name',
       async (req: Request<{ name: string }, unknown, unknown, unknown>, res: Response) => {
         try {
-          logger.log('Entered /pokemon/:name');
           const pokemonData = await controller.getPokemonWithName(req.params.name);
 
           res.header('Content-Type', 'application/json').send(JSON.stringify(pokemonData, null, 4));

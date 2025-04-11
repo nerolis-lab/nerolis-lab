@@ -1,16 +1,15 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { StrengthService } from '@/services/strength/strength-service'
-import { createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { BRAVIARY, MathUtils, berry, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = createMockMemberProductionExt({
-  member: createMockPokemon({ pokemon: BRAVIARY }),
+const mockMember = mocks.createMockMemberProductionExt({
+  member: mocks.createMockPokemon({ pokemon: BRAVIARY }),
   production: {
-    ...createMockMemberProductionExt().production,
+    ...mocks.createMockMemberProductionExt().production,
     produceFromSkill: {
       berries: [
         { amount: 100, berry: BRAVIARY.berry, level: 1 },
@@ -25,7 +24,6 @@ describe('MemberProductionSkill', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionSkill, {
       props: {
         memberWithProduction: mockMember

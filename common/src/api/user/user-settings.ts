@@ -11,4 +11,5 @@ export interface UserSettingsResponse {
   role: Roles;
   areaBonuses: GetAreaBonusesResponse;
   potSize: number;
+  supporterSince?: string;
 }
