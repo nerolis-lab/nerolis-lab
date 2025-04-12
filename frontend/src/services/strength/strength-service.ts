@@ -18,11 +18,14 @@ class StrengthServiceImpl {
 
     const strengthSkillValue = skillValues['strength'] ?? { amountToSelf: 0, amountToTeam: 0 }
 
+    // Cache the time window factor
+    const timeWindowFactor = this.timeWindowFactor(timeWindow)
+
     const berrySkillStrength = this.berryStrength(params)
     const skillStrength = this.skillValue({
       skill,
       amount: strengthSkillValue.amountToSelf + strengthSkillValue.amountToTeam,
-      timeWindow,
+      timeWindowFactor, // Pass the cached factor
       areaBonus
     })
     return berrySkillStrength + skillStrength
@@ -38,34 +41,36 @@ class StrengthServiceImpl {
 
     const timeWindowFactor = this.timeWindowFactor(timeWindow)
 
+    // Convert favoredBerries to a Set for faster lookups
+    const favoredBerrySet = new Set(favoredBerries.map((berry) => berry.name))
+
+    // Cache berry power calculations
+    const berryPowerCache = new Map<string, number>()
+
     let strength = 0
     for (const producedBerry of berries) {
-      const favoredBerryMultiplier = favoredBerries.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
+      const berryKey = `${producedBerry.berry.name}-${producedBerry.level}`
+      if (!berryPowerCache.has(berryKey)) {
+        berryPowerCache.set(berryKey, berryPowerForLevel(producedBerry.berry, producedBerry.level))
+      }
+
+      const favoredBerryMultiplier = favoredBerrySet.has(producedBerry.berry.name) ? 2 : 1
 
       strength +=
-        producedBerry.amount *
-        timeWindowFactor *
-        berryPowerForLevel(producedBerry.berry, producedBerry.level) *
-        areaBonus *
-        favoredBerryMultiplier
+        producedBerry.amount * timeWindowFactor * berryPowerCache.get(berryKey)! * areaBonus * favoredBerryMultiplier
     }
     return Math.floor(strength)
   }
 
-  public skillValue(params: { skill: Mainskill; amount: number; timeWindow: TimeWindowWeek; areaBonus: number }) {
-    const { skill, amount, timeWindow, areaBonus } = params
+  public skillValue(params: { skill: Mainskill; amount: number; timeWindowFactor: number; areaBonus: number }) {
+    const { skill, amount, timeWindowFactor, areaBonus } = params
 
     const isStrengthUnit = skill.isUnit('strength')
     const isShardsUnit = skill.isUnit('dream shards')
 
     const rounding = isStrengthUnit || isShardsUnit ? 0 : 1
 
-    return MathUtils.round(
-      isStrengthUnit
-        ? amount * areaBonus * this.timeWindowFactor(timeWindow)
-        : amount * this.timeWindowFactor(timeWindow),
-      rounding
-    )
+    return MathUtils.round(isStrengthUnit ? amount * areaBonus * timeWindowFactor : amount * timeWindowFactor, rounding)
   }
 
   public timeWindowFactor(timeWindow: TimeWindowWeek) {

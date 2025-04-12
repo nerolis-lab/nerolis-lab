@@ -12,7 +12,7 @@ export interface PokemonState {
 
 export const usePokemonStore = defineStore('pokemon', {
   state: (): PokemonState => ({
-    pokemon: {},
+    pokemon: {} as Record<string, PokemonInstanceExt>,
     domainVersion: 0
   }),
   getters: {
@@ -95,6 +95,9 @@ export const usePokemonStore = defineStore('pokemon', {
       }
 
       delete this.pokemon[externalId]
+    },
+    getAllPokemon() {
+      return Object.values(this.pokemon) // Return all Pokémon in the box
     }
   },
   persist: true

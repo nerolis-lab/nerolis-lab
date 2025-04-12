@@ -1,4 +1,5 @@
 import { TeamService } from '@/services/team/team-service'
+import { StrengthService } from '@/services/strength/strength-service'
 import { randomName } from '@/services/utils/name-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
@@ -34,6 +35,9 @@ export interface TeamState {
   timeWindow: TimeWindowDay
   tab: 'overview' | 'members' | 'cooking'
   teams: TeamInstance[]
+  currentTeam: {
+    members: (PokemonInstanceExt | undefined)[]
+  }
 }
 
 const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
@@ -62,6 +66,9 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
       production: undefined
     }
   ],
+  currentTeam: {
+    members: []
+  },
   ...attrs
 })
 
@@ -464,6 +471,53 @@ export const useTeamStore = defineStore('team', {
       ].some((s) => s.name.toLowerCase() === member.pokemon.skill.name.toLowerCase())
 
       return hbOrErb || supportSkill
+    },
+    async calculateTeamStrength(members: PokemonInstanceExt[]) {
+      const settings = {
+        camp: this.getCurrentTeam.camp,
+        bedtime: this.getCurrentTeam.bedtime,
+        wakeup: this.getCurrentTeam.wakeup,
+        stockpiledIngredients: this.getCurrentTeam.stockpiledIngredients
+      }
+
+      const production = await TeamService.calculateProduction({ members, settings })
+
+      if (!production) return 0
+
+      // Calculate cooking strength
+      const cookingStrength = production.team?.cooking?.curry?.weeklyStrength || 0
+
+      // Calculate berry strength
+      const berryStrength = StrengthService.berryStrength({
+        berries: production.team.berries,
+        favoredBerries: this.getCurrentTeam.favoredBerries,
+        timeWindow: 'WEEK',
+        areaBonus: 1 // Adjust based on your logic
+      })
+
+      // Calculate skill strength
+      const skillStrength = production.members.reduce((sum, memberProduction) => {
+        const member = usePokemonStore().getPokemon(memberProduction.externalId)
+        if (!member) return sum
+
+        const memberSkillStrength = StrengthService.skillStrength({
+          skill: member.pokemon.skill,
+          skillValues: memberProduction.skillValue,
+          berries: memberProduction.produceFromSkill.berries,
+          favoredBerries: this.getCurrentTeam.favoredBerries,
+          timeWindow: 'WEEK',
+          areaBonus: 1 // Adjust based on your logic
+        })
+
+        return sum + memberSkillStrength
+      }, 0)
+
+      // Return the total strength
+      return cookingStrength + berryStrength + skillStrength
+    },
+
+    updateTeamMembers(newMembers: PokemonInstanceExt[]) {
+      this.currentTeam.members = newMembers
     }
   },
   persist: true

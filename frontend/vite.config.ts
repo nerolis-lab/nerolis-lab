@@ -136,11 +136,14 @@ export default defineConfig({
       policy: {
         'connect-src': ["'self'", 'https://stats.nerolislab.com'],
         'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        'script-src': ["'self'", "'unsafe-inline'", "'strict-dynamic'", 'https:', 'https://gc.zgo.at/count.js'],
-        'script-src-elem': ["'self'", 'https://accounts.google.com/gsi/client', 'https://gc.zgo.at/count.js'],
+        // 'script-src': ["'self'", "'unsafe-inline'", "'strict-dynamic'", 'https:', 'https://gc.zgo.at/count.js'],
+        // 'script-src-elem': ["'self'", 'https://accounts.google.com/gsi/client', 'https://gc.zgo.at/count.js'],
+        'script-src': ["'self'", "'unsafe-inline'", "'strict-dynamic'", 'https:', 'https://gc.zgo.at'],
+        'script-src-elem': ["'self'", 'https://accounts.google.com/gsi/client', 'https://gc.zgo.at'],
         'style-src': ["'self'"],
         'style-src-elem': ['https://fonts.googleapis.com', 'https://accounts.google.com/gsi/style', "'unsafe-inline'"]
       },
+
       build: {
         sri: false
       }

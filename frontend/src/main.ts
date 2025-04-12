@@ -89,7 +89,7 @@ registerChartJS()
 app.use(vuetify)
 app.use(router)
 app.use(vue3GoogleLogin, {
-  clientId: '983013278971-m60s443rk30e8sjk04aof0ltaanogck0.apps.googleusercontent.com'
+  clientId: '849977224646-h959gvbile1kobn2gehe31o4m8lbm52m.apps.googleusercontent.com'
 })
 
 app.mount('#app')

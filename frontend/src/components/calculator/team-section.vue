@@ -212,6 +212,12 @@
       </v-col>
     </v-row>
   </v-dialog>
+
+  <div class="team-section">
+    <div class="button-container">
+      <v-btn color="primary" @click="findOptimalTeam">Find Optimal Team</v-btn>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -228,7 +234,95 @@ import { useNotificationStore } from '@/stores/notification-store/notification-s
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
+import { type PokemonInstanceExt } from 'sleepapi-common'
+import { UserService } from '@/services/user/user-service'
+import { calculateAndCachePokemonStrengths } from '@/services/strength/individual-strength-calculator'
+
+const MAX_TEAM_MEMBERS = 5;
+
+const generateCombinations = <T>(array: T[], size: number): T[][] => {
+  if (size === 0) return [[]];
+  if (array.length === 0) return [];
+  const [first, ...rest] = array;
+  const withFirst = generateCombinations(rest, size - 1).map((combo) => [first, ...combo]);
+  const withoutFirst = generateCombinations(rest, size);
+  return [...withFirst, ...withoutFirst];
+};
+
+const findOptimalTeam = async () => {
+  console.log('findOptimalTeam triggered')
+  const teamStore = useTeamStore()
+
+  try {
+    // Step 1: Calculate or retrieve cached Pokémon strengths
+    const sortedPokemon = await calculateAndCachePokemonStrengths()
+
+    // Log only the names and scores
+    const namesAndScores = sortedPokemon.map((entry) => ({
+      name: entry.pokemon.pokemon.displayName,
+      strength: entry.strength,
+    }))
+    console.log('Sorted Names and Scores:', namesAndScores)
+
+    // Step 2: Fetch Pokémon from the Pokebox
+    const boxedPokemon = await UserService.getUserPokemon()
+    console.log('Boxed Pokémon:', boxedPokemon)
+
+    // Log all boxed Pokémon names
+    console.log('Logging all boxed Pokémon names:')
+    boxedPokemon.forEach((pokemon) => {
+      console.log(pokemon.name) // Assuming each Pokémon object has a `name` property
+    })
+
+    // Step 3: Get the current team
+    const currentTeam = teamStore.getCurrentTeam.members.filter(
+      (member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string'
+    )
+    console.log('Filtered current team members:', currentTeam)
+
+    // Step 4: Calculate open slots
+    const openSlots = MAX_TEAM_MEMBERS - currentTeam.length
+    console.log('Open slots:', openSlots)
+
+    // Step 5: Generate combinations of Pokémon for the open slots
+    const combinations = generateCombinations(boxedPokemon, openSlots)
+    console.log('Generated combinations:', combinations)
+
+    let highestStrength = 0
+    let bestTeam: (string | PokemonInstanceExt | undefined)[] = [...currentTeam]
+
+    // Step 6: Test each combination
+    for (const combination of combinations) {
+      const testTeam = [...currentTeam, ...combination]
+      console.log('Testing team:', testTeam)
+
+      const validTestTeam = testTeam.filter(
+(member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string'
+      )
+      const strength = await teamStore.calculateTeamStrength(validTestTeam)
+      console.log('Team strength:', strength)
+
+      if (strength > highestStrength) {
+        highestStrength = strength
+        bestTeam = testTeam as (string | PokemonInstanceExt | undefined)[]
+        console.log('New best team found:', bestTeam, 'with strength:', highestStrength)
+      }
+    }
+
+    // Step 7: Update the team with the best combination
+    teamStore.updateTeamMembers(
+      bestTeam.filter(
+(member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string'
+)
+    )
+    const optimalTeamNames = bestTeam
+      .filter((member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string')
+      .map((member) => member.pokemon.displayName)
+    console.log('Optimal Team:', optimalTeamNames)
+  } catch (error) {
+    console.error('Error in findOptimalTeam:', error)
+  }
+}
 
 export default defineComponent({
   components: {
@@ -247,7 +341,7 @@ export default defineComponent({
 
     const { isMobile } = useBreakpoint()
 
-    return { userStore, teamStore, pokemonStore, notificationStore, isMobile }
+    return { userStore, teamStore, pokemonStore, notificationStore, isMobile, findOptimalTeam }
   },
   data: () => ({
     tabs: [
@@ -297,10 +391,7 @@ export default defineComponent({
       await this.teamStore.calculateProduction(this.teamStore.currentIndex)
     }
   }
-})
-</script>
-
-<style lang="scss">
+});</script><style lang="scss">
 .tab-item {
   flex: 1;
 }
@@ -312,6 +403,16 @@ export default defineComponent({
 
 .team-container {
   max-width: 100%;
+}
+
+.team-section {
+  position: relative;
+}
+
+.button-container {
+  position: absolute;
+  top: -10px;
+  left: 10px;
 }
 
 @media (min-width: $desktop) {
