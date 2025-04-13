@@ -1,5 +1,54 @@
 <template>
   <v-container class="team-container pt-2">
+    <!-- Loading Overlay -->
+    <v-overlay :model-value="isLoading" absolute>
+      <v-card class="p-4" width="400">
+        <!-- Progress Bar -->
+        <v-progress-linear :value="(scored / total) * 100" height="20" color="primary" class="mb-4">
+          <template #default>
+            Scored {{ scored }} / {{ total }}
+          </template>
+        </v-progress-linear>
+
+        <!-- Total Teams Info -->
+        <div class="d-flex justify-space-between">
+          <span>Total: {{ totalTeamsSearched }}</span>
+          <span>Total Possible Teams: {{ totalPossibleTeams }}</span>
+        </div>
+
+        <!-- Current Best Team Strength -->
+        <div class="text-center mt-2">
+          <strong>
+          Best Team Strength: 
+          <span :style="{ color: 'rgb(var(--v-theme-strength))' }">
+            {{ Math.round(bestTeamStrength) }}
+          </span>
+          </strong>
+        </div>
+
+        <!-- Current Best Team -->
+        <div class="d-flex justify-center mt-4">
+          <img
+            v-for="(sprite, index) in bestTeamSprites"
+            :key="index"
+            :src="sprite"
+            alt="Pokemon Sprite"
+            class="mx-2"
+            width="50"
+            height="50"
+          />
+        </div>
+
+        <!-- Current Best Team Names -->
+        <div class="d-flex justify-center mt-2">
+          <div v-for="(member, index) in bestTeam" :key="index" class="text-center mx-2">
+            <div>{{ member.pokemon.displayName }}</div>
+            <div v-if="member.customName" class="text-muted">({{ member.customName }})</div>
+          </div>
+        </div>
+      </v-card>
+    </v-overlay>
+
     <v-row v-if="!isMobile" id="desktop-layout" class="d-flex justify-left flex-nowrap">
       <v-col cols="auto">
         <v-card-actions class="px-0" :disabled="!userStore.loggedIn">
@@ -215,14 +264,13 @@
 
   <div class="team-section">
     <div class="button-container">
-      <v-btn color="primary" @click="findOptimalTeam">Find Optimal Team</v-btn>
+      <v-btn color="primary" @click="startFindOptimalTeam">Find Optimal Team</v-btn>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-
+import { defineComponent, ref, watch } from 'vue'
 import CookingResults from '@/components/calculator/results/cooking-results.vue'
 import MemberResults from '@/components/calculator/results/member-results/member-results.vue'
 import TeamResults from '@/components/calculator/results/team-results.vue'
@@ -230,99 +278,14 @@ import TeamName from '@/components/calculator/team-name.vue'
 import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import TeamSlot from '@/components/calculator/team-slot.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
+import { findOptimalTeam } from '@/services/team/find-optimal'
+import { pokemonImage } from '@/services/utils/image-utils'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { type PokemonInstanceExt } from 'sleepapi-common'
-import { UserService } from '@/services/user/user-service'
-import { calculateAndCachePokemonStrengths } from '@/services/strength/individual-strength-calculator'
 
-const MAX_TEAM_MEMBERS = 5;
-
-const generateCombinations = <T>(array: T[], size: number): T[][] => {
-  if (size === 0) return [[]];
-  if (array.length === 0) return [];
-  const [first, ...rest] = array;
-  const withFirst = generateCombinations(rest, size - 1).map((combo) => [first, ...combo]);
-  const withoutFirst = generateCombinations(rest, size);
-  return [...withFirst, ...withoutFirst];
-};
-
-const findOptimalTeam = async () => {
-  console.log('findOptimalTeam triggered')
-  const teamStore = useTeamStore()
-
-  try {
-    // Step 1: Calculate or retrieve cached Pokémon strengths
-    const sortedPokemon = await calculateAndCachePokemonStrengths()
-
-    // Log only the names and scores
-    const namesAndScores = sortedPokemon.map((entry) => ({
-      name: entry.pokemon.pokemon.displayName,
-      strength: entry.strength,
-    }))
-    console.log('Sorted Names and Scores:', namesAndScores)
-
-    // Step 2: Fetch Pokémon from the Pokebox
-    const boxedPokemon = await UserService.getUserPokemon()
-    console.log('Boxed Pokémon:', boxedPokemon)
-
-    // Log all boxed Pokémon names
-    console.log('Logging all boxed Pokémon names:')
-    boxedPokemon.forEach((pokemon) => {
-      console.log(pokemon.name) // Assuming each Pokémon object has a `name` property
-    })
-
-    // Step 3: Get the current team
-    const currentTeam = teamStore.getCurrentTeam.members.filter(
-      (member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string'
-    )
-    console.log('Filtered current team members:', currentTeam)
-
-    // Step 4: Calculate open slots
-    const openSlots = MAX_TEAM_MEMBERS - currentTeam.length
-    console.log('Open slots:', openSlots)
-
-    // Step 5: Generate combinations of Pokémon for the open slots
-    const combinations = generateCombinations(boxedPokemon, openSlots)
-    console.log('Generated combinations:', combinations)
-
-    let highestStrength = 0
-    let bestTeam: (string | PokemonInstanceExt | undefined)[] = [...currentTeam]
-
-    // Step 6: Test each combination
-    for (const combination of combinations) {
-      const testTeam = [...currentTeam, ...combination]
-      console.log('Testing team:', testTeam)
-
-      const validTestTeam = testTeam.filter(
-(member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string'
-      )
-      const strength = await teamStore.calculateTeamStrength(validTestTeam)
-      console.log('Team strength:', strength)
-
-      if (strength > highestStrength) {
-        highestStrength = strength
-        bestTeam = testTeam as (string | PokemonInstanceExt | undefined)[]
-        console.log('New best team found:', bestTeam, 'with strength:', highestStrength)
-      }
-    }
-
-    // Step 7: Update the team with the best combination
-    teamStore.updateTeamMembers(
-      bestTeam.filter(
-(member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string'
-)
-    )
-    const optimalTeamNames = bestTeam
-      .filter((member): member is PokemonInstanceExt => member !== undefined && typeof member !== 'string')
-      .map((member) => member.pokemon.displayName)
-    console.log('Optimal Team:', optimalTeamNames)
-  } catch (error) {
-    console.error('Error in findOptimalTeam:', error)
-  }
-}
+const MAX_TEAM_MEMBERS = 5
 
 export default defineComponent({
   components: {
@@ -341,7 +304,80 @@ export default defineComponent({
 
     const { isMobile } = useBreakpoint()
 
-    return { userStore, teamStore, pokemonStore, notificationStore, isMobile, findOptimalTeam }
+    const isLoading = ref(false)
+    const scored = ref(0)
+    const total = ref(0)
+    const totalTeamsSearched = ref(0)
+    const totalPossibleTeams = ref(0)
+    const bestTeam = ref([]) // Store the current best team
+    const bestTeamSprites = ref<string[]>([]) // Store the sprites for the best team
+    const bestTeamStrength = ref(0) // Store the strength of the best team
+
+    const startFindOptimalTeam = async () => {
+      isLoading.value = true
+      scored.value = 0
+      total.value = 0
+      totalTeamsSearched.value = 0
+      totalPossibleTeams.value = 0
+      bestTeam.value = []
+      bestTeamSprites.value = []
+      bestTeamStrength.value = 0
+
+      await findOptimalTeam(
+        (
+          currentScored,
+          currentTotal,
+          currentTotalTeamsSearched,
+          currentTotalPossibleTeams,
+          currentBestTeam,
+          currentBestTeamStrength
+        ) => {
+          scored.value = currentScored
+          total.value = currentTotal
+          totalTeamsSearched.value = currentTotalTeamsSearched
+          totalPossibleTeams.value = currentTotalPossibleTeams
+          bestTeam.value = currentBestTeam // Update the best team
+          bestTeamStrength.value = currentBestTeamStrength // Update the best team's strength
+        }
+      )
+
+      isLoading.value = false
+    }
+
+    // Watch for changes to the best team and update the sprites
+    watch(bestTeam, (newTeam) => {
+      bestTeamSprites.value = newTeam.map((member: any) =>
+        pokemonImage({
+          pokemonName: member.pokemon.name,
+          shiny: member.shiny
+        })
+      )
+    })
+
+    const getPokemonImage = (member: any) => {
+      return pokemonImage({
+        pokemonName: member.pokemon.name,
+        shiny: member.shiny
+      })
+    }
+
+    return {
+      userStore,
+      teamStore,
+      pokemonStore,
+      notificationStore,
+      isMobile,
+      isLoading,
+      scored,
+      total,
+      totalTeamsSearched,
+      totalPossibleTeams,
+      bestTeam,
+      bestTeamSprites,
+      bestTeamStrength,
+      startFindOptimalTeam,
+      getPokemonImage
+    }
   },
   data: () => ({
     tabs: [
