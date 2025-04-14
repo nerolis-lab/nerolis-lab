@@ -1,3 +1,10 @@
+# [1.47.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.46.0...v1.47.0) (2025-04-14)
+
+
+### Features
+
+* adds patreon and discord oauth ([47fffcf](https://github.com/nerolis-lab/nerolis-lab/commit/47fffcf22a6dc0fd34a6509eb4737725b1067544))
+
 # [1.46.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.45.0...v1.46.0) (2025-04-08)
 
 
