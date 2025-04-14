@@ -11,10 +11,9 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   provider = AuthProvider.Patreon;
   client: PatreonUserClient | undefined;
 
-  private identityQuery = QueryBuilder.identity.addRelationships(['memberships', 'campaign']).setAttributes({
+  private identityQuery = QueryBuilder.identity.addRelationships(['memberships']).setAttributes({
     member: ['patron_status', 'pledge_relationship_start', 'is_follower'],
     user: ['email']
-    // campaign: ['creation_name']
   });
 
   async signup(params: {
