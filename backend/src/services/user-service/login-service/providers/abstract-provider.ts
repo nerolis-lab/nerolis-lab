@@ -27,5 +27,5 @@ export abstract class AbstractProvider<TClient> {
     return user;
   }
 
-  abstract updateLastLogin(auth_id: string, role?: Roles): Promise<DBUser>;
+  abstract updateLastLogin(user: DBUser, role?: Roles): Promise<DBUser>;
 }

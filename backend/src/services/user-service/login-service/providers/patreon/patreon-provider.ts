@@ -30,10 +30,12 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
 
     const { access_token, refresh_token, expires_in_epoch } = token;
 
-    const { role, patreon_id, identifier } = await this.getPatronStatus({
+    const { patreon_id, identifier, userData } = await this.getPatronId({
       token: access_token,
       redirect_uri
     });
+
+    const { role } = this.parsePatronStatus(userData, preExistingUser);
 
     const expiryDate = Number(expires_in_epoch);
 
@@ -98,42 +100,74 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }
 
   async verifyExistingUser(userHeader: UserHeader): Promise<DBUser> {
-    const { role, patreon_id } = await this.getPatronStatus({
+    const { patreon_id, userData } = await this.getPatronId({
       token: userHeader.Authorization,
       redirect_uri: userHeader.Redirect
     });
 
-    return this.updateLastLogin(patreon_id, role);
+    const user = await UserDAO.get({ patreon_id });
+    const { role } = this.parsePatronStatus(userData, user);
+
+    logger.info(`[${user?.name}] Verified existing user with patreon_id: ${patreon_id} and role: ${role}`);
+
+    return this.updateLastLogin(user, role);
   }
 
-  async updateLastLogin(patreon_id: string, role: Roles): Promise<DBUser> {
-    const user = await UserDAO.get({ patreon_id });
+  async updateLastLogin(user: DBUser, role: Roles): Promise<DBUser> {
     return UserDAO.update({ ...user, last_login: new Date(), role });
   }
 
-  public async getPatronStatus(params: { token: string; redirect_uri: string }) {
+  public async getPatronId(params: {
+    token: string;
+    redirect_uri: string;
+    // TODO: set up a type for the patronData
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }): Promise<{ patreon_id: string; identifier: string; userData: any }> {
     const { token, redirect_uri } = params;
-    const userData = await this.getUserClient(redirect_uri).fetchIdentity(this.identityQuery, {
-      token
-    });
+    try {
+      logger.debug(`Calling getPatronId with redirect_uri: ${redirect_uri} and token: ${token}`);
+      const userData = await this.getUserClient(redirect_uri).fetchIdentity(this.identityQuery, {
+        token
+      });
 
-    const membership = simplify(userData).memberships.at(0);
-    let role = Roles.Default;
+      if (!userData || !userData.data) {
+        logger.error(`userData missing data: ${JSON.stringify(userData)}`);
+        throw new AuthorizationError('Invalid response from Patreon API: missing user data');
+      }
+
+      return {
+        patreon_id: userData.data.id,
+        identifier: userData.data.attributes.email,
+        userData: simplify(userData)
+      };
+    } catch (error) {
+      logger.error(`getPatronId error: ${JSON.stringify(error)}`);
+      throw error;
+    }
+  }
+
+  // TODO: set up a type for the patronData
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public parsePatronStatus(userData: any, user?: DBUser): { role: Roles; patronSince?: string } {
     let patronSince: string | undefined;
-    if (membership) {
-      const { patronStatus, pledgeRelationshipStart } = membership;
-      if (patronStatus === 'active_patron') {
-        role = Roles.Supporter;
-        patronSince = pledgeRelationshipStart!;
+    let role = user?.role ?? Roles.Default;
+
+    logger.debug(`[${user?.name}] Called parsePatronStatus with userData: ${JSON.stringify(userData)}`);
+
+    if (!userData.memberships) {
+      logger.error(`userData missing memberships: ${JSON.stringify(userData)}`);
+    } else if (userData.memberships.length > 0) {
+      const membership = userData.memberships[0]; // Using direct index instead of .at(0)
+      if (membership) {
+        const { patronStatus, pledgeRelationshipStart } = membership;
+        if (patronStatus === 'active_patron') {
+          role = Roles.Supporter;
+          patronSince = pledgeRelationshipStart!;
+        }
       }
     }
 
-    return {
-      patreon_id: userData.data.id,
-      role,
-      patronSince,
-      identifier: userData.data.attributes.email
-    };
+    return { role, patronSince };
   }
 
   private getUserClient(redirect_uri: string) {

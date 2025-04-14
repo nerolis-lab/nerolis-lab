@@ -160,9 +160,9 @@ describe('DiscordProvider', () => {
   describe('updateLastLogin', () => {
     it('should update the last login date', async () => {
       const discordId = 'mockDiscordId';
-      await UserDAO.insert(mocks.dbUser({ discord_id: discordId }));
+      const user = await UserDAO.insert(mocks.dbUser({ discord_id: discordId }));
       const initialDate = new Date();
-      await DiscordProvider.updateLastLogin(discordId);
+      await DiscordProvider.updateLastLogin(user);
 
       const updatedUser = await UserDAO.find({ discord_id: discordId });
       expect(updatedUser?.last_login).not.toEqual(initialDate);

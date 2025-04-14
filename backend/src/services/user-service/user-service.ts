@@ -26,10 +26,11 @@ export async function getUserSettings(user: DBUser, userHeader: UserHeader): Pro
 
   let supporterSince: string | undefined;
   if (user.patreon_id) {
-    const { role, patronSince } = await PatreonProvider.getPatronStatus({
+    const { userData } = await PatreonProvider.getPatronId({
       token: userHeader.Authorization,
       redirect_uri: userHeader.Redirect
     });
+    const { role, patronSince } = PatreonProvider.parsePatronStatus(userData, user);
 
     await UserDAO.update({ ...user, role });
     supporterSince = patronSince;

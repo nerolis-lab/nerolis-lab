@@ -245,9 +245,9 @@ describe('PatreonProvider', () => {
   describe('updateLastLogin', () => {
     it('should update the last login date and role', async () => {
       const patreonId = 'mockPatreonId';
-      await UserDAO.insert(mocks.dbUser({ patreon_id: patreonId, role: Roles.Default }));
+      const user = await UserDAO.insert(mocks.dbUser({ patreon_id: patreonId, role: Roles.Default }));
       const initialDate = new Date();
-      await PatreonProvider.updateLastLogin(patreonId, Roles.Supporter);
+      await PatreonProvider.updateLastLogin(user, Roles.Supporter);
 
       const updatedUser = await UserDAO.find({ patreon_id: patreonId });
       expect(updatedUser?.last_login).not.toEqual(initialDate);
@@ -255,18 +255,32 @@ describe('PatreonProvider', () => {
     });
   });
 
-  describe('getPatronStatus', () => {
+  describe('parsePatronStatus', () => {
     it('should return supporter role for active patrons', async () => {
-      const { role, patreon_id, identifier, patronSince } = await PatreonProvider.getPatronStatus({
+      const userData = {
+        memberships: [
+          {
+            patronStatus: 'active_patron',
+            pledgeRelationshipStart: '2024-01-01T00:00:00.000Z'
+          }
+        ]
+      };
+      const { role, patronSince } = PatreonProvider.parsePatronStatus(userData);
+
+      expect(role).toBe(Roles.Supporter);
+      expect(patronSince).toBe('2024-01-01T00:00:00.000Z');
+    });
+  });
+
+  describe('getPatronId', () => {
+    it('should return the patron id', async () => {
+      const { patreon_id, identifier } = await PatreonProvider.getPatronId({
         token: 'mockAccessToken',
         redirect_uri: 'http://localhost:3000'
       });
 
-      expect(PatreonProvider.client?.fetchIdentity).toHaveBeenCalled();
-      expect(role).toBe(Roles.Supporter);
       expect(patreon_id).toBe('mockPatreonId');
       expect(identifier).toBe('mock@patreon.com');
-      expect(patronSince).toBe('2024-01-01T00:00:00.000Z');
     });
   });
 });

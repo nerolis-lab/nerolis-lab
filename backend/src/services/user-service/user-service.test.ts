@@ -17,7 +17,8 @@ TimeUtils.getMySQLNow = vi.fn().mockReturnValue('2024-01-01 18:00:00');
 
 vi.mock('@src/services/user-service/login-service/providers/patreon/patreon-provider.js', () => ({
   PatreonProvider: {
-    getPatronStatus: vi.fn()
+    getPatronId: vi.fn(),
+    parsePatronStatus: vi.fn()
   }
 }));
 
@@ -126,11 +127,21 @@ describe('getUserSettings', () => {
 
     await UserDAO.insert(user);
 
-    vi.mocked(PatreonProvider.getPatronStatus).mockResolvedValue({
+    const userData = {
       role: Roles.Supporter,
       patronSince: '2024-01-01',
       patreon_id: 'patreon-id',
       identifier: 'patreon-email@example.com'
+    };
+
+    vi.mocked(PatreonProvider.getPatronId).mockResolvedValue({
+      identifier: 'patreon-email@example.com',
+      patreon_id: 'patreon-id',
+      userData
+    });
+    vi.mocked(PatreonProvider.parsePatronStatus).mockReturnValue({
+      role: Roles.Supporter,
+      patronSince: '2024-01-01'
     });
 
     const settings = await getUserSettings(user, mockUserHeader);
@@ -144,10 +155,7 @@ describe('getUserSettings', () => {
       supporterSince: '2024-01-01'
     });
 
-    expect(PatreonProvider.getPatronStatus).toHaveBeenCalledWith({
-      token: 'Bearer token',
-      redirect_uri: 'http://localhost:3000'
-    });
+    expect(PatreonProvider.parsePatronStatus).toHaveBeenCalledWith(userData, user);
   });
 
   it('should return custom pot size if set', async () => {
