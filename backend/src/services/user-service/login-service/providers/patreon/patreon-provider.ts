@@ -11,9 +11,10 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   provider = AuthProvider.Patreon;
   client: PatreonUserClient | undefined;
 
-  private identityQuery = QueryBuilder.identity.addRelationships(['memberships']).setAttributes({
-    member: ['patron_status', 'pledge_relationship_start'],
+  private identityQuery = QueryBuilder.identity.addRelationships(['memberships', 'campaign']).setAttributes({
+    member: ['patron_status', 'pledge_relationship_start', 'is_follower'],
     user: ['email']
+    // campaign: ['creation_name']
   });
 
   async signup(params: {
@@ -177,12 +178,7 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
           clientId: config.PATREON_CLIENT_ID,
           clientSecret: config.PATREON_CLIENT_SECRET,
           redirectUri: redirect_uri,
-          scopes: [
-            PatreonOauthScope.IdentityEmail,
-            PatreonOauthScope.IdentityMemberships,
-            PatreonOauthScope.CampaignMembers,
-            PatreonOauthScope.Identity
-          ]
+          scopes: [PatreonOauthScope.IdentityEmail, PatreonOauthScope.Identity]
         }
       });
     }
