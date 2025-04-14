@@ -180,7 +180,8 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
           scopes: [
             PatreonOauthScope.IdentityEmail,
             PatreonOauthScope.IdentityMemberships,
-            PatreonOauthScope.CampaignMembers
+            PatreonOauthScope.CampaignMembers,
+            PatreonOauthScope.Identity
           ]
         }
       });
