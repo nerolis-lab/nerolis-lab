@@ -1,54 +1,5 @@
 <template>
   <v-container class="team-container pt-2">
-    <!-- Loading Overlay -->
-    <v-overlay :model-value="isLoading" absolute>
-      <v-card class="p-4" width="400">
-        <!-- Progress Bar -->
-        <v-progress-linear :value="(scored / total) * 100" height="20" color="primary" class="mb-4">
-          <template #default>
-            Scored {{ scored }} / {{ total }}
-          </template>
-        </v-progress-linear>
-
-        <!-- Total Teams Info -->
-        <div class="d-flex justify-space-between">
-          <span>Total: {{ totalTeamsSearched }}</span>
-          <span>Total Possible Teams: {{ totalPossibleTeams }}</span>
-        </div>
-
-        <!-- Current Best Team Strength -->
-        <div class="text-center mt-2">
-          <strong>
-          Best Team Strength: 
-          <span :style="{ color: 'rgb(var(--v-theme-strength))' }">
-            {{ Math.round(bestTeamStrength) }}
-          </span>
-          </strong>
-        </div>
-
-        <!-- Current Best Team -->
-        <div class="d-flex justify-center mt-4">
-          <img
-            v-for="(sprite, index) in bestTeamSprites"
-            :key="index"
-            :src="sprite"
-            alt="Pokemon Sprite"
-            class="mx-2"
-            width="50"
-            height="50"
-          />
-        </div>
-
-        <!-- Current Best Team Names -->
-        <div class="d-flex justify-center mt-2">
-          <div v-for="(member, index) in bestTeam" :key="index" class="text-center mx-2">
-            <div>{{ member.pokemon.displayName }}</div>
-            <div v-if="member.customName" class="text-muted">({{ member.customName }})</div>
-          </div>
-        </div>
-      </v-card>
-    </v-overlay>
-
     <v-row v-if="!isMobile" id="desktop-layout" class="d-flex justify-left flex-nowrap">
       <v-col cols="auto">
         <v-card-actions class="px-0" :disabled="!userStore.loggedIn">
@@ -240,6 +191,60 @@
         </v-card>
       </v-col>
     </div>
+
+    <!-- Optimizer Section -->
+    <div class="optimizer-section">
+      <v-card class="p-4" width="100%">
+        <!-- Progress Bar -->
+        <!-- <v-progress-linear :value="(scored / total) * 100" height="20" color="primary" class="mb-4">
+          <template #default> Scored {{ scored }} / {{ total }} </template>
+        </v-progress-linear> -->
+
+        <v-progress-linear :model-value="progressValue" :height="20" color="primary" class="mb-4">
+          <template #default> Scored {{ totalTeamsSearched }} / {{ total - scored + totalTeamsSearched }} </template>
+        </v-progress-linear>
+
+        <!-- Total Teams Info -->
+        <div class="d-flex justify-space-between">
+          <span>Total: {{ totalTeamsSearched }}</span>
+          <span>Total Possible Teams: {{ totalPossibleTeams }}</span>
+        </div>
+
+        <!-- Current Best Team Strength -->
+        <div class="text-center mt-2">
+          <strong>
+            Best Team Strength:
+            <span :style="{ color: 'rgb(var(--v-theme-strength))' }">
+              {{ Math.round(bestTeamStrength) }}
+            </span>
+          </strong>
+        </div>
+
+        <!-- Current Best Team -->
+        <div class="d-flex justify-center mt-4">
+          <table>
+            <tr>
+              <!-- Pokémon Images -->
+              <td v-for="(sprite, index) in bestTeamSprites" :key="index" class="text-center">
+                <img :src="sprite" alt="Pokemon Sprite" class="mx-2" width="50" height="50" />
+              </td>
+            </tr>
+            <tr>
+              <!-- Pokémon Custom Names -->
+              <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
+                <strong>{{ member.name || '' }}</strong>
+              </td>
+            </tr>
+            <tr>
+              <!-- Pokémon Display Names -->
+              <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
+                {{ member.pokemon.displayName }}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </v-card>
+    </div>
   </v-container>
 
   <v-dialog v-model="isDeleteOpen" aria-label="delete team menu">
@@ -270,7 +275,6 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
 import CookingResults from '@/components/calculator/results/cooking-results.vue'
 import MemberResults from '@/components/calculator/results/member-results/member-results.vue'
 import TeamResults from '@/components/calculator/results/team-results.vue'
@@ -284,6 +288,7 @@ import { useNotificationStore } from '@/stores/notification-store/notification-s
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
+import { defineComponent, ref, watch } from 'vue'
 
 const MAX_TEAM_MEMBERS = 5
 
@@ -312,6 +317,7 @@ export default defineComponent({
     const bestTeam = ref([]) // Store the current best team
     const bestTeamSprites = ref<string[]>([]) // Store the sprites for the best team
     const bestTeamStrength = ref(0) // Store the strength of the best team
+    const teamsToCheck = ref([])
 
     const startFindOptimalTeam = async () => {
       isLoading.value = true
@@ -376,7 +382,8 @@ export default defineComponent({
       bestTeamSprites,
       bestTeamStrength,
       startFindOptimalTeam,
-      getPokemonImage
+      getPokemonImage,
+      teamsToCheck
     }
   },
   data: () => ({
@@ -396,6 +403,10 @@ export default defineComponent({
     },
     teamSlots() {
       return this.teamStore.getTeamSize === 0 ? 1 : MAX_TEAM_MEMBERS
+    },
+    progressValue() {
+      // Calculate the progress value reactively
+      return (this.totalTeamsSearched / (this.total - this.scored + this.totalTeamsSearched)) * 100
     }
   },
   methods: {
@@ -427,7 +438,9 @@ export default defineComponent({
       await this.teamStore.calculateProduction(this.teamStore.currentIndex)
     }
   }
-});</script><style lang="scss">
+})
+</script>
+<style lang="scss">
 .tab-item {
   flex: 1;
 }
@@ -449,6 +462,12 @@ export default defineComponent({
   position: absolute;
   top: -10px;
   left: 10px;
+}
+
+.optimizer-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: $desktop) {
