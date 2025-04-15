@@ -6,8 +6,8 @@ import { PatreonProvider } from '@src/services/user-service/login-service/provid
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
-import type { UpdateUserRequest, UserHeader } from 'sleepapi-common';
-import { AuthProvider, MAX_POT_SIZE, Roles, uuid, type IslandShortName } from 'sleepapi-common';
+import type { UpdateUserRequest } from 'sleepapi-common';
+import { MAX_POT_SIZE, Roles, uuid, type IslandShortName } from 'sleepapi-common';
 import { deleteUser, getUserSettings, updateUser, upsertUserSettings } from './user-service.js';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
@@ -72,12 +72,6 @@ describe('deleteUser', () => {
 });
 
 describe('getUserSettings', () => {
-  const mockUserHeader: UserHeader = mocks.userHeader({
-    Authorization: 'Bearer token',
-    Provider: AuthProvider.Google,
-    Redirect: 'http://localhost:3000'
-  });
-
   it('should return user settings with area bonuses', async () => {
     const user: DBUser = mocks.dbUser({
       external_id: uuid.v4(),
@@ -99,7 +93,7 @@ describe('getUserSettings', () => {
       await UserAreaDAO.insert(areaBonus);
     }
 
-    const settings = await getUserSettings(user, mockUserHeader);
+    const settings = await getUserSettings(user);
 
     expect(settings).toEqual({
       name: 'Test User',
@@ -127,24 +121,16 @@ describe('getUserSettings', () => {
 
     await UserDAO.insert(user);
 
-    const userData = {
-      role: Roles.Supporter,
-      patronSince: '2024-01-01',
-      patreon_id: 'patreon-id',
-      identifier: 'patreon-email@example.com'
-    };
-
     vi.mocked(PatreonProvider.getPatronId).mockResolvedValue({
       identifier: 'patreon-email@example.com',
-      patreon_id: 'patreon-id',
-      userData
+      patreon_id: 'patreon-id'
     });
-    vi.mocked(PatreonProvider.parsePatronStatus).mockReturnValue({
+    vi.mocked(PatreonProvider.isSupporter).mockReturnValue({
       role: Roles.Supporter,
       patronSince: '2024-01-01'
     });
 
-    const settings = await getUserSettings(user, mockUserHeader);
+    const settings = await getUserSettings(user);
 
     expect(settings).toEqual({
       name: 'Test User',
@@ -155,7 +141,7 @@ describe('getUserSettings', () => {
       supporterSince: '2024-01-01'
     });
 
-    expect(PatreonProvider.parsePatronStatus).toHaveBeenCalledWith(userData, user);
+    expect(PatreonProvider.isSupporter).toHaveBeenCalledWith({ patreon_id: user.patreon_id, previousRole: user.role });
   });
 
   it('should return custom pot size if set', async () => {
@@ -174,7 +160,7 @@ describe('getUserSettings', () => {
       pot_size: 150
     });
 
-    const settings = await getUserSettings(user, mockUserHeader);
+    const settings = await getUserSettings(user);
 
     expect(settings).toEqual({
       name: 'Test User',

@@ -3,18 +3,30 @@ import { UserDAO, type DBUser } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import { generateFriendCode } from '@src/services/user-service/login-service/login-utils.js';
 import { AbstractProvider } from '@src/services/user-service/login-service/providers/abstract-provider.js';
-import { PatreonOauthScope, PatreonUserClient, QueryBuilder, simplify } from 'patreon-api.ts';
+import type { Patron } from '@src/services/user-service/login-service/providers/patreon/patreon-types.js';
+import { PatreonCreatorClient, PatreonOauthScope, PatreonUserClient, QueryBuilder, simplify } from 'patreon-api.ts';
 import type { LoginResponse, RefreshResponse, UserHeader } from 'sleepapi-common';
 import { AuthProvider, Roles, uuid } from 'sleepapi-common';
 
 export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   provider = AuthProvider.Patreon;
   client: PatreonUserClient | undefined;
+  creatorClient: PatreonCreatorClient = this.getCreatorClient();
 
-  private identityQuery = QueryBuilder.identity.addRelationships(['memberships']).setAttributes({
-    member: ['patron_status', 'pledge_relationship_start', 'is_follower'],
+  private patrons: Map<string, Patron> = new Map();
+  private lastPatronsUpdate: number = 0;
+  private readonly PATRONS_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes in milliseconds
+  private readonly NEROLI_CAMPAIGN_ID = '12771188';
+
+  private identityQuery = QueryBuilder.identity.setAttributes({
     user: ['email']
   });
+
+  // can add currently_entitled_tiers to addRelationships to find which tier the user is in
+  private memberQuery = QueryBuilder.campaignMembers
+    .addRelationships(['user'])
+    .setAttributes({ member: ['patron_status', 'pledge_relationship_start'] })
+    .setRequestOptions({ count: 1000 });
 
   async signup(params: {
     authorization_code: string;
@@ -30,12 +42,12 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
 
     const { access_token, refresh_token, expires_in_epoch } = token;
 
-    const { patreon_id, identifier, userData } = await this.getPatronId({
+    const { patreon_id, identifier } = await this.getPatronId({
       token: access_token,
       redirect_uri
     });
 
-    const { role } = this.parsePatronStatus(userData, preExistingUser);
+    const { role } = await this.isSupporter({ patreon_id, previousRole: preExistingUser?.role });
 
     const expiryDate = Number(expires_in_epoch);
 
@@ -100,15 +112,13 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }
 
   async verifyExistingUser(userHeader: UserHeader): Promise<DBUser> {
-    const { patreon_id, userData } = await this.getPatronId({
+    const { patreon_id } = await this.getPatronId({
       token: userHeader.Authorization,
       redirect_uri: userHeader.Redirect
     });
 
     const user = await UserDAO.get({ patreon_id });
-    const { role } = this.parsePatronStatus(userData, user);
-
-    logger.info(`[${user?.name}] Verified existing user with patreon_id: ${patreon_id} and role: ${role}`);
+    const { role } = await this.isSupporter({ patreon_id, previousRole: user.role });
 
     return this.updateLastLogin(user, role);
   }
@@ -120,25 +130,18 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   public async getPatronId(params: {
     token: string;
     redirect_uri: string;
-    // TODO: set up a type for the patronData
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }): Promise<{ patreon_id: string; identifier: string; userData: any }> {
+  }): Promise<{ patreon_id: string; identifier: string }> {
     const { token, redirect_uri } = params;
     try {
-      logger.debug(`Calling getPatronId with redirect_uri: ${redirect_uri} and token: ${token}`);
-      const userData = await this.getUserClient(redirect_uri).fetchIdentity(this.identityQuery, {
-        token
-      });
-
-      if (!userData || !userData.data) {
-        logger.error(`userData missing data: ${JSON.stringify(userData)}`);
-        throw new AuthorizationError('Invalid response from Patreon API: missing user data');
-      }
+      const userData = simplify(
+        await this.getUserClient(redirect_uri).fetchIdentity(this.identityQuery, {
+          token
+        })
+      );
 
       return {
-        patreon_id: userData.data.id,
-        identifier: userData.data.attributes.email,
-        userData: simplify(userData)
+        patreon_id: userData.id,
+        identifier: userData.email
       };
     } catch (error) {
       logger.error(`getPatronId error: ${JSON.stringify(error)}`);
@@ -146,28 +149,51 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     }
   }
 
-  // TODO: set up a type for the patronData
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public parsePatronStatus(userData: any, user?: DBUser): { role: Roles; patronSince?: string } {
-    let patronSince: string | undefined;
-    let role = user?.role ?? Roles.Default;
+  // TODO: clean up
+  public async isSupporter(params: { patreon_id: string; previousRole?: Roles }): Promise<{
+    role: Roles;
+    patronSince: string | null;
+  }> {
+    const { patreon_id, previousRole } = params;
+    let patronSince: string | null = null;
+    let role = previousRole ?? Roles.Default;
 
-    logger.debug(`[${user?.name}] Called parsePatronStatus with userData: ${JSON.stringify(userData)}`);
+    await this.getPatrons();
+    const patron = this.patrons.get(patreon_id);
 
-    if (!userData.memberships) {
-      logger.error(`userData missing memberships: ${JSON.stringify(userData)}`);
-    } else if (userData.memberships.length > 0) {
-      const membership = userData.memberships[0]; // Using direct index instead of .at(0)
-      if (membership) {
-        const { patronStatus, pledgeRelationshipStart } = membership;
-        if (patronStatus === 'active_patron') {
-          role = Roles.Supporter;
-          patronSince = pledgeRelationshipStart!;
-        }
+    if (patron) {
+      const { patronStatus, pledgeRelationshipStart } = patron;
+      if (patronStatus === 'active_patron') {
+        role = Roles.Supporter;
+        patronSince = pledgeRelationshipStart;
       }
     }
 
     return { role, patronSince };
+  }
+
+  private async getPatrons(): Promise<Map<string, Patron>> {
+    const now = Date.now();
+    if (this.patrons.size === 0 || now - this.lastPatronsUpdate > this.PATRONS_CACHE_TTL_MS) {
+      await this.updatePatrons();
+      this.lastPatronsUpdate = now;
+    }
+    return this.patrons;
+  }
+
+  private async updatePatrons(): Promise<Map<string, Patron>> {
+    const memberData = simplify(
+      await this.creatorClient.fetchCampaignMembers(this.NEROLI_CAMPAIGN_ID, this.memberQuery)
+    ).data;
+
+    for (const member of memberData) {
+      this.patrons.set(member.user.id, {
+        id: member.user.id,
+        patronStatus: member.patronStatus,
+        pledgeRelationshipStart: member.pledgeRelationshipStart
+      });
+    }
+    return this.patrons;
   }
 
   private getUserClient(redirect_uri: string) {
@@ -182,6 +208,19 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
       });
     }
     return this.client;
+  }
+
+  private getCreatorClient(): PatreonCreatorClient {
+    return new PatreonCreatorClient({
+      oauth: {
+        clientId: config.PATREON_CLIENT_ID,
+        clientSecret: config.PATREON_CLIENT_SECRET,
+        token: {
+          access_token: config.PATREON_CREATOR_ACCESS_TOKEN,
+          refresh_token: config.PATREON_CREATOR_REFRESH_TOKEN
+        }
+      }
+    });
   }
 }
 

@@ -255,17 +255,10 @@ describe('PatreonProvider', () => {
     });
   });
 
-  describe('parsePatronStatus', () => {
+  describe('isSupporter', () => {
     it('should return supporter role for active patrons', async () => {
-      const userData = {
-        memberships: [
-          {
-            patronStatus: 'active_patron',
-            pledgeRelationshipStart: '2024-01-01T00:00:00.000Z'
-          }
-        ]
-      };
-      const { role, patronSince } = PatreonProvider.parsePatronStatus(userData);
+      // TODO: need to add mockPatreonId to the cache
+      const { role, patronSince } = PatreonProvider.isSupporter({ patreon_id: 'mockPatreonId' });
 
       expect(role).toBe(Roles.Supporter);
       expect(patronSince).toBe('2024-01-01T00:00:00.000Z');

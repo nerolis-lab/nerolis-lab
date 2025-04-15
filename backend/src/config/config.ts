@@ -41,6 +41,8 @@ export class BackendConfig {
       DISCORD_CLIENT_SECRET: getProductionVariable('DISCORD_CLIENT_SECRET'),
       PATREON_CLIENT_ID: getProductionVariable('PATREON_CLIENT_ID'),
       PATREON_CLIENT_SECRET: getProductionVariable('PATREON_CLIENT_SECRET'),
+      PATREON_CREATOR_ACCESS_TOKEN: getProductionVariable('PATREON_CREATOR_ACCESS_TOKEN'),
+      PATREON_CREATOR_REFRESH_TOKEN: getProductionVariable('PATREON_CREATOR_REFRESH_TOKEN'),
       GENERATE_TIERLIST: GENERATE_TIERLIST === 'true',
       DATABASE_NAME: getProductionVariable('DATABASE_NAME')
     };
