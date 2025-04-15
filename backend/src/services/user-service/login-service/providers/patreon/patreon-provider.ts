@@ -203,7 +203,7 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
           clientId: config.PATREON_CLIENT_ID,
           clientSecret: config.PATREON_CLIENT_SECRET,
           redirectUri: redirect_uri,
-          scopes: [PatreonOauthScope.IdentityEmail, PatreonOauthScope.Identity]
+          scopes: [PatreonOauthScope.IdentityEmail]
         }
       });
     }
