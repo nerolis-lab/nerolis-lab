@@ -82,7 +82,8 @@ export const useUserStore = defineStore('user', {
         this.areaBonus[area as IslandShortName] = bonus
       }
 
-      this.supporterSince = userSettings.supporterSince ?? null
+      logger.debug(`Setting supporter since ${userSettings.supporterSince}`)
+      this.supporterSince = userSettings.supporterSince
     },
     async syncUserSettings() {
       const userSettings = await UserService.getUserSettings()

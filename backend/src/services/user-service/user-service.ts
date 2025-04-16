@@ -24,7 +24,7 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
     areaBonuses[areaBonus.area] = areaBonus.bonus;
   }
 
-  let supporterSince: string | undefined;
+  let supporterSince: string | null = null;
   if (user.patreon_id) {
     const { role, patronSince } = await PatreonProvider.isSupporter({
       patreon_id: user.patreon_id,
@@ -32,12 +32,13 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
     });
 
     await UserDAO.update({ ...user, role });
-    supporterSince = patronSince ?? undefined;
+    supporterSince = patronSince;
   }
 
   const userSettings = await UserSettingsDAO.find({ fk_user_id: user.id });
   const potSize = userSettings?.pot_size ?? MAX_POT_SIZE;
 
+  logger.info(`Returning supporter since ${supporterSince}`);
   return {
     name: user.name,
     avatar: user.avatar ?? 'default',

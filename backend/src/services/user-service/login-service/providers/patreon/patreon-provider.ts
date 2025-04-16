@@ -178,7 +178,8 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
       if (patron) {
         const { patronStatus, pledgeRelationshipStart } = patron;
         if (patronStatus === 'active_patron') {
-          role = Roles.Supporter;
+          // if user was default, we upgrade to supporter, but we dont downgrade admins
+          role = role === Roles.Default ? Roles.Supporter : role;
           patronSince = pledgeRelationshipStart;
         }
       }
