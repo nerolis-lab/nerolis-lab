@@ -178,12 +178,16 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
       if (patron) {
         const { patronStatus, pledgeRelationshipStart } = patron;
         if (patronStatus === 'active_patron') {
+          logger.info(
+            `User is a supporter, updating role to ${Roles.Supporter} and patronSince ${pledgeRelationshipStart}`
+          );
           // if user was default, we upgrade to supporter, but we dont downgrade admins
           role = role === Roles.Default ? Roles.Supporter : role;
           patronSince = pledgeRelationshipStart;
         }
       }
 
+      logger.info(`[isSupporter] Returning role ${role} and patronSince ${patronSince}`);
       return { role, patronSince };
     } catch (error) {
       // eslint-disable-next-line SleepAPILogger/no-console
