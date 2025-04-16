@@ -2,7 +2,11 @@
   <v-container style="max-width: 600px">
     <v-row>
       <v-col cols="12">
-        <v-card rounded="xl" class="pb-4 frosted-glass" :class="{ 'supporter-card': userStore.isSupporter }">
+        <v-card
+          rounded="xl"
+          class="pb-4 frosted-glass"
+          :class="{ 'supporter-card': userStore.isSupporter, 'admin-card': userStore.isAdmin }"
+        >
           <v-row class="pt-4">
             <v-col cols="12" class="flex-center text-h4"> Profile </v-col>
           </v-row>
@@ -50,31 +54,29 @@
               <span class="text-center font-weight-bold">Supporter status: </span>
             </v-col>
             <v-col cols="auto" class="flex-center">
-              <span :class="['text-center', userStore.isSupporter ? 'text-supporter' : 'text-grey']">{{
-                userStore.isSupporter ? 'Active' : 'Inactive'
+              <span :class="['text-center', userStore.supporterSince ? 'text-supporter' : 'text-grey']">{{
+                userStore.supporterSince ? 'Active' : 'Inactive'
               }}</span>
             </v-col>
           </v-row>
 
-          <v-row v-if="userStore.isSupporter" dense class="flex-center">
+          <v-row v-if="userStore.supporterSince" dense class="flex-center">
             <v-col cols="auto" class="flex-center">
               <span class="text-center font-weight-bold">Supporter since: </span>
             </v-col>
             <v-col cols="auto" class="flex-center">
-              <span :class="['text-center', userStore.isSupporter ? 'text-supporter' : 'text-grey']">{{
-                userStore.supporterSince
-              }}</span>
+              <span class="text-center text-supporter">{{ userStore.supporterSince }}</span>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
     </v-row>
 
-    <v-row v-if="userStore.isSupporter">
+    <v-row v-if="userStore.isAdminOrSupporter">
       <v-col cols="12">
         <div class="d-flex align-center justify-center">
-          <v-icon class="mr-2" color="supporter">mdi-star</v-icon>
-          <span class="font-weight-bold text-supporter">Thank you for your support!</span>
+          <v-icon class="mr-2" :color="userStore.roleData.color">mdi-star</v-icon>
+          <span :class="['font-weight-bold', `text-${userStore.roleData.color}`]">Thank you for your support!</span>
         </div>
       </v-col>
     </v-row>
@@ -118,6 +120,15 @@ export default defineComponent({
 
   &:hover {
     box-shadow: 0 6px 25px rgba(var(--v-theme-strength), 0.4) !important;
+  }
+}
+
+.admin-card {
+  box-shadow: 0 4px 20px rgba(var(--v-theme-admin), 0.3) !important;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 25px rgba(var(--v-theme-admin), 0.4) !important;
   }
 }
 </style>

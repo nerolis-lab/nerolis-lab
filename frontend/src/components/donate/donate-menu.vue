@@ -2,9 +2,7 @@
   <v-menu v-model="menu" :close-on-content-click="false" location="bottom" width="250px">
     <template #activator="{ props }">
       <v-btn v-bind="props" id="navBarIcon" icon>
-        <v-icon v-if="userStore.isAdmin || userStore.isSupporter" size="32" :color="userStore.roleData.color"
-          >mdi-heart</v-icon
-        >
+        <v-icon v-if="userStore.isAdminOrSupporter" size="32" :color="userStore.roleData.color">mdi-heart</v-icon>
         <v-icon v-else-if="!menu" size="32" color="pink">mdi-heart-outline</v-icon>
         <v-icon v-else class="animate-heart" size="32" color="pink">mdi-heart</v-icon>
       </v-btn>

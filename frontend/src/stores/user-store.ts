@@ -21,7 +21,7 @@ export interface UserState {
   externalId: string | null
   friendCode: string | null
   auth: AuthProviders | null
-  role: Roles
+  role: Roles // TODO: make Role[]
   areaBonus: Record<IslandShortName, number>
   potSize: number
   supporterSince: string | null

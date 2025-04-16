@@ -111,9 +111,9 @@ export default defineComponent({
 }
 
 .admin-avatar {
-  border-color: var(--v-theme-primary) !important;
+  border-color: var(--v-theme-admin) !important;
   border-width: 2px;
-  box-shadow: 0 0 10px rgba(var(--v-theme-primary), 0.6);
+  box-shadow: 0 0 10px rgba(var(--v-theme-admin), 0.6);
 }
 
 .role-title {

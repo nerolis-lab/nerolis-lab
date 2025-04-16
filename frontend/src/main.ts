@@ -28,8 +28,9 @@ async function initializeApp() {
       'secondary-dark': '#4A4765',
       surface: '#403D58',
       accent: '#9A95C3',
-
       strength: '#FFB81F',
+
+      admin: '#E63946',
       supporter: '#FFB81F',
 
       natureUp: 'FF683A',

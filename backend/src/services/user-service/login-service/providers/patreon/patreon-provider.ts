@@ -24,7 +24,7 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
 
   // can add currently_entitled_tiers to addRelationships to find which tier the user is in
   private memberQuery = QueryBuilder.campaignMembers
-    .addRelationships(['user'])
+    .addRelationships(['user']) // needed so we can grab id to compare with patreon_id
     .setAttributes({ member: ['patron_status', 'pledge_relationship_start'] })
     .setRequestOptions({ count: 1000 });
 
@@ -33,69 +33,77 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     redirect_uri: string;
     preExistingUser?: DBUser;
   }): Promise<LoginResponse> {
-    const { authorization_code, redirect_uri, preExistingUser } = params;
-    const token = await this.getUserClient(redirect_uri).oauth.getOauthTokenFromCode({ code: authorization_code });
+    try {
+      const { authorization_code, redirect_uri, preExistingUser } = params;
+      const token = await this.getUserClient(redirect_uri).oauth.getOauthTokenFromCode({ code: authorization_code });
 
-    if (!token) {
-      throw new AuthorizationError('Failed to get Patreon tokens from authorization code');
-    }
+      if (!token) {
+        throw new AuthorizationError('Failed to get Patreon tokens from authorization code');
+      }
 
-    const { access_token, refresh_token, expires_in_epoch } = token;
+      const { access_token, refresh_token, expires_in_epoch } = token;
 
-    const { patreon_id, identifier } = await this.getPatronId({
-      token: access_token,
-      redirect_uri
-    });
+      const { patreon_id, identifier } = await this.getPatronId({
+        token: access_token,
+        redirect_uri
+      });
 
-    const { role } = await this.isSupporter({ patreon_id, previousRole: preExistingUser?.role });
+      const { role } = await this.isSupporter({ patreon_id, previousRole: preExistingUser?.role });
 
-    const expiryDate = Number(expires_in_epoch);
+      const expiryDate = Number(expires_in_epoch);
 
-    let existingUser: DBUser;
-    if (preExistingUser) {
-      // user sent credentials from frontend, indicating they are already signed up, but with different provider
-      existingUser = await UserDAO.update({ ...preExistingUser, patreon_id, role });
-    } else {
-      // either first time signing up ever, or new device
-      existingUser =
-        (await UserDAO.find({ patreon_id })) ??
-        (await UserDAO.insert({
-          friend_code: generateFriendCode(),
-          patreon_id,
-          external_id: uuid.v4(),
-          name: 'New user',
-          role
-        }));
-    }
+      let existingUser: DBUser;
+      if (preExistingUser) {
+        // user sent credentials from frontend, indicating they are already signed up, but with different provider
+        existingUser = await UserDAO.update({ ...preExistingUser, patreon_id, role });
+      } else {
+        // either first time signing up ever, or new device
+        existingUser =
+          (await UserDAO.find({ patreon_id })) ??
+          (await UserDAO.insert({
+            friend_code: generateFriendCode(),
+            patreon_id,
+            external_id: uuid.v4(),
+            name: 'New user',
+            role
+          }));
+      }
 
-    return {
-      name: existingUser.name,
-      externalId: existingUser.external_id,
-      auth: {
-        tokens: {
-          accessToken: access_token,
-          refreshToken: refresh_token,
-          expiryDate
-        },
-        activeProvider: AuthProvider.Patreon,
-        linkedProviders: {
-          [AuthProvider.Patreon]: {
-            linked: true,
-            identifier
+      return {
+        name: existingUser.name,
+        externalId: existingUser.external_id,
+        auth: {
+          tokens: {
+            accessToken: access_token,
+            refreshToken: refresh_token,
+            expiryDate
           },
-          [AuthProvider.Discord]: {
-            linked: !!existingUser.discord_id
-          },
-          [AuthProvider.Google]: {
-            linked: !!existingUser.google_id
+          activeProvider: AuthProvider.Patreon,
+          linkedProviders: {
+            [AuthProvider.Patreon]: {
+              linked: true,
+              identifier
+            },
+            [AuthProvider.Discord]: {
+              linked: !!existingUser.discord_id
+            },
+            [AuthProvider.Google]: {
+              linked: !!existingUser.google_id
+            }
           }
-        }
-      },
-      friendCode: existingUser.friend_code,
-      role: existingUser.role,
-      avatar: existingUser.avatar
-    };
+        },
+        friendCode: existingUser.friend_code,
+        role: existingUser.role,
+        avatar: existingUser.avatar
+      };
+    } catch (error) {
+      // TODO: add stack trace
+      // eslint-disable-next-line SleepAPILogger/no-console
+      console.error('signup error', error, (error as Error).stack);
+      throw error;
+    }
   }
+
   async refresh(params: { refresh_token: string; redirect_uri: string }): Promise<RefreshResponse> {
     const { refresh_token, redirect_uri } = params;
 
@@ -154,22 +162,28 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     role: Roles;
     patronSince: string | null;
   }> {
-    const { patreon_id, previousRole } = params;
-    let patronSince: string | null = null;
-    let role = previousRole ?? Roles.Default;
+    try {
+      const { patreon_id, previousRole } = params;
+      let patronSince: string | null = null;
+      let role = previousRole ?? Roles.Default;
 
-    await this.getPatrons();
-    const patron = this.patrons.get(patreon_id);
+      await this.getPatrons();
+      const patron = this.patrons.get(patreon_id);
 
-    if (patron) {
-      const { patronStatus, pledgeRelationshipStart } = patron;
-      if (patronStatus === 'active_patron') {
-        role = Roles.Supporter;
-        patronSince = pledgeRelationshipStart;
+      if (patron) {
+        const { patronStatus, pledgeRelationshipStart } = patron;
+        if (patronStatus === 'active_patron') {
+          role = Roles.Supporter;
+          patronSince = pledgeRelationshipStart;
+        }
       }
-    }
 
-    return { role, patronSince };
+      return { role, patronSince };
+    } catch (error) {
+      // eslint-disable-next-line SleepAPILogger/no-console
+      console.error('isSupporter error', error, (error as Error).stack);
+      throw error;
+    }
   }
 
   private async getPatrons(): Promise<Map<string, Patron>> {
@@ -182,18 +196,24 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }
 
   private async updatePatrons(): Promise<Map<string, Patron>> {
-    const memberData = simplify(
-      await this.creatorClient.fetchCampaignMembers(this.NEROLI_CAMPAIGN_ID, this.memberQuery)
-    ).data;
+    try {
+      const memberData = simplify(
+        await this.creatorClient.fetchCampaignMembers(this.NEROLI_CAMPAIGN_ID, this.memberQuery)
+      ).data;
 
-    for (const member of memberData) {
-      this.patrons.set(member.user.id, {
-        id: member.user.id,
-        patronStatus: member.patronStatus,
-        pledgeRelationshipStart: member.pledgeRelationshipStart
-      });
+      for (const member of memberData) {
+        this.patrons.set(member.user.id, {
+          id: member.user.id,
+          patronStatus: member.patronStatus,
+          pledgeRelationshipStart: member.pledgeRelationshipStart
+        });
+      }
+      return this.patrons;
+    } catch (error) {
+      // eslint-disable-next-line SleepAPILogger/no-console
+      console.error('updatePatrons error', error, (error as Error).stack);
+      throw error;
     }
-    return this.patrons;
   }
 
   private getUserClient(redirect_uri: string) {
