@@ -35,6 +35,9 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }): Promise<LoginResponse> {
     try {
       const { authorization_code, redirect_uri, preExistingUser } = params;
+      logger.debug(
+        `Exchanging tokens for user ${preExistingUser?.name} with redirect uri ${redirect_uri} and code ${authorization_code}`
+      );
       const token = await this.getUserClient(redirect_uri).oauth.getOauthTokenFromCode({ code: authorization_code });
 
       if (!token) {
@@ -141,6 +144,7 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }): Promise<{ patreon_id: string; identifier: string }> {
     const { token, redirect_uri } = params;
     try {
+      logger.debug(`Getting patron id for user with redirect uri ${redirect_uri} and token ${token}`);
       const userData = simplify(
         await this.getUserClient(redirect_uri).fetchIdentity(this.identityQuery, {
           token
@@ -169,6 +173,7 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
 
       await this.getPatrons();
       const patron = this.patrons.get(patreon_id);
+      logger.debug(`Checking if user is a supporter, found patron ${JSON.stringify(patron)}`);
 
       if (patron) {
         const { patronStatus, pledgeRelationshipStart } = patron;
@@ -188,7 +193,9 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
 
   private async getPatrons(): Promise<Map<string, Patron>> {
     const now = Date.now();
+    logger.debug('Checking if we should refresh patrons cache');
     if (this.patrons.size === 0 || now - this.lastPatronsUpdate > this.PATRONS_CACHE_TTL_MS) {
+      logger.debug('Refreshing patrons cache');
       await this.updatePatrons();
       this.lastPatronsUpdate = now;
     }
