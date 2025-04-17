@@ -115,7 +115,7 @@ export const DREAM_SHARD_BONUS: Subskill = {
 export const RESEARCH_EXP_BONUS: Subskill = {
   name: 'Research EXP Bonus',
   shortName: 'REB',
-  amount: 0.06,
+  amount: 0.09,
   rarity: 'gold'
 };
 

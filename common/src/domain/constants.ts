@@ -3,7 +3,7 @@ export const MAX_SKILL_LEVEL = 7;
 export const TASTY_CHANCE_S_CAP = 0.7;
 
 // recipe
-export const MAX_RECIPE_LEVEL = 60;
+export const MAX_RECIPE_LEVEL = 65;
 
 // ingredient
 export const MAX_INGREDIENT_INVENTORY = 700;

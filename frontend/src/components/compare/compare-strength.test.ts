@@ -101,7 +101,7 @@ describe('CompareStrength', () => {
     const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
     expect(firstRowCells[4].text()).toContain(totalPower.toString())
 
-    expect(totalPower).toEqual(17206)
+    expect(totalPower).toEqual(18913)
   })
 
   it('renders 8h time window correctly in data tab', async () => {
@@ -166,7 +166,7 @@ describe('CompareStrength', () => {
     // Check total power
     const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
     expect(Math.abs(+firstRowCells[4].text())).toEqual(totalPower)
-    expect(totalPower).toEqual(5735)
+    expect(totalPower).toEqual(6304)
   })
 
   it('displays the correct number of headers', async () => {
