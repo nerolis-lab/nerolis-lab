@@ -29,6 +29,7 @@ describe('berryPowerForLevel', () => {
     expect(berryPowerForLevel(ORAN, 50)).toBe(104);
     expect(berryPowerForLevel(ORAN, 55)).toBe(118);
     expect(berryPowerForLevel(ORAN, 60)).toBe(133);
+    expect(berryPowerForLevel(ORAN, 65)).toBe(151);
   });
 
   it('shall return expected belue berry power for multiple breakpoints', () => {
@@ -38,6 +39,7 @@ describe('berryPowerForLevel', () => {
     expect(berryPowerForLevel(BELUE, 50)).toBe(111);
     expect(berryPowerForLevel(BELUE, 55)).toBe(125);
     expect(berryPowerForLevel(BELUE, 60)).toBe(142);
+    expect(berryPowerForLevel(BELUE, 65)).toBe(160);
   });
 });
 
