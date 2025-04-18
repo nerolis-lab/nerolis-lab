@@ -4,7 +4,6 @@ import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event.
 import { HelpEvent } from '@src/domain/event/events/help-event/help-event.js';
 import { InventoryEvent } from '@src/domain/event/events/inventory-event/inventory-event.js';
 import { SkillEvent } from '@src/domain/event/events/skill-event/skill-event.js';
-import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import {
   addSneakySnackEvent,
   getDefaultRecoveryEvents,
@@ -14,7 +13,6 @@ import {
   inventoryFull,
   recoverEnergyEvents,
   recoverFromMeal,
-  scheduleNapEvent,
   scheduleTeamEnergyEvents,
   triggerTeamHelpsEvent
 } from '@src/utils/event-utils/event-utils.js';
@@ -317,44 +315,6 @@ describe('getHelperBoostEvents', () => {
   });
 });
 
-describe('scheduleNapEvent', () => {
-  it('adds a nap event to the recovery events array when nap info is provided', () => {
-    const recoveryEvents: EnergyEvent[] = [];
-    const nap: SleepInfo = {
-      period: {
-        start: { hour: 14, minute: 0, second: 0 },
-        end: { hour: 15, minute: 30, second: 0 }
-      },
-      nature: nature.BASHFUL,
-      incense: false,
-      erb: 0
-    };
-
-    const updatedRecoveryEvents = scheduleNapEvent(recoveryEvents, nap);
-
-    expect(updatedRecoveryEvents.length).toBe(1);
-    const napEvent = updatedRecoveryEvents[0];
-    expect(napEvent.description).toEqual('Nap');
-    expect(napEvent.time).toEqual(nap.period.start);
-    expect(napEvent.delta).toEqual(17.65);
-  });
-
-  it('returns the original array unchanged when no nap info is provided', () => {
-    const recoveryEvents = [
-      new EnergyEvent({
-        time: { hour: 10, minute: 0, second: 0 },
-        description: 'Morning Exercise',
-        delta: 20
-      })
-    ];
-
-    const updatedRecoveryEvents = scheduleNapEvent(recoveryEvents);
-
-    expect(updatedRecoveryEvents).toEqual(recoveryEvents);
-    expect(updatedRecoveryEvents.length).toBe(1);
-  });
-});
-
 describe('scheduleEnergyForEveryoneEvents', () => {
   it('does not add events when e4eProcs is 0', () => {
     const recoveryEvents: EnergyEvent[] = [];
@@ -404,23 +364,7 @@ describe('scheduleEnergyForEveryoneEvents', () => {
 });
 
 describe('getDefaultRecoveryEvents', () => {
-  it('adds both nap and E4E events when provided', () => {
-    const period = { start: { hour: 9, minute: 0, second: 0 }, end: { hour: 17, minute: 0, second: 0 } };
-    const e4eProcs = 2;
-    const e4eLevel = 6;
-    const nap = {
-      period: { start: { hour: 13, minute: 0, second: 0 }, end: { hour: 14, minute: 30, second: 0 } },
-      nature: nature.BASHFUL,
-      incense: false,
-      erb: 0
-    };
-
-    const recoveryEvents = getDefaultRecoveryEvents(period, nature.BASHFUL, e4eProcs, e4eLevel, 0, nap);
-
-    expect(recoveryEvents.length).toBe(3);
-  });
-
-  it('adds only E4E events when nap is not provided', () => {
+  it('returns e4e procs when provided', () => {
     const period = { start: { hour: 9, minute: 0, second: 0 }, end: { hour: 17, minute: 0, second: 0 } };
     const e4eProcs = 2;
     const e4eLevel = 6;
@@ -444,21 +388,7 @@ describe('getDefaultRecoveryEvents', () => {
     ]);
   });
 
-  it('adds only a nap event when e4eProcs is 0', () => {
-    const period = { start: { hour: 9, minute: 0, second: 0 }, end: { hour: 17, minute: 0, second: 0 } };
-    const nap = {
-      period: { start: { hour: 13, minute: 0, second: 0 }, end: { hour: 14, minute: 30, second: 0 } },
-      nature: nature.BASHFUL,
-      incense: false,
-      erb: 0
-    };
-
-    const recoveryEvents = getDefaultRecoveryEvents(period, nap.nature, 0, 6, 0, nap);
-
-    expect(recoveryEvents.length).toBe(1);
-  });
-
-  it('returns an empty array when neither nap nor e4eProcs are provided', () => {
+  it('returns an empty array when no e4eProcs are provided', () => {
     const period = { start: { hour: 9, minute: 0, second: 0 }, end: { hour: 17, minute: 0, second: 0 } };
 
     const recoveryEvents = getDefaultRecoveryEvents(period, nature.BASHFUL, 0, 6, 0);

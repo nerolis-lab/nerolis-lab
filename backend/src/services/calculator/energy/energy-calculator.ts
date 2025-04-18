@@ -28,24 +28,24 @@ export function calculateStartingEnergy(params: {
   dayPeriod: SleepInfo;
   recoveryEvents: EnergyEvent[];
   skillActivations: SkillActivation[];
+  maxEnergyRecovery: number;
 }) {
-  const { dayPeriod, recoveryEvents, skillActivations } = params;
+  const { dayPeriod, recoveryEvents, skillActivations, maxEnergyRecovery } = params;
 
   const sleepPeriod: TimePeriod = { start: dayPeriod.period.end, end: dayPeriod.period.start };
-  const recoveryMainSleep = calculateSleepEnergyRecovery({ ...dayPeriod, period: sleepPeriod });
+  const recoveryMainSleep = calculateSleepEnergyRecovery({ ...dayPeriod, period: sleepPeriod }, maxEnergyRecovery);
 
   const delta = calculateEnergyLeftInMorning(recoveryMainSleep, recoveryEvents, skillActivations);
   if (delta > 0) {
-    const updatedDelta = calculateEnergyLeftInMorning(100, recoveryEvents, skillActivations);
+    const updatedDelta = calculateEnergyLeftInMorning(maxEnergyRecovery, recoveryEvents, skillActivations);
 
-    const energyLeftToRecover = 100 - updatedDelta;
+    const energyLeftToRecover = maxEnergyRecovery - updatedDelta;
     const energyRecovered = Math.min(energyLeftToRecover, recoveryMainSleep);
     const startingEnergy = updatedDelta + energyRecovered;
 
     return { startingEnergy, energyLeftInMorning: updatedDelta, energyRecovered };
   } else {
-    const energyToRecover = 100;
-    const startingEnergy = Math.min(energyToRecover, recoveryMainSleep);
+    const startingEnergy = Math.min(maxEnergyRecovery, recoveryMainSleep);
 
     return { startingEnergy, energyLeftInMorning: 0, energyRecovered: startingEnergy };
   }
@@ -73,7 +73,7 @@ export function calculateEnergyLeftInMorning(
  * Uses numbers for representing Bedtime and Waking time
  * 21.5 = 21:30 (9:30PM)
  */
-export function calculateSleepEnergyRecovery(nightPeriod: SleepInfo): number {
+export function calculateSleepEnergyRecovery(nightPeriod: SleepInfo, maxEnergyRecovery: number): number {
   const { period, nature, erb, incense } = nightPeriod;
 
   const erbFactor = 1 + erb * subskill.ENERGY_RECOVERY_BONUS.amount;
@@ -84,7 +84,9 @@ export function calculateSleepEnergyRecovery(nightPeriod: SleepInfo): number {
   const sleepDuration = TimeUtils.calculateDuration(period);
   const sleepDurationInMinutes = sleepDuration.hour * 60 + sleepDuration.minute;
 
-  return Math.min(sleepDurationInMinutes * energyRecoveredPerMinute * nature.energy * erbFactor * incenseFactor, 100);
+  const energyRecovered = sleepDurationInMinutes * energyRecoveredPerMinute * nature.energy * erbFactor * incenseFactor;
+
+  return Math.min(energyRecovered, maxEnergyRecovery);
 }
 
 export function maybeDegradeEnergy(params: {

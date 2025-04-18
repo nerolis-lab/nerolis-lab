@@ -4,8 +4,6 @@ import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event.
 import { HelpEvent } from '@src/domain/event/events/help-event/help-event.js';
 import { InventoryEvent } from '@src/domain/event/events/inventory-event/inventory-event.js';
 import { SkillEvent } from '@src/domain/event/events/skill-event/skill-event.js';
-import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
-import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import { calculateHelperBoostHelpsFromUnique } from '@src/services/calculator/skill/skill-calculator.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Produce, Time, TimePeriod, nature } from 'sleepapi-common';
@@ -101,12 +99,10 @@ export function getDefaultRecoveryEvents(
   nature: nature.Nature,
   e4eProcs: number,
   e4eLevel: number,
-  cheerProcs: number,
-  nap?: SleepInfo
+  cheerProcs: number
 ): EnergyEvent[] {
   const recoveryEvents: EnergyEvent[] = [];
 
-  scheduleNapEvent(recoveryEvents, nap);
   scheduleTeamEnergyEvents(recoveryEvents, period, e4eProcs, e4eLevel, cheerProcs, nature);
 
   return recoveryEvents;
@@ -147,19 +143,6 @@ export function scheduleTeamEnergyEvents(
     recoveryEvents.push(event);
   }
 
-  return recoveryEvents;
-}
-
-export function scheduleNapEvent(recoveryEvents: EnergyEvent[], nap?: SleepInfo) {
-  if (nap) {
-    const napEvent: EnergyEvent = new EnergyEvent({
-      time: nap.period.start,
-      description: 'Nap',
-      delta: calculateSleepEnergyRecovery(nap)
-    });
-
-    recoveryEvents.push(napEvent);
-  }
   return recoveryEvents;
 }
 

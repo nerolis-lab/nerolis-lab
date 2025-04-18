@@ -15,7 +15,8 @@ describe('monteCarlo', () => {
       recoveryEvents: [],
       skillPercentage: 1,
       skillLevel: 6,
-      monteCarloIterations: 50
+      monteCarloIterations: 50,
+      maxEnergyRecovery: 100
     });
 
     expect(dayHelps).toBe(102);

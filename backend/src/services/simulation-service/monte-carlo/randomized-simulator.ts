@@ -40,6 +40,7 @@ export function randomizedSimulation(params: {
   mealTimes: Time[];
   energyFromYesterday: number;
   nightHelpsBeforeCarryFromYesterday: number;
+  maxEnergyRecovery: number;
 }): MonteCarloResult {
   // Set up input
   const {
@@ -52,7 +53,8 @@ export function randomizedSimulation(params: {
     recoveryEvents,
     mealTimes,
     energyFromYesterday,
-    nightHelpsBeforeCarryFromYesterday
+    nightHelpsBeforeCarryFromYesterday,
+    maxEnergyRecovery
   } = params;
   const nature = dayInfo.nature;
   const { pokemon, produce: averageProduce } = pokemonWithAverageProduce;
@@ -74,9 +76,11 @@ export function randomizedSimulation(params: {
 
   // Set up start values
   let currentEnergy = Math.min(
-    calculateSleepEnergyRecovery({ ...dayInfo, period: { start: dayInfo.period.end, end: dayInfo.period.start } }) +
-      energyFromYesterday,
-    100
+    calculateSleepEnergyRecovery(
+      { ...dayInfo, period: { start: dayInfo.period.end, end: dayInfo.period.start } },
+      maxEnergyRecovery
+    ) + energyFromYesterday,
+    maxEnergyRecovery
   );
 
   let nextHelpEvent: Time = dayInfo.period.start;

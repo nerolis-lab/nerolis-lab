@@ -22,12 +22,14 @@ export function startDayAndEnergy(
   inventoryLimit: number,
   recoveryEvents: EnergyEvent[],
   skillActivations: SkillActivation[],
-  eventLog: ScheduledEvent[]
+  eventLog: ScheduledEvent[],
+  maxEnergyRecovery: number
 ) {
   const { startingEnergy, energyLeftInMorning, energyRecovered } = calculateStartingEnergy({
     dayPeriod: dayInfo,
     recoveryEvents,
-    skillActivations
+    skillActivations,
+    maxEnergyRecovery
   });
   const startingDayEvent: SleepEvent = new SleepEvent({
     time: dayInfo.period.start,

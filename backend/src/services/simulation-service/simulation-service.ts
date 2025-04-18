@@ -46,6 +46,8 @@ import type {
 } from 'sleepapi-common';
 import {
   CarrySizeUtils,
+  MAX_ENERGY_RECOVERY,
+  MAX_ENERGY_RECOVERY_ERB,
   MEALS_IN_DAY,
   berrySetToFlat,
   calculateAveragePokemonIngredientSet,
@@ -58,7 +60,8 @@ import {
   ingredientSetToIntFlat,
   limitSubSkillsToLevel,
   mainskill,
-  nature
+  nature,
+  subskill
 } from 'sleepapi-common';
 
 /**
@@ -170,6 +173,10 @@ export function setupAndRunProductionSimulation(params: {
     pokemonWithAverageProduce
   );
 
+  const maxEnergyRecovery = subskills.has(subskill.ENERGY_RECOVERY_BONUS.name)
+    ? MAX_ENERGY_RECOVERY_ERB
+    : MAX_ENERGY_RECOVERY;
+
   const skillActivations = preGeneratedSkillActivations
     ? preGeneratedSkillActivations
     : generateSkillActivations({
@@ -183,7 +190,8 @@ export function setupAndRunProductionSimulation(params: {
         sneakySnackBerries,
         recoveryEvents,
         mealTimes,
-        monteCarloIterations
+        monteCarloIterations,
+        maxEnergyRecovery
       });
 
   const { detailedProduce, log, summary } = simulation({
@@ -199,7 +207,8 @@ export function setupAndRunProductionSimulation(params: {
     extraHelpfulEvents,
     helperBoostEvents,
     skillActivations,
-    mealTimes
+    mealTimes,
+    maxEnergyRecovery
   });
 
   return {
@@ -235,6 +244,7 @@ export function generateSkillActivations(params: {
   inventoryLimit: number;
   sneakySnackBerries: BerrySet[];
   monteCarloIterations: number;
+  maxEnergyRecovery: number;
 }) {
   const {
     dayInfo,
@@ -247,7 +257,8 @@ export function generateSkillActivations(params: {
     pokemonWithAverageProduce,
     inventoryLimit,
     sneakySnackBerries,
-    monteCarloIterations
+    monteCarloIterations,
+    maxEnergyRecovery
   } = params;
   const skillLevel = input.skillLevel ?? pokemonWithAverageProduce.pokemon.skill.maxLevel;
 
@@ -272,7 +283,8 @@ export function generateSkillActivations(params: {
       inventoryLimit,
       recoveryEvents,
       mealTimes,
-      monteCarloIterations
+      monteCarloIterations,
+      maxEnergyRecovery
     });
     nrOfDaySkillProcs = averageDailySkillProcs;
     oddsOfNightSkillProc = averageNightlySkillProcOdds;
@@ -292,7 +304,8 @@ export function generateSkillActivations(params: {
       extraHelpfulEvents: [],
       helperBoostEvents: [],
       skillActivations: [],
-      mealTimes
+      mealTimes,
+      maxEnergyRecovery
     });
     const { dayHelps, nightHelpsBeforeSS } = detailedProduce;
     nrOfDaySkillProcs = calculateSkillProcs(dayHelps ?? 0, skillPercentage);
