@@ -16,6 +16,7 @@ import {
   type Berry,
   type BerrySet,
   type CalculateIvResponse,
+  type CalculateTeamRequest,
   type CalculateTeamResponse,
   type GetTeamsResponse,
   type IngredientSet,
@@ -226,6 +227,19 @@ class TeamServiceImpl {
       optimalBerry: berryProduction,
       optimalIngredient: ingredientProduction,
       optimalSkill: skillProduction
+    }
+  }
+
+  public async calculateTeam(calculateTeamRequest: CalculateTeamRequest, iterations = 5110) {
+    try {
+      const response = await serverAxios.post<CalculateTeamResponse>(`/calculator/team`, {
+        ...calculateTeamRequest,
+        iterations
+      })
+      return response.data
+    } catch (error) {
+      logger.error(`Error calculating team: ${error}`)
+      throw error // Re-throw the error to be caught by the caller
     }
   }
 }

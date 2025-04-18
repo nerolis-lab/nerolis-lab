@@ -133,12 +133,16 @@ export function calculatePokemonProduction(
 }
 
 // 5110 days is 14 years or 730 weeks
-export function calculateTeam(
-  params: { settings: TeamSettingsExt; members: TeamMemberExt[]; userRecipes: UserRecipes },
-  iterations = 5110
-) {
-  const { settings, members, userRecipes } = params;
+export function calculateTeam(params: {
+  settings: TeamSettingsExt;
+  members: TeamMemberExt[];
+  userRecipes: UserRecipes;
+  iterations?: number;
+}) {
+  logger.log(`calculateTeam received params: ${JSON.stringify(params.iterations, null, 2)}`);
+  const { settings, members, userRecipes, iterations = 5110 } = params;
 
+  logger.log(`iter iter ${iterations}`);
   const rng: PreGeneratedRandom = createPreGeneratedRandom();
   const cookingState = settings.includeCooking ? new CookingState(settings, userRecipes, rng) : undefined;
   const teamSimulator = new TeamSimulator({ settings, members, cookingState, iterations, rng });

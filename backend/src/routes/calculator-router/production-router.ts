@@ -42,13 +42,21 @@ class ProductionRouterImpl {
     BaseRouter.router.post(
       '/calculator/team',
       withMaybeUser,
-      async (req: Request<unknown, unknown, CalculateTeamRequest, unknown>, res: Response<CalculateTeamResponse>) => {
+      async (
+        req: Request<unknown, unknown, CalculateTeamRequest & { iterations?: number }, unknown>,
+        res: Response<CalculateTeamResponse>
+      ) => {
         try {
           logger.log('Entered /calculator/team');
 
           const user = (req as MaybeAuthenticatedRequest).user;
+          const { iterations = 5110, ...rest } = req.body;
 
-          const data = await calculatorPool.exec('calculateTeam', [req.body, user]);
+          // Combine iterations into the same object, so we only pass two arguments
+          const extendedParams = { ...rest, iterations };
+          logger.log(`Sending to worker: ${JSON.stringify(extendedParams.iterations, null, 2)}`);
+
+          const data = await calculatorPool.exec('calculateTeam', [extendedParams, user]);
 
           res.json(data);
         } catch (err) {

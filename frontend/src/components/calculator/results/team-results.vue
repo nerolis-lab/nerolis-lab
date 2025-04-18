@@ -189,8 +189,8 @@ export default defineComponent({
         team: this.teamStore.getCurrentTeam,
         production: this.teamStore.getCurrentTeam.production,
         areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName),
-        favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
-      });
+        favoredBerries: this.teamStore.getCurrentTeam.favoredBerries
+      })
       return (
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
         this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
