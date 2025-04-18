@@ -267,7 +267,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2500,
       ],
       "description": "Obtain ? Dream Shards.",
-      "maxLevel": 7,
+      "maxLevel": 8,
       "modifier": {
         "critChance": 0,
         "type": "Base",
@@ -302,7 +302,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2875,
       ],
       "description": "Obtain ? Dream Shards on average.",
-      "maxLevel": 7,
+      "maxLevel": 8,
       "modifier": {
         "critChance": 0,
         "type": "Base",
