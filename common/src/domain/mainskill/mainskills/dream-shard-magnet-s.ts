@@ -1,4 +1,3 @@
-import { MAX_SKILL_LEVEL } from '../../constants';
 import type { Mainskill } from '../mainskill';
 import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
 
@@ -6,7 +5,7 @@ export const DREAM_SHARD_MAGNET_S: Mainskill = createBaseSkill({
   name: 'Dream Shard Magnet S',
   amount: [240, 340, 480, 670, 920, 1260, 1800, 2500],
   unit: 'dream shards',
-  maxLevel: MAX_SKILL_LEVEL,
+  maxLevel: 8,
   description: 'Obtain ? Dream Shards.',
   RP: [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303]
 });
@@ -24,7 +23,7 @@ export const DREAM_SHARD_MAGNET_S_RANGE: Mainskill = createBaseSkill({
     (1150 + 4600) / 2
   ],
   unit: 'dream shards',
-  maxLevel: MAX_SKILL_LEVEL,
+  maxLevel: 8,
   description: 'Obtain ? Dream Shards on average.',
   RP: [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303]
 });

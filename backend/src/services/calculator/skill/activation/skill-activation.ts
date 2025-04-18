@@ -316,7 +316,16 @@ export function activateMetronome(params: {
   const skillsToActivate = METRONOME_SKILLS;
 
   for (const skillToActivate of skillsToActivate) {
-    createSkillEvent({ ...params, skill: skillToActivate }, skillsToActivate.length);
+    const skillLevel = Math.min(skillToActivate.maxLevel, params.skillLevel);
+
+    createSkillEvent(
+      {
+        ...params,
+        skill: skillToActivate,
+        skillLevel
+      },
+      skillsToActivate.length
+    );
   }
 }
 

@@ -168,6 +168,10 @@
         padding: var(--bs-dropdown-item-padding-y) 2px;
         max-width: var(--input-width);
       }
+
+      .skill-level-container .btn-outline-dark {
+        padding: 18px 10px;
+      }
     </style>
 
     <script src="functions.3.0.0.js"></script>
@@ -1846,7 +1850,7 @@
       </div>
     </div>
 
-    <div class="d-flex align-items-center justify-content-center mb-3" id="skillLevelContainer">
+    <div class="d-flex align-items-center justify-content-center mb-3 skill-level-container" id="skillLevelContainer">
       <div
         class="btn-group"
         role="group"
@@ -1876,6 +1880,9 @@
 
         <input type="radio" class="btn-check" name="skillLevel" id="sl7" value="7" autocomplete="off" />
         <label class="btn btn-outline-dark" for="sl7">7</label>
+
+        <input type="radio" class="btn-check" name="skillLevel" id="sl8" value="8" autocomplete="off" />
+        <label class="btn btn-outline-dark" for="sl8">8</label>
       </div>
     </div>
 
@@ -2170,8 +2177,8 @@
                 title="
                   <h6>Compare your Pokémon to neutral and optimal setups.</h6>
 
-                  Which optimal setup is used is based on your Pokémon's specialty. 
-                  Your Pokémon is compared to the same optimal setup for all 3 specialties. 
+                  Which optimal setup is used is based on your Pokémon's specialty.
+                  Your Pokémon is compared to the same optimal setup for all 3 specialties.
                   The 100% benchmark for each specialty instead indicates how much you would get if you went focused on that type.
                   </br></br>
                   Neutral setup: Skill level 1</br>
@@ -2179,7 +2186,7 @@
 
                   Optimal ingredient setup: Max skill level</br>
                   Quiet [Ing M, Help M, Ing S]</br></br>
-                  
+
                   Optimal berry setup: Max skill level</br>
                   Adamant [BFS, Help M, Help S]</br>
                   Never evolved</br></br>
