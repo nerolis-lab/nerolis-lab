@@ -254,7 +254,7 @@ describe('startDay', () => {
     expect(Math.round(memberState.energy)).toBe(100);
   });
 
-  it('shall recover to 100 despite energy- nature if team has erb', () => {
+  it('shall recover to 100 despite energy- nature if teammate has erb', () => {
     const member: TeamMemberExt = {
       pokemonWithIngredients: mockPokemonSet,
       settings: {
@@ -262,6 +262,34 @@ describe('startDay', () => {
         level: 60,
         ribbon: 0,
         nature: nature.MILD,
+        skillLevel: 6,
+        subskills: new Set(),
+        externalId: 'some id'
+      }
+    };
+    const teammate: TeamMemberExt = {
+      ...member,
+      settings: {
+        ...member.settings,
+        subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name])
+      }
+    };
+
+    const memberState = new MemberState({ member, settings, team: [member, teammate], cookingState });
+    expect(memberState.energy).toBe(0);
+    memberState.wakeUp();
+    memberState.collectInventory();
+    expect(memberState.energy).toBe(100);
+  });
+
+  it('shall recover to 105 if member has erb', () => {
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: mockPokemonSet,
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
         externalId: 'some id'
@@ -272,7 +300,7 @@ describe('startDay', () => {
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
-    expect(memberState.energy).toBe(100);
+    expect(memberState.energy).toBe(105);
   });
 });
 

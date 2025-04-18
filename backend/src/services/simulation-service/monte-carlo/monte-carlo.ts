@@ -39,6 +39,7 @@ export function monteCarlo(params: {
   recoveryEvents: EnergyEvent[];
   mealTimes: Time[];
   monteCarloIterations: number;
+  maxEnergyRecovery: number;
 }) {
   const {
     dayInfo,
@@ -49,7 +50,8 @@ export function monteCarlo(params: {
     inventoryLimit,
     recoveryEvents,
     mealTimes,
-    monteCarloIterations
+    monteCarloIterations,
+    maxEnergyRecovery
   } = params;
 
   const results: MonteCarloResult[] = [];
@@ -66,7 +68,8 @@ export function monteCarlo(params: {
       recoveryEvents,
       mealTimes,
       energyFromYesterday,
-      nightHelpsBeforeCarryFromYesterday
+      nightHelpsBeforeCarryFromYesterday,
+      maxEnergyRecovery
     });
     const { endingEnergy, nightHelpsBeforeSS } = simResult;
 

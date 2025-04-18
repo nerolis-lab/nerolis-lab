@@ -27,3 +27,5 @@ export const MAX_ISLAND_BONUS = 75;
 
 // misc
 export const MAX_TEAM_SIZE = 5;
+export const MAX_ENERGY_RECOVERY = 100;
+export const MAX_ENERGY_RECOVERY_ERB = 105;

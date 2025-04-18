@@ -49,7 +49,8 @@ describe('simulator', () => {
         { skill: mainskill.CHARGE_ENERGY_S, adjustedAmount: 1, fractionOfProc: 1, nrOfHelpsToActivate: 0 }
       ],
       sneakySnackBerries: emptyBerryInventory(),
-      mealTimes: []
+      mealTimes: [],
+      maxEnergyRecovery: 100
     });
     expect(log.length).toBeGreaterThan(0);
     const summaryLog = log.at(-1) as SummaryEvent;

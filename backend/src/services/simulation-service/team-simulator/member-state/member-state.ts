@@ -31,6 +31,8 @@ import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   CarrySizeUtils,
   ING_ID_LOOKUP,
+  MAX_ENERGY_RECOVERY,
+  MAX_ENERGY_RECOVERY_ERB,
   MAX_POT_SIZE,
   MathUtils,
   berrySetToFlat,
@@ -321,8 +323,12 @@ export class MemberState {
     // Increment day counter
     this.currentDay = (this.currentDay + 1) % this.totalDays;
 
-    const missingEnergy = Math.max(0, 100 - this.currentEnergy);
-    const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo));
+    const maxEnergyRecovery = this.member.settings.subskills.has(subskill.ENERGY_RECOVERY_BONUS.name)
+      ? MAX_ENERGY_RECOVERY_ERB
+      : MAX_ENERGY_RECOVERY;
+
+    const missingEnergy = Math.max(0, maxEnergyRecovery - this.currentEnergy);
+    const recoveredEnergy = Math.min(missingEnergy, calculateSleepEnergyRecovery(sleepInfo, maxEnergyRecovery));
     this.currentEnergy += recoveredEnergy;
 
     this.disguiseBusted = false;

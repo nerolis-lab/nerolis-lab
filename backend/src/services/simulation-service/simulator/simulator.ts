@@ -62,6 +62,7 @@ export function simulation(params: {
   helperBoostEvents: SkillEvent[];
   skillActivations: SkillActivation[];
   mealTimes: Time[];
+  maxEnergyRecovery: number;
 }): { detailedProduce: DetailedProduce; log: ScheduledEvent[]; summary: Summary } {
   // Set up input
   const {
@@ -77,7 +78,8 @@ export function simulation(params: {
     extraHelpfulEvents,
     helperBoostEvents,
     skillActivations,
-    mealTimes
+    mealTimes,
+    maxEnergyRecovery
   } = params;
   const sneakySnackProduce: Produce = { berries: sneakySnackBerries, ingredients: [] };
   const { pokemon, produce: averageProduce } = pokemonWithAverageProduce;
@@ -119,7 +121,8 @@ export function simulation(params: {
     inventoryLimit,
     recoveryEvents,
     skillActivations,
-    eventLog
+    eventLog,
+    maxEnergyRecovery
   );
 
   let totalProduce: Produce = CarrySizeUtils.getEmptyInventory();

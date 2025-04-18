@@ -16,7 +16,8 @@ describe('randomizedSimulation', () => {
       recoveryEvents: [],
       mealTimes: [],
       skillPercentage: 0.2,
-      skillLevel: 6
+      skillLevel: 6,
+      maxEnergyRecovery: 100
     });
 
     expect(result.dayHelps).toBe(102);
@@ -35,7 +36,8 @@ describe('randomizedSimulation', () => {
       recoveryEvents: [],
       mealTimes: [],
       skillPercentage: 0.2,
-      skillLevel: 6
+      skillLevel: 6,
+      maxEnergyRecovery: 100
     });
 
     expect(result.dayHelps).toBe(102);

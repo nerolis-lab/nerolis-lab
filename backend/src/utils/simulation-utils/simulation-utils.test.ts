@@ -30,7 +30,8 @@ describe('startDayAndEnergy', () => {
         CarrySizeUtils.maxCarrySize(pkmn),
         recoveryEvents,
         skillActivations,
-        eventLog
+        eventLog,
+        100
       )
     ).toBe(100);
     expect(eventLog).toHaveLength(6);
