@@ -54,10 +54,13 @@ export default class ProductionController {
     return calculatePokemonProduction(pokemon, parsedInput, body.ingredientSet, queryAsBoolean(includeAnalysis), 5000);
   }
 
-  public async calculateTeam(body: CalculateTeamRequest, maybeUser?: DBUser) {
+  public async calculateTeam(body: CalculateTeamRequest & { iterations?: number }, maybeUser?: DBUser) {
+    const { iterations = 5110 } = body;
+    logger.log(`Controller got iterations: ${iterations}`);
+
     const userRecipes = await this.#parseUserRecipes(maybeUser);
     const parsedInput = await this.#parseTeamInput(body, userRecipes, maybeUser);
-    return calculateTeam(parsedInput);
+    return calculateTeam({ ...parsedInput, iterations });
   }
 
   public async calculateIv(body: CalculateIvRequest) {

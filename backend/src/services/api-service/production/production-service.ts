@@ -139,7 +139,8 @@ export function calculateTeam(params: {
   userRecipes: UserRecipes;
   iterations?: number;
 }) {
-  logger.log(`calculateTeam received params: ${JSON.stringify(params.iterations, null, 2)}`);
+  logger.log(`calculateTeam received params: ${params.iterations}`);
+
   const { settings, members, userRecipes, iterations = 5110 } = params;
 
   logger.log(`iter iter ${iterations}`);

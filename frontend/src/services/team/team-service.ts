@@ -230,12 +230,11 @@ class TeamServiceImpl {
     }
   }
 
-  public async calculateTeam(calculateTeamRequest: CalculateTeamRequest, iterations = 5110) {
+  public async calculateTeam(calculateTeamRequest: CalculateTeamRequest & { iterations?: number }) {
     try {
-      const response = await serverAxios.post<CalculateTeamResponse>(`/calculator/team`, {
-        ...calculateTeamRequest,
-        iterations
-      })
+      const { iterations = 5110, ...rest } = calculateTeamRequest
+
+      const response = await serverAxios.post<CalculateTeamResponse>(`/calculator/team`, { ...rest, iterations })
       return response.data
     } catch (error) {
       logger.error(`Error calculating team: ${error}`)

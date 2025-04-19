@@ -201,13 +201,12 @@
         </v-progress-linear> -->
 
         <v-progress-linear :model-value="progressValue" :height="20" color="primary" class="mb-4">
-          <template #default> Scored {{ totalTeamsSearched }} / {{ total - scored + totalTeamsSearched }} </template>
+          <template #default> {{ progressString }} {{ totalTeamsSearched }} / {{ totalToSearch }} </template>
         </v-progress-linear>
 
         <!-- Total Teams Info -->
         <div class="d-flex justify-space-between">
-          <span>Total: {{ totalTeamsSearched }}</span>
-          <span>Total Possible Teams: {{ totalPossibleTeams }}</span>
+          <span>Total Possible Teams: {{ Math.round(totalPossibleTeams) }}</span>
         </div>
 
         <!-- Current Best Team Strength -->
@@ -223,24 +222,26 @@
         <!-- Current Best Team -->
         <div class="d-flex justify-center mt-4">
           <table>
-            <tr>
-              <!-- Pokémon Images -->
-              <td v-for="(sprite, index) in bestTeamSprites" :key="index" class="text-center">
-                <img :src="sprite" alt="Pokemon Sprite" class="mx-2" width="50" height="50" />
-              </td>
-            </tr>
-            <tr>
-              <!-- Pokémon Custom Names -->
-              <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
-                <strong>{{ member.name || '' }}</strong>
-              </td>
-            </tr>
-            <tr>
-              <!-- Pokémon Display Names -->
-              <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
-                {{ member.pokemon.displayName }}
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <!-- Pokémon Images -->
+                <td v-for="(sprite, index) in bestTeamSprites" :key="index" class="text-center">
+                  <img :src="sprite" alt="Pokemon Sprite" class="mx-2" width="50" height="50" />
+                </td>
+              </tr>
+              <tr>
+                <!-- Pokémon Custom Names -->
+                <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
+                  <strong>{{ member.name || '' }}</strong>
+                </td>
+              </tr>
+              <tr>
+                <!-- Pokémon Display Names -->
+                <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
+                  {{ member.pokemon.displayName }}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </v-card>
@@ -311,23 +312,25 @@ export default defineComponent({
 
     const isLoading = ref(false)
     const scored = ref(0)
-    const total = ref(0)
+    const totalToSearch = ref(0)
     const totalTeamsSearched = ref(0)
     const totalPossibleTeams = ref(0)
     const bestTeam = ref([]) // Store the current best team
     const bestTeamSprites = ref<string[]>([]) // Store the sprites for the best team
     const bestTeamStrength = ref(0) // Store the strength of the best team
     const teamsToCheck = ref([])
+    const progressString = ref('')
 
     const startFindOptimalTeam = async () => {
       isLoading.value = true
       scored.value = 0
-      total.value = 0
+      totalToSearch.value = 0
       totalTeamsSearched.value = 0
       totalPossibleTeams.value = 0
       bestTeam.value = []
       bestTeamSprites.value = []
       bestTeamStrength.value = 0
+      progressString.value = ''
 
       await findOptimalTeam(
         (
@@ -336,14 +339,17 @@ export default defineComponent({
           currentTotalTeamsSearched,
           currentTotalPossibleTeams,
           currentBestTeam,
-          currentBestTeamStrength
+          currentBestTeamStrength,
+          incomingProgressString = ''
         ) => {
           scored.value = currentScored
-          total.value = currentTotal
+          totalToSearch.value = currentTotal
           totalTeamsSearched.value = currentTotalTeamsSearched
           totalPossibleTeams.value = currentTotalPossibleTeams
-          bestTeam.value = currentBestTeam // Update the best team
-          bestTeamStrength.value = currentBestTeamStrength // Update the best team's strength
+          bestTeam.value = currentBestTeam
+          bestTeamStrength.value = currentBestTeamStrength
+
+          progressString.value = incomingProgressString
         }
       )
 
@@ -375,7 +381,7 @@ export default defineComponent({
       isMobile,
       isLoading,
       scored,
-      total,
+      totalToSearch,
       totalTeamsSearched,
       totalPossibleTeams,
       bestTeam,
@@ -383,7 +389,8 @@ export default defineComponent({
       bestTeamStrength,
       startFindOptimalTeam,
       getPokemonImage,
-      teamsToCheck
+      teamsToCheck,
+      progressString
     }
   },
   data: () => ({
@@ -406,7 +413,7 @@ export default defineComponent({
     },
     progressValue() {
       // Calculate the progress value reactively
-      return (this.totalTeamsSearched / (this.total - this.scored + this.totalTeamsSearched)) * 100
+      return (this.totalTeamsSearched / this.totalToSearch) * 100
     }
   },
   methods: {
