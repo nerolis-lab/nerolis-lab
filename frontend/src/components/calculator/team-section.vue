@@ -412,8 +412,8 @@ export default defineComponent({
       return this.teamStore.getTeamSize === 0 ? 1 : MAX_TEAM_MEMBERS
     },
     progressValue() {
-      // Calculate the progress value reactively
-      return (this.totalTeamsSearched / this.totalToSearch) * 100
+      // Calculate the progress value reactively, guarding against division by zero
+      return this.totalToSearch === 0 ? 0 : (this.totalTeamsSearched / this.totalToSearch) * 100
     }
   },
   methods: {
