@@ -2,9 +2,9 @@ import AccountMenu from '@/components/account/account-menu.vue'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
-import { Roles } from 'sleepapi-common'
+import { AuthProvider, commonMocks, Roles } from 'sleepapi-common'
 
+import { clearCacheAndLogout } from '@/stores/store-service'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -16,12 +16,15 @@ vi.mock('vue3-google-login', () => ({
   decodeCredential: vi.fn()
 }))
 
+vi.mock('@/stores/store-service', () => ({
+  clearCacheAndLogout: vi.fn()
+}))
+
 describe('AccountMenu', () => {
   let wrapper: VueWrapper<InstanceType<typeof AccountMenu>>
   let userStore: ReturnType<typeof useUserStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     userStore = useUserStore()
     userStore.syncUserSettings = vi.fn().mockResolvedValue(undefined)
 
@@ -35,12 +38,11 @@ describe('AccountMenu', () => {
   })
 
   it('syncs user settings on mount', async () => {
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: 10
-    })
-    wrapper = mount(AccountMenu) // re-mount after setting user as logged in
+    // Set tokens before mounting
+    const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+    wrapper = mount(AccountMenu)
+
     expect(userStore.syncUserSettings).toHaveBeenCalled()
   })
 
@@ -66,13 +68,7 @@ describe('AccountMenu', () => {
     expect(wrapper.find('.mdi-account-circle').exists()).toBe(true)
 
     const userStore = useUserStore()
-
-    userStore.name = 'John Doe'
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: 10
-    })
+    userStore.setInitialLoginData(commonMocks.loginResponse({ name: 'John Doe' }))
 
     await nextTick()
     await flushPromises()
@@ -100,36 +96,52 @@ describe('AccountMenu', () => {
 
   it('resets user information when logged out', async () => {
     const userStore = useUserStore()
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        name: 'some name',
+        externalId: 'some id',
+        role: Roles.Default,
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'some-email'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            },
+            [AuthProvider.Patreon]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'access token',
+            refreshToken: 'refresh token',
+            expiryDate: 10
+          }
+        }
+      })
+    )
 
-    userStore.setUserData({
-      name: 'some name',
-      email: 'some email',
-      externalId: 'some id',
-      role: Roles.Default
-    })
-    userStore.setTokens({
-      accessToken: 'access token',
-      refreshToken: 'refresh token',
-      expiryDate: 10
-    })
+    wrapper = mount(AccountMenu)
 
-    expect(wrapper.vm.userStore.loggedIn).toBe(true)
-    expect(userStore.$state).toMatchInlineSnapshot(`
+    expect(userStore.loggedIn).toBe(true)
+    expect(userStore.auth).toMatchInlineSnapshot(`
       {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
+        "activeProvider": "google",
+        "linkedProviders": {
+          "discord": {
+            "linked": false,
+          },
+          "google": {
+            "identifier": "some-email",
+            "linked": true,
+          },
+          "patreon": {
+            "linked": false,
+          },
         },
-        "avatar": "default",
-        "email": "some email",
-        "externalId": "some id",
-        "name": "some name",
-        "potSize": 69,
-        "role": "default",
         "tokens": {
           "accessToken": "access token",
           "expiryDate": 10,
@@ -137,6 +149,8 @@ describe('AccountMenu', () => {
         },
       }
     `)
+    expect(userStore.name).toBe('some name')
+    expect(userStore.externalId).toBe('some id')
 
     const openMenuButton = wrapper.find('#navBarIcon')
     await openMenuButton.trigger('click')
@@ -145,25 +159,6 @@ describe('AccountMenu', () => {
     expect(logoutButton).not.toBeNull()
     ;(logoutButton as HTMLElement).click()
 
-    expect(wrapper.vm.userStore.loggedIn).toBe(false)
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
-        "avatar": null,
-        "email": null,
-        "externalId": null,
-        "name": "Guest",
-        "potSize": 69,
-        "role": "default",
-        "tokens": null,
-      }
-    `)
+    expect(clearCacheAndLogout).toHaveBeenCalled()
   })
 })

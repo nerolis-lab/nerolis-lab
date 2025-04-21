@@ -8,8 +8,7 @@ import { TeamService } from '@/services/team/team-service'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import type { TeamProductionExt } from '@/types/member/instanced'
-import { createMockMemberProduction, createMockPokemon, createMockTeamProduction } from '@/vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { mocks } from '@/vitest'
 import { nextTick } from 'vue'
 
 vi.mock('@/services/production/production-service')
@@ -18,12 +17,11 @@ describe('ComparisonPage', () => {
   let wrapper: VueWrapper<InstanceType<typeof ComparisonPage>>
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
-  const mockResponse: TeamProductionExt = createMockTeamProduction()
-  const mockPokemon = createMockPokemon()
-  const mockMemberProduction: MemberProduction = createMockMemberProduction()
+  const mockResponse: TeamProductionExt = mocks.createMockTeamProduction()
+  const mockPokemon = mocks.createMockPokemon()
+  const mockMemberProduction: MemberProduction = mocks.createMockMemberProduction()
 
   beforeEach(async () => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
 
@@ -66,7 +64,7 @@ describe('ComparisonPage', () => {
     const compStore = useComparisonStore()
     compStore.addMember(mockMemberProduction)
 
-    const newPokemon = createMockPokemon({ name: 'Misty' })
+    const newPokemon = mocks.createMockPokemon({ name: 'Misty' })
     await wrapper.vm.addToCompareMembers(newPokemon)
 
     expect(compStore.members).toHaveLength(2)
@@ -78,7 +76,7 @@ describe('ComparisonPage', () => {
 
     compStore.addMember(mockMemberProduction)
 
-    const editedPokemon = createMockPokemon({ name: 'Brock' })
+    const editedPokemon = mocks.createMockPokemon({ name: 'Brock' })
     await wrapper.vm.editCompareMember(editedPokemon)
 
     expect(pokemonStore.getPokemon(compStore.members[0].externalId)?.name).toBe('Brock')

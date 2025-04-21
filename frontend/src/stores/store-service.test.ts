@@ -1,17 +1,15 @@
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { clearCacheAndLogout, clearCacheKeepLogin, migrateStores } from '@/stores/store-service'
+import { clearCacheAndLogout, clearCacheKeepLogin, migrateSite } from '@/stores/store-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { createMockMemberProduction, createMockPokemon } from '@/vitest'
+import { useVersionStore } from '@/stores/version-store/version-store'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-beforeEach(() => {
-  setActivePinia(createPinia())
-})
+beforeEach(() => {})
 
 describe('Store Service', () => {
   it('should clear cache and logout', () => {
@@ -24,9 +22,9 @@ describe('Store Service', () => {
     // Set some state to verify it gets reset
     userStore.avatar = 'some avatar'
     teamStore.teams = createMockTeams(2)
-    pokemonStore.upsertLocalPokemon(createMockPokemon())
+    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
     pokedexStore.groupedPokedex = []
-    comparisonStore.members = [createMockMemberProduction()]
+    comparisonStore.members = [mocks.createMockMemberProduction()]
 
     clearCacheAndLogout()
 
@@ -47,9 +45,9 @@ describe('Store Service', () => {
     // Set some state to verify it gets reset
     userStore.avatar = 'some avatar'
     teamStore.teams = createMockTeams(2)
-    pokemonStore.upsertLocalPokemon(createMockPokemon())
+    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
     pokedexStore.groupedPokedex = []
-    comparisonStore.members = [createMockMemberProduction()]
+    comparisonStore.members = [mocks.createMockMemberProduction()]
 
     clearCacheKeepLogin()
 
@@ -60,16 +58,13 @@ describe('Store Service', () => {
     expect(comparisonStore.members).toHaveLength(0)
   })
 
-  it('should migrate stores', () => {
-    const teamStore = useTeamStore()
-    const comparisonStore = useComparisonStore()
+  it('should migrate stores', async () => {
+    const versionStore = useVersionStore()
+    versionStore.migrate = vi.fn()
+    versionStore.invalidateCache = vi.fn()
+    await migrateSite()
 
-    teamStore.migrate = vi.fn()
-    comparisonStore.migrate = vi.fn()
-
-    migrateStores()
-
-    expect(teamStore.migrate).toHaveBeenCalled()
-    expect(comparisonStore.migrate).toHaveBeenCalled()
+    expect(versionStore.migrate).toHaveBeenCalled()
+    expect(versionStore.invalidateCache).toHaveBeenCalled()
   })
 })

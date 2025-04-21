@@ -2,7 +2,6 @@ import InboxMenu from '@/components/inbox/inbox-menu.vue'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { NotificationType } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -12,7 +11,6 @@ describe('InboxMenu', () => {
   let notificationStore: ReturnType<typeof useNotificationStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     notificationStore = useNotificationStore()
     notificationStore.sync = vi.fn()
 

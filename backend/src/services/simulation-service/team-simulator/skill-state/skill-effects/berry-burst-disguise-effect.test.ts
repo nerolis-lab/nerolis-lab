@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-disguise-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import { CarrySizeUtils, mainskill } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
@@ -36,9 +36,9 @@ describe('BerryBurstDisguiseEffect', () => {
         ingredients: [],
         berries: [
           ...memberState.otherMembers.map((member) => ({
-            berry: member.pokemonWithIngredients.pokemon.berry,
+            berry: member.berry,
             amount: regularOtherAmount,
-            level: member.settings.level
+            level: member.level
           })),
           {
             berry: memberState.berry,

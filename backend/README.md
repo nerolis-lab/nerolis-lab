@@ -23,7 +23,25 @@ docker compose up -d
 If you need to recreate the database at some point you can bring it down with `docker compose down` before using the up command again.
 
 You can inspect the database with mysql shell: `docker exec -it backend-db-1 mysql -padmin`
-If you also want to use the frontend website's Google login functionality you'll need to set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` variables too. I won't give the values for these, as these are personal, instead you should generate a pair using google cloud API console.
+
+If you also want to use the frontend website's login functionality you'll need to set up some additional variables in both .env files (frontend and backend)—please refer to our [frontend documentation](../frontend/README.md) for how to set up that .env.
+
+For the backend we currently support Google, Discord and Patreon. They all require a client id and client secret. Pick any one (or multiple) you would like.
+
+- GOOGLE_CLIENT_ID='\<your google client id\>'
+- GOOGLE_CLIENT_SECRET='\<your google client id\>'
+- DISCORD_CLIENT_ID='\<your discord client id\>'
+- DISCORD_CLIENT_SECRET='\<your discord client id\>'
+- PATREON_CLIENT_ID='\<your patreon client id\>'
+- PATREON_CLIENT_SECRET='\<your patreon client id\>'
+
+I won't provide the values for these as they are personal, but you can generate a pair at the related provider.
+
+Please follow any of these documentations, for any of these you only need to follow the instruction to get a client id, client secret and configure redirect uri. The rest is managed by us already:
+
+- [Google documentation](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid): with redirect uri http://localhost:8001/google
+- [Discord documentation](https://discord.com/developers/docs/topics/oauth2): with redirect uri http://localhost:8001/discord
+- [Patreon documentation](https://docs.patreon.com/#clients-and-api-keys): with redirect uri http://localhost:8001/patreon
 
 ## Running backend in development mode
 

@@ -20,9 +20,9 @@ export class EnergyForEveryoneLunarBlessingEffect implements SkillEffect {
     const teamBerryAmount = mainskill.LUNAR_BLESSING_TEAM_BERRIES[unique - 1][skillState.skillLevel(skill) - 1];
 
     const berries = memberState.otherMembers.map((member) => ({
-      berry: member.pokemonWithIngredients.pokemon.berry,
+      berry: member.berry,
       amount: teamBerryAmount,
-      level: member.settings.level
+      level: member.level
     }));
 
     berries.push({

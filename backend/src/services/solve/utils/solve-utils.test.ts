@@ -1,4 +1,3 @@
-import { mocks } from '@src/bun/index.js';
 import * as productionService from '@src/services/api-service/production/production-service.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import type { SetCoverPokemonSetupWithSettings } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
@@ -20,6 +19,7 @@ import {
   settingsToArraySubskills
 } from '@src/services/solve/utils/solve-utils.js';
 import { splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
+import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, Pokedex, SolveSettingsExt } from 'sleepapi-common';
 import {
   ENTEI,
@@ -27,11 +27,11 @@ import {
   OPTIMAL_POKEDEX,
   RAIKOU,
   SUICUNE,
+  commonMocks,
   flatToIngredientSet,
   ingredient,
   ingredientSetToIntFlat,
   mainskill,
-  mockPokemon,
   prettifyIngredientDrop
 } from 'sleepapi-common';
 import { vimic } from 'vimic';
@@ -101,7 +101,7 @@ describe('solve-utils', () => {
 
   describe('pokedexToMembers', () => {
     it('should convert a basic Pokémon to a team member', () => {
-      const pokedex: Pokedex = [mockPokemon({ carrySize: 10, previousEvolutions: 2 })];
+      const pokedex: Pokedex = [commonMocks.mockPokemon({ carrySize: 10, previousEvolutions: 2 })];
       const members = pokedexToMembers({ pokedex, level: 60, camp: false });
       expect(members).toHaveLength(1);
 
@@ -132,7 +132,7 @@ Set {
     });
 
     it('should provide as many subskills as the level allows', () => {
-      const pokedex: Pokedex = [mockPokemon()];
+      const pokedex: Pokedex = [commonMocks.mockPokemon()];
       const level24Members = pokedexToMembers({ pokedex, level: 24, camp: false });
       expect(level24Members).toHaveLength(1);
       expect(level24Members[0].settings.subskills.size).toBe(1);
@@ -143,7 +143,9 @@ Set {
     });
 
     it('should use skill setup for skill specialist support Pokémon', () => {
-      const pokedex: Pokedex = [mockPokemon({ specialty: 'skill', skill: INGREDIENT_SUPPORT_MAINSKILLS[0] })];
+      const pokedex: Pokedex = [
+        commonMocks.mockPokemon({ specialty: 'skill', skill: INGREDIENT_SUPPORT_MAINSKILLS[0] })
+      ];
       const supportMembers = pokedexToMembers({ pokedex, level: 50, camp: false });
       expect(supportMembers).toHaveLength(1);
       expect(supportMembers[0].settings.subskills.size).toBe(3);
@@ -159,7 +161,7 @@ Set {
     });
 
     it('should return as many team members as were provided in the Pokédex', () => {
-      const pokedex: Pokedex = [mockPokemon(), mockPokemon()];
+      const pokedex: Pokedex = [commonMocks.mockPokemon(), commonMocks.mockPokemon()];
       const members = pokedexToMembers({ pokedex, level: 50, camp: false });
       expect(members).toHaveLength(2);
     });
@@ -314,7 +316,7 @@ Set {
     it('should generate produce for every ingredient list based on provided SimpleTeamResults', () => {
       const ingredientListA: IngredientSet = { amount: 1, ingredient: ingredient.FANCY_APPLE };
       const ingredientListB: IngredientSet = { amount: 1, ingredient: ingredient.BEAN_SAUSAGE };
-      const pokemon = mockPokemon({
+      const pokemon = commonMocks.mockPokemon({
         ingredient0: ingredientListA,
         ingredient30: [ingredientListA],
         ingredient60: [ingredientListA, ingredientListB]
@@ -348,7 +350,7 @@ Set {
 
     it('should calculate the correct amount of ingredients', () => {
       const ingredientListA: IngredientSet = { amount: 1, ingredient: ingredient.FANCY_APPLE };
-      const pokemon = mockPokemon({
+      const pokemon = commonMocks.mockPokemon({
         ingredient0: ingredientListA,
         ingredient30: [ingredientListA],
         ingredient60: [ingredientListA],
@@ -411,12 +413,12 @@ Set {
     it('should group producers by ingredient produced', () => {
       const member1 = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[0] })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[0] })
         ])
       });
       const member2 = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[1] })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[1] })
         ])
       });
 
@@ -434,12 +436,12 @@ Set {
     it('should sort producers of same ingredient by amount DESC', () => {
       const member1 = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 5, ingredient: ingredient.INGREDIENTS[0] })
+          commonMocks.mockIngredientSet({ amount: 5, ingredient: ingredient.INGREDIENTS[0] })
         ])
       });
       const member2 = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[0] })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[0] })
         ])
       });
 
@@ -458,7 +460,7 @@ Set {
     it('should convert an array of SetCoverPokemonWithSettings to a TeamSolution', () => {
       const array = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 10, ingredient: ingredient.FANCY_APPLE })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.FANCY_APPLE })
         ])
       });
       const result = pokemonProductionToRecipeSolutions([array]);
@@ -470,12 +472,12 @@ Set {
     it("should combine the member's production correctly", () => {
       const firstPokemon = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 10, ingredient: ingredient.FANCY_APPLE })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.FANCY_APPLE })
         ])
       });
       const secondPokemon = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          mocks.mockIngredientSet({ amount: 10, ingredient: ingredient.FANCY_APPLE })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.FANCY_APPLE })
         ])
       });
       const result = pokemonProductionToRecipeSolutions([firstPokemon, secondPokemon]);
@@ -628,12 +630,12 @@ Set {
       const nonSupportMembers = [
         mocks.teamMemberExt({
           pokemonWithIngredients: mocks.pokemonWithIngredients({
-            pokemon: mocks.mockPokemon({ skill: mainskill.TASTY_CHANCE_S })
+            pokemon: commonMocks.mockPokemon({ skill: mainskill.TASTY_CHANCE_S })
           })
         }),
         mocks.teamMemberExt({
           pokemonWithIngredients: mocks.pokemonWithIngredients({
-            pokemon: mocks.mockPokemon({ skill: mainskill.COOKING_POWER_UP_S })
+            pokemon: commonMocks.mockPokemon({ skill: mainskill.COOKING_POWER_UP_S })
           })
         })
       ];

@@ -15,7 +15,7 @@ afterEach(() => {
 describe('getAreaBonuses', () => {
   it('should return an empty object if no area bonuses exist for the user', async () => {
     const user = await UserDAO.insert({
-      sub: 'area-sub-empty',
+      google_id: 'area-google_id-empty',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'No Bonus User',
@@ -28,7 +28,7 @@ describe('getAreaBonuses', () => {
 
   it('should return a proper mapping of area bonuses when records exist', async () => {
     const user = await UserDAO.insert({
-      sub: 'area-sub-mapping',
+      google_id: 'area-google_id-mapping',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Mapping User',
@@ -50,7 +50,7 @@ describe('getAreaBonuses', () => {
 describe('upsertAreaBonus', () => {
   it('should insert a new area bonus if it does not exist', async () => {
     const user = await UserDAO.insert({
-      sub: 'upsert-sub-insert',
+      google_id: 'upsert-google_id-insert',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Insert User',
@@ -66,7 +66,7 @@ describe('upsertAreaBonus', () => {
 
   it('should update an existing area bonus if the record already exists', async () => {
     const user = await UserDAO.insert({
-      sub: 'upsert-sub-update',
+      google_id: 'upsert-google_id-update',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Update User',

@@ -12,9 +12,9 @@ export class BerryBurstEffect implements SkillEffect {
     const regularOtherAmount = mainskill.BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(skill) - 1];
 
     const berries = memberState.otherMembers.map((member) => ({
-      berry: member.pokemonWithIngredients.pokemon.berry,
+      berry: member.berry,
       amount: regularOtherAmount,
-      level: member.settings.level
+      level: member.level
     }));
 
     berries.push({

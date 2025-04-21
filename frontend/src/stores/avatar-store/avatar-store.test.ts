@@ -1,12 +1,9 @@
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
-import { createPinia, setActivePinia } from 'pinia'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { useUserStore } from '@/stores/user-store'
+import { Roles } from 'sleepapi-common'
+import { describe, expect, it, vi } from 'vitest'
 
 describe('Avatar Store', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   it('should initialize with empty avatars', () => {
     const store = useAvatarStore()
     expect(store.avatars).toEqual({})
@@ -39,6 +36,24 @@ describe('Avatar Store', () => {
       { name: 'default', path: 'default.png', pokedexNumber: 0, displayName: 'Default' },
       { name: 'charmander', path: 'portrait/charmander.png', pokedexNumber: 4, displayName: 'Charmander' },
       { name: 'pikachu', path: 'portrait/pikachu.png', pokedexNumber: 25, displayName: 'Pikachu' }
+    ])
+  })
+
+  it('should return base and happy avatars if user is supporter', () => {
+    const store = useAvatarStore()
+    const userStore = useUserStore()
+    userStore.role = Roles.Supporter
+
+    store.avatars = {
+      default: 'default.png',
+      pikachu: 'portrait/pikachu.png',
+      pikachu_happy: 'happy/pikachu.png'
+    }
+    const baseAvatars = store.getBasePokemonAvatars
+    expect(baseAvatars).toEqual([
+      { name: 'default', path: 'default.png', pokedexNumber: 0, displayName: 'Default' },
+      { name: 'pikachu', path: 'portrait/pikachu.png', pokedexNumber: 25, displayName: 'Pikachu' },
+      { name: 'pikachu_happy', path: 'happy/pikachu.png', pokedexNumber: 25, displayName: 'Pikachu' }
     ])
   })
 

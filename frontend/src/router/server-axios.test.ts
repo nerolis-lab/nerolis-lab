@@ -1,14 +1,13 @@
 import serverAxios from '@/router/server-axios'
 import { useUserStore } from '@/stores/user-store'
 import MockAdapter from 'axios-mock-adapter'
-import { createPinia, setActivePinia } from 'pinia'
+import { AuthProvider, commonMocks } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 describe('serverAxios', () => {
   let mock = new MockAdapter(serverAxios)
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     mock = new MockAdapter(serverAxios)
   })
 
@@ -18,11 +17,30 @@ describe('serverAxios', () => {
 
   test('should add Authorization header if tokens are available', async () => {
     const userStore = useUserStore()
-    userStore.setTokens({
-      accessToken: 'testAccessToken',
-      refreshToken: 'testRefreshToken',
-      expiryDate: Date.now() + 3600 * 1000
-    })
+    userStore.setInitialLoginData(
+      commonMocks.loginResponse({
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: {
+              linked: true,
+              identifier: 'test@example.com'
+            },
+            [AuthProvider.Discord]: {
+              linked: false
+            },
+            [AuthProvider.Patreon]: {
+              linked: false
+            }
+          },
+          tokens: {
+            accessToken: 'testAccessToken',
+            refreshToken: 'testRefreshToken',
+            expiryDate: Date.now() + 3600 * 1000
+          }
+        }
+      })
+    )
     userStore.refresh = vi.fn().mockResolvedValue(true)
 
     mock.onGet('/test').reply(200)

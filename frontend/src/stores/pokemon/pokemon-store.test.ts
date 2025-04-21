@@ -3,10 +3,9 @@ import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { createMockMemberProduction, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { createPinia, setActivePinia } from 'pinia'
-import { DOMAIN_VERSION } from 'sleepapi-common'
+import { commonMocks, DOMAIN_VERSION } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -19,11 +18,9 @@ vi.mock('@/services/user/user-service', () => ({
 
 describe('Pokemon Store', () => {
   const externalId = 'external-id'
-  const mockPokemon = createMockPokemon({ externalId, saved: false })
+  const mockPokemon = mocks.createMockPokemon({ externalId, saved: false })
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+  beforeEach(() => {})
 
   it('should have expected default state', () => {
     const pokemonStore = usePokemonStore()
@@ -103,7 +100,7 @@ describe('Pokemon Store', () => {
     const pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
     const comparisonStore = useComparisonStore()
-    comparisonStore.addMember(createMockMemberProduction())
+    comparisonStore.addMember(mocks.createMockMemberProduction())
 
     expect(pokemonStore.pokemon).toEqual({
       'external-id': mockPokemon
@@ -133,7 +130,7 @@ describe('Pokemon Store', () => {
   it('should call server to upsert pokemon if user logged in', async () => {
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     UserService.upsertPokemon = vi.fn().mockResolvedValue({})
 
@@ -145,7 +142,7 @@ describe('Pokemon Store', () => {
   it('should call server to delete pokemon if user logged in', async () => {
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
-    userStore.setTokens({ accessToken: '', expiryDate: 0, refreshToken: '' })
+    userStore.setInitialLoginData(commonMocks.loginResponse())
 
     UserService.deletePokemon = vi.fn().mockResolvedValue({})
 
@@ -153,17 +150,15 @@ describe('Pokemon Store', () => {
 
     expect(UserService.deletePokemon).toHaveBeenCalled()
   })
-  it('should migrate pokemon correctly', () => {
+  it('should invalidate cache correctly', () => {
     const pokemonStore = usePokemonStore()
-    pokemonStore.domainVersion = DOMAIN_VERSION
+    pokemonStore.domainVersion = -1 // guarantee outdated version
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mockPokemonWithoutRP = { ...mockPokemon, rp: undefined } as any
-    pokemonStore.upsertLocalPokemon(mockPokemonWithoutRP)
+    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
 
-    pokemonStore.migrate()
+    pokemonStore.invalidateCache()
 
-    expect(pokemonStore.pokemon[externalId].rp).toBeDefined()
+    expect(pokemonStore.pokemon).toEqual({})
   })
 
   it('should not change pokemon that already have rp', () => {
@@ -172,7 +167,7 @@ describe('Pokemon Store', () => {
     const mockPokemonWithRP = { ...mockPokemon, rp: 100 }
     pokemonStore.upsertLocalPokemon(mockPokemonWithRP)
 
-    pokemonStore.migrate()
+    pokemonStore.invalidateCache()
 
     expect(pokemonStore.pokemon[externalId].rp).toEqual(100)
   })
@@ -181,7 +176,7 @@ describe('Pokemon Store', () => {
     const pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
 
-    pokemonStore.outdate()
+    pokemonStore.invalidateCache()
 
     expect(pokemonStore.pokemon).toEqual({})
   })

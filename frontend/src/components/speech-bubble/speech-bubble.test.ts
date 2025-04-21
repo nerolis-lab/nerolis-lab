@@ -1,5 +1,5 @@
 import SpeechBubble from '@/components//speech-bubble/speech-bubble.vue'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -10,7 +10,7 @@ describe('SpeechBubble', () => {
   beforeEach(() => {
     wrapper = mount(SpeechBubble, {
       props: {
-        pokemonInstance: createMockPokemon()
+        pokemonInstance: mocks.createMockPokemon()
       },
       slots: {
         'body-text': '<span class="custom-body-text">This is the body text</span>'
@@ -27,7 +27,7 @@ describe('SpeechBubble', () => {
   it('renders the default header text correctly', async () => {
     wrapper = mount(SpeechBubble, {
       props: {
-        pokemonInstance: createMockPokemon({ level: 50, name: 'Abunzu' })
+        pokemonInstance: mocks.createMockPokemon({ level: 50, name: 'Abunzu' })
       },
       slots: {
         'body-text': '<span class="custom-body-text">This is the body text</span>'
@@ -50,7 +50,7 @@ describe('SpeechBubble', () => {
   it('renders the custom header-text slot when provided', () => {
     wrapper = mount(SpeechBubble, {
       props: {
-        pokemonInstance: createMockPokemon()
+        pokemonInstance: mocks.createMockPokemon()
       },
       slots: {
         'header-text': '<div class="custom-header">Custom Header Text</div>'

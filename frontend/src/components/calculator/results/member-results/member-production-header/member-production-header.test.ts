@@ -2,19 +2,17 @@ import MemberProductionBerry from '@/components/calculator/results/member-result
 import MemberProductionHeader from '@/components/calculator/results/member-results/member-production-header/member-production-header.vue'
 import MemberProductionIngredient from '@/components/calculator/results/member-results/member-production-header/member-production-ingredient.vue'
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
-import { createMockMemberProductionExt } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = createMockMemberProductionExt()
+const mockMember = mocks.createMockMemberProductionExt()
 
 describe('MemberProductionHeader', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionHeader>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionHeader, {
       props: {
         member: mockMember

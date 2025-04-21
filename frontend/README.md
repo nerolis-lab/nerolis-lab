@@ -1,8 +1,16 @@
 # Neroli's Lab - Frontend
 
-This is a project in its early days, but it's scheduled to replace the backend-hosted basic website at some point.
-
 The frontend is written in Typescript with [Vue.js 3][vue.js] and [Vuetify 3][Vuetify].
+
+## Setup
+
+If you'd like to be able to log in locally please set up a .env file in the frontend root with any of the following:
+
+- VITE_GOOGLE_CLIENT_ID='\<your google client id\>'
+- VITE_DISCORD_CLIENT_ID='\<your discord client id\>'
+- VITE_PATREON_CLIENT_ID='\<your patreon client id\>'
+
+You will also need to run the backend and the database locally, for more information on setting up cloud providers, the backend and database—please refer to our [backend documentation](../backend/README.md)
 
 ## Running the bot in development mode
 
@@ -21,18 +29,6 @@ This script cleans, compiles and starts the development server.
 ```
 npm run test
 ```
-
-Currently the project is in the starting grounds and no tests have been written yet.
-
-### Run the frontend in production mode
-
-```
-npm run start
-```
-
-This is still run locally (you're safe). This is used by the final environment deployment to start the service from the compiled javascript /dist folder. This is a good sanity-check before opening a pull request with your suggested changes
-
-For a complete list of available scripts, check the `package.json` file.
 
 [vue.js]: https://vuejs.org/
 [Vuetify]: https://vuetifyjs.com/en/

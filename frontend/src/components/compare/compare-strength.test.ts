@@ -2,10 +2,9 @@ import CompareStrength from '@/components/compare/compare-strength.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { createMockMemberProduction, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   MAX_RECIPE_LEVEL,
@@ -22,13 +21,12 @@ describe('CompareStrength', () => {
   let wrapper: VueWrapper<InstanceType<typeof CompareStrength>>
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
-  const mockPokemon = createMockPokemon({ name: 'Ash', skillLevel: 1 })
-  const mockMemberProduction: MemberProduction = createMockMemberProduction({
+  const mockPokemon = mocks.createMockPokemon({ name: 'Ash', skillLevel: 1 })
+  const mockMemberProduction: MemberProduction = mocks.createMockMemberProduction({
     skillValue: { strength: { amountToSelf: 100, amountToTeam: 0 } } as MemberSkillValue
   })
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mockPokemon)
     wrapper = mount(CompareStrength, {})

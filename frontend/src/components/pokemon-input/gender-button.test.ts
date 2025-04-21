@@ -1,5 +1,5 @@
 import GenderButton from '@/components/pokemon-input/gender-button.vue'
-import { createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
@@ -10,13 +10,13 @@ describe('GenderButton', () => {
   beforeEach(() => {
     wrapper = mount(GenderButton, {
       props: {
-        pokemonInstance: createMockPokemon()
+        pokemonInstance: mocks.createMockPokemon()
       }
     })
   })
 
   it('renders male icon when gender is male', async () => {
-    const mockPokemonInstance = createMockPokemon({ gender: 'male' })
+    const mockPokemonInstance = mocks.createMockPokemon({ gender: 'male' })
     await wrapper.setProps({
       pokemonInstance: mockPokemonInstance
     })
@@ -27,7 +27,7 @@ describe('GenderButton', () => {
   })
 
   it('renders female icon when gender is female', async () => {
-    const mockPokemonInstance = createMockPokemon({ gender: 'female' })
+    const mockPokemonInstance = mocks.createMockPokemon({ gender: 'female' })
     await wrapper.setProps({
       pokemonInstance: mockPokemonInstance
     })
@@ -39,7 +39,7 @@ describe('GenderButton', () => {
 
   it('toggles gender and emits update-gender event', async () => {
     await wrapper.setProps({
-      pokemonInstance: createMockPokemon({ gender: 'male' })
+      pokemonInstance: mocks.createMockPokemon({ gender: 'male' })
     })
 
     const button = wrapper.find('.v-btn')
@@ -49,7 +49,7 @@ describe('GenderButton', () => {
     expect(wrapper.emitted('update-gender')?.[0]).toEqual(['female'])
 
     await wrapper.setProps({
-      pokemonInstance: createMockPokemon({ gender: 'female' })
+      pokemonInstance: mocks.createMockPokemon({ gender: 'female' })
     })
 
     await button.trigger('click')
@@ -57,7 +57,7 @@ describe('GenderButton', () => {
   })
 
   it('does not render the button if gender is undefined', async () => {
-    const mockPokemonInstance = createMockPokemon({ gender: undefined })
+    const mockPokemonInstance = mocks.createMockPokemon({ gender: undefined })
     await wrapper.setProps({
       pokemonInstance: mockPokemonInstance
     })

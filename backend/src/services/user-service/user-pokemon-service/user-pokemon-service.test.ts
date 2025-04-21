@@ -20,7 +20,7 @@ afterEach(() => {
 describe('getSavedPokemon', () => {
   it("shall return a user's saved pokemon", async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Existing user',
@@ -61,7 +61,7 @@ describe('upsertPokemon', () => {
   };
   it('shall insert pokemon if not exists and saved is true', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       name: 'Existing user',
       friend_code: 'TESTFC',
@@ -75,7 +75,7 @@ describe('upsertPokemon', () => {
 
   it('shall update pokemon if pre-exists', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Existing user',
@@ -92,7 +92,7 @@ describe('upsertPokemon', () => {
 
   it('shall delete pokemon if saved false and does not exist in any teams', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Existing user',
@@ -108,7 +108,7 @@ describe('upsertPokemon', () => {
 describe('deletePokemon', () => {
   it('shall delete specific pokemon for user', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       name: 'Existing user',
       friend_code: 'TESTFC',
@@ -130,7 +130,7 @@ describe('deletePokemon', () => {
 
   it('shall not delete if user id matches, but external id doesnt', async () => {
     const user = await UserDAO.insert({
-      sub: 'some-sub',
+      google_id: 'some-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Existing user',

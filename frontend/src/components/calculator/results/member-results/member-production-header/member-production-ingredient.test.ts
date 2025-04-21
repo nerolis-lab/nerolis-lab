@@ -1,19 +1,17 @@
 import MemberProductionIngredient from '@/components/calculator/results/member-results/member-production-header/member-production-ingredient.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
-import { createMockMemberProductionExt } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = createMockMemberProductionExt()
+const mockMember = mocks.createMockMemberProductionExt()
 
 describe('MemberProductionIngredient', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionIngredient>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(MemberProductionIngredient, {
       props: {
         memberWithProduction: mockMember

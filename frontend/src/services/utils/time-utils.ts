@@ -1,6 +1,15 @@
 import { MathUtils, type Time } from 'sleepapi-common'
 
 class TimeUtilsImpl {
+  constructor() {
+    this.formatTime = this.formatTime.bind(this)
+    this.prettifyTime = this.prettifyTime.bind(this)
+    this.prettifySeconds = this.prettifySeconds.bind(this)
+    this.calculateDurationInMinutes = this.calculateDurationInMinutes.bind(this)
+    this.sleepScore = this.sleepScore.bind(this)
+    this.calculateSleepDuration = this.calculateSleepDuration.bind(this)
+  }
+
   public formatTime(seconds: number) {
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds % 3600) / 60)
@@ -35,25 +44,40 @@ class TimeUtilsImpl {
     return `${hours !== '00' ? `${hours}h ` : ''}${minutes}m ${seconds}s`
   }
 
-  public sleepScore(params: { bedtime: string; wakeup: string }) {
+  private calculateDurationInMinutes(params: { bedtime: string; wakeup: string }): number {
     const [bedHour, bedMinute] = params.bedtime.split(':').map(Number)
     const [wakeHour, wakeMinute] = params.wakeup.split(':').map(Number)
 
-    const bedTime = new Date()
-    bedTime.setHours(bedHour, bedMinute, 0, 0)
+    const bedTimeMinutes = bedHour * 60 + bedMinute
+    const wakeTimeMinutes = wakeHour * 60 + wakeMinute
 
-    const wakeTime = new Date()
-    wakeTime.setHours(wakeHour, wakeMinute, 0, 0)
-
-    if (wakeTime <= bedTime) {
-      wakeTime.setDate(wakeTime.getDate() + 1)
+    // Calculate duration, handling the case where we cross midnight
+    let durationInMinutes = wakeTimeMinutes - bedTimeMinutes
+    if (durationInMinutes < 0) {
+      durationInMinutes += 1440 // Add 24 hours worth of minutes
     }
 
-    const durationInMinutes = (wakeTime.getTime() - bedTime.getTime()) / (1000 * 60) // Duration in minutes
-    const maxDurationInMinutes = 8.5 * 60 // 8.5 hours in minutes
+    return durationInMinutes
+  }
 
-    const score = Math.floor(Math.min(100, (durationInMinutes / maxDurationInMinutes) * 100))
-    return score
+  public sleepScore(params: { bedtime: string; wakeup: string }) {
+    const durationInMinutes = this.calculateDurationInMinutes(params)
+    const maxDurationInMinutes = 510 // 8.5 hours in minutes
+    return Math.min(100, Math.round((durationInMinutes / maxDurationInMinutes) * 100))
+  }
+
+  public calculateSleepDuration(params: { bedtime: string; wakeup: string }): string {
+    const durationInMinutes = this.calculateDurationInMinutes(params)
+    const hours = Math.floor(durationInMinutes / 60)
+    const minutes = durationInMinutes % 60
+
+    if (hours === 0) {
+      return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`
+    }
+    if (minutes === 0) {
+      return `${hours} ${hours === 1 ? 'hour' : 'hours'}`
+    }
+    return `${hours} ${hours === 1 ? 'hour' : 'hours'} and ${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`
   }
 }
 

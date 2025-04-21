@@ -18,7 +18,7 @@ afterEach(() => {
 describe('getRecipeLevels', () => {
   it('should return an empty object if the user has no recipe levels', async () => {
     const user = await UserDAO.insert({
-      sub: 'test-sub',
+      google_id: 'test-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Test User',
@@ -31,7 +31,7 @@ describe('getRecipeLevels', () => {
 
   it('should return a proper mapping of recipe levels when records exist', async () => {
     const user = await UserDAO.insert({
-      sub: 'test-sub',
+      google_id: 'test-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Test User',
@@ -53,7 +53,7 @@ describe('getRecipeLevels', () => {
 describe('upsertRecipeLevel', () => {
   it('should insert a new recipe level if it does not exist', async () => {
     const user = await UserDAO.insert({
-      sub: 'insert-sub',
+      google_id: 'insert-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Insert User',
@@ -69,7 +69,7 @@ describe('upsertRecipeLevel', () => {
 
   it('should update an existing recipe level if the record already exists', async () => {
     const user = await UserDAO.insert({
-      sub: 'update-sub',
+      google_id: 'update-google_id',
       external_id: uuid.v4(),
       friend_code: 'TESTFC',
       name: 'Update User',

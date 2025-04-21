@@ -1,6 +1,6 @@
-import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import { capitalize, mainskill, MAINSKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -43,6 +43,23 @@ describe('SkillState', () => {
     skillState.addValue(value);
     expect(skillState['regularValue']).toBe(10);
     expect(skillState['critValue']).toBe(5);
+  });
+
+  it('should add skill value correctly', () => {
+    const unit = 'energy';
+    const amountToSelf = 15;
+    const amountToTeam = 10;
+
+    skillState.addSkillValue({ unit, amountToSelf, amountToTeam });
+
+    expect(skillState['skillValue'][unit].amountToSelf).toBe(15);
+    expect(skillState['skillValue'][unit].amountToTeam).toBe(10);
+
+    // Add more to the same unit
+    skillState.addSkillValue({ unit, amountToSelf: 5, amountToTeam: 8 });
+
+    expect(skillState['skillValue'][unit].amountToSelf).toBe(20);
+    expect(skillState['skillValue'][unit].amountToTeam).toBe(18);
   });
 
   it('should return correct results', () => {

@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import { BUTTERFREE, CarrySizeUtils, mainskill, NINETALES_ALOLAN } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -35,9 +35,9 @@ describe('BerryBurstEffect', () => {
         ingredients: [],
         berries: [
           ...memberState.otherMembers.map((member) => ({
-            berry: member.pokemonWithIngredients.pokemon.berry,
+            berry: member.berry,
             amount: regularOtherAmount,
-            level: member.settings.level
+            level: member.level
           })),
           {
             berry: memberState.berry,
@@ -88,9 +88,9 @@ describe('BerryBurstEffect', () => {
         ingredients: [],
         berries: [
           ...memberState.otherMembers.map((member) => ({
-            berry: member.pokemonWithIngredients.pokemon.berry,
+            berry: member.berry,
             amount: regularOtherAmount,
-            level: member.settings.level
+            level: member.level
           })),
           {
             berry: memberState.berry,

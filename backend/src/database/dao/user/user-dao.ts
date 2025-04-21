@@ -15,7 +15,9 @@ const DBUserSchema = Type.Composite([
     last_login: Type.Optional(Type.Date()),
     name: Type.String(),
     role: Type.Enum(Roles),
-    sub: Type.String(),
+    google_id: Type.Optional(Type.String()),
+    discord_id: Type.Optional(Type.String()),
+    patreon_id: Type.Optional(Type.String()),
     updated_at: Type.Optional(Type.Date())
   })
 ]);

@@ -152,26 +152,24 @@ export const useTeamStore = defineStore('team', {
           team.stockpiledIngredients = []
         }
       }
-
-      if (this.domainVersion !== DOMAIN_VERSION) {
-        this.outdate()
-      }
     },
-    outdate() {
-      for (const team of this.teams) {
-        team.production = undefined
-        team.memberIvs = {}
-      }
-      const updatedKeys = Object.keys(defaultState()) as Array<keyof TeamState>
-      const cachedKeys = Object.keys(this.$state) as Array<keyof TeamState>
-
-      cachedKeys.forEach((key) => {
-        if (!updatedKeys.includes(key)) {
-          delete this.$state[key]
+    invalidateCache() {
+      if (this.domainVersion !== DOMAIN_VERSION) {
+        for (const team of this.teams) {
+          team.production = undefined
+          team.memberIvs = {}
         }
-      })
+        const updatedKeys = Object.keys(defaultState()) as Array<keyof TeamState>
+        const cachedKeys = Object.keys(this.$state) as Array<keyof TeamState>
 
-      this.domainVersion = DOMAIN_VERSION
+        cachedKeys.forEach((key) => {
+          if (!updatedKeys.includes(key)) {
+            delete this.$state[key]
+          }
+        })
+
+        this.domainVersion = DOMAIN_VERSION
+      }
     },
     async syncTeams() {
       const userStore = useUserStore()

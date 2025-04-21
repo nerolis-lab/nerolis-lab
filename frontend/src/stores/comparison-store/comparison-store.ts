@@ -32,22 +32,19 @@ export const useComparisonStore = defineStore('comparison', {
     }
   },
   actions: {
-    migrate() {
+    invalidateCache() {
       if (this.domainVersion !== DOMAIN_VERSION) {
-        this.outdate()
+        const updatedKeys = Object.keys(defaultState()) as Array<keyof ComparisonState>
+        const cachedKeys = Object.keys(this.$state) as Array<keyof ComparisonState>
+
+        cachedKeys.forEach((key) => {
+          if (!updatedKeys.includes(key)) {
+            delete this.$state[key]
+          }
+        })
+
+        this.$patch(defaultState({ domainVersion: DOMAIN_VERSION }))
       }
-    },
-    outdate() {
-      const updatedKeys = Object.keys(defaultState()) as Array<keyof ComparisonState>
-      const cachedKeys = Object.keys(this.$state) as Array<keyof ComparisonState>
-
-      cachedKeys.forEach((key) => {
-        if (!updatedKeys.includes(key)) {
-          delete this.$state[key]
-        }
-      })
-
-      this.$patch(defaultState({ domainVersion: DOMAIN_VERSION }))
     },
     addMember(member: MemberProduction) {
       this.members.push(member)

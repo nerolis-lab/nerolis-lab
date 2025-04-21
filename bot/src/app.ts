@@ -1,5 +1,5 @@
 /* eslint-disable SleepAPILogger/no-console */
-import { Client, GatewayIntentBits } from 'discord.js';
+import { Client, Events, GatewayIntentBits } from 'discord.js';
 import type { Application, Request, Response } from 'express';
 import express from 'express';
 import morgan from 'morgan';
@@ -45,20 +45,33 @@ const client = new Client({
 });
 
 // At startup register commands
-client.once('ready', async () => {
-  console.log('Discord bot is ready! 🤖');
+client.once(Events.ClientReady, async (readyClient) => {
+  console.log(`Discord bot is ready! 🤖 Logged in as ${readyClient.user.tag}`);
   await deployCommands();
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-client.on('interactionCreate', async (interaction: any) => {
-  if (!interaction.isCommand()) {
-    return;
-  }
+// Handle slash command interactions
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
   const { commandName } = interaction;
   if (commands[commandName as keyof typeof commands]) {
-    commands[commandName as keyof typeof commands].execute(interaction);
+    try {
+      await commands[commandName as keyof typeof commands].execute(interaction);
+    } catch (error) {
+      console.error(`Error executing command ${commandName}:`, error);
+
+      // Reply with error if the interaction hasn't been replied to yet
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({ content: 'There was an error executing this command!', ephemeral: true });
+      } else {
+        await interaction.reply({ content: 'There was an error executing this command!', ephemeral: true });
+      }
+    }
   }
 });
 
-client.login(config.DISCORD_TOKEN);
+client.login(config.DISCORD_TOKEN).catch((error) => {
+  console.error('Failed to login to Discord:', error);
+  process.exit(1);
+});

@@ -2,7 +2,6 @@ import AdvancedSettings from '@/components/calculator/team-settings/advanced-set
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
 import { berry, ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -11,7 +10,6 @@ describe('AdvancedMenu', () => {
   let wrapper: VueWrapper<InstanceType<typeof AdvancedSettings>>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     wrapper = mount(AdvancedSettings, { attachTo: document.body })
   })
 

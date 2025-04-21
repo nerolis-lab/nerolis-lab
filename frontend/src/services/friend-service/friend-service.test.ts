@@ -1,6 +1,5 @@
 import serverAxios from '@/router/server-axios'
 import { useFriendStore } from '@/stores/friend-store/friend-store'
-import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { FriendService } from './friend-service'
 
@@ -21,7 +20,6 @@ describe('FriendService', () => {
   let mockStore: ReturnType<typeof useFriendStore>
 
   beforeEach(() => {
-    setActivePinia(createPinia())
     mockStore = useFriendStore()
     mockStore.sync = vi.fn()
   })

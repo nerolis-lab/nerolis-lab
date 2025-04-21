@@ -1,11 +1,11 @@
-import { mocks } from '@src/bun/index.js';
 import { SetCover } from '@src/services/solve/set-cover.js';
 import type {
   IngredientProducers,
   ProducersByIngredientIndex,
   SetCoverPokemonSetup
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
-import { ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
+import { mocks } from '@src/vitest/index.js';
+import { commonMocks, ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('Set Cover Integration', () => {
@@ -18,10 +18,10 @@ describe('Set Cover Integration', () => {
     const maxTeamSize = 5;
     const mockedGreengrassSalad = [
       // Recipe: 22 Oil, 17 Corn, 14 Tomato, 9 Potato
-      mocks.mockIngredientSet({ amount: 22, ingredient: ingredient.PURE_OIL }),
-      mocks.mockIngredientSet({ amount: 17, ingredient: ingredient.GREENGRASS_CORN }),
-      mocks.mockIngredientSet({ amount: 14, ingredient: ingredient.SNOOZY_TOMATO }),
-      mocks.mockIngredientSet({ amount: 9, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 22, ingredient: ingredient.PURE_OIL }),
+      commonMocks.mockIngredientSet({ amount: 17, ingredient: ingredient.GREENGRASS_CORN }),
+      commonMocks.mockIngredientSet({ amount: 14, ingredient: ingredient.SNOOZY_TOMATO }),
+      commonMocks.mockIngredientSet({ amount: 9, ingredient: ingredient.SOFT_POTATO })
     ];
     const recipe = ingredientSetToIntFlat(mockedGreengrassSalad);
 
@@ -61,8 +61,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 32, ingredient: ingredient.PURE_OIL }),
-      mocks.mockIngredientSet({ amount: 28, ingredient: ingredient.FIERY_HERB })
+      commonMocks.mockIngredientSet({ amount: 32, ingredient: ingredient.PURE_OIL }),
+      commonMocks.mockIngredientSet({ amount: 28, ingredient: ingredient.FIERY_HERB })
     ])
   });
   const dragoniteABC: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -71,9 +71,9 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 8, ingredient: ingredient.FIERY_HERB }),
-      mocks.mockIngredientSet({ amount: 16, ingredient: ingredient.GREENGRASS_CORN }),
-      mocks.mockIngredientSet({ amount: 32, ingredient: ingredient.PURE_OIL })
+      commonMocks.mockIngredientSet({ amount: 8, ingredient: ingredient.FIERY_HERB }),
+      commonMocks.mockIngredientSet({ amount: 16, ingredient: ingredient.GREENGRASS_CORN }),
+      commonMocks.mockIngredientSet({ amount: 32, ingredient: ingredient.PURE_OIL })
     ])
   });
   const cramorantAAA: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -81,7 +81,9 @@ function setupGreengrassProducers(): {
       pokemon: 'CRAMORANT',
       ingredients: ingredientSetToIntFlat([])
     },
-    totalIngredients: ingredientSetToIntFlat([mocks.mockIngredientSet({ amount: 29, ingredient: ingredient.PURE_OIL })])
+    totalIngredients: ingredientSetToIntFlat([
+      commonMocks.mockIngredientSet({ amount: 29, ingredient: ingredient.PURE_OIL })
+    ])
   });
   const cramorantABA: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
     pokemonSet: {
@@ -89,8 +91,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 19, ingredient: ingredient.PURE_OIL }),
-      mocks.mockIngredientSet({ amount: 8, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 19, ingredient: ingredient.PURE_OIL }),
+      commonMocks.mockIngredientSet({ amount: 8, ingredient: ingredient.SOFT_POTATO })
     ])
   });
   const cramorantAAB: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -99,8 +101,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 15, ingredient: ingredient.PURE_OIL }),
-      mocks.mockIngredientSet({ amount: 15, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 15, ingredient: ingredient.PURE_OIL }),
+      commonMocks.mockIngredientSet({ amount: 15, ingredient: ingredient.SOFT_POTATO })
     ])
   });
   const cramorantAAC: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -109,8 +111,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 17, ingredient: ingredient.FANCY_EGG }),
-      mocks.mockIngredientSet({ amount: 15, ingredient: ingredient.PURE_OIL })
+      commonMocks.mockIngredientSet({ amount: 17, ingredient: ingredient.FANCY_EGG }),
+      commonMocks.mockIngredientSet({ amount: 15, ingredient: ingredient.PURE_OIL })
     ])
   });
   const cramorantABB: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -119,8 +121,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 4, ingredient: ingredient.PURE_OIL }),
-      mocks.mockIngredientSet({ amount: 23, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 4, ingredient: ingredient.PURE_OIL }),
+      commonMocks.mockIngredientSet({ amount: 23, ingredient: ingredient.SOFT_POTATO })
     ])
   });
   const cramorantABC: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -129,9 +131,9 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 17, ingredient: ingredient.FANCY_EGG }),
-      mocks.mockIngredientSet({ amount: 4, ingredient: ingredient.PURE_OIL }),
-      mocks.mockIngredientSet({ amount: 8, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 17, ingredient: ingredient.FANCY_EGG }),
+      commonMocks.mockIngredientSet({ amount: 4, ingredient: ingredient.PURE_OIL }),
+      commonMocks.mockIngredientSet({ amount: 8, ingredient: ingredient.SOFT_POTATO })
     ])
   });
 
@@ -153,8 +155,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 8, ingredient: ingredient.FIERY_HERB }),
-      mocks.mockIngredientSet({ amount: 44, ingredient: ingredient.GREENGRASS_CORN })
+      commonMocks.mockIngredientSet({ amount: 8, ingredient: ingredient.FIERY_HERB }),
+      commonMocks.mockIngredientSet({ amount: 44, ingredient: ingredient.GREENGRASS_CORN })
     ])
   });
   const dragoniteAAB: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -163,8 +165,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 28, ingredient: ingredient.FIERY_HERB }),
-      mocks.mockIngredientSet({ amount: 28, ingredient: ingredient.GREENGRASS_CORN })
+      commonMocks.mockIngredientSet({ amount: 28, ingredient: ingredient.FIERY_HERB }),
+      commonMocks.mockIngredientSet({ amount: 28, ingredient: ingredient.GREENGRASS_CORN })
     ])
   });
   const dragoniteABA: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -173,8 +175,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 36, ingredient: ingredient.FIERY_HERB }),
-      mocks.mockIngredientSet({ amount: 16, ingredient: ingredient.GREENGRASS_CORN })
+      commonMocks.mockIngredientSet({ amount: 36, ingredient: ingredient.FIERY_HERB }),
+      commonMocks.mockIngredientSet({ amount: 16, ingredient: ingredient.GREENGRASS_CORN })
     ])
   });
 
@@ -196,7 +198,7 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 47, ingredient: ingredient.SNOOZY_TOMATO })
+      commonMocks.mockIngredientSet({ amount: 47, ingredient: ingredient.SNOOZY_TOMATO })
     ])
   });
   const victreebelABA: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -205,8 +207,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 30, ingredient: ingredient.SNOOZY_TOMATO }),
-      mocks.mockIngredientSet({ amount: 13, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 30, ingredient: ingredient.SNOOZY_TOMATO }),
+      commonMocks.mockIngredientSet({ amount: 13, ingredient: ingredient.SOFT_POTATO })
     ])
   });
   const victreebelAAB: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -215,8 +217,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 23, ingredient: ingredient.SNOOZY_TOMATO }),
-      mocks.mockIngredientSet({ amount: 20, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 23, ingredient: ingredient.SNOOZY_TOMATO }),
+      commonMocks.mockIngredientSet({ amount: 20, ingredient: ingredient.SOFT_POTATO })
     ])
   });
   const victreebelAAC: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -225,8 +227,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 23, ingredient: ingredient.SNOOZY_TOMATO }),
-      mocks.mockIngredientSet({ amount: 13, ingredient: ingredient.LARGE_LEEK })
+      commonMocks.mockIngredientSet({ amount: 23, ingredient: ingredient.SNOOZY_TOMATO }),
+      commonMocks.mockIngredientSet({ amount: 13, ingredient: ingredient.LARGE_LEEK })
     ])
   });
   const victreebelABB: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -235,8 +237,8 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 7, ingredient: ingredient.SNOOZY_TOMATO }),
-      mocks.mockIngredientSet({ amount: 33, ingredient: ingredient.SOFT_POTATO })
+      commonMocks.mockIngredientSet({ amount: 7, ingredient: ingredient.SNOOZY_TOMATO }),
+      commonMocks.mockIngredientSet({ amount: 33, ingredient: ingredient.SOFT_POTATO })
     ])
   });
   const victreebelABC: SetCoverPokemonSetup = mocks.setCoverPokemonSetup({
@@ -245,9 +247,9 @@ function setupGreengrassProducers(): {
       ingredients: ingredientSetToIntFlat([])
     },
     totalIngredients: ingredientSetToIntFlat([
-      mocks.mockIngredientSet({ amount: 7, ingredient: ingredient.SNOOZY_TOMATO }),
-      mocks.mockIngredientSet({ amount: 13, ingredient: ingredient.SOFT_POTATO }),
-      mocks.mockIngredientSet({ amount: 13, ingredient: ingredient.LARGE_LEEK })
+      commonMocks.mockIngredientSet({ amount: 7, ingredient: ingredient.SNOOZY_TOMATO }),
+      commonMocks.mockIngredientSet({ amount: 13, ingredient: ingredient.SOFT_POTATO }),
+      commonMocks.mockIngredientSet({ amount: 13, ingredient: ingredient.LARGE_LEEK })
     ])
   });
 

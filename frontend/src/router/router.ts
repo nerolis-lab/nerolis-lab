@@ -17,6 +17,10 @@ export enum RouteName {
 
   Admin = 'Admin',
 
+  Discord = 'Discord',
+  Patreon = 'Patreon',
+  Google = 'Google',
+
   NotFound = 'NotFound'
 }
 
@@ -34,6 +38,11 @@ const BetaPage = () => import('@/pages/beta/beta.vue')
 
 // Admin
 const AdminPage = () => import('@/pages/admin/admin.vue')
+
+// Auth pages
+const PatreonPage = () => import('@/pages/login/patreon-page.vue')
+const DiscordPage = () => import('@/pages/login/discord-page.vue')
+const GooglePage = () => import('@/pages/login/google-page.vue')
 
 // 404
 const NotFoundPage = () => import('@/pages/not-found/not-found-page.vue')
@@ -86,6 +95,30 @@ const router = createRouter({
       name: RouteName.Admin,
       component: AdminPage,
       meta: { requiresAdmin: true }
+    },
+    {
+      path: '/discord',
+      name: RouteName.Discord,
+      component: DiscordPage,
+      props: (route) => ({
+        originalRoute: route.query.state || route.redirectedFrom?.fullPath || '/'
+      })
+    },
+    {
+      path: '/patreon',
+      name: RouteName.Patreon,
+      component: PatreonPage,
+      props: (route) => ({
+        originalRoute: route.query.state || route.redirectedFrom?.fullPath || '/'
+      })
+    },
+    {
+      path: '/google',
+      name: RouteName.Google,
+      component: GooglePage,
+      props: (route) => ({
+        originalRoute: route.query.state || route.redirectedFrom?.fullPath || '/'
+      })
     },
     {
       path: '/:pathMatch(.*)*',

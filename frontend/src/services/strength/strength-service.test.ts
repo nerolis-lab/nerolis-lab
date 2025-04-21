@@ -1,6 +1,5 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import type { TimeWindowWeek } from '@/types/time/time-window'
-import { createPinia, setActivePinia } from 'pinia'
 import { MathUtils, berry, berryPowerForLevel, mainskill, type BerrySet, type MemberSkillValue } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -12,9 +11,7 @@ describe('StrengthService', () => {
   const favoredBerries = [berry.BELUE]
   const mockTimeWindow: TimeWindowWeek = 'WEEK'
 
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+  beforeEach(() => {})
 
   describe('berryStrength', () => {
     it('should calculate strength correctly with favored berry multiplier', () => {

@@ -1,7 +1,7 @@
-import { mocks } from '@src/bun/index.js';
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
+import { mocks } from '@src/vitest/index.js';
 import * as commonModule from 'sleepapi-common';
 import { CarrySizeUtils, mainskill, MAX_TEAM_SIZE } from 'sleepapi-common';
 import { vimic } from 'vimic';
@@ -77,7 +77,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     });
 
     Object.defineProperty(memberState, 'otherMembers', {
-      get: () => team.slice(1)
+      get: () => team.slice(1).map((member) => mocks.memberState({ member }))
     });
 
     vimic(commonModule, 'uniqueMembersWithBerry', () => unique);
@@ -138,7 +138,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     });
 
     Object.defineProperty(memberState, 'otherMembers', {
-      get: () => largeTeam.slice(1)
+      get: () => largeTeam.slice(1).map((member) => mocks.memberState({ member }))
     });
 
     vimic(skillState, 'skillLevel', () => skillLevel);

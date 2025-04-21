@@ -251,6 +251,7 @@ exports[`getPokemonNames > shall return all pokemon by default 1`] = `
   "RUFFLET",
   "PAWMI",
   "PAWMO",
+  "DARKRAI",
 ]
 `;
 
@@ -409,6 +410,7 @@ exports[`getPokemonNames > shall return all pokemon for multiple islands 1`] = `
   "RUFFLET",
   "PAWMI",
   "PAWMO",
+  "DARKRAI",
 ]
 `;
 
@@ -480,6 +482,7 @@ exports[`getPokemonNames > shall return all snowdrop pokemon 1`] = `
   "GLACEON",
   "MEOWTH",
   "EEVEE",
+  "DARKRAI",
 ]
 `;
 

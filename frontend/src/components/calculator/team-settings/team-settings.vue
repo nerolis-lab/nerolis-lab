@@ -102,7 +102,7 @@
     </v-dialog>
 
     <v-dialog v-model="isTimePickerOpen" max-width="400px" aria-label="time menu">
-      <v-card title="Update sleep" :subtitle="calculateSleepDuration">
+      <v-card title="Update sleep" :subtitle="calculateSleepDuration({ bedtime, wakeup })">
         <template #append>
           <v-avatar size="48" color="white">
             <v-progress-circular
@@ -202,7 +202,7 @@ export default defineComponent({
   components: { IslandSelect, AdvancedSettings },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, sleepScore: TimeUtils.sleepScore }
+    return { teamStore, sleepScore: TimeUtils.sleepScore, calculateSleepDuration: TimeUtils.calculateSleepDuration }
   },
   data: () => ({
     isCampButtonDisabled: false,
@@ -223,26 +223,6 @@ export default defineComponent({
     },
     wakeup() {
       return this.teamStore.getCurrentTeam.wakeup
-    },
-    calculateSleepDuration(): string {
-      const [bedHour, bedMinute] = this.bedtime.split(':').map(Number)
-      const [wakeHour, wakeMinute] = this.wakeup.split(':').map(Number)
-
-      const bedTime = new Date()
-      bedTime.setHours(bedHour, bedMinute, 0, 0)
-
-      const wakeTime = new Date()
-      wakeTime.setHours(wakeHour, wakeMinute, 0, 0)
-
-      if (wakeTime <= bedTime) {
-        wakeTime.setDate(wakeTime.getDate() + 1)
-      }
-
-      const duration = (wakeTime.getTime() - bedTime.getTime()) / 1000 // Duration in seconds
-      const hours = Math.floor(duration / 3600)
-      const minutes = Math.floor((duration % 3600) / 60)
-
-      return `${hours} hours and ${minutes} minutes`
     },
     recipeTypeImage() {
       return this.teamStore.getCurrentTeam.recipeType === 'dessert'

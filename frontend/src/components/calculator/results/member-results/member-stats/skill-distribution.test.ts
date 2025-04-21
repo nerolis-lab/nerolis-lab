@@ -1,6 +1,6 @@
 import SkillDistribution from '@/components/calculator/results/member-results/member-stats/skill-distribution.vue'
 import { registerChartJS } from '@/components/custom-components/charts/register-charts'
-import { createMockMemberProduction, createMockMemberProductionExt, createMockPokemon } from '@/vitest'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
@@ -9,12 +9,12 @@ describe('SkillDistribution.vue', () => {
   registerChartJS()
   let wrapper: VueWrapper<InstanceType<typeof SkillDistribution>>
 
-  const pokemonProduction = createMockMemberProductionExt({
-    member: createMockPokemon({ name: 'Test member' }),
-    production: createMockMemberProduction({
+  const pokemonProduction = mocks.createMockMemberProductionExt({
+    member: mocks.createMockPokemon({ name: 'Test member' }),
+    production: mocks.createMockMemberProduction({
       skillProcs: 5.5,
       advanced: {
-        ...createMockMemberProduction().advanced,
+        ...mocks.createMockMemberProduction().advanced,
         skillProcDistribution: {
           '1': 0.1,
           '2': 0.2,
