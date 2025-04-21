@@ -85,7 +85,7 @@ const evaluateTeam = async (team: PokemonInstanceExt[], settings: TeamSettings, 
   const teamStore = useTeamStore()
   const userStore = useUserStore()
 
-  const favoredBerries = teamStore.getCurrentTeam.favoredBerries
+  const {favoredBerries} = teamStore.getCurrentTeam
 
   const request = {
     settings,
