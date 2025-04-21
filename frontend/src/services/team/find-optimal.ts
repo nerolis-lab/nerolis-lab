@@ -140,9 +140,9 @@ const evaluateTeam = async (team: PokemonInstanceExt[], settings: TeamSettings, 
       }),
     0
   )
-  logger.log(
-    `members: ${team.map((p) => p.pokemon.displayName).join(', ')}\n berryStrength: ${Math.floor(berryStrength)}`
-  )
+  // logger.log(
+  //   `members: ${team.map((p) => p.pokemon.displayName).join(', ')}\n berryStrength: ${Math.floor(berryStrength)}`
+  // )
 
   return Math.floor(cookingStrength + berryStrength + skillStrength + stockpiledStrength)
 }
@@ -189,7 +189,7 @@ export const findOptimalTeam = async (
       )
       walkerStrengths.push(strength)
       addToTopTeams(team, strength)
-      logger.log(`Walker ${i + 1} init: ${team.map((p) => p.pokemon.displayName).join(', ')}`)
+      // logger.log(`Walker ${i + 1} init: ${team.map((p) => p.pokemon.displayName).join(', ')}`)
       updateProgress(i + 1, numWalkers, i + 1, 0, team, strength, 'Initializing random teams')
     }
 
@@ -313,7 +313,7 @@ const simulatedAnnealing = async (
     if (currentStrength > bestStrength) {
       bestTeam = currentTeam
       bestStrength = currentStrength
-      logger.log(`Walker ${walkerId} local best updated to ${bestStrength}`)
+      // logger.log(`Walker ${walkerId} local best updated to ${bestStrength}`)
       addToTopTeams(bestTeam, bestStrength)
       if (bestStrength > globalBest.strength) {
         globalBest.team = bestTeam
