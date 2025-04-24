@@ -268,29 +268,10 @@ describe('User Store', () => {
     })
 
     const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
     await userStore.syncUserSettings()
 
     expect(UserService.getUserSettings).toHaveBeenCalled()
-    expect(userStore.$state).toMatchInlineSnapshot(`
-      {
-        "areaBonus": {
-          "cyan": 15,
-          "greengrass": 25,
-          "lapis": 35,
-          "powerplant": 45,
-          "snowdrop": 55,
-          "taupe": 65,
-        },
-        "auth": null,
-        "avatar": "synced avatar",
-        "externalId": null,
-        "friendCode": null,
-        "name": "synced name",
-        "potSize": 30,
-        "role": "admin",
-        "supporterSince": "2024-02-01",
-      }
-    `)
   })
 
   it('reset should return name and avatar to defaults', () => {

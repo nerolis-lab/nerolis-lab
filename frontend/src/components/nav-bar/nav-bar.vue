@@ -70,4 +70,10 @@ export default defineComponent({
   font-size: 16px;
   margin: -6px 0 0 5px;
 }
+
+@media (max-width: $desktop) {
+  .v-app-bar-title {
+    margin-inline-start: 0px !important;
+  }
+}
 </style>

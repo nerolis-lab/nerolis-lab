@@ -3,7 +3,7 @@ import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-d
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
-import type { IslandShortName, UpdateUserRequest, UserHeader, UserSettingsResponse } from 'sleepapi-common';
+import type { IslandShortName, UpdateUserRequest, UserSettingsResponse } from 'sleepapi-common';
 import { MAX_POT_SIZE } from 'sleepapi-common';
 
 export async function updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {
@@ -16,7 +16,7 @@ export async function deleteUser(user: DBUser) {
   UserDAO.delete({ id: user.id });
 }
 
-export async function getUserSettings(user: DBUser, userHeader: UserHeader): Promise<UserSettingsResponse> {
+export async function getUserSettings(user: DBUser): Promise<UserSettingsResponse> {
   const areaBonusesRaw = await UserAreaDAO.findMultiple({ fk_user_id: user.id });
 
   const areaBonuses: Partial<Record<IslandShortName, number>> = {};
@@ -24,11 +24,11 @@ export async function getUserSettings(user: DBUser, userHeader: UserHeader): Pro
     areaBonuses[areaBonus.area] = areaBonus.bonus;
   }
 
-  let supporterSince: string | undefined;
+  let supporterSince: string | null = null;
   if (user.patreon_id) {
-    const { role, patronSince } = await PatreonProvider.getPatronStatus({
-      token: userHeader.Authorization,
-      redirect_uri: userHeader.Redirect
+    const { role, patronSince } = await PatreonProvider.isSupporter({
+      patreon_id: user.patreon_id,
+      previousRole: user.role
     });
 
     await UserDAO.update({ ...user, role });

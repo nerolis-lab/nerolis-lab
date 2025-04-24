@@ -3,7 +3,8 @@ import type { RouteLocationNormalizedLoaded } from 'vue-router'
 
 export const PATREON_REDIRECT_URI = `${window.location.origin}/patreon`
 
-export function getPatreonAuthCode(currentRoute: RouteLocationNormalizedLoaded, scope = 'identity[email]') {
+export function getPatreonAuthCode(currentRoute: RouteLocationNormalizedLoaded) {
+  const scope = 'identity identity[email]'
   const params = new URLSearchParams({
     client_id: import.meta.env.VITE_PATREON_CLIENT_ID,
     redirect_uri: PATREON_REDIRECT_URI,

@@ -65,7 +65,7 @@ class UserRouterImpl {
         if (!user) {
           throw new Error('User not found');
         }
-        const data = await controller.getUserSettings(user, authentication.userHeader);
+        const data = await controller.getUserSettings(user);
 
         res.json(data);
       } catch (err) {

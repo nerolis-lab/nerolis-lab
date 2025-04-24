@@ -1,4 +1,5 @@
 import ProfilePage from '@/pages/profile-page.vue'
+import { TimeUtils } from '@/services/utils/time-utils'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -53,7 +54,8 @@ describe('ProfilePage', () => {
       })
 
       it('displays supporter since date', () => {
-        const supporterSince = wrapper.findAll('.text-center').find((el) => el.text() === '2024-01-01')
+        const date = TimeUtils.extractDate(userStore.supporterSince!)
+        const supporterSince = wrapper.findAll('.text-center').find((el) => el.text() === date)
         expect(supporterSince?.classes()).toContain('text-supporter')
       })
 

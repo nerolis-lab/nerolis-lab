@@ -45,19 +45,9 @@
         </v-tab>
       </v-tabs>
 
-      <v-window v-model="activeTab">
-        <v-window-item value="game">
-          <GameSettings />
-        </v-window-item>
-
-        <v-window-item value="account">
-          <AccountSettings />
-        </v-window-item>
-
-        <v-window-item value="site">
-          <SiteSettings />
-        </v-window-item>
-      </v-window>
+      <GameSettings v-if="activeTab === 'game'" />
+      <AccountSettings v-if="activeTab === 'account'" />
+      <SiteSettings v-if="activeTab === 'site'" />
     </v-col>
   </v-row>
 </template>
@@ -67,9 +57,11 @@ import AccountSettings from '@/components/settings/account-settings/account-sett
 import GameSettings from '@/components/settings/game-settings/game-settings.vue'
 import SiteSettings from '@/components/settings/site-settings/site-settings.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
+import { RouteName } from '@/router/router'
 import { useUserStore } from '@/stores/user-store'
 import { useVersionStore } from '@/stores/version-store/version-store'
 import { defineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'SettingsPage',
@@ -82,17 +74,32 @@ export default defineComponent({
     const userStore = useUserStore()
     const versionStore = useVersionStore()
     const { isMobile } = useBreakpoint()
+    const route = useRoute()
+    const router = useRouter()
 
-    return { userStore, versionStore, isMobile }
+    return { userStore, versionStore, isMobile, route, router }
   },
   data() {
     return {
-      activeTab: 'game',
       tabs: [
-        { value: 'game', text: 'Game' },
-        { value: 'account', text: 'Account', icon: 'mdi-account-circle' },
-        { value: 'site', text: 'Site', icon: 'mdi-web' }
+        { value: 'game', text: 'Game', routeName: RouteName.SettingsGame },
+        { value: 'account', text: 'Account', icon: 'mdi-account-circle', routeName: RouteName.SettingsAccount },
+        { value: 'site', text: 'Site', icon: 'mdi-web', routeName: RouteName.SettingsSite }
       ]
+    }
+  },
+  computed: {
+    activeTab: {
+      get() {
+        const routeName = this.route.name as string
+        return this.tabs.find((tab) => tab.routeName === routeName)?.value || 'game'
+      },
+      set(value: string) {
+        const tab = this.tabs.find((t) => t.value === value)
+        if (tab) {
+          this.router.push({ name: tab.routeName })
+        }
+      }
     }
   }
 })

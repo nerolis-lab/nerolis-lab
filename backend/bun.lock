@@ -15,7 +15,7 @@
         "knex": "^3.1.0",
         "morgan": "~1.9.1",
         "mysql2": "~3.9.7",
-        "patreon-api.ts": "^0.12.0",
+        "patreon-api.ts": "^0.12.3",
         "seedrandom": "^3.0.5",
         "swagger-ui-express": "^5.0.0",
         "tsoa": "^6.6.0",
@@ -848,7 +848,7 @@
 
     "pathval": ["pathval@2.0.0", "", {}, "sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA=="],
 
-    "patreon-api.ts": ["patreon-api.ts@0.12.1", "", {}, "sha512-gJdgFl6Gfpz9OSiVf62EFf1AY8VrE8hN5gCJWHf9pNWPWDrrbX2rWlekx5ltjeV0iYT+LPizpaRKdhkHIbfwHw=="],
+    "patreon-api.ts": ["patreon-api.ts@0.12.3", "", {}, "sha512-RnQm1XPLu6lISsf4k0rrT7+TdWwKicUTlVsNhMyPSCI0fPmsyz3qNI41qqaGmPOwcM3IuBpqZA7tU5zqUIzykw=="],
 
     "pg-connection-string": ["pg-connection-string@2.6.2", "", {}, "sha512-ch6OwaeaPYcova4kKZ15sbJ2hKb/VP48ZD2gE7i1J+L4MspCtBMAx8nMgz7bksc7IojCIIWuEhHibSMFH8m8oA=="],
 

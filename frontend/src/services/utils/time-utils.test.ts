@@ -1,6 +1,6 @@
 import { TimeUtils } from '@/services/utils/time-utils'
 import type { Time } from 'sleepapi-common'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 
 describe('formatTime', () => {
   it('shall format seconds to hh:mm:ss', () => {
@@ -207,5 +207,72 @@ describe('calculateSleepDuration', () => {
         wakeup: '22:01'
       })
     ).toBe('1 minute')
+  })
+})
+
+describe('extractDate', () => {
+  const originalNavigator = global.navigator
+  const mockISOString = '2024-04-15T19:13:55.579+00:00'
+
+  afterEach(() => {
+    Object.defineProperty(global, 'navigator', {
+      value: originalNavigator,
+      configurable: true
+    })
+  })
+
+  it('formats date using default en-US locale', () => {
+    Object.defineProperty(global, 'navigator', {
+      value: { language: 'en-US' },
+      writable: true,
+      configurable: true
+    })
+
+    const result = TimeUtils.extractDate(mockISOString)
+    expect(result).toBe('April 15, 2024')
+  })
+
+  it('formats date using en-GB locale', () => {
+    Object.defineProperty(global, 'navigator', {
+      value: { language: 'en-GB' },
+      writable: true,
+      configurable: true
+    })
+
+    const result = TimeUtils.extractDate(mockISOString)
+    expect(result).toBe('15 April 2024')
+  })
+
+  it('formats date using de-DE locale', () => {
+    Object.defineProperty(global, 'navigator', {
+      value: { language: 'de-DE' },
+      writable: true,
+      configurable: true
+    })
+
+    const result = TimeUtils.extractDate(mockISOString)
+    expect(result).toBe('15. April 2024')
+  })
+
+  it('formats date using ja-JP locale', () => {
+    Object.defineProperty(global, 'navigator', {
+      value: { language: 'ja-JP' },
+      writable: true,
+      configurable: true
+    })
+
+    const result = TimeUtils.extractDate(mockISOString)
+    expect(result).toBe('2024年4月15日')
+  })
+
+  it('falls back to en-US when navigator.language is undefined', () => {
+    Object.defineProperty(global, 'navigator', {
+      value: { language: undefined },
+      writable: true,
+      configurable: true
+    })
+
+    const result = TimeUtils.extractDate(mockISOString)
+    expect(result).toBe('April 15, 2024')
   })
 })

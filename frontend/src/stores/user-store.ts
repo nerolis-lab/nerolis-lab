@@ -21,7 +21,7 @@ export interface UserState {
   externalId: string | null
   friendCode: string | null
   auth: AuthProviders | null
-  role: Roles
+  role: Roles // TODO: make Role[]
   areaBonus: Record<IslandShortName, number>
   potSize: number
   supporterSince: string | null
@@ -82,11 +82,13 @@ export const useUserStore = defineStore('user', {
         this.areaBonus[area as IslandShortName] = bonus
       }
 
-      this.supporterSince = userSettings.supporterSince ?? null
+      this.supporterSince = userSettings.supporterSince
     },
     async syncUserSettings() {
-      const userSettings = await UserService.getUserSettings()
-      this.setUserSettings(userSettings)
+      if (this.loggedIn) {
+        const userSettings = await UserService.getUserSettings()
+        this.setUserSettings(userSettings)
+      }
     },
     async login(params: { authCode: string; provider: AuthProvider; originalRoute: string; redirectUri?: string }) {
       const { authCode, provider, originalRoute, redirectUri } = params
@@ -94,6 +96,7 @@ export const useUserStore = defineStore('user', {
 
       this.setInitialLoginData(loginResponse)
 
+      await this.syncUserSettings()
       router.push(originalRoute)
     },
     async unlinkProvider(provider: AuthProvider) {
