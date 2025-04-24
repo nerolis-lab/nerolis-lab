@@ -9,7 +9,7 @@
           size="40"
           :class="borderClass"
         >
-          <img :src="userAvatar()" alt="User Profile Picture" height="24px" style="transform: scale(1.4)" />
+          <img :src="userAvatar()" alt="User Profile Picture" height="24px" style="transform: scale(1.5)" />
         </v-avatar>
         <v-icon v-else size="24">mdi-account-circle</v-icon>
       </v-btn>
@@ -86,9 +86,7 @@ export default defineComponent({
     menu: false
   }),
   async mounted() {
-    if (this.userStore.loggedIn) {
-      await this.userStore.syncUserSettings()
-    }
+    await this.userStore.syncUserSettings()
   },
   methods: {
     toggleMenu() {
@@ -111,9 +109,9 @@ export default defineComponent({
 }
 
 .admin-avatar {
-  border-color: var(--v-theme-primary) !important;
+  border-color: var(--v-theme-admin) !important;
   border-width: 2px;
-  box-shadow: 0 0 10px rgba(var(--v-theme-primary), 0.6);
+  box-shadow: 0 0 10px rgba(var(--v-theme-admin), 0.6);
 }
 
 .role-title {

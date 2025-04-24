@@ -34,7 +34,8 @@ export const useAvatarStore = defineStore('avatar', {
 
       const basePokemon = Object.entries(state.avatars)
         .filter(
-          ([name, path]) => path.includes(`${userStore.isSupporter ? '' : 'portrait'}/`) && !name.includes('shiny')
+          ([name, path]) =>
+            path.includes(`${userStore.isAdminOrSupporter ? '' : 'portrait'}/`) && !name.includes('shiny')
         )
         .map(([name, path]) => {
           const pokemon = findPokemon(name)

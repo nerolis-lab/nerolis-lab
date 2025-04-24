@@ -22,6 +22,8 @@ describe('config', () => {
         "NODE_ENV": "DEV",
         "PATREON_CLIENT_ID": "Missing env variable for PATREON_CLIENT_ID, you can add it to backend/.env",
         "PATREON_CLIENT_SECRET": "Missing env variable for PATREON_CLIENT_SECRET, you can add it to backend/.env",
+        "PATREON_CREATOR_ACCESS_TOKEN": "Missing env variable for PATREON_CREATOR_ACCESS_TOKEN, you can add it to backend/.env",
+        "PATREON_CREATOR_REFRESH_TOKEN": "Missing env variable for PATREON_CREATOR_REFRESH_TOKEN, you can add it to backend/.env",
         "PORT": 3000,
         "ROLLBACK_BATCHES": undefined,
       }
@@ -46,6 +48,8 @@ describe('config', () => {
     process.env.DISCORD_CLIENT_SECRET = 'some-discord-secret';
     process.env.PATREON_CLIENT_ID = 'some-patreon-id';
     process.env.PATREON_CLIENT_SECRET = 'some-patreon-secret';
+    process.env.PATREON_CREATOR_ACCESS_TOKEN = 'some-patreon-creator-access-token';
+    process.env.PATREON_CREATOR_REFRESH_TOKEN = 'some-patreon-creator-refresh-token';
 
     expect(backendConfig.config).toMatchInlineSnapshot(`
       {
@@ -63,6 +67,8 @@ describe('config', () => {
         "NODE_ENV": "DEV",
         "PATREON_CLIENT_ID": "some-patreon-id",
         "PATREON_CLIENT_SECRET": "some-patreon-secret",
+        "PATREON_CREATOR_ACCESS_TOKEN": "some-patreon-creator-access-token",
+        "PATREON_CREATOR_REFRESH_TOKEN": "some-patreon-creator-refresh-token",
         "PORT": "2",
         "ROLLBACK_BATCHES": 3,
       }

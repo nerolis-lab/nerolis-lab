@@ -129,11 +129,11 @@ export class DiscordProviderImpl extends AbstractProvider<DiscordOauth2> {
 
   async verifyExistingUser(userHeader: UserHeader): Promise<DBUser> {
     const userData: DiscordUser = await this.getClient(userHeader.Redirect).getUser(userHeader.Authorization);
-    return this.updateLastLogin(userData.id);
+    const user = await UserDAO.get({ discord_id: userData.id });
+    return this.updateLastLogin(user);
   }
 
-  async updateLastLogin(auth_id: string): Promise<DBUser> {
-    const user = await UserDAO.get({ discord_id: auth_id });
+  async updateLastLogin(user: DBUser): Promise<DBUser> {
     return UserDAO.update({ ...user, last_login: new Date() });
   }
 }

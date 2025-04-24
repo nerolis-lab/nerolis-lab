@@ -37,8 +37,8 @@
           </v-row>
           <v-row dense>
             <v-col cols="12" class="flex-center flex-column px-4">
-              To take advantage of our biggest new feature, saving your teams and Pokemon across devices, log in using
-              Google by clicking the Pokeball in the upper-right corner of the screen.
+              To take advantage of our biggest new feature, saving your teams and Pokemon across devices, log in by
+              clicking the Pokeball in the upper-right corner of the screen.
             </v-col>
           </v-row>
 

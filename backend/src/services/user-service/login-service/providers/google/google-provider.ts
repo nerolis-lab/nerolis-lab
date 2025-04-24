@@ -128,11 +128,11 @@ export class GoogleProviderImpl extends AbstractProvider<OAuth2Client> {
       throw new AuthorizationError('Missing sub in Google token info response');
     }
 
-    return this.updateLastLogin(response.data.sub);
+    const user = await UserDAO.get({ google_id: response.data.sub });
+    return this.updateLastLogin(user);
   }
 
-  async updateLastLogin(auth_id: string): Promise<DBUser> {
-    const user = await UserDAO.get({ google_id: auth_id });
+  async updateLastLogin(user: DBUser): Promise<DBUser> {
     return UserDAO.update({ ...user, last_login: new Date() });
   }
 }

@@ -9,7 +9,13 @@ export enum RouteName {
   Compare = 'Compare',
   Recipes = 'Recipes',
 
+  // Settings
   Settings = 'Settings',
+  // tabs
+  SettingsGame = 'Game Settings',
+  SettingsAccount = 'Account Settings',
+  SettingsSite = 'Site Settings',
+
   Profile = 'Profile',
   // Friends = 'Friends',
 
@@ -73,7 +79,25 @@ const router = createRouter({
     {
       path: '/settings',
       name: RouteName.Settings,
-      component: SettingsPage
+      component: SettingsPage,
+      redirect: { name: RouteName.SettingsGame },
+      children: [
+        {
+          path: 'game',
+          name: RouteName.SettingsGame,
+          component: SettingsPage
+        },
+        {
+          path: 'account',
+          name: RouteName.SettingsAccount,
+          component: SettingsPage
+        },
+        {
+          path: 'site',
+          name: RouteName.SettingsSite,
+          component: SettingsPage
+        }
+      ]
     },
     {
       path: '/profile',

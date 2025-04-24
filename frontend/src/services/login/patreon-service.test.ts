@@ -33,35 +33,19 @@ describe('patreon-service', () => {
   })
 
   describe('getPatreonAuthCode', () => {
-    it('should construct the correct authorization URL with default scope', () => {
+    it('should construct the correct authorization URL', () => {
       getPatreonAuthCode(mockRoute)
 
       const expectedParams = new URLSearchParams({
         client_id: mockClientId,
         redirect_uri: PATREON_REDIRECT_URI,
         response_type: 'code',
-        scope: 'identity[email]',
+        scope: 'identity identity[email]',
         state: '/calculator'
       })
 
       const expectedUrl = `https://www.patreon.com/oauth2/authorize?${expectedParams.toString()}`
       expect(window.location.href).toEqual(expectedUrl)
-    })
-
-    it('should use custom scope when provided', () => {
-      const customScope = 'identity campaigns'
-      getPatreonAuthCode(mockRoute, customScope)
-
-      const expectedParams = new URLSearchParams({
-        client_id: mockClientId,
-        redirect_uri: 'http://localhost:3000/patreon',
-        response_type: 'code',
-        scope: customScope,
-        state: '/calculator'
-      })
-
-      const expectedUrl = `https://www.patreon.com/oauth2/authorize?${expectedParams.toString()}`
-      expect(window.location.href).toBe(expectedUrl)
     })
 
     it('should preserve query parameters in state when present in route', () => {
@@ -77,7 +61,7 @@ describe('patreon-service', () => {
         client_id: mockClientId,
         redirect_uri: 'http://localhost:3000/patreon',
         response_type: 'code',
-        scope: 'identity[email]',
+        scope: 'identity identity[email]',
         state: '/calculator?param=value'
       })
 

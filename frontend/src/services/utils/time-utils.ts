@@ -44,6 +44,16 @@ class TimeUtilsImpl {
     return `${hours !== '00' ? `${hours}h ` : ''}${minutes}m ${seconds}s`
   }
 
+  public extractDate(isoString: string): string {
+    const date = new Date(isoString)
+    const userLocale = navigator.language || 'en-US'
+    return new Intl.DateTimeFormat(userLocale, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(date)
+  }
+
   private calculateDurationInMinutes(params: { bedtime: string; wakeup: string }): number {
     const [bedHour, bedMinute] = params.bedtime.split(':').map(Number)
     const [wakeHour, wakeMinute] = params.wakeup.split(':').map(Number)
