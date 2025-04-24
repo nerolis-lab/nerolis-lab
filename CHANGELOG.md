@@ -1,3 +1,27 @@
+# [2.0.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.46.0...v2.0.0) (2025-04-24)
+
+
+* fix(auth)!: patreon supporter status links correctly ([bb3b791](https://github.com/nerolis-lab/nerolis-lab/commit/bb3b7917f21f7ba1fc1dab0469205302b07ba498))
+
+
+### Bug Fixes
+
+* metronome and shard magnet skill levels ([e9a4907](https://github.com/nerolis-lab/nerolis-lab/commit/e9a490733372b6847c1f87e39eae0efc4b687a7d))
+
+
+### Features
+
+* add cress and darkrai to legacy calc ([8cc5038](https://github.com/nerolis-lab/nerolis-lab/commit/8cc5038b6c8ae5adae5b54f28d930a5c2658387a))
+* adds patreon and discord oauth ([15f6968](https://github.com/nerolis-lab/nerolis-lab/commit/15f69685848929615974c03e688af58d8b18d9cd))
+* ERB mons can recover up to 105 ([959f06b](https://github.com/nerolis-lab/nerolis-lab/commit/959f06bb5195ec91e7a62b09d77e5ab1e9ee9d14))
+* update constants to 2.7.0 ([4a049ba](https://github.com/nerolis-lab/nerolis-lab/commit/4a049ba1060b472b1c711c34d15da909707dc19d))
+
+
+### BREAKING CHANGES
+
+* Google client needs a redirect uri now and
+the API has been updated with new required headers.
+
 # [1.47.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.46.0...v1.47.0) (2025-04-14)
 
 
