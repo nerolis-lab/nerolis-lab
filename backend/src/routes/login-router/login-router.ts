@@ -25,7 +25,7 @@ class LoginRouterImpl {
 
           res.header('Content-Type', 'application/json').send(userData);
         } catch (err) {
-          logger.error(err as Error);
+          logger.error(JSON.stringify(err as Error));
           res.sendStatus(401);
         }
       }

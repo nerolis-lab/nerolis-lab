@@ -1,7 +1,7 @@
 <template>
   <div class="site-settings-container">
     <SettingsCard title="Version Information" icon="mdi-information">
-      <span>Site version:</span>
+      <span>Site version: </span>
       <code>{{ versionStore.version }}</code>
 
       <p class="fine-print">

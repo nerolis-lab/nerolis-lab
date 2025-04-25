@@ -70,7 +70,15 @@ export const useUserStore = defineStore('user', {
       this.externalId = serverData.externalId
       this.role = serverData.role
       this.friendCode = serverData.friendCode
-      this.auth = serverData.auth
+
+      if (this.auth) {
+        this.auth = {
+          ...this.auth,
+          linkedProviders: serverData.auth.linkedProviders
+        }
+      } else {
+        this.auth = serverData.auth
+      }
     },
     setUserSettings(userSettings: UserSettingsResponse) {
       this.name = userSettings.name
@@ -101,7 +109,11 @@ export const useUserStore = defineStore('user', {
     },
     async unlinkProvider(provider: AuthProvider) {
       await AuthService.unlinkProvider(provider)
-      this.logout() // will wipe cache and logout
+      if (this.auth?.activeProvider === provider) {
+        this.logout() // will wipe cache and logout
+      } else {
+        this.auth && (this.auth.linkedProviders[provider].linked = false)
+      }
     },
     async refresh() {
       try {
