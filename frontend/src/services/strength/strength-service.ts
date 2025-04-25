@@ -12,7 +12,7 @@ class StrengthServiceImpl {
     skill: Mainskill
     skillValues: MemberSkillValue
     berries: BerrySet[]
-    favoredBerries: Set<string>
+    favoredBerries: Berry[]
     timeWindow: TimeWindowWeek
     areaBonus: number
   }) {
@@ -20,13 +20,11 @@ class StrengthServiceImpl {
 
     const strengthSkillValue = skillValues['strength'] ?? { amountToSelf: 0, amountToTeam: 0 }
 
-    const timeWindowFactor = this.timeWindowFactor(timeWindow)
-
     const berrySkillStrength = this.berryStrength(params)
     const skillStrength = this.skillValue({
       skill,
       amount: strengthSkillValue.amountToSelf + strengthSkillValue.amountToTeam,
-      timeWindowFactor,
+      timeWindow,
       areaBonus
     })
     return berrySkillStrength + skillStrength
@@ -34,45 +32,45 @@ class StrengthServiceImpl {
 
   public berryStrength(params: {
     berries: BerrySet[]
-    favoredBerries: Set<string> | string[] // Allow both Set and array
+    favoredBerries: Berry[]
     timeWindow: TimeWindowWeek
     areaBonus: number
   }) {
     const { berries, favoredBerries, timeWindow, areaBonus } = params
 
-    const favoredBerrySet = Array.isArray(favoredBerries)
-      ? new Set(favoredBerries) // Convert array to Set if needed
-      : favoredBerries
-
     const timeWindowFactor = this.timeWindowFactor(timeWindow)
 
     let strength = 0
     for (const producedBerry of berries) {
-      const favoredBerryMultiplier = favoredBerrySet.has(producedBerry.berry.name) ? 2 : 1 // Use Set
-      const berryPowerCache = new Map<string, number>()
-      const berryKey = `${producedBerry.berry.name}-${producedBerry.level}`
-      if (!berryPowerCache.has(berryKey)) {
-        berryPowerCache.set(berryKey, berryPowerForLevel(producedBerry.berry, producedBerry.level))
-      }
+      const favoredBerryMultiplier = favoredBerries.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
 
       strength +=
-        producedBerry.amount * timeWindowFactor * berryPowerCache.get(berryKey)! * areaBonus * favoredBerryMultiplier
+        producedBerry.amount *
+        timeWindowFactor *
+        berryPowerForLevel(producedBerry.berry, producedBerry.level) *
+        areaBonus *
+        favoredBerryMultiplier
     }
     return Math.floor(strength)
   }
 
-  public skillValue(params: { skill: Mainskill; amount: number; timeWindowFactor: number; areaBonus: number }) {
-    const { skill, amount, timeWindowFactor, areaBonus } = params
+  public skillValue(params: { skill: Mainskill; amount: number; timeWindow: TimeWindowWeek; areaBonus: number }) {
+    const { skill, amount, timeWindow, areaBonus } = params
 
     const isStrengthUnit = skill.isUnit('strength')
     const isShardsUnit = skill.isUnit('dream shards')
 
     const rounding = isStrengthUnit || isShardsUnit ? 0 : 1
 
-    return MathUtils.round(isStrengthUnit ? amount * areaBonus * timeWindowFactor : amount * timeWindowFactor, rounding)
+    return MathUtils.round(
+      isStrengthUnit
+        ? amount * areaBonus * this.timeWindowFactor(timeWindow)
+        : amount * this.timeWindowFactor(timeWindow),
+      rounding
+    )
   }
 
-  public timeWindowFactor(timeWindow: TimeWindowWeek): number {
+  public timeWindowFactor(timeWindow: TimeWindowWeek) {
     switch (timeWindow) {
       case 'WEEK':
         return 7
@@ -81,7 +79,7 @@ class StrengthServiceImpl {
       case '8H':
         return 1 / 3
       default:
-        throw new Error(`Unhandled time window: ${timeWindow}`)
+        return 1
     }
   }
 
@@ -104,7 +102,7 @@ class StrengthServiceImpl {
         return (
           sum +
           this.berryStrength({
-            favoredBerries: favoredBerrySet,
+            favoredBerries: Array.from(favoredBerrySet).map((berryName) => getBerry(berryName)),
             berries,
             timeWindow: 'WEEK',
             areaBonus: areaBonus
@@ -131,7 +129,7 @@ class StrengthServiceImpl {
         skill: member.pokemon.skill, // Use the skill from the Pokémon data
         skillValues: memberProduction.skillValue, // Use the skill values from production
         berries: memberProduction.produceFromSkill.berries, // Use the berries from production
-        favoredBerries: favoredBerrySet,
+        favoredBerries: Array.from(favoredBerrySet).map((berryName) => getBerry(berryName)),
         timeWindow: 'WEEK',
         areaBonus: areaBonus
       })
@@ -146,7 +144,7 @@ class StrengthServiceImpl {
         return (
           sum +
           this.berryStrength({
-            favoredBerries: favoredBerrySet,
+            favoredBerries: Array.from(favoredBerrySet).map((berryName) => getBerry(berryName)),
             berries: [{ berry: getBerry(berry.name), amount: berry.amount, level: berry.level }],
             timeWindow: '24H',
             areaBonus: areaBonus

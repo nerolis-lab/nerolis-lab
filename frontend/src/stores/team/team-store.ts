@@ -1,5 +1,5 @@
-import { TeamService } from '@/services/team/team-service'
 import { StrengthService } from '@/services/strength/strength-service'
+import { TeamService } from '@/services/team/team-service'
 import { randomName } from '@/services/utils/name-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
@@ -38,6 +38,7 @@ export interface TeamState {
   currentTeam: {
     members: (PokemonInstanceExt | undefined)[]
   }
+  lockedPokemon: string[]
 }
 
 const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
@@ -69,6 +70,7 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
   currentTeam: {
     members: []
   },
+  lockedPokemon: [],
   ...attrs
 })
 
@@ -96,7 +98,6 @@ export const useTeamStore = defineStore('team', {
     },
     getMemberIvLoading: (state: TeamState) => (externalId: string) => {
       const currentTeam = state.teams[state.currentIndex]
-      // member is loading if key exists, but value is undefined
       if (externalId in currentTeam.memberIvs) {
         return currentTeam.memberIvs[externalId] === undefined
       } else return false
@@ -124,9 +125,18 @@ export const useTeamStore = defineStore('team', {
         })
       }
       return result
-    }
+    },
+    getLockedPokemon: (state) => state.lockedPokemon
   },
   actions: {
+    toggleLockedPokemon(externalId: string) {
+      const idx = this.lockedPokemon.indexOf(externalId)
+      if (idx === -1) {
+        this.lockedPokemon.push(externalId)
+      } else {
+        this.lockedPokemon.splice(idx, 1)
+      }
+    },
     migrate() {
       if (!this.timeWindow) {
         this.timeWindow = '24H'
@@ -406,6 +416,11 @@ export const useTeamStore = defineStore('team', {
 
       this.teams[this.currentIndex].members[memberIndex] = undefined // remove mon from team
       if (member != null) {
+        const idx = this.lockedPokemon.indexOf(member.externalId)
+        if (idx !== -1) {
+          this.lockedPokemon.splice(idx, 1) // unlock the Pokémon
+        }
+
         if (this.isSupportMember(member)) {
           this.resetCurrentTeamIvs()
         }
@@ -488,7 +503,7 @@ export const useTeamStore = defineStore('team', {
       // Calculate berry strength
       const berryStrength = StrengthService.berryStrength({
         berries: production.team.berries,
-        favoredBerries: this.getCurrentTeam.favoredBerries,
+        favoredBerries: this.getCurrentTeam.favoredBerries.map((b) => b.name),
         timeWindow: 'WEEK',
         areaBonus: 1 // Adjust based on your logic
       })

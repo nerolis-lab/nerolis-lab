@@ -37,19 +37,46 @@ const shuffleArray = <T>(array: T[]): T[] => {
   return array
 }
 
-const generateRandomTeam = (boxedPokemon: PokemonInstanceExt[], size = MAX_TEAM_MEMBERS): PokemonInstanceExt[] => {
-  const nonSpecial = boxedPokemon.filter((p) => !SPECIAL_POKEMON_DISPLAY_NAMES.includes(p.pokemon.displayName))
-  const shuffled = shuffleArray([...nonSpecial])
-  return sortTeamByExternalId(shuffled.slice(0, size))
+/**
+ * Always include locked Pokémon, then fill remaining slots from pool
+ */
+const generateRandomTeam = (
+  boxedPokemon: PokemonInstanceExt[],
+  size = MAX_TEAM_MEMBERS,
+  locked: PokemonInstanceExt[] = []
+): PokemonInstanceExt[] => {
+  const team: PokemonInstanceExt[] = [...locked]
+  const pool = boxedPokemon.filter(
+    (p) =>
+      !locked.some((l) => l.externalId === p.externalId) &&
+      !SPECIAL_POKEMON_DISPLAY_NAMES.includes(p.pokemon.displayName)
+  )
+  shuffleArray(pool)
+  team.push(...pool.slice(0, size - team.length))
+  return sortTeamByExternalId(team)
 }
 
 const hasTooManySpecialPokemon = (team: PokemonInstanceExt[]): boolean =>
   team.filter((p) => SPECIAL_POKEMON_DISPLAY_NAMES.includes(p.pokemon.displayName)).length > 1
 
-const generateNeighbor = (team: PokemonInstanceExt[], boxedPokemon: PokemonInstanceExt[]): PokemonInstanceExt[] => {
-  const idx = Math.floor(Math.random() * team.length)
-  const options = boxedPokemon.filter((p) => !team.includes(p))
+/**
+ * Only replace slots that aren't locked
+ */
+const generateNeighbor = (
+  team: PokemonInstanceExt[],
+  boxedPokemon: PokemonInstanceExt[],
+  lockedIds: string[]
+): PokemonInstanceExt[] => {
+  // find mutable indices
+  const mutableIdx = team
+    .map((p, i) => (lockedIds.includes(p.externalId) ? null : i))
+    .filter((i): i is number => i !== null)
+  if (mutableIdx.length === 0) return [...team]
+
+  const idx = mutableIdx[Math.floor(Math.random() * mutableIdx.length)]
+  const options = boxedPokemon.filter((p) => !team.some((m) => m.externalId === p.externalId))
   if (!options.length) return [...team]
+
   const replacement = options[Math.floor(Math.random() * options.length)]
   const newTeam = [...team]
   newTeam[idx] = replacement
@@ -62,11 +89,7 @@ function toPokemonInstanceIdentity(p: PokemonInstanceExt) {
     externalId: p.externalId,
     pokemon: p.pokemon.name,
     level: p.level,
-    ingredients: p.ingredients.map((ing) => ({
-      level: ing.level,
-      amount: ing.amount,
-      name: ing.ingredient.name
-    })),
+    ingredients: p.ingredients.map((ing) => ({ level: ing.level, amount: ing.amount, name: ing.ingredient.name })),
     nature: p.nature.name,
     subskills: p.subskills.map((ss) => {
       const val =
@@ -84,8 +107,8 @@ function toPokemonInstanceIdentity(p: PokemonInstanceExt) {
 const evaluateTeam = async (team: PokemonInstanceExt[], settings: TeamSettings, iterations = 5110): Promise<number> => {
   const teamStore = useTeamStore()
   const userStore = useUserStore()
-
-  const {favoredBerries} = teamStore.getCurrentTeam
+  const favoredBerries = teamStore.getCurrentTeam.favoredBerries
+  const favoredBerriesArr = favoredBerries.map((b) => getBerry(b.name))
 
   const request = {
     settings,
@@ -104,7 +127,7 @@ const evaluateTeam = async (team: PokemonInstanceExt[], settings: TeamSettings, 
     (sum, m) =>
       sum +
       StrengthService.berryStrength({
-        favoredBerries: favoredBerries,
+        favoredBerries: favoredBerriesArr,
         berries: m.produceWithoutSkill.berries,
         timeWindow: 'WEEK',
         areaBonus: islandBonus
@@ -121,7 +144,7 @@ const evaluateTeam = async (team: PokemonInstanceExt[], settings: TeamSettings, 
             skill: member.pokemon.skill,
             skillValues: prod.skillValue,
             berries: prod.produceFromSkill.berries,
-            favoredBerries: favoredBerries,
+            favoredBerries: favoredBerriesArr,
             timeWindow: 'WEEK',
             areaBonus: islandBonus
           })
@@ -133,16 +156,13 @@ const evaluateTeam = async (team: PokemonInstanceExt[], settings: TeamSettings, 
     (sum, sb) =>
       sum +
       StrengthService.berryStrength({
-        favoredBerries: favoredBerries,
+        favoredBerries: favoredBerriesArr,
         berries: [{ berry: getBerry(sb.name), amount: sb.amount, level: sb.level }],
         timeWindow: '24H',
         areaBonus: islandBonus
       }),
     0
   )
-  // logger.log(
-  //   `members: ${team.map((p) => p.pokemon.displayName).join(', ')}\n berryStrength: ${Math.floor(berryStrength)}`
-  // )
 
   return Math.floor(cookingStrength + berryStrength + skillStrength + stockpiledStrength)
 }
@@ -162,16 +182,22 @@ export const findOptimalTeam = async (
   const teamStore = useTeamStore()
   const userStore = useUserStore()
 
+  topTeams.length = 0
+
   try {
     const startTime = new Date()
     logger.log(`Find Optimal Team started at: ${startTime.toISOString()}`)
     const boxedPokemon = await UserService.getUserPokemon()
 
+    // collect locked members
+    const lockedIds = teamStore.getLockedPokemon
+    const lockedInstances = boxedPokemon.filter((p) => lockedIds.includes(p.externalId))
+
     // Initialize walkers
     const walkers: PokemonInstanceExt[][] = []
     const walkerStrengths: number[] = []
     for (let i = 0; i < numWalkers; i++) {
-      const team = generateRandomTeam(boxedPokemon)
+      const team = generateRandomTeam(boxedPokemon, MAX_TEAM_MEMBERS, lockedInstances)
       if (hasTooManySpecialPokemon(team)) {
         i--
         continue
@@ -189,7 +215,6 @@ export const findOptimalTeam = async (
       )
       walkerStrengths.push(strength)
       addToTopTeams(team, strength)
-      // logger.log(`Walker ${i + 1} init: ${team.map((p) => p.pokemon.displayName).join(', ')}`)
       updateProgress(i + 1, numWalkers, i + 1, 0, team, strength, 'Initializing random teams')
     }
 
@@ -201,11 +226,8 @@ export const findOptimalTeam = async (
     }
 
     const initialTemperature = Math.max(...walkerStrengths)
-    const totalPossibleTeams =
-      boxedPokemon.length >= MAX_TEAM_MEMBERS
-        ? factorial(boxedPokemon.length) /
-          (factorial(MAX_TEAM_MEMBERS) * factorial(boxedPokemon.length - MAX_TEAM_MEMBERS))
-        : 0
+    const totalPossibleTeams = calculatePossibleTeams(boxedPokemon, lockedInstances)
+
     const globalBest = { team: walkers[0], strength: walkerStrengths[0] }
     const counter = { count: 0 }
 
@@ -221,24 +243,23 @@ export const findOptimalTeam = async (
           globalBest,
           totalPossibleTeams,
           counter,
-          initialTemperature
+          initialTemperature,
+          lockedIds
         )
       )
     )
 
-    // Recalculate top numTopTeams with full iterations
+    // Recalculate top teams
     const initialTop = [...topTeams]
     topTeams.length = 0
-    const recalcTotal = initialTop.length
-    for (let i = 0; i < recalcTotal; i++) {
-      const team = initialTop[i].team
-      const strength = await evaluateTeam(team, settings, 5110)
-      addToTopTeams(team, strength)
-      if (strength > globalBest.strength) {
-        globalBest.team = team
-        globalBest.strength = strength
+    for (let i = 0; i < initialTop.length; i++) {
+      const t = initialTop[i].team
+      const s = await evaluateTeam(t, settings, 5110)
+      addToTopTeams(t, s)
+      if (s > globalBest.strength) {
+        globalBest.team = t
+        globalBest.strength = s
       }
-      // report recalculation progress
       updateProgress(
         i + 1,
         numTopTeams,
@@ -251,11 +272,9 @@ export const findOptimalTeam = async (
     }
 
     teamStore.updateTeamMembers(globalBest.team)
-    const endTime = new Date()
-    logger.log(`Find Optimal Team ended at: ${endTime.toISOString()}`)
+    logger.log(`Find Optimal Team ended at: ${new Date().toISOString()}`)
     logger.log(`Total teams searched: ${counter.count}`)
     logger.log(`Best team strength: ${globalBest.strength}`)
-    logger.log(`Top ${numTopTeams} teams:`)
     topTeams.forEach(({ team, strength }, i) =>
       logger.log(`#${i + 1}: ${team.map((p) => p.pokemon.displayName).join(', ')}\tStrength: ${strength}`)
     )
@@ -281,7 +300,8 @@ const simulatedAnnealing = async (
   globalBest: { team: PokemonInstanceExt[]; strength: number },
   totalPossibleTeams: number,
   teamsSearchedCounter: { count: number },
-  initialTemperature: number
+  initialTemperature: number,
+  lockedIds: string[]
 ): Promise<void> => {
   const logger = console
   let currentTeam = initialTeam
@@ -292,13 +312,11 @@ const simulatedAnnealing = async (
   const teamsToCheck = 1000
   const coolingRate = (100 / initialTemperature) ** (numWalkers / teamsToCheck)
 
-  logger.log(`Walker ${walkerId} started (temp=${temperature.toFixed(2)}, strength=${currentStrength}`)
-
   let stagnantSteps = 0
   const MAX_STAGNATION = 100
 
   while (teamsSearchedCounter.count + numWalkers < teamsToCheck) {
-    const neighbor = generateNeighbor(currentTeam, boxedPokemon)
+    const neighbor = generateNeighbor(currentTeam, boxedPokemon, lockedIds)
     const neighborStrength = await evaluateTeam(neighbor, settings, 8)
     teamsSearchedCounter.count++
     const delta = neighborStrength - currentStrength
@@ -313,21 +331,16 @@ const simulatedAnnealing = async (
     if (currentStrength > bestStrength) {
       bestTeam = currentTeam
       bestStrength = currentStrength
-      // logger.log(`Walker ${walkerId} local best updated to ${bestStrength}`)
       addToTopTeams(bestTeam, bestStrength)
       if (bestStrength > globalBest.strength) {
         globalBest.team = bestTeam
         globalBest.strength = bestStrength
-        logger.log(`Walker ${walkerId} global best updated to ${bestStrength}`)
       }
     }
     if (stagnantSteps >= MAX_STAGNATION) {
       currentTeam = bestTeam
       currentStrength = bestStrength
       stagnantSteps = 0
-      logger.log(
-        `Walker ${walkerId} reset to local best (strength=${bestStrength}) after ${MAX_STAGNATION} stagnant steps`
-      )
     }
     updateProgress(
       teamsSearchedCounter.count + numWalkers,
@@ -336,10 +349,45 @@ const simulatedAnnealing = async (
       totalPossibleTeams,
       globalBest.team,
       globalBest.strength,
-      'Evaulating teams'
+      'Evaluating teams'
     )
     temperature *= coolingRate
   }
 }
 
 const factorial = (num: number): number => (num <= 1 ? 1 : num * factorial(num - 1))
+
+function calculatePossibleTeams(boxed: PokemonInstanceExt[], locked: PokemonInstanceExt[]): number {
+  const SPECIAL_POKEMON_DISPLAY_NAMES = ['Entei', 'Suicune', 'Raikou', 'Cresselia', 'Darkrai']
+  const lockedCount = locked.length
+  const maxTeamSize = MAX_TEAM_MEMBERS
+  const openSlots = maxTeamSize - lockedCount
+
+  if (openSlots < 0) return 0
+
+  const pool = boxed.filter(
+    (p) =>
+      !locked.some((l) => l.externalId === p.externalId) &&
+      !SPECIAL_POKEMON_DISPLAY_NAMES.includes(p.pokemon.displayName)
+  )
+
+  const validCount = pool.length
+
+  // C(validCount, openSlots)
+  return combination(validCount, openSlots)
+}
+
+function combination(n: number, k: number): number {
+  if (k > n) return 0
+  if (k === 0 || k === n) return 1
+
+  let result = 1
+  for (let i = 1; i <= k; i++) {
+    result *= (n - (i - 1)) / i
+  }
+  return Math.round(result)
+}
+
+export function getTopTeams() {
+  return topTeams
+}
