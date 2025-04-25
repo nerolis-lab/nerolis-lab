@@ -241,6 +241,19 @@
                   {{ member.pokemon.displayName }}
                 </td>
               </tr>
+              <tr>
+                <td v-for="(member, index) in bestTeam" :key="index" class="text-center">
+                  <v-progress-linear
+                    :model-value="((topTeamsCountMap[member.externalId] || 0) / 25) * 100"
+                    height="10"
+                    color="primary"
+                    rounded
+                    style="margin-top: 4px; font-size: 10px"
+                  >
+                    {{ topTeamsCountMap[member.externalId] || 0 }}/25
+                  </v-progress-linear>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -283,7 +296,7 @@ import TeamName from '@/components/calculator/team-name.vue'
 import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import TeamSlot from '@/components/calculator/team-slot.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import { findOptimalTeam } from '@/services/team/find-optimal'
+import { findOptimalTeam, getTopTeams } from '@/services/team/find-optimal'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -320,6 +333,7 @@ export default defineComponent({
     const bestTeamStrength = ref(0) // Store the strength of the best team
     const teamsToCheck = ref([])
     const progressString = ref('')
+    const topTeamsCountMap = ref<Record<string, number>>({})
 
     const startFindOptimalTeam = async () => {
       isLoading.value = true
@@ -352,6 +366,15 @@ export default defineComponent({
           progressString.value = incomingProgressString
         }
       )
+
+      const teams = getTopTeams()
+      const countMap: Record<string, number> = {}
+      for (const { team } of teams) {
+        for (const member of team) {
+          countMap[member.externalId] = (countMap[member.externalId] || 0) + 1
+        }
+      }
+      topTeamsCountMap.value = countMap
 
       isLoading.value = false
     }
@@ -390,7 +413,8 @@ export default defineComponent({
       startFindOptimalTeam,
       getPokemonImage,
       teamsToCheck,
-      progressString
+      progressString,
+      topTeamsCountMap
     }
   },
   data: () => ({

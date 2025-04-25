@@ -27,6 +27,16 @@
           </div>
         </v-card>
 
+        <v-icon
+          v-if="pokemonInstance"
+          class="lock-toggle"
+          :color="isLocked ? 'error' : 'grey'"
+          small
+          @click.stop="toggleLock"
+        >
+          {{ isLocked ? 'mdi-lock' : 'mdi-lock-open' }}
+        </v-icon>
+
         <v-card class="text-center responsive-text level-card" rounded="lg" color="primary">
           {{ level }}
         </v-card>
@@ -41,7 +51,6 @@
 
   <!-- desktop layout -->
   <template v-else>
-    <!-- only seem to be able to solve the same height for pokemon slot and empty is with max 14dvh here and 75 dvh in team-section -->
     <v-card
       v-if="pokemonInstance"
       id="desktop-layout"
@@ -102,6 +111,16 @@
           </v-card>
         </v-col>
       </v-row>
+      <!-- Lock/unlock toggle -->
+      <v-icon
+        v-if="pokemonInstance"
+        class="lock-toggle"
+        :color="isLocked ? 'error' : 'grey'"
+        small
+        @click.stop="toggleLock"
+      >
+        {{ isLocked ? 'mdi-lock' : 'mdi-lock-open' }}
+      </v-icon>
     </v-card>
     <v-card v-else class="fill-height frosted-glass" @click="openDetailsDialog">
       <v-icon size="48" color="secondary" class="fill-height w-100">mdi-plus</v-icon>
@@ -144,9 +163,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-
     const { isMobile } = useBreakpoint()
-
     return { teamStore, isMobile, rarityColor }
   },
   data: () => ({
@@ -167,12 +184,8 @@ export default defineComponent({
     },
     imageUrl(): string {
       if (!this.pokemonInstance) return ''
-
       return this.isMobile
-        ? pokemonImage({
-            pokemonName: this.pokemonInstance.pokemon.name,
-            shiny: this.pokemonInstance.shiny
-          })
+        ? pokemonImage({ pokemonName: this.pokemonInstance.pokemon.name, shiny: this.pokemonInstance.shiny })
         : avatarImage({
             pokemonName: this.pokemonInstance.pokemon.name,
             shiny: this.pokemonInstance.shiny,
@@ -217,16 +230,15 @@ export default defineComponent({
     },
     subskillBadge() {
       const subskills = []
-      if (this.hb) {
-        subskills.push('HB')
-      }
-      if (this.erb) {
-        subskills.push('ERB')
-      }
+      if (this.hb) subskills.push('HB')
+      if (this.erb) subskills.push('ERB')
       return subskills.join(' + ')
     },
     fullTeam() {
       return this.teamStore.getTeamSize === MAX_TEAM_MEMBERS
+    },
+    isLocked() {
+      return this.pokemonInstance ? this.teamStore.getLockedPokemon.includes(this.pokemonInstance.externalId) : false
     }
   },
   methods: {
@@ -249,6 +261,11 @@ export default defineComponent({
         return
       }
       this.teamStore.updateTeamMember({ ...pokemonToUpdate, saved: state }, this.memberIndex)
+    },
+    toggleLock() {
+      if (this.pokemonInstance) {
+        this.teamStore.toggleLockedPokemon(this.pokemonInstance.externalId)
+      }
     }
   }
 })
@@ -290,5 +307,16 @@ export default defineComponent({
   left: 50%;
   width: 50%;
   white-space: nowrap;
+}
+
+.lock-toggle {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 2px;
+  z-index: 5;
 }
 </style>
