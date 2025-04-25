@@ -46,8 +46,9 @@
         <p class="mb-3">
           Are you sure you want to unlink your <strong>{{ getProviderName(providerToUnlink) }}</strong> account?
         </p>
-        <v-alert type="warning" variant="tonal" density="compact" class="mt-3">
-          <p class="mb-0">Unlinking a provider will log you out.</p>
+
+        <v-alert v-if="unlinkingActiveProvider()" type="warning" variant="tonal" density="compact" class="mt-3">
+          <p class="mb-0">Unlinking this provider will log you out.</p>
         </v-alert>
       </v-card-text>
       <v-card-actions class="pa-4">
@@ -146,6 +147,9 @@ export default defineComponent({
         this.unlinkDialog = false
         this.providerToUnlink = null
       }
+    },
+    unlinkingActiveProvider() {
+      return this.providerToUnlink === this.userStore.auth?.activeProvider
     }
   }
 })

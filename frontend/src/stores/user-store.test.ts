@@ -368,15 +368,58 @@ describe('User Store', () => {
   })
 
   describe('unlinkProvider', () => {
-    it('should call auth service and logout', async () => {
+    it('should call auth service and logout if unlinking active provider', async () => {
       AuthService.unlinkProvider = vi.fn()
       const userStore = useUserStore()
       const logoutSpy = vi.spyOn(userStore, 'logout')
-
+      userStore.setInitialLoginData(
+        commonMocks.loginResponse({
+          auth: {
+            activeProvider: AuthProvider.Google,
+            linkedProviders: {
+              [AuthProvider.Google]: { linked: true, identifier: 'test@example.com' },
+              [AuthProvider.Discord]: { linked: false },
+              [AuthProvider.Patreon]: { linked: false }
+            },
+            tokens: {
+              accessToken: 'some access token',
+              refreshToken: 'some refresh token',
+              expiryDate: 0
+            }
+          }
+        })
+      )
       await userStore.unlinkProvider(AuthProvider.Google)
 
       expect(AuthService.unlinkProvider).toHaveBeenCalledWith(AuthProvider.Google)
       expect(logoutSpy).toHaveBeenCalled()
+    })
+
+    it('should not logout if unlinking non-active provider', async () => {
+      const userStore = useUserStore()
+      const logoutSpy = vi.spyOn(userStore, 'logout')
+      AuthService.unlinkProvider = vi.fn()
+
+      userStore.setInitialLoginData(
+        commonMocks.loginResponse({
+          auth: {
+            activeProvider: AuthProvider.Google,
+            linkedProviders: {
+              [AuthProvider.Google]: { linked: true },
+              [AuthProvider.Discord]: { linked: true },
+              [AuthProvider.Patreon]: { linked: false }
+            },
+            tokens: {
+              accessToken: 'some access token',
+              refreshToken: 'some refresh token',
+              expiryDate: 0
+            }
+          }
+        })
+      )
+      await userStore.unlinkProvider(AuthProvider.Discord)
+      expect(AuthService.unlinkProvider).toHaveBeenCalledWith(AuthProvider.Discord)
+      expect(logoutSpy).not.toHaveBeenCalled()
     })
 
     it('should handle errors', async () => {
