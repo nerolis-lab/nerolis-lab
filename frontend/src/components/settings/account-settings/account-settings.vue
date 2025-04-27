@@ -8,7 +8,7 @@
   </template>
   <template v-else>
     <SettingsCard title="Account Settings" icon="mdi-account-circle">
-      <p class="text-body-2 mb-4">Please log in to access your account settings.</p>
+      <p class="mb-4">Please log in to access your account settings.</p>
     </SettingsCard>
   </template>
 </template>

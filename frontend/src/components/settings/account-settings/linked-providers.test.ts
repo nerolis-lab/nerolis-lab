@@ -107,7 +107,7 @@ describe('LinkedProviders', () => {
 
     const helpText = wrapper.find('.help-text')
     expect(helpText.exists()).toBe(true)
-    expect(helpText.text()).toContain("You can't unlink your last provider")
+    expect(helpText.text()).toContain("You can't unlink your only login option")
   })
 
   it('hides help text when multiple providers are linked', async () => {

@@ -29,9 +29,9 @@
         </v-btn>
       </div>
 
-      <div v-if="userStore.numberOfLinkedProviders <= 1" class="help-text">
+      <div v-if="userStore.numberOfLinkedProviders <= 1" class="help-text fine-print">
         <v-icon icon="mdi-information-outline" size="small" color="warning" class="mr-1" />
-        You can't unlink your last provider. To delete your account entirely, use the button below.
+        You can't unlink your only login option. To delete your account entirely, use the button below.
       </div>
     </v-card-text>
   </v-card>
@@ -175,8 +175,6 @@ export default defineComponent({
 }
 
 .help-text {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
   margin-top: 16px;
   display: flex;
   align-items: center;

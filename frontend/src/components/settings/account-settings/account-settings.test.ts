@@ -27,7 +27,7 @@ describe('AccountSettings', () => {
       const title = card.find('.v-card-title')
       expect(title.text()).toContain('Account Settings')
 
-      const message = card.find('.text-body-2')
+      const message = card.find('p')
       expect(message.text()).toBe('Please log in to access your account settings.')
     })
 

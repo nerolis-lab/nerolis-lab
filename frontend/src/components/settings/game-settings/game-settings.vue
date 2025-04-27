@@ -1,7 +1,7 @@
 <template>
   <template v-if="!isLoggedIn">
     <SettingsCard title="Game Settings" icon="mdi-information">
-      <p class="text-body-2 mb-4">Changing your game settings requires you to be logged in.</p>
+      <p class="mb-4">Changing your game settings requires you to be logged in.</p>
     </SettingsCard>
   </template>
 

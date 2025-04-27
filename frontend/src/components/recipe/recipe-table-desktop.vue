@@ -19,15 +19,20 @@
     >
       <template #[`item.image`]="{ item }">
         <v-avatar size="50" :color="item.type" rounded="0">
-          <v-img :src="recipeImage(item.name)" />
+          <v-img :src="recipeImage(item.name)" :alt="`${item.displayName}`" :title="`${item.displayName}`" />
         </v-avatar>
       </template>
 
       <template #[`item.displayName`]="{ item }">
         <span class="text-no-wrap text-body-1 font-weight-semibold">{{ item.displayName }}</span>
-        <div v-if="!isLargeDesktop" class="d-flex flex-nowrap">
-          <div v-for="({ ingredient, amount }, index) in item.ingredients" :key="index" class="flex-center mr-2">
-            <img :src="ingredientImage(ingredient.name)" height="24" />
+        <div v-if="!isLargeDesktop" class="flex-nowrap ing-container">
+          <div v-for="({ ingredient, amount }, index) in item.ingredients" :key="index" class="flex-left">
+            <img
+              :src="ingredientImage(ingredient.name)"
+              height="24"
+              :alt="`${ingredient.name}`"
+              :title="`${ingredient.name}`"
+            />
             <span>{{ amount }}</span>
           </div>
         </div>
@@ -36,7 +41,7 @@
       <template #[`item.userStrength`]="{ item }">
         <v-row class="d-flex justify-space-between" dense>
           <v-col cols="auto">
-            <img src="/images/misc/strength.png" height="24" />
+            <img src="/images/misc/strength.png" height="24" alt="strength" title="strength" />
           </v-col>
           <v-col class="flex-right">
             <span class="text-body-1">{{ localizeNumber(item.userStrength) }}</span>
@@ -45,14 +50,9 @@
       </template>
 
       <template #[`item.ingredients`]="{ item }">
-        <div class="flex-left">
-          <div
-            v-for="({ ingredient, amount }, index) in item.ingredients"
-            :key="index"
-            class="flex-center"
-            style="width: 50px"
-          >
-            <img :src="ingredientImage(ingredient.name)" height="28" class="" />
+        <div class="flex-left ing-container large">
+          <div v-for="({ ingredient, amount }, index) in item.ingredients" :key="index" class="flex-left">
+            <img :src="ingredientImage(ingredient.name)" height="28" />
             <span class="text-body-1">{{ amount }}</span>
           </div>
         </div>
@@ -159,5 +159,14 @@ export default defineComponent({
 <style scoped lang="scss">
 :deep(.v-table__wrapper) {
   overflow-y: hidden !important;
+}
+
+.ing-container {
+  display: flex;
+  gap: 8px;
+
+  &.large {
+    gap: 12px;
+  }
 }
 </style>

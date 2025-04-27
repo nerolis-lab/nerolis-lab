@@ -8,14 +8,26 @@
         color="subskillWhite"
         rounded="pill"
       >
-        <v-img :src="mainskillImage(memberWithProduction.member.pokemon)" height="40px" width="40px"></v-img>
+        <v-img
+          :src="mainskillImage(memberWithProduction.member.pokemon)"
+          height="40px"
+          width="40px"
+          :alt="`Metronome level ${memberWithProduction.member.skillLevel}`"
+          title="Metronome"
+        ></v-img>
       </v-badge>
       <div class="ml-2">
         <div class="flex-center">
           <span class="font-weight-medium text-center">{{
             MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
           }}</span>
-          <v-img src="/images/misc/skillproc.png" height="28" width="28"></v-img>
+          <v-img
+            src="/images/misc/skillproc.png"
+            height="24"
+            width="24"
+            alt="skill activations"
+            title="skill activations"
+          ></v-img>
         </div>
       </div>
     </v-col>
