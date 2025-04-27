@@ -155,7 +155,7 @@ export default defineComponent({
   justify-content: center;
 
   .beta {
-    color: $skill;
+    color: $primary;
     font-style: italic;
     font-size: 36px;
     margin: -20px 0 0 5px;

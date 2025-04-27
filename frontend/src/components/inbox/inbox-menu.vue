@@ -24,7 +24,7 @@
       </v-btn>
     </template>
 
-    <v-card id="inboxMenu" max-height="50dvh" title="Inbox">
+    <v-card id="inboxMenu" class="inbox-menu" title="Inbox">
       <template #prepend>
         <v-avatar size="48" color="background">
           <v-icon size="32">mdi-inbox-outline</v-icon>
@@ -51,7 +51,6 @@ import NewsNotification from '@/components/inbox/notifications/news/news-notific
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { defineComponent, type Component } from 'vue'
-
 export const notificationComponentMap: Record<string, Component> = {
   FriendRequest: FriendRequestNotification,
   News: NewsNotification
@@ -86,3 +85,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.inbox-menu {
+  max-height: 50dvh;
+
+  @media (max-width: 600px) {
+    max-height: 80dvh;
+  }
+}
+</style>

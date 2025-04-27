@@ -43,7 +43,7 @@ describe('SiteSettings', () => {
     const cacheSection = wrapper.findAll('.v-card')[1]
 
     expect(cacheSection.exists()).toBe(true)
-    expect(cacheSection.find('.text-body-2').text()).toContain('In case of issues please try clearing the cache')
+    expect(cacheSection.text()).toContain('In case of issues please try clearing the cache')
     expect(cacheSection.find('.v-btn').text()).toContain('Clear Cache')
   })
 

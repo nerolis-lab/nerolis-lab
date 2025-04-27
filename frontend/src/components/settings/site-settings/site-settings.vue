@@ -11,7 +11,7 @@
     </SettingsCard>
 
     <SettingsCard title="Cache Settings" icon="mdi-cached">
-      <p class="text-body-2 mb-4">
+      <p class="mb-4">
         In case of issues please try clearing the cache. If that doesn't work, contact the developers and attach the
         site version found above.
       </p>
