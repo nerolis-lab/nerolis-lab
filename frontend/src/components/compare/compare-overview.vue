@@ -27,7 +27,13 @@
 
           <template #item.berries="{ item }">
             <div class="flex-center" style="padding-right: 11px">
-              <v-img :src="`/images/berries/${item.berryName?.toLowerCase()}.png`" height="24" width="24"></v-img>
+              <v-img
+                :src="`/images/berries/${item.berryName?.toLowerCase()}.png`"
+                height="24"
+                width="24"
+                :alt="`${item.berryName?.toLowerCase()} berry`"
+                :title="`${item.berryName?.toLowerCase()} berry`"
+              ></v-img>
             </div>
             <div class="text-center" style="padding-right: 11px">
               {{ item.berries }}
@@ -38,7 +44,13 @@
             <v-row dense style="flex-wrap: nowrap; overflow-x: auto">
               <v-col v-for="(ingredient, index) in item.ingredientList" :key="index" class="flex-start" cols="4">
                 <div class="flex-center flex-column">
-                  <v-img :src="ingredientImage(ingredient.name)" height="24" width="24"></v-img>
+                  <v-img
+                    :src="ingredientImage(ingredient.name)"
+                    height="24"
+                    width="24"
+                    :alt="ingredient.name"
+                    :title="ingredient.name"
+                  ></v-img>
                   <div class="text-center">
                     {{ ingredient.amount }}
                   </div>
@@ -50,7 +62,14 @@
           <template #item.skillProcs="{ item }">
             <div class="flex-center">
               <div>
-                <v-img :src="`/images/misc/skillproc.png`" height="24" width="24"></v-img>
+                <v-img
+                  :src="`/images/misc/skillproc.png`"
+                  height="20"
+                  width="20"
+                  alt="skill activations"
+                  title="skill activations"
+                  class="skill-proc-img"
+                ></v-img>
                 {{ item.skillProcs }}
               </div>
             </div>
@@ -166,5 +185,9 @@ export default defineComponent({
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child)),
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > th:not(:last-child)) {
   border-right: 1px solid #dddddd87;
+}
+
+.skill-proc-img {
+  margin-bottom: 1px;
 }
 </style>

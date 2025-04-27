@@ -17,18 +17,19 @@ $subskill-white: #fafafa;
 $subskill-silver: #dcf2ff;
 $subskill-gold: #ffe570;
 
-$curry: #ff9f4b;
-$salad: #a8cf5c;
-$dessert: #f2d95f;
-$curry-dark: #e66b00;
-$salad-dark: #81b616;
-$dessert-dark: #dbb700;
+$curry: #e7a888;
+$salad: #bcd962;
+$dessert: #fdb4ca;
 
-$ingredient: #fbe346;
-$berry: #b297e7;
-$skill: #ff616e;
+$curry-dark: #f59261;
+$salad-dark: #99c418;
+$dessert-dark: #fe8bae;
+
+$ingredient: #fdb4ca;
+$berry: #b9a0e9;
+$berry-light: #daccf5;
+$skill: #efd269;
 $all: #ffffff;
-$berry-light: #d9ccf5;
 
 $energy: #31e571;
 $help: #ffbd2f;
@@ -48,8 +49,12 @@ $on-surface: #ffffff;
 $on-primary: #ffffff;
 $on-secondary: #ffffff;
 
+$patreon: #f96854;
+$google: #181717;
+$discord: #5865f2;
+
 :root {
-  --curry: #ff9f4b;
-  --salad: #a8cf5c;
-  --dessert: #f2d95f;
+  --curry: #e7a888;
+  --salad: #bcd962;
+  --dessert: #fdb4ca;
 }

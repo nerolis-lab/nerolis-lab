@@ -42,10 +42,10 @@ describe('LoginMenu', () => {
     // open the login menu
     await wrapper.find('.v-card-title').trigger('click')
 
-    const patreonTitle = Array.from(document.querySelectorAll('.v-card-title')).find(
-      (el) => el.textContent === 'Patreon'
+    const patreonTitle = Array.from(document.querySelectorAll('.v-btn')).find((el) =>
+      el.textContent?.includes('Patreon')
     )
-    const patreonButton = patreonTitle?.closest('.v-card') as HTMLElement
+    const patreonButton = patreonTitle?.closest('.v-btn') as HTMLElement
     expect(patreonButton).not.toBeNull()
     patreonButton.click()
 
@@ -56,8 +56,8 @@ describe('LoginMenu', () => {
     // open the login menu
     await wrapper.find('.v-card-title').trigger('click')
 
-    const googleTitle = Array.from(document.querySelectorAll('.v-card-title')).find((el) => el.textContent === 'Google')
-    const googleButton = googleTitle?.closest('.v-card') as HTMLElement
+    const googleTitle = Array.from(document.querySelectorAll('.v-btn')).find((el) => el.textContent?.includes('Google'))
+    const googleButton = googleTitle?.closest('.v-btn') as HTMLElement
     expect(googleButton).not.toBeNull()
     googleButton.click()
 
@@ -68,10 +68,10 @@ describe('LoginMenu', () => {
     // open the login menu
     await wrapper.find('.v-card-title').trigger('click')
 
-    const discordTitle = Array.from(document.querySelectorAll('.v-card-title')).find(
-      (el) => el.textContent === 'Discord'
+    const discordTitle = Array.from(document.querySelectorAll('.v-btn')).find((el) =>
+      el.textContent?.includes('Discord')
     )
-    const discordButton = discordTitle?.closest('.v-card') as HTMLElement
+    const discordButton = discordTitle?.closest('.v-btn') as HTMLElement
     expect(discordButton).not.toBeNull()
     discordButton.click()
 

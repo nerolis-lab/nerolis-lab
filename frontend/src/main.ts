@@ -40,17 +40,18 @@ async function initializeApp() {
       subskillSilver: '#DCF2FF',
       subskillGold: '#FFE570',
 
-      curry: '#ff9f4b',
-      'curry-dark': '#e66b00',
-      salad: '#a8cf5c',
-      'salad-dark': '#81b616',
-      dessert: '#f2d95f',
-      'dessert-dark': '#dbb700',
+      curry: '#E7A888',
+      salad: '#BCDA62',
+      dessert: '#FDB4CA',
 
-      ingredient: '#fbe346',
-      berry: '#b297e7',
-      'berry-light': '#d9ccf5',
-      skill: '#ff616e',
+      'curry-dark': '#F59261',
+      'salad-dark': '#99C418',
+      'dessert-dark': '#FE8BAE',
+
+      ingredient: '#FDB4CA',
+      berry: '#B9A0E9',
+      'berry-light': '#DACCF5',
+      skill: '#EFD269',
       all: '#ffffff',
 
       energy: '#31e571',
