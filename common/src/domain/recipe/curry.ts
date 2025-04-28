@@ -60,7 +60,7 @@ export const HEARTY_CHEESEBURGER_CURRY = createCurry({
   displayName: 'Hearty Cheeseburger Curry',
   ingredients: [
     { amount: 8, ingredient: MOOMOO_MILK },
-    { amount: 6, ingredient: BEAN_SAUSAGE }
+    { amount: 8, ingredient: BEAN_SAUSAGE }
   ],
   bonus: 18.77
 });
