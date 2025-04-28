@@ -57,7 +57,6 @@ async function main() {
     await DatabaseMigration.downgrade(config.ROLLBACK_BATCHES);
   } else {
     logger.info('Skipping database migration, set DATABASE_MIGRATION env to UP/DOWN');
-    logger.info('Skipping database migration, set DATABASE_MIGRATION env to UP/DOWN');
   }
 
   // Tierlist
