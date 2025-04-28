@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.1...v2.0.2) (2025-04-28)
+
+
+### Bug Fixes
+
+* cheeseburger curry has 8 sausages, not 6 ([a5de8bb](https://github.com/nerolis-lab/nerolis-lab/commit/a5de8bbb29f3ed90ccd99de806f89e24a1f0ab82))
+
 ## [2.0.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.0...v2.0.1) (2025-04-25)
 
 # [2.0.0](https://github.com/nerolis-lab/nerolis-lab/compare/v1.46.0...v2.0.0) (2025-04-24)
