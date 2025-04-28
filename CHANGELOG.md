@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.2...v2.0.3) (2025-04-28)
+
+
+### Bug Fixes
+
+* gitattributes lf line ending ignores png/ico ([8dddf2f](https://github.com/nerolis-lab/nerolis-lab/commit/8dddf2f8d215c34a593179594a251cefa06ef713))
+
 ## [2.0.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.1...v2.0.2) (2025-04-28)
 
 
