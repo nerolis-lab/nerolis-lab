@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.3...v2.0.4) (2025-04-29)
+
+
+### Bug Fixes
+
+* refresh to use correct non-server-axios route ([d1aa625](https://github.com/nerolis-lab/nerolis-lab/commit/d1aa62568d5f33ecb8b16856bac44b527ff6b7a4))
+
 ## [2.0.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.2...v2.0.3) (2025-04-28)
 
 
