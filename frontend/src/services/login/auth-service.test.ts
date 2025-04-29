@@ -42,7 +42,7 @@ describe('AuthService', () => {
     it('should call signup endpoint with authorization code', async () => {
       await AuthService.login('some-auth-code', AuthProvider.Google)
 
-      expect(mockedServerAxios.post).toHaveBeenCalledWith('login/signup', {
+      expect(mockedAxios.post).toHaveBeenCalledWith('/api/login/signup', {
         authorization_code: 'some-auth-code',
         provider: 'google'
       })
@@ -51,7 +51,7 @@ describe('AuthService', () => {
     it('should include redirect_uri when provided', async () => {
       await AuthService.login('some-auth-code', AuthProvider.Google, 'http://localhost:3000/callback')
 
-      expect(mockedServerAxios.post).toHaveBeenCalledWith('login/signup', {
+      expect(mockedAxios.post).toHaveBeenCalledWith('/api/login/signup', {
         authorization_code: 'some-auth-code',
         provider: 'google',
         redirect_uri: 'http://localhost:3000/callback'
@@ -63,7 +63,7 @@ describe('AuthService', () => {
     it('should call refresh endpoint with refresh token', async () => {
       await AuthService.refresh('refresh-token', AuthProvider.Google)
 
-      expect(mockedAxios.post).toHaveBeenCalledWith('login/refresh', {
+      expect(mockedAxios.post).toHaveBeenCalledWith('/api/login/refresh', {
         refresh_token: 'refresh-token',
         provider: 'google'
       })
@@ -72,7 +72,7 @@ describe('AuthService', () => {
     it('should include redirect_uri when provided', async () => {
       await AuthService.refresh('refresh-token', AuthProvider.Google, 'http://localhost:3000/callback')
 
-      expect(mockedAxios.post).toHaveBeenCalledWith('login/refresh', {
+      expect(mockedAxios.post).toHaveBeenCalledWith('/api/login/refresh', {
         refresh_token: 'refresh-token',
         provider: 'google',
         redirect_uri: 'http://localhost:3000/callback'
