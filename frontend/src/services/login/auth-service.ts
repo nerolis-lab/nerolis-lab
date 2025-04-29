@@ -8,7 +8,8 @@ class AuthServiceImpl {
     provider: AuthProvider,
     redirect_uri?: string
   ): Promise<LoginResponse> {
-    const response = await serverAxios.post<LoginResponse>('login/signup', {
+    // we can't use serverAxios here because it triggers a refresh before we have signed up
+    const response = await axios.post<LoginResponse>('/api/login/signup', {
       authorization_code,
       provider,
       redirect_uri
@@ -23,7 +24,7 @@ class AuthServiceImpl {
 
   public async refresh(refresh_token: string, provider: AuthProvider, redirect_uri?: string): Promise<RefreshResponse> {
     // we can't use serverAxios here because it triggers a refresh causing infinite loop
-    const response = await axios.post<RefreshResponse>('login/refresh', {
+    const response = await axios.post<RefreshResponse>('/api/login/refresh', {
       refresh_token,
       provider,
       redirect_uri
