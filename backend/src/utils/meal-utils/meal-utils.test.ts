@@ -80,6 +80,8 @@ describe('getMealsForFilter', () => {
         "CROSS_CHOP_SALAD",
         "GREENGRASS_SALAD",
         "NINJA_SALAD",
+        "PETAL_BLIZZARD_LAYERED_SALAD",
+        "APPLE_ACID_YOGURT_DRESSED_SALAD",
         "DEFIANT_COFFEE_DRESSED_SALAD",
         "HUGE_POWER_SOY_DONUTS",
         "EXPLOSION_POPCORN",
