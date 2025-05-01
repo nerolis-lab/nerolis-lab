@@ -234,6 +234,30 @@ export const GREENGRASS_SALAD = createSalad({
   bonus: 48
 });
 
+export const PETAL_BLIZZARD_LAYERED_SALAD = createSalad({
+  name: 'PETAL_BLIZZARD_LAYERED_SALAD',
+  displayName: '"Petal Blizzard" Layered Salad',
+  ingredients: [
+    { amount: 25, ingredient: FANCY_EGG },
+    { amount: 17, ingredient: PURE_OIL },
+    { amount: 15, ingredient: SOFT_POTATO },
+    { amount: 12, ingredient: BEAN_SAUSAGE }
+  ],
+  bonus: 47
+});
+
+export const APPLE_ACID_YOGURT_DRESSED_SALAD = createSalad({
+  name: 'APPLE_ACID_YOGURT_DRESSED_SALAD',
+  displayName: '"Apple Acid" Yogurt-Dressed Salad',
+  ingredients: [
+    { amount: 35, ingredient: FANCY_EGG },
+    { amount: 28, ingredient: FANCY_APPLE },
+    { amount: 23, ingredient: SNOOZY_TOMATO },
+    { amount: 18, ingredient: MOOMOO_MILK }
+  ],
+  bonus: 78
+});
+
 export const DEFIANT_COFFEE_DRESSED_SALAD = createSalad({
   name: 'DEFIANT_COFFEE_DRESSED_SALAD',
   displayName: '"Defiant" Coffee-Dressed Salad',
@@ -267,6 +291,8 @@ export const SALADS: Recipe[] = [
   CROSS_CHOP_SALAD,
   GREENGRASS_SALAD,
   NINJA_SALAD,
+  PETAL_BLIZZARD_LAYERED_SALAD,
+  APPLE_ACID_YOGURT_DRESSED_SALAD,
   DEFIANT_COFFEE_DRESSED_SALAD
 ];
 
