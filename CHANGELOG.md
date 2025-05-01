@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.4...v2.1.0) (2025-05-01)
+
+
+### Features
+
+* adds spring festival salads ([af579b4](https://github.com/nerolis-lab/nerolis-lab/commit/af579b452c4d7d5c4e52a9a40f825d5354c29368))
+
 ## [2.0.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.3...v2.0.4) (2025-04-29)
 
 
