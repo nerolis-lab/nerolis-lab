@@ -243,7 +243,7 @@ export const PETAL_BLIZZARD_LAYERED_SALAD = createSalad({
     { amount: 15, ingredient: SOFT_POTATO },
     { amount: 12, ingredient: BEAN_SAUSAGE }
   ],
-  bonus: 47
+  bonus: 48
 });
 
 export const APPLE_ACID_YOGURT_DRESSED_SALAD = createSalad({
