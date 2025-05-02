@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.1.0...v2.1.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* updates petal blizzard layered salad to 48% ([1bece15](https://github.com/nerolis-lab/nerolis-lab/commit/1bece152529e088e555e9336a6b64aab55c3cf53))
+
 # [2.1.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.0.4...v2.1.0) (2025-05-01)
 
 
