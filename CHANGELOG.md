@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.1.1...v2.2.0) (2025-05-02)
+
+
+### Features
+
+* adds spring recipes to sleepapi.net ([0ecf8cd](https://github.com/nerolis-lab/nerolis-lab/commit/0ecf8cd4767150e9b6d40e6b13c66a269305ccaa))
+
 ## [2.1.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.1.0...v2.1.1) (2025-05-02)
 
 
