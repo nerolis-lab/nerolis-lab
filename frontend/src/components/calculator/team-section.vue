@@ -228,7 +228,7 @@ import { useNotificationStore } from '@/stores/notification-store/notification-s
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
+import { MAX_TEAM_SIZE } from 'sleepapi-common'
 
 export default defineComponent({
   components: {
@@ -265,7 +265,7 @@ export default defineComponent({
       return berries && ingredients ? `${berries}\n${ingredients}` : 'No production'
     },
     teamSlots() {
-      return this.teamStore.getTeamSize === 0 ? 1 : MAX_TEAM_MEMBERS
+      return this.teamStore.getTeamSize === 0 ? 1 : MAX_TEAM_SIZE
     }
   },
   methods: {
