@@ -293,7 +293,6 @@ import IngredientSelection from '@/components/custom-components/input/ingredient
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { berryImage, ingredientImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
 import {
   berry,
   berryPowerForLevel,
@@ -349,8 +348,8 @@ export default defineComponent({
       minRule: (value: number) => value >= 0 || 'Value must be at least 0',
       maxIngredientsRule: (value: number) => value <= 10000 || `Value must be 10000 or less`,
       maxBerriesRule: (value: number) =>
-        value <= MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS ||
-        `Value must be ${MAX_STOCKPILED_BERRIES * MAX_TEAM_MEMBERS} or less`,
+        value <= MAX_STOCKPILED_BERRIES * MAX_TEAM_SIZE ||
+        `Value must be ${MAX_STOCKPILED_BERRIES * MAX_TEAM_SIZE} or less`,
       minLevelRule: (value: number) => value >= 1 || 'Value must be at least 1',
       maxLevelRule: (value: number) => value <= 100 || 'Value must be 100 or less'
     }

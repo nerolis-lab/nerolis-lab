@@ -49,8 +49,6 @@ export interface TeamInstance {
   production?: TeamProductionExt
 }
 
-// TODO: exists in common, clean up
-export const MAX_TEAM_MEMBERS = 5
 export const MAX_TEAMS = 10
 export const DEFAULT_SLEEP = {
   bedtime: '21:30',

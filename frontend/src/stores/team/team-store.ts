@@ -4,7 +4,6 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
 import {
   MAX_TEAMS,
-  MAX_TEAM_MEMBERS,
   type MemberProductionExt,
   type PerformanceDetails,
   type TeamInstance
@@ -13,6 +12,7 @@ import type { TimeWindowDay } from '@/types/time/time-window'
 import { defineStore } from 'pinia'
 import {
   DOMAIN_VERSION,
+  MAX_TEAM_SIZE,
   berry,
   mainskill,
   subskill,
@@ -57,7 +57,7 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
       stockpiledBerries: [],
       stockpiledIngredients: [],
       version: 0,
-      members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
+      members: new Array(MAX_TEAM_SIZE).fill(undefined),
       memberIvs: {},
       production: undefined
     }
@@ -278,7 +278,7 @@ export const useTeamStore = defineStore('team', {
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 0,
-        members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
+        members: new Array(MAX_TEAM_SIZE).fill(undefined),
         memberIvs: {},
         production: undefined
       }

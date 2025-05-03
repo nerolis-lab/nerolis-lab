@@ -2,13 +2,13 @@ import serverAxios from '@/router/server-axios'
 import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { MAX_TEAM_MEMBERS } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import MockAdapter from 'axios-mock-adapter'
 import {
   BULBASAUR,
   ingredient,
+  MAX_TEAM_SIZE,
   nature,
   subskill,
   uuid,
@@ -91,7 +91,7 @@ describe('getTeams', () => {
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 0,
-        members: new Array(MAX_TEAM_MEMBERS).fill(undefined),
+        members: new Array(MAX_TEAM_SIZE).fill(undefined),
         memberIvs: {}
       })
     })
@@ -165,7 +165,7 @@ describe('getTeams', () => {
       version: 1,
       recipeType: 'curry',
       favoredBerries: [],
-      members: Array.from({ length: MAX_TEAM_MEMBERS }, (__, memberIndex) => ({
+      members: Array.from({ length: MAX_TEAM_SIZE }, (__, memberIndex) => ({
         version: 1,
         memberIndex,
         saved: false,
