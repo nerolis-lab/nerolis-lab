@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.2.3...v2.3.0) (2025-05-05)
+
+
+### Features
+
+* adds chansey line ([7bbb0e7](https://github.com/nerolis-lab/nerolis-lab/commit/7bbb0e7c7a46902b5b573e2c4f669ca886cacc3d))
+
 ## [2.2.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.2.2...v2.2.3) (2025-05-03)
 
 ## [2.2.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.2.1...v2.2.2) (2025-05-02)
