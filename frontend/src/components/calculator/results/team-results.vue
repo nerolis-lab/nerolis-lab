@@ -15,42 +15,8 @@
 
           <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
-              <div class="legend bg-berry">
-                <v-img src="/images/berries/berries.png" contain width="28" height="28" />
-              </div>
-              <span class="text-body-1 text-berry w-100 text-center font-weight-medium ml-2">
-                {{ berryStrengthString }}
-              </span>
-            </v-col>
-
-            <v-col v-if="stockpiledBerryStrength > 0" cols="auto" class="flex-center">
-              <div class="legend bg-berry-light">
-                <v-img
-                  style="filter: grayscale(100)"
-                  src="/images/berries/berries.png"
-                  contain
-                  width="28"
-                  height="28"
-                />
-              </div>
-              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-2"> Starting Berries </span>
-              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-1">
-                {{ stockpiledBerryStrengthString }}
-              </span>
-            </v-col>
-
-            <v-col cols="auto" class="flex-center">
-              <div class="legend bg-skill">
-                <v-img src="/images/misc/skillproc.png" contain width="28" height="28" />
-              </div>
-              <span class="text-body-1 text-skill text-center font-weight-medium ml-2">
-                {{ skillStrengthString }}
-              </span>
-            </v-col>
-
-            <v-col cols="auto" class="flex-center">
               <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}`">
-                <v-img :src="recipeTypeImage" contain width="32" height="32" />
+                <v-img :src="recipeTypeImage" contain width="32" height="32" alt="Cooking" title="Cooking" />
               </div>
 
               <span
@@ -66,6 +32,42 @@
                 {{ cookingStrengthString }}</span
               >
             </v-col>
+
+            <v-col cols="auto" class="flex-center">
+              <div class="legend bg-berry">
+                <v-img src="/images/berries/berries.png" contain width="28" height="28" alt="Berries" title="Berries" />
+              </div>
+              <span class="text-body-1 text-berry w-100 text-center font-weight-medium ml-2">
+                {{ berryStrengthString }}
+              </span>
+            </v-col>
+
+            <v-col v-if="stockpiledBerryStrength > 0" cols="auto" class="flex-center">
+              <div class="legend bg-berry-light">
+                <v-img
+                  style="filter: grayscale(100)"
+                  src="/images/berries/berries.png"
+                  contain
+                  width="28"
+                  height="28"
+                  alt="Starting Berries"
+                  title="Starting Berries"
+                />
+              </div>
+              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-2"> Starting Berries </span>
+              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-1">
+                {{ stockpiledBerryStrengthString }}
+              </span>
+            </v-col>
+
+            <v-col cols="auto" class="flex-center">
+              <div class="legend bg-skill">
+                <v-img src="/images/misc/skillproc.png" contain width="24" height="24" alt="Skills" title="Skills" />
+              </div>
+              <span class="text-body-1 text-skill text-center font-weight-medium ml-2">
+                {{ skillStrengthString }}
+              </span>
+            </v-col>
           </v-row>
 
           <v-row class="flex-center">
@@ -74,6 +76,12 @@
                 id="memberBar"
                 :style="[`height: ${isMobile ? '30' : '50'}px`]"
                 :sections="[
+                  {
+                    color: teamStore.getCurrentTeam.recipeType,
+                    percentage: cookingPercentage,
+                    sectionText: `${cookingPercentage}%`,
+                    tooltipText: `${compactNumber(cookingStrength)} (${cookingPercentage}%)`
+                  },
                   {
                     color: 'berry',
                     percentage: berryPercentage,
@@ -86,17 +94,12 @@
                     sectionText: `${stockpiledBerryPercentage}%`,
                     tooltipText: `${compactNumber(stockpiledBerryStrength)} (${stockpiledBerryPercentage}%)`
                   },
+
                   {
                     color: 'skill',
                     percentage: skillPercentage,
                     sectionText: `${skillPercentage}%`,
                     tooltipText: `${compactNumber(skillStrength)} (${skillPercentage}%)`
-                  },
-                  {
-                    color: teamStore.getCurrentTeam.recipeType,
-                    percentage: cookingPercentage,
-                    sectionText: `${cookingPercentage}%`,
-                    tooltipText: `${compactNumber(cookingStrength)} (${cookingPercentage}%)`
                   }
                 ]"
               />

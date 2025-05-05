@@ -27,7 +27,7 @@
               </div>
             </v-col>
             <v-col cols="auto" class="flex-right pt-0">
-              <span class="text-body-1 flex-right">Sun </span>
+              <span class="text-body-1 flex-right">Sun</span>
               <span
                 id="sundayStrength"
                 :class="[

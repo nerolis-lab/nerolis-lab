@@ -20,57 +20,60 @@
 
         <v-list>
           <v-list-item>
-            <v-card
+            <v-btn
+              block
               title="Patreon"
-              class="text-center provider-card"
+              class="provider-btn patreon"
               rounded="xl"
-              color="#F96854"
-              style="cursor: pointer"
+              size="x-large"
               @click="handlePatreonLogin"
             >
               <template #prepend>
                 <PatreonIcon />
               </template>
+              Patreon
               <template #append>
-                <v-icon size="24">mdi-open-in-new</v-icon>
+                <v-icon class="external-link-icon" size="24">mdi-open-in-new</v-icon>
               </template>
-            </v-card>
+            </v-btn>
           </v-list-item>
 
           <v-list-item>
-            <v-card
+            <v-btn
+              block
               title="Google"
-              class="text-center provider-card"
+              class="provider-btn google"
               rounded="xl"
-              color="#181717"
-              style="cursor: pointer"
+              size="x-large"
               @click="handleGoogleLogin"
             >
               <template #prepend>
                 <GoogleIcon />
               </template>
+              Google
               <template #append>
-                <v-icon size="24">mdi-open-in-new</v-icon>
+                <v-icon class="external-link-icon" size="24">mdi-open-in-new</v-icon>
               </template>
-            </v-card>
+            </v-btn>
           </v-list-item>
 
           <v-list-item>
-            <v-card
+            <v-btn
+              block
               title="Discord"
-              class="text-center provider-card"
+              class="provider-btn discord"
               rounded="xl"
-              color="#5865F2"
-              style="cursor: pointer"
+              size="x-large"
               @click="handleDiscordLogin"
             >
               <template #prepend>
                 <DiscordIcon />
               </template>
+              Discord
               <template #append>
-                <v-icon size="24">mdi-open-in-new</v-icon>
+                <v-icon class="external-link-icon" size="24">mdi-open-in-new</v-icon>
               </template>
-            </v-card>
+            </v-btn>
           </v-list-item>
         </v-list>
 
@@ -133,12 +136,30 @@ const handlePatreonLogin = () => loginWithPatreon(route)
   padding: 8px;
 }
 
-.provider-card {
-  transition: transform 0.2s;
-}
+.provider-btn {
+  display: flex;
+  justify-content: space-between;
+  text-transform: none;
+  font-size: 20px;
+  letter-spacing: 0.0125em;
 
-.provider-card:hover {
-  transform: translateY(-2px);
+  &.patreon {
+    background-color: $patreon;
+  }
+
+  &.google {
+    background-color: $google;
+  }
+
+  &.discord {
+    background-color: $discord;
+  }
+
+  @media (max-width: 340px) {
+    .external-link-icon {
+      display: none;
+    }
+  }
 }
 
 .welcome-icon-container {
