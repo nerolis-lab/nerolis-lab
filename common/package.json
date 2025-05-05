@@ -30,7 +30,7 @@
     "esbuild": "^0.25.3",
     "rimraf": "^5.0.5",
     "rollup": "^4.40.1",
-    "typescript": "^5.3.2",
+    "typescript": "^5.8.3",
     "vimic": "^1.2.4",
     "vitest": "^3.1.2"
   },
