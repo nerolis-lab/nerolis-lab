@@ -4,7 +4,6 @@ import fs from 'fs-extra'
 import { fileURLToPath, URL } from 'node:url'
 import path from 'path'
 import { defineConfig } from 'vite'
-import csp from 'vite-plugin-csp-guard'
 import type { ManifestOptions } from 'vite-plugin-pwa'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueDevTools from 'vite-plugin-vue-devtools'
@@ -35,7 +34,7 @@ const manifest: Partial<ManifestOptions> = {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   css: {
     preprocessorOptions: {
       scss: {
@@ -52,7 +51,7 @@ export default defineConfig({
       manifest,
       strategies: 'generateSW',
       injectRegister: 'auto',
-      mode: 'production',
+      mode: command === 'serve' ? 'development' : 'production',
       workbox: {
         globPatterns: ['**/*.{js,css,ico,png,svg}'],
         navigateFallback: null,
@@ -90,12 +89,27 @@ export default defineConfig({
         mode: 'production',
         disableDevLogs: true
       },
-      includeAssets: ['apple-touch-icon.png', 'favicon.ico'],
-      devOptions: {
-        enabled: true
-      }
+      includeAssets: ['apple-touch-icon.png', 'favicon.ico']
     }),
     VueDevTools(),
+    // Temporarily disable CSP plugin for debugging
+    // csp({
+    //   dev: {
+    //     run: true,
+    //     outlierSupport: ['vue', 'less', 'scss']
+    //   },
+    //   policy: {
+    //     'connect-src': ["'self'", 'https://stats.nerolislab.com', 'https://gc.zgo.at'],
+    //     'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
+    //     'script-src': ["'self'", "'unsafe-inline'", "'strict-dynamic'", 'https:', 'https://gc.zgo.at/count.js'],
+    //     'script-src-elem': ["'self'", 'https://accounts.google.com/gsi/client', 'https://gc.zgo.at/count.js'],
+    //     'style-src': ["'self'"],
+    //     'style-src-elem': ['https://fonts.googleapis.com', 'https://accounts.google.com/gsi/style', "'unsafe-inline'"]
+    //   },
+    //   build: {
+    //     sri: false
+    //   }
+    // }),
     {
       name: 'generate-avatars-json',
       buildStart: () => {
@@ -127,24 +141,7 @@ export default defineConfig({
           console.warn('Avatar directory does not exist.')
         }
       }
-    },
-    csp({
-      dev: {
-        run: true,
-        outlierSupport: ['vue', 'less', 'scss']
-      },
-      policy: {
-        'connect-src': ["'self'", 'https://stats.nerolislab.com'],
-        'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        'script-src': ["'self'", "'unsafe-inline'", "'strict-dynamic'", 'https:', 'https://gc.zgo.at/count.js'],
-        'script-src-elem': ["'self'", 'https://accounts.google.com/gsi/client', 'https://gc.zgo.at/count.js'],
-        'style-src': ["'self'"],
-        'style-src-elem': ['https://fonts.googleapis.com', 'https://accounts.google.com/gsi/style', "'unsafe-inline'"]
-      },
-      build: {
-        sri: false
-      }
-    })
+    }
   ],
   server: {
     host: true,
@@ -182,4 +179,4 @@ export default defineConfig({
     APP_VERSION: JSON.stringify(version),
     __INTLIFY_JIT_COMPILATION__: true
   }
-})
+}))
