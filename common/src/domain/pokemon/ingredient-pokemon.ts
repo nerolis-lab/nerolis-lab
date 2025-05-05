@@ -47,6 +47,7 @@ import {
   CHARGE_STRENGTH_S_RANGE,
   COOKING_POWER_UP_S,
   ENERGIZING_CHEER_S,
+  ENERGY_FOR_EVERYONE,
   INGREDIENT_MAGNET_S,
   SKILL_COPY_MIMIC,
   SKILL_COPY_TRANSFORM,
@@ -406,6 +407,32 @@ export const KANGASKHAN: Pokemon = {
   skill: INGREDIENT_MAGNET_S
 };
 
+export const CHANSEY: Pokemon = {
+  name: 'CHANSEY',
+  displayName: 'Chansey',
+  pokedexNumber: 113,
+  specialty: 'ingredient',
+  frequency: toSeconds(0, 55, 0),
+  ingredientPercentage: 23.6,
+  skillPercentage: 2.3,
+  berry: PERSIM,
+  genders: FEMALE_ONLY,
+  carrySize: 15,
+  previousEvolutions: 1,
+  remainingEvolutions: 1,
+  ingredient0: { amount: 2, ingredient: FANCY_EGG },
+  ingredient30: [
+    { amount: 5, ingredient: FANCY_EGG },
+    { amount: 4, ingredient: SOFT_POTATO }
+  ],
+  ingredient60: [
+    { amount: 7, ingredient: FANCY_EGG },
+    { amount: 7, ingredient: SOFT_POTATO },
+    { amount: 8, ingredient: HONEY }
+  ],
+  skill: ENERGY_FOR_EVERYONE
+};
+
 export const MR_MIME: Pokemon = {
   name: 'MR_MIME',
   displayName: 'Mr. Mime',
@@ -621,6 +648,17 @@ export const DELIBIRD: Pokemon = {
   skill: INGREDIENT_MAGNET_S
 };
 
+export const BLISSEY: Pokemon = {
+  ...evolvesFrom(CHANSEY),
+  name: 'BLISSEY',
+  displayName: 'Blissey',
+  pokedexNumber: 242,
+  frequency: toSeconds(0, 51, 40),
+  ingredientPercentage: 23.8,
+  skillPercentage: 2.3,
+  carrySize: 21
+};
+
 export const LARVITAR: Pokemon = {
   name: 'LARVITAR',
   displayName: 'Larvitar',
@@ -800,6 +838,17 @@ export const MIME_JR: Pokemon = {
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 20.1,
   skillPercentage: 3.2,
+  carrySize: 7
+};
+
+export const HAPPINY: Pokemon = {
+  ...evolvesInto(CHANSEY),
+  name: 'HAPPINY',
+  displayName: 'Happiny',
+  pokedexNumber: 440,
+  frequency: toSeconds(1, 30, 0),
+  ingredientPercentage: 21,
+  skillPercentage: 1.3,
   carrySize: 7
 };
 
@@ -1186,6 +1235,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   DRAGONITE,
   QUAGSIRE,
   DELIBIRD,
+  BLISSEY,
   PUPITAR,
   TYRANITAR,
   AGGRON,
@@ -1220,6 +1270,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   GRAVELER,
   GASTLY,
   HAUNTER,
+  CHANSEY,
   DRATINI,
   DRAGONAIR,
   WOOPER,
@@ -1230,6 +1281,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   SHINX,
   LUXIO,
   MIME_JR,
+  HAPPINY,
   CROAGUNK,
   SNOVER,
   GRUBBIN,
