@@ -7,7 +7,7 @@
     </v-col>
 
     <v-col class="flex-center">
-      <v-btn class="w-100" color="error-3" variant="elevated" prepend-icon="mdi-delete" @click="confirmDeleteAccount">
+      <v-btn class="w-100" color="error-700" variant="elevated" prepend-icon="mdi-delete" @click="confirmDeleteAccount">
         DELETE ACCOUNT
       </v-btn>
     </v-col>
@@ -15,20 +15,20 @@
 
   <v-dialog v-model="deleteDialog" max-width="450">
     <v-card>
-      <v-card-title class="border-b-sm pb-4">
-        <v-icon icon="mdi-alert-circle" class="mr-2" color="warning" />
+      <v-card-title class="flex-left border-b-sm py-4">
+        <v-icon icon="mdi-alert-circle mr-2" color="error-500" />
         Delete Account
       </v-card-title>
       <v-card-text class="pt-4">
         <p class="mb-3">Are you sure you want to delete your account? This action <strong>cannot</strong> be undone.</p>
-        <v-alert type="error" variant="tonal" class="mt-3" icon="mdi-information-outline">
+        <v-alert type="error" color="error-500" variant="tonal" class="mt-3" icon="mdi-information-outline">
           <p class="mb-0">All your data and progress will be permanently deleted.</p>
         </v-alert>
       </v-card-text>
       <v-card-actions class="pa-4">
         <v-spacer />
         <v-btn variant="tonal" @click="closeDialog"> Cancel </v-btn>
-        <v-btn color="warning" @click="deleteAccount"> Delete </v-btn>
+        <v-btn color="error-500" @click="deleteAccount"> Delete </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

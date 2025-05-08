@@ -3,7 +3,7 @@
     <v-col>
       <v-divider />
     </v-col>
-    <v-col cols="auto" class="flex-center text-no-wrap text-strength text-h6"> Skill Breakdown </v-col>
+    <v-col cols="auto" class="flex-center text-no-wrap text-secondary-500 text-h6"> Skill Breakdown </v-col>
     <v-col>
       <v-divider />
     </v-col>

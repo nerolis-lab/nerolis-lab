@@ -11,7 +11,7 @@
         <span class="text-h6">{{ userStore.name }}</span>
       </div>
 
-      <div>
+      <div class="flex-left">
         <v-icon icon="mdi-badge-account" size="small" class="mr-2" color="info" />
         <span class="profile-label">User ID:</span>
         <span class="profile-value">{{ userStore.externalId || 'Unknown' }}</span>
@@ -48,8 +48,8 @@
         </v-btn>
       </div> -->
 
-      <div>
-        <v-icon icon="mdi-shield-account" size="small" class="mr-2" color="warning" />
+      <div class="flex-left">
+        <v-icon icon="mdi-shield-account" size="small" class="mr-2" :color="userStore.roleData.color" />
         <span class="profile-label">Role:</span>
         <span class="profile-value">{{ formatRole(userStore.role) }}</span>
       </div>

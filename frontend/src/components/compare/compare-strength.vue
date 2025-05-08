@@ -5,8 +5,8 @@
       <v-row class="d-flex align-center justify-space-between">
         <v-col class="d-flex align-center flex-wrap">
           <v-chip-group v-model="chips" column multiple>
-            <v-chip text="Berry strength" color="berry" variant="outlined" filter></v-chip>
-            <v-chip text="Skill strength" color="skill" variant="outlined" filter></v-chip>
+            <v-chip text="Berry strength" color="berry-500" variant="outlined" filter></v-chip>
+            <v-chip text="Skill strength" color="skill-500" variant="outlined" filter></v-chip>
           </v-chip-group>
 
           <v-menu v-model="ingredientMenu" location="bottom start">
@@ -14,7 +14,7 @@
               <v-chip
                 v-bind="props"
                 variant="outlined"
-                :color="selectedIngredientOption !== 'ignore' ? 'ingredient' : ''"
+                :color="selectedIngredientOption !== 'ignore' ? 'dessert-500' : ''"
                 :text="ingredientChipText()"
                 :class="{ 'selected-chip': selectedIngredientOption !== 'ignore' }"
                 append-icon="mdi-menu-down"
@@ -77,19 +77,19 @@
               style="height: 25px"
               :sections="[
                 {
-                  color: 'berry',
+                  color: 'berry-500',
                   percentage: member.berryPercentage,
                   sectionText: member.berryCompact,
                   tooltipText: `${member.berryCompact} (${round(member.berryPercentage)}%)`
                 },
                 {
-                  color: 'skill',
+                  color: 'skill-500',
                   percentage: member.skillPercentage,
                   sectionText: member.skillCompact,
                   tooltipText: `${member.skillCompact} (${round(member.skillPercentage)}%)`
                 },
                 {
-                  color: 'ingredient',
+                  color: 'dessert-500',
                   percentage: member.ingredientPercentage,
                   sectionText: member.ingredientCompact,
                   tooltipText: `${member.ingredientCompact} (${round(member.ingredientPercentage)}%)`
@@ -412,6 +412,6 @@ export default defineComponent({
 
 .selected-chip {
   background-color: rgba(255, 255, 255, 0.1);
-  border-color: 'ingredient';
+  border-color: $dessert-500;
 }
 </style>

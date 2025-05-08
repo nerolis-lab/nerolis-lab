@@ -10,7 +10,7 @@
             teamStore.getCurrentMember === pokemonInstance.externalId &&
             teamStore.tab === 'members' &&
             memberIndex === teamStore.getCurrentTeam.memberIndex
-              ? 'bg-surface'
+              ? 'bg-neutral-700'
               : 'frosted-glass'
           ]"
           @click="openDetailsDialog"
@@ -46,7 +46,7 @@
       v-if="pokemonInstance"
       id="desktop-layout"
       :loading="teamStore.getMemberLoading(memberIndex)"
-      :class="['fill-height', currentMemberSelected ? 'bg-surface' : 'frosted-glass']"
+      :class="['fill-height', currentMemberSelected ? 'bg-neutral-700' : 'frosted-glass']"
       style="max-height: 14dvh"
       @click="openDetailsDialog"
     >
@@ -80,11 +80,7 @@
               </v-card>
             </v-col>
             <v-col>
-              <v-card
-                class="flex-center rounded-s-0 font-weight-medium"
-                :color="pokemonInstance.pokemon.specialty"
-                elevation="0"
-              >
+              <v-card class="flex-center rounded-s-0 font-weight-medium" color="neutral-100" elevation="0">
                 {{ pokemonInstance.name }}
               </v-card>
             </v-col>

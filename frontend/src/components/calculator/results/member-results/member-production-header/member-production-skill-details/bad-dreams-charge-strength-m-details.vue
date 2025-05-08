@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters class="flex-center pb-1">
+  <v-row no-gutters class="flex-center pb-1 font-weight-medium">
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
@@ -18,7 +18,7 @@
       </v-badge>
       <div class="ml-2">
         <div class="flex-center">
-          <span class="font-weight-medium text-center">{{
+          <span class="proc-count text-center">{{
             MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
           }}</span>
           <v-img
@@ -41,15 +41,13 @@
     <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img src="/images/misc/strength.png" height="20" width="20" alt="strength" title="strength"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-1"> {{ totalSkillValue }} total</span>
+        <span class="total-strength text-no-wrap text-center ml-1">{{ totalSkillValue }} total</span>
       </div>
     </v-col>
     <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img src="/images/unit/energy.png" height="20" width="20" alt="energy" title="energy"></v-img>
-        <span class="font-weight-medium text-error-3 text-no-wrap text-center ml-1">
-          {{ totalEnergyDegraded }}% total</span
-        >
+        <span class="energy-degraded error-text text-no-wrap ml-1">{{ totalEnergyDegraded }}% total</span>
       </div>
     </v-col>
   </v-row>

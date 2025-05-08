@@ -1,5 +1,0 @@
-            <v-col v-for="mealKey in ['breakfast', 'lunch', 'dinner']" :key="mealKey" cols="12" class="meal-time">
-              <v-img v-if="mealTimes[mealKey]" src="/images/misc/pot.png" width="20" height="20" contain />
-              <v-img v-if="!mealTimes[mealKey]" src="/images/subskill/erb.png" width="20" height="20" contain />
-              {{ mealTimeText(mealKey, mealTimes[mealKey]) }}
-            </v-col>

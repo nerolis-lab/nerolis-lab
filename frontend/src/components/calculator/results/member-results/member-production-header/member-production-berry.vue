@@ -1,7 +1,7 @@
 <template>
   <v-card color="surface" rounded="xl" class="fill-height d-flex flex-column">
     <v-row no-gutters class="flex-center">
-      <v-col cols="12" class="flex-center text-h6 text-berry font-weight-medium"> Berry </v-col>
+      <v-col cols="12" class="flex-center text-h6 text-berry-500 font-weight-medium"> Berry </v-col>
     </v-row>
 
     <v-row no-gutters :class="['flex-center', 'fill-height', isMobile ? 'flex-column' : '']">

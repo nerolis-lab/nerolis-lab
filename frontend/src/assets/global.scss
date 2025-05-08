@@ -2,6 +2,7 @@
 @use '@/assets/common';
 @use '@/assets/animations';
 
+// *****************TYPOGRAPHY*****************
 html {
   font-family: $body-font-family, sans-serif !important;
 
@@ -12,50 +13,15 @@ html {
   }
 }
 
-a.simple {
-  color: $berry-light;
-  transition: unset !important;
-
-  &:visited {
-    color: $berry-light;
-  }
-
-  &:active,
-  &:hover {
-    color: $berry;
-  }
-
-  * {
-    transition: unset !important;
-  }
+.fine-print {
+  font-size: 14px;
+  font-weight: 300;
+  font-style: italic;
+  color: $neutral-400;
 }
 
-a.btn-link {
-  display: block;
-  text-decoration: none;
-  color: $berry-light;
-  position: relative;
-  border-bottom: 1px solid $berry-light;
-  padding: 0px 15px 0px 1px;
-  margin: 0 5px;
-}
-
-a.btn-link:visited {
-  color: $berry-light;
-}
-
-a.btn-link:hover,
-a.btn-link:active {
-  color: $berry;
-  border-color: $berry;
-}
-
-a.btn-link::after {
-  content: '\F0142';
-  font-family: 'Material Design Icons';
-  font-size: 20px;
-  position: absolute;
-  top: -2px;
+.error-text {
+  color: $error-500;
 }
 
 .text-outline {
@@ -66,6 +32,74 @@ a.btn-link::after {
     0.5px 0.5px 0 #000;
 }
 
+// *****************LINKS*****************
+a.simple {
+  color: $berry-400;
+  transition: unset !important;
+
+  &:visited {
+    color: $berry-400;
+  }
+
+  &:active,
+  &:hover {
+    color: $berry-500;
+  }
+
+  * {
+    transition: unset !important;
+  }
+}
+
+a.btn-link {
+  display: block;
+  text-decoration: none;
+  color: $berry-400;
+  position: relative;
+  border-bottom: 1px solid $berry-400;
+  padding: 0px 15px 0px 1px;
+  margin: 0 5px;
+}
+
+a.btn-link:visited {
+  color: $berry-400;
+}
+
+a.btn-link:hover,
+a.btn-link:active {
+  color: $berry-500;
+  border-color: $berry-500;
+}
+
+a.btn-link::after {
+  content: '\F0142';
+  font-family: 'Material Design Icons';
+  font-size: 20px;
+  position: absolute;
+  top: -2px;
+}
+
+// *****************SURFACES*****************
+.frosted-glass-light {
+  background: rgba($neutral-700, 0.2) !important;
+  backdrop-filter: blur(10px);
+}
+
+.frosted-glass {
+  background: rgba($neutral-700, 0.4) !important;
+  backdrop-filter: blur(10px);
+}
+
+.frosted-glass-dark {
+  background: rgba($neutral-700, 0.85) !important;
+  backdrop-filter: blur(10px);
+}
+
+.font-weight-semibold {
+  font-weight: 600;
+}
+
+// *****************MISC*****************
 .legend {
   flex-shrink: 0;
   display: flex;
@@ -74,23 +108,4 @@ a.btn-link::after {
   height: 34px;
   width: 34px;
   border-radius: 30px;
-}
-
-.frosted-glass-light {
-  background: rgba($surface, 0.2) !important;
-  backdrop-filter: blur(10px);
-}
-
-.frosted-glass {
-  background: rgba($surface, 0.4) !important;
-  backdrop-filter: blur(10px);
-}
-
-.frosted-glass-dark {
-  background: rgba($surface, 0.85) !important;
-  backdrop-filter: blur(10px);
-}
-
-.font-weight-semibold {
-  font-weight: 600;
 }

@@ -3,7 +3,7 @@
     <v-col v-for="subskillLevel in subskillLevels" :key="subskillLevel" cols="6" class="flex-center">
       <v-badge
         id="subskillBadge"
-        color="secondary"
+        color="neutral-600"
         class="w-100"
         location="top left"
         offset-x="auto"

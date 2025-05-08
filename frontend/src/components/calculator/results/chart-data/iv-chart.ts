@@ -4,9 +4,9 @@ import type { Ref } from 'vue'
 import { ref } from 'vue'
 
 export function generateIvData(themeVariables: { [x: string]: string }): Ref<ChartData<'radar'>> {
-  const berry = themeVariables['berry']
-  const skill = themeVariables['skill']
-  const ingredient = themeVariables['ingredient']
+  const berry = themeVariables['berry-500']
+  const skill = themeVariables['skill-500']
+  const ingredient = themeVariables['dessert-500']
 
   return ref<ChartData<'radar'>>({
     labels: ['Skill', 'Ingredient', 'Berry'],
@@ -23,9 +23,9 @@ export function generateIvData(themeVariables: { [x: string]: string }): Ref<Cha
 }
 
 export function generateIvTextPlugin(themeVariables: { [x: string]: string }): Plugin<'radar'> {
-  const berry = themeVariables['berry']
-  const skill = themeVariables['skill']
-  const ingredient = themeVariables['ingredient']
+  const berry = themeVariables['berry-500']
+  const skill = themeVariables['skill-500']
+  const ingredient = themeVariables['dessert-500']
   return {
     id: 'customPlugin',
     afterDraw(chart: Chart) {

@@ -34,16 +34,16 @@
             </v-col>
 
             <v-col cols="auto" class="flex-center">
-              <div class="legend bg-berry">
+              <div class="legend bg-berry-500">
                 <v-img src="/images/berries/berries.png" contain width="28" height="28" alt="Berries" title="Berries" />
               </div>
-              <span class="text-body-1 text-berry w-100 text-center font-weight-medium ml-2">
+              <span class="text-body-1 text-berry-500 w-100 text-center font-weight-medium ml-2">
                 {{ berryStrengthString }}
               </span>
             </v-col>
 
             <v-col v-if="stockpiledBerryStrength > 0" cols="auto" class="flex-center">
-              <div class="legend bg-berry-light">
+              <div class="legend bg-berry-400">
                 <v-img
                   style="filter: grayscale(100)"
                   src="/images/berries/berries.png"
@@ -54,17 +54,17 @@
                   title="Starting Berries"
                 />
               </div>
-              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-2"> Starting Berries </span>
-              <span class="text-body-1 text-berry-light text-center font-weight-medium ml-1">
+              <span class="text-body-1 text-berry-400 text-center font-weight-medium ml-2"> Starting Berries </span>
+              <span class="text-body-1 text-berry-400 text-center font-weight-medium ml-1">
                 {{ stockpiledBerryStrengthString }}
               </span>
             </v-col>
 
             <v-col cols="auto" class="flex-center">
-              <div class="legend bg-skill">
+              <div class="legend bg-skill-500">
                 <v-img src="/images/misc/skillproc.png" contain width="24" height="24" alt="Skills" title="Skills" />
               </div>
-              <span class="text-body-1 text-skill text-center font-weight-medium ml-2">
+              <span class="text-body-1 text-skill-500 text-center font-weight-medium ml-2">
                 {{ skillStrengthString }}
               </span>
             </v-col>
@@ -77,26 +77,26 @@
                 :style="[`height: ${isMobile ? '30' : '50'}px`]"
                 :sections="[
                   {
-                    color: teamStore.getCurrentTeam.recipeType,
+                    color: `${teamStore.getCurrentTeam.recipeType}-500`,
                     percentage: cookingPercentage,
                     sectionText: `${cookingPercentage}%`,
                     tooltipText: `${compactNumber(cookingStrength)} (${cookingPercentage}%)`
                   },
                   {
-                    color: 'berry',
+                    color: 'berry-500',
                     percentage: berryPercentage,
                     sectionText: `${berryPercentage}%`,
                     tooltipText: `${compactNumber(berryStrength)} (${berryPercentage}%)`
                   },
                   {
-                    color: 'berry-light',
+                    color: 'berry-400',
                     percentage: stockpiledBerryPercentage,
                     sectionText: `${stockpiledBerryPercentage}%`,
                     tooltipText: `${compactNumber(stockpiledBerryStrength)} (${stockpiledBerryPercentage}%)`
                   },
 
                   {
-                    color: 'skill',
+                    color: 'skill-500',
                     percentage: skillPercentage,
                     sectionText: `${skillPercentage}%`,
                     tooltipText: `${compactNumber(skillStrength)} (${skillPercentage}%)`
@@ -121,13 +121,13 @@
                 :style="[`height: ${isMobile ? '25' : '36'}px`]"
                 :sections="[
                   {
-                    color: 'berry',
+                    color: 'berry-500',
                     percentage: member.berryPercentage,
                     sectionText: member.berryValue,
                     tooltipText: `${member.berryValue} (${member.berryPercentage}%)`
                   },
                   {
-                    color: 'skill',
+                    color: 'skill-500',
                     percentage: member.skillPercentage,
                     sectionText: member.skillValue,
                     tooltipText: `${member.skillValue} (${member.skillPercentage}%)`
