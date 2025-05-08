@@ -21,6 +21,57 @@ async function initializeApp() {
   const darkTheme: ThemeDefinition = {
     dark: true,
     colors: {
+      'primary-200': '#ffedeb',
+      'primary-300': '#ffb3b1',
+      'primary-400': '#f87c7e',
+      'primary-500': '#e63946', //main, formerly "primary"
+      'primary-600': '#bb152c',
+      'primary-700': '#92001c',
+      'primary-800': '#54000c',
+      'primary-900': '#2c0003',
+
+      'secondary-200': '#fff5e5',
+      'secondary-300': '#ffdd94',
+      'secondary-400': '#ffca57',
+      'secondary-500': '#ffb81f', //main, formerly "strength"
+      'secondary-600': '#e09f00',
+      'secondary-700': '#9d6e00',
+      'secondary-800': '#5f4100',
+      'secondary-900': '#422c00',
+
+      'neutral-100': '#fafaff', //a good white for text on dark
+      'neutral-200': '#ebeaf5',
+      'neutral-300': '#cfceda',
+      'neutral-400': '#a5a2b7',
+      'neutral-500': '#817d95',
+      'neutral-600': '#5e5a7f', //formerly "secondary"
+      'neutral-700': '#403d58', //formerly "surface"
+      'neutral-800': '#231a33',
+      'neutral-900': '#191224', //formerly "background"
+      'neutral-990': '#0e0e10', //a good black for text on light
+
+      'error-200': '#ffefe5',
+      'error-300': '#ffd3b6',
+      'error-400': '#ffb688',
+      'error-500': '#ff8e39', //good contrast on neutral-600+
+      'error-600': '#c96304',
+      'error-700': '#bd5c00',
+
+      'skill-500': '#efd269',
+
+      'berry-400': '#daccf5', //formerly "berry-light"
+      'berry-500': '#b9a0e9', //main, formerly "berry"
+      'berry-600': '#a986ea', //formerly "berry-dark"
+
+      'salad-500': '#bcda62', //formerly "salad"
+      'salad-600': '#99c418', //formerly "salad-dark"
+
+      'dessert-500': '#fdb4ca', //main, formerly "dessert"
+      'dessert-600': '#fe8bae', //formerly "dessert-dark"
+
+      'curry-500': '#e7a888', //main, formerly "curry"
+      'curry-600': '#f59261', //formerly "curry-dark"
+
       background: '#191224',
       primary: '#E63946',
       secondary: '#5E5A7F',
@@ -30,8 +81,9 @@ async function initializeApp() {
       accent: '#9A95C3',
       strength: '#FFB81F',
 
-      admin: '#E63946',
-      supporter: '#FFB81F',
+      'role-admin': '#E63946',
+      'role-supporter': '#FFB81F',
+      'role-default': '#FAFAFF',
 
       natureUp: 'FF683A',
       natureDown: '2BA0ED',
@@ -48,12 +100,6 @@ async function initializeApp() {
       'salad-dark': '#99C418',
       'dessert-dark': '#FE8BAE',
 
-      ingredient: '#FDB4CA',
-      berry: '#B9A0E9',
-      'berry-light': '#DACCF5',
-      skill: '#EFD269',
-      all: '#ffffff',
-
       energy: '#31e571',
       help: '#ffbd2f',
 
@@ -63,14 +109,7 @@ async function initializeApp() {
       day: '#FF9D45',
       night: '#4896FF',
 
-      'pretty-purple': '#9771e0',
-
-      'error-3': '#E97612',
-
-      'on-background': '#ffffff',
-      'on-surface': '#ffffff',
-      'on-primary': '#ffffff',
-      'on-secondary': '#ffffff'
+      'pretty-purple': '#9771e0'
     }
   }
 

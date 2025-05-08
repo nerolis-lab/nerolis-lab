@@ -49,7 +49,12 @@ export const useUserStore = defineStore('user', {
     isAdminOrSupporter: (state) => state.role === Roles.Admin || state.role === Roles.Supporter,
     roleData: (state) => {
       return {
-        color: state.role === Roles.Admin ? 'primary' : state.role === Roles.Supporter ? 'supporter' : 'surface',
+        color:
+          state.role === Roles.Admin
+            ? 'role-admin'
+            : state.role === Roles.Supporter
+              ? 'role-supporter'
+              : 'role-default',
         icon: state.role === Roles.Admin ? 'mdi-crown' : state.role === Roles.Supporter ? 'mdi-heart' : '',
         text: state.role === Roles.Admin ? 'Admin' : state.role === Roles.Supporter ? 'Supporter' : ''
       }

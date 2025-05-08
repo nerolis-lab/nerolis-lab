@@ -1,7 +1,7 @@
 <template>
   <v-card color="surface" rounded="xl" class="fill-height d-flex flex-column">
     <v-row no-gutters class="flex-center">
-      <v-col cols="12" class="flex-center text-h6 text-skill font-weight-medium"> Skill </v-col>
+      <v-col cols="12" class="flex-center text-h6 text-skill-500 font-weight-medium"> Skill </v-col>
     </v-row>
 
     <v-row no-gutters class="flex-center fill-height">

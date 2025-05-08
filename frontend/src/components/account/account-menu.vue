@@ -95,23 +95,29 @@ export default defineComponent({
   },
   computed: {
     borderClass() {
-      return this.userStore.isAdmin ? 'admin-avatar' : this.userStore.isSupporter ? 'supporter-avatar' : ''
+      return `${this.userStore.role.toLowerCase()}-avatar`
     }
   }
 })
 </script>
 
 <style lang="scss" scoped>
-.supporter-avatar {
-  border-color: var(--v-theme-strength) !important;
+.v-avatar {
   border-width: 2px;
-  box-shadow: 0 0 10px rgba(var(--v-theme-strength), 0.6);
-}
 
-.admin-avatar {
-  border-color: var(--v-theme-admin) !important;
-  border-width: 2px;
-  box-shadow: 0 0 10px rgba(var(--v-theme-admin), 0.6);
+  &.supporter-avatar {
+    border-color: $role-supporter !important;
+    box-shadow: 0 0 10px rgba(var(--v-theme-role-supporter), 0.6);
+  }
+
+  &.admin-avatar {
+    border-color: $role-admin !important;
+    box-shadow: 0 0 10px rgba(var(--v-theme-role-admin), 0.6);
+  }
+
+  &.default-avatar {
+    border-color: $neutral-700 !important;
+  }
 }
 
 .role-title {

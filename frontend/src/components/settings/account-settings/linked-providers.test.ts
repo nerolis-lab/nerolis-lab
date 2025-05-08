@@ -77,7 +77,7 @@ describe('LinkedProviders', () => {
     // Discord is linked
     const discordButton = buttons[1]
     expect(discordButton.text()).toBe('UNLINK')
-    expect(discordButton.classes()).toContain('text-error-3')
+    expect(discordButton.classes()).toContain('text-error-500')
     expect(discordButton.classes()).toContain('v-btn--variant-outlined')
 
     // Google is unlinked

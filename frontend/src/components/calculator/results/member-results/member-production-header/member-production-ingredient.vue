@@ -1,7 +1,7 @@
 <template>
   <v-card color="surface" rounded="xl" class="fill-height d-flex flex-column">
     <v-row dense class="flex-center">
-      <v-col cols="12" class="flex-center text-h6 text-ingredient font-weight-medium">
+      <v-col cols="12" class="flex-center text-h6 text-dessert-500 font-weight-medium">
         {{ isMobile ? 'Ings' : 'Ingredients' }}
       </v-col>
     </v-row>

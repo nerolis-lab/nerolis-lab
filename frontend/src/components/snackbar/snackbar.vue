@@ -29,15 +29,15 @@ export function success(message: string, timeout = 5000) {
 }
 
 export function error(message: string, timeout = 5000) {
-  showSnackbar(message, 'error', timeout)
+  showSnackbar(message, 'error-700', timeout)
 }
 
 export function info(message: string, timeout = 5000) {
-  showSnackbar(message, 'info', timeout)
+  showSnackbar(message, 'neutral-700', timeout)
 }
 
 export function warning(message: string, timeout = 5000) {
-  showSnackbar(message, 'warning', timeout)
+  showSnackbar(message, 'error-400', timeout)
 }
 
 export default defineComponent({

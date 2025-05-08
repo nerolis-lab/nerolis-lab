@@ -441,7 +441,7 @@ export default defineComponent({
       return this.stockpiledBerries.reduce((acc, berry) => acc + Number(berry.amount), 0)
     },
     ingredientChipColor(): string {
-      return this.stockpiledIngredientsAmount > MAX_INGREDIENT_INVENTORY ? 'strength' : 'default'
+      return this.stockpiledIngredientsAmount > MAX_INGREDIENT_INVENTORY ? 'secondary-500' : 'default'
     },
     isSaveDisabled(): boolean {
       const ingredientsInvalid = this.stockpiledIngredients.some((ingredient) => {

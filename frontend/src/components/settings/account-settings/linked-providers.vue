@@ -15,7 +15,7 @@
         </div>
         <v-btn
           width="100px"
-          :color="userStore.isProviderLinked(provider.id) ? 'error-3' : 'secondary'"
+          :color="userStore.isProviderLinked(provider.id) ? 'error-500' : 'secondary'"
           :variant="userStore.isProviderLinked(provider.id) ? 'outlined' : 'elevated'"
           class="provider-action-btn"
           :disabled="userStore.isProviderLinked(provider.id) && userStore.numberOfLinkedProviders <= 1"
@@ -30,7 +30,7 @@
       </div>
 
       <div v-if="userStore.numberOfLinkedProviders <= 1" class="help-text fine-print">
-        <v-icon icon="mdi-information-outline" size="small" color="warning" class="mr-1" />
+        <v-icon icon="mdi-information-outline" size="small" color="error-500" class="mr-1" />
         You can't unlink your only login option. To delete your account entirely, use the button below.
       </div>
     </v-card-text>
@@ -47,7 +47,14 @@
           Are you sure you want to unlink your <strong>{{ getProviderName(providerToUnlink) }}</strong> account?
         </p>
 
-        <v-alert v-if="unlinkingActiveProvider()" type="warning" variant="tonal" density="compact" class="mt-3">
+        <v-alert
+          v-if="unlinkingActiveProvider()"
+          type="warning"
+          color="error-500"
+          variant="tonal"
+          density="compact"
+          class="mt-3"
+        >
           <p class="mb-0">Unlinking this provider will log you out.</p>
         </v-alert>
       </v-card-text>

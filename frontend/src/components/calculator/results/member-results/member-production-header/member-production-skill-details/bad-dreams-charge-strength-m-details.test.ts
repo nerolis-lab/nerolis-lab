@@ -59,7 +59,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   })
 
   it('displays the correct number of skill procs', () => {
-    const skillProcs = wrapper.find('.font-weight-medium.text-center')
+    const skillProcs = wrapper.find('.proc-count')
     expect(skillProcs.text()).toBe(
       MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
     )
@@ -71,7 +71,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   })
 
   it('displays the correct total skill value', () => {
-    const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center.ml-1').at(0)
+    const totalSkillValue = wrapper.findAll('.total-strength').at(0)
     const expectedValue = StrengthService.skillValue({
       skill: mockMember.member.pokemon.skill,
       amount: mockMember.production.skillAmount,
@@ -82,7 +82,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   })
 
   it('displays the correct total energy degraded', () => {
-    const totalEnergyDegraded = wrapper.find('.font-weight-medium.text-error-3.text-no-wrap.text-center.ml-1')
+    const totalEnergyDegraded = wrapper.find('.energy-degraded')
     expect(totalEnergyDegraded.text()).toContain('-24%')
   })
 })
