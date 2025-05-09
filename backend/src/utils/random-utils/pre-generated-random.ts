@@ -115,13 +115,13 @@ export function createPreGeneratedRandom(): PreGeneratedRandom {
 
   const randomFn = function (): number {
     const value = store.getRandomNumber(index);
-    index = index + 1;
+    index = (index + 1) % store.getSize();
     return value;
   };
 
   randomFn.getUint8 = function (): number {
     const value = store.getRawUint8(index);
-    index = index + 1;
+    index = (index + 1) % store.getSize();
     return value;
   };
 
