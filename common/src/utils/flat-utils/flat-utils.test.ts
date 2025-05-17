@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { BERRIES } from '../../domain/berry/berries';
-import { INGREDIENTS } from '../../domain/ingredient/ingredients';
+import { BERRIES } from '../../types/berry/berries';
+import { INGREDIENTS } from '../../types/ingredient/ingredients';
 import {
   emptyBerryInventoryFloat,
   emptyBerryInventoryInt,

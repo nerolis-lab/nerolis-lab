@@ -1,5 +1,5 @@
-import type { Produce } from '../../api/production/produce';
-import type { Pokemon } from '../../domain/pokemon';
+import type { Pokemon } from '../../types/pokemon';
+import type { Produce } from '../../types/production';
 import { calculateRibbonCarrySize, calculateSubskillCarrySize } from '../stat-utils/stat-utils';
 
 class CarrySizeUtilsImpl {

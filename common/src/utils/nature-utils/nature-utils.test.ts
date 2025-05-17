@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ADAMANT, MODEST, NATURES, RASH } from '../../domain/nature';
+import { ADAMANT, MODEST, NATURES, RASH } from '../../types/nature';
 import { getNature, getNatureNames, invertNatureFrequency } from './nature-utils';
 
 describe('getNature', () => {

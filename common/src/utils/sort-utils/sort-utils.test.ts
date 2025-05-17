@@ -18,8 +18,8 @@ import {
   TOGEKISS,
   VULPIX,
   VULPIX_ALOLAN
-} from '../../domain/pokemon';
-import type { Pokemon } from '../../domain/pokemon/pokemon';
+} from '../../types/pokemon';
+import type { Pokemon } from '../../types/pokemon/pokemon';
 import { sortPokemonByField } from './sort-utils';
 
 describe('sortPokemonByField', () => {

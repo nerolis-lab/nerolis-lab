@@ -9,6 +9,8 @@ import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import vueRecommended from 'eslint-plugin-vue';
+import pluginVueA11y from 'eslint-plugin-vuejs-accessibility';
+
 import globals from 'globals';
 
 export default typescriptEslint.config(
@@ -29,7 +31,7 @@ export default typescriptEslint.config(
       },
       sourceType: 'module'
     },
-    extends: [...vueRecommended.configs['flat/recommended']]
+    extends: [...pluginVueA11y.configs['flat/recommended'], ...vueRecommended.configs['flat/recommended']]
   },
 
   // backend-specific rules

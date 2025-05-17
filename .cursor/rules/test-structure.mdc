@@ -1,0 +1,61 @@
+---
+description: 
+globs: *.test.ts
+alwaysApply: false
+---
+# Test Structure
+
+Tests follow these conventions:
+
+## File Structure
+
+- Test files are placed in the same directory as the file they're testing
+- Test files are named with the pattern `<filename>.test.ts` (e.g., `simulation-utils.ts` → `simulation-utils.test.ts`)
+- No separate test directory structure is used
+
+## Testing Framework
+
+- Vitest is used as the testing framework
+- Tests are run with `npm run test` or `npm run test-watch` for watching mode
+
+## Self-Feedback Loop
+
+**IMPORTANT:** Before finalizing any test implementation, always run:
+
+```bash
+npm run test -- <filename>.test.ts
+```
+
+This ensures your tests are functional and correctly structured before committing. Example:
+
+```bash
+cd backend
+npm run test -- src/services/tier-list/tierlist-utils.test.ts
+```
+
+## Import Pattern
+
+Standard imports for tests:
+
+```typescript
+import { functionToTest } from './file-being-tested.js';
+import { describe, expect, it } from 'vitest';
+```
+
+## Test Structure
+
+Tests typically follow this pattern:
+
+```typescript
+describe('functionName', () => {
+  it('should do something specific', () => {
+    const testInput = [...];
+    
+    const result = functionToTest(testInput);
+    
+    expect(result).toBe(expectedOutput);
+  });
+});
+```
+
+Mock data for tests can be found in `src/vitest/mocks/` directory.

@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import type { IngredientSet } from '../../domain/ingredient';
-import type { PokemonInstanceExt } from '../../domain/instance/pokemon-instance';
-import type { Nature } from '../../domain/nature/nature';
-import type { Pokemon } from '../../domain/pokemon';
+import type { IngredientSet } from '../../types/ingredient';
+import type { PokemonInstanceExt } from '../../types/instance/pokemon-instance';
+import type { Nature } from '../../types/nature/nature';
+import type { Pokemon } from '../../types/pokemon';
 import {
   DREAM_SHARD_BONUS,
   ENERGY_RECOVERY_BONUS,
@@ -29,7 +29,7 @@ import {
   INVENTORY_S,
   RESEARCH_EXP_BONUS,
   SLEEP_EXP_BONUS
-} from '../../domain/subskill/subskills';
+} from '../../types/subskill/subskills';
 import { MathUtils } from '../../utils/math-utils';
 import { invertNatureFrequency } from '../../utils/nature-utils';
 import {

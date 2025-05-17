@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { HELPER_BOOST } from '../../domain/mainskill/mainskills/helper-boost';
-import type { Pokemon } from '../../domain/pokemon';
+import { HELPER_BOOST } from '../../types/mainskill/mainskills/helper-boost';
+import type { Pokemon } from '../../types/pokemon';
 import { mockPokemon } from '../../vitest/mocks/pokemon/mock-pokemon';
 import { evolvesFrom, evolvesInto } from './evolution-utils';
 

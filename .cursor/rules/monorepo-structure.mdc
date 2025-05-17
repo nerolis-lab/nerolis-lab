@@ -1,0 +1,12 @@
+---
+description: Folder structure
+globs: 
+alwaysApply: false
+---
+# Monorepo Structure
+
+This project is a monorepo with the following main directories:
+
+-   `[common/](mdc:)`: A shared library used by both the frontend and backend.
+-   `[backend/](mdc:)`: Contains the backend application.
+-   `[frontend/](mdc:)`: Contains the frontend application.

@@ -1,0 +1,14 @@
+---
+description: 
+globs: common/**
+alwaysApply: false
+---
+# Common Package (`common/`)
+
+The `[common/](mdc:common/common/common)` directory contains shared code used across the monorepo.
+
+-   It is written in TypeScript.
+-   It uses Rollup for bundling (see `[rollup.config.mjs](mdc:common/common/common/rollup.config.mjs)`).
+-   TypeScript configuration can be found in `[tsconfig.json](mdc:common/common/common/tsconfig.json)`.
+-   Dependencies are managed in `[package.json](mdc:common/common/common/package.json)`.
+-   This package is installed as a dependency in the `frontend` and `backend` packages.

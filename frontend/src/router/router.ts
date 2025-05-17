@@ -33,6 +33,7 @@ export enum RouteName {
 const CalculatorPage = () => import('@/pages/calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
+const TierlistPage = () => import('@/pages/tierlist/tierlist-page.vue')
 
 // User
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
@@ -75,6 +76,16 @@ const router = createRouter({
       path: '/recipes',
       name: RouteName.Recipes,
       component: RecipesPage
+    },
+    {
+      // TODO: we want to default to 60 camp, decided here?
+      path: '/tierlist',
+      name: 'Tierlist',
+      component: TierlistPage,
+      props: (route) => ({
+        level: route.query.level ? Number(route.query.level) : undefined,
+        camp: route.query.camp ? route.query.camp === 'true' : undefined
+      })
     },
     {
       path: '/settings',

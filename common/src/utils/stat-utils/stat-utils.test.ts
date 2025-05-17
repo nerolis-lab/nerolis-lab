@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { BRAVE, MILD, SASSY } from '../../domain/nature';
+import { BRAVE, MILD, SASSY } from '../../types/nature';
 import {
   ABSOL,
   CATERPIE,
@@ -17,7 +17,7 @@ import {
   RAIKOU,
   SYLVEON,
   TOGEKISS
-} from '../../domain/pokemon';
+} from '../../types/pokemon';
 import {
   BERRY_FINDING_S,
   ENERGY_RECOVERY_BONUS,
@@ -31,7 +31,7 @@ import {
   INVENTORY_S,
   SKILL_TRIGGER_M,
   SKILL_TRIGGER_S
-} from '../../domain/subskill/subskills';
+} from '../../types/subskill/subskills';
 import {
   calculateHelpSpeedSubskills,
   calculateIngredientPercentage,

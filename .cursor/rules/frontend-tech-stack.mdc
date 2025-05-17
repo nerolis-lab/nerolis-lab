@@ -1,0 +1,15 @@
+---
+description: 
+globs: frontend/**
+alwaysApply: false
+---
+# Frontend Tech Stack (`frontend/`)
+
+The `[frontend/](mdc:)` directory contains the frontend application.
+
+-   It is a Vue 3 application.
+-   It uses Vuetify as the component framework.
+-   It is built with TypeScript.
+-   Key configuration files (e.g., its own `package.json`, `vite.config.ts` or `vue.config.js`, `tsconfig.json`) and the main entry point (e.g., `src/main.ts`) are located within this directory.
+-   Most of the vue components use Options API, but we want to transition to composition API.
+-   The colors are defined in [colors.scss](frontend/assets/colors.scss)

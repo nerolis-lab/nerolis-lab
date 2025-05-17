@@ -1,0 +1,12 @@
+---
+description: 
+globs: backend/**
+alwaysApply: false
+---
+# Backend Tech Stack (`backend/`)
+
+The `[backend/](mdc:common/backend)` directory houses the backend application.
+
+-   It is an Express.js server.
+-   It is built with Node.js and TypeScript.
+-   Key configuration files (e.g., its own `[package.json](backend/package.json)`, `[tsconfig.json](backend/tsconfig.json)`) and the main entry point `[src/app.ts](backend/src/app.ts)` are located within this directory.

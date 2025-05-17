@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "name": "Project files",
+      "path": "."
+    },
+    {
       "name": "common",
       "path": "common"
     },
@@ -15,10 +19,6 @@
     {
       "name": "bot",
       "path": "bot"
-    },
-    {
-      "name": "Project files",
-      "path": "."
     }
   ],
   "settings": {

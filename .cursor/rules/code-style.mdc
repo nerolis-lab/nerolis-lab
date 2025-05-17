@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Code Style
+
+## Comments
+- Prefer self-documenting code with clear names over comments
+- Add comments only for complex algorithms or non-obvious approaches
+- Use JSDoc for public API documentation
+
+## Imports
+- Use type imports: `import type { Type } from 'module'` 
+- Function/component imports: `import { func } from 'module'`
+- Always use .js extension in imports
+
+## Logging
+- Use `logger` instead of `console.*` methods, e.g., `logger.log()` instead of `console.log()`
+
+## Naming
+- Use camelCase for variables, functions, methods
+- Use PascalCase for classes, interfaces, types
+- Use ALL_CAPS for constants
+- User kebab-case for file names
+- PascalCase for .vue file names and components
