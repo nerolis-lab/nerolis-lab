@@ -1,6 +1,6 @@
-import type { ProduceFlat } from '../../api/production/produce';
-import { TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
-import { TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
+import { TOTAL_NUMBER_OF_BERRIES } from '../../types/berry/berries';
+import { TOTAL_NUMBER_OF_INGREDIENTS } from '../../types/ingredient/ingredients';
+import type { ProduceFlat } from '../../types/production';
 
 export function initFloatArray(length: number) {
   return new Float32Array(length);

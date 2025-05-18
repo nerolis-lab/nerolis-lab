@@ -1,17 +1,17 @@
+import '../../prototype/logger';
 import type {
   Ingredient,
   IngredientIndexToFloatAmount,
   IngredientIndexToIntAmount,
   IngredientSet,
   IngredientSetSimple
-} from '../../domain/ingredient/ingredient';
+} from '../../types/ingredient/ingredient';
 import {
   INGREDIENTS_WITH_LOCKED,
   LOCKED_INGREDIENT,
   TOTAL_NUMBER_OF_INGREDIENTS
-} from '../../domain/ingredient/ingredients';
-import type { Pokemon } from '../../domain/pokemon/pokemon';
-import '../../prototype/logger';
+} from '../../types/ingredient/ingredients';
+import type { Pokemon } from '../../types/pokemon/pokemon';
 import { emptyIngredientInventoryFloat, emptyIngredientInventoryInt } from '../flat-utils';
 import { MathUtils } from '../math-utils/math-utils';
 import { capitalize } from '../string-utils/string-utils';

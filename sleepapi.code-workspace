@@ -1,6 +1,10 @@
 {
   "folders": [
     {
+      "name": "Root",
+      "path": "."
+    },
+    {
       "name": "common",
       "path": "common"
     },
@@ -15,10 +19,6 @@
     {
       "name": "bot",
       "path": "bot"
-    },
-    {
-      "name": "Project files",
-      "path": "."
     }
   ],
   "settings": {
@@ -56,6 +56,9 @@
     },
     "[typescript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.editorAssociations": {
+      "*.mdc": "default"
     }
   },
   "extensions": {

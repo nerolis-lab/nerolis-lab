@@ -41,6 +41,7 @@ describe('SettingsPage', () => {
   it('renders desktop navigation when not mobile', () => {
     vi.mocked(useBreakpoint).mockReturnValue({
       isMobile: ref(false),
+      isTinyMobile: ref(false),
       isLargeDesktop: ref(true),
       viewportWidth: ref(375)
     })
@@ -53,6 +54,7 @@ describe('SettingsPage', () => {
   it('renders mobile navigation when on mobile', () => {
     vi.mocked(useBreakpoint).mockReturnValue({
       isMobile: ref(true),
+      isTinyMobile: ref(false),
       isLargeDesktop: ref(false),
       viewportWidth: ref(375)
     })
@@ -73,6 +75,7 @@ describe('SettingsPage', () => {
     // Ensure we're in desktop mode to see the list items
     vi.mocked(useBreakpoint).mockReturnValue({
       isMobile: ref(false),
+      isTinyMobile: ref(false),
       isLargeDesktop: ref(true),
       viewportWidth: ref(1024)
     })
