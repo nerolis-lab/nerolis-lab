@@ -1,6 +1,6 @@
-import { AuthProvider } from '../../../api/login/auth-provider';
-import type { LoginResponse } from '../../../api/login/login';
-import { Roles } from '../../../domain/user/roles';
+import type { LoginResponse } from '../../../types/login';
+import { AuthProvider } from '../../../types/login/auth-provider';
+import { Roles } from '../../../types/user/roles';
 
 export function loginResponse(attrs?: Partial<LoginResponse>): LoginResponse {
   return {

@@ -1,11 +1,11 @@
 import type { ScheduledEvent } from '@src/domain/event/event.js';
 // import { TieredPokemonCombinationContribution } from '@src/routes/tierlist-router/tierlist-router.js';
-import type { PokemonWithTiering } from '@src/services/tier-list/cooking-tier-list.js';
 import { getMeal } from '@src/utils/meal-utils/meal-utils.js';
 import type {
   DetailedProduce,
   IngredientSet,
   PokemonWithIngredients,
+  PokemonWithTiering,
   SolveRecipeResponse,
   Summary,
   SurplusIngredients,

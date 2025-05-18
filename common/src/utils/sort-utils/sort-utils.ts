@@ -1,4 +1,4 @@
-import type { Pokemon } from '../../domain/pokemon';
+import type { Pokemon } from '../../types/pokemon';
 
 type sortOrder = 'asc' | 'desc';
 

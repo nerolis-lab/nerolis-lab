@@ -1,4 +1,4 @@
-import type { Berry } from '../../../domain';
+import type { Berry } from '../../../types';
 
 export function mockBerry(attrs?: Partial<Berry>): Berry {
   return {

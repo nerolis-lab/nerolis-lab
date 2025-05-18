@@ -1,4 +1,4 @@
-import type { BerrySet, BerrySetSimple } from '../../../domain';
+import type { BerrySet, BerrySetSimple } from '../../../types';
 import { mockBerry } from './mock-berry';
 
 export function mockBerrySet(attrs?: Partial<BerrySet>): BerrySet {

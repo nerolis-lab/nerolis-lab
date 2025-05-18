@@ -13,16 +13,18 @@ import {
   hashPokemonSetIndexed,
   pokedexToMembers
 } from '@src/services/solve/utils/solve-utils.js';
+import { createTierlistIndex } from '@src/services/tier-list/tierlist-utils.js';
 import { joinPath } from '@src/utils/file-utils/file-utils.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import type {
-  IngredientSetSimple,
   Pokemon,
+  PokemonWithFinalContribution,
+  PokemonWithTiering,
   Recipe,
   SolveSettingsExt,
   TeamMemberExt,
-  TeamMemberSettings,
+  Tier,
   TierlistSettings,
   Time
 } from 'sleepapi-common';
@@ -57,32 +59,6 @@ export interface PokemonWithRecipeContributionsRaw {
   pokemonWithSettings: SetCoverPokemonSetupWithSettings;
   contributions: RecipeContribution[];
 }
-
-export interface PokemonWithRecipeContributions {
-  pokemonWithSettings: {
-    pokemon: string;
-    ingredientList: IngredientSetSimple[];
-    totalIngredients: Float32Array;
-    critMultiplier: number;
-    averageWeekdayPotSize: number;
-    settings: TeamMemberSettings;
-  };
-  contributions: {
-    coverage: number;
-    skillValue: number;
-    score: number;
-    recipe: string;
-    team: { pokemon: string }[];
-  }[];
-}
-export interface PokemonWithFinalContribution extends PokemonWithRecipeContributions {
-  score: number;
-}
-export interface PokemonWithTiering extends PokemonWithFinalContribution {
-  tier: Tier;
-  diff?: number;
-}
-export type Tier = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
 // TODO: can we make nrOfMeals to take into consideration a query param? More meals more flexible
 const NUMBER_OF_MEALS = 3;
@@ -612,7 +588,9 @@ class CookingTierlistImpl {
       { tier: 'E', bucket: 0.9 }
     ];
 
-    const previousTierlistIndices = this.createTierlistIndex(previous);
+    const previousRanks = createTierlistIndex(previous.map((p) => p.pokemonWithSettings.pokemon));
+    const currentRanks = createTierlistIndex(current.map((c) => c.pokemonWithSettings.pokemon));
+
     let threshold = current[0].score;
 
     const tieredEntries: PokemonWithTiering[] = [];
@@ -625,35 +603,16 @@ class CookingTierlistImpl {
         currentTier = tiers.at(0);
       }
 
-      const previousIndex: number | undefined = previousTierlistIndices.get(
-        this.hashPokemonSetSimple(entry.pokemonWithSettings.pokemon, entry.pokemonWithSettings.ingredientList)
-      );
+      const currentRank = currentRanks.get(entry.pokemonWithSettings.pokemon);
+      const previousRank = previousRanks.get(entry.pokemonWithSettings.pokemon);
 
       const tier = currentTier?.tier ?? 'F';
-      const diff = previousIndex && previousIndex - i;
+      const diff = previousRank !== undefined && currentRank !== undefined ? previousRank - currentRank : undefined;
 
       tieredEntries.push({ ...entry, tier, diff });
     }
 
     return tieredEntries;
-  }
-
-  private createTierlistIndex(previous: PokemonWithTiering[]): Map<string, number> {
-    const indexMap = new Map<string, number>();
-
-    previous.forEach((entry, index) => {
-      const hash = this.hashPokemonSetSimple(
-        entry.pokemonWithSettings.pokemon,
-        entry.pokemonWithSettings.ingredientList
-      );
-      indexMap.set(hash, index);
-    });
-
-    return indexMap;
-  }
-
-  private hashPokemonSetSimple(pokemon: string, ingredientList: IngredientSetSimple[]) {
-    return `${pokemon}${ingredientList.map((ing) => ing.name + ing.amount).join('')}`;
   }
 }
 

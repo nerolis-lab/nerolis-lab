@@ -1,8 +1,8 @@
-import { createBaseSkill } from '../../../domain';
-import { BELUE } from '../../../domain/berry/berries';
-import { BALANCED_GENDER } from '../../../domain/gender/gender';
-import { SLOWPOKE_TAIL } from '../../../domain/ingredient/ingredients';
-import type { Pokemon } from '../../../domain/pokemon/pokemon';
+import { createBaseSkill } from '../../../types';
+import { BELUE } from '../../../types/berry/berries';
+import { BALANCED_GENDER } from '../../../types/gender/gender';
+import { SLOWPOKE_TAIL } from '../../../types/ingredient/ingredients';
+import type { Pokemon } from '../../../types/pokemon/pokemon';
 
 export const mockMainskill = createBaseSkill({
   amount: [0],

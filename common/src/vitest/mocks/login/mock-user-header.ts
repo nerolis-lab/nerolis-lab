@@ -1,5 +1,5 @@
-import { AuthProvider } from '../../../api/login/auth-provider';
-import type { UserHeader } from '../../../api/login/user-header';
+import type { UserHeader } from '../../../types/login';
+import { AuthProvider } from '../../../types/login/auth-provider';
 
 export function userHeader(attrs?: Partial<UserHeader>): UserHeader {
   return {

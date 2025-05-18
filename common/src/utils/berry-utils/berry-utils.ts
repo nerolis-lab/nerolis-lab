@@ -1,6 +1,6 @@
-import { BERRIES, TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
-import type { Berry, BerrySet } from '../../domain/berry/berry';
-import type { Pokemon } from '../../domain/pokemon/pokemon';
+import { BERRIES, TOTAL_NUMBER_OF_BERRIES } from '../../types/berry/berries';
+import type { Berry, BerrySet } from '../../types/berry/berry';
+import type { Pokemon } from '../../types/pokemon/pokemon';
 import { MathUtils } from '../math-utils/math-utils';
 
 export const BERRY_ID_LOOKUP: Record<string, number> = Object.fromEntries(
