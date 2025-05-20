@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.4.4...v2.5.0) (2025-05-20)
+
+
+### Features
+
+* color rework, img accessibility ([4a238d4](https://github.com/nerolis-lab/nerolis-lab/commit/4a238d4b9da2cb5ebf3d2173912bce1e57d538c3))
+
 ## [2.4.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.4.3...v2.4.4) (2025-05-20)
 
 ## [2.4.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.4.2...v2.4.3) (2025-05-20)
