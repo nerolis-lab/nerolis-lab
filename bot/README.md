@@ -17,6 +17,18 @@ As mentioned in the [previous section](#sleep-api---bot) you'll need to create a
 
 |
 
+## Available Commands
+
+### `/ping`
+Responds with "Pong!" to check if the bot is responsive.
+
+### `/help`
+Displays a list of available commands and their descriptions.
+
+### `/recipe <recipename>`
+Fetches and displays information about a specific recipe.
+-   `recipename`: The name of the recipe you want to look up (e.g., "Warm Moomoo Milk").
+
 ## Running the bot in development mode
 
 Everytime a file in the folder is saved, the bot will be automatically recompiled and restarted using [nodemon][nodemon].
