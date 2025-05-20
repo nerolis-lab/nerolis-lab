@@ -22,11 +22,11 @@
   "dependencies": {
     "discord.js": "^14.19.3",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^5.1.0",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "@types/express": "^4.17.21",
+    "@types/express": "^5.0.2",
     "@types/morgan": "^1.9.9",
     "jest": "^29.7.0",
     "nodemon": "^3.1.0",
