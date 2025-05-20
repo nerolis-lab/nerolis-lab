@@ -21,6 +21,7 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^14.20.0",
+    "common": "file:../common",
     "dotenv": "^16.4.5",
     "express": "^5.1.0",
     "morgan": "^1.10.0"
