@@ -1,7 +1,9 @@
-import * as help from './help';
-import * as ping from './ping';
+import { command as helpCommand } from './help';
+import { command as pingCommand } from './ping';
+import { command as recipeCommand } from './recipe';
 
 export const commands = {
-  ping,
-  help
+  ping: pingCommand,
+  help: helpCommand,
+  recipe: recipeCommand,
 };
