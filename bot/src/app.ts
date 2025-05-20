@@ -55,11 +55,22 @@ client.on(Events.InteractionCreate, async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   const { commandName } = interaction;
-  if (commands[commandName as keyof typeof commands]) {
+  const command = commands[commandName as keyof typeof commands];
+
+  if (!command) {
+    console.error(`No command matching ${commandName} was found.`);
     try {
-      await commands[commandName as keyof typeof commands].execute(interaction);
-    } catch (error) {
-      console.error(`Error executing command ${commandName}:`, error);
+      await interaction.reply({ content: `Command not found: ${commandName}`, ephemeral: true });
+    } catch (replyError) {
+      console.error('Error trying to reply about unknown command:', replyError);
+    }
+    return;
+  }
+
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(`Error executing command ${commandName}:`, error);
 
       // Reply with error if the interaction hasn't been replied to yet
       if (interaction.replied || interaction.deferred) {
