@@ -55,3 +55,12 @@ export async function upsertUserSettings(user: DBUser, potSize: number) {
   });
   return;
 }
+
+export async function updateFriendCode(user: DBUser, newFriendCode: string) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { google_id, discord_id, patreon_id, ...rest } = await UserDAO.update({
+    ...user,
+    friend_code: newFriendCode
+  });
+  return rest;
+}

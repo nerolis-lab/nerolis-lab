@@ -7,6 +7,9 @@ import type { Request, Response } from 'express';
 import type {
   PokemonInstanceWithMeta,
   UpdateUserRequest,
+  PokemonInstanceWithMeta,
+  UpdateFriendCodeRequest,
+  UpdateUserRequest,
   UpsertAreaBonusRequest,
   UpsertRecipeLevelRequest,
   UserSettingsRequest
@@ -254,6 +257,44 @@ class UserRouterImpl {
         } catch (err) {
           logger.error(err as Error);
           res.status(500).send('Something went wrong');
+        }
+      }
+    );
+
+    /**
+     * @summary Updates the user's friend code.
+     * @tags User
+     * @param request The Express request object.
+     * @body newFriendCode The new friend code.
+     * @returns 200 if successful.
+     * @returns 400 if the request body is invalid.
+     * @returns 401 if the user is unauthorized.
+     * @returns 403 if the user is forbidden from performing this action.
+     * @returns 500 if an internal server error occurs.
+     */
+    BaseRouter.router.put(
+      '/user/friend-code',
+      validateAuthHeader,
+      async (req: RequestBody<UpdateFriendCodeRequest>, res: Response) => {
+        try {
+          logger.log('Entered /user/friend-code PUT');
+
+          const user = (req as AuthenticatedRequest).user;
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          // TODO: move to controller and implement logic
+          const data = await controller.updateFriendCode(user, req.body);
+
+          res.json(data);
+        } catch (err) {
+          logger.error(err as Error);
+          if (err instanceof Error && err.message === 'User not found') {
+            res.status(401).send('Unauthorized');
+          } else {
+            res.status(500).send('Something went wrong');
+          }
         }
       }
     );
