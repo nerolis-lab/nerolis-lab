@@ -17,7 +17,7 @@ export enum RouteName {
   SettingsSite = 'Site Settings',
 
   Profile = 'Profile',
-  // Friends = 'Friends',
+  Friends = 'Friends', // Added Friends to RouteName enum
 
   Beta = 'Beta',
 
@@ -37,7 +37,8 @@ const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
 // User
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
-// const FriendsPage = () => import('@/pages/friends/friends-page.vue')
+import FriendsPage from '@/pages/friends/friends-page.vue'
+import { useUserStore } from '@/stores/user-store' // Added import for useUserStore
 
 // Misc
 const BetaPage = () => import('@/pages/beta/beta.vue')
@@ -104,11 +105,24 @@ const router = createRouter({
       name: RouteName.Profile,
       component: ProfilePage
     },
-    // {
-    //   path: '/friends',
-    //   name: RouteName.Friends,
-    //   component: FriendsPage
-    // },
+    {
+      path: '/friends',
+      name: RouteName.Friends, // Using the enum value
+      component: FriendsPage,
+      meta: { requiresAuth: true },
+      beforeEnter: (to, from, next) => {
+        const userStore = useUserStore();
+        if (userStore.isLoggedIn) {
+          next();
+        } else {
+          // Redirect to login, preserving the intended path
+          // NOTE: No generic 'Login' route exists. Redirecting to Home.
+          // A more robust solution might involve a dedicated login page or flow.
+          console.warn("User not logged in, redirecting to Home. Consider a dedicated login page.");
+          next({ name: RouteName.Home, query: { redirect: to.fullPath } });
+        }
+      }
+    },
     {
       path: '/beta',
       name: RouteName.Beta,
