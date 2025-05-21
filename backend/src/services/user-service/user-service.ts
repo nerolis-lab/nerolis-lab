@@ -2,11 +2,17 @@ import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
 import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { FriendService } from '@src/services/friend-service/friend-service.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
 import type { IslandShortName, UpdateUserRequest, UserSettingsResponse } from 'sleepapi-common';
 import { MAX_POT_SIZE } from 'sleepapi-common';
 
-export async function updateUser(user: DBUser, newSettings: Partial<UpdateUserRequest>) {
+export async function updateUser(user: DBUser, newSettings: UpdateUserRequest) {
+  if (newSettings.friend_code) {
+    // will throw if invalid user/patreon status/friend code format
+    await FriendService.validateFriendCodeUpdate(user, newSettings.friend_code);
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { google_id, discord_id, patreon_id, ...rest } = await UserDAO.update({ ...user, ...newSettings });
   return rest;
@@ -53,5 +59,4 @@ export async function upsertUserSettings(user: DBUser, potSize: number) {
     updated: { fk_user_id: user.id, pot_size: potSize },
     filter: { fk_user_id: user.id }
   });
-  return;
 }

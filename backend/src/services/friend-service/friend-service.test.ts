@@ -1,11 +1,30 @@
 import { FriendDAO } from '@src/database/dao/friend/friend-dao.js';
 import { NotificationDAO } from '@src/database/dao/notification/notification-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { BadRequestError, ForbiddenError } from '@src/domain/error/api/api-error.js';
 import { DatabaseInsertError } from '@src/domain/error/database/database-error.js';
 import { FriendService } from '@src/services/friend-service/friend-service.js';
+import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { NotificationType, Roles, uuid } from 'sleepapi-common';
-import { describe, expect, it } from 'vitest';
+import { mocks } from '@src/vitest/index.js';
+import { NotificationType, Roles, uuid, type Logger } from 'sleepapi-common';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+beforeEach(() => {
+  global.logger = {
+    debug: vi.fn() as unknown,
+    log: vi.fn() as unknown,
+    info: vi.fn() as unknown,
+    warn: vi.fn() as unknown,
+    error: vi.fn() as unknown
+  } as Logger;
+});
+
+vi.mock('@src/services/user-service/login-service/providers/patreon/patreon-provider.js', () => ({
+  PatreonProvider: {
+    isSupporter: vi.fn()
+  }
+}));
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
@@ -34,6 +53,42 @@ describe('FriendService', () => {
       const user = await createUser('Lonely User', 'FC3');
       const result = await FriendService.getFriends(user);
       expect(result.friends).toEqual([]);
+    });
+  });
+
+  describe('validateFriendCodeUpdate', () => {
+    it('should successfully validate for a supporter with a valid code', async () => {
+      const user = mocks.dbUser({ patreon_id: 'patreon-id' });
+      vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({ role: Roles.Supporter, patronSince: null });
+
+      await expect(FriendService.validateFriendCodeUpdate(user, 'VALID6')).resolves.toBeUndefined();
+    });
+
+    it('should throw BadRequestError for invalid friend code format', async () => {
+      const user = mocks.dbUser({ patreon_id: 'patreon-id' });
+
+      await expect(FriendService.validateFriendCodeUpdate(user, 'short')).rejects.toThrow(BadRequestError);
+      await expect(FriendService.validateFriendCodeUpdate(user, 'INVALID!')).rejects.toThrow(BadRequestError);
+    });
+
+    it('should throw ForbiddenError if patreon_id is missing', async () => {
+      const user = mocks.dbUser({ patreon_id: undefined });
+
+      await expect(FriendService.validateFriendCodeUpdate(user, 'VALID6')).rejects.toThrow(ForbiddenError);
+    });
+
+    it('should throw ForbiddenError if user is not a supporter', async () => {
+      const user = mocks.dbUser({ patreon_id: 'patreon-id', role: Roles.Default });
+      vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({ role: Roles.Default, patronSince: null });
+
+      await expect(FriendService.validateFriendCodeUpdate(user, 'VALID6')).rejects.toThrow(ForbiddenError);
+    });
+
+    it('should allow admin to update friend code', async () => {
+      const user = mocks.dbUser({ patreon_id: 'patreon-id', role: Roles.Admin });
+      vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({ role: Roles.Admin, patronSince: null });
+
+      await expect(FriendService.validateFriendCodeUpdate(user, 'ADMIN6')).resolves.toBeUndefined();
     });
   });
 

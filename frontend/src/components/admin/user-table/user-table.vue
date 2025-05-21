@@ -4,6 +4,7 @@
     <v-data-table
       v-if="!loading"
       key="key"
+      v-model:expanded="expanded"
       :items="filteredUsers"
       :headers="headers"
       item-value="external_id"
@@ -40,6 +41,14 @@
         <span>{{ DateUtils.formatDate(item.created_at ?? new Date().toISOString()) }}</span>
       </template>
 
+      <template #expanded-row="{ columns, item }">
+        <tr>
+          <td :colspan="columns.length">
+            <user-admin-options :user="item" :save-function="saveFriendCode"></user-admin-options>
+          </td>
+        </tr>
+      </template>
+
       <template #no-data>
         <v-alert type="error">No users found.</v-alert>
       </template>
@@ -47,10 +56,15 @@
 
     <v-skeleton-loader v-else :loading="loading" type="table"></v-skeleton-loader>
   </v-card-text>
+  <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="3000">
+    {{ snackbarText }}
+  </v-snackbar>
 </template>
 
 <script lang="ts">
+import UserAdminOptions from '@/components/admin/user-table/UserAdminOptions.vue'
 import { AdminService } from '@/services/admin/admin-service'
+import { UserService } from '@/services/user/user-service'
 import { DateUtils } from '@/services/utils/date/date-utils'
 import { userAvatar } from '@/services/utils/image-utils'
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
@@ -60,11 +74,19 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 
 export default defineComponent({
   name: 'UserTable',
+  components: {
+    UserAdminOptions
+  },
   setup() {
     const avatarStore = useAvatarStore()
     const users = ref<User[]>([])
     const loading = ref(false)
     const search = ref('')
+    const expanded = ref<string[]>([])
+
+    const snackbar = ref(false)
+    const snackbarText = ref('')
+    const snackbarColor = ref('success')
 
     // Table headers
     const headers = ref<DataTableHeader[]>([
@@ -86,6 +108,26 @@ export default defineComponent({
         console.error('Failed to fetch users:', error)
       } finally {
         loading.value = false
+      }
+    }
+
+    const saveFriendCode = async (user: User) => {
+      try {
+        await UserService.updateUser({
+          external_id: user.external_id,
+          friend_code: user.friend_code
+        })
+
+        await fetchUsers()
+
+        snackbarText.value = 'Friend code updated successfully'
+        snackbarColor.value = 'success'
+        snackbar.value = true
+      } catch (error) {
+        snackbarText.value = 'Failed to update friend code'
+        snackbarColor.value = 'error'
+        snackbar.value = true
+        console.error('Failed to update friend code:', error)
       }
     }
 
@@ -113,7 +155,12 @@ export default defineComponent({
       search,
       filteredUsers,
       avatarStore,
-      DateUtils
+      DateUtils,
+      saveFriendCode,
+      snackbar,
+      snackbarText,
+      snackbarColor,
+      expanded
     }
   }
 })

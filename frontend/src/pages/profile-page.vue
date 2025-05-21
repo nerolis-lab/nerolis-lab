@@ -109,6 +109,10 @@ export default defineComponent({
     },
     async updateAvatar(newAvatar: string) {
       await UserService.updateUser({ avatar: newAvatar })
+    },
+    // TODO: currently not used
+    async updateFriendCode(newFriendCode: string) {
+      await UserService.updateUser({ friend_code: newFriendCode })
     }
   },
   computed: {

@@ -174,12 +174,17 @@ describe('GoogleProvider', () => {
   describe('updateLastLogin', () => {
     it('should update the last login date', async () => {
       const googleId = 'mockSub';
-      const user = await UserDAO.insert(mocks.dbUser({ google_id: googleId }));
-      const initialDate = new Date();
+      const initialDate = new Date('2023-01-01T00:00:00.000Z');
+      const user = await UserDAO.insert(mocks.dbUser({ google_id: googleId, last_login: initialDate }));
+
+      const initialUser = await UserDAO.find({ google_id: googleId });
+      expect(initialUser?.last_login).toEqual(initialDate);
+
       await GoogleProvider.updateLastLogin(user);
 
       const updatedUser = await UserDAO.find({ google_id: googleId });
       expect(updatedUser?.last_login).not.toEqual(initialDate);
+      expect(updatedUser?.last_login).toBeInstanceOf(Date);
     });
   });
 });

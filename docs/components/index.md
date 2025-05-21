@@ -78,7 +78,7 @@ The shared library containing:
 
 1. **Source Data**: New Pokémon Sleep data becomes available
 2. **Database Migration**: Backend updates database schema/data
-3. **Cache Invalidation**: Simply bumping the version in [version.ts](../../common/src/domain/version.ts) invalidates the user's client cache
+3. **Cache Invalidation**: Simply bumping the version in [version.ts](../../common/src/types/version.ts) invalidates the user's client cache
 4. **Notification**: Admins have the option to send out news notifications on the frontend site
 
 ### Frontend ↔ Backend
