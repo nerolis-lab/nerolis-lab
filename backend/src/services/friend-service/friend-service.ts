@@ -3,11 +3,13 @@ import { FriendDAO } from '@src/database/dao/friend/friend-dao.js';
 import { NotificationDAO } from '@src/database/dao/notification/notification-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { BadRequestError, ForbiddenError } from '@src/domain/error/api/api-error.js';
 import { DatabaseInsertError } from '@src/domain/error/database/database-error.js';
+import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
 import type { Filter } from '@src/utils/database-utils/find-filter.js';
 import { inArray, like } from '@src/utils/database-utils/find-filter.js';
 import type { BaseUser, GetFriendsResponse } from 'sleepapi-common';
-import { NotificationType, uuid } from 'sleepapi-common';
+import { NotificationType, Roles, uuid } from 'sleepapi-common';
 
 class FriendServiceImpl {
   public async getFriends(user: DBUser): Promise<GetFriendsResponse> {
@@ -86,6 +88,25 @@ class FriendServiceImpl {
       fk_receiver_id: user.id,
       template: NotificationType.FriendRequest
     });
+  }
+
+  public async validateFriendCodeUpdate(user: DBUser, newFriendCode: string) {
+    logger.info(`User ${user.name} updating friend code to ${newFriendCode}`);
+    if (newFriendCode.length !== 6 || !/^[A-Z0-9]{6}$/.test(newFriendCode)) {
+      throw new BadRequestError('Invalid friend code format. Must be 6 characters, A-Z, 0-9.');
+    }
+
+    if (!user.patreon_id) {
+      throw new ForbiddenError('Patreon account not linked. Supporter status cannot be verified.');
+    }
+
+    const patreonInfo = await PatreonProvider.isSupporter({
+      patreon_id: user.patreon_id,
+      previousRole: user.role
+    });
+    if (patreonInfo.role !== Roles.Supporter && patreonInfo.role !== Roles.Admin) {
+      throw new ForbiddenError('User is not a Patreon supporter.');
+    }
   }
 }
 

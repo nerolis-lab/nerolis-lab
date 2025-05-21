@@ -12,7 +12,9 @@ serverAxios.interceptors.request.use(
   async (config) => {
     const userStore = useUserStore()
     if (userStore.auth) {
-      await userStore.refresh()
+      if (!config.skipRefresh) {
+        await userStore.refresh()
+      }
       const userHeader: UserHeader = {
         Authorization: `Bearer ${userStore.auth.tokens.accessToken}`,
         Provider: userStore.auth.activeProvider,
