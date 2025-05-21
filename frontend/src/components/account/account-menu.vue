@@ -47,13 +47,13 @@
         <v-list-item :to="'/profile'" :disabled="!userStore.loggedIn" prepend-icon="mdi-account-box" @click="toggleMenu"
           >Profile</v-list-item
         >
-        <!-- <v-list-item
+        <v-list-item
           :to="'/friends'"
           :disabled="!userStore.loggedIn"
           prepend-icon="mdi-account-heart"
           @click="toggleMenu"
           >Friends</v-list-item
-        > -->
+        >
       </v-list>
 
       <v-divider />

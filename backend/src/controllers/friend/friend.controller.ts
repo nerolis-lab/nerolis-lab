@@ -17,4 +17,8 @@ export default class FriendController {
   public async declineRequest(user: DBUser, senderCode: string) {
     return FriendService.declineRequest(user, senderCode);
   }
+
+  public async removeFriend(user: DBUser, friendCodeToRemove: string) {
+    return FriendService.removeFriend(user, friendCodeToRemove);
+  }
 }

@@ -40,6 +40,34 @@ class FriendServiceImpl {
       return false
     }
   }
+
+  public async sendFriendRequest(friendCode: string): Promise<boolean> {
+    try {
+      await serverAxios.post(`friend/request/${friendCode}`)
+
+      const friendStore = useFriendStore()
+      await friendStore.sync()
+
+      return true
+    } catch (err) {
+      logger.error('Could not send friend request', err)
+      return false
+    }
+  }
+
+  public async removeFriend(friendCode: string): Promise<boolean> {
+    try {
+      await serverAxios.delete(`friend/remove/${friendCode}`)
+
+      const friendStore = useFriendStore()
+      await friendStore.sync()
+
+      return true
+    } catch (err) {
+      logger.error('Could not remove friend', err)
+      return false
+    }
+  }
 }
 
 export const FriendService = new FriendServiceImpl()

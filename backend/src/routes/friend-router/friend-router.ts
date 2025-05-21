@@ -3,6 +3,12 @@ import type { AuthenticatedRequest } from '@src/middleware/authorization-middlew
 import { validateAuthHeader } from '@src/middleware/authorization-middleware.js';
 import { BaseRouter } from '@src/routes/base-router.js';
 import type { Request, Response } from 'express';
+import {
+  UserNotFoundError,
+  CannotRemoveSelfError,
+  FriendshipNotFoundError,
+} from '@src/services/friend-service/friend-service.js';
+import { SleepAPIError } from 'sleepapi-common';
 
 class FriendRouterImpl {
   public async register(controller: FriendController) {
@@ -82,6 +88,38 @@ class FriendRouterImpl {
         } catch (err) {
           logger.error(err as Error);
           res.status(500).send('Something went wrong');
+        }
+      }
+    );
+
+    BaseRouter.router.delete(
+      '/friend/remove/:friend_code',
+      validateAuthHeader,
+      async (req: Request<{ friend_code: string }>, res: Response) => {
+        try {
+          logger.log(`Entered /friend/remove/${req.params.friend_code}`);
+
+          const user = (req as AuthenticatedRequest).user;
+          if (!user) {
+            // This case should ideally be caught by validateAuthHeader,
+            // but as a safeguard:
+            logger.error('User not found in authenticated request');
+            throw new Error('User not found');
+          }
+
+          await controller.removeFriend(user, req.params.friend_code);
+          res.status(204).send();
+        } catch (err) {
+          logger.error(err as Error);
+          if (err instanceof UserNotFoundError || err instanceof FriendshipNotFoundError) {
+            res.status(404).send(err.message);
+          } else if (err instanceof CannotRemoveSelfError) {
+            res.status(400).send(err.message);
+          } else if (err instanceof SleepAPIError) {
+            res.status(err.statusCode ?? 500).send(err.message);
+          } else {
+            res.status(500).send('Something went wrong');
+          }
         }
       }
     );

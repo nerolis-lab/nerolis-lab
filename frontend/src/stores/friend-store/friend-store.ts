@@ -23,6 +23,26 @@ export const useFriendStore = defineStore('friend', {
 
       this.loading = false
       return this.friends
+    },
+    async sendFriendRequest(friendCode: string): Promise<boolean> {
+      this.loading = true;
+      try {
+        const result = await FriendService.sendFriendRequest(friendCode);
+        // FriendService.sendFriendRequest calls sync() internally, which will update this.friends
+        return result;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async removeFriend(friendCode: string): Promise<boolean> {
+      this.loading = true;
+      try {
+        const result = await FriendService.removeFriend(friendCode);
+        // FriendService.removeFriend calls sync() internally, which will update this.friends
+        return result;
+      } finally {
+        this.loading = false;
+      }
     }
   },
   persist: true
