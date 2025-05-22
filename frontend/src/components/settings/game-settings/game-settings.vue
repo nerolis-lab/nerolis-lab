@@ -134,7 +134,7 @@ async function updatePotSize() {
 
   debounceTimer = setTimeout(async () => {
     loadingPotSize.value = true
-    await UserService.upsertUserSettings(userStore.potSize)
+    await UserService.upsertUserSettings({ potSize: userStore.potSize })
     teamStore.clearCalculatorCache()
     loadingPotSize.value = false
     debounceTimer = undefined

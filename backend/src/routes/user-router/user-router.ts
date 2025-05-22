@@ -86,7 +86,7 @@ class UserRouterImpl {
             throw new Error('User not found');
           }
 
-          await controller.upsertUserSettings(user, req.body.potSize);
+          await controller.upsertUserSettings(user, req.body);
 
           res.sendStatus(204);
         } catch (err) {

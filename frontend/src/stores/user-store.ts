@@ -25,6 +25,7 @@ export interface UserState {
   areaBonus: Record<IslandShortName, number>
   potSize: number
   supporterSince: string | null
+  randomizeNicknames: boolean
 }
 
 export const useUserStore = defineStore('user', {
@@ -38,7 +39,8 @@ export const useUserStore = defineStore('user', {
       areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>,
       potSize: MAX_POT_SIZE,
       auth: null,
-      supporterSince: null
+      supporterSince: null,
+      randomizeNicknames: true
     }
   },
   getters: {
@@ -85,6 +87,7 @@ export const useUserStore = defineStore('user', {
       this.avatar = userSettings.avatar
       this.role = userSettings.role
       this.potSize = userSettings.potSize
+      this.randomizeNicknames = userSettings.randomizeNicknames
 
       for (const [area, bonus] of Object.entries(userSettings.areaBonuses)) {
         this.areaBonus[area as IslandShortName] = bonus

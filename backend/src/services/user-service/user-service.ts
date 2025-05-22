@@ -1,10 +1,11 @@
 import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
+import type { DBUserSettings } from '@src/database/dao/user-settings/user-settings-dao.js';
 import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { FriendService } from '@src/services/friend-service/friend-service.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
-import type { IslandShortName, UpdateUserRequest, UserSettingsResponse } from 'sleepapi-common';
+import type { IslandShortName, UpdateUserRequest, UserSettingsRequest, UserSettingsResponse } from 'sleepapi-common';
 import { MAX_POT_SIZE } from 'sleepapi-common';
 
 export async function updateUser(user: DBUser, newSettings: UpdateUserRequest) {
@@ -43,6 +44,7 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
 
   const userSettings = await UserSettingsDAO.find({ fk_user_id: user.id });
   const potSize = userSettings?.pot_size ?? MAX_POT_SIZE;
+  const randomizeNicknames = userSettings?.randomize_nicknames ?? true;
 
   return {
     name: user.name,
@@ -50,13 +52,22 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
     role: user.role,
     areaBonuses,
     potSize,
-    supporterSince
+    supporterSince,
+    randomizeNicknames
   };
 }
 
-export async function upsertUserSettings(user: DBUser, potSize: number) {
+export async function upsertUserSettings(user: DBUser, settings: UserSettingsRequest) {
+  const existingSettings = await UserSettingsDAO.find({ fk_user_id: user.id });
+
+  const dbSettings: Omit<DBUserSettings, 'id' | 'version'> = {
+    fk_user_id: user.id,
+    pot_size: settings.potSize ?? existingSettings?.pot_size ?? MAX_POT_SIZE,
+    randomize_nicknames: settings.randomizeNicknames ?? existingSettings?.randomize_nicknames ?? true
+  };
+
   await UserSettingsDAO.upsert({
-    updated: { fk_user_id: user.id, pot_size: potSize },
+    updated: dbSettings,
     filter: { fk_user_id: user.id }
   });
 }

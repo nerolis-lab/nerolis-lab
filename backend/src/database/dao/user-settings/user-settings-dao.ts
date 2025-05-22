@@ -7,7 +7,8 @@ export const DBUserSettingsSchema = Type.Composite([
   DBWithVersionedIdSchema,
   Type.Object({
     fk_user_id: Type.Number(),
-    pot_size: Type.Number({ minimum: MIN_POT_SIZE, maximum: MAX_POT_SIZE })
+    pot_size: Type.Number({ minimum: MIN_POT_SIZE, maximum: MAX_POT_SIZE }),
+    randomize_nicknames: Type.Boolean()
   })
 ]);
 

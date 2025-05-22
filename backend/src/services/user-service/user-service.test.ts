@@ -138,7 +138,8 @@ describe('getUserSettings', () => {
         AREA2: 20
       },
       potSize: MAX_POT_SIZE,
-      supporterSince: null
+      supporterSince: null,
+      randomizeNicknames: true
     });
   });
 
@@ -172,7 +173,8 @@ describe('getUserSettings', () => {
       role: Roles.Supporter,
       areaBonuses: {},
       potSize: MAX_POT_SIZE,
-      supporterSince: '2024-01-01'
+      supporterSince: '2024-01-01',
+      randomizeNicknames: true
     });
 
     expect(PatreonProvider.isSupporter).toHaveBeenCalledWith({ patreon_id: user.patreon_id, previousRole: user.role });
@@ -191,7 +193,8 @@ describe('getUserSettings', () => {
     await UserDAO.insert(user);
     await UserSettingsDAO.insert({
       fk_user_id: user.id,
-      pot_size: 150
+      pot_size: 150,
+      randomize_nicknames: true
     });
 
     const settings = await getUserSettings(user);
@@ -202,7 +205,8 @@ describe('getUserSettings', () => {
       role: Roles.Default,
       areaBonuses: {},
       potSize: 150,
-      supporterSince: null
+      supporterSince: null,
+      randomizeNicknames: true
     });
   });
 });
@@ -218,13 +222,14 @@ describe('upsertUserSettings', () => {
     });
 
     await UserDAO.insert(user);
-    await upsertUserSettings(user, 150);
+    await upsertUserSettings(user, { potSize: 150 });
 
     const settings = await UserSettingsDAO.find({ fk_user_id: user.id });
     expect(settings).toEqual(
       expect.objectContaining({
         fk_user_id: user.id,
-        pot_size: 150
+        pot_size: 150,
+        randomize_nicknames: true
       })
     );
   });
@@ -241,16 +246,18 @@ describe('upsertUserSettings', () => {
     await UserDAO.insert(user);
     await UserSettingsDAO.insert({
       fk_user_id: user.id,
-      pot_size: 100
+      pot_size: 100,
+      randomize_nicknames: true
     });
 
-    await upsertUserSettings(user, 200);
+    await upsertUserSettings(user, { potSize: 200 });
 
     const settings = await UserSettingsDAO.find({ fk_user_id: user.id });
     expect(settings).toEqual(
       expect.objectContaining({
         fk_user_id: user.id,
-        pot_size: 200
+        pot_size: 200,
+        randomize_nicknames: true
       })
     );
   });
