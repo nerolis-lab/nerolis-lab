@@ -108,14 +108,15 @@
         </v-row>
 
         <v-row dense class="flex-nowrap flex-center">
-          <v-col v-for="(subskill, i) in memberWithProduction.member.subskills" :key="i">
+          <v-col v-for="(subskillItem, i) in memberWithProduction.member.subskills" :key="i">
             <v-card
-              :color="rarityColor(subskill.subskill)"
+              :color="rarityColor(subskillItem.subskill)"
               height="20px"
-              :style="subskill.level > memberWithProduction.member.level ? 'opacity: 40%' : ''"
+              :style="subskillItem.level > memberWithProduction.member.level ? 'opacity: 40%' : ''"
               class="text-body-2 text-center"
+              @click="openSubskillMenu(memberWithProduction, index)"
             >
-              {{ isMobile ? subskill.subskill.shortName : subskill.subskill.name }}
+              {{ isMobile ? subskillItem.subskill.shortName : subskillItem.subskill.name }}
             </v-card>
           </v-col>
         </v-row>
@@ -161,13 +162,24 @@
       </template>
     </v-window-item>
   </v-window>
+
+  <v-dialog v-model="subskillMenuOpen" max-width="550px" persistent>
+    <SubskillMenu
+      v-if="editingMember && editingMember.member"
+      :current-subskills="editingMember.member.subskills"
+      :available-subskills="subskill"
+      @update-subskills="handleUpdateSubskills"
+      @cancel="handleCancelSubskillMenu"
+    />
+  </v-dialog>
 </template>
 
 <script lang="ts">
 import { generateIvData, generateIvTextPlugin, ivOptions } from '@/components/calculator/results/chart-data/iv-chart'
 import MemberProductionHeader from '@/components/calculator/results/member-results/member-production-header/member-production-header.vue'
 import MemberStats from '@/components/calculator/results/member-results/member-stats/member-stats.vue'
-import SkillBreakdown from '@/components/calculator/results/member-results/skill-breakdown/skill-breakdown.vue'
+// import SkillBreakdown from '@/components/calculator/results/member-results/skill-breakdown/skill-breakdown.vue'
+import SubskillMenu from '@/components/pokemon-input/menus/subskill-menu.vue'
 import TeamImpact from '@/components/calculator/results/member-results/team-impact/team-impact.vue'
 import RadarChart from '@/components/custom-components/charts/radar-chart.vue'
 import NatureModifiers from '@/components/pokemon-input/nature-modifiers.vue'
@@ -182,7 +194,7 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
 import type { MemberProductionExt, PerformanceDetails } from '@/types/member/instanced'
-import { MathUtils, type MemberProductionBase } from 'sleepapi-common'
+import { MathUtils, type MemberProductionBase, type PokemonInstanceExt, subskill, type SubskillInstanceExt } from 'sleepapi-common'
 import { computed, defineComponent, nextTick, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
 import { useTheme } from 'vuetify'
 
@@ -195,7 +207,8 @@ export default defineComponent({
     MemberProductionHeader,
     TeamImpact,
     MemberStats,
-    SkillBreakdown
+    // SkillBreakdown,
+    SubskillMenu
   },
   setup() {
     const teamStore = useTeamStore()
@@ -203,6 +216,11 @@ export default defineComponent({
     const userStore = useUserStore()
     const chartClipPath = ref('polygon(0% -10%, 50% -10%, 150% 100%, 0% 100%)')
     const { isMobile } = useBreakpoint()
+
+    const subskillMenuOpen = ref(false)
+    const editingMember = ref<MemberProductionExt | null | undefined>(null)
+    const editingMemberIndex = ref(0)
+
     const currentMember = computed(() => {
       return teamStore.getCurrentTeam.production?.members[teamStore.getCurrentTeam.memberIndex] ?? null
     })
@@ -271,6 +289,47 @@ export default defineComponent({
       window.removeEventListener('resize', updateClipPath)
     })
 
+    const openSubskillMenu = (memberWithProd: MemberProductionExt, indexInWindow: number) => {
+      editingMember.value = memberWithProd
+
+      // Find the actual index in the teamStore members array
+      const actualIndex = teamStore.getCurrentTeam.members.findIndex(
+        (id) => id === memberWithProd.member.externalId
+      )
+      if (actualIndex !== -1) {
+        editingMemberIndex.value = actualIndex
+      } else {
+        // Fallback or error handling if member not found, though this should ideally not happen
+        // For now, let's use the window index, but this needs careful consideration
+        // Or perhaps throw an error / log a warning
+        console.warn('Editing member not found in teamStore, using window index as fallback for editingMemberIndex')
+        editingMemberIndex.value = teamStore.getCurrentTeam.memberIndex // Or indexInWindow if it's more reliable
+      }
+      subskillMenuOpen.value = true
+    }
+
+    const handleUpdateSubskills = (updatedSubskills: SubskillInstanceExt[]) => {
+      if (!editingMember.value || !editingMember.value.member) {
+        console.error('Error: editingMember is not defined when updating subskills.')
+        return
+      }
+
+      const updatedMember: PokemonInstanceExt = {
+        ...editingMember.value.member,
+        subskills: updatedSubskills
+      }
+
+      teamStore.updateTeamMember(updatedMember, editingMemberIndex.value)
+
+      subskillMenuOpen.value = false
+      editingMember.value = null
+    }
+
+    const handleCancelSubskillMenu = () => {
+      subskillMenuOpen.value = false
+      editingMember.value = null
+    }
+
     return {
       teamStore,
       pokemonStore,
@@ -285,7 +344,13 @@ export default defineComponent({
       ivData,
       ivOptions,
       ivPlugins,
-      MathUtils
+      MathUtils,
+      subskillMenuOpen,
+      editingMember,
+      openSubskillMenu,
+      subskill,
+      handleUpdateSubskills,
+      handleCancelSubskillMenu
     }
   },
   computed: {
