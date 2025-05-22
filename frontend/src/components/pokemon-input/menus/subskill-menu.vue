@@ -260,7 +260,8 @@ export default {
     }
   },
   mounted() {
-    this.selectedSubskills = this.currentSubskills
+    // deep copy to avoid mutating the original subskills without even saving
+    this.selectedSubskills = JSON.parse(JSON.stringify(this.currentSubskills))
   },
   methods: {
     subskillForLevel(subskillLevel: number): Subskill | undefined {

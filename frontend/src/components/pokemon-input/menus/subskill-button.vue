@@ -1,5 +1,6 @@
 <template>
   <v-badge
+    v-if="subskill"
     class="w-100"
     location="top right"
     :offset-y="2"
