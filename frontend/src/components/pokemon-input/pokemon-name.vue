@@ -87,7 +87,7 @@ export default {
       }
     },
     randomizeName() {
-      return randomName(12, this.pokemonInstance.gender)
+      return randomName(this.pokemonInstance.pokemon, 12, this.pokemonInstance.gender)
     }
   }
 }
