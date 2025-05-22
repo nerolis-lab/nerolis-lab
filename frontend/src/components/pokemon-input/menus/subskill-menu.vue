@@ -259,8 +259,15 @@ export default {
       return this.availableLevels.find((level) => !usedLevels.includes(level))
     }
   },
-  mounted() {
-    this.selectedSubskills = this.currentSubskills
+  watch: {
+    currentSubskills: {
+      handler(newVal: SubskillInstanceExt[]) {
+        // Use a deep copy method. JSON.parse(JSON.stringify()) is a common way for simple data.
+        this.selectedSubskills = newVal ? JSON.parse(JSON.stringify(newVal)) : []
+      },
+      immediate: true, // This ensures it runs when the component is created/dialog opened
+      deep: true // Important for arrays of objects
+    }
   },
   methods: {
     subskillForLevel(subskillLevel: number): Subskill | undefined {
