@@ -175,7 +175,7 @@ describe('GameSettings', () => {
 
       // API should be called once with the final value
       expect(UserService.upsertUserSettings).toHaveBeenCalledTimes(1)
-      expect(UserService.upsertUserSettings).toHaveBeenCalledWith(39)
+      expect(UserService.upsertUserSettings).toHaveBeenCalledWith({ potSize: 39 })
     })
 
     it('cancels pending debounced calls when unmounted', async () => {

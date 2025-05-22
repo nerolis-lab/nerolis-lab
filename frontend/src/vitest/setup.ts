@@ -2,10 +2,10 @@ import { darkTheme } from '@/assets/theme'
 import router from '@/router/router'
 import { config } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { defineComponent, h } from 'vue'
 import ResizeObserver from 'resize-observer-polyfill'
 import { beforeEach } from 'vitest'
 import 'vitest-canvas-mock'
+import { defineComponent, h } from 'vue'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -54,6 +54,19 @@ const intersectionObserverMock = () => ({
   disconnect: () => null
 })
 vi.stubGlobal('IntersectionObserver', intersectionObserverMock)
+
+// Mock matchMedia for Vuetify components
+const matchMediaMock = (query: string) => ({
+  matches: false,
+  media: query,
+  onchange: null,
+  addListener: vi.fn(),
+  removeListener: vi.fn(),
+  addEventListener: vi.fn(),
+  removeEventListener: vi.fn(),
+  dispatchEvent: vi.fn()
+})
+vi.stubGlobal('matchMedia', matchMediaMock)
 
 // Add missing window properties that components might need
 if (typeof window !== 'undefined') {

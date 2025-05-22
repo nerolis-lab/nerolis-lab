@@ -63,8 +63,8 @@ class UserServiceImpl {
     return response.data
   }
 
-  public async upsertUserSettings(potSize: number) {
-    const response = await serverAxios.put<UserSettingsRequest>('user/settings', { potSize })
+  public async upsertUserSettings(settings: UserSettingsRequest) {
+    const response = await serverAxios.put<UserSettingsRequest>('user/settings', settings)
     return response.data
   }
 }

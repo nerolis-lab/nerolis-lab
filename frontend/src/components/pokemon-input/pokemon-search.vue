@@ -54,7 +54,7 @@ export default {
 
       const pokemonInstance: PokemonInstanceExt = {
         pokemon: pkmn,
-        name: randomName(12, gender),
+        name: randomName(pkmn, 12, gender),
         level: 60,
         ribbon: 0,
         carrySize: CarrySizeUtils.baseCarrySize(pkmn),

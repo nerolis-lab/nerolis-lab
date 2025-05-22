@@ -371,7 +371,7 @@ export const useTeamStore = defineStore('team', {
         version: 0,
         saved: false,
         externalId: uuid.v4(),
-        name: randomName(12, existingMember.gender)
+        name: randomName(existingMember.pokemon, 12, existingMember.gender)
       }
       await this.updateTeamMember(duplicatedMember, openSlotIndex)
       this.loadingMembers[openSlotIndex] = false

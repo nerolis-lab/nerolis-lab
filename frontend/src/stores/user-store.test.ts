@@ -24,6 +24,7 @@ describe('User Store', () => {
         "friendCode": null,
         "name": "Guest",
         "potSize": 69,
+        "randomizeNicknames": true,
         "role": "default",
         "supporterSince": null,
       }
@@ -204,6 +205,7 @@ describe('User Store', () => {
         "friendCode": "some friend code",
         "name": "some name",
         "potSize": 69,
+        "randomizeNicknames": true,
         "role": "default",
         "supporterSince": null,
       }
@@ -225,7 +227,8 @@ describe('User Store', () => {
         taupe: 60
       },
       potSize: 25,
-      supporterSince: '2024-01-01'
+      supporterSince: '2024-01-01',
+      randomizeNicknames: false
     })
 
     expect(userStore.$state).toMatchInlineSnapshot(`
@@ -244,6 +247,7 @@ describe('User Store', () => {
         "friendCode": null,
         "name": "new name",
         "potSize": 25,
+        "randomizeNicknames": false,
         "role": "admin",
         "supporterSince": "2024-01-01",
       }
@@ -294,6 +298,7 @@ describe('User Store', () => {
         "friendCode": null,
         "name": "Guest",
         "potSize": 69,
+        "randomizeNicknames": true,
         "role": "default",
         "supporterSince": null,
       }

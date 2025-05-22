@@ -99,7 +99,7 @@ describe('upsertUserSettings', () => {
   it('should call server to upsert user settings with pot size', async () => {
     const potSize = 2000
 
-    await UserService.upsertUserSettings(potSize)
+    await UserService.upsertUserSettings({ potSize })
 
     expect(serverAxios.put).toHaveBeenCalledWith('user/settings', { potSize })
   })
@@ -110,7 +110,7 @@ describe('upsertUserSettings', () => {
 
     vi.mocked(serverAxios.put).mockResolvedValueOnce({ data: mockResponse })
 
-    const result = await UserService.upsertUserSettings(potSize)
+    const result = await UserService.upsertUserSettings({ potSize })
 
     expect(result).toEqual(mockResponse)
   })

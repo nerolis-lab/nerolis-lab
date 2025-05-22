@@ -2,7 +2,8 @@ import type { Roles } from '../../types/user/roles';
 import type { GetAreaBonusesResponse } from './user-area';
 
 export interface UserSettingsRequest {
-  potSize: number;
+  potSize?: number;
+  randomizeNicknames?: boolean;
 }
 
 export interface UserSettingsResponse {
@@ -12,4 +13,5 @@ export interface UserSettingsResponse {
   areaBonuses: GetAreaBonusesResponse;
   potSize: number;
   supporterSince: string | null;
+  randomizeNicknames: boolean;
 }

@@ -20,7 +20,7 @@ describe('Database migration', async () => {
     const migrationFilesFS: string[] = await fs.readdir(migrationsDir);
 
     expect(migrationFilesDB).toEqual(migrationFilesFS);
-    expect(migrationFilesDB).toHaveLength(10);
+    expect(migrationFilesDB).toHaveLength(11);
   });
 
   it('shall migrate database down', async () => {

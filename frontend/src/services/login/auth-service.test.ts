@@ -1,29 +1,14 @@
 import serverAxios from '@/router/server-axios'
 import { AuthService } from '@/services/login/auth-service'
 import { AuthProvider } from 'sleepapi-common'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-const mockedServerAxios = vi.mocked(serverAxios, true)
-
-vi.mock('@/router/server-axios', () => {
-  return {
-    default: {
-      get: vi.fn().mockResolvedValue({ data: {} }),
-      post: vi.fn().mockResolvedValue({ data: {} }),
-      put: vi.fn().mockResolvedValue({ data: {} }),
-      delete: vi.fn().mockResolvedValue({ data: {} }),
-      patch: vi.fn().mockResolvedValue({ data: {} }),
-      interceptors: {
-        request: {
-          use: vi.fn()
-        },
-        response: {
-          use: vi.fn()
-        }
-      }
-    }
+vi.mock('@/router/server-axios', () => ({
+  default: {
+    post: vi.fn().mockResolvedValue({ data: {} }),
+    delete: vi.fn().mockResolvedValue({ data: {} })
   }
-})
+}))
 
 describe('AuthService', () => {
   afterEach(() => {
@@ -34,11 +19,12 @@ describe('AuthService', () => {
     it('should call signup endpoint with authorization code', async () => {
       await AuthService.login('some-auth-code', AuthProvider.Google)
 
-      expect(mockedServerAxios.post).toHaveBeenCalledWith(
+      expect(serverAxios.post).toHaveBeenCalledWith(
         '/login/signup',
         {
           authorization_code: 'some-auth-code',
-          provider: 'google'
+          provider: 'google',
+          redirect_uri: undefined
         },
         { skipRefresh: true }
       )
@@ -47,7 +33,7 @@ describe('AuthService', () => {
     it('should include redirect_uri when provided', async () => {
       await AuthService.login('some-auth-code', AuthProvider.Google, 'http://localhost:3000/callback')
 
-      expect(mockedServerAxios.post).toHaveBeenCalledWith(
+      expect(serverAxios.post).toHaveBeenCalledWith(
         '/login/signup',
         {
           authorization_code: 'some-auth-code',
@@ -63,11 +49,12 @@ describe('AuthService', () => {
     it('should call refresh endpoint with refresh token', async () => {
       await AuthService.refresh('refresh-token', AuthProvider.Google)
 
-      expect(mockedServerAxios.post).toHaveBeenCalledWith(
+      expect(serverAxios.post).toHaveBeenCalledWith(
         '/login/refresh',
         {
           refresh_token: 'refresh-token',
-          provider: 'google'
+          provider: 'google',
+          redirect_uri: undefined
         },
         { skipRefresh: true }
       )
@@ -76,7 +63,7 @@ describe('AuthService', () => {
     it('should include redirect_uri when provided', async () => {
       await AuthService.refresh('refresh-token', AuthProvider.Google, 'http://localhost:3000/callback')
 
-      expect(mockedServerAxios.post).toHaveBeenCalledWith(
+      expect(serverAxios.post).toHaveBeenCalledWith(
         '/login/refresh',
         {
           refresh_token: 'refresh-token',
@@ -88,7 +75,7 @@ describe('AuthService', () => {
     })
 
     it('should throw an error if refresh fails', async () => {
-      mockedServerAxios.post.mockRejectedValueOnce(new Error('Request failed'))
+      vi.mocked(serverAxios.post).mockRejectedValueOnce(new Error('Request failed'))
 
       await expect(AuthService.refresh('something', AuthProvider.Google)).rejects.toThrow('Request failed')
     })
@@ -98,11 +85,11 @@ describe('AuthService', () => {
     it('should call unlink endpoint with provider', async () => {
       await AuthService.unlinkProvider(AuthProvider.Google)
 
-      expect(mockedServerAxios.delete).toHaveBeenCalledWith('login/unlink/google')
+      expect(serverAxios.delete).toHaveBeenCalledWith('login/unlink/google')
     })
 
     it('should throw an error if unlink fails', async () => {
-      mockedServerAxios.delete.mockRejectedValueOnce(new Error('Request failed'))
+      vi.mocked(serverAxios.delete).mockRejectedValueOnce(new Error('Request failed'))
 
       await expect(AuthService.unlinkProvider(AuthProvider.Google)).rejects.toThrow('Request failed')
     })
@@ -112,11 +99,11 @@ describe('AuthService', () => {
     it('should call delete endpoint to delete user', async () => {
       await AuthService.delete()
 
-      expect(mockedServerAxios.delete).toHaveBeenCalledWith('/user')
+      expect(serverAxios.delete).toHaveBeenCalledWith('/user')
     })
 
     it('should throw an error if delete fails', async () => {
-      mockedServerAxios.delete.mockRejectedValueOnce(new Error('Request failed'))
+      vi.mocked(serverAxios.delete).mockRejectedValueOnce(new Error('Request failed'))
 
       await expect(AuthService.delete()).rejects.toThrow('Request failed')
     })
