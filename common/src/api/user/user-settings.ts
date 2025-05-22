@@ -3,6 +3,7 @@ import type { GetAreaBonusesResponse } from './user-area';
 
 export interface UserSettingsRequest {
   potSize: number;
+  useRandomName?: boolean;
 }
 
 export interface UserSettingsResponse {
@@ -12,4 +13,5 @@ export interface UserSettingsResponse {
   areaBonuses: GetAreaBonusesResponse;
   potSize: number;
   supporterSince: string | null;
+  useRandomName: boolean;
 }
