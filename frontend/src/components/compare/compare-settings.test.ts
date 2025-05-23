@@ -1,6 +1,7 @@
 import CompareSettings from '@/components/compare/compare-settings.vue'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -79,5 +80,71 @@ describe('CompareSettings', () => {
     deleteModalButton.click()
 
     expect(comparisonStore.$reset).toHaveBeenCalled()
+  })
+
+  it('applies camp-disabled class when camp is false', async () => {
+    const comparisonStore = useComparisonStore()
+    const teamStore = useTeamStore()
+
+    // Create a mock team with camp disabled
+    const mockTeam = {
+      index: 0,
+      memberIndex: 0,
+      name: 'Test Team',
+      members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
+      favoredBerries: [],
+      camp: false,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      stockpiledIngredients: [],
+      stockpiledBerries: [],
+      recipeType: 'curry' as const,
+      version: 0,
+      memberIvs: {},
+      production: undefined
+    }
+
+    teamStore.teams = [mockTeam]
+    comparisonStore.teamIndex = 0
+
+    await wrapper.vm.$nextTick()
+
+    const campIcons = wrapper.findAll('.v-img')
+    const campIcon = campIcons.find((img) => img.html().includes('/images/misc/camp.png'))
+    expect(campIcon).toBeDefined()
+    expect(campIcon?.classes()).toContain('camp-disabled')
+  })
+
+  it('does not apply camp-disabled class when camp is true', async () => {
+    const comparisonStore = useComparisonStore()
+    const teamStore = useTeamStore()
+
+    // Create a mock team with camp enabled
+    const mockTeam = {
+      index: 0,
+      memberIndex: 0,
+      name: 'Test Team',
+      members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
+      favoredBerries: [],
+      camp: true,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      stockpiledIngredients: [],
+      stockpiledBerries: [],
+      recipeType: 'curry' as const,
+      version: 0,
+      memberIvs: {},
+      production: undefined
+    }
+
+    teamStore.teams = [mockTeam]
+    comparisonStore.teamIndex = 0
+
+    await wrapper.vm.$nextTick()
+
+    const campIcons = wrapper.findAll('.v-img')
+    const campIcon = campIcons.find((img) => img.html().includes('/images/misc/camp.png'))
+    expect(campIcon).toBeDefined()
+    expect(campIcon?.classes()).not.toContain('camp-disabled')
   })
 })
