@@ -17,7 +17,13 @@
                   :src="islandImage({ favoredBerries: comparisonStore.currentTeam.favoredBerries, background: false })"
                 >
                 </v-img>
-                <v-img src="/images/misc/camp.png" width="36" height="36" class="ml-2" />
+                <v-img
+                  src="/images/misc/camp.png"
+                  width="36"
+                  height="36"
+                  class="ml-2"
+                  :class="{ 'camp-disabled': !camp }"
+                />
                 <v-avatar color="white" size="36" class="ml-2">
                   <v-progress-circular
                     :model-value="
@@ -174,6 +180,11 @@ export default defineComponent({
     teamMenu: false,
     isClearMenuOpen: false
   }),
+  computed: {
+    camp() {
+      return this.comparisonStore.currentTeam?.camp
+    }
+  },
   methods: {
     selectTeam(teamIndex: number) {
       this.comparisonStore.teamIndex = teamIndex
@@ -214,5 +225,9 @@ export default defineComponent({
 .clock-face {
   position: absolute;
   z-index: 2;
+}
+
+.camp-disabled {
+  filter: grayscale(100%);
 }
 </style>
