@@ -2,16 +2,6 @@
 @use '@/assets/common';
 @use '@/assets/animations';
 
-html {
-  font-family: $body-font-family, sans-serif !important;
-
-  @each $typoOption in $typoOptions {
-    .#{$typoOption} {
-      font-family: $body-font-family, sans-serif !important;
-    }
-  }
-}
-
 a.simple {
   color: $berry-light;
   transition: unset !important;
