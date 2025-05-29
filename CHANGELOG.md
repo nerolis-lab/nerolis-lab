@@ -1,3 +1,10 @@
+## [2.5.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.5.5...v2.5.6) (2025-05-29)
+
+
+### Bug Fixes
+
+* Add a self-hosted Chakra Petch font as fallback when CDN fails ([cf8c1cb](https://github.com/nerolis-lab/nerolis-lab/commit/cf8c1cb9555a86422aa962e5e7655f1104c13988))
+
 ## [2.5.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.5.4...v2.5.5) (2025-05-21)
 
 ## [2.5.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.5.3...v2.5.4) (2025-05-21)
