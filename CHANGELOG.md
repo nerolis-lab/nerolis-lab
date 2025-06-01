@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.5.6...v2.6.0) (2025-06-01)
+
+
+### Features
+
+* show snackbar on cache clear ([16d9769](https://github.com/nerolis-lab/nerolis-lab/commit/16d976976ae51500275819db9ac4ce18423b976b))
+
 ## [2.5.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.5.5...v2.5.6) (2025-05-29)
 
 
