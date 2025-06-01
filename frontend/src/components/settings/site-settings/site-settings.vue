@@ -25,10 +25,12 @@
 import { clearCacheKeepLogin } from '@/stores/store-service'
 import { useVersionStore } from '@/stores/version-store/version-store'
 import SettingsCard from '../settings-card.vue'
+import { success } from '@/components/snackbar/snackbar.vue'
 const versionStore = useVersionStore()
 
 function clear() {
   clearCacheKeepLogin()
+  success('Cache cleared successfully')
 }
 </script>
 
