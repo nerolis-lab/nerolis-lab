@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.6.0...v2.7.0) (2025-06-01)
+
+
+### Features
+
+* Add Goatcounter to Sleepapi ([fd8c9ee](https://github.com/nerolis-lab/nerolis-lab/commit/fd8c9ee15f982bb8aeb7e69da2511a97a4e9abe0))
+
 # [2.6.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.5.6...v2.6.0) (2025-06-01)
 
 
