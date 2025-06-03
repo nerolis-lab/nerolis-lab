@@ -37,6 +37,7 @@ class PokemonInstanceUtilsImpl {
         { ...pokemon.ingredient30[0], level: 30 },
         { ...pokemon.ingredient60[0], level: 60 }
       ],
+      sneakySnacking: false,
       rp: 0,
       version: 0,
       ...attrs,
@@ -101,7 +102,8 @@ class PokemonInstanceUtilsImpl {
         level: instancedIngredient.level,
         ingredient: getIngredient(instancedIngredient.name),
         amount: instancedIngredient.amount
-      }))
+      })),
+      sneakySnacking: pokemonInstance.sneakySnacking
     }
     return {
       ...pokemonWithoutRP,
@@ -139,7 +141,8 @@ class PokemonInstanceUtilsImpl {
         level: instancedIngredient.level,
         name: instancedIngredient.ingredient.name,
         amount: instancedIngredient.amount
-      }))
+      })),
+      sneakySnacking: instancedPokemon.sneakySnacking
     }
   }
 
@@ -160,6 +163,7 @@ class PokemonInstanceUtilsImpl {
       level: pokemonInstance.level,
       ribbon: pokemonInstance.ribbon,
       skillLevel: pokemonInstance.skillLevel,
+      sneakySnacking: pokemonInstance.sneakySnacking,
       externalId: pokemonInstance.externalId
     }
   }
