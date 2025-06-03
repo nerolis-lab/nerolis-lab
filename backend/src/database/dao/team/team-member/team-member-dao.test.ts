@@ -16,22 +16,24 @@ describe('TeamMemberDAO insert', () => {
     const teamMember = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
     expect(teamMember).toBeDefined();
 
     const data = await TeamMemberDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-[
-  {
-    "fk_pokemon_id": 1,
-    "fk_team_id": 1,
-    "id": 1,
-    "member_index": 0,
-    "version": 1,
-  },
-]
-`);
+      [
+        {
+          "fk_pokemon_id": 1,
+          "fk_team_id": 1,
+          "id": 1,
+          "member_index": 0,
+          "sneaky_snacking": false,
+          "version": 1,
+        },
+      ]
+    `);
   });
 
   it('shall fail to insert entity without fk_team_id', async () => {
@@ -39,7 +41,8 @@ describe('TeamMemberDAO insert', () => {
       TeamMemberDAO.insert({
         fk_team_id: undefined as any,
         fk_pokemon_id: 1,
-        member_index: 0
+        member_index: 0,
+        sneaky_snacking: false
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.fk_team_id/);
   });
@@ -49,7 +52,8 @@ describe('TeamMemberDAO insert', () => {
       TeamMemberDAO.insert({
         fk_team_id: 1,
         fk_pokemon_id: undefined as any,
-        member_index: 0
+        member_index: 0,
+        sneaky_snacking: false
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.fk_pokemon_id/);
   });
@@ -59,7 +63,8 @@ describe('TeamMemberDAO insert', () => {
       TeamMemberDAO.insert({
         fk_team_id: 1,
         fk_pokemon_id: 1,
-        member_index: undefined as any
+        member_index: undefined as any,
+        sneaky_snacking: false
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: NOT NULL constraint failed: team_member.member_index/);
   });
@@ -68,13 +73,15 @@ describe('TeamMemberDAO insert', () => {
     await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
     await expect(
       TeamMemberDAO.insert({
         fk_team_id: 1,
         fk_pokemon_id: 2,
-        member_index: 0
+        member_index: 0,
+        sneaky_snacking: false
       })
     ).rejects.toThrow(/SQLITE_CONSTRAINT: UNIQUE constraint failed: team_member.fk_team_id, team_member.member_index/);
   });
@@ -85,7 +92,8 @@ describe('TeamMemberDAO update', () => {
     const teamMember = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
     expect(teamMember.fk_pokemon_id).toEqual(1);
 
@@ -93,28 +101,31 @@ describe('TeamMemberDAO update', () => {
 
     const data = await TeamMemberDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-[
-  {
-    "fk_pokemon_id": 2,
-    "fk_team_id": 1,
-    "id": 1,
-    "member_index": 0,
-    "version": 2,
-  },
-]
-`);
+      [
+        {
+          "fk_pokemon_id": 2,
+          "fk_team_id": 1,
+          "id": 1,
+          "member_index": 0,
+          "sneaky_snacking": false,
+          "version": 2,
+        },
+      ]
+    `);
   });
 
   it('shall fail to update entity with duplicate fk_team_id and member_index', async () => {
     await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
     const teamMemberB = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 2,
-      member_index: 1
+      member_index: 1,
+      sneaky_snacking: false
     });
 
     await expect(TeamMemberDAO.update({ ...teamMemberB, member_index: 0 })).rejects.toThrow(
@@ -128,7 +139,8 @@ describe('TeamMemberDAO delete', () => {
     const teamMember = await TeamMemberDAO.insert({
       fk_team_id: 1,
       fk_pokemon_id: 1,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
 
     await TeamMemberDAO.delete({ id: teamMember.id });

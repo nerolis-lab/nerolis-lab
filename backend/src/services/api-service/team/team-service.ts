@@ -160,7 +160,12 @@ export async function upsertTeamMember(params: {
     });
 
     const updatedMemberMeta = await TeamMemberDAO.upsert({
-      updated: { fk_pokemon_id: upsertedMember.id, fk_team_id: team.id, member_index: memberIndex },
+      updated: {
+        fk_pokemon_id: upsertedMember.id,
+        fk_team_id: team.id,
+        member_index: memberIndex,
+        sneaky_snacking: request.sneakySnacking
+      },
       filter: { fk_team_id: team.id, member_index: memberIndex },
       options: { trx }
     });
