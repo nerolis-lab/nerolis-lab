@@ -346,10 +346,10 @@ describe('recoverEnergy', () => {
   });
 });
 
-describe('addHelps', () => {
+describe('addHelpsFromSkill', () => {
   it('shall add 1 average produce help', () => {
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
-    memberState.addHelps({ regular: 1, crit: 1 }, memberState);
+    memberState.addHelpsFromSkill({ regular: 1, crit: 1 }, memberState);
     memberState.collectInventory();
 
     expect(memberState.results(1)).toMatchSnapshot();
@@ -357,7 +357,7 @@ describe('addHelps', () => {
 
   it('shall not add produce if adding 0 helps', () => {
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
-    memberState.addHelps({ regular: 0, crit: 0 }, memberState);
+    memberState.addHelpsFromSkill({ regular: 0, crit: 0 }, memberState);
     memberState.collectInventory();
 
     expect(memberState.results(1)).toMatchSnapshot();
