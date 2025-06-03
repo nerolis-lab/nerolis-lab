@@ -379,6 +379,18 @@ export class MemberState {
     }
   }
 
+  private isSneakySnacking() {
+    const name = this.member.pokemonWithIngredients.pokemon.name;
+    const berryMon =
+      name == 'TYPHLOSION' ||
+      name == 'NINETALES' ||
+      name == 'FLAREON' ||
+      // name == 'CHARIZARD' ||
+      // name == 'MEGANIUM' ||
+      name == 'RAICHU';
+    return berryMon;
+  }
+
   public updateIngredientBag() {
     // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
     this.cookingState?.addIngredients(this.ingredientsSinceLastCook);
@@ -422,11 +434,24 @@ export class MemberState {
     }
   }
 
+  public attemptSneakySnackHelp() {
+    this.totalDayHelps += 1;
+    this.totalAverageHelps += 1;
+
+    // Berry drop
+    this.totalBerryProduction += this.berryDropAmount;
+    this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
+  }
+
   public attemptDayHelp(currentMinutesSincePeriodStart: number): TeamSkillActivation[] {
     const frequency = this.calculateFrequencyWithEnergy();
     this.countFrequencyAndEnergyIntervals('day', frequency);
 
     if (currentMinutesSincePeriodStart >= this.nextHelp) {
+      if (this.isSneakySnacking()) {
+        this.attemptSneakySnackHelp();
+        return [];
+      }
       this.attemptDayHelpInner();
       return this.skillState.attemptSkill();
     }
@@ -467,7 +492,7 @@ export class MemberState {
         ingredientId = this.level60IngredientId!;
       }
 
-      const inventorySpace = Math.max(0, this.inventoryLimit - this.carriedAmount);
+      const inventorySpace = this.isSneakySnacking() ? 0 : Math.max(0, this.inventoryLimit - this.carriedAmount);
 
       // Easy case, inventory not full
       if (inventorySpace <= 0) {
