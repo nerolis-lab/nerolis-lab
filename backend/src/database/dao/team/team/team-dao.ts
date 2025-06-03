@@ -80,7 +80,7 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
           skillLevel: member.skill_level,
           nature: member.nature,
           subskills,
-          sneakySnacking: false,
+          sneakySnacking: memberData.sneaky_snacking,
           ingredients: PokemonDAO.filterChosenIngredientList(member)
         });
       }
