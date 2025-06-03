@@ -93,7 +93,8 @@ describe('calculateTeam', () => {
           nature: nature.MILD,
           skillLevel: 6,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
-          externalId: 'some id'
+          externalId: 'some id',
+          sneakySnacking: false
         }
       }
     ];
@@ -155,7 +156,8 @@ describe('calculateIv', () => {
           nature: nature.JOLLY,
           skillLevel: 4,
           subskills: new Set([subskill.HELPING_SPEED_S.name]),
-          externalId: 'bulbasaur-1'
+          externalId: 'bulbasaur-1',
+          sneakySnacking: false
         }
       }
     ];
@@ -173,7 +175,8 @@ describe('calculateIv', () => {
           nature: nature.BRAVE,
           skillLevel: 3,
           subskills: new Set([subskill.SKILL_TRIGGER_S.name]),
-          externalId: 'charmander-variant'
+          externalId: 'charmander-variant',
+          sneakySnacking: false
         }
       }
     ];

@@ -44,7 +44,8 @@ describe('OverviewTab.vue', () => {
           skillLevel: 6,
           carrySize: 15,
           ribbon: 4,
-          externalId: 'pikachu-1'
+          externalId: 'pikachu-1',
+          sneakySnacking: false
         }
       }
     })
@@ -200,7 +201,8 @@ describe('OverviewTab.vue', () => {
             skillLevel: 1,
             carrySize: 5,
             ribbon: 0,
-            externalId: 'bulbasaur-1'
+            externalId: 'bulbasaur-1',
+            sneakySnacking: false
           }
         }
       })

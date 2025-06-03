@@ -13,6 +13,7 @@ export interface PokemonInstanceBase<PokemonType, NatureType, SubskillType, Ingr
   nature: NatureType;
   subskills: SubskillType[];
   ingredients: IngredientType[];
+  sneakySnacking: boolean;
 }
 export type PokemonInstance = PokemonInstanceBase<
   string, // Pokemon as a simple string ID

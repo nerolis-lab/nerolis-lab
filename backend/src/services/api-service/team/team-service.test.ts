@@ -397,7 +397,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     };
 
     const result = await upsertTeamMember({ teamIndex: 0, memberIndex: 0, request, user });
@@ -421,7 +422,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     });
 
     expect(await PokemonDAO.get({ external_id: result.externalId })).toEqual({
@@ -509,7 +511,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     };
 
     // should get updated to version 2
@@ -570,7 +573,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     });
 
     expect(await PokemonDAO.get({ external_id: result.externalId })).toEqual({
@@ -654,7 +658,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 }
         // Missing ingredient for level 60
-      ]
+      ],
+      sneakySnacking: false
     };
 
     await expect(upsertTeamMember({ teamIndex: 0, memberIndex: 0, request, user })).rejects.toThrow(IngredientError);

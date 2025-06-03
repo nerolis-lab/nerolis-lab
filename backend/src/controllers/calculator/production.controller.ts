@@ -213,7 +213,8 @@ export default class ProductionController {
           nature: getNature(member.nature),
           skillLevel: Math.min(member.skillLevel, pokemon.skill.maxLevel),
           subskills,
-          externalId: member.externalId
+          externalId: member.externalId,
+          sneakySnacking: member.sneakySnacking
         }
       });
     }
