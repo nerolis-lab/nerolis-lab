@@ -126,7 +126,8 @@ describe('Optimal', () => {
       const memberSettings = Optimal.toMemberSettings({
         stats: optimalStats,
         level: 50,
-        externalId: 'test-id'
+        externalId: 'test-id',
+        sneakySnacking: true
       });
 
       expect(memberSettings).toEqual({
@@ -136,7 +137,8 @@ describe('Optimal', () => {
         skillLevel: mockedPokemon.skill.maxLevel,
         subskills: new Set(optimalStats.subskills.slice(0, 3).map((subskill) => subskill.subskill.name)),
         level: 50,
-        externalId: 'test-id'
+        externalId: 'test-id',
+        sneakySnacking: true
       });
     });
 
@@ -158,7 +160,8 @@ describe('Optimal', () => {
       const memberSettings = Optimal.toMemberSettings({
         stats: optimalStats,
         level: 75,
-        externalId: 'test-id-2'
+        externalId: 'test-id-2',
+        sneakySnacking: false
       });
 
       expect(memberSettings).toEqual({
@@ -168,7 +171,8 @@ describe('Optimal', () => {
         skillLevel: mockedPokemon.skill.maxLevel,
         subskills: new Set(optimalStats.subskills.slice(0, 4).map((subskill) => subskill.subskill.name)),
         level: 75,
-        externalId: 'test-id-2'
+        externalId: 'test-id-2',
+        sneakySnacking: false
       });
     });
   });
