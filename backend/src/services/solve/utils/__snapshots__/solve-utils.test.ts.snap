@@ -18,6 +18,7 @@ exports[`solve-utils > bogusMembers > should create an array of mocked Pokémon 
   },
   "ribbon": 0,
   "skillLevel": 1,
+  "sneakySnacking": false,
   "subskills": Set {},
 }
 `;

@@ -34,7 +34,8 @@ export function pokemonWithTiering(attrs?: Partial<PokemonWithTiering>): Pokemon
         skillLevel: 6,
         carrySize: 10,
         ribbon: 0,
-        externalId: 'pikachu-1'
+        externalId: 'pikachu-1',
+        sneakySnacking: false
       }
     },
     contributions: [],
@@ -78,7 +79,8 @@ export function multiplePokemonWithTiering(count: number = 4): PokemonWithTierin
             skillLevel: 4 + Math.floor(i / 2),
             carrySize: 8 + i,
             ribbon: 0,
-            externalId: `${pokemon.name.toLowerCase()}-${i + 1}`
+            externalId: `${pokemon.name.toLowerCase()}-${i + 1}`,
+            sneakySnacking: false
           }
         },
         score: baseScore,

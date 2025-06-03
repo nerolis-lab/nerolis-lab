@@ -49,7 +49,8 @@ const guaranteedSkillProcMember: TeamMemberExt = {
     nature: nature.BASHFUL,
     skillLevel: 6,
     subskills: new Set(),
-    externalId: 'some id'
+    externalId: 'some id',
+    sneakySnacking: false
   }
 };
 
@@ -62,7 +63,8 @@ const member: TeamMemberExt = {
     nature: nature.BASHFUL,
     skillLevel: 6,
     subskills: new Set(),
-    externalId: 'some id'
+    externalId: 'some id',
+    sneakySnacking: false
   }
 };
 
@@ -212,7 +214,8 @@ describe('startDay', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -233,7 +236,8 @@ describe('startDay', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -266,7 +270,8 @@ describe('startDay', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const teammate: TeamMemberExt = {
@@ -294,7 +299,8 @@ describe('startDay', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -326,7 +332,8 @@ describe('recoverEnergy', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -621,7 +628,8 @@ describe('attemptDayHelp', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -927,7 +935,8 @@ describe('attemptDayHelp', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -984,7 +993,8 @@ describe('attemptNightHelp', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
