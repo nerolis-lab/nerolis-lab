@@ -21,7 +21,7 @@ export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWith
     nature: pkmn.nature,
     subskills: PokemonDAO.filterFilledSubskills(pkmn),
     ingredients: PokemonDAO.filterChosenIngredientList(pkmn),
-    sneakySnacking: false // default team members to not sneaky snacking
+    sneakySnacking: false // default box mons to not sneaky snacking
   }));
 }
 
