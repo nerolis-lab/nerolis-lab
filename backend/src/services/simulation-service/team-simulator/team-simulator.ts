@@ -229,7 +229,7 @@ export class TeamSimulator {
     const helpsActivation = result.activations.find((activation) => activation.unit === 'helps' && activation.team);
     if (helpsActivation?.team) {
       for (const mem of this.memberStatesWithoutFillers) {
-        mem.addHelps(helpsActivation.team, invoker);
+        mem.addHelpsFromSkill(helpsActivation.team, invoker);
         invoker.addSkillValue(helpsActivation.team);
       }
     }
