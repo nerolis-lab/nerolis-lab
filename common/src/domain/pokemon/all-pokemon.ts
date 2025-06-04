@@ -1,7 +1,16 @@
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import { WIKI } from '../berry/berries';
 import { GENDER_UNKNOWN } from '../gender';
-import { BEAN_SAUSAGE } from '../ingredient/ingredients';
+import {
+  BEAN_SAUSAGE,
+  FANCY_APPLE,
+  FIERY_HERB,
+  GREENGRASS_CORN,
+  GREENGRASS_SOYBEANS,
+  HONEY,
+  MOOMOO_MILK,
+  ROUSING_COFFEE
+} from '../ingredient/ingredients';
 import { CHARGE_STRENGTH_M_BAD_DREAMS } from '../mainskill/mainskills/charge-strength-m-bad-dreams';
 import type { Pokemon } from './pokemon';
 
@@ -18,9 +27,36 @@ export const DARKRAI: Pokemon = {
   carrySize: 28,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
-  ingredient30: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
-  ingredient60: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
+  ingredient0: [
+    { amount: 2, ingredient: BEAN_SAUSAGE },
+    { amount: 2, ingredient: FANCY_APPLE },
+    { amount: 2, ingredient: FIERY_HERB },
+    { amount: 2, ingredient: MOOMOO_MILK },
+    { amount: 2, ingredient: HONEY },
+    { amount: 2, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 2, ingredient: GREENGRASS_CORN },
+    { amount: 2, ingredient: ROUSING_COFFEE }
+  ],
+  ingredient30: [
+    { amount: 4, ingredient: BEAN_SAUSAGE },
+    { amount: 5, ingredient: FANCY_APPLE },
+    { amount: 3, ingredient: FIERY_HERB },
+    { amount: 4, ingredient: MOOMOO_MILK },
+    { amount: 4, ingredient: HONEY },
+    { amount: 4, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 3, ingredient: GREENGRASS_CORN },
+    { amount: 3, ingredient: ROUSING_COFFEE }
+  ],
+  ingredient60: [
+    { amount: 6, ingredient: BEAN_SAUSAGE },
+    { amount: 7, ingredient: FANCY_APPLE },
+    { amount: 5, ingredient: FIERY_HERB },
+    { amount: 6, ingredient: MOOMOO_MILK },
+    { amount: 6, ingredient: HONEY },
+    { amount: 6, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 4, ingredient: GREENGRASS_CORN },
+    { amount: 4, ingredient: ROUSING_COFFEE }
+  ],
   skill: CHARGE_STRENGTH_M_BAD_DREAMS
 };
 
