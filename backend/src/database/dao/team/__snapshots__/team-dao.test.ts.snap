@@ -14,7 +14,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "gender": undefined,
         "ingredients": [
           {
-            "amount": 1,
+            "amount": 0,
             "level": 0,
             "name": "Berry",
           },
@@ -68,7 +68,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "gender": undefined,
         "ingredients": [
           {
-            "amount": 1,
+            "amount": 0,
             "level": 0,
             "name": "Berry",
           },
@@ -122,7 +122,7 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
         "gender": undefined,
         "ingredients": [
           {
-            "amount": 2,
+            "amount": 0,
             "level": 0,
             "name": "Berry",
           },

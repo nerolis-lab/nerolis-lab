@@ -311,7 +311,10 @@
 						"format": "double"
 					},
 					"ingredient0": {
-						"$ref": "#/components/schemas/IngredientSet"
+						"items": {
+							"$ref": "#/components/schemas/IngredientSet"
+						},
+						"type": "array"
 					},
 					"ingredient30": {
 						"items": {

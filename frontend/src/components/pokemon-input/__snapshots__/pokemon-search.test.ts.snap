@@ -63,15 +63,17 @@ exports[`PokemonSearch > selects Pokémon correctly 1`] = `
       "female": 0.5,
       "male": 0.5,
     },
-    "ingredient0": {
-      "amount": 1,
-      "ingredient": {
-        "longName": "Fancy Apple",
-        "name": "Apple",
-        "taxedValue": 23.7,
-        "value": 90,
+    "ingredient0": [
+      {
+        "amount": 1,
+        "ingredient": {
+          "longName": "Fancy Apple",
+          "name": "Apple",
+          "taxedValue": 23.7,
+          "value": 90,
+        },
       },
-    },
+    ],
     "ingredient30": [
       {
         "amount": 2,
@@ -230,15 +232,17 @@ exports[`PokemonSearch > selects Pokémon correctly 2`] = `
       "female": 0.5,
       "male": 0.5,
     },
-    "ingredient0": {
-      "amount": 1,
-      "ingredient": {
-        "longName": "Fancy Apple",
-        "name": "Apple",
-        "taxedValue": 23.7,
-        "value": 90,
+    "ingredient0": [
+      {
+        "amount": 1,
+        "ingredient": {
+          "longName": "Fancy Apple",
+          "name": "Apple",
+          "taxedValue": 23.7,
+          "value": 90,
+        },
       },
-    },
+    ],
     "ingredient30": [
       {
         "amount": 2,

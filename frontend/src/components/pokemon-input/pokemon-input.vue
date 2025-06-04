@@ -219,7 +219,7 @@ export default defineComponent({
     updatePokemon(pokemon: Pokemon) {
       this.pokemonInstance.pokemon = pokemon
       this.pokemonInstance.ingredients = [
-        { ...pokemon.ingredient0, level: 0 },
+        { ...pokemon.ingredient0[0], level: 0 },
         { ...pokemon.ingredient30[0], level: 30 },
         { ...pokemon.ingredient60[0], level: 60 }
       ]

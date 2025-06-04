@@ -178,7 +178,7 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(mainskill.COOKING_POWER_UP_S.name);
   for (let i = 0; i < pokedex.length; ++i) {
     const pkmn = pokedex[i];
-    const AAA: IngredientSet[] = [pkmn.ingredient0, pkmn.ingredient30[0], pkmn.ingredient60[0]];
+    const AAA: IngredientSet[] = [pkmn.ingredient0[0], pkmn.ingredient30[0], pkmn.ingredient60[0]];
     const pokemonWithIngredients: PokemonWithIngredients = { pokemon: pkmn, ingredientList: AAA };
 
     const isSupportSkillMon = pkmn.specialty === 'skill' && INGREDIENT_SUPPORT_MAINSKILLS_SET.has(pkmn.skill.name);

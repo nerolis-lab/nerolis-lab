@@ -110,7 +110,7 @@ describe('solve-utils', () => {
       expect(member.pokemonWithIngredients.ingredientList).toHaveLength(3);
       expect(
         member.pokemonWithIngredients.ingredientList.every(
-          (ing) => ing.ingredient === pokedex[0].ingredient0.ingredient
+          (ing) => ing.ingredient === pokedex[0].ingredient0[0].ingredient
         )
       ).toBe(true);
 
@@ -317,7 +317,7 @@ Set {
       const ingredientListA: IngredientSet = { amount: 1, ingredient: ingredient.FANCY_APPLE };
       const ingredientListB: IngredientSet = { amount: 1, ingredient: ingredient.BEAN_SAUSAGE };
       const pokemon = commonMocks.mockPokemon({
-        ingredient0: ingredientListA,
+        ingredient0: [ingredientListA],
         ingredient30: [ingredientListA],
         ingredient60: [ingredientListA, ingredientListB]
       });
@@ -351,7 +351,7 @@ Set {
     it('should calculate the correct amount of ingredients', () => {
       const ingredientListA: IngredientSet = { amount: 1, ingredient: ingredient.FANCY_APPLE };
       const pokemon = commonMocks.mockPokemon({
-        ingredient0: ingredientListA,
+        ingredient0: [ingredientListA],
         ingredient30: [ingredientListA],
         ingredient60: [ingredientListA],
         ingredientPercentage: 100

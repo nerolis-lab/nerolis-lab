@@ -303,19 +303,18 @@ function getPokemonData(pokemonName) {
     var pokemonInfo = JSON.parse(data);
 
     // parse ingredients
-    var ing0 = pokemonInfo.ingredient0.ingredient.name;
-    var [ing30_1, ing30_2] = pokemonInfo.ingredient30.map((ing) => ing.ingredient.name);
-    var [ing60_1, ing60_2, ing60_3] = pokemonInfo.ingredient60.map((ing) => ing.ingredient.name);
+    var ing0Options = pokemonInfo.ingredient0.map((ing) => ing.ingredient.name);
+    var ing30Options = pokemonInfo.ingredient30.map((ing) => ing.ingredient.name);
+    var ing60Options = pokemonInfo.ingredient60.map((ing) => ing.ingredient.name);
 
     var ingredients = [];
-    ingredients.push(`${ing0}/${ing30_1}/${ing60_1}`); // AAA
-    ingredients.push(`${ing0}/${ing30_2}/${ing60_1}`); // ABA
-    ingredients.push(`${ing0}/${ing30_1}/${ing60_2}`); // AAB
-    ingredients.push(`${ing0}/${ing30_2}/${ing60_2}`); // ABB
 
-    if (ing60_3) {
-      ingredients.push(`${ing0}/${ing30_1}/${ing60_3}`); // AAC
-      ingredients.push(`${ing0}/${ing30_2}/${ing60_3}`); // ABC
+    for (var ing60 = 0; ing60 < ing60Options.length; ++ing60) {
+      for (var ing30 = 0; ing30 < ing30Options.length; ++ing30) {
+        for (var ing00 = 0; ing00 < ing0Options.length; ++ing00) {
+          ingredients.push(`${ing0Options[ing00]}/${ing30Options[ing30]}/${ing60Options[ing60]}`);
+        }
+      }
     }
 
     var nrOfEvolutions = pokemonInfo.previousEvolutions;
