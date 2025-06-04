@@ -312,6 +312,9 @@ function getPokemonData(pokemonName) {
     for (var ing60 = 0; ing60 < ing60Options.length; ++ing60) {
       for (var ing30 = 0; ing30 < ing30Options.length; ++ing30) {
         for (var ing00 = 0; ing00 < ing0Options.length; ++ing00) {
+          if (ing30Options[ing30] == 'Locked' && ing60Options[ing60] != 'Locked') {
+            continue;
+          }
           ingredients.push(`${ing0Options[ing00]}/${ing30Options[ing30]}/${ing60Options[ing60]}`);
         }
       }

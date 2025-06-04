@@ -8,6 +8,7 @@ import {
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
+  LOCKED_INGREDIENT,
   MOOMOO_MILK,
   ROUSING_COFFEE
 } from '../ingredient/ingredients';
@@ -38,6 +39,7 @@ export const DARKRAI: Pokemon = {
     { amount: 2, ingredient: ROUSING_COFFEE }
   ],
   ingredient30: [
+    { amount: 0, ingredient: LOCKED_INGREDIENT },
     { amount: 4, ingredient: BEAN_SAUSAGE },
     { amount: 5, ingredient: FANCY_APPLE },
     { amount: 3, ingredient: FIERY_HERB },
@@ -48,6 +50,7 @@ export const DARKRAI: Pokemon = {
     { amount: 3, ingredient: ROUSING_COFFEE }
   ],
   ingredient60: [
+    { amount: 0, ingredient: LOCKED_INGREDIENT },
     { amount: 6, ingredient: BEAN_SAUSAGE },
     { amount: 7, ingredient: FANCY_APPLE },
     { amount: 5, ingredient: FIERY_HERB },

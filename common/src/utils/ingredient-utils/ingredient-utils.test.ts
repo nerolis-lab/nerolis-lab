@@ -1,15 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import type { IngredientSet, IngredientSetSimple } from '../../domain/ingredient/ingredient';
 import {
+  BEAN_SAUSAGE,
   FANCY_APPLE,
   FANCY_EGG,
   HONEY,
   INGREDIENTS,
+  LOCKED_INGREDIENT,
   MOOMOO_MILK,
   ROUSING_COFFEE,
   SOFT_POTATO,
   SOOTHING_CACAO
 } from '../../domain/ingredient/ingredients';
+import { DARKRAI } from '../../domain/pokemon/all-pokemon';
 import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
 import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
 import type { Logger } from '../../prototype/logger/logger';
@@ -132,18 +135,27 @@ describe('combineSameIngredientsInDrop', () => {
 
 describe('shortPrettifyIngredientDrop', () => {
   it('shall shorten the prettify ingredient drop', () => {
-    const rawCombination = [
+    const rawCombination: IngredientSet[] = [
       { amount: 2, ingredient: HONEY },
       { amount: 5, ingredient: FANCY_APPLE },
       { amount: 7, ingredient: HONEY }
     ];
     expect(shortPrettifyIngredientDrop(rawCombination)).toMatchInlineSnapshot(`"Honey/Apple/Honey"`);
   });
+
+  it('shall acknowledge locked ingredients', () => {
+    const rawCombination: IngredientSet[] = [
+      { amount: 2, ingredient: BEAN_SAUSAGE },
+      { amount: 0, ingredient: LOCKED_INGREDIENT },
+      { amount: 0, ingredient: LOCKED_INGREDIENT }
+    ];
+    expect(shortPrettifyIngredientDrop(rawCombination)).toMatchInlineSnapshot(`"Sausage/Locked/Locked"`);
+  });
 });
 
 describe('prettifyIngredientDrop', () => {
   it('shall prettify an ingredient list', () => {
-    const rawCombination = [
+    const rawCombination: IngredientSet[] = [
       { amount: 2, ingredient: HONEY },
       { amount: 5, ingredient: FANCY_APPLE },
       { amount: 7, ingredient: HONEY }
@@ -151,8 +163,17 @@ describe('prettifyIngredientDrop', () => {
     expect(prettifyIngredientDrop(rawCombination)).toMatchInlineSnapshot(`"2 Honey, 5 Apple, 7 Honey"`);
   });
 
+  it('shall leave out locked ingredients', () => {
+    const rawCombination: IngredientSet[] = [
+      { amount: 2, ingredient: BEAN_SAUSAGE },
+      { amount: 0, ingredient: LOCKED_INGREDIENT },
+      { amount: 0, ingredient: LOCKED_INGREDIENT }
+    ];
+    expect(prettifyIngredientDrop(rawCombination)).toMatchInlineSnapshot(`"2 Sausage"`);
+  });
+
   it('shall prettify an ingredient drop + ingredient magnet proc', () => {
-    const rawCombination = [
+    const rawCombination: IngredientSet[] = [
       { amount: 2, ingredient: HONEY },
       { amount: 5, ingredient: FANCY_APPLE },
       { amount: 7, ingredient: HONEY }
@@ -457,7 +478,7 @@ describe('calculateAveragePokemonIngredientSet', () => {
         }
       ]
     };
-    const averagedResult = calculateAveragePokemonIngredientSet(ingredientSetToIntFlat(pokemonSet.ingredientList), 100);
+    const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 100);
     expect(averagedResult).toMatchInlineSnapshot(`
 Float32Array [
   1,
@@ -480,6 +501,7 @@ Float32Array [
 ]
 `);
   });
+
   it('shall average an ingredient set for level 60', () => {
     const pokemonSet: PokemonWithIngredients = {
       pokemon: PINSIR,
@@ -498,7 +520,7 @@ Float32Array [
         }
       ]
     };
-    const averagedResult = calculateAveragePokemonIngredientSet(ingredientSetToIntFlat(pokemonSet.ingredientList), 60);
+    const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 60);
     expect(averagedResult).toMatchInlineSnapshot(`
 Float32Array [
   1,
@@ -537,7 +559,7 @@ Float32Array [
       ]
     };
 
-    const averagedResult = calculateAveragePokemonIngredientSet(ingredientSetToIntFlat(pokemonSet.ingredientList), 30);
+    const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 30);
     expect(averagedResult).toMatchInlineSnapshot(`
 Float32Array [
   2,
@@ -560,7 +582,42 @@ Float32Array [
 ]
 `);
   });
+
+  it('shall average an ingredient set for Darkrai', () => {
+    const pokemonSet: PokemonWithIngredients = {
+      pokemon: DARKRAI,
+      ingredientList: [
+        { amount: 2, ingredient: BEAN_SAUSAGE },
+        { amount: 0, ingredient: LOCKED_INGREDIENT },
+        { amount: 0, ingredient: LOCKED_INGREDIENT }
+      ]
+    };
+
+    const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 60);
+    expect(averagedResult).toMatchInlineSnapshot(`
+Float32Array [
+  0,
+  0,
+  0,
+  0,
+  2,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+]
+`);
+  });
 });
+
 describe('ingredientSetToFloatFlat', () => {
   it('shall convert ingredient set to float flat array', () => {
     const ingredientSet: IngredientSet[] = [

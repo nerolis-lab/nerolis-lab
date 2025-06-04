@@ -3,6 +3,12 @@ import { MathUtils } from '../../utils/math-utils';
 
 const SLOWPOKE_TAIL_VALUE = 342;
 
+export const LOCKED_INGREDIENT: Ingredient = createIngredient({
+  name: 'Locked',
+  value: 0,
+  longName: 'Locked Ingredient'
+});
+
 export const FANCY_APPLE: Ingredient = createIngredient({
   name: 'Apple',
   value: 90,

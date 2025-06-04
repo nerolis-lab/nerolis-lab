@@ -42,6 +42,10 @@ export function ingredientSetToFloatFlat(ingredientSet: IngredientSet[]): Float3
   const result = emptyIngredientInventoryFloat();
 
   for (const { ingredient, amount } of ingredientSet) {
+    if (ingredient.value === 0) {
+      // locked ingredients for mythical Pokemon are excluded
+      continue;
+    }
     const index = ING_ID_LOOKUP[ingredient.name];
     // we assume that this works since both ING_ID_LOOKUP and result contain one element for each Ingredient
     // we don't verify due to performance reasons
@@ -54,6 +58,10 @@ export function ingredientSetToIntFlat(ingredientSet: IngredientSet[]): Int16Arr
   const result = emptyIngredientInventoryInt();
 
   for (const { ingredient, amount } of ingredientSet) {
+    if (ingredient.value === 0) {
+      // locked ingredients for mythical Pokemon are excluded
+      continue;
+    }
     const index = ING_ID_LOOKUP[ingredient.name];
     // we assume that this works since both ING_ID_LOOKUP and result contain one element for each Ingredient
     // we don't verify due to performance reasons
@@ -158,7 +166,9 @@ export function prettifyIngredientDrop(
   ingredients: IngredientSet[] | IngredientIndexToFloatAmount | IngredientIndexToIntAmount,
   separator = ', '
 ): string {
-  const ingredientSet: IngredientSet[] = isFlat(ingredients) ? flatToIngredientSet(ingredients) : ingredients;
+  const ingredientSet: IngredientSet[] = (isFlat(ingredients) ? flatToIngredientSet(ingredients) : ingredients).filter(
+    ({ ingredient }) => ingredient.value > 0
+  );
 
   if (!includesMagnet(ingredientSet)) {
     return ingredientSet
@@ -210,12 +220,21 @@ export function getAllIngredientLists(pokemon: Pokemon, level: number): Ingredie
 }
 
 export function calculateAveragePokemonIngredientSet(
-  ingredients: IngredientIndexToIntAmount,
+  ingredients: IngredientSet[],
   level: number
 ): IngredientIndexToFloatAmount {
-  const ingredientsUnlocked = Math.min(Math.floor(level / 30) + 1, 3);
+  // The third ingredient can't be unlocked before the second is unlocked. If the
+  // user enters an invalid list, like Sausage/Locked/Sausage, we treat it as if
+  // everything after the first locked ingredient is also locked.
+  // NB: This assumes the level 0 ingredient can never be locked.
+  const firstLockedIngredientIndex = ingredients.findIndex(({ ingredient }) => ingredient.value === 0);
+  const ingredientsUnlocked = Math.min(
+    Math.floor(level / 30) + 1,
+    firstLockedIngredientIndex < 0 ? 3 : firstLockedIngredientIndex
+  );
   const multiplier = 1 / ingredientsUnlocked;
-  const dividedIngredients = Float32Array.from(ingredients, (value) => value * multiplier);
+  const flatIngredients = ingredientSetToIntFlat(ingredients);
+  const dividedIngredients = Float32Array.from(flatIngredients, (value) => value * multiplier);
   return dividedIngredients;
 }
 

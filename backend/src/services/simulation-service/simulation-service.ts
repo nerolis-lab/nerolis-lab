@@ -57,7 +57,6 @@ import {
   countErbUsers,
   flatToBerrySet,
   flatToIngredientSet,
-  ingredientSetToIntFlat,
   limitSubSkillsToLevel,
   mainskill,
   nature,
@@ -100,10 +99,7 @@ export function setupAndRunProductionSimulation(params: {
     ribbon
   } = input;
 
-  const averageIngredientList = calculateAveragePokemonIngredientSet(
-    ingredientSetToIntFlat(pokemonSet.ingredientList),
-    level
-  );
+  const averageIngredientList = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, level);
   const averageBerryList = berrySetToFlat([{ amount: 1, berry: pokemonSet.pokemon.berry, level }]);
 
   const ingredientPercentage = calculateIngredientPercentage({

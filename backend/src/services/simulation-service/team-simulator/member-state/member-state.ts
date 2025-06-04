@@ -201,13 +201,16 @@ export class MemberState {
     this.level0IngredientSet = ingredientList[0];
 
     // Level 30 ingredient is second if available
-    if (member.settings.level >= 30 && ingredientList.length > 1) {
+    if (member.settings.level >= 30 && ingredientList.length > 1 && ingredientList[1].ingredient.value > 0) {
       this.level30IngredientSet = ingredientList[1];
-    }
 
-    // Level 60 ingredient is third if available
-    if (member.settings.level >= 60 && ingredientList.length > 2) {
-      this.level60IngredientSet = ingredientList[2];
+      // Level 60 ingredient is third if available and if level 30 isn't locked.
+      // The third ingredient can't be unlocked before the second is unlocked. If the
+      // user enters an invalid list, like Sausage/Locked/Sausage, we treat it as if
+      // everything after the first locked ingredient is also locked.
+      if (member.settings.level >= 60 && ingredientList.length > 2 && ingredientList[2].ingredient.value > 0) {
+        this.level60IngredientSet = ingredientList[2];
+      }
     }
 
     // Calculate raw production amounts without probability adjustments
