@@ -190,16 +190,17 @@ export function prettifyIngredientDrop(
 export function getAllIngredientLists(pokemon: Pokemon, level: number): IngredientSet[][] {
   const result: IngredientSet[][] = [];
 
-  const ing0 = pokemon.ingredient0;
-  if (level < 30) {
-    result.push([ing0]);
-  } else {
-    for (const ing30 of pokemon.ingredient30) {
-      if (level < 60) {
-        result.push([ing0, ing30]);
-      } else {
-        for (const ing60 of pokemon.ingredient60) {
-          result.push([ing0, ing30, ing60]);
+  for (const ing0 of pokemon.ingredient0) {
+    if (level < 30) {
+      result.push([ing0]);
+    } else {
+      for (const ing30 of pokemon.ingredient30) {
+        if (level < 60) {
+          result.push([ing0, ing30]);
+        } else {
+          for (const ing60 of pokemon.ingredient60) {
+            result.push([ing0, ing30, ing60]);
+          }
         }
       }
     }

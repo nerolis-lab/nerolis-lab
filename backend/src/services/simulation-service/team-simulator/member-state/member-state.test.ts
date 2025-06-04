@@ -23,7 +23,7 @@ const mockPokemonSet: PokemonWithIngredients = {
   pokemon: commonMocks.mockPokemon({
     carrySize: 10,
     frequency: 3600,
-    ingredient0: { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+    ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredientPercentage: 20,

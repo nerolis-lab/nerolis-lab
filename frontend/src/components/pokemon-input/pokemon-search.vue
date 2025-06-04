@@ -62,7 +62,7 @@ export default {
         nature: nature.BASHFUL,
         subskills: [],
         ingredients: [
-          { ...pkmn.ingredient0, level: 0 },
+          { ...pkmn.ingredient0[0], level: 0 },
           { ...pkmn.ingredient30[0], level: 30 },
           { ...pkmn.ingredient60[0], level: 60 }
         ],

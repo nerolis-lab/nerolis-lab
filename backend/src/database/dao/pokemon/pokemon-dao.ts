@@ -77,7 +77,7 @@ class PokemonDAOImpl extends AbstractDAO<typeof DBPokemonSchema> {
       {
         level: 0,
         name: ingredient_0,
-        amount: member.ingredient0.amount
+        amount: member.ingredient0.find((ing) => ing.ingredient.name === ingredient_0)?.amount ?? 0
       },
       {
         level: 30,

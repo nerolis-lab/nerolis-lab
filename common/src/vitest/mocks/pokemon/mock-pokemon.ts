@@ -27,7 +27,7 @@ export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
     carrySize: 0,
     previousEvolutions: 0,
     remainingEvolutions: 0,
-    ingredient0: { amount: 0, ingredient: SLOWPOKE_TAIL },
+    ingredient0: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
     ingredient30: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
     ingredient60: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
     skill: mockMainskill,

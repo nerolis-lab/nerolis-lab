@@ -68,7 +68,7 @@ export const CATERPIE: Pokemon = {
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: { amount: 1, ingredient: HONEY },
+  ingredient0: [{ amount: 1, ingredient: HONEY }],
   ingredient30: [
     { amount: 2, ingredient: HONEY },
     { amount: 2, ingredient: SNOOZY_TOMATO }
@@ -116,7 +116,7 @@ export const RATTATA: Pokemon = {
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: FANCY_APPLE },
+  ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
   ingredient30: [
     { amount: 2, ingredient: FANCY_APPLE },
     { amount: 2, ingredient: GREENGRASS_SOYBEANS }
@@ -153,7 +153,7 @@ export const EKANS: Pokemon = {
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: BEAN_SAUSAGE },
+  ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
   ingredient30: [
     { amount: 2, ingredient: BEAN_SAUSAGE },
     { amount: 2, ingredient: FANCY_EGG }
@@ -190,7 +190,7 @@ export const PIKACHU: Pokemon = {
   carrySize: 17,
   previousEvolutions: 1,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: FANCY_APPLE },
+  ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
   ingredient30: [
     { amount: 2, ingredient: FANCY_APPLE },
     { amount: 2, ingredient: WARMING_GINGER }
@@ -216,7 +216,7 @@ export const PIKACHU_HALLOWEEN: Pokemon = {
   carrySize: 18,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: { amount: 1, ingredient: FANCY_APPLE },
+  ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
   ingredient30: [
     { amount: 2, ingredient: FANCY_APPLE },
     { amount: 2, ingredient: WARMING_GINGER }
@@ -253,7 +253,7 @@ export const CLEFAIRY: Pokemon = {
   carrySize: 16,
   previousEvolutions: 1,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: FANCY_APPLE },
+  ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
   ingredient30: [
     { amount: 2, ingredient: FANCY_APPLE },
     { amount: 2, ingredient: HONEY }
@@ -290,7 +290,7 @@ export const VULPIX: Pokemon = {
   carrySize: 13,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: GREENGRASS_SOYBEANS },
+  ingredient0: [{ amount: 1, ingredient: GREENGRASS_SOYBEANS }],
   ingredient30: [
     { amount: 2, ingredient: GREENGRASS_SOYBEANS },
     { amount: 2, ingredient: GREENGRASS_CORN }
@@ -316,7 +316,7 @@ export const VULPIX_ALOLAN: Pokemon = {
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: GREENGRASS_SOYBEANS },
+  ingredient0: [{ amount: 1, ingredient: GREENGRASS_SOYBEANS }],
   ingredient30: [
     { amount: 2, ingredient: GREENGRASS_SOYBEANS },
     { amount: 2, ingredient: GREENGRASS_CORN }
@@ -364,7 +364,7 @@ export const MANKEY: Pokemon = {
   carrySize: 7,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: BEAN_SAUSAGE },
+  ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
   ingredient30: [
     { amount: 2, ingredient: BEAN_SAUSAGE },
     { amount: 1, ingredient: TASTY_MUSHROOM }
@@ -401,7 +401,7 @@ export const DODUO: Pokemon = {
   carrySize: 13,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: GREENGRASS_SOYBEANS },
+  ingredient0: [{ amount: 1, ingredient: GREENGRASS_SOYBEANS }],
   ingredient30: [
     { amount: 2, ingredient: GREENGRASS_SOYBEANS },
     { amount: 1, ingredient: SOOTHING_CACAO }
@@ -438,7 +438,7 @@ export const ONIX: Pokemon = {
   carrySize: 22,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: SNOOZY_TOMATO },
+  ingredient0: [{ amount: 1, ingredient: SNOOZY_TOMATO }],
   ingredient30: [
     { amount: 2, ingredient: SNOOZY_TOMATO },
     { amount: 2, ingredient: BEAN_SAUSAGE }
@@ -464,7 +464,7 @@ export const CUBONE: Pokemon = {
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: WARMING_GINGER },
+  ingredient0: [{ amount: 1, ingredient: WARMING_GINGER }],
   ingredient30: [
     { amount: 2, ingredient: WARMING_GINGER },
     { amount: 2, ingredient: SOOTHING_CACAO }
@@ -500,7 +500,7 @@ export const EEVEE_HOLIDAY: Pokemon = {
   carrySize: 20,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: { amount: 1, ingredient: MOOMOO_MILK },
+  ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
   ingredient30: [
     { amount: 2, ingredient: MOOMOO_MILK },
     { amount: 1, ingredient: SOOTHING_CACAO }
@@ -526,7 +526,7 @@ export const CHIKORITA: Pokemon = {
   carrySize: 12,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: { amount: 1, ingredient: SOOTHING_CACAO },
+  ingredient0: [{ amount: 1, ingredient: SOOTHING_CACAO }],
   ingredient30: [
     { amount: 2, ingredient: SOOTHING_CACAO },
     { amount: 3, ingredient: HONEY }
@@ -574,7 +574,7 @@ export const CYNDAQUIL: Pokemon = {
   carrySize: 14,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: { amount: 1, ingredient: WARMING_GINGER },
+  ingredient0: [{ amount: 1, ingredient: WARMING_GINGER }],
   ingredient30: [
     { amount: 2, ingredient: WARMING_GINGER },
     { amount: 2, ingredient: FIERY_HERB }
@@ -622,7 +622,7 @@ export const TOTODILE: Pokemon = {
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: { amount: 1, ingredient: BEAN_SAUSAGE },
+  ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
   ingredient30: [
     { amount: 2, ingredient: BEAN_SAUSAGE },
     { amount: 2, ingredient: PURE_OIL }
@@ -703,7 +703,7 @@ export const SNEASEL: Pokemon = {
   carrySize: 17,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: BEAN_SAUSAGE },
+  ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
   ingredient30: [
     { amount: 2, ingredient: BEAN_SAUSAGE },
     { amount: 2, ingredient: FANCY_EGG }
@@ -729,7 +729,7 @@ export const HOUNDOUR: Pokemon = {
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: FIERY_HERB },
+  ingredient0: [{ amount: 1, ingredient: FIERY_HERB }],
   ingredient30: [
     { amount: 2, ingredient: FIERY_HERB },
     { amount: 3, ingredient: WARMING_GINGER }
@@ -766,7 +766,7 @@ export const SLAKOTH: Pokemon = {
   carrySize: 7,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: { amount: 1, ingredient: SNOOZY_TOMATO },
+  ingredient0: [{ amount: 1, ingredient: SNOOZY_TOMATO }],
   ingredient30: [
     { amount: 2, ingredient: SNOOZY_TOMATO },
     { amount: 2, ingredient: HONEY }
@@ -814,7 +814,7 @@ export const SWABLU: Pokemon = {
   carrySize: 12,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: FANCY_EGG },
+  ingredient0: [{ amount: 1, ingredient: FANCY_EGG }],
   ingredient30: [
     { amount: 2, ingredient: FANCY_EGG },
     { amount: 3, ingredient: GREENGRASS_SOYBEANS }
@@ -852,7 +852,7 @@ export const SHUPPET: Pokemon = {
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: PURE_OIL },
+  ingredient0: [{ amount: 1, ingredient: PURE_OIL }],
   ingredient30: [
     { amount: 2, ingredient: PURE_OIL },
     { amount: 2, ingredient: WARMING_GINGER }
@@ -889,7 +889,7 @@ export const SPHEAL: Pokemon = {
   carrySize: 9,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: { amount: 1, ingredient: PURE_OIL },
+  ingredient0: [{ amount: 1, ingredient: PURE_OIL }],
   ingredient30: [
     { amount: 2, ingredient: PURE_OIL },
     { amount: 3, ingredient: BEAN_SAUSAGE }
@@ -948,7 +948,7 @@ export const MUNNA: Pokemon = {
   carrySize: 12,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: { amount: 1, ingredient: MOOMOO_MILK },
+  ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
   ingredient30: [
     { amount: 2, ingredient: MOOMOO_MILK },
     { amount: 2, ingredient: HONEY }

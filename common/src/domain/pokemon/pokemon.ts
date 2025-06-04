@@ -29,7 +29,7 @@ export interface Pokemon {
   carrySize: number;
   previousEvolutions: number;
   remainingEvolutions: number;
-  ingredient0: IngredientSet;
+  ingredient0: IngredientSet[];
   ingredient30: IngredientSet[];
   ingredient60: IngredientSet[];
   skill: Mainskill;

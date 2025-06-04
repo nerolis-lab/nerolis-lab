@@ -89,7 +89,7 @@ describe('PokemonInput', () => {
     const pokemonInstance = wrapper.vm.pokemonInstance
     expect(pokemonInstance.pokemon).toBe(WEAVILE)
     expect(pokemonInstance.ingredients).toEqual([
-      { ...SNEASEL.ingredient0, level: 0 },
+      { ...SNEASEL.ingredient0[0], level: 0 },
       { ...SNEASEL.ingredient30[0], level: 30 },
       { ...SNEASEL.ingredient60[0], level: 60 }
     ])
