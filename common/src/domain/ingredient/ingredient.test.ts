@@ -7,14 +7,13 @@ describe('createIngredient', () => {
   it('should create an ingredient', () => {
     const ingredient = createIngredient({
       name: 'Seaweed',
-      value: 10,
-      taxedValue: 15,
+      value: 171,
       longName: 'Squirmy Seaweed'
     });
 
     expect(ingredient.name).toBe('Seaweed');
-    expect(ingredient.value).toBe(10);
-    expect(ingredient.taxedValue).toBe(15);
+    expect(ingredient.value).toBe(171);
+    expect(ingredient.taxedValue).toBe(85.5);
     expect(ingredient.longName).toBe('Squirmy Seaweed');
   });
 });
