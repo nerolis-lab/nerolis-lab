@@ -1,6 +1,6 @@
 import type { SummaryEvent } from '@src/domain/event/events/summary-event/summary-event.js';
 import { setupAndRunProductionSimulation } from '@src/services/simulation-service/simulation-service.js';
-import { MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_POKEMON, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
+import { MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
 import { MEALS_IN_DAY } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
@@ -9,14 +9,17 @@ describe('setupAndRunProductionSimulation', () => {
     const { detailedProduce, log, skillActivations } = setupAndRunProductionSimulation({
       input: MOCKED_OPTIMAL_PRODUCTION_STATS,
       monteCarloIterations: 1,
-      pokemonSet: { pokemon: MOCKED_POKEMON, ingredientList: MOCKED_PRODUCE.ingredients }
+      pokemonSet: {
+        pokemon: MOCKED_POKEMON,
+        ingredientList: [MOCKED_POKEMON.ingredient0[0], MOCKED_POKEMON.ingredient30[0], MOCKED_POKEMON.ingredient60[0]]
+      }
     });
 
     expect(skillActivations).toMatchInlineSnapshot(`
       [
         {
-          "adjustedAmount": 2535.705616670246,
-          "fractionOfProc": 0.5577883010713256,
+          "adjustedAmount": 1933.6456764800878,
+          "fractionOfProc": 0.42535100670481474,
           "nrOfHelpsToActivate": 0,
           "skill": {
             "RP": [
@@ -126,14 +129,14 @@ describe('setupAndRunProductionSimulation', () => {
 
     expect(detailedProduce).toMatchInlineSnapshot(`
       {
-        "averageTotalSkillProcs": 2.1226022374497338,
+        "averageTotalSkillProcs": 1.990164943083223,
         "dayHelps": 54,
         "nightHelps": 20,
-        "nightHelpsBeforeSS": 20,
+        "nightHelpsBeforeSS": 15,
         "produce": {
           "berries": [
             {
-              "amount": 46.64960014820099,
+              "amount": 48.24720747725384,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -144,7 +147,7 @@ describe('setupAndRunProductionSimulation', () => {
           ],
           "ingredients": [
             {
-              "amount": 3.038933500647545,
+              "amount": 5.634577239442856,
               "ingredient": {
                 "longName": "Fancy Apple",
                 "name": "Apple",
@@ -152,12 +155,30 @@ describe('setupAndRunProductionSimulation', () => {
                 "value": 90,
               },
             },
+            {
+              "amount": 2.817288619721428,
+              "ingredient": {
+                "longName": "Bean Sausage",
+                "name": "Sausage",
+                "taxedValue": 31,
+                "value": 103,
+              },
+            },
+            {
+              "amount": 8.451865348033566,
+              "ingredient": {
+                "longName": "Fancy Egg",
+                "name": "Egg",
+                "taxedValue": 38.7,
+                "value": 115,
+              },
+            },
           ],
         },
         "skillActivations": [
           {
-            "adjustedAmount": 2535.705616670246,
-            "fractionOfProc": 0.5577883010713256,
+            "adjustedAmount": 1933.6456764800878,
+            "fractionOfProc": 0.42535100670481474,
             "nrOfHelpsToActivate": 0,
             "skill": {
               "RP": [
@@ -255,8 +276,46 @@ describe('setupAndRunProductionSimulation', () => {
             },
           },
         ],
-        "sneakySnack": [],
-        "spilledIngredients": [],
+        "sneakySnack": [
+          {
+            "amount": 5,
+            "berry": {
+              "name": "BELUE",
+              "type": "steel",
+              "value": 33,
+            },
+            "level": 60,
+          },
+        ],
+        "spilledIngredients": [
+          {
+            "amount": 1.3298692855567018,
+            "ingredient": {
+              "longName": "Fancy Apple",
+              "name": "Apple",
+              "taxedValue": 23.7,
+              "value": 90,
+            },
+          },
+          {
+            "amount": 0.6649346427783509,
+            "ingredient": {
+              "longName": "Bean Sausage",
+              "name": "Sausage",
+              "taxedValue": 31,
+              "value": 103,
+            },
+          },
+          {
+            "amount": 1.9948038076983106,
+            "ingredient": {
+              "longName": "Fancy Egg",
+              "name": "Egg",
+              "taxedValue": 38.7,
+              "value": 115,
+            },
+          },
+        ],
       }
     `);
   });

@@ -5,8 +5,7 @@ import {
   calculateAveragePokemonIngredientSet,
   calculateIngredientPercentage,
   calculateNrOfBerriesPerDrop,
-  calculateSkillPercentage,
-  ingredientSetToIntFlat
+  calculateSkillPercentage
 } from 'sleepapi-common';
 
 class TeamSimulatorUtilsImpl {
@@ -28,9 +27,11 @@ class TeamSimulatorUtilsImpl {
 
   public calculateAverageProduce(member: TeamMemberExt): ProduceFlat {
     const ingredientPercentage = TeamSimulatorUtils.calculateIngredientPercentage(member);
-    const pokemonIngredientListFlat = ingredientSetToIntFlat(member.pokemonWithIngredients.ingredientList);
 
-    const avgIngredientList = calculateAveragePokemonIngredientSet(pokemonIngredientListFlat, member.settings.level);
+    const avgIngredientList = calculateAveragePokemonIngredientSet(
+      member.pokemonWithIngredients.ingredientList,
+      member.settings.level
+    );
 
     const memberBerryInList = berrySetToFlat([
       { amount: 1, berry: member.pokemonWithIngredients.pokemon.berry, level: member.settings.level }
