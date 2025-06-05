@@ -65,7 +65,7 @@ export class CookingState {
     this.rng = rng;
 
     this.camp = settings.camp;
-    this.userPotSize = settings.potSize;
+    this.userPotSize = settings.potSize + Math.floor(settings.potSize / 2);
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
     this.currentCurryStockpile = settings.stockpiledIngredients.slice();
     this.currentSaladStockpile = settings.stockpiledIngredients.slice();

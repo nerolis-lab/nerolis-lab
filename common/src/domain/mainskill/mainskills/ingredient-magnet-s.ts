@@ -1,10 +1,11 @@
+import { strengthenIngredientSkillOutputByHalf } from '../../../utils/event-utils';
 import { MAX_SKILL_LEVEL } from '../../constants';
 import type { Mainskill } from '../mainskill';
 import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
 
 export const INGREDIENT_MAGNET_S: Mainskill = createBaseSkill({
   name: 'Ingredient Magnet S',
-  amount: [6, 8, 11, 14, 17, 21, 24],
+  amount: [6, 8, 11, 14, 17, 21, 24].map(strengthenIngredientSkillOutputByHalf),
   unit: 'ingredients',
   maxLevel: MAX_SKILL_LEVEL,
   description: 'Gets you ? ingredients chosen at random.',

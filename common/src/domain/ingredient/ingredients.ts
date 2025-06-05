@@ -1,5 +1,6 @@
 import type { Ingredient } from './ingredient';
 import { MathUtils } from '../../utils/math-utils';
+import { strengthenIngredientByHalf } from '../../utils/event-utils';
 
 const SLOWPOKE_TAIL_VALUE = 342;
 
@@ -123,7 +124,7 @@ export const INGREDIENTS: Ingredient[] = [
   TASTY_MUSHROOM,
   LARGE_LEEK,
   SLOWPOKE_TAIL
-];
+].map(strengthenIngredientByHalf);
 
 export const TOTAL_NUMBER_OF_INGREDIENTS = INGREDIENTS.length;
 

@@ -388,8 +388,8 @@ export class MemberState {
   }
 
   public recoverMeal() {
-    this.totalRecovery += getMealRecoveryAmount(this.currentEnergy);
-    this.currentEnergy += getMealRecoveryAmount(this.currentEnergy);
+    this.totalRecovery += getMealRecoveryAmount(this.currentEnergy) + 5;
+    this.currentEnergy += getMealRecoveryAmount(this.currentEnergy) + 5;
   }
 
   public attemptDayHelpInner() {

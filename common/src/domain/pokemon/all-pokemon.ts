@@ -1,3 +1,4 @@
+import { addOneIngredient } from '../../utils/event-utils';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import { WIKI } from '../berry/berries';
 import { GENDER_UNKNOWN } from '../gender';
@@ -24,6 +25,6 @@ export const DARKRAI: Pokemon = {
   skill: CHARGE_STRENGTH_M_BAD_DREAMS
 };
 
-export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [DARKRAI];
+export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [DARKRAI].map(addOneIngredient);
 export const INFERIOR_ALL_SPECIALISTS: Pokemon[] = [];
 export const ALL_ALL_SPECIALISTS: Pokemon[] = [...OPTIMAL_ALL_SPECIALISTS, ...INFERIOR_ALL_SPECIALISTS];

@@ -1,3 +1,4 @@
+import { addOneIngredient } from '../../utils/event-utils';
 import { evolvesFrom, evolvesInto } from '../../utils/pokemon-utils/evolution-utils';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import {
@@ -1254,7 +1255,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   QUAXWELL,
   QUAQUAVAL,
   CLODSIRE
-];
+].map(addOneIngredient);
 
 export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   BULBASAUR,
@@ -1290,7 +1291,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   SPRIGATITO,
   FUECOCO,
   QUAXLY
-];
+].map(addOneIngredient);
 
 export const ALL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   ...OPTIMAL_INGREDIENT_SPECIALISTS,
