@@ -3,11 +3,13 @@ import type { DBTeamWithoutVersion } from '@src/database/dao/team/team-dao.js';
 import { TeamDAO } from '@src/database/dao/team/team-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import type {
-  GetTeamsResponse,
-  UpsertTeamMemberRequest,
-  UpsertTeamMemberResponse,
-  UpsertTeamMetaResponse
+import {
+  CarrySizeUtils,
+  getPokemon,
+  type GetTeamsResponse,
+  type UpsertTeamMemberRequest,
+  type UpsertTeamMemberResponse,
+  type UpsertTeamMetaResponse
 } from 'sleepapi-common';
 
 export async function upsertTeamMeta(team: DBTeamWithoutVersion): Promise<UpsertTeamMetaResponse> {
@@ -78,7 +80,7 @@ export async function upsertTeamMember(params: {
       name: request.name,
       level: request.level,
       ribbon: request.ribbon,
-      carry_size: request.carrySize,
+      carry_size: CarrySizeUtils.baseCarrySize(getPokemon(request.pokemon)),
       skill_level: request.skillLevel,
       nature: request.nature,
       subskill_10: PokemonDAO.subskillForLevel(10, request.subskills),
@@ -109,7 +111,7 @@ export async function upsertTeamMember(params: {
     name: upsertedMember.name,
     level: upsertedMember.level,
     ribbon: upsertedMember.ribbon,
-    carrySize: upsertedMember.carry_size,
+    carrySize: CarrySizeUtils.baseCarrySize(getPokemon(upsertedMember.pokemon)),
     skillLevel: upsertedMember.skill_level,
     nature: upsertedMember.nature,
     subskills: request.subskills,

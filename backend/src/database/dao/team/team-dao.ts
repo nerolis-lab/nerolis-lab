@@ -5,6 +5,8 @@ import type { DBPokemon } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import {
+  CarrySizeUtils,
+  getPokemon,
   type BerrySetSimple,
   type GetTeamResponse,
   type IngredientSetSimple,
@@ -72,7 +74,7 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
           name: member.name,
           level: member.level,
           ribbon: member.ribbon,
-          carrySize: member.carry_size,
+          carrySize: CarrySizeUtils.baseCarrySize(getPokemon(member.pokemon)),
           skillLevel: member.skill_level,
           nature: member.nature,
           subskills,

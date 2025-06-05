@@ -259,7 +259,7 @@ export default defineComponent({
       ]
       this.pokemonInstance.skillLevel = Math.min(this.pokemonInstance.skillLevel, pokemon.skill.maxLevel)
       this.pokemonInstance.gender = getRandomGender(pokemon)
-      this.pokemonInstance.carrySize = CarrySizeUtils.maxCarrySize(pokemon)
+      this.pokemonInstance.carrySize = CarrySizeUtils.baseCarrySize(pokemon)
     },
     updateName(newName: string) {
       this.pokemonInstance.name = newName

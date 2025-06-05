@@ -26,7 +26,7 @@ describe('simulator', () => {
       skillPercentage: 0.02,
       input: MOCKED_OPTIMAL_PRODUCTION_STATS,
       pokemonWithAverageProduce,
-      inventoryLimit: CarrySizeUtils.maxCarrySize(pokemonWithAverageProduce.pokemon),
+      inventoryLimit: CarrySizeUtils.baseCarrySize(pokemonWithAverageProduce.pokemon),
       recoveryEvents: [new EnergyEvent({ delta: 10, description: 'some-desc', time: TimeUtils.parseTime('08:00') })],
       extraHelpfulEvents: [
         new SkillEvent({

@@ -1,4 +1,4 @@
-import { MAX_TEAM_SIZE } from '../../domain';
+import { MAX_TEAM_SIZE } from '../../domain/constants';
 import type { Nature } from '../../domain/nature';
 import type { Pokemon, PokemonSpecialty } from '../../domain/pokemon';
 import {

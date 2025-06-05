@@ -27,7 +27,7 @@ describe('startDayAndEnergy', () => {
         dayInfo,
         pkmn,
         input,
-        CarrySizeUtils.maxCarrySize(pkmn),
+        CarrySizeUtils.baseCarrySize(pkmn),
         recoveryEvents,
         skillActivations,
         eventLog,

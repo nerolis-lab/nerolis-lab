@@ -1,7 +1,7 @@
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import type { PokemonInstanceWithMeta } from 'sleepapi-common';
+import { CarrySizeUtils, getPokemon, type PokemonInstanceWithMeta } from 'sleepapi-common';
 
 export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWithMeta[]> {
   const userPokemon = await PokemonDAO.findMultiple({ fk_user_id: user.id, saved: true });
@@ -38,7 +38,7 @@ export async function upsertPokemon(params: { user: DBUser; pokemonInstance: Pok
       name: pokemonInstance.name,
       level: pokemonInstance.level,
       ribbon: pokemonInstance.ribbon,
-      carry_size: pokemonInstance.carrySize,
+      carry_size: CarrySizeUtils.baseCarrySize(getPokemon(pokemonInstance.pokemon)),
       skill_level: pokemonInstance.skillLevel,
       nature: pokemonInstance.nature,
       subskill_10: PokemonDAO.subskillForLevel(10, pokemonInstance.subskills),

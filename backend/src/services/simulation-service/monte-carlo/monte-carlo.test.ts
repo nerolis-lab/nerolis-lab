@@ -11,7 +11,7 @@ describe('monteCarlo', () => {
       helpFrequency: 1000,
       mealTimes: [],
       pokemonWithAverageProduce,
-      inventoryLimit: CarrySizeUtils.maxCarrySize(MOCKED_POKEMON),
+      inventoryLimit: CarrySizeUtils.baseCarrySize(MOCKED_POKEMON),
       recoveryEvents: [],
       skillPercentage: 1,
       skillLevel: 6,

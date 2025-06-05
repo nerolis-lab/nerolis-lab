@@ -57,7 +57,7 @@ export default {
         name: randomName(12, gender),
         level: 60,
         ribbon: 0,
-        carrySize: CarrySizeUtils.maxCarrySize(pkmn),
+        carrySize: CarrySizeUtils.baseCarrySize(pkmn),
         skillLevel: pkmn.previousEvolutions + 1,
         nature: nature.BASHFUL,
         subskills: [],

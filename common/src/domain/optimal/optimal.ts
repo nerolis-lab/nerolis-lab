@@ -1,3 +1,4 @@
+import { CarrySizeUtils } from '../../utils/carry-size-utils/carry-size-utils';
 import type { SubskillInstanceExt } from '../instance/subskill-instance';
 import type { Nature } from '../nature/nature';
 import { ADAMANT, CAREFUL, QUIET } from '../nature/nature';
@@ -35,7 +36,7 @@ class OptimalImpl {
       ],
       nature: ADAMANT,
       skillLevel: skillLevel ?? pokemon.skill.maxLevel,
-      carrySize: pokemon.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(pokemon),
       ribbon: ribbon ?? 4
     };
   }
@@ -51,7 +52,7 @@ class OptimalImpl {
       ],
       nature: QUIET,
       skillLevel: skillLevel ?? pokemon.skill.maxLevel,
-      carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
+      carrySize: CarrySizeUtils.baseCarrySize(pokemon),
       ribbon: ribbon ?? 4
     };
   }
@@ -67,7 +68,7 @@ class OptimalImpl {
       ],
       nature: CAREFUL,
       skillLevel: skillLevel ?? pokemon.skill.maxLevel,
-      carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
+      carrySize: CarrySizeUtils.baseCarrySize(pokemon),
       ribbon: ribbon ?? 4
     };
   }

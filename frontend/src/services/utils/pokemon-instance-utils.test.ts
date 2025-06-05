@@ -1,6 +1,12 @@
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { mocks } from '@/vitest'
-import { ingredient, subskill, type PokemonInstanceExt, type PokemonInstanceWithMeta } from 'sleepapi-common'
+import {
+  CarrySizeUtils,
+  ingredient,
+  subskill,
+  type PokemonInstanceExt,
+  type PokemonInstanceWithMeta
+} from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
 const mockPokemonInstanceExt: PokemonInstanceExt = mocks.createMockPokemon({
@@ -19,7 +25,7 @@ const mockPokemonInstanceWithMeta: PokemonInstanceWithMeta = {
   name: mockPokemonInstanceExt.name,
   level: mockPokemonInstanceExt.level,
   ribbon: mockPokemonInstanceExt.ribbon,
-  carrySize: mockPokemonInstanceExt.carrySize,
+  carrySize: CarrySizeUtils.baseCarrySize(mockPokemonInstanceExt.pokemon),
   skillLevel: mockPokemonInstanceExt.skillLevel,
   nature: mockPokemonInstanceExt.nature.name,
   subskills: [
@@ -118,7 +124,7 @@ describe('toPokemonInstanceIdentity', () => {
         name: ingredientSet.ingredient.name,
         amount: ingredientSet.amount
       })),
-      carrySize: mockPokemonInstanceExt.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(mockPokemonInstanceExt.pokemon),
       level: mockPokemonInstanceExt.level,
       ribbon: mockPokemonInstanceExt.ribbon,
       skillLevel: mockPokemonInstanceExt.skillLevel,

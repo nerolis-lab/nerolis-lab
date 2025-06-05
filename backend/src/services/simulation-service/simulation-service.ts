@@ -130,7 +130,7 @@ export function setupAndRunProductionSimulation(params: {
   ];
 
   const inventoryLimit = CarrySizeUtils.calculateCarrySize({
-    baseWithEvolutions: input.inventoryLimit ?? CarrySizeUtils.maxCarrySize(pokemonSet.pokemon),
+    baseWithEvolutions: input.inventoryLimit ?? CarrySizeUtils.baseCarrySize(pokemonSet.pokemon),
     subskillsLevelLimited: limitSubSkillsToLevel(subskills, level),
     ribbon,
     camp

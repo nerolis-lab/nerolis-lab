@@ -85,7 +85,7 @@ describe('calculateTeam', () => {
           ]
         },
         settings: {
-          carrySize: 24,
+          carrySize: PINSIR.carrySize,
           level: 60,
           ribbon: 0,
           nature: nature.MILD,
@@ -146,7 +146,7 @@ describe('calculateIv', () => {
           ingredientList: [{ amount: 3, ingredient: ingredient.FANCY_APPLE }]
         },
         settings: {
-          carrySize: 10,
+          carrySize: BULBASAUR.carrySize,
           level: 15,
           ribbon: 0,
           nature: nature.JOLLY,
@@ -164,7 +164,7 @@ describe('calculateIv', () => {
           ingredientList: [{ amount: 2, ingredient: ingredient.HONEY }]
         },
         settings: {
-          carrySize: 8,
+          carrySize: CHARMANDER.carrySize,
           level: 12,
           ribbon: 0,
           nature: nature.BRAVE,

@@ -12,7 +12,7 @@ import {
 } from '@src/services/api-service/team/team-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
-import { Roles, uuid } from 'sleepapi-common';
+import { getPokemon, Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -309,7 +309,7 @@ describe('upsertTeamMember', () => {
       name: 'Bulbasaur',
       level: 5,
       ribbon: 0,
-      carrySize: 3,
+      carrySize: getPokemon('Bulbasaur').carrySize,
       skillLevel: 2,
       nature: 'brave',
       subskills: [],
@@ -333,7 +333,7 @@ describe('upsertTeamMember', () => {
       shiny: false,
       gender: 'female',
       ribbon: 0,
-      carrySize: 3,
+      carrySize: getPokemon('Bulbasaur').carrySize,
       skillLevel: 2,
       nature: 'brave',
       subskills: [],
@@ -355,7 +355,7 @@ describe('upsertTeamMember', () => {
       shiny: false,
       gender: 'female',
       ribbon: 0,
-      carry_size: 3,
+      carry_size: getPokemon('Bulbasaur').carrySize,
       skill_level: 2,
       nature: 'brave',
       subskill_10: undefined,
@@ -474,7 +474,7 @@ describe('upsertTeamMember', () => {
       name: 'Bulbasaur',
       level: 10,
       ribbon: 0,
-      carrySize: 5,
+      carrySize: getPokemon('Bulbasaur').carrySize,
       skillLevel: 3,
       nature: 'bold',
       subskills: [
@@ -499,7 +499,7 @@ describe('upsertTeamMember', () => {
       pokemon: 'bulbasaur',
       name: 'Bulbasaur',
       level: 10,
-      carry_size: 5,
+      carry_size: getPokemon('Bulbasaur').carrySize,
       skill_level: 3,
       nature: 'bold',
       subskill_10: 'quick-attack',
