@@ -3,7 +3,7 @@ import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamDAO } from '@src/database/dao/team/team-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { uuid } from 'sleepapi-common';
+import { getPokemon, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -225,7 +225,7 @@ describe('findTeamsWithMembers', () => {
       pokemon: 'Pikachu',
       name: 'Sparky',
       skill_level: 5,
-      carry_size: 10,
+      carry_size: getPokemon('Pikachu').carrySize,
       level: 25,
       ribbon: 0,
       nature: 'Brave',
@@ -247,7 +247,7 @@ describe('findTeamsWithMembers', () => {
       pokemon: 'Bulbasaur',
       name: 'Bubble',
       skill_level: 5,
-      carry_size: 10,
+      carry_size: getPokemon('Bulbasaur').carrySize,
       level: 25,
       ribbon: 0,
       nature: 'Brave',
@@ -270,7 +270,7 @@ describe('findTeamsWithMembers', () => {
       pokemon: 'Bulbasaur',
       name: 'Bubble',
       skill_level: 5,
-      carry_size: 10,
+      carry_size: getPokemon('Bulbasaur').carrySize,
       level: 25,
       ribbon: 0,
       nature: 'Brave',

@@ -15,6 +15,7 @@ import {
   SKILL_TRIGGER_S
 } from '../subskill/subskills';
 import { Optimal } from './optimal';
+import { CarrySizeUtils } from '../../utils';
 
 describe('Optimal', () => {
   const baseSkill: Mainskill = new (class extends Mainskill {
@@ -41,7 +42,7 @@ describe('Optimal', () => {
       ],
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
       ribbon: 2
     });
   });
@@ -77,7 +78,7 @@ describe('Optimal', () => {
       ],
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
       ribbon: 4
     });
   });
@@ -95,7 +96,7 @@ describe('Optimal', () => {
       ],
       nature: QUIET,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+      carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
       ribbon: 4
     });
   });
@@ -113,7 +114,7 @@ describe('Optimal', () => {
       ],
       nature: CAREFUL,
       skillLevel: mockedPokemon.skill.maxLevel,
-      carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+      carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
       ribbon: 4
     });
   });
@@ -129,7 +130,7 @@ describe('Optimal', () => {
       });
 
       expect(memberSettings).toEqual({
-        carrySize: mockedPokemon.carrySize,
+        carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
         nature: ADAMANT,
         ribbon: 2,
         skillLevel: mockedPokemon.skill.maxLevel,
@@ -150,7 +151,7 @@ describe('Optimal', () => {
         ],
         nature: QUIET,
         skillLevel: mockedPokemon.skill.maxLevel,
-        carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+        carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
         ribbon: 0
       };
 
@@ -161,7 +162,7 @@ describe('Optimal', () => {
       });
 
       expect(memberSettings).toEqual({
-        carrySize: mockedPokemon.carrySize + mockedPokemon.previousEvolutions * 5,
+        carrySize: CarrySizeUtils.baseCarrySize(mockedPokemon),
         nature: QUIET,
         ribbon: 0,
         skillLevel: mockedPokemon.skill.maxLevel,

@@ -50,7 +50,7 @@ describe('upsertPokemon', () => {
     level: 0,
     name: 'name',
     nature: 'nature',
-    pokemon: 'pokemon',
+    pokemon: 'sneasel',
     ribbon: 0,
     saved: false,
     shiny: false,

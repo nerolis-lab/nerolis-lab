@@ -201,7 +201,7 @@ export default class ProductionController {
           level: member.level,
           ribbon: member.ribbon,
           carrySize: CarrySizeUtils.calculateCarrySize({
-            baseWithEvolutions: member.carrySize,
+            baseWithEvolutions: CarrySizeUtils.baseCarrySize(getPokemon(member.pokemon)),
             subskillsLevelLimited: subskills,
             ribbon: member.ribbon,
             camp
@@ -254,7 +254,7 @@ export default class ProductionController {
     if (nrOfEvos > pkmn.previousEvolutions) {
       throw new PokemonError(`${pkmn.name} doesn't evolve ${inputNrOfEvos} times`);
     }
-    const inventoryLimit = pkmn.carrySize + nrOfEvos * 5;
+    const inventoryLimit = CarrySizeUtils.baseCarrySize(pkmn);
 
     const parsedInput: ProductionStats = {
       level,

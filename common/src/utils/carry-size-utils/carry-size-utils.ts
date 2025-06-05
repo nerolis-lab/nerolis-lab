@@ -74,15 +74,7 @@ class CarrySizeUtilsImpl {
     );
   }
 
-  public timesEvolvedByCarrySize(pokemon: Pokemon, currentBaseCarrySize: number): number {
-    return (currentBaseCarrySize - pokemon.carrySize) / 5;
-  }
-
-  public baseCarrySize(pokemon: Pokemon, timesEvolved: number): number {
-    return pokemon.carrySize + 5 * timesEvolved;
-  }
-
-  public maxCarrySize(pokemon: Pokemon): number {
+  public baseCarrySize(pokemon: Pokemon): number {
     return pokemon.carrySize + 5 * pokemon.previousEvolutions;
   }
 }

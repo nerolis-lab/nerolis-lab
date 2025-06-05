@@ -69,7 +69,7 @@ export function calculatePokemonProduction(
         subskills: optimalIngredientSubskills,
         nature: nature.QUIET,
         skillLevel: pokemon.skill.maxLevel,
-        inventoryLimit: CarrySizeUtils.maxCarrySize(pokemon)
+        inventoryLimit: CarrySizeUtils.baseCarrySize(pokemon)
       },
       monteCarloIterations
     }).detailedProduce;
@@ -90,7 +90,7 @@ export function calculatePokemonProduction(
         ),
         nature: nature.ADAMANT,
         skillLevel: pokemon.skill.maxLevel,
-        inventoryLimit: pokemon.carrySize
+        inventoryLimit: CarrySizeUtils.baseCarrySize(pokemon)
       },
       monteCarloIterations
     }).detailedProduce;
@@ -111,7 +111,7 @@ export function calculatePokemonProduction(
         ),
         nature: nature.CAREFUL,
         skillLevel: pokemon.skill.maxLevel,
-        inventoryLimit: CarrySizeUtils.maxCarrySize(pokemon)
+        inventoryLimit: CarrySizeUtils.baseCarrySize(pokemon)
       },
       monteCarloIterations
     }).detailedProduce;

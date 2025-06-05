@@ -7,6 +7,7 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import MockAdapter from 'axios-mock-adapter'
 import {
   BULBASAUR,
+  CarrySizeUtils,
   ingredient,
   MAX_TEAM_SIZE,
   nature,
@@ -219,7 +220,7 @@ describe('getTeams', () => {
       pokemon: BULBASAUR,
       name: `Bubble`,
       level: 5,
-      carrySize: 3,
+      carrySize: BULBASAUR.carrySize,
       skillLevel: 2,
       nature: nature.BRAVE,
       subskills: [{ level: 10, subskill: subskill.HELPING_BONUS }],
@@ -269,7 +270,7 @@ describe('createOrUpdateMember', () => {
       ribbon: member.ribbon,
       name: member.name,
       level: member.level,
-      carrySize: member.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(member.pokemon),
       skillLevel: member.skillLevel,
       nature: member.nature.name,
       subskills: member.subskills.map((subskill) => ({
@@ -301,7 +302,7 @@ describe('createOrUpdateMember', () => {
       ribbon: member.ribbon,
       name: member.name,
       level: member.level,
-      carrySize: member.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(member.pokemon),
       skillLevel: member.skillLevel,
       nature: member.nature.name,
       subskills: member.subskills.map((subskill) => ({
@@ -395,7 +396,7 @@ describe('calculateProduction', () => {
         ribbon: member.ribbon,
         pokemon: member.pokemon.name,
         level: member.level,
-        carrySize: member.carrySize,
+        carrySize: CarrySizeUtils.baseCarrySize(member.pokemon),
         skillLevel: member.skillLevel,
         nature: member.nature.name,
         subskills: member.subskills.map((s) => ({ level: s.level, subskill: s.subskill.name })),
@@ -498,7 +499,7 @@ describe('calculateIv', () => {
           ribbon: otherMember.ribbon,
           pokemon: otherMember.pokemon.name,
           level: otherMember.level,
-          carrySize: otherMember.carrySize,
+          carrySize: CarrySizeUtils.baseCarrySize(otherMember.pokemon),
           skillLevel: otherMember.skillLevel,
           nature: otherMember.nature.name,
           subskills: otherMember.subskills.map((s) => ({

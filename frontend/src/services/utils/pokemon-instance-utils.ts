@@ -1,4 +1,5 @@
 import {
+  CarrySizeUtils,
   getIngredient,
   getNature,
   getPokemon,
@@ -28,7 +29,7 @@ class PokemonInstanceUtilsImpl {
       name: pokemonInstance.name,
       level: pokemonInstance.level,
       ribbon: pokemonInstance.ribbon,
-      carrySize: pokemonInstance.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(getPokemon(pokemonInstance.pokemon)),
       skillLevel: pokemonInstance.skillLevel,
       nature: getNature(pokemonInstance.nature),
       subskills: pokemonInstance.subskills.map((instancedSubskill) => ({
@@ -64,7 +65,7 @@ class PokemonInstanceUtilsImpl {
       name: instancedPokemon.name,
       level: instancedPokemon.level,
       ribbon: instancedPokemon.ribbon,
-      carrySize: instancedPokemon.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(instancedPokemon.pokemon),
       skillLevel: instancedPokemon.skillLevel,
       nature: instancedPokemon.nature.name,
       subskills: instancedPokemon.subskills.map((instancedSubskill) => ({
@@ -92,7 +93,7 @@ class PokemonInstanceUtilsImpl {
         name: ingredient.ingredient.name,
         amount: ingredient.amount
       })),
-      carrySize: pokemonInstance.carrySize,
+      carrySize: CarrySizeUtils.baseCarrySize(pokemonInstance.pokemon),
       level: pokemonInstance.level,
       ribbon: pokemonInstance.ribbon,
       skillLevel: pokemonInstance.skillLevel,

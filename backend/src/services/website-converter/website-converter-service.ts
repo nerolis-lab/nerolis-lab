@@ -261,15 +261,7 @@ class WebsiteConverterServiceImpl {
       `Level: ${productionCombination.filters.level}, Nature: ${
         productionCombination.filters.nature?.prettyName ?? 'None'
       }\n` +
-      `Main skill level: ${productionCombination.filters.skillLevel}${
-        productionCombination.filters.inventoryLimit !== undefined
-          ? `, evolutions: ${
-              (productionCombination.filters.inventoryLimit -
-                productionCombination.production.pokemonCombination.pokemon.carrySize) /
-              5
-            }`
-          : ''
-      }\n` +
+      `Main skill level: ${productionCombination.filters.skillLevel}\n` +
       `Subskills: ${filters.subskills && filters.subskills.size > 0 ? [...filters.subskills].join(', ') : 'None'}\n`;
 
     const teamInput: string[] = [];

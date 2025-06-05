@@ -95,7 +95,7 @@ describe('PokemonInput', () => {
     ])
     expect(pokemonInstance.skillLevel).toBe(1)
     expect(pokemonInstance.gender).toEqual('female')
-    expect(pokemonInstance.carrySize).toBe(CarrySizeUtils.maxCarrySize(WEAVILE))
+    expect(pokemonInstance.carrySize).toBe(CarrySizeUtils.baseCarrySize(WEAVILE))
   })
 
   it('updates name correctly', async () => {

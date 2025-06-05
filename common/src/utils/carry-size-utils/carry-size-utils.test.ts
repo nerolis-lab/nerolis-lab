@@ -227,29 +227,9 @@ describe('base and max carry size', () => {
     skill: HelperBoost
   });
 
-  describe('timesEvolvedByCarrySize', () => {
-    it('shall return 2 given 10 over base carry size', () => {
-      expect(CarrySizeUtils.timesEvolvedByCarrySize(MOCK_POKEMON, 20)).toBe(2);
-    });
-
-    it('shall return 0 given the base carry size', () => {
-      expect(CarrySizeUtils.timesEvolvedByCarrySize(MOCK_POKEMON, 10)).toBe(0);
-    });
-  });
-
   describe('baseCarrySize', () => {
-    it('shall return 15 given 1 time evolved', () => {
-      expect(CarrySizeUtils.baseCarrySize(MOCK_POKEMON, 1)).toBe(15);
-    });
-
-    it('shall return 10 given 0 times evolved', () => {
-      expect(CarrySizeUtils.baseCarrySize(MOCK_POKEMON, 0)).toBe(10);
-    });
-  });
-
-  describe('maxCarrySize', () => {
-    it('shall return 15 for MOCK_POKEMON', () => {
-      expect(CarrySizeUtils.maxCarrySize(MOCK_POKEMON)).toBe(15);
+    it('shall return 15', () => {
+      expect(CarrySizeUtils.baseCarrySize(MOCK_POKEMON)).toBe(15);
     });
   });
 });
