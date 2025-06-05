@@ -97,7 +97,7 @@ export const BUTTERFREE: Pokemon = {
   name: 'BUTTERFREE',
   displayName: 'Butterfree',
   pokedexNumber: 12,
-  frequency: toSeconds(0, 43, 20),
+  frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 19.7,
   skillPercentage: 1.4,
   carrySize: 21
@@ -419,7 +419,7 @@ export const DODRIO: Pokemon = {
   name: 'DODRIO',
   displayName: 'Dodrio',
   pokedexNumber: 85,
-  frequency: toSeconds(0, 40, 0),
+  frequency: toSeconds(0, 38, 20),
   ingredientPercentage: 18.4,
   skillPercentage: 2.0,
   carrySize: 21
@@ -832,7 +832,7 @@ export const ALTARIA: Pokemon = {
   name: 'ALTARIA',
   displayName: 'Altaria',
   pokedexNumber: 334,
-  frequency: toSeconds(1, 1, 40),
+  frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 25.8,
   skillPercentage: 6.1,
   berry: YACHE,
