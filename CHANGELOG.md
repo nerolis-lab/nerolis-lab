@@ -1,3 +1,11 @@
+# [2.8.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.7.4...v2.8.0) (2025-06-07)
+
+
+### Features
+
+* **Darkrai:** Add locked ingredients for Darkrai ([77a673b](https://github.com/nerolis-lab/nerolis-lab/commit/77a673b7e667d4d8090b327b6f036097b0dab08a))
+* **Darkrai:** add normal ingredients for Darkrai ([35eb640](https://github.com/nerolis-lab/nerolis-lab/commit/35eb6407e1a5d871c9b3aef9701da3624cf1650b))
+
 ## [2.7.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.7.3...v2.7.4) (2025-06-06)
 
 ## [2.7.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.7.2...v2.7.3) (2025-06-05)
