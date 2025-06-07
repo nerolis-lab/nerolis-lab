@@ -24,7 +24,7 @@ export interface Optimal {
 }
 
 class OptimalImpl {
-  public berry(pokemon: Pokemon, ribbon?: number): Optimal {
+  public berry(pokemon: Pokemon, ribbon?: number, skillLevel?: number): Optimal {
     return {
       subskills: [
         { level: 10, subskill: BERRY_FINDING_S },
@@ -34,13 +34,13 @@ class OptimalImpl {
         { level: 100, subskill: SKILL_TRIGGER_M }
       ],
       nature: ADAMANT,
-      skillLevel: pokemon.skill.maxLevel,
+      skillLevel: skillLevel ?? pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize,
       ribbon: ribbon ?? 4
     };
   }
 
-  public ingredient(pokemon: Pokemon, ribbon?: number): Optimal {
+  public ingredient(pokemon: Pokemon, ribbon?: number, skillLevel?: number): Optimal {
     return {
       subskills: [
         { level: 10, subskill: INGREDIENT_FINDER_M },
@@ -50,12 +50,13 @@ class OptimalImpl {
         { level: 100, subskill: HELPING_SPEED_S }
       ],
       nature: QUIET,
-      skillLevel: pokemon.skill.maxLevel,
+      skillLevel: skillLevel ?? pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
       ribbon: ribbon ?? 4
     };
   }
-  public skill(pokemon: Pokemon, ribbon?: number): Optimal {
+
+  public skill(pokemon: Pokemon, ribbon?: number, skillLevel?: number): Optimal {
     return {
       subskills: [
         { level: 10, subskill: SKILL_TRIGGER_M },
@@ -65,7 +66,7 @@ class OptimalImpl {
         { level: 100, subskill: HELPING_BONUS }
       ],
       nature: CAREFUL,
-      skillLevel: pokemon.skill.maxLevel,
+      skillLevel: skillLevel ?? pokemon.skill.maxLevel,
       carrySize: pokemon.carrySize + pokemon.previousEvolutions * 5,
       ribbon: ribbon ?? 4
     };
