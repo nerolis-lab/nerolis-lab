@@ -1,7 +1,7 @@
 import { emptyProduce, type Produce } from '../../api/production/produce';
 import { BELUE, LEPPA } from '../../domain/berry/berries';
 import { SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
-import { HELPER_BOOST } from '../../domain/mainskill/mainskills/helper-boost';
+import { HelperBoost } from '../../domain/mainskill/mainskills/helper-boost';
 import type { Pokemon } from '../../domain/pokemon';
 import { INVENTORY_S } from '../../domain/subskill/subskills';
 import { mockPokemon } from '../../vitest/mocks/pokemon/mock-pokemon';
@@ -224,7 +224,7 @@ describe('base and max carry size', () => {
     carrySize: 10,
     previousEvolutions: 1,
     remainingEvolutions: 1,
-    skill: HELPER_BOOST
+    skill: HelperBoost
   });
 
   describe('timesEvolvedByCarrySize', () => {

@@ -5,7 +5,7 @@ import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { DARKRAI, MathUtils, compactNumber, type MemberSkillValue } from 'sleepapi-common'
+import { ChargeStrengthMBadDreams, DARKRAI, MathUtils, compactNumber, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mockMember: MemberProductionExt = mocks.createMockMemberProductionExt({
@@ -55,7 +55,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/mainskill/bad_dreams_strength.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/strength.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -73,7 +73,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center.ml-1').at(0)
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: ChargeStrengthMBadDreams.activations.strength,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1

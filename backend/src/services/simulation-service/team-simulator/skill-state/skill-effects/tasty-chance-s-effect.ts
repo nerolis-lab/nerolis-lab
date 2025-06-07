@@ -1,17 +1,22 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill } from 'sleepapi-common';
+import { TastyChanceS } from 'sleepapi-common';
 
 export class TastyChanceSEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
-    const skill = mainskill.TASTY_CHANCE_S;
-    const critAmount = skillState.skillAmount(skill);
+  activate(skillState: SkillState): SkillActivation {
+    const skill = TastyChanceS;
+    const critAmount = skillState.skillAmount(skill.activations.chance);
     skillState.memberState.cookingState?.addCritBonus(critAmount / 100);
 
     return {
       skill,
-      selfValue: { regular: critAmount, crit: 0 }
+      activations: [
+        {
+          unit: 'crit chance',
+          self: { regular: critAmount, crit: 0 }
+        }
+      ]
     };
   }
 }

@@ -1,34 +1,30 @@
-import type { Mainskill } from '../mainskill';
-import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
+import { Mainskill } from '../mainskill';
 
-export const DREAM_SHARD_MAGNET_S: Mainskill = createBaseSkill({
-  name: 'Dream Shard Magnet S',
-  amount: [240, 340, 480, 670, 920, 1260, 1800, 2500],
-  unit: 'dream shards',
-  maxLevel: 8,
-  description: 'Obtain ? Dream Shards.',
-  RP: [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303]
-});
+export const DreamShardMagnetS = new (class extends Mainskill {
+  name = 'Dream Shard Magnet S';
+  RP = [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303];
+  shardAmounts = [240, 340, 480, 670, 920, 1260, 1800, 2500];
+  image = 'shards';
 
-export const DREAM_SHARD_MAGNET_S_RANGE: Mainskill = createBaseSkill({
-  name: 'Dream Shard Magnet S Range',
-  amount: [
-    (DREAM_SHARD_MAGNET_S.amounts[0] * 2 + DREAM_SHARD_MAGNET_S.amounts[0] * 0.5) / 2,
-    (DREAM_SHARD_MAGNET_S.amounts[1] * 2 + DREAM_SHARD_MAGNET_S.amounts[1] * 0.5) / 2,
-    (DREAM_SHARD_MAGNET_S.amounts[2] * 2 + DREAM_SHARD_MAGNET_S.amounts[2] * 0.5) / 2,
-    (DREAM_SHARD_MAGNET_S.amounts[3] * 2 + DREAM_SHARD_MAGNET_S.amounts[3] * 0.5) / 2,
-    (DREAM_SHARD_MAGNET_S.amounts[4] * 2 + DREAM_SHARD_MAGNET_S.amounts[4] * 0.5) / 2,
-    (DREAM_SHARD_MAGNET_S.amounts[5] * 2 + DREAM_SHARD_MAGNET_S.amounts[5] * 0.5) / 2,
-    (DREAM_SHARD_MAGNET_S.amounts[6] * 2 + DREAM_SHARD_MAGNET_S.amounts[6] * 0.5) / 2,
-    (1150 + 4600) / 2
-  ],
-  unit: 'dream shards',
-  maxLevel: 8,
-  description: 'Obtain ? Dream Shards on average.',
-  RP: [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303]
-});
+  description = (skillLevel: number) => `Obtain ${this.shardAmounts[skillLevel - 1]} Dream Shards.`;
+  activations = {
+    dreamShards: {
+      unit: 'dream shards',
+      amount: this.leveledAmount(this.shardAmounts)
+    }
+  };
+})();
 
-MAINSKILLS.push(DREAM_SHARD_MAGNET_S);
-MAINSKILLS.push(DREAM_SHARD_MAGNET_S_RANGE);
-METRONOME_SKILLS.push(DREAM_SHARD_MAGNET_S);
-METRONOME_SKILLS.push(DREAM_SHARD_MAGNET_S_RANGE);
+export const DreamShardMagnetSRange = new (class extends Mainskill {
+  name = 'Dream Shard Magnet S Range';
+  RP = [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303];
+  shardAmounts = [300, 425, 600, 837.5, 1150, 1575, 2250, 3125];
+  image = 'shards';
+  description = (skillLevel: number) => `Obtain ${this.shardAmounts[skillLevel - 1]} Dream Shards on average.`;
+  activations = {
+    dreamShards: {
+      unit: 'dream shards',
+      amount: this.leveledAmount(this.shardAmounts)
+    }
+  };
+})();

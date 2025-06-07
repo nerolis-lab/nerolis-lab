@@ -25,6 +25,6 @@ export class SkillEvent extends ScheduledEvent {
     return `[${TimeUtils.prettifyTime(this.time)}][Skill] (${this.description}): ${MathUtils.round(
       this.skillActivation.adjustedAmount,
       2
-    )} ${this.skillActivation.skill.unit} (${MathUtils.round(this.skillActivation.fractionOfProc * 100, 1)}% strength)`;
+    )} (${MathUtils.round(this.skillActivation.fractionOfProc * 100, 1)}% strength)`;
   }
 }

@@ -18,7 +18,16 @@ import {
 } from '@src/utils/event-utils/event-utils.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { ABOMASNOW, CarrySizeUtils, MathUtils, berry, ingredient, mainskill, nature } from 'sleepapi-common';
+import {
+  ABOMASNOW,
+  CarrySizeUtils,
+  EnergyForEveryone,
+  ExtraHelpfulS,
+  MathUtils,
+  berry,
+  ingredient,
+  nature
+} from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('getExtraHelpfulEvents', () => {
@@ -72,7 +81,14 @@ describe('getExtraHelpfulEvents', () => {
                 4546,
                 5843,
               ],
-              "amount": [
+              "activations": {
+                "helps": {
+                  "amount": [Function],
+                  "unit": "helps",
+                },
+              },
+              "description": [Function],
+              "helpAmounts": [
                 5,
                 6,
                 7,
@@ -81,14 +97,8 @@ describe('getExtraHelpfulEvents', () => {
                 10,
                 11,
               ],
-              "description": "Instantly gets you x? the usual help from a helper Pokémon.",
-              "maxLevel": 7,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
+              "image": "helps",
               "name": "Extra Helpful S",
-              "unit": "helps",
             },
           },
           "time": {
@@ -138,7 +148,14 @@ describe('getExtraHelpfulEvents', () => {
                 4546,
                 5843,
               ],
-              "amount": [
+              "activations": {
+                "helps": {
+                  "amount": [Function],
+                  "unit": "helps",
+                },
+              },
+              "description": [Function],
+              "helpAmounts": [
                 5,
                 6,
                 7,
@@ -147,14 +164,8 @@ describe('getExtraHelpfulEvents', () => {
                 10,
                 11,
               ],
-              "description": "Instantly gets you x? the usual help from a helper Pokémon.",
-              "maxLevel": 7,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
+              "image": "helps",
               "name": "Extra Helpful S",
-              "unit": "helps",
             },
           },
           "time": {
@@ -221,7 +232,13 @@ describe('getHelperBoostEvents', () => {
                 9317,
                 12438,
               ],
-              "amount": [
+              "activations": {
+                "helps": {
+                  "amount": [Function],
+                  "unit": "helps",
+                },
+              },
+              "baseAmounts": [
                 2,
                 3,
                 3,
@@ -229,14 +246,51 @@ describe('getHelperBoostEvents', () => {
                 4,
                 5,
               ],
-              "description": "Instantly gets your x? the usual help from all Pokémon on your team. Meet certain conditions to boost effect.",
-              "maxLevel": 6,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
+              "description": [Function],
+              "image": "helps",
               "name": "Helper Boost",
-              "unit": "helps",
+              "uniqueBoostTable": {
+                "1": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                ],
+                "2": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                ],
+                "3": [
+                  1,
+                  1,
+                  2,
+                  2,
+                  3,
+                  3,
+                ],
+                "4": [
+                  2,
+                  2,
+                  3,
+                  3,
+                  4,
+                  4,
+                ],
+                "5": [
+                  4,
+                  4,
+                  5,
+                  5,
+                  6,
+                  6,
+                ],
+              },
             },
           },
           "time": {
@@ -285,7 +339,13 @@ describe('getHelperBoostEvents', () => {
                 9317,
                 12438,
               ],
-              "amount": [
+              "activations": {
+                "helps": {
+                  "amount": [Function],
+                  "unit": "helps",
+                },
+              },
+              "baseAmounts": [
                 2,
                 3,
                 3,
@@ -293,14 +353,51 @@ describe('getHelperBoostEvents', () => {
                 4,
                 5,
               ],
-              "description": "Instantly gets your x? the usual help from all Pokémon on your team. Meet certain conditions to boost effect.",
-              "maxLevel": 6,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
+              "description": [Function],
+              "image": "helps",
               "name": "Helper Boost",
-              "unit": "helps",
+              "uniqueBoostTable": {
+                "1": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                ],
+                "2": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                ],
+                "3": [
+                  1,
+                  1,
+                  2,
+                  2,
+                  3,
+                  3,
+                ],
+                "4": [
+                  2,
+                  2,
+                  3,
+                  3,
+                  4,
+                  4,
+                ],
+                "5": [
+                  4,
+                  4,
+                  5,
+                  5,
+                  6,
+                  6,
+                ],
+              },
             },
           },
           "time": {
@@ -336,7 +433,7 @@ describe('scheduleEnergyForEveryoneEvents', () => {
       const energyEvent = event as EnergyEvent;
       expect(energyEvent.description).toEqual('E4E');
       expect(energyEvent.delta).toEqual(
-        MathUtils.round(mainskill.ENERGY_FOR_EVERYONE.amount(6) * nature.RELAXED.energy, 2)
+        MathUtils.round(EnergyForEveryone.activations.energy.amount(6) * nature.RELAXED.energy, 2)
       );
     });
   });
@@ -383,8 +480,8 @@ describe('getDefaultRecoveryEvents', () => {
 
     expect(recoveryEvents.length).toBe(2);
     expect(recoveryEvents.map((e) => e.delta)).toEqual([
-      mainskill.ENERGY_FOR_EVERYONE.amount(6),
-      mainskill.ENERGY_FOR_EVERYONE.amount(6) / 2
+      EnergyForEveryone.activations.energy.amount(6),
+      EnergyForEveryone.activations.energy.amount(6) / 2
     ]);
   });
 
@@ -654,7 +751,7 @@ describe('triggerTeamHelpsEvent', () => {
         description: '1',
         time: TimeUtils.parseTime('06:00'),
         skillActivation: {
-          skill: mainskill.EXTRA_HELPFUL_S,
+          skill: ExtraHelpfulS,
           adjustedAmount: 1,
           fractionOfProc: 1,
           nrOfHelpsToActivate: 1,
@@ -665,7 +762,7 @@ describe('triggerTeamHelpsEvent', () => {
         description: '1',
         time: TimeUtils.parseTime('13:00'),
         skillActivation: {
-          skill: mainskill.EXTRA_HELPFUL_S,
+          skill: ExtraHelpfulS,
           adjustedAmount: 2,
           fractionOfProc: 2,
           nrOfHelpsToActivate: 2,

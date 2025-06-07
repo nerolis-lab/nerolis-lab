@@ -1,19 +1,22 @@
-import { INGREDIENT_SUPPORT_MAINSKILLS, MAINSKILLS, METRONOME_SKILLS } from '../mainskill';
-import { Moonlight } from '../modifier';
-import { CHARGE_ENERGY_S } from './charge-energy-s';
+import { ModifiedMainskill } from '../mainskill';
+import { ChargeEnergyS } from './charge-energy-s';
 
-const MOONLIGHT_CHARGE_ENERGY_CRIT_CHANCE = 0.5;
+export const ChargeEnergySMoonlight = new (class extends ModifiedMainskill {
+  baseSkill = ChargeEnergyS;
+  modifierName = 'Moonlight';
+  energyAmounts = [12, 16.2, 21.2, 26.6, 33.6, 43.4];
+  critAmounts = [6.3, 7.7, 10.1, 13.0, 17.2, 22.8];
+  image = 'energy';
+  description = (skillLevel: number) =>
+    `Restores ${this.energyAmounts[skillLevel - 1]} Energy to the user. Has a chance of restoring ${this.critAmounts[skillLevel - 1]} energy to another Pokémon.`;
+  RP = [560, 797, 1099, 1516, 2094, 2892];
 
-export const CHARGE_ENERGY_S_MOONLIGHT = Moonlight(CHARGE_ENERGY_S, MOONLIGHT_CHARGE_ENERGY_CRIT_CHANCE, {
-  description: 'Restores ? Energy to the user. Has a chance of restoring ? energy to another Pokémon.',
-  RP: [560, 797, 1099, 1516, 2094, 2892]
-});
-
-export function moonlightCritAmount(skillLevel: number) {
-  const critValues = [6.3, 7.7, 10.1, 13.0, 17.2, 22.8];
-  return critValues[skillLevel - 1] ?? 0;
-}
-
-MAINSKILLS.push(CHARGE_ENERGY_S_MOONLIGHT);
-METRONOME_SKILLS.push(CHARGE_ENERGY_S_MOONLIGHT);
-INGREDIENT_SUPPORT_MAINSKILLS.push(CHARGE_ENERGY_S_MOONLIGHT);
+  activations = {
+    energy: {
+      unit: 'energy',
+      amount: this.leveledAmount(this.energyAmounts),
+      critChance: 0.5,
+      critAmount: this.leveledAmount(this.critAmounts)
+    }
+  };
+})(true);

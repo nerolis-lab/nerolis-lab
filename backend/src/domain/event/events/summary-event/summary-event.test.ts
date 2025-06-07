@@ -2,7 +2,7 @@ import { SummaryEvent } from '@src/domain/event/events/summary-event/summary-eve
 import { MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Summary } from 'sleepapi-common';
-import { mainskill } from 'sleepapi-common';
+import { ChargeStrengthS } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('SummaryEvent', () => {
@@ -11,7 +11,7 @@ describe('SummaryEvent', () => {
       ingredientPercentage: 0.2,
       carrySize: 23,
       skillPercentage: 0.02,
-      skill: mainskill.CHARGE_STRENGTH_S,
+      skill: ChargeStrengthS,
       skillProcs: 11,
       skillEnergySelfValue: 11,
       skillEnergyOthersValue: 11,

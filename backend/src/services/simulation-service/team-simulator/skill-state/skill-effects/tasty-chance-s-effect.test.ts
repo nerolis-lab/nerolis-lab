@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { TastyChanceSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/tasty-chance-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { TastyChanceS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -26,8 +26,13 @@ describe('TastyChanceSEffect', () => {
 
     expect(addCritBonusMock).toHaveBeenCalledWith(critAmount / 100);
     expect(result).toEqual({
-      skill: mainskill.TASTY_CHANCE_S,
-      selfValue: { regular: critAmount, crit: 0 }
+      skill: TastyChanceS,
+      activations: [
+        {
+          unit: 'crit chance',
+          self: { regular: critAmount, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -39,8 +44,13 @@ describe('TastyChanceSEffect', () => {
     const result = tastyChanceSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.TASTY_CHANCE_S,
-      selfValue: { regular: critAmount, crit: 0 }
+      skill: TastyChanceS,
+      activations: [
+        {
+          unit: 'crit chance',
+          self: { regular: critAmount, crit: 0 }
+        }
+      ]
     });
   });
 });

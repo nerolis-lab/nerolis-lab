@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { HELPER_BOOST } from '../../domain/mainskill/mainskills/helper-boost';
+import { HelperBoost } from '../../domain/mainskill/mainskills/helper-boost';
 import type { Pokemon } from '../../domain/pokemon';
 import { mockPokemon } from '../../vitest/mocks/pokemon/mock-pokemon';
 import { evolvesFrom, evolvesInto } from './evolution-utils';
@@ -7,7 +7,7 @@ import { evolvesFrom, evolvesInto } from './evolution-utils';
 const MOCK_POKEMON: Pokemon = mockPokemon({
   previousEvolutions: 1,
   remainingEvolutions: 1,
-  skill: HELPER_BOOST
+  skill: HelperBoost
 });
 
 describe('evolvesFrom', () => {

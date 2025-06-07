@@ -134,8 +134,7 @@ export default defineComponent({
           skillProcs: MathUtils.round(
             memberProduction.skillProcs * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
             1
-          ),
-          skillUnit: memberPokemon.skill.unit
+          )
         })
       }
 

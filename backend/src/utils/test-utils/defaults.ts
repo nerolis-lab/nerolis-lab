@@ -3,10 +3,10 @@ import type { Pokemon, Produce, ProduceFlat, TimePeriod } from 'sleepapi-common'
 import {
   berry,
   berrySetToFlat,
+  ChargeStrengthM,
   commonMocks,
   ingredient,
   ingredientSetToFloatFlat,
-  mainskill,
   nature,
   subskill
 } from 'sleepapi-common';
@@ -84,7 +84,7 @@ export const MOCKED_POKEMON: Pokemon = commonMocks.mockPokemon({
   name: 'MOCK_POKEMON',
   frequency: 2500,
   ingredientPercentage: 20,
-  skill: mainskill.CHARGE_STRENGTH_M,
+  skill: ChargeStrengthM,
   skillPercentage: 2,
   specialty: 'skill',
   carrySize: 20,

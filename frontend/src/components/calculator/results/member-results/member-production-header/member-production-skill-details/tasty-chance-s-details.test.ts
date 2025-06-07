@@ -3,7 +3,7 @@ import { StrengthService } from '@/services/strength/strength-service'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { DEDENNE, MathUtils, compactNumber } from 'sleepapi-common'
+import { DEDENNE, MathUtils, TastyChanceS, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
@@ -59,7 +59,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center')
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: TastyChanceS.activations.chance,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1

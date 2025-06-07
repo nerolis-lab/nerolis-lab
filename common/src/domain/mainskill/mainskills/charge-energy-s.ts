@@ -1,15 +1,16 @@
-import { MAX_SKILL_LEVEL } from '../../constants';
-import type { Mainskill } from '../mainskill';
-import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
+import { Mainskill } from '../mainskill';
 
-export const CHARGE_ENERGY_S: Mainskill = createBaseSkill({
-  name: 'Charge Energy S',
-  amount: [12, 16.2, 21.2, 26.6, 33.6, 43.4],
-  unit: 'energy',
-  maxLevel: MAX_SKILL_LEVEL - 1,
-  description: 'Restores ? Energy to the user.',
-  RP: [400, 569, 785, 1083, 1496, 2066]
-});
+export const ChargeEnergyS = new (class extends Mainskill {
+  name = 'Charge Energy S';
+  energyAmounts = [12, 16.2, 21.2, 26.6, 33.6, 43.4];
+  image = 'energy';
+  description = (skillLevel: number) => `Restores ${this.energyAmounts[skillLevel - 1]} Energy to the user.`;
+  RP = [400, 569, 785, 1083, 1496, 2066];
 
-MAINSKILLS.push(CHARGE_ENERGY_S);
-METRONOME_SKILLS.push(CHARGE_ENERGY_S);
+  activations = {
+    energy: {
+      unit: 'energy',
+      amount: this.leveledAmount(this.energyAmounts)
+    }
+  };
+})();

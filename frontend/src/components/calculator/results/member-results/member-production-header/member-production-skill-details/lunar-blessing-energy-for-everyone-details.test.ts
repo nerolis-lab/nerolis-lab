@@ -5,7 +5,7 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { CRESSELIA, MathUtils, compactNumber } from 'sleepapi-common'
+import { CRESSELIA, EnergyForEveryoneLunarBlessing, MathUtils, compactNumber } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 import LunarBlessingEnergyForEveryoneDetails from './lunar-blessing-energy-for-everyone-details.vue'
 
@@ -41,7 +41,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/mainskill/lunar_blessing_energy.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/energy.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -59,7 +59,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
   it('displays the correct total energy value', () => {
     const totalEnergyValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1
@@ -74,7 +74,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
         (b) => b.berry.name === mockMember.member.pokemon.berry.name && b.level === mockMember.member.level
       )?.amount ?? 0
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
       amount: berryAmount,
       timeWindow: '24H',
       areaBonus: 1
@@ -93,7 +93,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
       0
     )
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
       amount: teamAmount,
       timeWindow: '24H',
       areaBonus: 1

@@ -3,7 +3,7 @@ import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-s
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet } from 'sleepapi-common';
-import { ingredient, ingredientSetToFloatFlat, mainskill, MathUtils } from 'sleepapi-common';
+import { ingredient, IngredientMagnetS, ingredientSetToFloatFlat, MathUtils } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -38,8 +38,13 @@ describe('IngredientMagnetSEffect', () => {
       }))
     ).toEqual(magnetIngredients.map(({ ingredient, amount }) => ({ ingredient, amount: MathUtils.round(amount, 2) })));
     expect(result).toEqual({
-      skill: mainskill.INGREDIENT_MAGNET_S,
-      selfValue: { regular: ingMagnetAmount, crit: 0 }
+      skill: IngredientMagnetS,
+      activations: [
+        {
+          unit: 'ingredients',
+          self: { regular: ingMagnetAmount, crit: 0 }
+        }
+      ]
     });
   });
 });

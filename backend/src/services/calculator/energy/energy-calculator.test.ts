@@ -8,7 +8,7 @@ import {
 } from '@src/services/calculator/energy/energy-calculator.js';
 import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
 import type { SkillActivation, Time } from 'sleepapi-common';
-import { mainskill, nature } from 'sleepapi-common';
+import { ChargeEnergyS, nature } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculateStartingEnergy', () => {
@@ -225,10 +225,10 @@ describe('calculateStartingEnergy', () => {
     const skillActivations: SkillActivation[] = [];
     for (let i = 0; i < 15; i++) {
       skillActivations.push({
-        adjustedAmount: mainskill.CHARGE_ENERGY_S.amount(6),
+        adjustedAmount: ChargeEnergyS.activations.energy.amount(6),
         fractionOfProc: 1,
         nrOfHelpsToActivate: 0,
-        skill: mainskill.CHARGE_ENERGY_S
+        skill: ChargeEnergyS
       });
     }
 

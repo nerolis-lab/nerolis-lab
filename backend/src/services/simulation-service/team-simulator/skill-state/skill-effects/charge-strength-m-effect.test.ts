@@ -1,7 +1,7 @@
 import { ChargeStrengthMEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { ChargeStrengthM } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('ChargeStrengthMEffect', () => {
@@ -15,8 +15,11 @@ describe('ChargeStrengthMEffect', () => {
 
   it('should activate skill and return correct values', () => {
     const activation = chargeStrengthMEffect.activate(mockSkillState);
-    expect(activation.skill).toBe(mainskill.CHARGE_STRENGTH_M);
-    expect(activation.selfValue?.regular).toBe(mockSkillState.skillAmount(mainskill.CHARGE_STRENGTH_M));
-    expect(activation.selfValue?.crit).toBe(0);
+    expect(activation.skill).toBe(ChargeStrengthM);
+    expect(activation.activations[0].unit).toBe('strength');
+    expect(activation.activations[0].self?.regular).toBe(
+      mockSkillState.skillAmount(ChargeStrengthM.activations.strength)
+    );
+    expect(activation.activations[0].self?.crit).toBe(0);
   });
 });

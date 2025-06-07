@@ -3,7 +3,7 @@ import type { SkillState } from '@src/services/simulation-service/team-simulator
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { mocks } from '@src/vitest/index.js';
 import type { Mainskill } from 'sleepapi-common';
-import { mainskill } from 'sleepapi-common';
+import { ChargeStrengthS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('SkillCopyEffect', () => {
@@ -18,7 +18,7 @@ describe('SkillCopyEffect', () => {
         otherMembers: [
           mocks.memberState({
             skill: {
-              isSameOrModifiedVersion: vi.fn().mockReturnValue(false),
+              isOrModifies: vi.fn().mockReturnValue(false),
               name: 'Test Skill'
             } as unknown as Mainskill
           }),
@@ -26,7 +26,7 @@ describe('SkillCopyEffect', () => {
             pokemonWithIngredients: {
               pokemon: {
                 skill: {
-                  isSameOrModifiedVersion: vi.fn().mockReturnValue(false),
+                  isOrModifies: vi.fn().mockReturnValue(false),
                   name: 'Test Skill'
                 }
               }
@@ -61,16 +61,16 @@ describe('SkillCopyEffect', () => {
   });
 
   it('should fallback to CHARGE_STRENGTH_S if copied skill is same or modified version of SKILL_COPY', () => {
-    skillState.memberState.otherMembers[0].skill.isSameOrModifiedVersion = vi.fn().mockReturnValue(true);
+    skillState.memberState.otherMembers[0].skill.isOrModifies = vi.fn().mockReturnValue(true);
     const mockActivation = { skill: skillState.skill };
-    skillState.skillEffects.set(mainskill.CHARGE_STRENGTH_S, {
+    skillState.skillEffects.set(ChargeStrengthS, {
       activate: vi.fn().mockReturnValue(mockActivation)
     });
 
     const result = skillCopyEffect.activate(skillState);
 
     expect(result).toEqual(mockActivation);
-    expect(skillState.skillEffects.get(mainskill.CHARGE_STRENGTH_S)?.activate).toHaveBeenCalledWith(skillState);
+    expect(skillState.skillEffects.get(ChargeStrengthS)?.activate).toHaveBeenCalledWith(skillState);
   });
 
   it('should log an error if activation fails', () => {
@@ -80,7 +80,7 @@ describe('SkillCopyEffect', () => {
 
     const result = skillCopyEffect.activate(skillState);
 
-    expect(result).toEqual({ skill: skillState.skill });
+    expect(result).toEqual({ skill: skillState.skill, activations: [] });
     expect(logger.error).toHaveBeenCalledWith(`[${skillState.skill.name}] Couldn't activate Charge Strength S`);
   });
 
@@ -88,13 +88,13 @@ describe('SkillCopyEffect', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     vi.spyOn(skillState.memberState.otherMembers[0], 'skill', 'get').mockReturnValue(null as any);
     const mockActivation = { skill: skillState.skill };
-    skillState.skillEffects.set(mainskill.CHARGE_STRENGTH_S, {
+    skillState.skillEffects.set(ChargeStrengthS, {
       activate: vi.fn().mockReturnValue(mockActivation)
     });
 
     const result = skillCopyEffect.activate(skillState);
 
     expect(result).toEqual(mockActivation);
-    expect(skillState.skillEffects.get(mainskill.CHARGE_STRENGTH_S)?.activate).toHaveBeenCalledWith(skillState);
+    expect(skillState.skillEffects.get(ChargeStrengthS)?.activate).toHaveBeenCalledWith(skillState);
   });
 });

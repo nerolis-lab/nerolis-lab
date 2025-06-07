@@ -1,12 +1,11 @@
 import type { PokemonProduce } from '@src/domain/combination/produce.js';
 import {
   calculateAverageNumberOfSkillProcsForHelps,
-  calculateHelperBoostHelpsFromUnique,
   calculateHelpsToProcSchedule,
   calculateSkillProcs,
   scheduleSkillEvents
 } from '@src/services/calculator/skill/skill-calculator.js';
-import { MathUtils, PINSIR, berry, ingredient, mainskill } from 'sleepapi-common';
+import { ChargeStrengthS, MathUtils, PINSIR, berry, ingredient } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculateSkillProcs', () => {
@@ -210,7 +209,16 @@ describe('scheduleSkillEvents', () => {
             2066,
             2656,
           ],
-          "amount": [
+          "activations": {
+            "strength": {
+              "amount": [Function],
+              "unit": "strength",
+            },
+          },
+          "description": [Function],
+          "image": "strength",
+          "name": "Charge Strength S",
+          "strengthAmounts": [
             400,
             569,
             785,
@@ -219,14 +227,6 @@ describe('scheduleSkillEvents', () => {
             2066,
             3002,
           ],
-          "description": "Increases Snorlax's Strength by ?.",
-          "maxLevel": 7,
-          "modifier": {
-            "critChance": 0,
-            "type": "Base",
-          },
-          "name": "Charge Strength S",
-          "unit": "strength",
         },
       }
     `); // Nightly proc
@@ -245,7 +245,16 @@ describe('scheduleSkillEvents', () => {
             2066,
             2656,
           ],
-          "amount": [
+          "activations": {
+            "strength": {
+              "amount": [Function],
+              "unit": "strength",
+            },
+          },
+          "description": [Function],
+          "image": "strength",
+          "name": "Charge Strength S",
+          "strengthAmounts": [
             400,
             569,
             785,
@@ -254,14 +263,6 @@ describe('scheduleSkillEvents', () => {
             2066,
             3002,
           ],
-          "description": "Increases Snorlax's Strength by ?.",
-          "maxLevel": 7,
-          "modifier": {
-            "critChance": 0,
-            "type": "Base",
-          },
-          "name": "Charge Strength S",
-          "unit": "strength",
         },
       }
     `); // Final partial proc, no helps during the day
@@ -285,14 +286,14 @@ describe('scheduleSkillEvents', () => {
       adjustedAmount: 826.4000000000001,
       fractionOfProc: 0.4,
       nrOfHelpsToActivate: 0,
-      skill: mainskill.CHARGE_STRENGTH_S
+      skill: ChargeStrengthS
     });
     // Final partial proc
     expect(skillActivations[skillActivations.length - 1]).toEqual({
       adjustedAmount: 0,
       fractionOfProc: 0,
       nrOfHelpsToActivate: 10,
-      skill: mainskill.CHARGE_STRENGTH_S
+      skill: ChargeStrengthS
     });
   });
 });
@@ -361,43 +362,5 @@ describe('calculateHelpsToProcSchedule', () => {
   },
 ]
 `);
-  });
-});
-
-describe('calculateHelperBoostHelpsFromUnique', () => {
-  it('shall return 0 for just Raikou', () => {
-    expect(calculateHelperBoostHelpsFromUnique(1, 1)).toBe(0);
-    expect(calculateHelperBoostHelpsFromUnique(1, 2)).toBe(0);
-    expect(calculateHelperBoostHelpsFromUnique(1, 3)).toBe(0);
-    expect(calculateHelperBoostHelpsFromUnique(1, 4)).toBe(0);
-    expect(calculateHelperBoostHelpsFromUnique(1, 5)).toBe(0);
-    expect(calculateHelperBoostHelpsFromUnique(1, 6)).toBe(0);
-  });
-
-  it('shall return 6 for 5 unique and 5+ skill level', () => {
-    expect(calculateHelperBoostHelpsFromUnique(5, 5)).toBe(6);
-    expect(calculateHelperBoostHelpsFromUnique(5, 6)).toBe(6);
-  });
-
-  it('shall return 2 for 3 unique and 3 skill level', () => {
-    expect(calculateHelperBoostHelpsFromUnique(3, 3)).toBe(2);
-  });
-
-  it('shall throw if level is not between 1 and 6', () => {
-    expect(() => calculateHelperBoostHelpsFromUnique(0, 0)).toThrowErrorMatchingInlineSnapshot(
-      `[ProgrammingError: Invalid input: unique should be between 1 and 5, level should be between 1 and 6]`
-    );
-    expect(() => calculateHelperBoostHelpsFromUnique(0, 7)).toThrowErrorMatchingInlineSnapshot(
-      `[ProgrammingError: Invalid input: unique should be between 1 and 5, level should be between 1 and 6]`
-    );
-  });
-
-  it('shall throw if unique mons is not between 1 and 5', () => {
-    expect(() => calculateHelperBoostHelpsFromUnique(0, 0)).toThrowErrorMatchingInlineSnapshot(
-      `[ProgrammingError: Invalid input: unique should be between 1 and 5, level should be between 1 and 6]`
-    );
-    expect(() => calculateHelperBoostHelpsFromUnique(0, 6)).toThrowErrorMatchingInlineSnapshot(
-      `[ProgrammingError: Invalid input: unique should be between 1 and 5, level should be between 1 and 6]`
-    );
   });
 });

@@ -41,17 +41,17 @@ import {
   WARMING_GINGER
 } from '../ingredient/ingredients';
 import {
-  CHARGE_ENERGY_S,
-  CHARGE_STRENGTH_M,
-  CHARGE_STRENGTH_S,
-  CHARGE_STRENGTH_S_RANGE,
-  COOKING_POWER_UP_S,
-  ENERGIZING_CHEER_S,
-  ENERGY_FOR_EVERYONE,
-  INGREDIENT_MAGNET_S,
-  SKILL_COPY_MIMIC,
-  SKILL_COPY_TRANSFORM,
-  TASTY_CHANCE_S
+  ChargeEnergyS,
+  ChargeStrengthM,
+  ChargeStrengthS,
+  ChargeStrengthSRange,
+  CookingPowerUpS,
+  EnergizingCheerS,
+  EnergyForEveryone,
+  IngredientMagnetS,
+  SkillCopyMimic,
+  SkillCopyTransform,
+  TastyChanceS
 } from '../mainskill/mainskills';
 
 import type { Pokemon } from './pokemon';
@@ -79,7 +79,7 @@ export const BULBASAUR: Pokemon = {
     { amount: 7, ingredient: SNOOZY_TOMATO },
     { amount: 6, ingredient: SOFT_POTATO }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const IVYSAUR: Pokemon = {
@@ -127,7 +127,7 @@ export const CHARMANDER: Pokemon = {
     { amount: 7, ingredient: WARMING_GINGER },
     { amount: 6, ingredient: FIERY_HERB }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const CHARMELEON: Pokemon = {
@@ -175,7 +175,7 @@ export const SQUIRTLE: Pokemon = {
     { amount: 5, ingredient: SOOTHING_CACAO },
     { amount: 7, ingredient: BEAN_SAUSAGE }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const WARTORTLE: Pokemon = {
@@ -223,7 +223,7 @@ export const DIGLETT: Pokemon = {
     { amount: 4, ingredient: LARGE_LEEK },
     { amount: 8, ingredient: GREENGRASS_SOYBEANS }
   ],
-  skill: CHARGE_STRENGTH_S
+  skill: ChargeStrengthS
 };
 
 export const DUGTRIO: Pokemon = {
@@ -260,7 +260,7 @@ export const BELLSPROUT: Pokemon = {
     { amount: 6, ingredient: SOFT_POTATO },
     { amount: 4, ingredient: LARGE_LEEK }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const WEEPINBELL: Pokemon = {
@@ -308,7 +308,7 @@ export const GEODUDE: Pokemon = {
     { amount: 6, ingredient: SOFT_POTATO },
     { amount: 4, ingredient: TASTY_MUSHROOM }
   ],
-  skill: CHARGE_STRENGTH_S_RANGE
+  skill: ChargeStrengthSRange
 };
 
 export const GRAVELER: Pokemon = {
@@ -356,7 +356,7 @@ export const GASTLY: Pokemon = {
     { amount: 6, ingredient: TASTY_MUSHROOM },
     { amount: 8, ingredient: PURE_OIL }
   ],
-  skill: CHARGE_STRENGTH_S_RANGE
+  skill: ChargeStrengthSRange
 };
 
 export const HAUNTER: Pokemon = {
@@ -404,7 +404,7 @@ export const KANGASKHAN: Pokemon = {
     { amount: 6, ingredient: SOFT_POTATO },
     { amount: 8, ingredient: GREENGRASS_SOYBEANS }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const CHANSEY: Pokemon = {
@@ -430,7 +430,7 @@ export const CHANSEY: Pokemon = {
     { amount: 7, ingredient: SOFT_POTATO },
     { amount: 8, ingredient: HONEY }
   ],
-  skill: ENERGY_FOR_EVERYONE
+  skill: EnergyForEveryone
 };
 
 export const MR_MIME: Pokemon = {
@@ -456,7 +456,7 @@ export const MR_MIME: Pokemon = {
     { amount: 6, ingredient: SOFT_POTATO },
     { amount: 4, ingredient: LARGE_LEEK }
   ],
-  skill: SKILL_COPY_MIMIC
+  skill: SkillCopyMimic
 };
 
 export const PINSIR: Pokemon = {
@@ -482,7 +482,7 @@ export const PINSIR: Pokemon = {
     { amount: 8, ingredient: FANCY_APPLE },
     { amount: 7, ingredient: BEAN_SAUSAGE }
   ],
-  skill: CHARGE_STRENGTH_S
+  skill: ChargeStrengthS
 };
 
 export const DITTO: Pokemon = {
@@ -508,7 +508,7 @@ export const DITTO: Pokemon = {
     { amount: 5, ingredient: LARGE_LEEK },
     { amount: 3, ingredient: SLOWPOKE_TAIL }
   ],
-  skill: SKILL_COPY_TRANSFORM
+  skill: SkillCopyTransform
 };
 
 export const DRATINI: Pokemon = {
@@ -534,7 +534,7 @@ export const DRATINI: Pokemon = {
     { amount: 7, ingredient: GREENGRASS_CORN },
     { amount: 8, ingredient: PURE_OIL }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const DRAGONAIR: Pokemon = {
@@ -582,7 +582,7 @@ export const WOOPER: Pokemon = {
     { amount: 10, ingredient: SOFT_POTATO },
     { amount: 12, ingredient: BEAN_SAUSAGE }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const WOOPER_PALDEAN: Pokemon = {
@@ -608,7 +608,7 @@ export const WOOPER_PALDEAN: Pokemon = {
     { amount: 7, ingredient: ROUSING_COFFEE },
     { amount: 9, ingredient: SOFT_POTATO }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const QUAGSIRE: Pokemon = {
@@ -645,7 +645,7 @@ export const DELIBIRD: Pokemon = {
     { amount: 9, ingredient: FANCY_APPLE },
     { amount: 5, ingredient: SOOTHING_CACAO }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const BLISSEY: Pokemon = {
@@ -682,7 +682,7 @@ export const LARVITAR: Pokemon = {
     { amount: 8, ingredient: GREENGRASS_SOYBEANS },
     { amount: 8, ingredient: BEAN_SAUSAGE }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const PUPITAR: Pokemon = {
@@ -731,7 +731,7 @@ export const ARON: Pokemon = {
     { amount: 5, ingredient: ROUSING_COFFEE },
     { amount: 7, ingredient: GREENGRASS_SOYBEANS }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const LAIRON: Pokemon = {
@@ -779,7 +779,7 @@ export const ABSOL: Pokemon = {
     { amount: 12, ingredient: FANCY_APPLE },
     { amount: 7, ingredient: TASTY_MUSHROOM }
   ],
-  skill: CHARGE_STRENGTH_S
+  skill: ChargeStrengthS
 };
 
 export const SHINX: Pokemon = {
@@ -805,7 +805,7 @@ export const SHINX: Pokemon = {
     { amount: 7, ingredient: PURE_OIL },
     { amount: 5, ingredient: ROUSING_COFFEE }
   ],
-  skill: COOKING_POWER_UP_S
+  skill: CookingPowerUpS
 };
 
 export const LUXIO: Pokemon = {
@@ -874,7 +874,7 @@ export const CROAGUNK: Pokemon = {
     { amount: 7, ingredient: PURE_OIL },
     { amount: 8, ingredient: BEAN_SAUSAGE }
   ],
-  skill: CHARGE_STRENGTH_S
+  skill: ChargeStrengthS
 };
 
 export const TOXICROAK: Pokemon = {
@@ -911,7 +911,7 @@ export const SNOVER: Pokemon = {
     { amount: 7, ingredient: FANCY_EGG },
     { amount: 5, ingredient: TASTY_MUSHROOM }
   ],
-  skill: CHARGE_STRENGTH_S_RANGE
+  skill: ChargeStrengthSRange
 };
 
 export const ABOMASNOW: Pokemon = {
@@ -948,7 +948,7 @@ export const GRUBBIN: Pokemon = {
     { amount: 7, ingredient: TASTY_MUSHROOM },
     { amount: 11, ingredient: HONEY }
   ],
-  skill: CHARGE_STRENGTH_S
+  skill: ChargeStrengthS
 };
 
 export const CHARJABUG: Pokemon = {
@@ -996,7 +996,7 @@ export const STUFFUL: Pokemon = {
     { amount: 10, ingredient: BEAN_SAUSAGE },
     { amount: 9, ingredient: FANCY_EGG }
   ],
-  skill: CHARGE_STRENGTH_S_RANGE
+  skill: ChargeStrengthSRange
 };
 
 export const BEWEAR: Pokemon = {
@@ -1033,7 +1033,7 @@ export const COMFEY: Pokemon = {
     { amount: 9, ingredient: WARMING_GINGER },
     { amount: 7, ingredient: SOOTHING_CACAO }
   ],
-  skill: ENERGIZING_CHEER_S
+  skill: EnergizingCheerS
 };
 
 export const CRAMORANT: Pokemon = {
@@ -1059,7 +1059,7 @@ export const CRAMORANT: Pokemon = {
     { amount: 7, ingredient: SOFT_POTATO },
     { amount: 8, ingredient: FANCY_EGG }
   ],
-  skill: TASTY_CHANCE_S
+  skill: TastyChanceS
 };
 
 export const SPRIGATITO: Pokemon = {
@@ -1085,7 +1085,7 @@ export const SPRIGATITO: Pokemon = {
     { amount: 9, ingredient: MOOMOO_MILK },
     { amount: 8, ingredient: WARMING_GINGER }
   ],
-  skill: COOKING_POWER_UP_S
+  skill: CookingPowerUpS
 };
 
 export const FLORAGATO: Pokemon = {
@@ -1134,7 +1134,7 @@ export const FUECOCO: Pokemon = {
     { amount: 6, ingredient: BEAN_SAUSAGE },
     { amount: 5, ingredient: FIERY_HERB }
   ],
-  skill: CHARGE_ENERGY_S
+  skill: ChargeEnergyS
 };
 
 export const CROCALOR: Pokemon = {
@@ -1183,7 +1183,7 @@ export const QUAXLY: Pokemon = {
     { amount: 4, ingredient: LARGE_LEEK },
     { amount: 6, ingredient: PURE_OIL }
   ],
-  skill: CHARGE_STRENGTH_M
+  skill: ChargeStrengthM
 };
 
 export const QUAXWELL: Pokemon = {

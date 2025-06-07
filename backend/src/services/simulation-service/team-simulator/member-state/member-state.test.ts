@@ -9,11 +9,13 @@ import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   berry,
+  ChargeStrengthM,
+  ChargeStrengthS,
   commonMocks,
   emptyIngredientInventoryFloat,
   ingredient,
-  mainskill,
   MAX_POT_SIZE,
+  Metronome,
   nature,
   subskill
 } from 'sleepapi-common';
@@ -27,7 +29,7 @@ const mockPokemonSet: PokemonWithIngredients = {
     ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredientPercentage: 20,
-    skill: mainskill.CHARGE_STRENGTH_S,
+    skill: ChargeStrengthS,
     skillPercentage: 2,
     specialty: 'skill'
   }),
@@ -134,7 +136,7 @@ describe('ivResults', () => {
             specialty: 'berry',
             ingredientPercentage: 50,
             skillPercentage: 100,
-            skill: mainskill.CHARGE_STRENGTH_M
+            skill: ChargeStrengthM
           }),
           ingredientList
         },
@@ -916,7 +918,7 @@ describe('attemptDayHelp', () => {
     const member: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonSet,
-        pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100, skill: mainskill.METRONOME }
+        pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 100, skill: Metronome }
       },
       settings: {
         carrySize: 10,

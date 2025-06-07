@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { BUTTERFREE, CarrySizeUtils, mainskill, NINETALES_ALOLAN } from 'sleepapi-common';
+import { BerryBurst, BerryBurstDisguise, BUTTERFREE, CarrySizeUtils, NINETALES_ALOLAN } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -21,7 +21,8 @@ describe('BerryBurstEffect', () => {
     const regularSelfAmount = 10;
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST) - 1] = regularOtherAmount;
+    skillState.memberState.member.settings.skillLevel = 3;
+    vimic(BerryBurstDisguise.activations.berries, 'teamAmount', () => regularOtherAmount);
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstEffect.activate(skillState);
@@ -36,7 +37,7 @@ describe('BerryBurstEffect', () => {
         berries: [
           ...memberState.otherMembers.map((member) => ({
             berry: member.berry,
-            amount: regularOtherAmount,
+            amount: BerryBurst.activations.berries.teamAmount(skillState.skillLevel),
             level: member.level
           })),
           {
@@ -48,11 +49,18 @@ describe('BerryBurstEffect', () => {
       }
     );
     expect(result).toEqual({
-      skill: mainskill.BERRY_BURST,
-      selfValue: {
-        regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length,
-        crit: 0
-      }
+      skill: BerryBurst,
+      activations: [
+        {
+          unit: 'berries',
+          self: {
+            regular:
+              regularSelfAmount +
+              BerryBurst.activations.berries.teamAmount(skillState.skillLevel) * memberState.otherMembers.length,
+            crit: 0
+          }
+        }
+      ]
     });
   });
 
@@ -74,7 +82,8 @@ describe('BerryBurstEffect', () => {
     const regularSelfAmount = 10;
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
-    mainskill.BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST) - 1] = regularOtherAmount;
+    skillState.memberState.member.settings.skillLevel = 3;
+    vimic(BerryBurst.activations.berries, 'teamAmount', () => regularOtherAmount);
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstEffect.activate(skillState);
@@ -89,7 +98,7 @@ describe('BerryBurstEffect', () => {
         berries: [
           ...memberState.otherMembers.map((member) => ({
             berry: member.berry,
-            amount: regularOtherAmount,
+            amount: BerryBurst.activations.berries.teamAmount(skillState.skillLevel),
             level: member.level
           })),
           {
@@ -101,11 +110,18 @@ describe('BerryBurstEffect', () => {
       }
     );
     expect(result).toEqual({
-      skill: mainskill.BERRY_BURST,
-      selfValue: {
-        regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length,
-        crit: 0
-      }
+      skill: BerryBurst,
+      activations: [
+        {
+          unit: 'berries',
+          self: {
+            regular:
+              regularSelfAmount +
+              BerryBurst.activations.berries.teamAmount(skillState.skillLevel) * memberState.otherMembers.length,
+            crit: 0
+          }
+        }
+      ]
     });
   });
 
@@ -134,11 +150,13 @@ describe('BerryBurstEffect', () => {
       }
     );
     expect(result).toEqual({
-      skill: mainskill.BERRY_BURST,
-      selfValue: {
-        regular: regularSelfAmount,
-        crit: 0
-      }
+      skill: BerryBurst,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: regularSelfAmount, crit: 0 }
+        }
+      ]
     });
   });
 });

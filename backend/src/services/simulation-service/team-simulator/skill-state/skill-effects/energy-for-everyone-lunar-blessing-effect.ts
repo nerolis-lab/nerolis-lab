@@ -1,11 +1,11 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { CarrySizeUtils, mainskill, MAX_TEAM_SIZE, uniqueMembersWithBerry } from 'sleepapi-common';
+import { CarrySizeUtils, EnergyForEveryoneLunarBlessing, MAX_TEAM_SIZE, uniqueMembersWithBerry } from 'sleepapi-common';
 
 export class EnergyForEveryoneLunarBlessingEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
-    const skill = mainskill.ENERGY_FOR_EVERYONE_LUNAR_BLESSING;
+  activate(skillState: SkillState): SkillActivation {
+    const skill = EnergyForEveryoneLunarBlessing;
     const memberState = skillState.memberState;
     const unique =
       memberState.team.length > MAX_TEAM_SIZE // accounts for bogus members
@@ -15,9 +15,15 @@ export class EnergyForEveryoneLunarBlessingEffect implements SkillEffect {
             members: memberState.team.map((member) => member.pokemonWithIngredients.pokemon)
           });
 
-    const energyForEveryoneAmount = skillState.skillAmount(skillState.skill);
-    const selfBerryAmount = mainskill.LUNAR_BLESSING_SELF_BERRIES[unique - 1][skillState.skillLevel(skill) - 1];
-    const teamBerryAmount = mainskill.LUNAR_BLESSING_TEAM_BERRIES[unique - 1][skillState.skillLevel(skill) - 1];
+    const energyAmount = skillState.skillAmount(skill.activations.energy);
+    const selfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(
+      skillState.skillLevel,
+      unique
+    );
+    const teamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(
+      skillState.skillLevel,
+      unique
+    );
 
     const berries = memberState.otherMembers.map((member) => ({
       berry: member.berry,
@@ -38,10 +44,19 @@ export class EnergyForEveryoneLunarBlessingEffect implements SkillEffect {
 
     return {
       skill,
-      teamValue: {
-        regular: energyForEveryoneAmount,
-        crit: 0
-      }
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: selfBerryAmount + teamBerryAmount, crit: 0 }
+        },
+        {
+          unit: 'energy',
+          team: {
+            regular: energyAmount,
+            crit: 0
+          }
+        }
+      ]
     };
   }
 }

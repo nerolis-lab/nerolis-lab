@@ -12,7 +12,7 @@ import {
   MOOMOO_MILK,
   ROUSING_COFFEE
 } from '../ingredient/ingredients';
-import { CHARGE_STRENGTH_M_BAD_DREAMS } from '../mainskill/mainskills/charge-strength-m-bad-dreams';
+import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strength-m-bad-dreams';
 import type { Pokemon } from './pokemon';
 
 export const DARKRAI: Pokemon = {
@@ -60,7 +60,7 @@ export const DARKRAI: Pokemon = {
     { amount: 4, ingredient: GREENGRASS_CORN },
     { amount: 4, ingredient: ROUSING_COFFEE }
   ],
-  skill: CHARGE_STRENGTH_M_BAD_DREAMS
+  skill: ChargeStrengthMBadDreams
 };
 
 export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [DARKRAI];

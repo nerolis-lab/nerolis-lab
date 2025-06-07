@@ -34,7 +34,6 @@ import {
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
   ingredientSetToIntFlat,
-  mainskill,
   MathUtils,
   MAX_POT_SIZE,
   MAX_RECIPE_LEVEL,
@@ -43,7 +42,8 @@ import {
   recipeCoverage,
   recipeLevelBonus,
   RECIPES,
-  simplifyIngredientSet
+  simplifyIngredientSet,
+  TastyChanceS
 } from 'sleepapi-common';
 
 export interface RecipeContribution {
@@ -175,7 +175,7 @@ class CookingTierlistImpl {
 
     // TODO: split into functions
     for (const pkmn of OPTIMAL_POKEDEX) {
-      const isSupport = INGREDIENT_SUPPORT_MAINSKILLS.some((skill) => skill.isSkill(pkmn.skill));
+      const isSupport = INGREDIENT_SUPPORT_MAINSKILLS.some((skill) => skill.is(pkmn.skill));
 
       const { supportProductionMap, pokemonIngredientLists, supportSetCoverSetups } =
         this.getIngredientListsAndSupportMap({
@@ -486,10 +486,7 @@ class CookingTierlistImpl {
     const valueLeftInRecipe = recipe.valueMax - ownRelevantValue;
     let tastyChanceContribution =
       teamSizePenalty * (ownCritMultiplier * valueLeftInRecipe - defaultCritMultiplier * valueLeftInRecipe);
-    if (
-      tastyChanceContribution < 100 ||
-      !getPokemon(currentPokemon.pokemonSet.pokemon).skill.isSameOrModifiedVersion(mainskill.TASTY_CHANCE_S)
-    ) {
+    if (tastyChanceContribution < 100 || !getPokemon(currentPokemon.pokemonSet.pokemon).skill.is(TastyChanceS)) {
       tastyChanceContribution = 0;
     }
 

@@ -2,7 +2,7 @@ import { SolveService } from '@src/services/solve/solve-service.js';
 import type { SolveRecipeInput } from '@src/services/solve/types/solution-types.js';
 import * as solveUtils from '@src/services/solve/utils/solve-utils.js';
 import { mocks } from '@src/vitest/index.js';
-import { commonMocks, mainskill, type Recipe } from 'sleepapi-common';
+import { BerryBurst, commonMocks, type Recipe } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
@@ -17,7 +17,7 @@ describe('SolveService', () => {
     const member = mocks.teamMemberExt({
       pokemonWithIngredients: mocks.pokemonWithIngredients({
         ingredientList,
-        pokemon: commonMocks.mockPokemon({ skill: mainskill.BERRY_BURST })
+        pokemon: commonMocks.mockPokemon({ skill: BerryBurst })
       })
     });
     vimic(solveUtils, 'calculateProductionAll', () => ({

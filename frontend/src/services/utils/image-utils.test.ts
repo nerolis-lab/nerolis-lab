@@ -10,7 +10,15 @@ import {
 } from '@/services/utils/image-utils'
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useUserStore } from '@/stores/user-store'
-import { berry, commonMocks, ISLANDS, mainskill, type Pokemon } from 'sleepapi-common'
+import {
+  berry,
+  ChargeEnergyS,
+  ChargeStrengthSStockpile,
+  commonMocks,
+  HelperBoost,
+  ISLANDS,
+  type Pokemon
+} from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
 const MOCK_POKEMON = commonMocks.mockPokemon()
@@ -19,7 +27,7 @@ describe('mainskillImage', () => {
     const mockPokemon: Pokemon = {
       ...MOCK_POKEMON,
       berry: berry.LEPPA,
-      skill: mainskill.HELPER_BOOST
+      skill: HelperBoost
     }
 
     const result = mainskillImage(mockPokemon)
@@ -29,7 +37,7 @@ describe('mainskillImage', () => {
   it('returns correct image path for stockpile skill', () => {
     const mockPokemon: Pokemon = {
       ...MOCK_POKEMON,
-      skill: mainskill.CHARGE_STRENGTH_S_STOCKPILE
+      skill: ChargeStrengthSStockpile
     }
 
     const result = mainskillImage(mockPokemon)
@@ -39,7 +47,7 @@ describe('mainskillImage', () => {
   it('returns correct image path for other skills', () => {
     const mockPokemon: Pokemon = {
       ...MOCK_POKEMON,
-      skill: mainskill.CHARGE_ENERGY_S
+      skill: ChargeEnergyS
     }
 
     const result = mainskillImage(mockPokemon)

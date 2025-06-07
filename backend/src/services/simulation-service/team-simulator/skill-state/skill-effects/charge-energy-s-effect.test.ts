@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { ChargeEnergyS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -29,8 +29,13 @@ describe('ChargeEnergySEffect', () => {
     expect(skillState.memberState.totalRecovery).toBe(50);
     expect(wasteEnergyMock).toHaveBeenCalledWith(0);
     expect(result).toEqual({
-      skill: mainskill.CHARGE_ENERGY_S,
-      selfValue: { regular: 50, crit: 0 }
+      skill: ChargeEnergyS,
+      activations: [
+        {
+          unit: 'energy',
+          self: { regular: 50, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -46,8 +51,13 @@ describe('ChargeEnergySEffect', () => {
     expect(skillState.memberState.totalRecovery).toBe(10);
     expect(wasteEnergyMock).toHaveBeenCalledWith(10);
     expect(result).toEqual({
-      skill: mainskill.CHARGE_ENERGY_S,
-      selfValue: { regular: 10, crit: 0 }
+      skill: ChargeEnergyS,
+      activations: [
+        {
+          unit: 'energy',
+          self: { regular: 10, crit: 0 }
+        }
+      ]
     });
   });
 });

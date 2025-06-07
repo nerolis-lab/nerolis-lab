@@ -30,16 +30,21 @@ import type {
 } from 'sleepapi-common';
 import {
   CarrySizeUtils,
+  CookingPowerUpS,
   getAllIngredientLists,
+  HelperBoost,
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
+  IngredientDrawS,
+  IngredientDrawSSuperLuck,
+  IngredientMagnetS,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
-  mainskill,
   MAX_TEAM_SIZE,
   MEALS_IN_DAY,
   Optimal,
-  OPTIMAL_POKEDEX
+  OPTIMAL_POKEDEX,
+  TastyChanceS
 } from 'sleepapi-common';
 
 export function calculateProductionAll(params: {
@@ -56,7 +61,7 @@ export function calculateProductionAll(params: {
   const filteredPokedex = filterPokedex(userMembers);
 
   const [supportMons, nonSupportMons] = splitArrayByCondition(filteredPokedex, (pkmn) =>
-    INGREDIENT_SUPPORT_MAINSKILLS.some((skill) => skill.isSkill(pkmn.skill))
+    INGREDIENT_SUPPORT_MAINSKILLS.some((skill) => skill.is(pkmn.skill))
   );
 
   const nonSupportMembers = pokedexToMembers({
@@ -137,7 +142,7 @@ export function settingsToArraySubskills(settings: TeamMemberSettingsExt) {
 export function filterPokedex(members: TeamMemberExt[]) {
   const helperBoostIncludedMembers = new Set(
     members
-      .filter((member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.HELPER_BOOST))
+      .filter((member) => member.pokemonWithIngredients.pokemon.skill.is(HelperBoost))
       .map((member) => member.pokemonWithIngredients.pokemon.name)
   );
   if (helperBoostIncludedMembers.size > 0) {
@@ -173,9 +178,13 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
   const pokedexAsMembers: TeamMemberExt[] = [];
 
   const INGREDIENT_SUPPORT_MAINSKILLS_SET = new Set(INGREDIENT_SUPPORT_MAINSKILLS.map((ms) => ms.name));
-  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(mainskill.TASTY_CHANCE_S.name);
-  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(mainskill.INGREDIENT_MAGNET_S.name);
-  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(mainskill.COOKING_POWER_UP_S.name);
+  // TODO: there needs to be a better way to do this
+  // TODO: also missleading variable name since we really only filter here to figure out which skill mons we should give skill setup vs keeping ingredient setup
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(TastyChanceS.name);
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientMagnetS.name);
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingPowerUpS.name);
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawSSuperLuck.name);
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawS.name);
   for (let i = 0; i < pokedex.length; ++i) {
     const pkmn = pokedex[i];
     const AAA: IngredientSet[] = [pkmn.ingredient0[0], pkmn.ingredient30[0], pkmn.ingredient60[0]];
@@ -209,11 +218,11 @@ export function calculateNonSupportPokemon(params: {
   if (settings.includeCooking) {
     const [tastyChanceMembers, otherNonSupportMembersWithCookingMembers] = splitArrayByCondition(
       nonSupportMembers,
-      (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.TASTY_CHANCE_S)
+      (member) => member.pokemonWithIngredients.pokemon.skill.is(TastyChanceS)
     );
     const [cookingPowerUpMembers, otherNonSupportMembers] = splitArrayByCondition(
       otherNonSupportMembersWithCookingMembers,
-      (member) => member.pokemonWithIngredients.pokemon.skill.isSameOrModifiedVersion(mainskill.COOKING_POWER_UP_S)
+      (member) => member.pokemonWithIngredients.pokemon.skill.is(CookingPowerUpS)
     );
     const otherNonSupportProductionStats = calculateSimple({
       settings: { ...settings, includeCooking: false },

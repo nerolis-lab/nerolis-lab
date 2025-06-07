@@ -141,9 +141,7 @@ describe('PokemonInput', () => {
   })
 
   it('saves data and emits cancel event on save button click', async () => {
-    await wrapper.setData({
-      pokemonInstance: { ...wrapper.vm.pokemonInstance, name: 'updatedName' }
-    })
+    wrapper.vm.pokemonInstance.name = 'updatedName'
     const saveButton = wrapper.find('#saveButton')
     await saveButton.trigger('click')
     expect(wrapper.emitted('save')).toHaveLength(1)

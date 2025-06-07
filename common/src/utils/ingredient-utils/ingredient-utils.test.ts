@@ -15,6 +15,7 @@ import {
 import { DARKRAI } from '../../domain/pokemon/all-pokemon';
 import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
 import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
+import '../../domain/recipe/recipe'; // Import recipes to populate ingredient bonus cache
 import type { Logger } from '../../prototype/logger/logger';
 import { commonMocks } from '../../vitest';
 import {

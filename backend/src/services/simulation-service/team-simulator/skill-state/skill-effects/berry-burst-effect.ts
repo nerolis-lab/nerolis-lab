@@ -1,15 +1,15 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { CarrySizeUtils, mainskill } from 'sleepapi-common';
+import { BerryBurst, CarrySizeUtils } from 'sleepapi-common';
 
 // implemented because metronome can proc it
 export class BerryBurstEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
+  activate(skillState: SkillState): SkillActivation {
     const memberState = skillState.memberState;
-    const skill = mainskill.BERRY_BURST;
-    const regularSelfAmount = skillState.skillAmount(skill);
-    const regularOtherAmount = mainskill.BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(skill) - 1];
+    const skill = BerryBurst;
+    const regularSelfAmount = skillState.skillAmount(skill.activations.berries);
+    const regularOtherAmount = BerryBurst.activations.berries.teamAmount(skillState.skillLevel);
 
     const berries = memberState.otherMembers.map((member) => ({
       berry: member.berry,
@@ -30,10 +30,15 @@ export class BerryBurstEffect implements SkillEffect {
 
     return {
       skill,
-      selfValue: {
-        regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length,
-        crit: 0
-      }
+      activations: [
+        {
+          unit: 'berries',
+          self: {
+            regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length,
+            crit: 0
+          }
+        }
+      ]
     };
   }
 }

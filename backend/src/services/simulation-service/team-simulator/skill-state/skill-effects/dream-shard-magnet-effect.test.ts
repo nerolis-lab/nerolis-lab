@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { DreamShardMagnetS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -24,11 +24,13 @@ describe('DreamShardMagnetSEffect', () => {
     const result = dreamShardMagnetSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.DREAM_SHARD_MAGNET_S,
-      selfValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      skill: DreamShardMagnetS,
+      activations: [
+        {
+          unit: 'dream shards',
+          self: { regular: regularAmount, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -38,11 +40,13 @@ describe('DreamShardMagnetSEffect', () => {
     const result = dreamShardMagnetSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.DREAM_SHARD_MAGNET_S,
-      selfValue: {
-        regular: 0,
-        crit: 0
-      }
+      skill: DreamShardMagnetS,
+      activations: [
+        {
+          unit: 'dream shards',
+          self: { regular: 0, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -52,11 +56,13 @@ describe('DreamShardMagnetSEffect', () => {
     const result = dreamShardMagnetSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.DREAM_SHARD_MAGNET_S,
-      selfValue: {
-        regular: -5,
-        crit: 0
-      }
+      skill: DreamShardMagnetS,
+      activations: [
+        {
+          unit: 'dream shards',
+          self: { regular: -5, crit: 0 }
+        }
+      ]
     });
   });
 });

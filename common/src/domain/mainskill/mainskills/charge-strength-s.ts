@@ -1,35 +1,31 @@
-import { MAX_SKILL_LEVEL } from '../../constants';
-import type { Mainskill } from '../mainskill';
-import { MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
+import { Mainskill } from '../mainskill';
 
-export const CHARGE_STRENGTH_S: Mainskill = createBaseSkill({
-  name: 'Charge Strength S',
-  amount: [400, 569, 785, 1083, 1496, 2066, 3002],
-  unit: 'strength',
-  maxLevel: MAX_SKILL_LEVEL,
-  description: "Increases Snorlax's Strength by ?.",
-  RP: [400, 569, 785, 1083, 1496, 2066, 2656]
-});
+export const ChargeStrengthS = new (class extends Mainskill {
+  name = 'Charge Strength S';
+  RP = [400, 569, 785, 1083, 1496, 2066, 2656];
+  strengthAmounts = [400, 569, 785, 1083, 1496, 2066, 3002];
+  image = 'strength';
+  description = (skillLevel: number) => `Increases Snorlax's Strength by ${this.strengthAmounts[skillLevel - 1]}.`;
 
-export const CHARGE_STRENGTH_S_RANGE: Mainskill = createBaseSkill({
-  name: 'Charge Strength S Range',
-  amount: [
-    (CHARGE_STRENGTH_S.amounts[0] * 2 + CHARGE_STRENGTH_S.amounts[0] * 0.5) / 2,
-    (CHARGE_STRENGTH_S.amounts[1] * 2 + CHARGE_STRENGTH_S.amounts[1] * 0.5) / 2,
-    (CHARGE_STRENGTH_S.amounts[2] * 2 + CHARGE_STRENGTH_S.amounts[2] * 0.5) / 2,
-    (CHARGE_STRENGTH_S.amounts[3] * 2 + CHARGE_STRENGTH_S.amounts[3] * 0.5) / 2,
-    (CHARGE_STRENGTH_S.amounts[4] * 2 + CHARGE_STRENGTH_S.amounts[4] * 0.5) / 2,
-    (CHARGE_STRENGTH_S.amounts[5] * 2 + CHARGE_STRENGTH_S.amounts[5] * 0.5) / 2,
-    (CHARGE_STRENGTH_S.amounts[6] * 2 + CHARGE_STRENGTH_S.amounts[6] * 0.5) / 2
-  ],
-  unit: 'strength',
-  maxLevel: MAX_SKILL_LEVEL,
-  description: "Increases Snorlax's Strength on average by ?.",
-  RP: [400, 569, 785, 1083, 1496, 2066, 2656]
-});
+  activations = {
+    strength: {
+      unit: 'strength',
+      amount: this.leveledAmount(this.strengthAmounts)
+    }
+  };
+})();
 
-MAINSKILLS.push(CHARGE_STRENGTH_S);
-MAINSKILLS.push(CHARGE_STRENGTH_S_RANGE);
-
-METRONOME_SKILLS.push(CHARGE_STRENGTH_S);
-METRONOME_SKILLS.push(CHARGE_STRENGTH_S_RANGE);
+export const ChargeStrengthSRange = new (class extends Mainskill {
+  name = 'Charge Strength S Range';
+  RP = [400, 569, 785, 1083, 1496, 2066, 2656];
+  strengthAmounts = [500, 711.25, 981.25, 1353.75, 1870, 2582.5, 3752.5];
+  image = 'strength';
+  description = (skillLevel: number) =>
+    `Increases Snorlax's Strength on average by ${this.strengthAmounts[skillLevel - 1]}.`;
+  activations = {
+    strength: {
+      unit: 'strength',
+      amount: this.leveledAmount(this.strengthAmounts)
+    }
+  };
+})();

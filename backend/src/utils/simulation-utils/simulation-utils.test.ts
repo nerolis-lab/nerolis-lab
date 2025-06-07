@@ -5,7 +5,7 @@ import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { finishSimulation, startDayAndEnergy, startNight } from '@src/utils/simulation-utils/simulation-utils.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
 import type { SkillActivation, Summary } from 'sleepapi-common';
-import { CarrySizeUtils, mainskill, nature, PINSIR } from 'sleepapi-common';
+import { CarrySizeUtils, ChargeStrengthS, nature, PINSIR } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('startDayAndEnergy', () => {
@@ -54,7 +54,7 @@ describe('finishSimulation', () => {
       ingredientPercentage: 0.2,
       carrySize: 23,
       skillPercentage: 0.02,
-      skill: mainskill.CHARGE_STRENGTH_S,
+      skill: ChargeStrengthS,
       skillProcs: 11,
       skillEnergySelfValue: 11,
       skillEnergyOthersValue: 11,

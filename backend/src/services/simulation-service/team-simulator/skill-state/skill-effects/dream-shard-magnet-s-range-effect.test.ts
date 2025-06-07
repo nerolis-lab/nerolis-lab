@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { DreamShardMagnetSRange } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -24,11 +24,13 @@ describe('DreamShardMagnetSRangeEffect', () => {
     const result = dreamShardMagnetSRangeEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.DREAM_SHARD_MAGNET_S_RANGE,
-      selfValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      skill: DreamShardMagnetSRange,
+      activations: [
+        {
+          unit: 'dream shards',
+          self: { regular: regularAmount, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -38,11 +40,13 @@ describe('DreamShardMagnetSRangeEffect', () => {
     const result = dreamShardMagnetSRangeEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.DREAM_SHARD_MAGNET_S_RANGE,
-      selfValue: {
-        regular: 0,
-        crit: 0
-      }
+      skill: DreamShardMagnetSRange,
+      activations: [
+        {
+          unit: 'dream shards',
+          self: { regular: 0, crit: 0 }
+        }
+      ]
     });
   });
 });

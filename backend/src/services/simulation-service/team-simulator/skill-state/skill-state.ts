@@ -19,6 +19,8 @@ import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-s
 import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost-effect.js';
+import { IngredientDrawSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-effect.js';
+import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-effect.js';
@@ -26,12 +28,41 @@ import { SkillCopyMimicEffect } from '@src/services/simulation-service/team-simu
 import { SkillCopyTransformEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-transform-effect.js';
 import { TastyChanceSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/tasty-chance-s-effect.js';
 import type {
-  SkillActivationValue,
-  TeamSkillActivation
+  SkillActivation,
+  TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import type { Mainskill, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
-import { calculatePityProcThreshold, defaultZero, mainskill, mainskillUnits } from 'sleepapi-common';
+import type { Mainskill, MainskillActivation, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
+import {
+  BerryBurst,
+  BerryBurstDisguise,
+  calculatePityProcThreshold,
+  ChargeEnergyS,
+  ChargeEnergySMoonlight,
+  ChargeStrengthM,
+  ChargeStrengthMBadDreams,
+  ChargeStrengthS,
+  ChargeStrengthSRange,
+  ChargeStrengthSStockpile,
+  CookingPowerUpS,
+  defaultZero,
+  DreamShardMagnetS,
+  DreamShardMagnetSRange,
+  EnergizingCheerS,
+  EnergyForEveryone,
+  EnergyForEveryoneLunarBlessing,
+  ExtraHelpfulS,
+  HelperBoost,
+  IngredientDrawS,
+  IngredientDrawSSuperLuck,
+  IngredientMagnetS,
+  mainskillUnits,
+  Metronome,
+  SkillCopy,
+  SkillCopyMimic,
+  SkillCopyTransform,
+  TastyChanceS
+} from 'sleepapi-common';
 
 export class SkillState {
   memberState: MemberState;
@@ -59,38 +90,40 @@ export class SkillState {
     this.memberState = memberState;
     this.rng = rng;
 
-    this.skillEffects = new Map([
-      [mainskill.BERRY_BURST, new BerryBurstEffect()],
-      [mainskill.BERRY_BURST_DISGUISE, new BerryBurstDisguiseEffect()],
-      [mainskill.CHARGE_ENERGY_S, new ChargeEnergySEffect()],
-      [mainskill.CHARGE_ENERGY_S_MOONLIGHT, new ChargeEnergySMoonlightEffect()],
-      [mainskill.CHARGE_STRENGTH_M, new ChargeStrengthMEffect()],
-      [mainskill.CHARGE_STRENGTH_M_BAD_DREAMS, new ChargeStrengthMBadDreamsEffect()],
-      [mainskill.CHARGE_STRENGTH_S, new ChargeStrengthSEffect()],
-      [mainskill.CHARGE_STRENGTH_S_RANGE, new ChargeStrengthSRangeEffect()],
-      [mainskill.CHARGE_STRENGTH_S_STOCKPILE, new ChargeStrengthSStockpileEffect()],
-      [mainskill.COOKING_POWER_UP_S, new CookingPowerUpSEffect()],
-      [mainskill.DREAM_SHARD_MAGNET_S, new DreamShardMagnetSEffect()],
-      [mainskill.DREAM_SHARD_MAGNET_S_RANGE, new DreamShardMagnetSRangeEffect()],
-      [mainskill.ENERGIZING_CHEER_S, new EnergizingCheerSEffect()],
-      [mainskill.ENERGY_FOR_EVERYONE, new EnergyForEveryoneEffect()],
-      [mainskill.ENERGY_FOR_EVERYONE_LUNAR_BLESSING, new EnergyForEveryoneLunarBlessingEffect()],
-      [mainskill.EXTRA_HELPFUL_S, new ExtraHelpfulSEffect()],
-      [mainskill.HELPER_BOOST, new HelperBoostEffect()],
-      [mainskill.INGREDIENT_MAGNET_S, new IngredientMagnetSEffect()],
-      [mainskill.METRONOME, new MetronomeEffect()],
-      [mainskill.SKILL_COPY, new SkillCopyEffect()],
-      [mainskill.SKILL_COPY_MIMIC, new SkillCopyMimicEffect()],
-      [mainskill.SKILL_COPY_TRANSFORM, new SkillCopyTransformEffect()],
-      [mainskill.TASTY_CHANCE_S, new TastyChanceSEffect()]
+    this.skillEffects = new Map<Mainskill, SkillEffect>([
+      [BerryBurst, new BerryBurstEffect()],
+      [BerryBurstDisguise, new BerryBurstDisguiseEffect()],
+      [ChargeEnergyS, new ChargeEnergySEffect()],
+      [ChargeEnergySMoonlight, new ChargeEnergySMoonlightEffect()],
+      [ChargeStrengthM, new ChargeStrengthMEffect()],
+      [ChargeStrengthMBadDreams, new ChargeStrengthMBadDreamsEffect()],
+      [ChargeStrengthS, new ChargeStrengthSEffect()],
+      [ChargeStrengthSRange, new ChargeStrengthSRangeEffect()],
+      [ChargeStrengthSStockpile, new ChargeStrengthSStockpileEffect()],
+      [CookingPowerUpS, new CookingPowerUpSEffect()],
+      [DreamShardMagnetS, new DreamShardMagnetSEffect()],
+      [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
+      [EnergizingCheerS, new EnergizingCheerSEffect()],
+      [EnergyForEveryone, new EnergyForEveryoneEffect()],
+      [EnergyForEveryoneLunarBlessing, new EnergyForEveryoneLunarBlessingEffect()],
+      [ExtraHelpfulS, new ExtraHelpfulSEffect()],
+      [HelperBoost, new HelperBoostEffect()],
+      [IngredientMagnetS, new IngredientMagnetSEffect()],
+      [IngredientDrawS, new IngredientDrawSEffect()],
+      [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
+      [Metronome, new MetronomeEffect()],
+      [SkillCopy, new SkillCopyEffect()],
+      [SkillCopyMimic, new SkillCopyMimicEffect()],
+      [SkillCopyTransform, new SkillCopyTransformEffect()],
+      [TastyChanceS, new TastyChanceSEffect()]
     ]);
 
     this.pityProcThreshold = calculatePityProcThreshold(memberState.member.pokemonWithIngredients.pokemon);
   }
 
   // // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
-  public attemptSkill(): TeamSkillActivation[] {
-    const activations: TeamSkillActivation[] = [];
+  public attemptSkill(): SkillActivation[] {
+    const activations: SkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
 
     if (this.helpsSinceLastSkillProc > this.pityProcThreshold || this.rng() < this.skillPercentage) {
@@ -106,7 +139,7 @@ export class SkillState {
     this.todaysSkillProcs = 0;
   }
 
-  public addValue(value: SkillActivationValue) {
+  public addValue(value: TeamActivationValue) {
     this.regularValue += value.regular;
     this.critValue += value.crit;
   }
@@ -150,41 +183,49 @@ export class SkillState {
     return this.memberState.skillPercentage;
   }
 
-  public skillLevel(skill: Mainskill) {
-    return Math.min(this.memberState.member.settings.skillLevel, skill.maxLevel);
+  get skillLevel() {
+    return this.memberState.member.settings.skillLevel;
   }
 
-  public skillAmount(skill: Mainskill) {
-    return skill.amount(this.skillLevel(skill));
+  public skillAmount(activation: MainskillActivation) {
+    return activation.amount(this.skillLevel);
   }
 
-  private activateSkill(skill: Mainskill): TeamSkillActivation {
+  private activateSkill(skill: Mainskill): SkillActivation {
     const effect = this.skillEffects.get(skill);
     if (!effect) {
       throw new NotImplementedError(`No SkillEffect implemented for skill: ${skill.name}`);
     }
 
-    const activation = effect.activate(this);
+    const skillActivation: SkillActivation = effect.activate(this);
 
     // update state
     this.skillProcs += 1;
-    // checks both that selfValue is not undefined and also crit is > 0 since 0 is falsy
-    this.skillCrits += activation?.selfValue?.crit || activation?.teamValue?.crit ? 1 : 0;
     this.helpsSinceLastSkillProc = 0;
 
-    const selfRegular = defaultZero(activation.selfValue?.regular);
-    const selfCrit = defaultZero(activation.selfValue?.crit);
-    const teamRegular = defaultZero(activation.teamValue?.regular);
-    const teamCrit = defaultZero(activation.teamValue?.crit);
+    let hadACrit = false;
+    for (const activation of skillActivation.activations) {
+      const selfRegular = defaultZero(activation.self?.regular);
+      const selfCrit = defaultZero(activation.self?.crit);
+      const teamRegular = defaultZero(activation.team?.regular);
+      const teamCrit = defaultZero(activation.team?.crit);
 
-    // only add self value directly, team value is added after team feedback in addValue
-    this.regularValue += selfRegular;
-    this.critValue += selfCrit;
+      if (selfCrit > 0 || teamCrit > 0) {
+        hadACrit = true;
+      }
 
-    const entry = this.skillValue[skill.unit];
-    entry.amountToSelf += selfRegular + selfCrit;
-    entry.amountToTeam += teamRegular + teamCrit;
+      // only add self value directly, team value is added after team feedback in addValue
+      this.regularValue += selfRegular;
+      this.critValue += selfCrit;
 
-    return activation;
+      const entry = this.skillValue[activation.unit];
+      entry.amountToSelf += selfRegular + selfCrit;
+      entry.amountToTeam += teamRegular + teamCrit;
+    }
+
+    if (hadACrit) {
+      this.skillCrits += 1;
+    }
+    return skillActivation;
   }
 }

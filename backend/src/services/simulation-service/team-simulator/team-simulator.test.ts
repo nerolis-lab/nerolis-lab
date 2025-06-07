@@ -1,15 +1,17 @@
-import type { SkillActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { TeamActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
+  BerryBurstDisguise,
+  ChargeStrengthS,
+  EnergyForEveryone,
   PINSIR,
   RandomUtils,
   calculatePityProcThreshold,
   commonMocks,
   ingredient,
-  mainskill,
   nature,
   subskill
 } from 'sleepapi-common';
@@ -24,7 +26,7 @@ const mockpokemonWithIngredients: PokemonWithIngredients = {
     ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
     ingredientPercentage: 20,
-    skill: mainskill.CHARGE_STRENGTH_S,
+    skill: ChargeStrengthS,
     skillPercentage: 100,
     specialty: 'skill'
   }),
@@ -175,7 +177,7 @@ describe('TeamSimulator', () => {
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockpokemonWithIngredients,
-        pokemon: { ...mockpokemonWithIngredients.pokemon, skillPercentage: 100, skill: mainskill.ENERGY_FOR_EVERYONE }
+        pokemon: { ...mockpokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
       },
       settings: {
         carrySize: 10,
@@ -206,14 +208,14 @@ describe('TeamSimulator', () => {
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockpokemonWithIngredients,
-        pokemon: { ...mockpokemonWithIngredients.pokemon, skillPercentage: 100, skill: mainskill.ENERGY_FOR_EVERYONE }
+        pokemon: { ...mockpokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
       },
       settings: {
         carrySize: 10,
         level: 60,
         ribbon: 0,
         nature: nature.ADAMANT,
-        skillLevel: mainskill.ENERGY_FOR_EVERYONE.maxLevel,
+        skillLevel: EnergyForEveryone.maxLevel,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
         externalId: 'some id'
       }
@@ -237,9 +239,9 @@ describe('TeamSimulator', () => {
     const wasteAmount = result.members[0].advanced.wastedEnergy;
     expect(skillAmount).toMatchInlineSnapshot(`726.5`);
     expect(wasteAmount).toMatchInlineSnapshot(`4070`);
-    expect(5 * result.members[0].skillProcs * mainskill.ENERGY_FOR_EVERYONE.maxAmount).toEqual(
-      skillAmount + wasteAmount
-    );
+    expect(
+      5 * result.members[0].skillProcs * EnergyForEveryone.activations.energy.amount(EnergyForEveryone.maxLevel)
+    ).toEqual(skillAmount + wasteAmount);
   });
 
   it('shall give pity procs when threshold met', () => {
@@ -289,7 +291,7 @@ describe('TeamSimulator', () => {
           ...mockpokemonWithIngredients,
           pokemon: {
             ...commonMocks.mockPokemon(),
-            skill: mainskill.BERRY_BURST_DISGUISE,
+            skill: BerryBurstDisguise,
             // one help every ~12 hours, final x2 multiplication is to account for energy frequency
             frequency: 60 * 60 * 12 * 2,
             // 100% chance to activate skill per help
@@ -316,7 +318,7 @@ describe('TeamSimulator', () => {
     expect(result.members).toHaveLength(1);
     expect(result.members[0].skillProcs).toBe(2);
     expect(result.members[0].produceFromSkill.berries).toHaveLength(1);
-    const amountPerProc = mainskill.BERRY_BURST_DISGUISE.amount(6);
+    const amountPerProc = BerryBurstDisguise.activations.berries.amount(6);
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(amountPerProc * 3 + amountPerProc);
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(84);
 
@@ -333,7 +335,7 @@ describe('recoverMemberEnergy', () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
-    const energy: SkillActivationValue = {
+    const energy: TeamActivationValue = {
       crit: 0,
       regular: 50
     };
@@ -355,7 +357,7 @@ describe('recoverMemberEnergy', () => {
     }) as any;
     simulator.memberStates[0].recoverEnergy(100, simulator.memberStates[0]);
 
-    const energy: SkillActivationValue = {
+    const energy: TeamActivationValue = {
       crit: 0,
       regular: 50,
       chanceToTargetLowestMember: 1
