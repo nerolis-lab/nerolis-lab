@@ -46,6 +46,24 @@ describe('Optimal', () => {
     });
   });
 
+  it('should use the skill level provided', () => {
+    const optimalBerry = Optimal.berry(mockedPokemon, 2, 4);
+
+    expect(optimalBerry).toEqual({
+      subskills: [
+        { level: 10, subskill: BERRY_FINDING_S },
+        { level: 25, subskill: HELPING_SPEED_M },
+        { level: 50, subskill: HELPING_SPEED_S },
+        { level: 75, subskill: HELPING_BONUS },
+        { level: 100, subskill: SKILL_TRIGGER_M }
+      ],
+      nature: ADAMANT,
+      skillLevel: 4,
+      carrySize: mockedPokemon.carrySize,
+      ribbon: 2
+    });
+  });
+
   it('should return correct optimal setup for berry production', () => {
     const optimalBerry = Optimal.berry(mockedPokemon);
 
