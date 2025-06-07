@@ -12,14 +12,14 @@ import type {
   nature
 } from 'sleepapi-common';
 import {
+  EnergyForEveryone,
+  HelperBoost,
   MathUtils,
-  mainskill,
   prettifyBerries,
   prettifyIngredientDrop,
   shortPrettifyIngredientDrop,
   unsimplifyIngredientSet
 } from 'sleepapi-common';
-import { calculateHelperBoostHelpsFromUnique } from '../calculator/skill/skill-calculator.js';
 
 // --- production calculator
 interface ProductionFilters {
@@ -53,8 +53,40 @@ interface ProductionCombination {
 }
 
 class WebsiteConverterServiceImpl {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public toProductionCalculator(pokemonProduction: ProductionCombination): any {
+  public toProductionCalculator(pokemonProduction: ProductionCombination) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const log = pokemonProduction.log.map((s: any) => {
+      const skillActivation = s?.skillActivation;
+      if (skillActivation) {
+        return {
+          ...s,
+          skillActivation: {
+            adjustedAmount: skillActivation.adjustedAmount,
+            fractionOfProc: skillActivation.fractionOfProc,
+            nrOfHelpsToActivate: skillActivation.nrOfHelpsToActivate,
+            skill: {
+              name: skillActivation.skill.name,
+              RP: skillActivation.skill.RP,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              unit: (Object.values(skillActivation.skill.activations).at(0) as any)?.unit
+            }
+          }
+        };
+      } else if (s.type === 'info') {
+        return {
+          ...s,
+          pokemon: {
+            ...s?.pokemon,
+            skill: s?.pokemon?.skill?.name
+          },
+          summary: {
+            ...s?.summary,
+            skill: s?.summary?.skill?.name
+          }
+        };
+      }
+      return s;
+    });
     return {
       details: pokemonProduction.filters,
       production: {
@@ -62,7 +94,8 @@ class WebsiteConverterServiceImpl {
         pokemon: pokemonProduction.production.pokemonCombination.pokemon.name,
         ingredients: pokemonProduction.production.pokemonCombination.ingredientList.map((ing) => ing.ingredient.name),
         specialty: pokemonProduction.production.pokemonCombination.pokemon.specialty,
-        log: pokemonProduction.log,
+
+        log,
         logName: `eventlog-${pokemonProduction.production.pokemonCombination.pokemon.name}${
           pokemonProduction.filters.level
         }-${Date.now()}.txt`,
@@ -244,14 +277,16 @@ class WebsiteConverterServiceImpl {
       teamInput.push(`Ribbon level: ${filters.ribbon}`);
     }
     if (filters.e4eProcs > 0) {
-      teamInput.push(`E4E: ${filters.e4eProcs} x ${mainskill.ENERGY_FOR_EVERYONE.amount(filters.e4eLevel)} energy`);
+      teamInput.push(
+        `E4E: ${filters.e4eProcs} x ${EnergyForEveryone.activations.energy.amount(filters.e4eLevel)} energy`
+      );
     }
     if (filters.helperBoostProcs > 0) {
       teamInput.push(
-        `Helper boost: ${filters.helperBoostProcs} x ${
-          mainskill.HELPER_BOOST.amount(filters.helperBoostLevel) +
-          calculateHelperBoostHelpsFromUnique(filters.helperBoostUnique, filters.helperBoostLevel)
-        } helps`
+        `Helper boost: ${filters.helperBoostProcs} x ${HelperBoost.activations.helps.amount(
+          filters.helperBoostLevel,
+          filters.helperBoostUnique
+        )} helps`
       );
     }
     if (filters.helpingBonus > 0) {

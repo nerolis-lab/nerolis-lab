@@ -3,7 +3,7 @@ import { StrengthService } from '@/services/strength/strength-service'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { BRAVIARY, MathUtils, berry, compactNumber } from 'sleepapi-common'
+import { berry, BerryBurst, BRAVIARY, compactNumber, MathUtils } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
@@ -71,7 +71,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center')
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: BerryBurst.activations.berries,
       amount: mockMember.production.produceFromSkill.berries.reduce(
         (sum, cur) => (sum + cur.berry.name === BRAVIARY.berry.name ? cur.amount : 0),
         0
@@ -80,7 +80,7 @@ describe('MemberProductionSkill', () => {
       areaBonus: 1
     })
     const expectedTeam = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: BerryBurst.activations.berries,
       amount: mockMember.production.produceFromSkill.berries.reduce(
         (sum, cur) => (sum + cur.berry.name !== BRAVIARY.berry.name ? cur.amount : 0),
         0

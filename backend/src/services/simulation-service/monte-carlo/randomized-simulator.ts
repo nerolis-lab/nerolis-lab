@@ -24,7 +24,15 @@ import type { MonteCarloResult } from '@src/services/simulation-service/monte-ca
 import { recoverEnergyEvents, recoverFromMeal } from '@src/utils/event-utils/event-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Produce, Time } from 'sleepapi-common';
-import { CarrySizeUtils, MathUtils, RandomUtils, emptyProduce, mainskill } from 'sleepapi-common';
+import {
+  BerryBurstDisguise,
+  CarrySizeUtils,
+  ChargeEnergySMoonlight,
+  emptyProduce,
+  EnergizingCheerS,
+  MathUtils,
+  RandomUtils
+} from 'sleepapi-common';
 
 /**
  * Runs the randomized simulation for Monte Carlo
@@ -94,22 +102,22 @@ export function randomizedSimulation(params: {
   for (let i = 0; i < nightHelpsBeforeCarryFromYesterday; i++) {
     const skillActivated = RandomUtils.roll(skillPercentage);
     if (skillActivated) {
-      if (pokemon.skill.isUnit('energy')) {
-        let energyAmount = pokemon.skill.amount(skillLevel) * nature.energy;
-        if (pokemon.skill.isSkill(mainskill.ENERGIZING_CHEER_S)) {
+      if (pokemon.skill.hasUnit('energy')) {
+        let energyAmount = pokemon.skill.activations.energy.amount(skillLevel) * nature.energy;
+        if (pokemon.skill.is(EnergizingCheerS)) {
           // 20% chance it affects this Pokémon
           if (!RandomUtils.roll(0.2)) {
             energyAmount = 0;
           }
-        } else if (pokemon.skill.isModifiedVersionOf(mainskill.CHARGE_ENERGY_S, 'Moonlight')) {
-          if (RandomUtils.roll(pokemon.skill.critChance)) {
+        } else if (pokemon.skill.is(ChargeEnergySMoonlight)) {
+          if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance)) {
             skillCrits += 1;
-            energyAmount += mainskill.moonlightCritAmount(skillLevel);
+            energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount(skillLevel);
           }
         }
         currentEnergy = Math.min(currentEnergy + energyAmount, 150);
-      } else if (!disguiseBusted && pokemon.skill.isModifiedVersionOf(mainskill.BERRY_BURST, 'Disguise')) {
-        if (RandomUtils.roll(pokemon.skill.critChance)) {
+      } else if (!disguiseBusted && pokemon.skill.is(BerryBurstDisguise)) {
+        if (RandomUtils.roll(BerryBurstDisguise.activations.berries.critChance)) {
           disguiseBusted = true;
           skillCrits += 1;
         }
@@ -151,22 +159,22 @@ export function randomizedSimulation(params: {
 
       if (RandomUtils.roll(skillPercentage)) {
         skillProcsDay += 1;
-        if (pokemon.skill.isUnit('energy')) {
-          let energyAmount = pokemon.skill.amount(skillLevel) * nature.energy;
-          if (pokemon.skill === mainskill.ENERGIZING_CHEER_S) {
+        if (pokemon.skill.hasUnit('energy')) {
+          let energyAmount = pokemon.skill.activations.energy.amount(skillLevel) * nature.energy;
+          if (pokemon.skill.is(EnergizingCheerS)) {
             // 20% chance it affects this Pokémon
             if (!RandomUtils.roll(0.2)) {
               energyAmount = 0;
             }
-          } else if (pokemon.skill.isModifiedVersionOf(mainskill.CHARGE_ENERGY_S, 'Moonlight')) {
-            if (RandomUtils.roll(pokemon.skill.critChance)) {
+          } else if (pokemon.skill.is(ChargeEnergySMoonlight)) {
+            if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance)) {
               skillCrits += 1;
-              energyAmount += mainskill.moonlightCritAmount(skillLevel);
+              energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount(skillLevel);
             }
           }
           currentEnergy = Math.min(currentEnergy + energyAmount, 150);
-        } else if (!disguiseBusted && pokemon.skill.isModifiedVersionOf(mainskill.BERRY_BURST, 'Disguise')) {
-          if (RandomUtils.roll(pokemon.skill.critChance)) {
+        } else if (!disguiseBusted && pokemon.skill.is(BerryBurstDisguise)) {
+          if (RandomUtils.roll(BerryBurstDisguise.activations.berries.critChance)) {
             disguiseBusted = true;
             skillCrits += 1;
           }

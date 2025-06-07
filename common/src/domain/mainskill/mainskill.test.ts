@@ -1,72 +1,354 @@
 import { describe, expect, it } from 'vitest';
-import type { MainskillAttributes } from './mainskill';
-import { Mainskill, createBaseSkill } from './mainskill';
-import type { MainskillUnit } from './mainskill-unit';
+import { INGREDIENT_SUPPORT_MAINSKILLS, Mainskill, MAINSKILLS, ModifiedMainskill } from './mainskill';
+import { mainskillUnits } from './mainskill-unit';
+import { ChargeEnergySMoonlight } from './mainskills/charge-energy-s-moonlight';
+import { Metronome } from './mainskills/metronome';
 
-const baseSkillAttributes: Omit<MainskillAttributes, 'modifier'> = {
-  name: 'Charge Energy S',
-  amount: [12, 16, 21, 26, 33, 43],
-  unit: 'energy' as MainskillUnit,
-  maxLevel: 6,
-  description: 'Restores ? Energy to the user.',
-  RP: [400, 569, 785, 1083, 1496, 2066]
-};
-const baseSkill = createBaseSkill(baseSkillAttributes);
+const TestMainskill = new (class extends Mainskill {
+  name = 'Test Skill';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  description = (_skillLevel: number) => 'A test skill for testing purposes.';
+  RP = [100, 200, 300];
+  image = 'test';
+  activations = {
+    testActivation: {
+      unit: 'energy',
+      amount: (skillLevel: number) => skillLevel * 10
+    }
+  };
+})();
 
-const modifiedSkillAttributes: MainskillAttributes = {
-  ...baseSkillAttributes,
-  modifier: { type: 'Moonlight', critChance: 0.5 },
-  name: 'Moonlight (Charge Energy S)'
-};
-const modifiedSkill = new Mainskill(modifiedSkillAttributes);
+const TestModifiedMainskill = new (class extends ModifiedMainskill {
+  baseSkill = TestMainskill;
+  modifierName = 'Test Modified';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  description = (_skillLevel: number) => 'A test modified skill for testing purposes.';
+  RP = [150, 300, 450];
+  image = 'test';
+  activations = {
+    testActivation: {
+      unit: 'energy',
+      amount: (skillLevel: number) => skillLevel * 15,
+      critAmount: (skillLevel: number) => skillLevel * 20
+    }
+  };
+})(true);
 
 describe('Mainskill', () => {
-  it('should create a base skill with createBaseSkill', () => {
-    expect(baseSkill.name).toBe('Charge Energy S');
-    expect(baseSkill.amounts).toEqual([12, 16, 21, 26, 33, 43]);
-    expect(baseSkill.unit).toBe('energy');
-    expect(baseSkill.maxLevel).toBe(6);
-    expect(baseSkill.description).toBe('Restores ? Energy to the user.');
-    expect(baseSkill.RP).toEqual([400, 569, 785, 1083, 1496, 2066]);
-    expect(baseSkill.modifier.type).toBe('Base');
-    expect(baseSkill.isModified).toBe(false);
+  describe('Generic Mainskill behavior', () => {
+    it('should have basic properties structure', () => {
+      expect(TestMainskill.name).toBe('Test Skill');
+      expect(typeof TestMainskill.description).toBe('function');
+      expect(TestMainskill.RP).toEqual([100, 200, 300]);
+      expect(TestMainskill.maxLevel).toBe(3);
+    });
+
+    it('should have activations object', () => {
+      expect(typeof TestMainskill.activations).toBe('object');
+      expect(TestMainskill.activations).not.toBeNull();
+      expect(TestMainskill.activations).toHaveProperty('testActivation');
+    });
+
+    it('should get RP value at valid levels', () => {
+      expect(TestMainskill.getRPValue(1)).toBe(100);
+      expect(TestMainskill.getRPValue(2)).toBe(200);
+      expect(TestMainskill.getRPValue(3)).toBe(300);
+    });
+
+    it('should return undefined for invalid RP levels', () => {
+      expect(TestMainskill.getRPValue(0)).toBeUndefined();
+      expect(TestMainskill.getRPValue(4)).toBeUndefined();
+    });
+
+    it('should correctly identify units it has', () => {
+      expect(TestMainskill.hasUnit('energy')).toBe(true);
+    });
+
+    it('should correctly identify units it does not have', () => {
+      expect(TestMainskill.hasUnit('berries')).toBe(false);
+      expect(TestMainskill.hasUnit('ingredients')).toBe(false);
+      expect(TestMainskill.hasUnit('strength')).toBe(false);
+    });
+
+    it('should get all units used by skill', () => {
+      const units = TestMainskill.getUnits();
+      expect(units).toEqual(['energy']);
+    });
+
+    it('should get all activation names', () => {
+      const activationNames = TestMainskill.getActivationNames();
+      expect(activationNames).toEqual(['testActivation']);
+    });
+
+    it('should check skill identity correctly using is() method', () => {
+      expect(TestMainskill.is(TestMainskill)).toBe(true);
+      expect(TestMainskill.is(TestModifiedMainskill)).toBe(false);
+    });
+
+    it('should check skill identity correctly using is() method with multiple skills', () => {
+      expect(TestMainskill.is(TestMainskill, TestModifiedMainskill)).toBe(true);
+      expect(TestMainskill.is(TestModifiedMainskill, TestMainskill)).toBe(true);
+      expect(TestMainskill.is(TestModifiedMainskill, TestModifiedMainskill)).toBe(false);
+    });
+
+    it('should calculate activation amounts correctly', () => {
+      expect(TestMainskill.activations.testActivation.amount(1)).toBe(10);
+      expect(TestMainskill.activations.testActivation.amount(2)).toBe(20);
+      expect(TestMainskill.activations.testActivation.amount(3)).toBe(30);
+    });
   });
 
-  it('should create a modified skill', () => {
-    expect(modifiedSkill.name).toBe('Moonlight (Charge Energy S)');
-    expect(modifiedSkill.modifier.type).toBe('Moonlight');
-    expect(modifiedSkill.isModified).toBe(true);
+  describe('Generic ModifiedMainskill behavior', () => {
+    it('should have modified name format', () => {
+      expect(TestModifiedMainskill.name).toBe('Test Modified (Test Skill)');
+      expect(TestModifiedMainskill.modifierName).toBe('Test Modified');
+      expect(TestModifiedMainskill.baseSkill).toBe(TestMainskill);
+    });
+
+    it('should have modified properties', () => {
+      expect(typeof TestModifiedMainskill.description).toBe('function');
+      expect(TestModifiedMainskill.RP).toEqual([150, 300, 450]);
+      expect(TestModifiedMainskill.maxLevel).toBe(3);
+    });
+
+    it('should have enhanced activations with crit properties', () => {
+      const activation = TestModifiedMainskill.activations.testActivation;
+      expect(activation.unit).toBe('energy');
+      expect(typeof activation.amount).toBe('function');
+      expect(activation.critAmount!(1)).toBe(20);
+      expect(activation.critAmount!(2)).toBe(40);
+      expect(activation.critAmount!(3)).toBe(60);
+    });
+
+    it('should calculate crit amounts correctly', () => {
+      const activation = TestModifiedMainskill.activations.testActivation;
+      expect(activation.critAmount!(1)).toBe(20);
+      expect(activation.critAmount!(2)).toBe(40);
+      expect(activation.critAmount!(3)).toBe(60);
+    });
   });
 
-  it('should check if the skill is the same using isSkill()', () => {
-    const anotherSkill = createBaseSkill({ ...baseSkillAttributes, name: 'Different Skill' });
-    expect(baseSkill.isSkill(baseSkill)).toBe(true);
-    expect(baseSkill.isSkill(baseSkill, anotherSkill)).toBe(true);
-    expect(baseSkill.isSkill(anotherSkill)).toBe(false);
+  describe('ModifiedMainskill', () => {
+    it('should have modified name format', () => {
+      expect(ChargeEnergySMoonlight.name).toBe('Moonlight (Charge Energy S)');
+      expect(ChargeEnergySMoonlight.modifierName).toBe('Moonlight');
+      expect(ChargeEnergySMoonlight.baseSkill.name).toBe('Charge Energy S');
+    });
+
+    it('should have modified RP values', () => {
+      expect(ChargeEnergySMoonlight.RP).toEqual([560, 797, 1099, 1516, 2094, 2892]);
+      expect(ChargeEnergySMoonlight.maxLevel).toBe(6);
+    });
+
+    it('should have enhanced activations with crit properties', () => {
+      const activation = ChargeEnergySMoonlight.activations.energy;
+      expect(activation.unit).toBe('energy');
+      expect(typeof activation.amount).toBe('function');
+      expect(activation.critChance).toBe(0.5);
+      expect(typeof activation.critAmount).toBe('function');
+    });
+
+    it('should calculate crit amounts correctly', () => {
+      const activation = ChargeEnergySMoonlight.activations.energy;
+      const level1CritAmount = activation.critAmount!(1);
+      const level6CritAmount = activation.critAmount!(6);
+
+      expect(level1CritAmount).toBe(6.3);
+      expect(level6CritAmount).toBe(22.8);
+    });
   });
 
-  it('should check if the unit matches using isUnit()', () => {
-    expect(baseSkill.isUnit('energy')).toBe(true);
-    expect(baseSkill.isUnit('energy', 'strength')).toBe(true);
-    expect(baseSkill.isUnit('strength')).toBe(false);
-    expect(baseSkill.isUnit('berries', 'strength', 'ingredients')).toBe(false);
+  describe('Special Skills', () => {
+    it('should handle Metronome skill correctly', () => {
+      expect(Metronome.name).toBe('Metronome');
+      expect(typeof Metronome.description).toBe('function');
+      expect(Metronome.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
+      expect(Metronome.maxLevel).toBe(7);
+      expect(Object.keys(Metronome.activations)).toHaveLength(0);
+    });
+
+    it('should have metronome skills excluding blocked skills', () => {
+      const metronomeSkills = Metronome.metronomeSkills;
+      expect(metronomeSkills).not.toContain(Metronome);
+      expect(Array.isArray(metronomeSkills)).toBe(true);
+      expect(metronomeSkills.length).toBeGreaterThan(0);
+    });
   });
 
-  it('should check if the skill is a modified version of a base skill using isModifiedVersionOf()', () => {
-    expect(modifiedSkill.isModifiedVersionOf(baseSkill)).toBe(true);
-    expect(modifiedSkill.isModifiedVersionOf(baseSkill, 'Moonlight')).toBe(true);
-    expect(modifiedSkill.isModifiedVersionOf(baseSkill, 'Stockpile')).toBe(false);
+  describe('Skills with multiple activations', () => {
+    it('should handle skills with multiple units correctly', () => {
+      // Find a skill with multiple activations or test a hypothetical one
+      // This test would need to be adjusted based on actual skills with multiple activations
+      const multiActivationSkill = MAINSKILLS.find((skill) => skill.getUnits().length > 1);
+
+      if (multiActivationSkill) {
+        const units = multiActivationSkill.getUnits();
+        const activationNames = multiActivationSkill.getActivationNames();
+
+        expect(units.length).toBeGreaterThan(1);
+        expect(activationNames.length).toBeGreaterThan(1);
+
+        units.forEach((unit) => {
+          expect(multiActivationSkill.hasUnit(unit)).toBe(true);
+        });
+      }
+    });
   });
 
-  it('should check if the skill is the same or a modified version using isSameOrModifiedVersionOf()', () => {
-    expect(modifiedSkill.isSameOrModifiedVersion(baseSkill)).toBe(true);
-    expect(baseSkill.isSameOrModifiedVersion(baseSkill)).toBe(true);
-    expect(baseSkill.isSameOrModifiedVersion(modifiedSkill)).toBe(false);
-    expect(baseSkill.isSameOrModifiedVersion(modifiedSkill, baseSkill)).toBe(true);
+  describe('Global skill arrays', () => {
+    it('should include skills in MAINSKILLS array', () => {
+      expect(MAINSKILLS).toContain(TestMainskill);
+      expect(MAINSKILLS).toContain(ChargeEnergySMoonlight);
+      expect(MAINSKILLS).toContain(Metronome);
+      expect(MAINSKILLS.length).toBeGreaterThan(0);
+    });
+
+    it('should include ingredient support skills in INGREDIENT_SUPPORT_MAINSKILLS array', () => {
+      expect(INGREDIENT_SUPPORT_MAINSKILLS).toContain(ChargeEnergySMoonlight);
+      expect(INGREDIENT_SUPPORT_MAINSKILLS).toContain(Metronome);
+      // Note: Skills that benefit team ingredients are passed true to constructor
+    });
   });
 
-  it('should convert skill to JSON using toJSON()', () => {
-    expect(baseSkill.toJSON()).toEqual({ ...baseSkillAttributes, modifier: { type: 'Base', critChance: 0 } });
-    expect(modifiedSkill.toJSON()).toEqual(modifiedSkillAttributes);
+  describe('Edge cases and validation', () => {
+    it('should handle invalid skill levels gracefully', () => {
+      // Test with level 0 (should return undefined)
+      expect(TestMainskill.getRPValue(0)).toBeUndefined();
+
+      // Test with level beyond max level
+      expect(TestMainskill.getRPValue(4)).toBeUndefined();
+    });
+
+    it('should validate that all skills have proper structure', () => {
+      MAINSKILLS.forEach((skill) => {
+        expect(typeof skill.name).toBe('string');
+        expect(skill.name.length).toBeGreaterThan(0);
+        expect(typeof skill.description).toBe('function');
+        expect(Array.isArray(skill.RP)).toBe(true);
+        expect(skill.RP.length).toBeGreaterThan(0);
+        expect(typeof skill.activations).toBe('object');
+        expect(typeof skill.maxLevel).toBe('number');
+        expect(skill.maxLevel).toBeGreaterThan(0);
+      });
+    });
+
+    it('should ensure all activations have valid units', () => {
+      const validUnits = ['energy', 'berries', 'ingredients', 'helps', 'shards', 'strength', 'pot size', 'crit chance'];
+
+      MAINSKILLS.forEach((skill) => {
+        Object.values(skill.activations).forEach((activation) => {
+          expect(validUnits).toContain(activation.unit);
+          expect(typeof activation.amount).toBe('function');
+        });
+      });
+    });
+
+    it('should ensure modified skills extend their base skills properly', () => {
+      const modifiedSkills = MAINSKILLS.filter((skill) => skill instanceof ModifiedMainskill) as ModifiedMainskill[];
+
+      modifiedSkills.forEach((modifiedSkill) => {
+        expect(modifiedSkill.baseSkill).toBeInstanceOf(Mainskill);
+        expect(typeof modifiedSkill.modifierName).toBe('string');
+        expect(modifiedSkill.modifierName.length).toBeGreaterThan(0);
+        expect(modifiedSkill.name).toContain(modifiedSkill.modifierName);
+        expect(modifiedSkill.name).toContain(modifiedSkill.baseSkill.name);
+      });
+    });
+  });
+});
+
+describe('Additional validation tests', () => {
+  it('should ensure all skills have valid units for each activation', () => {
+    MAINSKILLS.forEach((skill) => {
+      Object.entries(skill.activations).forEach(([activationName, activation]) => {
+        expect(mainskillUnits).toContain(activation.unit);
+        expect(typeof activation.amount).toBe('function');
+
+        // Test that the activation name is descriptive
+        expect(activationName.length).toBeGreaterThan(0);
+        expect(typeof activationName).toBe('string');
+      });
+    });
+  });
+
+  it('should ensure activation amount functions return valid numbers', () => {
+    MAINSKILLS.forEach((skill) => {
+      Object.values(skill.activations).forEach((activation) => {
+        // Test amount function for all skill levels
+        for (let level = 1; level <= skill.maxLevel; level++) {
+          const amount = activation.amount(level);
+          // Some skills might return undefined for edge levels
+          if (amount !== undefined) {
+            expect(typeof amount).toBe('number');
+            expect(amount).toBeGreaterThan(0);
+            expect(Number.isFinite(amount)).toBe(true);
+          }
+        }
+      });
+    });
+  });
+
+  it('should handle out-of-bounds skill levels gracefully with leveledAmount helper', () => {
+    // Create a test mainskill to test the leveledAmount helper
+    const testSkill = new (class extends Mainskill {
+      name = 'Test Skill 2';
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      description = (_skillLevel: number) => 'Another test skill.';
+      RP = [100, 200, 300];
+      image = 'test';
+      activations = {
+        testActivation: {
+          unit: 'test',
+          amount: this.leveledAmount([10, 20, 30])
+        }
+      };
+    })(false, true); // Don't add to global arrays
+
+    // Test normal levels
+    expect(testSkill.activations.testActivation.amount(1)).toBe(10);
+    expect(testSkill.activations.testActivation.amount(2)).toBe(20);
+    expect(testSkill.activations.testActivation.amount(3)).toBe(30);
+
+    // Test out-of-bounds levels (should clamp to valid range)
+    expect(testSkill.activations.testActivation.amount(0)).toBe(10); // Clamped to level 1
+    expect(testSkill.activations.testActivation.amount(-5)).toBe(10); // Clamped to level 1
+    expect(testSkill.activations.testActivation.amount(4)).toBe(30); // Clamped to max level (3)
+    expect(testSkill.activations.testActivation.amount(999)).toBe(30); // Clamped to max level (3)
+  });
+
+  it('should ensure skills have consistent structure', () => {
+    MAINSKILLS.forEach((skill) => {
+      // Check RP array matches maxLevel
+      expect(skill.RP.length).toBe(skill.maxLevel);
+
+      // Check all RP values are positive numbers
+      skill.RP.forEach((rp) => {
+        expect(typeof rp).toBe('number');
+        expect(rp).toBeGreaterThan(0);
+        expect(Number.isFinite(rp)).toBe(true);
+      });
+
+      // Check that RP values are generally increasing (allowing for some variance)
+      for (let i = 1; i < skill.RP.length; i++) {
+        expect(skill.RP[i]).toBeGreaterThanOrEqual(skill.RP[i - 1]);
+      }
+    });
+  });
+
+  it('should ensure modified skills have proper inheritance', () => {
+    const modifiedSkills = MAINSKILLS.filter((skill) => skill instanceof ModifiedMainskill) as ModifiedMainskill[];
+
+    modifiedSkills.forEach((modifiedSkill) => {
+      // Note: Some modified skills might have different max levels than their base skills
+      // This is allowed for game balance reasons, so we only check that they have valid levels
+      expect(modifiedSkill.maxLevel).toBeGreaterThan(0);
+      expect(modifiedSkill.baseSkill.maxLevel).toBeGreaterThan(0);
+
+      // Check that the modified skill's name includes both modifier and base skill name
+      expect(modifiedSkill.name).toMatch(new RegExp(`${modifiedSkill.modifierName}.*${modifiedSkill.baseSkill.name}`));
+
+      // Check that base skill exists in MAINSKILLS
+      expect(MAINSKILLS).toContain(modifiedSkill.baseSkill);
+    });
   });
 });

@@ -36,13 +36,18 @@ import { clampHelp } from '@src/services/calculator/production/produce-calculato
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { BerrySet, DetailedProduce, Produce, SkillActivation, Summary, Time } from 'sleepapi-common';
 import {
+  BerryBurst,
+  BerryBurstDisguise,
   CarrySizeUtils,
-  METRONOME_SKILLS,
+  ChargeEnergyS,
+  ChargeEnergySMoonlight,
+  ExtraHelpfulS,
+  HelperBoost,
   MathUtils,
+  Metronome,
   combineSameIngredientsInDrop,
   emptyBerryInventory,
-  emptyProduce,
-  mainskill
+  emptyProduce
 } from 'sleepapi-common';
 
 /**
@@ -238,7 +243,7 @@ export function simulation(params: {
           })
         );
 
-        if (skillActivation.skill.isUnit('energy')) {
+        if (skillActivation.skill.hasUnit('energy')) {
           const energyAmountWithNature = skillActivation.adjustedAmount * dayInfo.nature.energy;
           const clampedDelta =
             currentEnergy + energyAmountWithNature > 150 ? 150 - currentEnergy : energyAmountWithNature;
@@ -253,53 +258,57 @@ export function simulation(params: {
           );
           currentEnergy += clampedDelta;
           totalRecovery += clampedDelta;
-          if (skillActivation.skill.isSameOrModifiedVersion(mainskill.CHARGE_ENERGY_S)) {
+          if (skillActivation.skill.is(ChargeEnergyS) || skillActivation.skill.is(ChargeEnergySMoonlight)) {
             skillEnergySelfValue += clampedDelta;
-            if (skillActivation.skill.isModifiedVersionOf(mainskill.CHARGE_ENERGY_S, 'Moonlight')) {
+            if (skillActivation.skill.is(ChargeEnergySMoonlight)) {
               const energyFromCrit =
                 skillActivation.fractionOfProc *
-                (mainskill.moonlightCritAmount(input.skillLevel ?? skillActivation.skill.maxLevel) / 5);
+                (ChargeEnergySMoonlight.activations.energy.critAmount(
+                  input.skillLevel ?? skillActivation.skill.maxLevel
+                ) /
+                  5);
 
-              skillEnergyOthersValue += energyFromCrit * skillActivation.skill.critChance;
+              skillEnergyOthersValue += energyFromCrit * ChargeEnergySMoonlight.activations.energy.critChance;
             }
           } else {
             skillEnergyOthersValue += skillActivation.adjustedAmount;
           }
         } else if (skillActivation.adjustedProduce) {
-          if (skillActivation.skill === mainskill.EXTRA_HELPFUL_S || skillActivation.skill === mainskill.HELPER_BOOST) {
+          if (skillActivation.skill.is(ExtraHelpfulS) || skillActivation.skill.is(HelperBoost)) {
             skillHelpsValue += skillActivation.adjustedAmount;
-          } else if (skillActivation.skill.isSkill(mainskill.BERRY_BURST_DISGUISE)) {
-            const skillLevel = input.skillLevel ?? mainskill.BERRY_BURST_DISGUISE.maxLevel;
-            const metronomeUser = pokemon.skill.isSkill(mainskill.METRONOME);
-            const metronomeFactor = metronomeUser ? METRONOME_SKILLS.length : 1;
+          } else if (skillActivation.skill.is(BerryBurstDisguise)) {
+            const skillLevel = input.skillLevel ?? BerryBurstDisguise.maxLevel;
+            const metronomeUser = pokemon.skill.is(Metronome);
+            const metronomeFactor = metronomeUser ? Metronome.metronomeSkills.length : 1;
 
             const amountNoCrit =
-              mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillLevel - 1] * skillActivation.fractionOfProc;
-            const critChance = skillActivation.critChance ?? skillActivation.skill.critChance;
+              BerryBurstDisguise.activations.berries.teamAmount(skillLevel) * skillActivation.fractionOfProc;
+            const critChance = skillActivation.critChance ?? BerryBurstDisguise.activations.berries.critChance;
 
             const averageTeamBerryAmount =
-              (amountNoCrit + critChance * amountNoCrit * mainskill.DISGUISE_CRIT_MULTIPLIER) / metronomeFactor;
+              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.activations.berries.critMultiplier) /
+              metronomeFactor;
 
             skillBerriesOtherValue += averageTeamBerryAmount;
-          } else if (skillActivation.skill.isSkill(mainskill.BERRY_BURST)) {
-            const skillLevel = input.skillLevel ?? mainskill.BERRY_BURST.maxLevel;
-            const metronomeUser = pokemon.skill.isSkill(mainskill.METRONOME);
-            const metronomeFactor = metronomeUser ? METRONOME_SKILLS.length : 1;
+          } else if (skillActivation.skill.is(BerryBurst)) {
+            const skillLevel = input.skillLevel ?? BerryBurst.maxLevel;
+            const metronomeUser = pokemon.skill.is(Metronome);
+            const metronomeFactor = metronomeUser ? Metronome.metronomeSkills.length : 1;
 
-            const amountNoCrit = mainskill.BERRY_BURST_TEAM_AMOUNT[skillLevel - 1] * skillActivation.fractionOfProc;
+            const amountNoCrit = BerryBurst.activations.berries.teamAmount(skillLevel) * skillActivation.fractionOfProc;
 
             const averageTeamBerryAmount = amountNoCrit / metronomeFactor;
 
             skillBerriesOtherValue += averageTeamBerryAmount;
           }
           skillProduceValue = CarrySizeUtils.addToInventory(skillProduceValue, skillActivation.adjustedProduce);
-        } else if (skillActivation.skill.isUnit('strength')) {
+        } else if (skillActivation.skill.hasUnit('strength')) {
           skillStrengthValue += skillActivation.adjustedAmount;
-        } else if (skillActivation.skill.unit === 'dream shards') {
+        } else if (skillActivation.skill.hasUnit('dream shards')) {
           skillDreamShardValue += skillActivation.adjustedAmount;
-        } else if (skillActivation.skill.unit === 'pot size') {
+        } else if (skillActivation.skill.hasUnit('pot size')) {
           skillPotSizeValue += skillActivation.adjustedAmount;
-        } else if (skillActivation.skill.unit === 'chance') {
+        } else if (skillActivation.skill.hasUnit('chance')) {
           skillTastyChanceValue += skillActivation.adjustedAmount;
         }
       } else break;

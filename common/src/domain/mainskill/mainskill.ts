@@ -1,129 +1,129 @@
 import type { MainskillUnit } from './mainskill-unit';
 
-import type { Modifier, ModifierType } from './modifier';
+export type AmountFunction = (skillLevel: number, extra?: number) => number;
 
-// TODO: maxLevel could be calced auto from amount.length
-export type MainskillAttributes = {
-  name: string;
-  amount: number[];
-  unit: MainskillUnit;
-  maxLevel: number;
-  description: string;
-  RP: number[];
-  modifier: Modifier;
+export type DescriptionFunction = (skillLevel: number, extra?: number) => string;
+
+export type MainskillActivation = {
+  // I can't figure out a way to make this be MainskillUnit only
+  unit: MainskillUnit | string;
+  amount: AmountFunction;
 };
-export class Mainskill {
-  attributes: MainskillAttributes;
 
-  constructor(attributes: MainskillAttributes) {
-    this.attributes = attributes;
+export interface MainskillBaseAttributes {
+  name: string;
+  RP: number[];
+  description: DescriptionFunction;
+  activations: Record<string, MainskillActivation>;
+}
+
+export type ActivationsType = { [K: string]: MainskillActivation };
+
+export interface ModifiedSkillConfig {
+  baseSkill: Mainskill;
+  modifierName: string;
+  activations: ActivationsType;
+  description?: string;
+}
+
+export abstract class Mainskill {
+  public abstract readonly name: string;
+  public abstract readonly description: DescriptionFunction;
+  public abstract readonly image: string;
+  public abstract readonly RP: number[];
+  public abstract readonly activations: ActivationsType;
+
+  constructor(benefitsTeamIngredients: boolean = false, skipAddingToMainskills: boolean = false) {
+    if (benefitsTeamIngredients) {
+      // This flag is used to determine which pokemon are simmed seperately in the tier list, as to not affect the production of other pokemon
+      INGREDIENT_SUPPORT_MAINSKILLS.push(this);
+    }
+
+    if (!skipAddingToMainskills) {
+      // This is a small hack that allows us to create mock/test mainskills without having to add them to the mainskill list
+      MAINSKILLS.push(this);
+    }
   }
 
-  get name() {
-    return this.attributes.name;
+  get maxLevel(): number {
+    return this.RP.length;
   }
 
-  get maxLevel() {
-    return this.attributes.maxLevel;
+  /**
+   * Helper method to create an AmountFunction from an array of values
+   * Automatically clamps skillLevel to the valid range (1 to maxLevel)
+   */
+  public leveledAmount(amounts: number[]): AmountFunction {
+    return (skillLevel: number) => {
+      const clampedLevel = Math.min(this.maxLevel, Math.max(1, skillLevel));
+      return amounts[clampedLevel - 1];
+    };
   }
 
-  get description() {
-    return this.attributes.description;
+  getRPValue(level: number): number {
+    return this.RP[level - 1];
   }
 
-  get amounts() {
-    return this.attributes.amount;
+  hasUnit(unit: string): boolean {
+    return Object.values(this.activations).some((activation) => activation.unit === unit);
   }
 
-  get unit() {
-    return this.attributes.unit;
+  getUnits(): string[] {
+    const unitSet = new Set(Object.values(this.activations).map((activation) => activation.unit));
+    return Array.from(unitSet);
   }
 
-  get modifier() {
-    return this.attributes.modifier;
+  getActivationNames(): string[] {
+    return Object.keys(this.activations);
+  }
+
+  /**
+   * Get the primary amount for this skill at the given level
+   * Returns the amount from the first activation
+   * @deprecated use activations instead
+   */
+  amount(skillLevel: number, extra?: number): number {
+    const firstActivationKey = Object.keys(this.activations)[0];
+    if (!firstActivationKey) {
+      return 0;
+    }
+    return this.activations[firstActivationKey].amount(skillLevel, extra);
+  }
+
+  /**
+   * Get the first activation of this skill
+   * @deprecated use activations instead
+   */
+  getFirstActivation(): MainskillActivation | undefined {
+    const firstActivationKey = Object.keys(this.activations).at(0);
+    return this.activations[firstActivationKey];
   }
 
   get isModified(): boolean {
-    return this.modifier.type !== 'Base';
+    return this instanceof ModifiedMainskill;
   }
 
-  get critChance() {
-    return this.modifier.critChance;
+  is(...other: Mainskill[]): boolean {
+    return other.some((o) => this.name === o.name);
   }
 
-  get RP() {
-    return this.attributes.RP;
-  }
-
-  get maxAmount() {
-    return this.amounts[this.maxLevel - 1];
-  }
-
-  // TEST:
-  get baseSkill(): Mainskill {
-    if (this.isModified) {
-      return MAINSKILLS.find((skill) => this.name.includes(skill.name) && !skill.isModified);
-    } else return this;
-  }
-
-  /**
-   *
-   * @returns amount for given skill level
-   */
-  public amount(skillLevel: number) {
-    return this.amounts[skillLevel - 1];
-  }
-
-  /**
-   * Checks if the current skill is the same as any of the provided skills.
-   * @param skills The skill or array of skills to compare against.
-   * @returns True if the current skill is the same as any of the provided skills.
-   */
-  isSkill(...skills: Mainskill[]): boolean {
-    return skills.some((skill) => this.name === skill.name);
-  }
-
-  /**
-   * Checks if the unit matches any of the provided units.
-   * @param units The units to compare against.
-   * @returns True if the current unit matches any of the provided units.
-   */
-  isUnit(...units: MainskillUnit[]): boolean {
-    return units.includes(this.unit);
-  }
-
-  /**
-   * Checks if the current skill is a modified version of the provided base skill.
-   * @param skill The base skill to compare against.
-   * @param modifierType Optional modifier type to check for.
-   * @returns True if the current skill is a modified version of the provided base skill.
-   */
-  isModifiedVersionOf(skill: Mainskill, modifierType?: ModifierType): boolean {
-    return this.isModified && (!modifierType || this.modifier.type === modifierType) && this.name.includes(skill.name);
-  }
-
-  /**
-   * Checks if the current skill is either the skill itself or a modified version of it.
-   * @param skill The base skill to compare against.
-   * @param modifierType Optional modifier type to check for.
-   * @returns True if the current skill is the same as the provided skill or a modified version of it.
-   */
-  isSameOrModifiedVersion(...skills: Mainskill[]): boolean {
-    return skills.some((skill) => this.name === skill.name || this.isModifiedVersionOf(skill));
-  }
-
-  toJSON() {
-    return { ...this.attributes };
+  // TEST: missing tests
+  isOrModifies(...skills: Mainskill[]): boolean {
+    return skills.some(
+      (skill) => this.name === skill.name || (this instanceof ModifiedMainskill && this.baseSkill.name === skill.name)
+    );
   }
 }
 
-export const createBaseSkill = (baseSkill: Omit<MainskillAttributes, 'modifier'>): Mainskill => {
-  return new Mainskill({
-    ...baseSkill,
-    modifier: { type: 'Base', critChance: 0 }
-  });
-};
+export abstract class ModifiedMainskill extends Mainskill {
+  public abstract readonly baseSkill: Mainskill;
+  public abstract readonly modifierName: string;
+
+  get name(): string {
+    return `${this.modifierName} (${this.baseSkill.name})`;
+  }
+}
 
 export const MAINSKILLS: Mainskill[] = [];
-export const METRONOME_SKILLS: Mainskill[] = [];
+
 export const INGREDIENT_SUPPORT_MAINSKILLS: Mainskill[] = [];

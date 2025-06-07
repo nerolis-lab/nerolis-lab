@@ -3,8 +3,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import type { Mainskill } from 'sleepapi-common'
-import { GENGAR, createBaseSkill, type PokemonInstanceExt } from 'sleepapi-common'
+import { GENGAR, Mainskill, type PokemonInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('MainskillButton', () => {
@@ -57,14 +56,16 @@ describe('MainskillButton', () => {
   })
 
   it('displays default values dynamically', async () => {
-    const skillWithLowMaxLevel: Mainskill = createBaseSkill({
-      name: 'Test skill',
-      amount: [1, 2, 3, 4],
-      unit: 'strength',
-      maxLevel: 4,
-      description: 'Test.',
-      RP: [880, 1251, 1726, 2383]
-    })
+    const skillWithLowMaxLevel: Mainskill = new (class extends Mainskill {
+      name = 'Test skill'
+      amount = (skillLevel: number) => skillLevel
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      description = (skillLevel: number) => `Test.`
+      RP = [880, 1251, 1726, 2383]
+      image = 'strength'
+      activations = {}
+    })(false, true)
+
     const changedPokemon: PokemonInstanceExt = {
       ...mockPokemon,
       pokemon: { ...mockPokemon.pokemon, skill: skillWithLowMaxLevel }

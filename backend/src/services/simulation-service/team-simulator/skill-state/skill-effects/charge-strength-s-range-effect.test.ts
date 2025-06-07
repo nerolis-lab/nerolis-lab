@@ -1,7 +1,7 @@
 import { ChargeStrengthSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-range-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { ChargeStrengthSRange } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('ChargeStrengthSRangeEffect', () => {
@@ -16,9 +16,10 @@ describe('ChargeStrengthSRangeEffect', () => {
   it('should activate skill and return correct skill activation', () => {
     const activation = chargeStrengthSRangeEffect.activate(skillState);
     expect(activation).toBeDefined();
-    expect(activation.skill).toBe(mainskill.CHARGE_STRENGTH_S_RANGE);
-    expect(activation.selfValue).toEqual({
-      regular: skillState.skillAmount(mainskill.CHARGE_STRENGTH_S_RANGE),
+    expect(activation.skill).toBe(ChargeStrengthSRange);
+    expect(activation.activations[0].unit).toBe('strength');
+    expect(activation.activations[0].self).toEqual({
+      regular: skillState.skillAmount(ChargeStrengthSRange.activations.strength),
       crit: 0
     });
   });

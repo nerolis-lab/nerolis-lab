@@ -1,7 +1,7 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { capitalize, mainskill, MAINSKILLS } from 'sleepapi-common';
+import { BerryBurst, capitalize, MAINSKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('SkillState', () => {
@@ -14,7 +14,7 @@ describe('SkillState', () => {
   });
 
   it('should initialize skill effects map', () => {
-    expect(skillState.skillEffects).toHaveLength(MAINSKILLS.length);
+    expect(skillState.skillEffects.size).toBe(MAINSKILLS.length);
   });
 
   it('should instantiate pityProcThreshold', () => {
@@ -22,7 +22,7 @@ describe('SkillState', () => {
   });
 
   it("should guarantee skill activation if we're past the pity threshold", () => {
-    skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = mainskill.BERRY_BURST;
+    skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
     skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'];
     const activation1 = skillState.attemptSkill();
     const activation2 = skillState.attemptSkill();
@@ -30,7 +30,7 @@ describe('SkillState', () => {
   });
 
   it('should activate skill if roll is successful', () => {
-    skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = mainskill.BERRY_BURST;
+    skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skillPercentage = 100;
     skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'] - 1; // ensure we dont hit pity threshold
     const activation1 = skillState.attemptSkill();
@@ -83,7 +83,7 @@ describe('SkillState', () => {
   });
 
   it('should activate skill correctly', () => {
-    const skill = mainskill.BERRY_BURST;
+    const skill = BerryBurst;
     const activation = skillState['activateSkill'](skill);
     expect(activation).toBeDefined();
     expect(skillState['skillProcs']).toBe(1);
@@ -102,9 +102,7 @@ describe('SkillState', () => {
   });
 
   it('should return correct skill level', () => {
-    expect(skillState.skillLevel(mockMemberState.member.pokemonWithIngredients.pokemon.skill)).toBe(
-      mockMemberState.member.settings.skillLevel
-    );
+    expect(skillState.skillLevel).toBe(mockMemberState.member.settings.skillLevel);
   });
 
   it('should return correct skill percentage', () => {
@@ -112,9 +110,9 @@ describe('SkillState', () => {
   });
 
   it('should return correct skill amount', () => {
-    const skill = mainskill.BERRY_BURST;
-    const skillAmount = skillState.skillAmount(skill);
-    expect(skillAmount).toBe(skill.amount(mockMemberState.member.settings.skillLevel));
+    const skill = BerryBurst;
+    const skillAmount = skillState.skillAmount(skill.activations.berries);
+    expect(skillAmount).toBe(skill.activations.berries.amount(mockMemberState.member.settings.skillLevel));
   });
 
   it('should initialize skillEffects map with all mainskills', () => {

@@ -20,11 +20,26 @@ describe('GET /pokemon', function () {
   });
 
   it('should respond with 200 and specific body', async function () {
+    const apiSafeSneasel = {
+      ...SNEASEL,
+      skill: {
+        ...SNEASEL.skill,
+        activations: {
+          chance: {
+            unit: 'chance',
+            amounts: Array.from({ length: SNEASEL.skill.maxLevel }, (_, i) =>
+              SNEASEL.skill.activations.chance.amount(i + 1)
+            )
+          }
+        },
+        description: SNEASEL.skill.description(1)
+      }
+    };
     await request(app)
       .get('/api/pokemon/sneasel')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, JSON.parse(JSON.stringify(SNEASEL)));
+      .expect(200, apiSafeSneasel);
   });
 
   it('should respond with 500 when pokemon is not found', async function () {

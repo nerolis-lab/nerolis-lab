@@ -1,17 +1,22 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill } from 'sleepapi-common';
+import { CookingPowerUpS } from 'sleepapi-common';
 
 export class CookingPowerUpSEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
-    const skill = mainskill.COOKING_POWER_UP_S;
-    const potAmount = skillState.skillAmount(skill);
+  activate(skillState: SkillState): SkillActivation {
+    const skill = CookingPowerUpS;
+    const potAmount = skillState.skillAmount(skill.activations.potSize);
     skillState.memberState.cookingState?.addPotSize(potAmount);
 
     return {
       skill,
-      selfValue: { regular: potAmount, crit: 0 }
+      activations: [
+        {
+          unit: 'pot size',
+          self: { regular: potAmount, crit: 0 }
+        }
+      ]
     };
   }
 }

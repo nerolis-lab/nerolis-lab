@@ -7,94 +7,10 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"MainskillUnit": {
-				"type": "string",
-				"enum": [
-					"energy",
-					"berries",
-					"ingredients",
-					"helps",
-					"dream shards",
-					"strength",
-					"pot size",
-					"chance",
-					"metronome",
-					"copy"
-				]
-			},
-			"ModifierType": {
-				"type": "string",
-				"enum": [
-					"Base",
-					"Stockpile",
-					"Moonlight",
-					"Disguise",
-					"Mimic",
-					"Transform",
-					"Lunar Blessing",
-					"Bad Dreams"
-				]
-			},
-			"Modifier": {
-				"properties": {
-					"type": {
-						"$ref": "#/components/schemas/ModifierType"
-					},
-					"critChance": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"type",
-					"critChance"
-				],
+			"Record_string._unit-string--amounts-number-Array__": {
+				"properties": {},
 				"type": "object",
-				"additionalProperties": false
-			},
-			"Mainskill": {
-				"properties": {
-					"modifier": {
-						"$ref": "#/components/schemas/Modifier"
-					},
-					"RP": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
-					"description": {
-						"type": "string"
-					},
-					"maxLevel": {
-						"type": "number",
-						"format": "double"
-					},
-					"unit": {
-						"$ref": "#/components/schemas/MainskillUnit"
-					},
-					"amount": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
-					"name": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"modifier",
-					"RP",
-					"description",
-					"maxLevel",
-					"unit",
-					"amount",
-					"name"
-				],
-				"type": "object"
+				"description": "Construct a type with a set of properties K of type T"
 			},
 			"Ingredient": {
 				"properties": {
@@ -265,94 +181,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pokemon": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"displayName": {
-						"type": "string"
-					},
-					"pokedexNumber": {
-						"type": "number",
-						"format": "double"
-					},
-					"specialty": {
-						"$ref": "#/components/schemas/PokemonSpecialty"
-					},
-					"frequency": {
-						"type": "number",
-						"format": "double"
-					},
-					"ingredientPercentage": {
-						"type": "number",
-						"format": "double"
-					},
-					"skillPercentage": {
-						"type": "number",
-						"format": "double"
-					},
-					"berry": {
-						"$ref": "#/components/schemas/Berry"
-					},
-					"genders": {
-						"$ref": "#/components/schemas/GenderRatio"
-					},
-					"carrySize": {
-						"type": "number",
-						"format": "double"
-					},
-					"previousEvolutions": {
-						"type": "number",
-						"format": "double"
-					},
-					"remainingEvolutions": {
-						"type": "number",
-						"format": "double"
-					},
-					"ingredient0": {
-						"items": {
-							"$ref": "#/components/schemas/IngredientSet"
-						},
-						"type": "array"
-					},
-					"ingredient30": {
-						"items": {
-							"$ref": "#/components/schemas/IngredientSet"
-						},
-						"type": "array"
-					},
-					"ingredient60": {
-						"items": {
-							"$ref": "#/components/schemas/IngredientSet"
-						},
-						"type": "array"
-					},
-					"skill": {
-						"$ref": "#/components/schemas/Mainskill"
-					}
-				},
-				"required": [
-					"name",
-					"displayName",
-					"pokedexNumber",
-					"specialty",
-					"frequency",
-					"ingredientPercentage",
-					"skillPercentage",
-					"berry",
-					"genders",
-					"carrySize",
-					"previousEvolutions",
-					"remainingEvolutions",
-					"ingredient0",
-					"ingredient30",
-					"ingredient60",
-					"skill"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"GetPokemonQueryParams": {
 				"properties": {
 					"cyan": {
@@ -447,7 +275,58 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Mainskill"
+									"properties": {
+										"RP": {
+											"items": {
+												"type": "number",
+												"format": "double"
+											},
+											"type": "array"
+										},
+										"image": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										},
+										"activationNames": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										},
+										"isModified": {
+											"type": "boolean"
+										},
+										"maxLevel": {
+											"type": "number",
+											"format": "double"
+										},
+										"units": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										},
+										"description": {
+											"type": "string"
+										},
+										"activations": {
+											"$ref": "#/components/schemas/Record_string._unit-string--amounts-number-Array__"
+										}
+									},
+									"required": [
+										"RP",
+										"image",
+										"name",
+										"activationNames",
+										"isModified",
+										"maxLevel",
+										"units",
+										"description",
+										"activations"
+									],
+									"type": "object"
 								}
 							}
 						}
@@ -628,7 +507,119 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Pokemon"
+									"properties": {
+										"ingredient60": {
+											"items": {
+												"$ref": "#/components/schemas/IngredientSet"
+											},
+											"type": "array"
+										},
+										"ingredient30": {
+											"items": {
+												"$ref": "#/components/schemas/IngredientSet"
+											},
+											"type": "array"
+										},
+										"ingredient0": {
+											"items": {
+												"$ref": "#/components/schemas/IngredientSet"
+											},
+											"type": "array"
+										},
+										"remainingEvolutions": {
+											"type": "number",
+											"format": "double"
+										},
+										"previousEvolutions": {
+											"type": "number",
+											"format": "double"
+										},
+										"carrySize": {
+											"type": "number",
+											"format": "double"
+										},
+										"genders": {
+											"$ref": "#/components/schemas/GenderRatio"
+										},
+										"berry": {
+											"$ref": "#/components/schemas/Berry"
+										},
+										"skillPercentage": {
+											"type": "number",
+											"format": "double"
+										},
+										"ingredientPercentage": {
+											"type": "number",
+											"format": "double"
+										},
+										"frequency": {
+											"type": "number",
+											"format": "double"
+										},
+										"specialty": {
+											"$ref": "#/components/schemas/PokemonSpecialty"
+										},
+										"pokedexNumber": {
+											"type": "number",
+											"format": "double"
+										},
+										"displayName": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										},
+										"skill": {
+											"properties": {
+												"RP": {
+													"items": {
+														"type": "number",
+														"format": "double"
+													},
+													"type": "array"
+												},
+												"image": {
+													"type": "string"
+												},
+												"name": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												},
+												"activations": {
+													"$ref": "#/components/schemas/Record_string._unit-string--amounts-number-Array__"
+												}
+											},
+											"required": [
+												"RP",
+												"image",
+												"name",
+												"description",
+												"activations"
+											],
+											"type": "object"
+										}
+									},
+									"required": [
+										"ingredient60",
+										"ingredient30",
+										"ingredient0",
+										"remainingEvolutions",
+										"previousEvolutions",
+										"carrySize",
+										"genders",
+										"berry",
+										"skillPercentage",
+										"ingredientPercentage",
+										"frequency",
+										"specialty",
+										"pokedexNumber",
+										"displayName",
+										"name",
+										"skill"
+									],
+									"type": "object"
 								}
 							}
 						}

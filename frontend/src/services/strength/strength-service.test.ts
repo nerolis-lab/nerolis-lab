@@ -1,6 +1,16 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import type { TimeWindowWeek } from '@/types/time/time-window'
-import { MathUtils, berry, berryPowerForLevel, mainskill, type BerrySet, type MemberSkillValue } from 'sleepapi-common'
+import {
+  berry,
+  BerryBurstDisguise,
+  berryPowerForLevel,
+  ChargeStrengthM,
+  DreamShardMagnetS,
+  EnergizingCheerS,
+  MathUtils,
+  type BerrySet,
+  type MemberSkillValue
+} from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('StrengthService', () => {
@@ -49,7 +59,7 @@ describe('StrengthService', () => {
     it('should return correct strength for Strength skill type', () => {
       const skillValueSpy = vi.spyOn(StrengthService, 'skillValue')
       StrengthService.skillStrength({
-        skill: mainskill.CHARGE_STRENGTH_M,
+        skillActivation: ChargeStrengthM.activations.strength,
         skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
         berries: mockBerrySet,
         favoredBerries: favoredBerries,
@@ -64,7 +74,7 @@ describe('StrengthService', () => {
       const berryStrengthSpy = vi.spyOn(StrengthService, 'berryStrength')
 
       StrengthService.skillStrength({
-        skill: mainskill.BERRY_BURST_DISGUISE,
+        skillActivation: BerryBurstDisguise.activations.berries,
         skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
         berries: mockBerrySet,
         favoredBerries: favoredBerries,
@@ -79,7 +89,7 @@ describe('StrengthService', () => {
     it('should calculate value for Strength skill type', () => {
       const amount = 10.7816238
       const value = StrengthService.skillValue({
-        skill: mainskill.CHARGE_STRENGTH_M,
+        skillActivation: ChargeStrengthM.activations.strength,
         amount,
         timeWindow: mockTimeWindow,
         areaBonus: 1
@@ -90,7 +100,7 @@ describe('StrengthService', () => {
     it('should calculate value for Dream Shards skill type', () => {
       const amount = 10.7816238
       const value = StrengthService.skillValue({
-        skill: mainskill.DREAM_SHARD_MAGNET_S,
+        skillActivation: DreamShardMagnetS.activations.dreamShards,
         amount,
         timeWindow: mockTimeWindow,
         areaBonus: 1
@@ -101,7 +111,7 @@ describe('StrengthService', () => {
     it('should calculate and round 1 decimal value for other skill types', () => {
       const amount = 10.7816238
       const value = StrengthService.skillValue({
-        skill: mainskill.ENERGIZING_CHEER_S,
+        skillActivation: EnergizingCheerS.activations.energy,
         amount,
         timeWindow: mockTimeWindow,
         areaBonus: 1

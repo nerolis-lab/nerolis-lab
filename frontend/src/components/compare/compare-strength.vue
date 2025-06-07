@@ -152,7 +152,7 @@
 
           <template #item.skillProcs="{ item }">
             <div class="flex-center">
-              <div v-if="!item.skill.isUnit('metronome', 'copy')">
+              <div v-if="!item.skill.is(Metronome, SkillCopy)">
                 <div class="flex-center">
                   <v-img :src="mainskillImage(item.pokemon)" height="24" width="24"></v-img>
                 </div>
@@ -193,13 +193,17 @@ import { useUserStore } from '@/stores/user-store'
 import type { DataTableHeader } from '@/types/vuetify/table/table-header'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
+  EnergyForEveryone,
   MAX_RECIPE_LEVEL,
   MathUtils,
+  Metronome,
+  SkillCopy,
   compactNumber,
   defaultZero,
   getMaxIngredientBonus,
-  mainskill,
+  getPokemon,
   recipeLevelBonus,
+  type MainskillUnit,
   type MemberProduction
 } from 'sleepapi-common'
 
@@ -215,7 +219,9 @@ export default defineComponent({
       userStore,
       pokemonStore,
       mainskillImage,
-      pokemonImage
+      pokemonImage,
+      Metronome,
+      SkillCopy
     }
   },
   data: () => ({
@@ -279,27 +285,32 @@ export default defineComponent({
             ? this.lowestIngredientPower(memberProduction)
             : 0
 
-        const skillStrength = this.showSkills
-          ? StrengthService.skillStrength({
-              skill: memberPokemon.skill,
-              skillValues: memberProduction.skillValue,
-              berries: memberProduction.produceFromSkill.berries,
-              favoredBerries,
-              timeWindow,
-              areaBonus
-            })
-          : 0
+        // TODO: currently this will only work for the first activation of the skill, skills with multiple units are not yet supported
+        const skillActivation = memberPokemon.skill.getFirstActivation()
+        const skillStrength =
+          this.showSkills && skillActivation
+            ? StrengthService.skillStrength({
+                skillActivation,
+                skillValues: memberProduction.skillValue,
+                berries: memberProduction.produceFromSkill.berries,
+                favoredBerries,
+                timeWindow,
+                areaBonus
+              })
+            : 0
 
-        const skillValue = this.showSkills
-          ? StrengthService.skillValue({
-              skill: memberPokemon.skill,
-              amount:
-                memberProduction.skillValue[memberPokemon.skill.unit].amountToSelf +
-                memberProduction.skillValue[memberPokemon.skill.unit].amountToTeam,
-              timeWindow,
-              areaBonus
-            })
-          : 0
+        const skillValue =
+          this.showSkills && skillActivation
+            ? StrengthService.skillValue({
+                skillActivation,
+                amount: (() => {
+                  const value = memberProduction.skillValue[skillActivation.unit as MainskillUnit]
+                  return value.amountToSelf + value.amountToTeam
+                })(),
+                timeWindow,
+                areaBonus
+              })
+            : 0
         const total = Math.floor(berryPower + ingredientPower + skillStrength)
 
         production.push({
@@ -317,7 +328,7 @@ export default defineComponent({
           skillStrength,
           skillValue,
           skillCompact: skillStrength > 0 ? compactNumber(skillStrength) : '',
-          energyPerMember: memberPokemon.skill.isUnit('energy') ? this.energyPerMember(memberProduction) : 0,
+          energyPerMember: memberPokemon.skill.hasUnit('energy') ? this.energyPerMember(memberProduction) : 0,
           total,
           totalCompact: compactNumber(total)
         })
@@ -346,11 +357,12 @@ export default defineComponent({
   },
   methods: {
     energyPerMember(member: MemberProduction): string | undefined {
-      const skill = member.pokemonWithIngredients.pokemon
+      const pokemon = getPokemon(member.pokemonWithIngredients.pokemon)
+      const skill = pokemon.skill
       const critAmount = member.advanced.skillCritValue
       const amountWithoutCrit = member.skillAmount - critAmount
 
-      const e4eSuffix = skill === mainskill.ENERGY_FOR_EVERYONE.name ? 'x5' : ''
+      const e4eSuffix = skill.isOrModifies(EnergyForEveryone) ? 'x5' : ''
       return `${MathUtils.round(amountWithoutCrit, 1)} ${e4eSuffix}${critAmount > 0 ? `+${MathUtils.round(critAmount, 1)}` : ''}`
     },
     lowestIngredientPower(memberProduction: MemberProduction) {

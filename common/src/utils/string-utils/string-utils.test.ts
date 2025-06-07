@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { capitalize, compactNumber, localizeNumber } from './string-utils';
 
 describe('capitalize', () => {
@@ -33,6 +33,8 @@ describe('compactNumber', () => {
 
 describe('localizeNumber function', () => {
   test('formats numbers correctly using default locale', () => {
+    vi.stubGlobal('navigator', { language: 'en-US' });
+
     expect(localizeNumber(1234)).toEqual('1,234'); // Assuming 'en-US' as the default locale
     expect(localizeNumber(1000000)).toEqual('1,000,000');
     expect(localizeNumber(42.9)).toEqual('43');

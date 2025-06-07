@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst-disguise-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { CarrySizeUtils, mainskill } from 'sleepapi-common';
+import { BerryBurstDisguise, CarrySizeUtils } from 'sleepapi-common';
 import { vimic } from 'vimic';
 
 describe('BerryBurstDisguiseEffect', () => {
@@ -21,8 +21,8 @@ describe('BerryBurstDisguiseEffect', () => {
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
     vimic(skillState, 'rng', () => 0.9);
-    mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST_DISGUISE) - 1] =
-      regularOtherAmount;
+    skillState.memberState.member.settings.skillLevel = 3;
+    vimic(BerryBurstDisguise.activations.berries, 'teamAmount', () => regularOtherAmount);
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstDisguiseEffect.activate(skillState);
@@ -49,11 +49,13 @@ describe('BerryBurstDisguiseEffect', () => {
       }
     );
     expect(result).toEqual({
-      skill: mainskill.BERRY_BURST_DISGUISE,
-      selfValue: {
-        regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length,
-        crit: 0
-      }
+      skill: BerryBurstDisguise,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -62,8 +64,8 @@ describe('BerryBurstDisguiseEffect', () => {
     const regularOtherAmount = 5;
     vimic(skillState, 'skillAmount', () => regularSelfAmount);
     vimic(skillState, 'rng', () => 0.01);
-    mainskill.DISGUISE_BERRY_BURST_TEAM_AMOUNT[skillState.skillLevel(mainskill.BERRY_BURST_DISGUISE) - 1] =
-      regularOtherAmount;
+    skillState.memberState.member.settings.skillLevel = 3;
+    vimic(BerryBurstDisguise.activations.berries, 'teamAmount', () => regularOtherAmount);
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
     const result = berryBurstDisguiseEffect.activate(skillState);
@@ -78,18 +80,20 @@ describe('BerryBurstDisguiseEffect', () => {
         berries: [
           {
             berry: memberState.berry,
-            amount: regularSelfAmount * mainskill.DISGUISE_CRIT_MULTIPLIER,
+            amount: regularSelfAmount * BerryBurstDisguise.activations.berries.critMultiplier,
             level: memberState.level
           }
         ]
       }
     );
     expect(result).toEqual({
-      skill: mainskill.BERRY_BURST_DISGUISE,
-      selfValue: {
-        regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length,
-        crit: 20
-      }
+      skill: BerryBurstDisguise,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: regularSelfAmount + regularOtherAmount * memberState.otherMembers.length, crit: 20 }
+        }
+      ]
     });
   });
 
@@ -119,11 +123,13 @@ describe('BerryBurstDisguiseEffect', () => {
       }
     );
     expect(result).toEqual({
-      skill: mainskill.BERRY_BURST_DISGUISE,
-      selfValue: {
-        regular: regularSelfAmount,
-        crit: 0
-      }
+      skill: BerryBurstDisguise,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: regularSelfAmount, crit: 0 }
+        }
+      ]
     });
   });
 });

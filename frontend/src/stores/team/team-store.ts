@@ -12,9 +12,13 @@ import type { TimeWindowDay } from '@/types/time/time-window'
 import { defineStore } from 'pinia'
 import {
   DOMAIN_VERSION,
+  EnergizingCheerS,
+  EnergyForEveryone,
+  ExtraHelpfulS,
+  HelperBoost,
   MAX_TEAM_SIZE,
+  Metronome,
   berry,
-  mainskill,
   subskill,
   uuid,
   type Berry,
@@ -453,13 +457,9 @@ export const useTeamStore = defineStore('team', {
             s.subskill.name.toLowerCase() === subskill.HELPING_BONUS.name.toLowerCase()) &&
           s.level <= member.level
       )
-      const supportSkill = [
-        mainskill.ENERGIZING_CHEER_S,
-        mainskill.ENERGY_FOR_EVERYONE,
-        mainskill.HELPER_BOOST,
-        mainskill.EXTRA_HELPFUL_S,
-        mainskill.METRONOME
-      ].some((s) => s.name.toLowerCase() === member.pokemon.skill.name.toLowerCase())
+      const supportSkill = [EnergizingCheerS, EnergyForEveryone, HelperBoost, ExtraHelpfulS, Metronome].some(
+        (s) => s.name.toLowerCase() === member.pokemon.skill.name.toLowerCase()
+      )
 
       return hbOrErb || supportSkill
     }

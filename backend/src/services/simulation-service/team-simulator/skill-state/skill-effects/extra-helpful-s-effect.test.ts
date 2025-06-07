@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { ExtraHelpfulS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -28,11 +28,13 @@ describe('ExtraHelpfulSEffect', () => {
     const result = extraHelpfulSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.EXTRA_HELPFUL_S,
-      teamValue: {
-        regular: regularAmount / memberState.teamSize,
-        crit: 0
-      }
+      skill: ExtraHelpfulS,
+      activations: [
+        {
+          unit: 'helps',
+          team: { regular: regularAmount / memberState.teamSize, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -46,11 +48,13 @@ describe('ExtraHelpfulSEffect', () => {
     const result = extraHelpfulSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.EXTRA_HELPFUL_S,
-      teamValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      skill: ExtraHelpfulS,
+      activations: [
+        {
+          unit: 'helps',
+          team: { regular: regularAmount, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -64,11 +68,13 @@ describe('ExtraHelpfulSEffect', () => {
     const result = extraHelpfulSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.EXTRA_HELPFUL_S,
-      teamValue: {
-        regular: 0,
-        crit: 0
-      }
+      skill: ExtraHelpfulS,
+      activations: [
+        {
+          unit: 'helps',
+          team: { regular: 0, crit: 0 }
+        }
+      ]
     });
   });
 });

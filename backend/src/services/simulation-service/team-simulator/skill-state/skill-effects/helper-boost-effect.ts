@@ -1,11 +1,11 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill, MAX_TEAM_SIZE, uniqueMembersWithBerry } from 'sleepapi-common';
+import { HelperBoost, MAX_TEAM_SIZE, uniqueMembersWithBerry } from 'sleepapi-common';
 
 export class HelperBoostEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
-    const skill = mainskill.HELPER_BOOST;
+  activate(skillState: SkillState): SkillActivation {
+    const skill = HelperBoost;
     const memberState = skillState.memberState;
     const unique =
       memberState.team.length > MAX_TEAM_SIZE // accounts for bogus members
@@ -15,15 +15,19 @@ export class HelperBoostEffect implements SkillEffect {
             members: memberState.team.map((member) => member.pokemonWithIngredients.pokemon)
           });
 
-    const uniqueHelps = mainskill.HELPER_BOOST_UNIQUE_BOOST_TABLE[unique - 1][skillState.skillLevel(skill) - 1];
-    const regularAmount = skillState.skillAmount(skill) + uniqueHelps;
+    const helps = HelperBoost.activations.helps.amount(skillState.skillLevel, unique);
 
     return {
       skill,
-      teamValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      activations: [
+        {
+          unit: 'helps',
+          team: {
+            regular: helps,
+            crit: 0
+          }
+        }
+      ]
     };
   }
 }

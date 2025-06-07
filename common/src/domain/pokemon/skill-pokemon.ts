@@ -47,24 +47,25 @@ import {
   WARMING_GINGER
 } from '../ingredient/ingredients';
 import {
-  BERRY_BURST,
-  BERRY_BURST_DISGUISE,
-  CHARGE_ENERGY_S_MOONLIGHT,
-  CHARGE_STRENGTH_M,
-  CHARGE_STRENGTH_S_RANGE,
-  CHARGE_STRENGTH_S_STOCKPILE,
-  COOKING_POWER_UP_S,
-  DREAM_SHARD_MAGNET_S,
-  DREAM_SHARD_MAGNET_S_RANGE,
-  ENERGIZING_CHEER_S,
-  ENERGY_FOR_EVERYONE,
-  ENERGY_FOR_EVERYONE_LUNAR_BLESSING,
-  EXTRA_HELPFUL_S,
-  HELPER_BOOST,
-  INGREDIENT_MAGNET_S,
-  METRONOME,
-  TASTY_CHANCE_S
+  BerryBurst,
+  BerryBurstDisguise,
+  ChargeEnergySMoonlight,
+  ChargeStrengthM,
+  ChargeStrengthSRange,
+  ChargeStrengthSStockpile,
+  CookingPowerUpS,
+  DreamShardMagnetS,
+  DreamShardMagnetSRange,
+  EnergizingCheerS,
+  EnergyForEveryone,
+  EnergyForEveryoneLunarBlessing,
+  ExtraHelpfulS,
+  HelperBoost,
+  IngredientMagnetS,
+  Metronome,
+  TastyChanceS
 } from '../mainskill/mainskills';
+import { IngredientDrawSSuperLuck } from '../mainskill/mainskills/ingredient-draw-s-super-luck';
 
 import type { Pokemon } from './pokemon';
 
@@ -91,7 +92,7 @@ export const PIKACHU_HOLIDAY: Pokemon = {
     { amount: 3, ingredient: FANCY_EGG },
     { amount: 3, ingredient: WARMING_GINGER }
   ],
-  skill: DREAM_SHARD_MAGNET_S
+  skill: DreamShardMagnetS
 };
 
 export const JIGGLYPUFF: Pokemon = {
@@ -117,7 +118,7 @@ export const JIGGLYPUFF: Pokemon = {
     { amount: 3, ingredient: PURE_OIL },
     { amount: 2, ingredient: SOOTHING_CACAO }
   ],
-  skill: ENERGY_FOR_EVERYONE
+  skill: EnergyForEveryone
 };
 
 export const WIGGLYTUFF: Pokemon = {
@@ -153,7 +154,7 @@ export const MEOWTH: Pokemon = {
     { amount: 4, ingredient: MOOMOO_MILK },
     { amount: 3, ingredient: BEAN_SAUSAGE }
   ],
-  skill: DREAM_SHARD_MAGNET_S
+  skill: DreamShardMagnetS
 };
 
 export const PERSIAN: Pokemon = {
@@ -190,7 +191,7 @@ export const PSYDUCK: Pokemon = {
     { amount: 6, ingredient: FANCY_APPLE },
     { amount: 5, ingredient: BEAN_SAUSAGE }
   ],
-  skill: CHARGE_STRENGTH_S_RANGE
+  skill: ChargeStrengthSRange
 };
 
 export const GOLDUCK: Pokemon = {
@@ -227,7 +228,7 @@ export const GROWLITHE: Pokemon = {
     { amount: 5, ingredient: BEAN_SAUSAGE },
     { amount: 5, ingredient: MOOMOO_MILK }
   ],
-  skill: EXTRA_HELPFUL_S
+  skill: ExtraHelpfulS
 };
 
 export const ARCANINE: Pokemon = {
@@ -264,7 +265,7 @@ export const SLOWPOKE: Pokemon = {
     { amount: 2, ingredient: SLOWPOKE_TAIL },
     { amount: 5, ingredient: SNOOZY_TOMATO }
   ],
-  skill: ENERGIZING_CHEER_S
+  skill: EnergizingCheerS
 };
 
 export const SLOWBRO: Pokemon = {
@@ -300,7 +301,7 @@ export const MAGNEMITE: Pokemon = {
     { amount: 4, ingredient: PURE_OIL },
     { amount: 3, ingredient: FIERY_HERB }
   ],
-  skill: COOKING_POWER_UP_S
+  skill: CookingPowerUpS
 };
 
 export const MAGNETON: Pokemon = {
@@ -337,7 +338,7 @@ export const EEVEE: Pokemon = {
     { amount: 2, ingredient: SOOTHING_CACAO },
     { amount: 3, ingredient: BEAN_SAUSAGE }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const VAPOREON: Pokemon = {
@@ -350,7 +351,7 @@ export const VAPOREON: Pokemon = {
   skillPercentage: 6.1,
   berry: ORAN,
   carrySize: 13,
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const JOLTEON: Pokemon = {
@@ -363,7 +364,7 @@ export const JOLTEON: Pokemon = {
   skillPercentage: 3.9,
   berry: GREPA,
   carrySize: 17,
-  skill: EXTRA_HELPFUL_S
+  skill: ExtraHelpfulS
 };
 
 export const FLAREON: Pokemon = {
@@ -376,7 +377,7 @@ export const FLAREON: Pokemon = {
   skillPercentage: 5.2,
   berry: LEPPA,
   carrySize: 14,
-  skill: COOKING_POWER_UP_S
+  skill: CookingPowerUpS
 };
 
 export const IGGLYBUFF: Pokemon = {
@@ -413,7 +414,7 @@ export const TOGEPI: Pokemon = {
     { amount: 4, ingredient: WARMING_GINGER },
     { amount: 3, ingredient: SOOTHING_CACAO }
   ],
-  skill: METRONOME
+  skill: Metronome
 };
 
 export const TOGETIC: Pokemon = {
@@ -449,7 +450,7 @@ export const MAREEP: Pokemon = {
     { amount: 4, ingredient: FIERY_HERB },
     { amount: 4, ingredient: FANCY_EGG }
   ],
-  skill: CHARGE_STRENGTH_M
+  skill: ChargeStrengthM
 };
 
 export const FLAAFFY: Pokemon = {
@@ -497,7 +498,7 @@ export const SUDOWOODO: Pokemon = {
     { amount: 4, ingredient: GREENGRASS_SOYBEANS },
     { amount: 2, ingredient: TASTY_MUSHROOM }
   ],
-  skill: CHARGE_STRENGTH_M
+  skill: ChargeStrengthM
 };
 
 export const ESPEON: Pokemon = {
@@ -510,7 +511,7 @@ export const ESPEON: Pokemon = {
   skillPercentage: 4.4,
   berry: MAGO,
   carrySize: 16,
-  skill: CHARGE_STRENGTH_M
+  skill: ChargeStrengthM
 };
 
 export const UMBREON: Pokemon = {
@@ -523,7 +524,33 @@ export const UMBREON: Pokemon = {
   skillPercentage: 10.1,
   berry: WIKI,
   carrySize: 14,
-  skill: CHARGE_ENERGY_S_MOONLIGHT
+  skill: ChargeEnergySMoonlight
+};
+
+export const MURKROW: Pokemon = {
+  name: 'MURKROW',
+  displayName: 'Murkrow',
+  pokedexNumber: 198,
+  specialty: 'skill',
+  frequency: toSeconds(1, 0, 0),
+  ingredientPercentage: 14.1,
+  skillPercentage: 6.2,
+  berry: WIKI,
+  genders: BALANCED_GENDER,
+  carrySize: 13,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: [{ amount: 1, ingredient: ROUSING_COFFEE }],
+  ingredient30: [
+    { amount: 2, ingredient: ROUSING_COFFEE },
+    { amount: 3, ingredient: GREENGRASS_SOYBEANS }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: ROUSING_COFFEE },
+    { amount: 6, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 4, ingredient: FIERY_HERB }
+  ],
+  skill: IngredientDrawSSuperLuck
 };
 
 export const SLOWKING: Pokemon = {
@@ -560,7 +587,7 @@ export const WOBBUFFET: Pokemon = {
     { amount: 2, ingredient: TASTY_MUSHROOM },
     { amount: 3, ingredient: PURE_OIL }
   ],
-  skill: ENERGIZING_CHEER_S
+  skill: EnergizingCheerS
 };
 
 export const HERACROSS: Pokemon = {
@@ -586,7 +613,7 @@ export const HERACROSS: Pokemon = {
     { amount: 2, ingredient: TASTY_MUSHROOM },
     { amount: 4, ingredient: BEAN_SAUSAGE }
   ],
-  skill: INGREDIENT_MAGNET_S
+  skill: IngredientMagnetS
 };
 
 export const RAIKOU: Pokemon = {
@@ -612,7 +639,7 @@ export const RAIKOU: Pokemon = {
     { amount: 3, ingredient: FIERY_HERB },
     { amount: 2, ingredient: LARGE_LEEK }
   ],
-  skill: HELPER_BOOST
+  skill: HelperBoost
 };
 
 export const ENTEI: Pokemon = {
@@ -638,7 +665,7 @@ export const ENTEI: Pokemon = {
     { amount: 4, ingredient: SNOOZY_TOMATO },
     { amount: 3, ingredient: TASTY_MUSHROOM }
   ],
-  skill: HELPER_BOOST
+  skill: HelperBoost
 };
 
 export const SUICUNE: Pokemon = {
@@ -664,7 +691,7 @@ export const SUICUNE: Pokemon = {
     { amount: 3, ingredient: PURE_OIL },
     { amount: 2, ingredient: GREENGRASS_CORN }
   ],
-  skill: HELPER_BOOST
+  skill: HelperBoost
 };
 
 export const RALTS: Pokemon = {
@@ -690,7 +717,7 @@ export const RALTS: Pokemon = {
     { amount: 2, ingredient: GREENGRASS_CORN },
     { amount: 2, ingredient: LARGE_LEEK }
   ],
-  skill: ENERGY_FOR_EVERYONE
+  skill: EnergyForEveryone
 };
 
 export const KIRLIA: Pokemon = {
@@ -738,7 +765,7 @@ export const SABLEYE: Pokemon = {
     { amount: 3, ingredient: TASTY_MUSHROOM },
     { amount: 3, ingredient: SOOTHING_CACAO }
   ],
-  skill: DREAM_SHARD_MAGNET_S_RANGE
+  skill: DreamShardMagnetSRange
 };
 
 export const GULPIN: Pokemon = {
@@ -764,7 +791,7 @@ export const GULPIN: Pokemon = {
     { amount: 2, ingredient: TASTY_MUSHROOM },
     { amount: 4, ingredient: HONEY }
   ],
-  skill: DREAM_SHARD_MAGNET_S_RANGE
+  skill: DreamShardMagnetSRange
 };
 
 export const SWALOT: Pokemon = {
@@ -823,7 +850,7 @@ export const DRIFLOON: Pokemon = {
     { amount: 4, ingredient: PURE_OIL },
     { amount: 4, ingredient: SOFT_POTATO }
   ],
-  skill: CHARGE_STRENGTH_S_STOCKPILE
+  skill: ChargeStrengthSStockpile
 };
 export const DRIFBLIM: Pokemon = {
   ...evolvesFrom(DRIFLOON),
@@ -834,6 +861,17 @@ export const DRIFBLIM: Pokemon = {
   ingredientPercentage: 12.8,
   skillPercentage: 6.1,
   carrySize: 17
+};
+
+export const HONCHKROW: Pokemon = {
+  ...evolvesFrom(MURKROW),
+  name: 'HONCHKROW',
+  displayName: 'Honchkrow',
+  pokedexNumber: 430,
+  frequency: toSeconds(0, 53, 20),
+  ingredientPercentage: 14.3,
+  skillPercentage: 6.7,
+  carrySize: 18
 };
 
 export const RIOLU: Pokemon = {
@@ -859,7 +897,7 @@ export const RIOLU: Pokemon = {
     { amount: 4, ingredient: SOFT_POTATO },
     { amount: 4, ingredient: FANCY_EGG }
   ],
-  skill: DREAM_SHARD_MAGNET_S
+  skill: DreamShardMagnetS
 };
 
 export const LUCARIO: Pokemon = {
@@ -905,7 +943,7 @@ export const LEAFEON: Pokemon = {
   skillPercentage: 5.9,
   berry: DURIN,
   carrySize: 13,
-  skill: ENERGIZING_CHEER_S
+  skill: EnergizingCheerS
 };
 
 export const GLACEON: Pokemon = {
@@ -918,7 +956,7 @@ export const GLACEON: Pokemon = {
   skillPercentage: 6.3,
   berry: RAWST,
   carrySize: 12,
-  skill: COOKING_POWER_UP_S
+  skill: CookingPowerUpS
 };
 
 export const GALLADE: Pokemon = {
@@ -932,7 +970,7 @@ export const GALLADE: Pokemon = {
   carrySize: 19,
   berry: CHERI,
   genders: MALE_ONLY,
-  skill: EXTRA_HELPFUL_S
+  skill: ExtraHelpfulS
 };
 
 export const CRESSELIA: Pokemon = {
@@ -958,7 +996,7 @@ export const CRESSELIA: Pokemon = {
     { amount: 3, ingredient: SOOTHING_CACAO },
     { amount: 4, ingredient: SNOOZY_TOMATO }
   ],
-  skill: ENERGY_FOR_EVERYONE_LUNAR_BLESSING
+  skill: EnergyForEveryoneLunarBlessing
 };
 
 export const RUFFLET: Pokemon = {
@@ -984,7 +1022,7 @@ export const RUFFLET: Pokemon = {
     { amount: 3, ingredient: GREENGRASS_CORN },
     { amount: 2, ingredient: ROUSING_COFFEE }
   ],
-  skill: BERRY_BURST
+  skill: BerryBurst
 };
 
 export const BRAVIARY: Pokemon = {
@@ -1008,7 +1046,7 @@ export const SYLVEON: Pokemon = {
   skillPercentage: 4.0,
   berry: PECHA,
   carrySize: 15,
-  skill: ENERGY_FOR_EVERYONE
+  skill: EnergyForEveryone
 };
 
 export const DEDENNE: Pokemon = {
@@ -1034,7 +1072,7 @@ export const DEDENNE: Pokemon = {
     { amount: 2, ingredient: SOOTHING_CACAO },
     { amount: 2, ingredient: GREENGRASS_CORN }
   ],
-  skill: TASTY_CHANCE_S
+  skill: TastyChanceS
 };
 
 export const MIMIKYU: Pokemon = {
@@ -1060,7 +1098,7 @@ export const MIMIKYU: Pokemon = {
     { amount: 2, ingredient: ROUSING_COFFEE },
     { amount: 2, ingredient: TASTY_MUSHROOM }
   ],
-  skill: BERRY_BURST_DISGUISE
+  skill: BerryBurstDisguise
 };
 
 export const PAWMI: Pokemon = {
@@ -1086,7 +1124,7 @@ export const PAWMI: Pokemon = {
     { amount: 6, ingredient: MOOMOO_MILK },
     { amount: 5, ingredient: FANCY_EGG }
   ],
-  skill: ENERGY_FOR_EVERYONE
+  skill: EnergyForEveryone
 };
 
 export const PAWMO: Pokemon = {
@@ -1134,6 +1172,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   SABLEYE,
   SWALOT,
   DRIFBLIM,
+  HONCHKROW,
   LUCARIO,
   MAGNEZONE,
   TOGEKISS,
@@ -1163,6 +1202,7 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   TOGETIC,
   MAREEP,
   FLAAFFY,
+  MURKROW,
   RALTS,
   KIRLIA,
   GULPIN,

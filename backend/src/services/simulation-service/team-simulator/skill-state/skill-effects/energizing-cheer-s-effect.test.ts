@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { EnergizingCheerS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -19,18 +19,23 @@ describe('EnergizingCheerSEffect', () => {
 
   it('should activate skill and return correct team value', () => {
     const regularEnergyAmount = 20;
-    const chanceToTargetLowest = mainskill.ENERGIZING_CHEER_TARGET_LOWEST_CHANCE;
+    const chanceToTargetLowest = EnergizingCheerS.activations.energy.targetLowestChance;
     vimic(skillState, 'skillAmount', () => regularEnergyAmount);
 
     const result = energizingCheerSEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.ENERGIZING_CHEER_S,
-      teamValue: {
-        regular: regularEnergyAmount,
-        crit: 0,
-        chanceToTargetLowestMember: chanceToTargetLowest
-      }
+      skill: EnergizingCheerS,
+      activations: [
+        {
+          unit: 'energy',
+          team: {
+            regular: regularEnergyAmount,
+            crit: 0,
+            chanceToTargetLowestMember: chanceToTargetLowest
+          }
+        }
+      ]
     });
   });
 
@@ -40,7 +45,7 @@ describe('EnergizingCheerSEffect', () => {
 
     const result = energizingCheerSEffect.activate(skillState);
 
-    expect(result.teamValue?.regular).toBe(regularEnergyAmount);
+    expect(result.activations[0].team?.regular).toBe(regularEnergyAmount);
   });
 
   it('should handle zero skill amount correctly', () => {
@@ -49,6 +54,6 @@ describe('EnergizingCheerSEffect', () => {
 
     const result = energizingCheerSEffect.activate(skillState);
 
-    expect(result.teamValue?.regular).toBe(regularEnergyAmount);
+    expect(result.activations[0].team?.regular).toBe(regularEnergyAmount);
   });
 });

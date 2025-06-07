@@ -36,15 +36,18 @@ import {
   CarrySizeUtils,
   curry,
   dessert,
+  EnergyForEveryone,
   flatToIngredientSet,
   getIngredient,
   getNature,
   getPokemon,
+  HelperBoost,
   ingredientSetToFloatFlat,
   limitSubSkillsToLevel,
-  mainskill,
   MAX_POT_SIZE,
-  salad
+  Metronome,
+  salad,
+  SkillCopy
 } from 'sleepapi-common';
 
 export default class ProductionController {
@@ -242,7 +245,8 @@ export default class ProductionController {
     }
 
     const rawUniqueHelperBoost = queryAsNumber(input.helperBoostUnique) ?? 0;
-    const canRollHelperBoost = pkmn.skill === mainskill.HELPER_BOOST || pkmn.skill === mainskill.METRONOME;
+    const canRollHelperBoost =
+      pkmn.skill.is(HelperBoost) || pkmn.skill.is(Metronome) || pkmn.skill.isOrModifies(SkillCopy);
     const uniqueHelperBoost = rawUniqueHelperBoost === 0 && canRollHelperBoost ? 1 : rawUniqueHelperBoost;
 
     const inputNrOfEvos = queryAsNumber(input.nrOfEvolutions);
@@ -260,12 +264,12 @@ export default class ProductionController {
       skillLevel: Math.min(queryAsNumber(input.skillLevel) ?? pkmn.skill.maxLevel, pkmn.skill.maxLevel),
       inventoryLimit,
       e4eProcs: queryAsNumber(input.e4eProcs) ?? 0,
-      e4eLevel: queryAsNumber(input.e4eLevel) ?? mainskill.ENERGY_FOR_EVERYONE.maxLevel,
+      e4eLevel: queryAsNumber(input.e4eLevel) ?? EnergyForEveryone.maxLevel,
       cheer: queryAsNumber(input.cheer) ?? 0,
       extraHelpful: queryAsNumber(input.extraHelpful) ?? 0,
       helperBoostProcs: queryAsNumber(input.helperBoostProcs) ?? 0,
       helperBoostUnique: uniqueHelperBoost,
-      helperBoostLevel: queryAsNumber(input.helperBoostLevel) ?? mainskill.HELPER_BOOST.maxLevel,
+      helperBoostLevel: queryAsNumber(input.helperBoostLevel) ?? HelperBoost.maxLevel,
       helpingBonus: queryAsNumber(input.helpingbonus) ?? 0,
       camp: queryAsBoolean(input.camp),
       erb: queryAsNumber(input.erb) ?? 0,

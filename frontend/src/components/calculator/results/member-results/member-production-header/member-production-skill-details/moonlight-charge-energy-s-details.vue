@@ -68,7 +68,7 @@ import { getIsland } from '@/services/utils/island/island-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils, compactNumber, mainskill } from 'sleepapi-common'
+import { ChargeEnergySMoonlight, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -88,12 +88,14 @@ export default defineComponent({
       return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
     },
     critValuePerProc() {
-      return mainskill.moonlightCritAmount(this.memberWithProduction.member.skillLevel)
+      const critAmounts = ChargeEnergySMoonlight.critAmounts
+      return critAmounts[this.memberWithProduction.member.skillLevel - 1]
     },
     selfSkillValue() {
+      const skillActivation = ChargeEnergySMoonlight.activations.energy
       return compactNumber(
         StrengthService.skillValue({
-          skill: this.memberWithProduction.member.pokemon.skill,
+          skillActivation,
           amount:
             this.memberWithProduction.production.skillAmount -
             this.memberWithProduction.production.advanced.skillCritValue,
@@ -103,9 +105,10 @@ export default defineComponent({
       )
     },
     teamSkillValue() {
+      const skillActivation = ChargeEnergySMoonlight.activations.energy
       return compactNumber(
         StrengthService.skillValue({
-          skill: this.memberWithProduction.member.pokemon.skill,
+          skillActivation,
           amount: this.memberWithProduction.production.advanced.skillCritValue,
           timeWindow: this.teamStore.timeWindow,
           areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)

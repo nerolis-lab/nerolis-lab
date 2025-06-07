@@ -3,7 +3,7 @@ import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-s
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import * as commonModule from 'sleepapi-common';
-import { CarrySizeUtils, mainskill, MAX_TEAM_SIZE } from 'sleepapi-common';
+import { CarrySizeUtils, EnergyForEveryoneLunarBlessing, MAX_TEAM_SIZE } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -24,7 +24,8 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const energyForEveryoneAmount = 15;
 
     const preExistingSkillProduce = mocks.produce();
-    const expectedSelfBerryAmount = mainskill.LUNAR_BLESSING_SELF_BERRIES[unique - 1][skillLevel - 1];
+    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(skillLevel, unique);
+    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(skillLevel, unique);
 
     const mockTeam = [mocks.teamMemberExt()];
     Object.defineProperty(memberState, 'team', {
@@ -35,7 +36,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
       set: vi.fn()
     });
 
-    vimic(skillState, 'skillLevel', () => skillLevel);
+    skillState.memberState.member.settings.skillLevel = skillLevel;
     vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
@@ -43,11 +44,17 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const result = effect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.ENERGY_FOR_EVERYONE_LUNAR_BLESSING,
-      teamValue: {
-        regular: energyForEveryoneAmount,
-        crit: 0
-      }
+      skill: EnergyForEveryoneLunarBlessing,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: expectedSelfBerryAmount + expectedTeamBerryAmount, crit: 0 }
+        },
+        {
+          unit: 'energy',
+          team: { regular: energyForEveryoneAmount, crit: 0 }
+        }
+      ]
     });
 
     expect(addToInventoryMock).toHaveBeenCalledTimes(1);
@@ -82,11 +89,11 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
 
     vimic(commonModule, 'uniqueMembersWithBerry', () => unique);
 
-    vimic(skillState, 'skillLevel', () => skillLevel);
+    skillState.memberState.member.settings.skillLevel = skillLevel;
     vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
-    const expectedSelfBerryAmount = mainskill.LUNAR_BLESSING_SELF_BERRIES[unique - 1][skillLevel - 1];
-    const expectedTeamBerryAmount = mainskill.LUNAR_BLESSING_TEAM_BERRIES[unique - 1][skillLevel - 1];
+    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(skillLevel, unique);
+    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(skillLevel, unique);
 
     const preExistingSkillProduce = mocks.produce();
     Object.defineProperty(memberState, 'skillProduce', {
@@ -99,11 +106,17 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const result = effect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.ENERGY_FOR_EVERYONE_LUNAR_BLESSING,
-      teamValue: {
-        regular: energyForEveryoneAmount,
-        crit: 0
-      }
+      skill: EnergyForEveryoneLunarBlessing,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: expectedSelfBerryAmount + expectedTeamBerryAmount, crit: 0 }
+        },
+        {
+          unit: 'energy',
+          team: { regular: energyForEveryoneAmount, crit: 0 }
+        }
+      ]
     });
 
     expect(addToInventoryMock).toHaveBeenCalledTimes(1);
@@ -141,13 +154,19 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
       get: () => largeTeam.slice(1).map((member) => mocks.memberState({ member }))
     });
 
-    vimic(skillState, 'skillLevel', () => skillLevel);
+    skillState.memberState.member.settings.skillLevel = skillLevel;
     vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
     // When team size exceeds MAX_TEAM_SIZE, unique is forced to 1
     const expectedUnique = 1;
-    const expectedSelfBerryAmount = mainskill.LUNAR_BLESSING_SELF_BERRIES[expectedUnique - 1][skillLevel - 1];
-    const expectedTeamBerryAmount = mainskill.LUNAR_BLESSING_TEAM_BERRIES[expectedUnique - 1][skillLevel - 1];
+    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(
+      skillLevel,
+      expectedUnique
+    );
+    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(
+      skillLevel,
+      expectedUnique
+    );
 
     const preExistingSkillProduce = mocks.produce();
     Object.defineProperty(memberState, 'skillProduce', {
@@ -160,11 +179,17 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const result = effect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.ENERGY_FOR_EVERYONE_LUNAR_BLESSING,
-      teamValue: {
-        regular: energyForEveryoneAmount,
-        crit: 0
-      }
+      skill: EnergyForEveryoneLunarBlessing,
+      activations: [
+        {
+          unit: 'berries',
+          self: { regular: expectedSelfBerryAmount + expectedTeamBerryAmount, crit: 0 }
+        },
+        {
+          unit: 'energy',
+          team: { regular: energyForEveryoneAmount, crit: 0 }
+        }
+      ]
     });
 
     expect(addToInventoryMock).toHaveBeenCalledTimes(1);

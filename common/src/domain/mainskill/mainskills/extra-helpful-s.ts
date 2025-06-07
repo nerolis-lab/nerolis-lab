@@ -1,16 +1,16 @@
-import { MAX_SKILL_LEVEL } from '../../constants';
-import type { Mainskill } from '../mainskill';
-import { INGREDIENT_SUPPORT_MAINSKILLS, MAINSKILLS, METRONOME_SKILLS, createBaseSkill } from '../mainskill';
+import { Mainskill } from '../mainskill';
 
-export const EXTRA_HELPFUL_S: Mainskill = createBaseSkill({
-  name: 'Extra Helpful S',
-  amount: [5, 6, 7, 8, 9, 10, 11],
-  unit: 'helps',
-  maxLevel: MAX_SKILL_LEVEL,
-  description: 'Instantly gets you x? the usual help from a helper Pokémon.',
-  RP: [880, 1251, 1726, 2383, 3290, 4546, 5843]
-});
-
-MAINSKILLS.push(EXTRA_HELPFUL_S);
-METRONOME_SKILLS.push(EXTRA_HELPFUL_S);
-INGREDIENT_SUPPORT_MAINSKILLS.push(EXTRA_HELPFUL_S);
+export const ExtraHelpfulS = new (class extends Mainskill {
+  name = 'Extra Helpful S';
+  RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];
+  helpAmounts = [5, 6, 7, 8, 9, 10, 11];
+  image = 'helps';
+  description = (skillLevel: number) =>
+    `Instantly gets you x${this.helpAmounts[skillLevel - 1]} the usual help from a helper Pokémon.`;
+  activations = {
+    helps: {
+      unit: 'helps',
+      amount: this.leveledAmount(this.helpAmounts)
+    }
+  };
+})(true);

@@ -4,7 +4,7 @@ import type { MemberProductionExt } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { ESPEON, MathUtils, compactNumber } from 'sleepapi-common'
+import { ChargeStrengthM, ESPEON, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember: MemberProductionExt = mocks.createMockMemberProductionExt({
@@ -59,7 +59,7 @@ describe('ChargeStrengthMDetails', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: ChargeStrengthM.activations.strength,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1

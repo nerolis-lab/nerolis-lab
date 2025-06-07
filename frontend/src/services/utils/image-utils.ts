@@ -2,8 +2,8 @@ import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useUserStore } from '@/stores/user-store'
 import {
   CYAN,
+  HelperBoost,
   LAPIS,
-  mainskill,
   POWER_PLANT,
   SNOWDROP,
   TAUPE,
@@ -13,12 +13,10 @@ import {
 } from 'sleepapi-common'
 
 export function mainskillImage(pokemon: Pokemon) {
-  if (pokemon.skill.isSameOrModifiedVersion(mainskill.HELPER_BOOST)) {
+  if (pokemon.skill.is(HelperBoost)) {
     return `/images/type/${pokemon.berry.type}.png`
   } else {
-    const maybeModifier =
-      pokemon.skill.modifier.type === 'Base' ? '' : `${pokemon.skill.modifier.type.replace(/ /g, '_').toLowerCase()}_`
-    return `/images/mainskill/${maybeModifier}${pokemon.skill.unit}.png`
+    return `/images/mainskill/${pokemon.skill.image}.png`
   }
 }
 

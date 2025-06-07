@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { EnergyForEveryone } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -24,11 +24,13 @@ describe('EnergyForEveryoneEffect', () => {
     const result = energyForEveryoneEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.ENERGY_FOR_EVERYONE,
-      teamValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      skill: EnergyForEveryone,
+      activations: [
+        {
+          unit: 'energy',
+          team: { regular: regularAmount, crit: 0 }
+        }
+      ]
     });
   });
 
@@ -39,11 +41,13 @@ describe('EnergyForEveryoneEffect', () => {
     const result = energyForEveryoneEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: mainskill.ENERGY_FOR_EVERYONE,
-      teamValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      skill: EnergyForEveryone,
+      activations: [
+        {
+          unit: 'energy',
+          team: { regular: regularAmount, crit: 0 }
+        }
+      ]
     });
   });
 });

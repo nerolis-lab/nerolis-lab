@@ -1,17 +1,19 @@
-import { createBaseSkill } from '../../../domain';
 import { BELUE } from '../../../domain/berry/berries';
 import { BALANCED_GENDER } from '../../../domain/gender/gender';
 import { SLOWPOKE_TAIL } from '../../../domain/ingredient/ingredients';
+import { Mainskill } from '../../../domain/mainskill/mainskill';
 import type { Pokemon } from '../../../domain/pokemon/pokemon';
 
-export const mockMainskill = createBaseSkill({
-  amount: [0],
-  description: 'mock skill',
-  maxLevel: 1,
-  name: 'mock skill',
-  RP: [0],
-  unit: 'metronome'
-});
+export const mockMainskill = new (class extends Mainskill {
+  name = 'mock skill';
+  description = (skillLevel: number) => `mock skill with level ${skillLevel}`;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  amount = (skillLevel: number) => 0;
+  RP = [0];
+  unit = 'mock unit';
+  activations = {};
+  image = 'mock';
+})(false, true);
 
 export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   return {

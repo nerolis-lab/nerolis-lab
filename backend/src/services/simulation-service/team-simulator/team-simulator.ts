@@ -17,8 +17,8 @@
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type {
-  SkillActivationValue,
-  TeamSkillActivation
+  SkillActivation,
+  TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
@@ -106,7 +106,7 @@ export class TeamSimulator {
         rng: this.rng
       });
       this.memberStates.push(memberState);
-      if (!member.pokemonWithIngredients.pokemon.skill.isSkill(commonMocks.mockMainskill)) {
+      if (!member.pokemonWithIngredients.pokemon.skill.is(commonMocks.mockMainskill)) {
         this.memberStatesWithoutFillers.push(memberState);
       }
     }
@@ -124,8 +124,8 @@ export class TeamSimulator {
       this.attemptCooking(minutesSinceWakeup);
 
       for (const member of this.memberStatesWithoutFillers) {
-        for (const teamSkillActivated of member.attemptDayHelp(minutesSinceWakeup)) {
-          this.activateTeamSkill(teamSkillActivated, member);
+        for (const skillActivation of member.attemptDayHelp(minutesSinceWakeup)) {
+          this.maybeActivateTeamSkill(skillActivation, member);
         }
       }
       for (const member of this.memberStatesWithoutFillers) {
@@ -183,7 +183,7 @@ export class TeamSimulator {
 
     for (const member of this.memberStatesWithoutFillers) {
       for (const proc of member.collectInventory()) {
-        this.activateTeamSkill(proc, member);
+        this.maybeActivateTeamSkill(proc, member);
       }
     }
 
@@ -224,23 +224,25 @@ export class TeamSimulator {
     }
   }
 
-  // TODO: we probably can't rely on isUnit much longer, now what Cresselia introduced mixed units. We need to TeamSkillActivation to include the unit and multiple units per activation
-  private activateTeamSkill(result: TeamSkillActivation, invoker: MemberState) {
-    if (result.teamValue) {
-      if (result.skill.isUnit('helps')) {
-        for (const mem of this.memberStatesWithoutFillers) {
-          mem.addHelps(result.teamValue, invoker);
-          invoker.addSkillValue(result.teamValue);
-        }
-      } else if (result.skill.isUnit('energy')) {
-        const recovered = this.recoverMemberEnergy(result.teamValue, invoker);
-        invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
-        invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
+  // TODO: won't change things now, but this should probably find all help/energy units rather than the first (which find does)
+  private maybeActivateTeamSkill(result: SkillActivation, invoker: MemberState) {
+    const helpsActivation = result.activations.find((activation) => activation.unit === 'helps' && activation.team);
+    if (helpsActivation?.team) {
+      for (const mem of this.memberStatesWithoutFillers) {
+        mem.addHelps(helpsActivation.team, invoker);
+        invoker.addSkillValue(helpsActivation.team);
       }
+    }
+
+    const energyActivation = result.activations.find((activation) => activation.unit === 'energy' && activation.team);
+    if (energyActivation?.team) {
+      const recovered = this.recoverMemberEnergy(energyActivation.team, invoker);
+      invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
+      invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
     }
   }
 
-  private recoverMemberEnergy(activation: SkillActivationValue, invoker: MemberState) {
+  private recoverMemberEnergy(activation: TeamActivationValue, invoker: MemberState) {
     const { chanceToTargetLowestMember, crit, regular } = activation;
     let valueRegular = 0;
     let valueCrit = 0;
@@ -286,7 +288,7 @@ export class TeamSimulator {
   private collectInventory() {
     for (const member of this.memberStatesWithoutFillers) {
       for (const activation of member.collectInventory()) {
-        this.activateTeamSkill(activation, member);
+        this.maybeActivateTeamSkill(activation, member);
       }
     }
   }

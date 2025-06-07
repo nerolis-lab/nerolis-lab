@@ -22,16 +22,17 @@ import { splitArrayByCondition } from '@src/utils/database-utils/array-utils.js'
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, Pokedex, SolveSettingsExt } from 'sleepapi-common';
 import {
+  CookingPowerUpS,
   ENTEI,
   INGREDIENT_SUPPORT_MAINSKILLS,
   OPTIMAL_POKEDEX,
   RAIKOU,
   SUICUNE,
+  TastyChanceS,
   commonMocks,
   flatToIngredientSet,
   ingredient,
   ingredientSetToIntFlat,
-  mainskill,
   prettifyIngredientDrop
 } from 'sleepapi-common';
 import { vimic } from 'vimic';
@@ -66,7 +67,7 @@ describe('solve-utils', () => {
       });
 
       const [supportMons] = splitArrayByCondition(OPTIMAL_POKEDEX, (pkmn) =>
-        INGREDIENT_SUPPORT_MAINSKILLS.some((skill) => skill.isSkill(pkmn.skill))
+        INGREDIENT_SUPPORT_MAINSKILLS.some((skill) => skill.is(pkmn.skill))
       );
 
       expect(teamSpy).toHaveBeenCalled();
@@ -630,12 +631,12 @@ Set {
       const nonSupportMembers = [
         mocks.teamMemberExt({
           pokemonWithIngredients: mocks.pokemonWithIngredients({
-            pokemon: commonMocks.mockPokemon({ skill: mainskill.TASTY_CHANCE_S })
+            pokemon: commonMocks.mockPokemon({ skill: TastyChanceS })
           })
         }),
         mocks.teamMemberExt({
           pokemonWithIngredients: mocks.pokemonWithIngredients({
-            pokemon: commonMocks.mockPokemon({ skill: mainskill.COOKING_POWER_UP_S })
+            pokemon: commonMocks.mockPokemon({ skill: CookingPowerUpS })
           })
         })
       ];

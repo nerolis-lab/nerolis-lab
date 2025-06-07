@@ -6,7 +6,7 @@ import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { ENTEI, MathUtils, compactNumber } from 'sleepapi-common'
+import { ENTEI, HelperBoost, MathUtils, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
@@ -71,7 +71,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: HelperBoost.activations.helps,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1

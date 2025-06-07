@@ -17,15 +17,15 @@ import {
 import { Optimal } from './optimal';
 
 describe('Optimal', () => {
-  const baseSkill: Mainskill = new Mainskill({
-    name: 'Charge Energy S',
-    amount: [12, 16, 21, 26, 33, 43],
-    unit: 'energy',
-    maxLevel: 6,
-    description: 'Restores ? Energy to the user.',
-    RP: [400, 569, 785, 1083, 1496, 2066],
-    modifier: { type: 'Base', critChance: 0 }
-  });
+  const baseSkill: Mainskill = new (class extends Mainskill {
+    name = 'Charge Energy S';
+    amount = (skillLevel: number) => [12, 16, 21, 26, 33, 43][skillLevel - 1];
+    unit = 'energy';
+    description = (skillLevel: number) => `Restores ${this.amount(skillLevel)} Energy to the user.`;
+    RP = [400, 569, 785, 1083, 1496, 2066];
+    activations = {};
+    image = 'energy';
+  })();
   const mockedPokemon: Pokemon = { ...mockPokemon(), skill: baseSkill };
 
   it('should use the ribbon provided', () => {

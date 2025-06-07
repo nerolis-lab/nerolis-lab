@@ -1,8 +1,8 @@
 import type { GetPokemonQueryParams } from '@src/routes/pokemon-router/pokemon-router.js';
+import { convertActivationsToApiFormat } from '@src/utils/mainskill-utils/mainskill-utils.js';
 import { getPokemonNames } from '@src/utils/pokemon-utils/pokemon-utils.js';
 import { queryAsBoolean } from '@src/utils/routing/routing-utils.js';
 import tsoa from '@tsoa/runtime';
-import type { Pokemon } from 'sleepapi-common';
 import { getPokemon } from 'sleepapi-common';
 const { Controller, Path, Get, Queries, Route, Tags } = tsoa;
 
@@ -10,8 +10,18 @@ const { Controller, Path, Get, Queries, Route, Tags } = tsoa;
 @Tags('pokemon')
 export default class PokemonController extends Controller {
   @Get('/{name}')
-  public async getPokemonWithName(@Path() name: string): Promise<Pokemon> {
-    return getPokemon(name);
+  public async getPokemonWithName(@Path() name: string) {
+    const pokemon = getPokemon(name);
+    const skillActivations = convertActivationsToApiFormat(pokemon.skill.activations, pokemon.skill.maxLevel);
+
+    return {
+      ...pokemon,
+      skill: {
+        ...pokemon.skill,
+        activations: skillActivations,
+        description: pokemon.skill.description(1)
+      }
+    };
   }
 
   @Get('/')

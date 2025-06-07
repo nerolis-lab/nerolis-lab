@@ -3,7 +3,7 @@ import { StrengthService } from '@/services/strength/strength-service'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { MathUtils, UMBREON, compactNumber } from 'sleepapi-common'
+import { ChargeEnergySMoonlight, MathUtils, UMBREON, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
@@ -41,7 +41,7 @@ describe('Moonlight details', () => {
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/mainskill/moonlight_energy.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/energy.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -59,7 +59,7 @@ describe('Moonlight details', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation: ChargeEnergySMoonlight.activations.energy,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1

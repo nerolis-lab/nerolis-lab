@@ -31,7 +31,16 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               5843,
             ],
-            "amount": [
+            "activations": {
+              "strength": {
+                "amount": [Function],
+                "unit": "strength",
+              },
+            },
+            "description": [Function],
+            "image": "strength",
+            "name": "Charge Strength M",
+            "strengthAmounts": [
               880,
               1251,
               1726,
@@ -40,14 +49,6 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               6409,
             ],
-            "description": "Increases Snorlax's Strength by ?.",
-            "maxLevel": 7,
-            "modifier": {
-              "critChance": 0,
-              "type": "Base",
-            },
-            "name": "Charge Strength M",
-            "unit": "strength",
           },
         },
         {
@@ -64,7 +65,16 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               5843,
             ],
-            "amount": [
+            "activations": {
+              "strength": {
+                "amount": [Function],
+                "unit": "strength",
+              },
+            },
+            "description": [Function],
+            "image": "strength",
+            "name": "Charge Strength M",
+            "strengthAmounts": [
               880,
               1251,
               1726,
@@ -73,14 +83,6 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               6409,
             ],
-            "description": "Increases Snorlax's Strength by ?.",
-            "maxLevel": 7,
-            "modifier": {
-              "critChance": 0,
-              "type": "Base",
-            },
-            "name": "Charge Strength M",
-            "unit": "strength",
           },
         },
         {
@@ -97,7 +99,16 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               5843,
             ],
-            "amount": [
+            "activations": {
+              "strength": {
+                "amount": [Function],
+                "unit": "strength",
+              },
+            },
+            "description": [Function],
+            "image": "strength",
+            "name": "Charge Strength M",
+            "strengthAmounts": [
               880,
               1251,
               1726,
@@ -106,14 +117,6 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               6409,
             ],
-            "description": "Increases Snorlax's Strength by ?.",
-            "maxLevel": 7,
-            "modifier": {
-              "critChance": 0,
-              "type": "Base",
-            },
-            "name": "Charge Strength M",
-            "unit": "strength",
           },
         },
       ]
@@ -190,7 +193,16 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 5843,
               ],
-              "amount": [
+              "activations": {
+                "strength": {
+                  "amount": [Function],
+                  "unit": "strength",
+                },
+              },
+              "description": [Function],
+              "image": "strength",
+              "name": "Charge Strength M",
+              "strengthAmounts": [
                 880,
                 1251,
                 1726,
@@ -199,14 +211,6 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 6409,
               ],
-              "description": "Increases Snorlax's Strength by ?.",
-              "maxLevel": 7,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
-              "name": "Charge Strength M",
-              "unit": "strength",
             },
           },
           {
@@ -223,7 +227,16 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 5843,
               ],
-              "amount": [
+              "activations": {
+                "strength": {
+                  "amount": [Function],
+                  "unit": "strength",
+                },
+              },
+              "description": [Function],
+              "image": "strength",
+              "name": "Charge Strength M",
+              "strengthAmounts": [
                 880,
                 1251,
                 1726,
@@ -232,14 +245,6 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 6409,
               ],
-              "description": "Increases Snorlax's Strength by ?.",
-              "maxLevel": 7,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
-              "name": "Charge Strength M",
-              "unit": "strength",
             },
           },
           {
@@ -256,7 +261,16 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 5843,
               ],
-              "amount": [
+              "activations": {
+                "strength": {
+                  "amount": [Function],
+                  "unit": "strength",
+                },
+              },
+              "description": [Function],
+              "image": "strength",
+              "name": "Charge Strength M",
+              "strengthAmounts": [
                 880,
                 1251,
                 1726,
@@ -265,14 +279,6 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 6409,
               ],
-              "description": "Increases Snorlax's Strength by ?.",
-              "maxLevel": 7,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
-              "name": "Charge Strength M",
-              "unit": "strength",
             },
           },
         ],

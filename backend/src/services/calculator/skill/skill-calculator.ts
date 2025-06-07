@@ -1,7 +1,5 @@
 import type { PokemonProduce } from '@src/domain/combination/produce.js';
-import { ProgrammingError } from '@src/domain/error/programming/programming-error.js';
 import type { PokemonSpecialty, SkillActivation } from 'sleepapi-common';
-import { mainskill } from 'sleepapi-common';
 import { createSkillEvent } from './activation/skill-activation.js';
 
 export function calculateSkillProcs(nrOfHelps: number, skillPercentage: number) {
@@ -113,16 +111,4 @@ export function calculateHelpsToProcSchedule(params: {
     nrOfHelpsToActivate: Math.floor(nrOfDayHelps)
   });
   return activationsWithAdjustedAmount;
-}
-
-// TODO: remove in Sleep API 2.0
-export function calculateHelperBoostHelpsFromUnique(unique: number, level: number) {
-  if (unique < 1 || unique > 5 || level < 1 || level > 6) {
-    throw new ProgrammingError('Invalid input: unique should be between 1 and 5, level should be between 1 and 6');
-  }
-
-  const rowIndex = unique - 1;
-  const colIndex = level - 1;
-
-  return mainskill.HELPER_BOOST_UNIQUE_BOOST_TABLE[rowIndex][colIndex];
 }

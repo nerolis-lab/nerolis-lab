@@ -1,19 +1,24 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill } from 'sleepapi-common';
+import { ExtraHelpfulS } from 'sleepapi-common';
 
 export class ExtraHelpfulSEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
-    const skill = mainskill.EXTRA_HELPFUL_S;
-    const regularAmount = skillState.skillAmount(skill) / skillState.memberState.teamSize;
+  activate(skillState: SkillState): SkillActivation {
+    const skill = ExtraHelpfulS;
+    const regularAmount = skillState.skillAmount(skill.activations.helps) / skillState.memberState.teamSize;
 
     return {
       skill,
-      teamValue: {
-        regular: regularAmount,
-        crit: 0
-      }
+      activations: [
+        {
+          unit: 'helps',
+          team: {
+            regular: regularAmount,
+            crit: 0
+          }
+        }
+      ]
     };
   }
 }

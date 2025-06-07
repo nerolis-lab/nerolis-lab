@@ -2,7 +2,7 @@ import { CookingState } from '@src/services/simulation-service/team-simulator/co
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { mainskill } from 'sleepapi-common';
+import { CookingPowerUpS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -23,8 +23,9 @@ describe('CookingPowerUpSEffect', () => {
     const result = cookingPowerUpSEffect.activate(skillState);
 
     expect(addPotMock).toHaveBeenCalledWith(potAmount);
-    expect(result.skill).toBe(mainskill.COOKING_POWER_UP_S);
-    expect(result.selfValue).toEqual({ regular: potAmount, crit: 0 });
+    expect(result.skill).toBe(CookingPowerUpS);
+    expect(result.activations[0].unit).toBe('pot size');
+    expect(result.activations[0].self).toEqual({ regular: potAmount, crit: 0 });
   });
 
   it('should handle missing cookingState gracefully', () => {
@@ -33,7 +34,8 @@ describe('CookingPowerUpSEffect', () => {
 
     const result = cookingPowerUpSEffect.activate(skillState);
 
-    expect(result.skill).toBe(mainskill.COOKING_POWER_UP_S);
-    expect(result.selfValue).toEqual({ regular: 0, crit: 0 });
+    expect(result.skill).toBe(CookingPowerUpS);
+    expect(result.activations[0].unit).toBe('pot size');
+    expect(result.activations[0].self).toEqual({ regular: 0, crit: 0 });
   });
 });

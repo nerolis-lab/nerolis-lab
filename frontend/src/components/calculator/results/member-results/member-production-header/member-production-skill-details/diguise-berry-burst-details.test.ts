@@ -3,7 +3,7 @@ import { StrengthService } from '@/services/strength/strength-service'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { MIMIKYU, MathUtils, berry, compactNumber, mainskill } from 'sleepapi-common'
+import { BerryBurstDisguise, MIMIKYU, MathUtils, berry, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
@@ -51,7 +51,7 @@ describe('MemberProductionSkill', () => {
   it('renders the correct skill image', () => {
     const skillImage = wrapper.find('img')
     expect(skillImage.exists()).toBe(true)
-    expect(skillImage.attributes('src')).toContain('/images/mainskill/disguise_berries.png')
+    expect(skillImage.attributes('src')).toContain('/images/mainskill/berries.png')
   })
 
   it('displays the correct number of skill procs', () => {
@@ -64,14 +64,15 @@ describe('MemberProductionSkill', () => {
   it('displays the correct skill value per proc', () => {
     const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
     expect(skillValuePerProc.text()).toBe(
-      `x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}-${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel) * mainskill.DISGUISE_CRIT_MULTIPLIER}`
+      `x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}-${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel) * BerryBurstDisguise.activations.berries.critMultiplier!}`
     )
   })
 
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center')
+    const skillActivation = mockMember.member.pokemon.skill.getFirstActivation()!
     const expectedValue = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation,
       amount: mockMember.production.produceFromSkill.berries.reduce(
         (sum, cur) => (sum + cur.berry.name === MIMIKYU.berry.name ? cur.amount : 0),
         0
@@ -80,7 +81,7 @@ describe('MemberProductionSkill', () => {
       areaBonus: 1
     })
     const expectedTeam = StrengthService.skillValue({
-      skill: mockMember.member.pokemon.skill,
+      skillActivation,
       amount: mockMember.production.produceFromSkill.berries.reduce(
         (sum, cur) => (sum + cur.berry.name !== MIMIKYU.berry.name ? cur.amount : 0),
         0

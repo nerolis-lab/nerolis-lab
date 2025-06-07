@@ -3,8 +3,8 @@ import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/en
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { calculateDistribution } from '@src/services/simulation-service/team-simulator/member-state/member-state-utils.js';
 import type {
-  SkillActivationValue,
-  TeamSkillActivation
+  SkillActivation,
+  TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
@@ -364,11 +364,11 @@ export class MemberState {
     this.wastedEnergy += wasted;
   }
 
-  public addSkillValue(skillValue: SkillActivationValue) {
+  public addSkillValue(skillValue: TeamActivationValue) {
     this.skillState.addValue(skillValue);
   }
 
-  public addHelps(helps: SkillActivationValue, invoker: MemberState) {
+  public addHelps(helps: TeamActivationValue, invoker: MemberState) {
     const { regular, crit } = helps;
     const totalHelps = regular + crit;
 
@@ -425,7 +425,7 @@ export class MemberState {
     }
   }
 
-  public attemptDayHelp(currentMinutesSincePeriodStart: number): TeamSkillActivation[] {
+  public attemptDayHelp(currentMinutesSincePeriodStart: number): SkillActivation[] {
     const frequency = this.calculateFrequencyWithEnergy();
     this.countFrequencyAndEnergyIntervals('day', frequency);
 
@@ -530,9 +530,9 @@ export class MemberState {
    *
    * @returns team skill value for any skill procs that were stored in the inventory
    */
-  public collectInventory(): TeamSkillActivation[] {
+  public collectInventory(): SkillActivation[] {
     let currentMorningProcs = 0;
-    const bankedSkillProcs: TeamSkillActivation[] = [];
+    const bankedSkillProcs: SkillActivation[] = [];
     for (let help = 0; help < this.currentNightHelps; help++) {
       if (currentMorningProcs > 1) {
         break;

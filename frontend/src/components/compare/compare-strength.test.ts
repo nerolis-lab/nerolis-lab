@@ -85,7 +85,7 @@ describe('CompareStrength', () => {
 
     // Check skill value
     const skillValue = StrengthService.skillStrength({
-      skill: member.pokemon.skill,
+      skillActivation: member.pokemon.skill.getFirstActivation()!,
       skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       favoredBerries: [],
@@ -151,7 +151,7 @@ describe('CompareStrength', () => {
 
     // Check skill value
     const skillValue = StrengthService.skillStrength({
-      skill: member.pokemon.skill,
+      skillActivation: member.pokemon.skill.getFirstActivation()!,
       skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       favoredBerries: comparisonStore.currentTeam?.favoredBerries ?? [],

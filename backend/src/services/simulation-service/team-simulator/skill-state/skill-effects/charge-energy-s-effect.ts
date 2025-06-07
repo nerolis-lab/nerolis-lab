@@ -1,16 +1,18 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { mainskill } from 'sleepapi-common';
+import { ChargeEnergyS } from 'sleepapi-common';
 
 export class ChargeEnergySEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
+  activate(skillState: SkillState): SkillActivation {
     const memberState = skillState.memberState;
-    const skill = mainskill.CHARGE_ENERGY_S;
-    const defaultEnergyAmount = skillState.skillAmount(skill);
+    const skill = ChargeEnergyS;
+    const defaultEnergyAmount = skillState.skillAmount(skill.activations.energy);
 
     const clampedEnergyRecovered =
-      memberState.energy + defaultEnergyAmount > 150 ? 150 - memberState.energy : skillState.skillAmount(skill);
+      memberState.energy + defaultEnergyAmount > 150
+        ? 150 - memberState.energy
+        : skillState.skillAmount(skill.activations.energy);
 
     // Apply changes to member state
     memberState.currentEnergy += clampedEnergyRecovered;
@@ -19,7 +21,12 @@ export class ChargeEnergySEffect implements SkillEffect {
 
     return {
       skill,
-      selfValue: { regular: clampedEnergyRecovered, crit: 0 }
+      activations: [
+        {
+          unit: 'energy',
+          self: { regular: clampedEnergyRecovered, crit: 0 }
+        }
+      ]
     };
   }
 }

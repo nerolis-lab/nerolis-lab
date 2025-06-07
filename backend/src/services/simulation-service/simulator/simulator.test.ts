@@ -5,7 +5,16 @@ import type { SummaryEvent } from '@src/domain/event/events/summary-event/summar
 import { simulation } from '@src/services/simulation-service/simulator/simulator.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { berry, CarrySizeUtils, emptyBerryInventory, ingredient, mainskill, nature } from 'sleepapi-common';
+import {
+  berry,
+  CarrySizeUtils,
+  ChargeEnergyS,
+  emptyBerryInventory,
+  ExtraHelpfulS,
+  HelperBoost,
+  ingredient,
+  nature
+} from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('simulator', () => {
@@ -24,7 +33,7 @@ describe('simulator', () => {
           description: 'Extra helpful',
           time: TimeUtils.parseTime('08:00'),
           skillActivation: {
-            skill: mainskill.EXTRA_HELPFUL_S,
+            skill: ExtraHelpfulS,
             adjustedAmount: 1,
             fractionOfProc: 1,
             nrOfHelpsToActivate: 0,
@@ -37,7 +46,7 @@ describe('simulator', () => {
           description: 'Helper boost',
           time: TimeUtils.parseTime('08:00'),
           skillActivation: {
-            skill: mainskill.HELPER_BOOST,
+            skill: HelperBoost,
             adjustedAmount: 1,
             fractionOfProc: 1,
             nrOfHelpsToActivate: 0,
@@ -45,9 +54,7 @@ describe('simulator', () => {
           }
         })
       ],
-      skillActivations: [
-        { skill: mainskill.CHARGE_ENERGY_S, adjustedAmount: 1, fractionOfProc: 1, nrOfHelpsToActivate: 0 }
-      ],
+      skillActivations: [{ skill: ChargeEnergyS, adjustedAmount: 1, fractionOfProc: 1, nrOfHelpsToActivate: 0 }],
       sneakySnackBerries: emptyBerryInventory(),
       mealTimes: [],
       maxEnergyRecovery: 100
@@ -101,7 +108,14 @@ describe('simulator', () => {
                 1496,
                 2066,
               ],
-              "amount": [
+              "activations": {
+                "energy": {
+                  "amount": [Function],
+                  "unit": "energy",
+                },
+              },
+              "description": [Function],
+              "energyAmounts": [
                 12,
                 16.2,
                 21.2,
@@ -109,14 +123,8 @@ describe('simulator', () => {
                 33.6,
                 43.4,
               ],
-              "description": "Restores ? Energy to the user.",
-              "maxLevel": 6,
-              "modifier": {
-                "critChance": 0,
-                "type": "Base",
-              },
+              "image": "energy",
               "name": "Charge Energy S",
-              "unit": "energy",
             },
           },
         ],

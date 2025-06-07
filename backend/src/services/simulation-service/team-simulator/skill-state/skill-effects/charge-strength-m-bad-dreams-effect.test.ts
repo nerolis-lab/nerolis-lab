@@ -2,7 +2,7 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { ChargeStrengthMBadDreamsEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m-bad-dreams-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { berry, mainskill } from 'sleepapi-common';
+import { berry, ChargeStrengthMBadDreams } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -43,13 +43,16 @@ describe('ChargeStrengthMBadDreamsEffect', () => {
 
     const activation = chargeStrengthMBadDreamsEffect.activate(skillState);
 
-    expect(activation.skill).toBe(mainskill.CHARGE_STRENGTH_M_BAD_DREAMS);
-    expect(activation.selfValue?.regular).toBe(regularAmount);
-    expect(activation.selfValue?.crit).toBe(0);
+    expect(activation.skill).toBe(ChargeStrengthMBadDreams);
+    expect(activation.activations[0].unit).toBe('strength');
+    expect(activation.activations[0].self?.regular).toBe(regularAmount);
+    expect(activation.activations[0].self?.crit).toBe(0);
 
     // Verify degradeEnergy was called for each other member
     mockOtherMembers.forEach((member) => {
-      expect(member.degradeEnergy).toHaveBeenCalledWith(mainskill.BAD_DREAMS_ENERGY_REDUCTION);
+      expect(member.degradeEnergy).toHaveBeenCalledWith(
+        ChargeStrengthMBadDreams.activations.strength.teamEnergyReduction
+      );
     });
 
     // Verify addSkillValue was called with the correct values
@@ -80,7 +83,9 @@ describe('ChargeStrengthMBadDreamsEffect', () => {
 
     // The member with Wiki berry should not have energy degraded
     expect(mockOtherMembers[0].degradeEnergy).not.toHaveBeenCalled();
-    expect(mockOtherMembers[1].degradeEnergy).toHaveBeenCalledWith(mainskill.BAD_DREAMS_ENERGY_REDUCTION);
+    expect(mockOtherMembers[1].degradeEnergy).toHaveBeenCalledWith(
+      ChargeStrengthMBadDreams.activations.strength.teamEnergyReduction
+    );
 
     // Verify addSkillValue was called with the correct values (only one member's energy was degraded)
     expect(addSkillValueMock).toHaveBeenCalledWith({

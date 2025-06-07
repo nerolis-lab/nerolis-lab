@@ -1,18 +1,18 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { TeamSkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import {
   emptyIngredientInventoryFloat,
   flatToIngredientSet,
   ingredient,
-  ingredientSetToFloatFlat,
-  mainskill
+  IngredientMagnetS,
+  ingredientSetToFloatFlat
 } from 'sleepapi-common';
 
 export class IngredientMagnetSEffect implements SkillEffect {
-  activate(skillState: SkillState): TeamSkillActivation {
-    const skill = mainskill.INGREDIENT_MAGNET_S;
-    const ingMagnetAmount = skillState.skillAmount(skill);
+  activate(skillState: SkillState): SkillActivation {
+    const skill = IngredientMagnetS;
+    const ingMagnetAmount = skillState.skillAmount(skill.activations.ingredients);
     const magnetIngredients = emptyIngredientInventoryFloat().fill(
       ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS
     );
@@ -28,7 +28,12 @@ export class IngredientMagnetSEffect implements SkillEffect {
 
     return {
       skill,
-      selfValue: { regular: ingMagnetAmount, crit: 0 }
+      activations: [
+        {
+          unit: 'ingredients',
+          self: { regular: ingMagnetAmount, crit: 0 }
+        }
+      ]
     };
   }
 }
