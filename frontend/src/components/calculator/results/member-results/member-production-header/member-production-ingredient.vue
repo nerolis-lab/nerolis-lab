@@ -29,7 +29,7 @@ import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils, ingredient, type IngredientSet } from 'sleepapi-common'
+import { MathUtils, type IngredientSet } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -49,7 +49,7 @@ export default defineComponent({
     memberWithIngredientImages() {
       return {
         ...this.memberWithProduction,
-        ingredients: this.prepareMemberIngredients(this.memberWithProduction.production.produceTotal.ingredients)
+        ingredients: this.prepareMemberIngredients(this.memberWithProduction.production.produceWithoutSkill.ingredients)
       }
     },
     timeWindowFactor() {
@@ -58,26 +58,10 @@ export default defineComponent({
   },
   methods: {
     prepareMemberIngredients(ingredients: IngredientSet[]) {
-      if (ingredients.length >= ingredient.INGREDIENTS.length) {
-        const ingMagnetAmount = ingredients.reduce(
-          (min, cur) => (cur.amount < min ? cur.amount : min),
-          ingredients[0].amount
-        )
-
-        const nonIngMagnetIngs = ingredients.filter((ing) => ing.amount !== ingMagnetAmount)
-
-        const result = nonIngMagnetIngs.map(({ amount, ingredient }) => ({
-          amount: MathUtils.round(amount - ingMagnetAmount, 1),
-          image: `/images/ingredient/${ingredient.name.toLowerCase()}.png`
-        }))
-
-        return result
-      } else {
-        return ingredients.map(({ amount, ingredient }) => ({
-          amount: MathUtils.round(amount, 1),
-          image: `/images/ingredient/${ingredient.name.toLowerCase()}.png`
-        }))
-      }
+      return ingredients.map(({ amount, ingredient }) => ({
+        amount: MathUtils.round(amount, 1),
+        image: `/images/ingredient/${ingredient.name.toLowerCase()}.png`
+      }))
     }
   }
 })
