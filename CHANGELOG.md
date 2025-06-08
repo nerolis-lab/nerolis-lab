@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.8.0...v2.9.0) (2025-06-08)
+
+
+### Features
+
+* **mainskill:** refactor mainskill and add Honchkrow ([7c77ff3](https://github.com/nerolis-lab/nerolis-lab/commit/7c77ff34b20ac7d982a319615172bcf8de0da16b))
+
 # [2.8.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.7.4...v2.8.0) (2025-06-07)
 
 
