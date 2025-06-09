@@ -181,10 +181,13 @@ export default defineComponent({
     return { teamStore, userStore }
   },
   data(this: { preSelectedPokemonInstance: PokemonInstanceExt }) {
+    const { pokemon: _, ...pokemonInstanceWithoutPokemon } = this.preSelectedPokemonInstance
+
     return {
       pokemonInstance: {
-        // used to avoid updating the original instance
-        ...JSON.parse(JSON.stringify(this.preSelectedPokemonInstance)),
+        // Deep clone all properties except pokemon to avoid mutating the original
+        ...JSON.parse(JSON.stringify(pokemonInstanceWithoutPokemon)),
+        // Get fresh pokemon instance with classes intact
         pokemon: getPokemon(this.preSelectedPokemonInstance.pokemon.name)
       } as PokemonInstanceExt
     }
