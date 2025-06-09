@@ -1,3 +1,10 @@
+## [2.10.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.10.0...v2.10.1) (2025-06-09)
+
+
+### Bug Fixes
+
+* avoids JSON parsing Pokemon in pokemon-input ([4c4d881](https://github.com/nerolis-lab/nerolis-lab/commit/4c4d8812f1ab4b4244a516df3382e76272def452))
+
 # [2.10.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.9.0...v2.10.0) (2025-06-09)
 
 
