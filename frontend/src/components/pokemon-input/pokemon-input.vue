@@ -37,8 +37,14 @@
     </v-row>
 
     <v-row dense>
-      <v-col class="flex-center">
+      <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
+        <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
+      </v-col>
+      <v-col :cols="viewportWidth >= pokemonNameBreakpoint ? 4 : 12" class="flex-center">
         <PokemonName :pokemon-instance="pokemonInstance" @update-name="updateName" />
+      </v-col>
+      <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
+        <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
       </v-col>
     </v-row>
 
@@ -48,22 +54,17 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-2">
-      <v-col cols="4" class="flex-center">
+    <v-row dense class="mt-2" v-if="viewportWidth < pokemonNameBreakpoint">
+      <v-col cols="12" class="level-ribbon-container">
         <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
-      </v-col>
-      <v-col cols="6" class="flex-center">
-        <CarrySizeButton :pokemon-instance="pokemonInstance" @update-carry="updateCarry" />
-      </v-col>
-      <v-col cols="2" class="flex-center">
-        <RibbonButton :ribbon="pokemonInstance.ribbon" @update-ribbon="updateRibbon" />
+        <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
       </v-col>
     </v-row>
 
     <!-- Ingredients -->
-    <v-row no-gutters class="mt-2">
+    <v-row no-gutters class="mt-2 validatable-section" :class="{ 'invalid-section': !ingsAreValid }">
       <v-col cols="4" class="mr-2 flex-center">
-        <v-card rounded="pill" class="w-100 h-50 text-center responsive-text flex-center">Ingredients</v-card>
+        <span class="w-100 h-50 text-center flex-center ingredients-label">Ingredients</span>
       </v-col>
       <v-col class="flex-center">
         <IngredientButton
@@ -85,6 +86,12 @@
           :pokemon-instance="pokemonInstance"
           @update-ingredient="updateIngredient"
         />
+      </v-col>
+      <v-col cols="12" v-if="!ingsAreValid">
+        <div class="text-center text-error-3 text-caption">
+          Level 30 ingredient must unlock before level 60 ingredient.
+          <!-- Cannot unlock level 60 ingredient without level 30 ingredient. -->
+        </div>
       </v-col>
     </v-row>
 
@@ -118,7 +125,14 @@
         >
       </v-col>
       <v-col cols="6">
-        <v-btn id="saveButton" class="w-100 responsive-text" size="large" rounded="lg" color="primary" @click="save"
+        <v-btn
+          id="saveButton"
+          :disabled="!isValid"
+          class="w-100 responsive-text"
+          size="large"
+          rounded="lg"
+          color="primary"
+          @click="save"
           >Save</v-btn
         >
       </v-col>
@@ -127,7 +141,7 @@
 </template>
 
 <script lang="ts">
-import CarrySizeButton from '@/components/pokemon-input/carry-size-button.vue'
+import CarrySizeDisplay from '@/components/pokemon-input/carry-size-display.vue'
 import GenderButton from '@/components/pokemon-input/gender-button.vue'
 import IngredientButton from '@/components/pokemon-input/ingredient-button.vue'
 import LevelButton from '@/components/pokemon-input/level-button.vue'
@@ -137,6 +151,7 @@ import NatureButton from '@/components/pokemon-input/nature-button.vue'
 import PokemonButton from '@/components/pokemon-input/pokemon-button.vue'
 import PokemonName from '@/components/pokemon-input/pokemon-name.vue'
 import RibbonButton from '@/components/pokemon-input/ribbon-button.vue'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import {
@@ -161,7 +176,7 @@ export default defineComponent({
     PokemonButton,
     PokemonName,
     LevelButton,
-    CarrySizeButton,
+    CarrySizeDisplay,
     IngredientButton,
     MainskillButton,
     NatureButton,
@@ -178,7 +193,11 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const userStore = useUserStore()
-    return { teamStore, userStore }
+    const { viewportWidth } = useBreakpoint()
+
+    const pokemonNameBreakpoint = 600
+
+    return { teamStore, userStore, viewportWidth, pokemonNameBreakpoint }
   },
   data(this: { preSelectedPokemonInstance: PokemonInstanceExt }) {
     const { pokemon: _, ...pokemonInstanceWithoutPokemon } = this.preSelectedPokemonInstance
@@ -201,6 +220,19 @@ export default defineComponent({
           this.pokemonInstance.rp = rp.calc()
         })
       }
+    }
+  },
+  computed: {
+    isValid() {
+      return this.ingsAreValid
+    },
+    ingsAreValid() {
+      // if the second ingredient is locked, the third cannot be selected
+      // this refers to mythicals' locked ingredients, not level-based locking
+      return !(
+        this.pokemonInstance.ingredients[1].ingredient.name == 'Locked' &&
+        this.pokemonInstance.ingredients[2].ingredient.name !== 'Locked'
+      )
     }
   },
   methods: {
@@ -270,6 +302,27 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.validatable-section {
+  border: 2px solid transparent; //to keep the section from moving when the error border is added
+}
+
+.invalid-section {
+  background-color: rgba($error-3, 0.2);
+  border: 2px solid $error-3;
+}
+
+.level-ribbon-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ingredients-label {
+  background-color: $surface;
+  border-radius: 64px;
+}
+
 .nowrap {
   display: flex;
   align-items: center;

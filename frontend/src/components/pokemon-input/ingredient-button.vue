@@ -4,7 +4,12 @@
       <v-icon left class="mr-1">mdi-lock</v-icon>
       Lv.{{ ingredientLevel }}
     </template>
-    <v-speed-dial v-model="fab" location="top center" transition="fade-transition">
+    <v-speed-dial
+      :content-class="{ 'wide-speed-dial': otherIngredientOptions.length > 2 }"
+      v-model="fab"
+      location="top center"
+      transition="fade-transition"
+    >
       <template #activator="{ props }">
         <v-badge :content="ingredientSet?.amount" color="accent" text-color="background" offset-x="5" offset-y="5">
           <v-btn icon :class="{ 'disabled-image-btn': locked }" :disabled="disabled" v-bind="props">
@@ -65,7 +70,7 @@ export default {
       return this.pokemonLevel < this.ingredientLevel
     },
     disabled() {
-      return !this.ingredientSet || this.ingredientLevel < 30 // first ingredient is always disabled
+      return !this.ingredientSet || this.otherIngredientOptions.length === 0
     },
     pokemon() {
       return this.pokemonInstance.pokemon
@@ -74,16 +79,19 @@ export default {
       return this.pokemonInstance.level
     },
     otherIngredientOptions() {
-      if (this.ingredientLevel < 30) {
-        return []
-      } else if (this.ingredientLevel < 60) {
-        return this.pokemonInstance.pokemon.ingredient30.filter(
-          (ing) => ing.ingredient.name.toLowerCase() !== this.ingredientSet?.ingredient.name.toLowerCase()
-        )
-      } else
-        return this.pokemonInstance.pokemon.ingredient60.filter(
-          (ing) => ing.ingredient.name.toLowerCase() !== this.ingredientSet?.ingredient.name.toLowerCase()
-        )
+      let ingredientOptions: IngredientSet[] = []
+
+      if (this.ingredientLevel == 0) {
+        ingredientOptions = this.pokemonInstance.pokemon.ingredient0
+      } else if (this.ingredientLevel == 30) {
+        ingredientOptions = this.pokemonInstance.pokemon.ingredient30
+      } else {
+        ingredientOptions = this.pokemonInstance.pokemon.ingredient60
+      }
+
+      return ingredientOptions.filter(
+        (ing) => ing.ingredient.name.toLowerCase() !== this.ingredientSet?.ingredient.name.toLowerCase()
+      )
     }
   },
   beforeUnmount() {
@@ -122,3 +130,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.wide-speed-dial.v-overlay__content.v-speed-dial__content {
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  width: 176px;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 16px;
+  background-color: rgba($background, 0.8);
+
+  button {
+    transition-delay: 0s;
+  }
+}
+</style>

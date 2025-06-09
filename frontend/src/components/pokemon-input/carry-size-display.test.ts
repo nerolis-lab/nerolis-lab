@@ -1,4 +1,4 @@
-import CarrySizeButton from '@/components/pokemon-input/carry-size-button.vue'
+import CarrySizeButton from '@/components/pokemon-input/carry-size-display.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { commonMocks, subskill, type Pokemon, type PokemonInstanceExt, type SubskillInstanceExt } from 'sleepapi-common'
