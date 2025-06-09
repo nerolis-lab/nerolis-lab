@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.9.0...v2.10.0) (2025-06-09)
+
+
+### Features
+
+* **Super Luck:** adds frontend UI for super luck ([70cdc78](https://github.com/nerolis-lab/nerolis-lab/commit/70cdc78887c95fa53f6ffa5937c9e8c17f7c23fa))
+
 # [2.9.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.8.0...v2.9.0) (2025-06-08)
 
 
