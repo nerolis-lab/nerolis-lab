@@ -236,7 +236,7 @@
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "sleep-api",
+		"title": "Sleep API",
 		"version": "2.7.1",
 		"contact": {}
 	},
