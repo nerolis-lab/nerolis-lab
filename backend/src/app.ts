@@ -75,7 +75,8 @@ async function main() {
   app.use(morgan('tiny')); // TODO: replace morgan with custom HTTP log
   app.use(cors(options));
   app.use('/api', BaseRouter.router);
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { customSiteTitle: "Neroli's Lab" }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  app.use('/docs', swaggerUi.serve as any, swaggerUi.setup(swaggerDocument) as any);
   app.use(express.static(joinPath('assets', import.meta.url)));
   app.get('/', (req: Request, res: Response) => {
     try {
