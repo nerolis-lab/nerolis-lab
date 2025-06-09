@@ -1,29 +1,39 @@
 <template>
-  <v-menu id="ribbon-menu" v-model="menu" :close-on-content-click="true" offset-y>
-    <template #activator="{ props }">
-      <v-btn v-bind="props" icon elevation="0" size="40" color="transparent">
-        <v-avatar size="40">
-          <v-img :src="ribbonImage" :class="ribbon === 0 ? 'greyScale' : ''"></v-img>
-        </v-avatar>
-      </v-btn>
-    </template>
+  <div class="ribbon-carry-container">
+    <v-menu id="ribbon-menu" v-model="menu" :close-on-content-click="true" offset-y>
+      <template #activator="{ props }">
+        <v-btn v-bind="props" icon elevation="0" size="40" color="surface">
+          <v-avatar size="40">
+            <v-img :src="ribbonImage" :class="pokemonInstance.ribbon === 0 ? 'greyScale' : ''"></v-img>
+          </v-avatar>
+        </v-btn>
+      </template>
 
-    <v-card>
-      <v-list density="compact">
-        <v-list-item v-for="value in ribbonLevels" :key="value" @click="updateRibbon(value)">
-          <v-list-item-title>{{ ribbonLabel(value) }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-card>
-  </v-menu>
+      <v-card>
+        <v-list density="compact">
+          <v-list-item v-for="value in ribbonLevels" :key="value" @click="updateRibbon(value)">
+            <v-list-item-title>{{ ribbonLabel(value) }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-card>
+    </v-menu>
+    <CarrySizeDisplay :pokemon-instance="pokemonInstance" />
+  </div>
 </template>
 
 <script lang="ts">
+import type { PokemonInstanceExt } from 'sleepapi-common'
+import type { PropType } from 'vue'
+import CarrySizeDisplay from './carry-size-display.vue'
+
 export default {
   name: 'RibbonButton',
+  components: {
+    CarrySizeDisplay
+  },
   props: {
-    ribbon: {
-      type: Number,
+    pokemonInstance: {
+      type: Object as PropType<PokemonInstanceExt>,
       required: true
     }
   },
@@ -34,7 +44,7 @@ export default {
   }),
   computed: {
     ribbonImage() {
-      const ribbonLevel = Math.max(this.ribbon, 1)
+      const ribbonLevel = Math.max(this.pokemonInstance.ribbon, 1)
       return `/images/misc/ribbon${ribbonLevel}.png`
     }
   },
@@ -54,8 +64,14 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .greyScale {
   filter: grayscale(100);
+}
+
+.ribbon-carry-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>

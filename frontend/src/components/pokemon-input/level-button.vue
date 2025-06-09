@@ -4,7 +4,7 @@
       <v-text-field
         v-bind="props"
         v-model.number="customValue"
-        class="w-100 text-center"
+        class="w-100 text-center level-input"
         label="Level"
         density="compact"
         persistent-hint
@@ -86,7 +86,11 @@ export default {
 </script>
 
 <style lang="scss">
-.text-center input {
+.level-input {
+  flex-basis: 85px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  max-width: 150px;
   text-align: center;
 }
 </style>

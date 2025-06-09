@@ -36,7 +36,9 @@
     <!-- Carry limit -->
     <v-col class="text-no-wrap">
       <span>
-        Carry limit: <span class="font-weight-medium">{{ carrySize }}</span>
+        Carry limit: <span class="font-weight-medium">{{ carrySize }}</span
+        >&nbsp; <span>(+{{ carryGainFromSubskills }} from subskills)</span>&nbsp;
+        <span>(+{{ carryGainFromRibbon }} from ribbon <v-img class="ribbon-image" :src="ribbonImage"></v-img>)</span>
       </span>
     </v-col>
 
@@ -91,7 +93,7 @@ import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils } from 'sleepapi-common'
+import { calculateRibbonCarrySize, calculateSubskillCarrySize, limitSubSkillsToLevel, MathUtils } from 'sleepapi-common'
 import { computed, defineComponent, ref, type PropType } from 'vue'
 
 export default defineComponent({
@@ -151,6 +153,21 @@ export default defineComponent({
       averageNightEnergy,
       isMobile
     }
+  },
+  computed: {
+    carryGainFromSubskills() {
+      const subskills = new Set(this.pokemonProduction.member.subskills.map((s) => s.subskill.name))
+      const activeSubskills = limitSubSkillsToLevel(subskills, this.pokemonProduction.member.level)
+
+      return calculateSubskillCarrySize(activeSubskills)
+    },
+    carryGainFromRibbon() {
+      return calculateRibbonCarrySize(this.pokemonProduction.member.ribbon)
+    },
+    ribbonImage() {
+      const ribbonLevel = Math.max(this.pokemonProduction.member.ribbon, 1)
+      return `/images/misc/ribbon${ribbonLevel}.png`
+    }
   }
 })
 </script>
@@ -162,5 +179,12 @@ export default defineComponent({
 
 .night-card {
   background-color: rgba($night, 0.2);
+}
+
+.ribbon-image {
+  height: 24px;
+  width: 24px;
+  display: inline-flex;
+  vertical-align: text-bottom;
 }
 </style>
