@@ -1,4 +1,5 @@
 import RibbonButton from '@/components/pokemon-input/ribbon-button.vue'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
@@ -10,7 +11,7 @@ describe('RibbonButton', () => {
   beforeEach(() => {
     wrapper = mount(RibbonButton, {
       props: {
-        ribbon: 0
+        pokemonInstance: mocks.createMockPokemon({ ribbon: 0 })
       }
     })
   })
@@ -22,7 +23,7 @@ describe('RibbonButton', () => {
   })
 
   it('renders correctly with given props', async () => {
-    await wrapper.setProps({ ribbon: 2 })
+    await wrapper.setProps({ pokemonInstance: mocks.createMockPokemon({ ribbon: 2 }) })
     await nextTick()
 
     expect(wrapper.exists()).toBe(true)
@@ -32,7 +33,7 @@ describe('RibbonButton', () => {
   })
 
   it('renders the correct badge label based on the ribbon prop', async () => {
-    await wrapper.setProps({ ribbon: 0 })
+    await wrapper.setProps({ pokemonInstance: mocks.createMockPokemon({ ribbon: 0 }) })
     await nextTick()
 
     const img = wrapper.find('img')
@@ -42,7 +43,7 @@ describe('RibbonButton', () => {
   })
 
   it('opens the menu when button is clicked', async () => {
-    await wrapper.setProps({ ribbon: 1 })
+    await wrapper.setProps({ pokemonInstance: mocks.createMockPokemon({ ribbon: 1 }) })
     await nextTick()
 
     const button = wrapper.find('button')
@@ -54,7 +55,7 @@ describe('RibbonButton', () => {
   })
 
   it('updates ribbon and emits update-ribbon event when list item is clicked', async () => {
-    await wrapper.setProps({ ribbon: 1 })
+    await wrapper.setProps({ pokemonInstance: mocks.createMockPokemon({ ribbon: 1 }) })
     await nextTick()
 
     const button = wrapper.find('button')

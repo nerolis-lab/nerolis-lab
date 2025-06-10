@@ -46,7 +46,7 @@ describe('PokemonInput', () => {
     expect(wrapper.findComponent({ name: 'PokemonButton' }).exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'PokemonName' }).exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'LevelButton' }).exists()).toBe(true)
-    expect(wrapper.findComponent({ name: 'CarrySizeButton' }).exists()).toBe(true)
+    expect(wrapper.findComponent({ name: 'CarrySizeDisplay' }).exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'IngredientButton' }).exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'MainskillButton' }).exists()).toBe(true)
     expect(wrapper.findComponent({ name: 'NatureButton' }).exists()).toBe(true)
