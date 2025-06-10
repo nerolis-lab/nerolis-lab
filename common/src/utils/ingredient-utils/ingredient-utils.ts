@@ -5,7 +5,11 @@ import type {
   IngredientSet,
   IngredientSetSimple
 } from '../../domain/ingredient/ingredient';
-import { INGREDIENTS, TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
+import {
+  INGREDIENTS_WITH_LOCKED,
+  LOCKED_INGREDIENT,
+  TOTAL_NUMBER_OF_INGREDIENTS
+} from '../../domain/ingredient/ingredients';
 import type { Pokemon } from '../../domain/pokemon/pokemon';
 import '../../prototype/logger';
 import { emptyIngredientInventoryFloat, emptyIngredientInventoryInt } from '../flat-utils';
@@ -13,7 +17,7 @@ import { MathUtils } from '../math-utils/math-utils';
 import { capitalize } from '../string-utils/string-utils';
 
 export const ING_ID_LOOKUP: Record<string, number> = Object.fromEntries(
-  INGREDIENTS.map((ingredient, index) => [ingredient.name, index])
+  INGREDIENTS_WITH_LOCKED.map((ingredient, index) => [ingredient.name, index])
 );
 
 const ingredientBonusCache = new Map<string, number>();
@@ -21,17 +25,17 @@ const ingredientBonusCache = new Map<string, number>();
 export function getIngredientName(ingredient: Ingredient): string;
 export function getIngredientName(ingredient: number): string;
 export function getIngredientName(ingredient: Ingredient | number): string {
-  return typeof ingredient === 'number' ? INGREDIENTS[ingredient].name : ingredient.name;
+  return typeof ingredient === 'number' ? INGREDIENTS_WITH_LOCKED[ingredient].name : ingredient.name;
 }
 
 export function getIngredient(name: string): Ingredient;
 export function getIngredient(index: number): Ingredient;
 export function getIngredient(param: string | number): Ingredient {
   const index = typeof param === 'number' ? param : ING_ID_LOOKUP[param];
-  return INGREDIENTS[index];
+  return INGREDIENTS_WITH_LOCKED[index];
 }
 export function getIngredientNames(): string[] {
-  return INGREDIENTS.map((ing) => ing.name);
+  return INGREDIENTS_WITH_LOCKED.map((ing) => ing.name);
 }
 
 export function emptyIngredientInventory(): IngredientSet[] {
@@ -78,7 +82,7 @@ export function flatToIngredientSet(
   for (let i = 0, len = ingredients.length; i < len; ++i) {
     const amount = ingredients[i];
     if (amount > 0) {
-      result[result.length] = { ingredient: INGREDIENTS[i], amount };
+      result[result.length] = { ingredient: INGREDIENTS_WITH_LOCKED[i], amount };
     }
   }
   return result;
@@ -95,7 +99,7 @@ export function simplifyIngredientSet(ingredients: IngredientSet[]): IngredientS
 export function unsimplifyIngredientSet(ingredients: IngredientSetSimple[]): IngredientSet[] {
   const result: IngredientSet[] = [];
   for (const { name, amount } of ingredients) {
-    result.push({ ingredient: INGREDIENTS.find((ing) => ing.name === name), amount });
+    result.push({ ingredient: INGREDIENTS_WITH_LOCKED.find((ing) => ing.name === name), amount });
   }
   return result;
 }
@@ -204,11 +208,11 @@ export function getAllIngredientLists(pokemon: Pokemon, level: number): Ingredie
     if (level < 30) {
       result.push([ing0]);
     } else {
-      for (const ing30 of pokemon.ingredient30) {
+      for (const ing30 of pokemon.ingredient30.filter((ing) => ing.ingredient.name !== LOCKED_INGREDIENT.name)) {
         if (level < 60) {
           result.push([ing0, ing30]);
         } else {
-          for (const ing60 of pokemon.ingredient60) {
+          for (const ing60 of pokemon.ingredient60.filter((ing) => ing.ingredient.name !== LOCKED_INGREDIENT.name)) {
             result.push([ing0, ing30, ing60]);
           }
         }
