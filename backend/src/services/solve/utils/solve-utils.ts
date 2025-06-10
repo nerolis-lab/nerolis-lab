@@ -187,7 +187,12 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawS.name);
   for (let i = 0; i < pokedex.length; ++i) {
     const pkmn = pokedex[i];
-    const AAA: IngredientSet[] = [pkmn.ingredient0[0], pkmn.ingredient30[0], pkmn.ingredient60[0]];
+
+    const AAA: IngredientSet[] = [
+      pkmn.ingredient0[0],
+      pkmn.ingredient30.filter((ing) => ing.ingredient.name !== ingredient.LOCKED_INGREDIENT.name)[0],
+      pkmn.ingredient60.filter((ing) => ing.ingredient.name !== ingredient.LOCKED_INGREDIENT.name)[0]
+    ];
     const pokemonWithIngredients: PokemonWithIngredients = { pokemon: pkmn, ingredientList: AAA };
 
     const isSupportSkillMon = pkmn.specialty === 'skill' && INGREDIENT_SUPPORT_MAINSKILLS_SET.has(pkmn.skill.name);

@@ -72,6 +72,7 @@ describe('getIngredientNames', () => {
         "Mushroom",
         "Leek",
         "Tail",
+        "Locked",
       ]
     `);
   });

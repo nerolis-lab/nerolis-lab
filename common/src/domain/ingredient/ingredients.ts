@@ -1,5 +1,5 @@
-import type { Ingredient } from './ingredient';
 import { MathUtils } from '../../utils/math-utils';
+import type { Ingredient } from './ingredient';
 
 const SLOWPOKE_TAIL_VALUE = 342;
 
@@ -130,6 +130,7 @@ export const INGREDIENTS: Ingredient[] = [
   LARGE_LEEK,
   SLOWPOKE_TAIL
 ];
+export const INGREDIENTS_WITH_LOCKED = [...INGREDIENTS, LOCKED_INGREDIENT];
 
 export const TOTAL_NUMBER_OF_INGREDIENTS = INGREDIENTS.length;
 
