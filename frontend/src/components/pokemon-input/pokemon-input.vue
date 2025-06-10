@@ -90,7 +90,6 @@
       <v-col cols="12" v-if="!ingsAreValid">
         <div class="text-center text-error-3 text-caption">
           Level 30 ingredient must unlock before level 60 ingredient.
-          <!-- Cannot unlock level 60 ingredient without level 30 ingredient. -->
         </div>
       </v-col>
     </v-row>

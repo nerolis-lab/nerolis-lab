@@ -1,11 +1,11 @@
-import CarrySizeButton from '@/components/pokemon-input/carry-size-display.vue'
+import CarrySizeDisplay from '@/components/pokemon-input/carry-size-display.vue'
 import type { VueWrapper } from '@vue/test-utils'
-import { flushPromises, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { commonMocks, subskill, type Pokemon, type PokemonInstanceExt, type SubskillInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-describe('CarrySizeButton', () => {
-  let wrapper: VueWrapper<InstanceType<typeof CarrySizeButton>>
+describe('CarrySizeDisplay', () => {
+  let wrapper: VueWrapper<InstanceType<typeof CarrySizeDisplay>>
 
   const initialPokemon = {
     pokemon: commonMocks.mockPokemon(), //base carry size 0
@@ -21,9 +21,8 @@ describe('CarrySizeButton', () => {
   } as Pokemon
 
   beforeEach(() => {
-    wrapper = mount(CarrySizeButton, {
+    wrapper = mount(CarrySizeDisplay, {
       props: {
-        memberIndex: 0,
         pokemonInstance: {
           ...initialPokemon,
           pokemon: venusaur,
@@ -41,60 +40,39 @@ describe('CarrySizeButton', () => {
     }
   })
 
-  it('displays calculated actual carry size on the button', async () => {
+  it('displays calculated actual carry size', async () => {
     expect(wrapper.text()).toContain('Carry size 29')
   })
 
-  it('displays value added by subskills in the menu', async () => {
-    await wrapper.setData({ menu: true })
-    const firstDetails = document.querySelector('.carry-size-card .carry-details:first-of-type')
-    expect(firstDetails!.textContent).toContain('+6 from subskills')
-  })
+  it('updates displayed carry size when pokemon instance changes', async () => {
+    const newPokemonInstance = {
+      ...initialPokemon,
+      pokemon: venusaur,
+      carrySize: 25,
+      subskills: [{ level: 10, subskill: subskill.INVENTORY_S }],
+      ribbon: 1
+    }
 
-  it('displays value added by subskills in the menu', async () => {
-    await wrapper.setData({ menu: true })
-    const firstDetails = document.querySelector('.carry-size-card .carry-details:last-of-type')
-    expect(firstDetails!.textContent).toContain('+3 from ribbon')
-  })
-
-  it('displays carry size options correctly in the list', async () => {
-    await wrapper.setData({ menu: true })
-    const buttons = Array.from(document.querySelectorAll('.times-evolved-toggle button') as NodeListOf<HTMLElement>)
-    const buttonTexts = buttons.map((button) => button.textContent)
-
-    expect(buttonTexts).toEqual(['0', '1', '2'])
-  })
-
-  it('updates carry limit when an option is selected', async () => {
-    await wrapper.setData({ menu: true })
-    const buttons = document.querySelectorAll('.times-evolved-toggle button') as NodeListOf<HTMLElement>
-    buttons[0].click()
-    await flushPromises()
-
-    expect(wrapper.emitted('update-carry')).toBeTruthy()
-    expect(wrapper.emitted('update-carry')!.at(-1)).toEqual([venusaur.carrySize])
-  })
-
-  it('closes the menu when times evolved is selected', async () => {
-    await wrapper.setData({ menu: true })
-    const buttons = document.querySelectorAll('.times-evolved-toggle button') as NodeListOf<HTMLElement>
-    buttons[2].click()
-    await flushPromises()
-
-    expect(wrapper.vm.$data.menu).toBe(false)
-  })
-  it('updates carry limit and selected evolutions the first time a pokemon is set', async () => {
-    wrapper = mount(CarrySizeButton, {
-      props: {
-        memberIndex: 0,
-        pokemonInstance: {
-          ...initialPokemon,
-          pokemon: venusaur,
-          carrySize: 20
-        }
-      }
+    await wrapper.setProps({
+      pokemonInstance: newPokemonInstance
     })
 
-    expect(wrapper.vm.$data.selectedEvolutions).toBe(1)
+    expect(wrapper.text()).toContain('Carry size 32')
+  })
+
+  it('displays carry size with no subskills or ribbon correctly', async () => {
+    const simplePokemonInstance = {
+      ...initialPokemon,
+      pokemon: venusaur,
+      carrySize: 15,
+      subskills: [],
+      ribbon: 0
+    }
+
+    await wrapper.setProps({
+      pokemonInstance: simplePokemonInstance
+    })
+
+    expect(wrapper.text()).toContain('Carry size 15')
   })
 })
