@@ -35,7 +35,7 @@ export abstract class Mainskill {
 
   constructor(benefitsTeamIngredients: boolean = false, skipAddingToMainskills: boolean = false) {
     if (benefitsTeamIngredients) {
-      // This flag is used to determine which pokemon are simmed seperately in the tier list, as to not affect the production of other pokemon
+      // This flag is used to determine which pokemon are simmed separately in the tier list, as to not affect the production of other pokemon
       INGREDIENT_SUPPORT_MAINSKILLS.push(this);
     }
 
