@@ -48,6 +48,7 @@ import {
   CookingPowerUpS,
   EnergizingCheerS,
   EnergyForEveryone,
+  IngredientDrawSHyperCutter,
   IngredientMagnetS,
   SkillCopyMimic,
   SkillCopyTransform,
@@ -708,6 +709,32 @@ export const TYRANITAR: Pokemon = {
   carrySize: 19
 };
 
+export const MAWILE: Pokemon = {
+  name: 'MAWILE',
+  displayName: 'Mawile',
+  pokedexNumber: 303,
+  specialty: 'ingredient',
+  frequency: toSeconds(0, 53, 20),
+  ingredientPercentage: 20.4,
+  skillPercentage: 3.8,
+  berry: BELUE,
+  genders: BALANCED_GENDER,
+  carrySize: 17,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
+  ingredient30: [
+    { amount: 5, ingredient: PURE_OIL },
+    { amount: 4, ingredient: GREENGRASS_CORN }
+  ],
+  ingredient60: [
+    { amount: 7, ingredient: PURE_OIL },
+    { amount: 6, ingredient: GREENGRASS_CORN },
+    { amount: 8, ingredient: SNOOZY_TOMATO }
+  ],
+  skill: IngredientDrawSHyperCutter
+};
+
 export const ARON: Pokemon = {
   name: 'ARON',
   displayName: 'Aron',
@@ -1238,6 +1265,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   BLISSEY,
   PUPITAR,
   TYRANITAR,
+  MAWILE,
   AGGRON,
   ABSOL,
   LUXRAY,
