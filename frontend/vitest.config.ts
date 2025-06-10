@@ -8,6 +8,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       environment: 'jsdom',
+      pool: 'forks', // uses child processes instead of worker threads, works better with CI teardown
       exclude: [...configDefaults.exclude, 'e2e/*', '**/main.ts'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {
@@ -15,7 +16,7 @@ export default mergeConfig(
         exclude: ['**/node_modules/**', '**/test/**', '**/main.ts', '**/index.ts'],
         reporter: ['text-summary', 'json', 'lcov']
       },
-      setupFiles: ['./src/vitest']
+      setupFiles: ['./src/vitest/setup.ts']
     }
   })
 )
