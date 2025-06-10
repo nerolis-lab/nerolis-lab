@@ -1,3 +1,10 @@
+## [2.10.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.10.1...v2.10.2) (2025-06-10)
+
+
+### Bug Fixes
+
+* ignore window in vitest node environment ([8172849](https://github.com/nerolis-lab/nerolis-lab/commit/8172849cb27ef0fa801cb57cd12d4cfee4f2247b))
+
 ## [2.10.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.10.0...v2.10.1) (2025-06-09)
 
 
