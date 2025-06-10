@@ -20,6 +20,7 @@ import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-s
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost-effect.js';
 import { IngredientDrawSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-effect.js';
+import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-hyper-cutter-effect.js';
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome-effect.js';
@@ -54,6 +55,7 @@ import {
   ExtraHelpfulS,
   HelperBoost,
   IngredientDrawS,
+  IngredientDrawSHyperCutter,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
   mainskillUnits,
@@ -110,6 +112,7 @@ export class SkillState {
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
       [IngredientDrawS, new IngredientDrawSEffect()],
+      [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
       [Metronome, new MetronomeEffect()],
       [SkillCopy, new SkillCopyEffect()],
