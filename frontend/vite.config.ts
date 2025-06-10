@@ -177,6 +177,7 @@ export default defineConfig(({ command }) => ({
   define: {
     APP_NAME: JSON.stringify(name),
     APP_VERSION: JSON.stringify(version),
-    __INTLIFY_JIT_COMPILATION__: true
+    __INTLIFY_JIT_COMPILATION__: true,
+    global: process.env.VITEST ? {} : 'window'
   }
 }))

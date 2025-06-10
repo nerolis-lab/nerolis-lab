@@ -1,5 +1,6 @@
 import serverAxios from '@/router/server-axios'
 import { useFriendStore } from '@/stores/friend-store/friend-store'
+import type { Logger } from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { FriendService } from './friend-service'
 
@@ -10,7 +11,9 @@ vi.mock('@/router/server-axios', () => ({
   }
 }))
 
-vi.spyOn(logger, 'error').mockImplementation(() => {})
+global.logger = {
+  error: vi.fn()
+} as unknown as Logger
 
 describe('FriendService', () => {
   const mockFriends = [
