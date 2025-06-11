@@ -1,3 +1,11 @@
+# [2.11.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.10.2...v2.11.0) (2025-06-11)
+
+
+### Features
+
+* **main skills:** add hyper cutter ([62ffa4e](https://github.com/nerolis-lab/nerolis-lab/commit/62ffa4e4e5b4b7939b21de5960e05e9a7ec1b9e8))
+* **pokedex:** add mawile ([828501d](https://github.com/nerolis-lab/nerolis-lab/commit/828501dbce6ffa6494c272bd2359cf48b90fbf32))
+
 ## [2.10.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.10.1...v2.10.2) (2025-06-10)
 
 
