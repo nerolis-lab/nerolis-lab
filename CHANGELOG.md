@@ -1,3 +1,10 @@
+## [2.13.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.13.0...v2.13.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* carry limit in member stats now wraps ([a56688b](https://github.com/nerolis-lab/nerolis-lab/commit/a56688b8801e758a74aeacf34cc7b0303fe7dcd2))
+
 # [2.13.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.12.0...v2.13.0) (2025-06-11)
 
 
