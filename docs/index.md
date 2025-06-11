@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: ./getting-started/development-setup
+      link: ./getting-started/contributing
     - theme: alt
       text: API Documentation
       link: https://api.sleepapi.net/docs

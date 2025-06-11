@@ -10,9 +10,12 @@
     "eslint-check": "eslint .",
     "eslint-fix": "npm run eslint-check -- --fix",
     "prettier-check": "prettier --check .",
-    "prettier-fix": "prettier --write ."
+    "prettier-fix": "prettier --write .",
+    "commitlint": "commitlint"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "@eslint/js": "^9.16.0",
     "@eslint/json": "^0.8.0",
     "@eslint/markdown": "^6.2.1",
