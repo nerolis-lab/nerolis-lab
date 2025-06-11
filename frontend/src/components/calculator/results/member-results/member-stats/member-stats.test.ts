@@ -3,7 +3,7 @@ import SkillDistribution from '@/components/calculator/results/member-results/me
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import { mount } from '@vue/test-utils'
-import { commonMocks } from 'sleepapi-common'
+import { commonMocks, subskill } from 'sleepapi-common'
 import { describe, expect, it, vi } from 'vitest'
 
 // Create a dummy production with additional properties: level, ingredient list, and dayPeriod values
@@ -142,6 +142,65 @@ describe('MemberStats.vue', () => {
     const wrapper = mount(MemberStats, { props: { pokemonProduction: productionWithoutSpilled } })
     const nightCard = wrapper.find('.night-card')
     expect(nightCard.text()).not.toContain('spilled')
+  })
+
+  it('renders subskill carry bonus when greater than 0', () => {
+    const productionWithSubskills: MemberProductionExt = mocks.createMockMemberProductionExt({
+      member: mocks.createMockPokemon({
+        subskills: [
+          { subskill: subskill.INVENTORY_S, level: 10 },
+          { subskill: subskill.INVENTORY_M, level: 25 }
+        ]
+      })
+    })
+
+    const wrapper = mount(MemberStats, { props: { pokemonProduction: productionWithSubskills } })
+    expect(wrapper.text()).toContain('from subskills')
+    const subskillDiv = wrapper.find('.text-caption.mr-4.flex-center')
+    expect(subskillDiv.exists()).toBe(true)
+  })
+
+  it('renders ribbon carry bonus when greater than 0', () => {
+    const productionWithRibbon: MemberProductionExt = mocks.createMockMemberProductionExt({
+      member: mocks.createMockPokemon({ ribbon: 2 })
+    })
+
+    const wrapper = mount(MemberStats, { props: { pokemonProduction: productionWithRibbon } })
+    expect(wrapper.text()).toContain('from ribbon')
+    const ribbonDiv = wrapper.find('.text-caption.flex-center')
+    expect(ribbonDiv.exists()).toBe(true)
+  })
+
+  it('does not render subskill bonus when value is 0', () => {
+    const wrapper = mount(MemberStats, { props: { pokemonProduction } })
+    expect(wrapper.text()).not.toContain('from subskills')
+  })
+
+  it('does not render ribbon bonus when value is 0', () => {
+    const wrapper = mount(MemberStats, { props: { pokemonProduction } })
+    expect(wrapper.text()).not.toContain('from ribbon')
+  })
+
+  it('renders both subskill and ribbon bonuses when both are greater than 0', () => {
+    const productionWithBoth: MemberProductionExt = mocks.createMockMemberProductionExt({
+      member: mocks.createMockPokemon({
+        ribbon: 2,
+        subskills: [
+          { subskill: subskill.INVENTORY_S, level: 10 },
+          { subskill: subskill.INVENTORY_M, level: 25 }
+        ]
+      })
+    })
+
+    const wrapper = mount(MemberStats, { props: { pokemonProduction: productionWithBoth } })
+    expect(wrapper.text()).toContain('from subskills')
+    expect(wrapper.text()).toContain('from ribbon')
+
+    // Should have both divs with proper spacing
+    const subskillDiv = wrapper.find('.text-caption.mr-4.flex-center')
+    const ribbonDiv = wrapper.find('.text-caption.flex-center:not(.mr-4)')
+    expect(subskillDiv.exists()).toBe(true)
+    expect(ribbonDiv.exists()).toBe(true)
   })
 })
 
