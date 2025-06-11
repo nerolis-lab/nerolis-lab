@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.12.0...v2.13.0) (2025-06-11)
+
+
+### Features
+
+* **inventory:** Stop calcing based on evolutions ([a111edb](https://github.com/nerolis-lab/nerolis-lab/commit/a111edb6b47bc3577ede4f7fce4aee7706b145aa))
+
 # [2.12.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.11.0...v2.12.0) (2025-06-11)
 
 
