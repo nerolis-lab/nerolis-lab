@@ -22,8 +22,27 @@ config.global.stubs = {
   RouterLink: true
 }
 
+vi.stubGlobal('visualViewport', new EventTarget())
+
+if (typeof window === 'undefined') {
+  vi.stubGlobal('window', {
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    setTimeout: vi.fn(),
+    clearTimeout: vi.fn(),
+    setInterval: vi.fn(),
+    clearInterval: vi.fn(),
+    location: { href: 'http://localhost:3000/' }
+  })
+}
+
 global.ResizeObserver = ResizeObserver
 
 beforeEach(() => {
   setActivePinia(createPinia())
+})
+
+afterEach(() => {
+  vi.clearAllTimers()
+  vi.clearAllMocks()
 })
