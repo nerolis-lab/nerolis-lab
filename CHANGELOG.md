@@ -1,3 +1,15 @@
+# [2.12.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.11.0...v2.12.0) (2025-06-11)
+
+
+### Bug Fixes
+
+* support finding locked ingredients ([6409e25](https://github.com/nerolis-lab/nerolis-lab/commit/6409e25a3f08d4b9104f9b043f669e02893e47a9))
+
+
+### Features
+
+* darkrai ings ui, carry size ui ([619da55](https://github.com/nerolis-lab/nerolis-lab/commit/619da5516e4b2c3710958616314115e269b8b38b))
+
 # [2.11.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.10.2...v2.11.0) (2025-06-11)
 
 
