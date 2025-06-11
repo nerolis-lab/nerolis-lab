@@ -42,9 +42,10 @@ describe('PokemonName', () => {
   it('filters input correctly', async () => {
     await wrapper.setData({ isEditDialogOpen: true })
 
-    const input = document.querySelector('#input-1') as HTMLInputElement
-    input.value = 'Pokemon123'
-    input.dispatchEvent(new Event('input'))
+    const textField = wrapper.findComponent({ name: 'VTextField' })
+    expect(textField.exists()).toBe(true)
+
+    await textField.setValue('Pokemon123')
 
     expect(wrapper.vm.editedName).toBe('Pokemon123')
   })

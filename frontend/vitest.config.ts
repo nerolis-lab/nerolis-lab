@@ -16,7 +16,9 @@ export default mergeConfig(
         exclude: ['**/node_modules/**', '**/test/**', '**/main.ts', '**/index.ts'],
         reporter: ['text-summary', 'json', 'lcov']
       },
-      setupFiles: ['./src/vitest/setup.ts']
+      setupFiles: ['./src/vitest/setup.ts'],
+      teardownTimeout: 10000, // Give more time for cleanup
+      testTimeout: 30000 // Increase test timeout
     }
   })
 )

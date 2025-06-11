@@ -8,7 +8,8 @@ import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
-import vueRecommended from 'eslint-plugin-vue';
+import vue from 'eslint-plugin-vue';
+import vuetify from 'eslint-plugin-vuetify';
 import globals from 'globals';
 
 export default typescriptEslint.config(
@@ -29,7 +30,8 @@ export default typescriptEslint.config(
       },
       sourceType: 'module'
     },
-    extends: [...vueRecommended.configs['flat/recommended']]
+    // @ts-expect-error - eslint-plugin-vuetify is not typed
+    extends: [...vue.configs['flat/recommended'], ...vuetify.configs['flat/recommended']]
   },
 
   // backend-specific rules
