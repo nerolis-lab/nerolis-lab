@@ -34,12 +34,18 @@
     </v-col>
 
     <!-- Carry limit -->
-    <v-col class="text-no-wrap">
+    <v-col :class="[{ 'flex-left': !isMobile }]">
       <span>
-        Carry limit: <span class="font-weight-medium">{{ carrySize }}</span
-        >&nbsp; <span>(+{{ carryGainFromSubskills }} from subskills)</span>&nbsp;
-        <span>(+{{ carryGainFromRibbon }} from ribbon <v-img class="ribbon-image" :src="ribbonImage"></v-img>)</span>
+        Carry limit: <span class="font-weight-medium">{{ carrySize }} </span>
       </span>
+      <div v-if="carryGainFromSubskills > 0 || carryGainFromRibbon > 0" class="ml-4 d-flex">
+        <div v-if="carryGainFromSubskills > 0" class="text-caption mr-4 flex-center">
+          +{{ carryGainFromSubskills }} from subskills
+        </div>
+        <div v-if="carryGainFromRibbon > 0" class="text-caption flex-center">
+          +{{ carryGainFromRibbon }} from ribbon <v-img class="ribbon-image" :src="ribbonImage"></v-img>
+        </div>
+      </div>
     </v-col>
 
     <SkillDistribution :pokemonProduction="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
