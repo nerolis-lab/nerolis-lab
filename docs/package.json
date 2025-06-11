@@ -8,12 +8,11 @@
     "dev": "vitepress dev",
     "build": "vitepress build",
     "preview": "vitepress preview",
-    "test": "vitest --run --coverage",
+    "test": "vitest --run",
     "test-watch": "vitest --watch"
   },
   "devDependencies": {
     "@types/node": "^22.10.4",
-    "@vitest/coverage-v8": "^3.2.3",
     "globby": "^14.0.2",
     "sass-embedded": "^1.89.2",
     "typescript": "^5.8.3",

@@ -7,22 +7,75 @@ on:
     branches: ["main", "develop"]
 
 jobs:
-  build-and-test:
+  common:
+    name: Setup & Build Common Library
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js for Common and Frontend
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Cache common dependencies
+        id: cache-common-deps
         uses: actions/cache@v4
         with:
           path: common/node_modules
-          key: common-${{ hashFiles('common/package-lock.json') }}
-          restore-keys: common-
+          key: common-deps-${{ hashFiles('common/package-lock.json') }}
+          restore-keys: common-deps-
+
+      - name: Cache common build
+        id: cache-common-build
+        uses: actions/cache@v4
+        with:
+          path: common/dist
+          key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
+
+      - name: Install Common Dependencies
+        if: steps.cache-common-deps.outputs.cache-hit != 'true'
+        run: |
+          cd common
+          npm ci
+
+      - name: Build Common Library
+        if: steps.cache-common-build.outputs.cache-hit != 'true'
+        run: |
+          cd common
+          npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
+
+      - name: Test Common Library
+        run: |
+          cd common
+          npm run test
+
+      - name: Upload Common Coverage
+        uses: codecov/codecov-action@v4-beta
+        with:
+          flags: common
+          directory: common
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  backend:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    needs: common
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Restore common build
+        uses: actions/cache/restore@v4
+        with:
+          path: common/dist
+          key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
+          fail-on-cache-miss: true
 
       - name: Cache backend dependencies
         uses: actions/cache@v4
@@ -31,21 +84,7 @@ jobs:
           key: backend-${{ hashFiles('backend/package-lock.json') }}
           restore-keys: backend-
 
-      - name: Cache frontend dependencies
-        uses: actions/cache@v4
-        with:
-          path: frontend/node_modules
-          key: frontend2-${{ hashFiles('frontend/package-lock.json') }}
-          restore-keys: frontend-
-
-      - name: Install and Test Common
-        run: |
-          cd common
-          npm ci
-          npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
-          npm run test
-
-      - name: Install and Test Backend
+      - name: Install, Build, and Test Backend
         run: |
           cd backend
           npm ci
@@ -55,30 +94,128 @@ jobs:
           bun compile
           npm run test
 
-      - name: Install and Test Frontend
+      - name: Upload Backend Coverage
+        uses: codecov/codecov-action@v4-beta
+        with:
+          flags: backend
+          directory: backend
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  frontend:
+    name: Test Frontend
+    runs-on: ubuntu-latest
+    needs: common
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Restore common build
+        uses: actions/cache/restore@v4
+        with:
+          path: common/dist
+          key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
+          fail-on-cache-miss: true
+
+      - name: Cache frontend dependencies
+        uses: actions/cache@v4
+        with:
+          path: frontend/node_modules
+          key: frontend2-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: frontend-
+
+      - name: Install, Build, and Test Frontend
         run: |
           cd frontend
           npm ci
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
           npm run test
 
-      - name: Lint
+      - name: Upload Frontend Coverage
+        uses: codecov/codecov-action@v4-beta
+        with:
+          flags: frontend
+          directory: frontend
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  docs:
+    name: Test Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Cache docs dependencies
+        uses: actions/cache@v4
+        with:
+          path: docs/node_modules
+          key: docs-${{ hashFiles('docs/package-lock.json') }}
+          restore-keys: docs-
+
+      - name: Install Dependencies
+        run: |
+          cd docs
+          npm ci
+
+      - name: Test Documentation
+        run: |
+          cd docs
+          npm run test
+
+      - name: Build Documentation
+        run: |
+          cd docs
+          npm run build
+
+      - name: Upload Docs Coverage
+        uses: codecov/codecov-action@v4-beta
+        with:
+          flags: docs
+          directory: docs
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Cache root dependencies
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: root-${{ hashFiles('package-lock.json') }}
+          restore-keys: root-
+
+      - name: Install and Lint
         run: |
           npm ci
           npm run lint
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4-beta
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
   release:
+    name: Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
       issues: write
       pull-requests: write
-    needs: build-and-test
+    needs: [common, backend, frontend, docs, lint]
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
