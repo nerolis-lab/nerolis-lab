@@ -1,0 +1,23 @@
+$background: #1c1923;
+$surface: #403d58;
+$primary: #9771e0;
+$secondary: #5e5a7f;
+$accent: #9a95c3;
+
+:root {
+  --vp-c-brand-1: #{$primary};
+  --vp-c-brand-2: #{$primary};
+  --vp-c-brand-3: #{$primary};
+}
+
+.VPHero .VPImage {
+  border-radius: 12px;
+}
+
+.VPNavBar .VPImage {
+  border-radius: 4px;
+}
+
+.VPSidebar .logo {
+  border-radius: 4px;
+}

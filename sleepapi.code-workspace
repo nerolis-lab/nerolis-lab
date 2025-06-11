@@ -13,6 +13,10 @@
       "path": "frontend"
     },
     {
+      "name": "docs",
+      "path": "docs"
+    },
+    {
       "name": "bot",
       "path": "bot"
     },
@@ -37,6 +41,7 @@
       "backend": true,
       "frontend": true,
       "bot": true,
+      "docs": true,
       ".vscode": true,
       "dev-dist": true,
       "*.tsbuildinfo": true,

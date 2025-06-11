@@ -7,6 +7,10 @@
 node_modules/
 dist/
 
+# VitePress build outputs and cache
+cache/
+.temp/
+
 # Compiled Java class files
 *.class
 
