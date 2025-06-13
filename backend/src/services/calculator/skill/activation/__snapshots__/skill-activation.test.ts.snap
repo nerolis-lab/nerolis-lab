@@ -1007,7 +1007,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     "adjustedAmount": 0.5565217391304348,
     "fractionOfProc": 0.034782608695652174,
     "nrOfHelpsToActivate": 2,
-    "skill": {
+    "skill": IngredientDrawSSuperLuckImpl {
       "RP": [
         880,
         1251,
@@ -1017,6 +1017,72 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         4546,
         5843,
       ],
+      "SuperLuckProbabilities": {
+        "Coffee": 22,
+        "Dream Shards (L)": 3,
+        "Dream Shards (S)": 13,
+        "Mushroom": 20,
+        "Sausage": 22,
+        "Soybeans": 20,
+      },
+      "SuperLuckResultConfig": {
+        "Coffee": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Rousing Coffee",
+            "name": "Coffee",
+            "taxedValue": 68.4,
+            "value": 153,
+          },
+          "unit": "ingredients",
+        },
+        "Dream Shards (L)": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": undefined,
+          "unit": "dream shards",
+        },
+        "Dream Shards (S)": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": undefined,
+          "unit": "dream shards",
+        },
+        "Mushroom": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Tasty Mushroom",
+            "name": "Mushroom",
+            "taxedValue": 81.5,
+            "value": 167,
+          },
+          "unit": "ingredients",
+        },
+        "Sausage": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Bean Sausage",
+            "name": "Sausage",
+            "taxedValue": 31,
+            "value": 103,
+          },
+          "unit": "ingredients",
+        },
+        "Soybeans": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Greengrass Soybeans",
+            "name": "Soybean",
+            "taxedValue": 29.2,
+            "value": 100,
+          },
+          "unit": "ingredients",
+        },
+      },
       "activations": {
         "dreamShards": {
           "amount": [Function],
@@ -1057,7 +1123,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         ],
         "name": "Ingredient Draw S",
       },
-      "critChance": 0.16,
       "critDreamShardAmounts": [
         2500,
         3600,
@@ -1088,7 +1153,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         18,
       ],
       "modifierName": "Super Luck",
-      "superCritChance": 0.04,
     },
   },
   {
