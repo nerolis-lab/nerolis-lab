@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { BEAN_SAUSAGE, GREENGRASS_SOYBEANS, ROUSING_COFFEE, TASTY_MUSHROOM } from '../../ingredient/ingredients';
 import { IngredientDrawS } from './ingredient-draw-s';
+import type { SuperLuckOutput } from './ingredient-draw-s-super-luck';
 import { IngredientDrawSSuperLuck } from './ingredient-draw-s-super-luck';
 
 describe('IngredientDrawSSuperLuck', () => {
@@ -23,11 +23,6 @@ describe('IngredientDrawSSuperLuck', () => {
     expect(IngredientDrawSSuperLuck.activations).toHaveProperty('ingredients');
     expect(IngredientDrawSSuperLuck.activations.ingredients.unit).toBe('ingredients');
     expect(typeof IngredientDrawSSuperLuck.activations.ingredients.amount).toBe('function');
-  });
-
-  it('should have crit chance properties', () => {
-    expect(IngredientDrawSSuperLuck.critChance).toBe(0.16);
-    expect(IngredientDrawSSuperLuck.superCritChance).toBe(0.04);
   });
 
   it('should have dream shards activation with crit properties', () => {
@@ -55,15 +50,17 @@ describe('IngredientDrawSSuperLuck', () => {
     expect(IngredientDrawSSuperLuck.activations.dreamShards.critAmount!(7)).toBe(20000);
   });
 
-  it('should have specific ingredient draw ingredients', () => {
-    const ingredients = IngredientDrawSSuperLuck.ingredientDrawIngredients;
-    expect(ingredients).toEqual([BEAN_SAUSAGE, GREENGRASS_SOYBEANS, TASTY_MUSHROOM, ROUSING_COFFEE]);
-    expect(ingredients).toHaveLength(4);
-  });
-
   it('should have specific RP values', () => {
     expect(IngredientDrawSSuperLuck.getRPValue(1)).toBe(880);
     expect(IngredientDrawSSuperLuck.getRPValue(4)).toBe(2383);
     expect(IngredientDrawSSuperLuck.getRPValue(7)).toBe(5843);
+  });
+
+  it('should have probabilities that sum to 100', () => {
+    let sum = 0;
+    for (const key of Object.keys(IngredientDrawSSuperLuck.SuperLuckProbabilities) as SuperLuckOutput[]) {
+      sum += IngredientDrawSSuperLuck.SuperLuckProbabilities[key];
+    }
+    expect(sum).toBe(100);
   });
 });

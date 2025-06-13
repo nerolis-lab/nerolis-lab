@@ -12,7 +12,7 @@ export const IngredientDrawSHyperCutter = new (class extends ModifiedMainskill {
   image = 'ingredient_draw';
 
   description = (skillLevel: number) =>
-    `Gets ${this.ingredientAmounts[skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. On rare occasions, gets twice as many ingredients.`;
+    `Gets ${this.ingredientAmounts[skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. Sometimes gets an additional ${this.ingredientAmounts[skillLevel - 1]} ingredients.`;
 
   critChance = 0.16;
 
