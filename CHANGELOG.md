@@ -1,3 +1,10 @@
+## [2.13.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.13.1...v2.13.2) (2025-06-13)
+
+
+### Bug Fixes
+
+* adds suspense for async setup ([0ebe635](https://github.com/nerolis-lab/nerolis-lab/commit/0ebe63519989d2372f5d240620df0ed34e3a9921))
+
 ## [2.13.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.13.0...v2.13.1) (2025-06-11)
 
 
