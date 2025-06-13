@@ -1,1 +1,1 @@
-export const DOMAIN_VERSION = 21;
+export const DOMAIN_VERSION = 22;

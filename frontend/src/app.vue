@@ -5,7 +5,16 @@
     <TheSnackbar />
 
     <v-main>
-      <RouterView />
+      <Suspense>
+        <template #default>
+          <RouterView />
+        </template>
+        <template #fallback>
+          <div class="d-flex justify-center align-center" style="height: 400px">
+            <v-progress-circular indeterminate color="primary" size="48"></v-progress-circular>
+          </div>
+        </template>
+      </Suspense>
     </v-main>
     <TheFooter></TheFooter>
   </v-app>

@@ -253,12 +253,12 @@ export default defineComponent({
     },
     teamHelpMembers() {
       return this.teamMembersWithProduction
-        .filter((member) => member?.skillValue['helps']?.amountToTeam > 0)
+        .filter((member) => member?.skillValue?.['helps']?.amountToTeam > 0)
         .map((member) => ({ pokemonName: member.pokemonWithIngredients.pokemon, shiny: member.member?.shiny === true }))
     },
     teamEnergyMembers() {
       return this.teamMembersWithProduction
-        .filter((member) => member?.skillValue['energy']?.amountToTeam > 0)
+        .filter((member) => member?.skillValue?.['energy']?.amountToTeam > 0)
         .map((member) => ({ pokemonName: member.pokemonWithIngredients.pokemon, shiny: member.member?.shiny === true }))
     },
     helpingBonusMembers() {
