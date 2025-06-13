@@ -2,6 +2,8 @@ import type { MainskillUnit } from './mainskill-unit';
 
 export type AmountFunction = (skillLevel: number, extra?: number) => number;
 
+export const ZeroAmount: AmountFunction = (_skillLevel: number, _extra?: number) => 0;
+
 export type DescriptionFunction = (skillLevel: number, extra?: number) => string;
 
 export type MainskillActivation = {

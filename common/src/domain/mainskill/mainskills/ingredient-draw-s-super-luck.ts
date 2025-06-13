@@ -1,9 +1,10 @@
-import type { Ingredient } from '../..';
+import type { AmountFunction, Ingredient, MainskillUnit } from '../..';
+import { rollToOutput } from '../../../utils/mainskill-utils/mainskill-utils';
 import { BEAN_SAUSAGE, GREENGRASS_SOYBEANS, ROUSING_COFFEE, TASTY_MUSHROOM } from '../../ingredient/ingredients';
-import { ModifiedMainskill } from '../mainskill';
+import { ModifiedMainskill, ZeroAmount } from '../mainskill';
 import { IngredientDrawS } from './ingredient-draw-s';
 
-export const IngredientDrawSSuperLuck = new (class extends ModifiedMainskill {
+class IngredientDrawSSuperLuckImpl extends ModifiedMainskill {
   baseSkill = IngredientDrawS;
   modifierName = 'Super Luck';
   // TODO: is RP sheet off? It has 4846 instead of 4546
@@ -15,9 +16,6 @@ export const IngredientDrawSSuperLuck = new (class extends ModifiedMainskill {
 
   description = (skillLevel: number) =>
     `Gets ${this.ingredientAmounts[skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. On rare occasions, gets a great number of Dream Shards instead.`;
-
-  critChance = 0.16;
-  superCritChance = 0.04;
 
   activations = {
     ingredients: {
@@ -31,7 +29,66 @@ export const IngredientDrawSSuperLuck = new (class extends ModifiedMainskill {
     }
   };
 
-  get ingredientDrawIngredients(): Ingredient[] {
-    return [BEAN_SAUSAGE, GREENGRASS_SOYBEANS, TASTY_MUSHROOM, ROUSING_COFFEE];
+  SuperLuckProbabilities: Record<SuperLuckOutput, number> = {
+    Mushroom: 20,
+    Sausage: 22,
+    Soybeans: 20,
+    Coffee: 22,
+    'Dream Shards (S)': 13,
+    'Dream Shards (L)': 3
+  };
+
+  SuperLuckResultConfig: Record<SuperLuckOutput, SuperLuckResult> = {
+    Mushroom: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: TASTY_MUSHROOM,
+      unit: 'ingredients'
+    },
+    Sausage: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: BEAN_SAUSAGE,
+      unit: 'ingredients'
+    },
+    Soybeans: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: GREENGRASS_SOYBEANS,
+      unit: 'ingredients'
+    },
+    Coffee: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: ROUSING_COFFEE,
+      unit: 'ingredients'
+    },
+    'Dream Shards (S)': {
+      amountFunc: this.activations.dreamShards.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: undefined,
+      unit: 'dream shards'
+    },
+    'Dream Shards (L)': {
+      amountFunc: ZeroAmount,
+      critAmountFunc: this.activations.dreamShards.critAmount,
+      ingredient: undefined,
+      unit: 'dream shards'
+    }
+  };
+
+  rollToResult(roll: number): SuperLuckResult {
+    return this.SuperLuckResultConfig[rollToOutput(roll, this.SuperLuckProbabilities)];
   }
-})();
+}
+
+export type SuperLuckOutput = 'Mushroom' | 'Sausage' | 'Soybeans' | 'Coffee' | 'Dream Shards (S)' | 'Dream Shards (L)';
+
+export interface SuperLuckResult {
+  amountFunc: AmountFunction;
+  critAmountFunc: AmountFunction;
+  ingredient: Ingredient | undefined;
+  unit: MainskillUnit;
+}
+
+export const IngredientDrawSSuperLuck = new IngredientDrawSSuperLuckImpl();

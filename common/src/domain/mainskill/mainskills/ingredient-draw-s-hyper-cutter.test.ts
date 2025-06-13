@@ -13,7 +13,7 @@ describe('IngredientDrawSHyperCutter', () => {
   it('should have correct basic properties', () => {
     expect(IngredientDrawSHyperCutter.name).toBe('Hyper Cutter (Ingredient Draw S)');
     expect(IngredientDrawSHyperCutter.description(1)).toBe(
-      'Gets 5 of one type of ingredient chosen randomly from a specific selection of ingredients. On rare occasions, gets twice as many ingredients.'
+      'Gets 5 of one type of ingredient chosen randomly from a specific selection of ingredients. Sometimes gets an additional 5 ingredients.'
     );
     expect(IngredientDrawSHyperCutter.RP).toEqual([880, 1251, 1726, 2383, 3290, 4846, 5843]);
     expect(IngredientDrawSHyperCutter.maxLevel).toBe(7);
