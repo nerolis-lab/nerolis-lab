@@ -1,0 +1,60 @@
+name: 'NPM Install with Cache'
+description: 'Install npm dependencies with caching and retry logic for reliability'
+inputs:
+  working-directory:
+    description: 'Directory to run npm install in'
+    required: true
+  cache-key-prefix:
+    description: 'Prefix for cache key'
+    required: true
+  package-lock-path:
+    description: 'Path to package-lock.json relative to working directory'
+    required: false
+    default: 'package-lock.json'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Cache dependencies
+      id: cache-deps
+      uses: actions/cache@v4
+      with:
+        path: ${{ inputs.working-directory }}/node_modules
+        key: ${{ inputs.cache-key-prefix }}-${{ hashFiles(format('{0}/{1}', inputs.working-directory, inputs.package-lock-path)) }}
+        restore-keys: ${{ inputs.cache-key-prefix }}-
+
+    - name: Install dependencies with retry
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ "${{ steps.cache-deps.outputs.cache-hit }}" != "true" ]; then
+          echo "Cache miss - installing dependencies..."
+          # Retry npm ci up to 3 times on failure
+          for i in {1..3}; do
+            if npm ci; then
+              echo "✅ npm ci succeeded on attempt $i"
+              break
+            else
+              echo "❌ npm ci failed (attempt $i/3). Clearing node_modules and retrying..."
+              rm -rf node_modules
+              npm cache clean --force
+              if [ $i -eq 3 ]; then
+                echo "💥 npm ci failed after 3 attempts"
+                exit 1
+              fi
+              echo "⏳ Waiting 10 seconds before retry..."
+              sleep 10
+            fi
+          done
+        else
+          echo "✅ Cache hit - verifying integrity..."
+          # Verify cache integrity
+          if [ ! -d "node_modules" ] || [ -z "$(ls -A node_modules 2>/dev/null)" ]; then
+            echo "⚠️  Cache hit but node_modules is missing or empty. Installing dependencies..."
+            rm -rf node_modules
+            npm cache clean --force
+            npm ci
+          else
+            echo "✅ Using cached dependencies"
+          fi
+        fi 

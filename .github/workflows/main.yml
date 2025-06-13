@@ -18,13 +18,11 @@ jobs:
         with:
           node-version: 22
 
-      - name: Cache common dependencies
-        id: cache-common-deps
-        uses: actions/cache@v4
+      - name: Install Common Dependencies
+        uses: ./.github/actions/npm-install-with-cache
         with:
-          path: common/node_modules
-          key: common-deps-${{ hashFiles('common/package-lock.json') }}
-          restore-keys: common-deps-
+          working-directory: common
+          cache-key-prefix: common-deps
 
       - name: Cache common build
         id: cache-common-build
@@ -32,12 +30,6 @@ jobs:
         with:
           path: common/dist
           key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
-
-      - name: Install Common Dependencies
-        if: steps.cache-common-deps.outputs.cache-hit != 'true'
-        run: |
-          cd common
-          npm ci
 
       - name: Build Common Library
         if: steps.cache-common-build.outputs.cache-hit != 'true'
@@ -77,17 +69,15 @@ jobs:
           key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
           fail-on-cache-miss: true
 
-      - name: Cache backend dependencies
-        uses: actions/cache@v4
+      - name: Install Backend Dependencies
+        uses: ./.github/actions/npm-install-with-cache
         with:
-          path: backend/node_modules
-          key: backend-${{ hashFiles('backend/package-lock.json') }}
-          restore-keys: backend-
+          working-directory: backend
+          cache-key-prefix: backend
 
-      - name: Install, Build, and Test Backend
+      - name: Build and Test Backend
         run: |
           cd backend
-          npm ci
           npm run build
           npm install -g bun
           bun install
@@ -121,17 +111,15 @@ jobs:
           key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
           fail-on-cache-miss: true
 
-      - name: Cache frontend dependencies
-        uses: actions/cache@v4
+      - name: Install Frontend Dependencies
+        uses: ./.github/actions/npm-install-with-cache
         with:
-          path: frontend/node_modules
-          key: frontend2-${{ hashFiles('frontend/package-lock.json') }}
-          restore-keys: frontend-
+          working-directory: frontend
+          cache-key-prefix: frontend2
 
-      - name: Install, Build, and Test Frontend
+      - name: Build and Test Frontend
         run: |
           cd frontend
-          npm ci
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
           npm run test
 
@@ -154,17 +142,11 @@ jobs:
         with:
           node-version: 22
 
-      - name: Cache docs dependencies
-        uses: actions/cache@v4
+      - name: Install Documentation Dependencies
+        uses: ./.github/actions/npm-install-with-cache
         with:
-          path: docs/node_modules
-          key: docs-${{ hashFiles('docs/package-lock.json') }}
-          restore-keys: docs-
-
-      - name: Install Dependencies
-        run: |
-          cd docs
-          npm ci
+          working-directory: docs
+          cache-key-prefix: docs
 
       - name: Test Documentation
         run: |
@@ -199,17 +181,14 @@ jobs:
         with:
           node-version: 22
 
-      - name: Cache root dependencies
-        uses: actions/cache@v4
+      - name: Install Root Dependencies
+        uses: ./.github/actions/npm-install-with-cache
         with:
-          path: node_modules
-          key: root-${{ hashFiles('package-lock.json') }}
-          restore-keys: root-
+          working-directory: .
+          cache-key-prefix: root
 
-      - name: Install and Lint
-        run: |
-          npm ci
-          npm run lint
+      - name: Run Lint
+        run: npm run lint
 
       - name: Lint Commit Messages
         id: commitlint
@@ -218,75 +197,10 @@ jobs:
 
       - name: Comment on PR for commit message warnings
         if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''
-        uses: actions/github-script@v7
+        uses: ./.github/actions/commitlint-comment
         with:
-          script: |
-            const results = JSON.parse('${{ steps.commitlint.outputs.results }}');
-            
-            // Check if there are any warnings
-            const hasWarnings = results.some(result => result.warnings && result.warnings.length > 0);
-            
-            // Check if we already commented
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
-
-            const existingComment = comments.find(comment => 
-              comment.user.login === 'github-actions[bot]' && 
-              (comment.body.includes('Commit Message Warnings') || comment.body.includes('Commit Messages Look Good'))
-            );
-            
-            if (hasWarnings) {
-              let warningMessage = '## ⚠️ Commit Message Warnings\n\n';
-              warningMessage += 'Your commit messages have some formatting warnings. While these won\'t block the PR, consider fixing them for better consistency:\n\n';
-              
-              results.forEach(result => {
-                if (result.warnings && result.warnings.length > 0) {
-                  warningMessage += `### \`${result.hash.substring(0, 7)}\`: ${result.message.split('\n')[0]}\n`;
-                  result.warnings.forEach(warning => {
-                    warningMessage += `- ⚠️ ${warning}\n`;
-                  });
-                  warningMessage += '\n';
-                }
-              });
-              
-              warningMessage += '💡 **Tip**: For sentence-case warnings, use lowercase for the first word after the colon (e.g., `feat: add feature` instead of `feat: Add feature`).\n\n';
-              warningMessage += 'ℹ️ [Learn more about conventional commits](https://www.conventionalcommits.org/)\n\n';
-              warningMessage += '<sub>This comment is automatically generated by commitlint.</sub>';
-
-              if (existingComment) {
-                // Update existing comment
-                await github.rest.issues.updateComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  comment_id: existingComment.id,
-                  body: warningMessage
-                });
-              } else {
-                // Create new comment
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.issue.number,
-                  body: warningMessage
-                });
-              }
-            } else if (existingComment) {
-              // No warnings found, but there was a previous comment - update it to show resolution
-              const resolvedMessage = '## ✅ Commit Messages Look Good!\n\n';
-              resolvedMessage += 'All commit message warnings have been resolved. Thanks for following the conventional commit format!\n\n';
-              resolvedMessage += 'ℹ️ [Learn more about conventional commits](https://www.conventionalcommits.org/)\n\n';
-              resolvedMessage += '<sub>This comment is automatically generated by commitlint.</sub>';
-
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: existingComment.id,
-                body: resolvedMessage
-              });
-            }
+          results: ${{ steps.commitlint.outputs.results }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     name: Release
