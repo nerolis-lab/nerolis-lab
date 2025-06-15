@@ -15,7 +15,7 @@ describe('IngredientDrawSSuperLuck', () => {
     expect(IngredientDrawSSuperLuck.description(1)).toBe(
       'Gets 5 of one type of ingredient chosen randomly from a specific selection of ingredients. On rare occasions, gets a great number of Dream Shards instead.'
     );
-    expect(IngredientDrawSSuperLuck.RP).toEqual([880, 1251, 1726, 2383, 3290, 4846, 5843]);
+    expect(IngredientDrawSSuperLuck.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(IngredientDrawSSuperLuck.maxLevel).toBe(7);
   });
 
