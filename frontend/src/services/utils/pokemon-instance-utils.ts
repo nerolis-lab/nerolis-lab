@@ -29,7 +29,6 @@ class PokemonInstanceUtilsImpl {
       name: pokemonInstance.name,
       level: pokemonInstance.level,
       ribbon: pokemonInstance.ribbon,
-      carrySize: CarrySizeUtils.baseCarrySize(getPokemon(pokemonInstance.pokemon)),
       skillLevel: pokemonInstance.skillLevel,
       nature: getNature(pokemonInstance.nature),
       subskills: pokemonInstance.subskills.map((instancedSubskill) => ({
@@ -44,6 +43,8 @@ class PokemonInstanceUtilsImpl {
     }
     return {
       ...pokemonWithoutRP,
+      // @deprecated
+      carrySize: CarrySizeUtils.baseCarrySize(getPokemon(pokemonInstance.pokemon)),
       rp: new RP(pokemonWithoutRP).calc()
     }
   }
