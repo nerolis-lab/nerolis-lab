@@ -39,7 +39,7 @@ import {
   calculateSkillPercentage
 } from '../../utils/stat-utils';
 
-export type PokemonInstanceWithoutRP = Omit<PokemonInstanceExt, 'rp'>;
+export type PokemonInstanceWithoutRP = Omit<PokemonInstanceExt, 'rp' | 'carrySize'>;
 
 export class RP {
   private pokemon: Pokemon;
@@ -78,23 +78,27 @@ export class RP {
 
     return (
       5 *
-      MathUtils.floor(
+      MathUtils.floorWithIEEE754Correction(
         3600 /
-          (this.pokemon.frequency * MathUtils.floor(levelFactor * natureFreq * helpSpeedSubskills * ribbonFactor, 4)),
+          (this.pokemon.frequency *
+            MathUtils.floorWithIEEE754Correction(levelFactor * natureFreq * helpSpeedSubskills * ribbonFactor, 4)),
         2
       )
     );
   }
 
   get ingredientChance() {
-    return MathUtils.floor(
+    return MathUtils.floorWithIEEE754Correction(
       calculateIngredientPercentage({ pokemon: this.pokemon, nature: this.nature, subskills: this.subskills }),
       4
     );
   }
 
   get skillChance() {
-    return MathUtils.floor(calculateSkillPercentage(this.pokemon.skillPercentage, this.subskills, this.nature), 4);
+    return MathUtils.floorWithIEEE754Correction(
+      calculateSkillPercentage(this.pokemon.skillPercentage, this.subskills, this.nature),
+      4
+    );
   }
 
   get ingredientFactor() {
@@ -108,7 +112,10 @@ export class RP {
       this.ingredientSet.reduce((sum, cur) => (sum += cur.amount * cur.ingredient.value), 0) / this.ingredientSet.length
     );
 
-    return MathUtils.floor(this.helpFactor * this.ingredientChance * ingredientsValue * ingredientGrowth, 2);
+    return MathUtils.floorWithIEEE754Correction(
+      this.helpFactor * this.ingredientChance * ingredientsValue * ingredientGrowth,
+      2
+    );
   }
 
   get berryFactor() {
@@ -120,12 +127,12 @@ export class RP {
         Math.round(Math.pow(1.025, this.level - 1) * this.pokemon.berry.value)
       );
 
-    return MathUtils.floor(this.helpFactor * (1 - this.ingredientChance) * berryValue, 2);
+    return MathUtils.floorWithIEEE754Correction(this.helpFactor * (1 - this.ingredientChance) * berryValue, 2);
   }
 
   get skillFactor() {
     const skillValue = this.pokemon.skill.RP[this.skillLevel - 1];
-    return MathUtils.floor(this.helpFactor * this.skillChance * skillValue, 2);
+    return MathUtils.floorWithIEEE754Correction(this.helpFactor * this.skillChance * skillValue, 2);
   }
 
   get miscFactor() {
@@ -136,7 +143,7 @@ export class RP {
       subskillFactor += this.subskillValue[sub] ?? 0;
     }
 
-    return MathUtils.floor(convertedNatureEnergy * subskillFactor, 2);
+    return MathUtils.floorWithIEEE754Correction(convertedNatureEnergy * subskillFactor, 2);
   }
 
   get frequencySubskills() {
