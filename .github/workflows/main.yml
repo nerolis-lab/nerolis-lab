@@ -195,11 +195,17 @@ jobs:
         uses: wagoid/commitlint-github-action@v6
         continue-on-error: true
 
+      - name: Encode commitlint results
+        if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''
+        id: encode-results
+        run: |
+          echo "encoded=$(echo '${{ steps.commitlint.outputs.results }}' | base64 -w 0)" >> $GITHUB_OUTPUT
+
       - name: Comment on PR for commit message warnings
         if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''
         uses: ./.github/actions/commitlint-comment
         with:
-          results: ${{ steps.commitlint.outputs.results }}
+          results: ${{ steps.encode-results.outputs.encoded }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
   release:

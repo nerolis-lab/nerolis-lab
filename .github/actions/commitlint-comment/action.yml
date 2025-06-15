@@ -17,7 +17,7 @@ runs:
       with:
         github-token: ${{ inputs.github-token }}
         script: |
-          const results = JSON.parse('${{ inputs.results }}');
+          const results = JSON.parse(Buffer.from('${{ inputs.results }}', 'base64').toString());
           
           // Check if there are any warnings
           const hasWarnings = results.some(result => result.warnings && result.warnings.length > 0);
