@@ -105,7 +105,7 @@ export class RP {
     // We make assumption regarding ingredient growth past 55
     // We make assumption regarding ingredientsValue being same value for 60 ingredient and divide by 3 then
     const ingredientGrowth =
-      this.ingGrowth[this.level] ??
+      RP.ingGrowth[this.level] ??
       0.000000398 * Math.pow(this.level, 3) + 0.000159 * Math.pow(this.level, 2) + 0.00367 * this.level - 0.00609 + 1;
 
     const ingredientsValue = Math.floor(
@@ -164,7 +164,7 @@ export class RP {
     [INVENTORY_L.name]: 0.181
   };
 
-  private ingGrowth: { [level: number]: number } = {
+  static ingGrowth: { [level: number]: number } = {
     1: 1.0,
     2: 1.003,
     3: 1.007,
@@ -224,7 +224,12 @@ export class RP {
     57: 1.798,
     58: 1.824,
     59: 1.852,
-    60: 1.88
+    60: 1.88,
+    61: 1.927,
+    62: 1.975,
+    63: 2.024,
+    64: 2.075,
+    65: 2.127
   };
 
   private filteredSubskills(pokemonInstance: PokemonInstanceWithoutRP): Set<string> {
