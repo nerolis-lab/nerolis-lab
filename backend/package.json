@@ -17,7 +17,7 @@
   },
   "files": ["dist"],
   "devDependencies": {
-    "@types/bun": "^1.1.17",
+    "@types/bun": "^1.2.16",
     "@types/cors": "^2.8.15",
     "@types/express": "^5.0.3",
     "@types/morgan": "^1.9.7",
