@@ -198,8 +198,10 @@ jobs:
       - name: Encode commitlint results
         if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''
         id: encode-results
+        env:
+          COMMITLINT_RESULTS: ${{ steps.commitlint.outputs.results }}
         run: |
-          echo "encoded=$(echo '${{ steps.commitlint.outputs.results }}' | base64 -w 0)" >> $GITHUB_OUTPUT
+          echo "encoded=$(printf '%s' "$COMMITLINT_RESULTS" | base64 -w 0)" >> $GITHUB_OUTPUT
 
       - name: Comment on PR for commit message warnings
         if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''

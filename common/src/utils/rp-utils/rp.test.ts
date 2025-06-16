@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { MAX_POKEMON_LEVEL } from '../../domain/constants';
 import {
   BEAN_SAUSAGE,
   FANCY_APPLE,
@@ -61,6 +62,16 @@ const baseInstance: PokemonInstanceWithoutRP = {
 };
 
 describe('RP', () => {
+  it('shall have ingGrowth entries for all levels up to MAX_POKEMON_LEVEL', () => {
+    for (let i = 1; i <= MAX_POKEMON_LEVEL; i++) {
+      expect(RP.ingGrowth).toHaveProperty(i.toString());
+    }
+  });
+
+  it('shall NOT have an ingGrowth entry for MAX_POKEMON_LEVEL + 1', () => {
+    expect(RP.ingGrowth).not.toHaveProperty((MAX_POKEMON_LEVEL + 1).toString());
+  });
+
   it('shall calculate realistic level 50 Pokémon', () => {
     const pokemonInstance: PokemonInstanceWithoutRP = {
       ...baseInstance,

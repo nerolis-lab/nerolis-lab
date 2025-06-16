@@ -17,7 +17,16 @@ runs:
       with:
         github-token: ${{ inputs.github-token }}
         script: |
-          const results = JSON.parse(Buffer.from('${{ inputs.results }}', 'base64').toString());
+          let results;
+          try {
+            const decodedResults = Buffer.from('${{ inputs.results }}', 'base64').toString();
+            console.log('Decoded results:', decodedResults);
+            results = JSON.parse(decodedResults);
+          } catch (error) {
+            console.error('Error parsing commitlint results:', error.message);
+            console.error('Raw input was:', '${{ inputs.results }}');
+            throw new Error(`Failed to parse commitlint results: ${error.message}`);
+          }
           
           // Check if there are any warnings
           const hasWarnings = results.some(result => result.warnings && result.warnings.length > 0);
