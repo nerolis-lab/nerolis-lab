@@ -55,7 +55,6 @@ jobs:
         with:
           path: common/dist
           key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
-          fail-on-cache-miss: true
 
       - name: Install Dependencies
         uses: ./.github/actions/npm-install-with-cache
