@@ -97,6 +97,7 @@ jobs:
       pull-requests: write
     needs: [common, backend, frontend, docs, lint]
     if: |
+      always() && 
       github.ref == 'refs/heads/develop' &&
       (needs.common.result == 'success' || needs.common.result == 'skipped') &&
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
