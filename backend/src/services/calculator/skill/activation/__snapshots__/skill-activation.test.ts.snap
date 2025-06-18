@@ -933,7 +933,99 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     "adjustedAmount": 0.5565217391304348,
     "fractionOfProc": 0.034782608695652174,
     "nrOfHelpsToActivate": 2,
-    "skill": {
+    "skill": IngredientDrawSHyperCutterImpl {
+      "HyperCutterProbabilities": {
+        "Corn": 19,
+        "Corn (L)": 4,
+        "Oil": 20,
+        "Oil (L)": 3,
+        "Potato": 22,
+        "Potato (L)": 6,
+        "Tomato": 22,
+        "Tomato (L)": 4,
+      },
+      "HyperCutterResultConfig": {
+        "Corn": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Greengrass Corn",
+            "name": "Corn",
+            "taxedValue": 57.3,
+            "value": 140,
+          },
+        },
+        "Corn (L)": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Greengrass Corn",
+            "name": "Corn",
+            "taxedValue": 57.3,
+            "value": 140,
+          },
+        },
+        "Oil": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Pure Oil",
+            "name": "Oil",
+            "taxedValue": 42.8,
+            "value": 121,
+          },
+        },
+        "Oil (L)": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Pure Oil",
+            "name": "Oil",
+            "taxedValue": 42.8,
+            "value": 121,
+          },
+        },
+        "Potato": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Soft Potato",
+            "name": "Potato",
+            "taxedValue": 45,
+            "value": 124,
+          },
+        },
+        "Potato (L)": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Soft Potato",
+            "name": "Potato",
+            "taxedValue": 45,
+            "value": 124,
+          },
+        },
+        "Tomato": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Snoozy Tomato",
+            "name": "Tomato",
+            "taxedValue": 35.4,
+            "value": 110,
+          },
+        },
+        "Tomato (L)": {
+          "amountFunc": [Function],
+          "critAmountFunc": [Function],
+          "ingredient": {
+            "longName": "Snoozy Tomato",
+            "name": "Tomato",
+            "taxedValue": 35.4,
+            "value": 110,
+          },
+        },
+      },
       "RP": [
         880,
         1251,
@@ -979,7 +1071,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         ],
         "name": "Ingredient Draw S",
       },
-      "critChance": 0.16,
       "critIngredientAmounts": [
         10,
         12,
