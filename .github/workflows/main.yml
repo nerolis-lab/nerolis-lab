@@ -14,6 +14,7 @@ jobs:
       backend: ${{ steps.changes.outputs.backend }}
       frontend: ${{ steps.changes.outputs.frontend }}
       docs: ${{ steps.changes.outputs.docs }}
+      workflows: ${{ steps.changes.outputs.workflows }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v3
@@ -28,6 +29,16 @@ jobs:
               - 'frontend/**'
             docs:
               - 'docs/**'
+            workflows:
+              - '.github/workflows/**'
+      
+      - name: Debug path changes
+        run: |
+          echo "Common changes: ${{ steps.changes.outputs.common }}"
+          echo "Backend changes: ${{ steps.changes.outputs.backend }}"
+          echo "Frontend changes: ${{ steps.changes.outputs.frontend }}"
+          echo "Docs changes: ${{ steps.changes.outputs.docs }}"
+          echo "Workflow changes: ${{ steps.changes.outputs.workflows }}"
 
   common:
     name: Common
@@ -85,7 +96,7 @@ jobs:
       issues: write
       pull-requests: write
     needs: [common, backend, frontend, docs, lint]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
