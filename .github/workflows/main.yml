@@ -96,7 +96,13 @@ jobs:
       issues: write
       pull-requests: write
     needs: [common, backend, frontend, docs, lint]
-    if: github.ref == 'refs/heads/develop'
+    if: |
+      github.ref == 'refs/heads/develop' &&
+      (needs.common.result == 'success' || needs.common.result == 'skipped') &&
+      (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
+      (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
+      (needs.docs.result == 'success' || needs.docs.result == 'skipped') &&
+      needs.lint.result == 'success'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
