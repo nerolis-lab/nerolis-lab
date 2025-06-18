@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { GREENGRASS_CORN, PURE_OIL, SNOOZY_TOMATO, SOFT_POTATO } from '../../ingredient/ingredients';
 import { IngredientDrawS } from './ingredient-draw-s';
+import type { HyperCutterOutput } from './ingredient-draw-s-hyper-cutter';
 import { IngredientDrawSHyperCutter } from './ingredient-draw-s-hyper-cutter';
 
 describe('IngredientDrawSHyperCutter', () => {
@@ -25,10 +25,6 @@ describe('IngredientDrawSHyperCutter', () => {
     expect(typeof IngredientDrawSHyperCutter.activations.ingredients.amount).toBe('function');
   });
 
-  it('should have crit chance properties', () => {
-    expect(IngredientDrawSHyperCutter.critChance).toBe(0.16);
-  });
-
   it('should calculate correct ingredient amounts', () => {
     expect(IngredientDrawSHyperCutter.activations.ingredients.amount(1)).toBe(5);
     expect(IngredientDrawSHyperCutter.activations.ingredients.amount(4)).toBe(11);
@@ -41,15 +37,17 @@ describe('IngredientDrawSHyperCutter', () => {
     expect(IngredientDrawSHyperCutter.activations.ingredients.critAmount!(7)).toBe(36);
   });
 
-  it('should have specific ingredient draw ingredients', () => {
-    const ingredients = IngredientDrawSHyperCutter.ingredientDrawIngredients;
-    expect(ingredients).toEqual([SOFT_POTATO, PURE_OIL, SNOOZY_TOMATO, GREENGRASS_CORN]);
-    expect(ingredients).toHaveLength(4);
-  });
-
   it('should have specific RP values', () => {
     expect(IngredientDrawSHyperCutter.getRPValue(1)).toBe(880);
     expect(IngredientDrawSHyperCutter.getRPValue(4)).toBe(2383);
     expect(IngredientDrawSHyperCutter.getRPValue(7)).toBe(5843);
+  });
+
+  it('should have probabilities that sum to 100', () => {
+    let sum = 0;
+    for (const key of Object.keys(IngredientDrawSHyperCutter.HyperCutterProbabilities) as HyperCutterOutput[]) {
+      sum += IngredientDrawSHyperCutter.HyperCutterProbabilities[key];
+    }
+    expect(sum).toBe(100);
   });
 });

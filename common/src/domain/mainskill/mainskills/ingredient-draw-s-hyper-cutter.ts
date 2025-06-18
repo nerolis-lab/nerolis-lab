@@ -1,9 +1,10 @@
-import type { Ingredient } from '../..';
+import type { AmountFunction, Ingredient } from '../..';
+import { rollToOutput } from '../../../utils/mainskill-utils/mainskill-utils';
 import { GREENGRASS_CORN, PURE_OIL, SNOOZY_TOMATO, SOFT_POTATO } from '../../ingredient/ingredients';
-import { ModifiedMainskill } from '../mainskill';
+import { ModifiedMainskill, ZeroAmount } from '../mainskill';
 import { IngredientDrawS } from './ingredient-draw-s';
 
-export const IngredientDrawSHyperCutter = new (class extends ModifiedMainskill {
+class IngredientDrawSHyperCutterImpl extends ModifiedMainskill {
   baseSkill = IngredientDrawS;
   modifierName = 'Hyper Cutter';
   RP = [880, 1251, 1726, 2383, 3290, 4846, 5843];
@@ -14,8 +15,6 @@ export const IngredientDrawSHyperCutter = new (class extends ModifiedMainskill {
   description = (skillLevel: number) =>
     `Gets ${this.ingredientAmounts[skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. Sometimes gets an additional ${this.ingredientAmounts[skillLevel - 1]} ingredients.`;
 
-  critChance = 0.16;
-
   activations = {
     ingredients: {
       unit: 'ingredients',
@@ -24,7 +23,79 @@ export const IngredientDrawSHyperCutter = new (class extends ModifiedMainskill {
     }
   };
 
-  get ingredientDrawIngredients(): Ingredient[] {
-    return [SOFT_POTATO, PURE_OIL, SNOOZY_TOMATO, GREENGRASS_CORN];
+  HyperCutterProbabilities: Record<HyperCutterOutput, number> = {
+    Potato: 22,
+    Oil: 20,
+    Tomato: 22,
+    Corn: 19,
+    'Potato (L)': 6,
+    'Oil (L)': 3,
+    'Tomato (L)': 4,
+    'Corn (L)': 4
+  };
+
+  HyperCutterResultConfig: Record<HyperCutterOutput, HyperCutterResult> = {
+    Potato: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: SOFT_POTATO
+    },
+    Oil: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: PURE_OIL
+    },
+    Tomato: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: SNOOZY_TOMATO
+    },
+    Corn: {
+      amountFunc: this.activations.ingredients.amount,
+      critAmountFunc: ZeroAmount,
+      ingredient: GREENGRASS_CORN
+    },
+    'Potato (L)': {
+      amountFunc: ZeroAmount,
+      critAmountFunc: this.activations.ingredients.critAmount,
+      ingredient: SOFT_POTATO
+    },
+    'Oil (L)': {
+      amountFunc: ZeroAmount,
+      critAmountFunc: this.activations.ingredients.critAmount,
+      ingredient: PURE_OIL
+    },
+    'Tomato (L)': {
+      amountFunc: ZeroAmount,
+      critAmountFunc: this.activations.ingredients.critAmount,
+      ingredient: SNOOZY_TOMATO
+    },
+    'Corn (L)': {
+      amountFunc: ZeroAmount,
+      critAmountFunc: this.activations.ingredients.critAmount,
+      ingredient: GREENGRASS_CORN
+    }
+  };
+
+  rollToResult(roll: number): HyperCutterResult {
+    return this.HyperCutterResultConfig[rollToOutput(roll, this.HyperCutterProbabilities)];
   }
-})();
+}
+
+export type HyperCutterOutput =
+  | 'Potato'
+  | 'Oil'
+  | 'Tomato'
+  | 'Corn'
+  | 'Potato (L)'
+  | 'Oil (L)'
+  | 'Tomato (L)'
+  | 'Corn (L)';
+
+export interface HyperCutterResult {
+  amountFunc: AmountFunction;
+  critAmountFunc: AmountFunction;
+  ingredient: Ingredient;
+}
+
+export const IngredientDrawSHyperCutter = new IngredientDrawSHyperCutterImpl();
