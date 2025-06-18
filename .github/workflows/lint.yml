@@ -1,0 +1,54 @@
+name: Lint
+
+on:
+  workflow_call:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Root Dependencies
+        uses: ./.github/actions/npm-install-with-cache
+        with:
+          working-directory: .
+          cache-key-prefix: root
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Lint Commit Messages
+        id: commitlint
+        if: github.event_name != 'pull_request' || !startsWith(github.head_ref, 'dependabot/')
+        uses: wagoid/commitlint-github-action@v6
+        continue-on-error: true
+
+      - name: Encode commitlint results
+        if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''
+        id: encode-results
+        env:
+          COMMITLINT_RESULTS: ${{ steps.commitlint.outputs.results }}
+        run: |
+          echo "encoded=$(printf '%s' "$COMMITLINT_RESULTS" | base64 -w 0)" >> $GITHUB_OUTPUT
+
+      - name: Comment on PR for commit message warnings
+        if: github.event_name == 'pull_request' && steps.commitlint.outputs.results != ''
+        uses: ./.github/actions/commitlint-comment
+        with:
+          results: ${{ steps.encode-results.outputs.encoded }}
+          github-token: ${{ secrets.GITHUB_TOKEN }} 
