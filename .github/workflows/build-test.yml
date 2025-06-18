@@ -55,6 +55,7 @@ jobs:
         with:
           path: common/dist
           key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
+          fail-on-cache-miss: true
 
       - name: Install Dependencies
         uses: ./.github/actions/npm-install-with-cache
@@ -68,7 +69,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ inputs.working-directory }}/dist
-          key: ${{ inputs.working-directory }}-build-${{ hashFiles(format('{0}/src/**', inputs.working-directory), format('{0}/package.json', inputs.working-directory), format('{0}/tsconfig.json', inputs.working-directory), format('{0}/rollup.config.mjs', inputs.working-directory)) }}
+          key: common-build-${{ hashFiles('common/src/**', 'common/package.json', 'common/tsconfig.json', 'common/rollup.config.mjs') }}
 
       - name: Additional Setup
         if: ${{ inputs.additional-setup != '' }}
