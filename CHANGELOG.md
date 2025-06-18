@@ -1,3 +1,21 @@
+# [2.14.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.13.2...v2.14.0) (2025-06-18)
+
+
+### Bug Fixes
+
+* change back release CI from main to develop ([8337d84](https://github.com/nerolis-lab/nerolis-lab/commit/8337d8402671f74bc02df91d34d17a88e1e17c6d))
+* correct ieee 754 precision in RP floor ([6d2fd7f](https://github.com/nerolis-lab/nerolis-lab/commit/6d2fd7f5ea201dcd94ac97fca390fe209e120002))
+* corrects RP typo for Super Luck ([f998210](https://github.com/nerolis-lab/nerolis-lab/commit/f998210270d8a42c781ee537b939dcfad8f8b5c1))
+* dont skip release if other jobs were skipped ([1135ad2](https://github.com/nerolis-lab/nerolis-lab/commit/1135ad2fedf6f9dfdd308c27c46753d76dced2f3))
+* handle newline characters in commit message ([d5b467f](https://github.com/nerolis-lab/nerolis-lab/commit/d5b467f17e4a6ef0aca99176b6b7c77768c7c726))
+* okay this time we wont skip release job ([39c72cb](https://github.com/nerolis-lab/nerolis-lab/commit/39c72cb82ada913c5cb1494b16a287e19a9924a9))
+* use discord png url instead of inline svg ([995fdef](https://github.com/nerolis-lab/nerolis-lab/commit/995fdeff674b180eac9e4606904f1d651f3f5ea0))
+
+
+### Features
+
+* adds docs.nerolislab.com ([5cb4a3d](https://github.com/nerolis-lab/nerolis-lab/commit/5cb4a3df8727dd657f7b0a1d8f08c4cce6420c4d))
+
 ## [2.13.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.13.1...v2.13.2) (2025-06-13)
 
 
