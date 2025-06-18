@@ -192,6 +192,7 @@ jobs:
 
       - name: Lint Commit Messages
         id: commitlint
+        if: github.event_name != 'pull_request' || !startsWith(github.head_ref, 'dependabot/')
         uses: wagoid/commitlint-github-action@v6
         continue-on-error: true
 
