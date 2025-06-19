@@ -1,3 +1,10 @@
+# [2.15.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.14.0...v2.15.0) (2025-06-19)
+
+
+### Features
+
+* **meals:** add "Cut" Sukiyaki Curry ([782f838](https://github.com/nerolis-lab/nerolis-lab/commit/782f838f97fe194e0528e6b1eec222dfb610c193))
+
 # [2.14.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.13.2...v2.14.0) (2025-06-18)
 
 
