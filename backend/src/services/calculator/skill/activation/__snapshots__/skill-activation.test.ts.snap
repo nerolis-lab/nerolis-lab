@@ -2062,9 +2062,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         4546,
       ],
       "activations": {
-        "chance": {
+        "critChance": {
           "amount": [Function],
-          "unit": "chance",
+          "unit": "crit chance",
         },
       },
       "chanceAmounts": [

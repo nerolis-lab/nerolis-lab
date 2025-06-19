@@ -81,7 +81,7 @@ export default defineComponent({
     totalSkillValue() {
       return compactNumber(
         StrengthService.skillValue({
-          skillActivation: TastyChanceS.activations.chance,
+          skillActivation: TastyChanceS.activations.critChance,
           amount: this.memberWithProduction.production.skillAmount,
           timeWindow: this.teamStore.timeWindow,
           areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)

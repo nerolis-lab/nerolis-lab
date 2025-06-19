@@ -25,10 +25,10 @@ describe('GET /pokemon', function () {
       skill: {
         ...SNEASEL.skill,
         activations: {
-          chance: {
-            unit: 'chance',
+          critChance: {
+            unit: 'crit chance',
             amounts: Array.from({ length: SNEASEL.skill.maxLevel }, (_, i) =>
-              SNEASEL.skill.activations.chance.amount(i + 1)
+              SNEASEL.skill.activations.critChance.amount(i + 1)
             )
           }
         },

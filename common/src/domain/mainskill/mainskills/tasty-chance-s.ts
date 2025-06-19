@@ -8,8 +8,8 @@ export const TastyChanceS = new (class extends Mainskill {
   description = (skillLevel: number) =>
     `Raises your Extra Tasty rate by ${this.chanceAmounts[skillLevel - 1]}%. The effect lasts until you cook an Extra Tasty dish or change sites.`;
   activations = {
-    chance: {
-      unit: 'chance',
+    critChance: {
+      unit: 'crit chance',
       amount: this.leveledAmount(this.chanceAmounts)
     }
   };

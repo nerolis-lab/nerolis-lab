@@ -59,7 +59,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center')
     const expectedValue = StrengthService.skillValue({
-      skillActivation: TastyChanceS.activations.chance,
+      skillActivation: TastyChanceS.activations.critChance,
       amount: mockMember.production.skillAmount,
       timeWindow: '24H',
       areaBonus: 1
