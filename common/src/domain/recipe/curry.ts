@@ -231,6 +231,18 @@ export const HIDDEN_POWER_PERK_UP_STEW = createCurry({
   bonus: 61
 });
 
+export const CUT_SUKIYAKI_CURRY = createCurry({
+  name: 'CUT_SUKIYAKI_CURRY',
+  displayName: '"Cut" Sukiyaki Curry',
+  ingredients: [
+    { amount: 27, ingredient: LARGE_LEEK },
+    { amount: 26, ingredient: BEAN_SAUSAGE },
+    { amount: 26, ingredient: HONEY },
+    { amount: 22, ingredient: FANCY_EGG }
+  ],
+  bonus: 61
+});
+
 export const CURRIES: Recipe[] = [
   FANCY_APPLE_CURRY,
   SIMPLE_CHOWDER,
@@ -251,7 +263,8 @@ export const CURRIES: Recipe[] = [
   GRILLED_TAIL_CURRY,
   DREAM_EATER_BUTTER_CURRY,
   INFERNO_CORN_KEEMA_CURRY,
-  HIDDEN_POWER_PERK_UP_STEW
+  HIDDEN_POWER_PERK_UP_STEW,
+  CUT_SUKIYAKI_CURRY
 ];
 
 export const MIXED_CURRY_FLAT: RecipeFlat = recipesToFlat(MIXED_CURRY);

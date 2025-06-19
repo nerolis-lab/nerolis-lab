@@ -76,6 +76,7 @@ describe('getMealsForFilter', () => {
         "DREAM_EATER_BUTTER_CURRY",
         "INFERNO_CORN_KEEMA_CURRY",
         "HIDDEN_POWER_PERK_UP_STEW",
+        "CUT_SUKIYAKI_CURRY",
         "CALM_MIND_FRUIT_SALAD",
         "CROSS_CHOP_SALAD",
         "GREENGRASS_SALAD",
