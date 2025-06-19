@@ -29,11 +29,11 @@ describe('MetronomeEffect', () => {
 
   it('should log an error and return the original skill if the selected skill cannot be activated', () => {
     vimic(skillState.rng, 'randomElement');
-    vimic(console, 'error').mockImplementation(() => {});
+    vimic(logger, 'error').mockImplementation(() => {});
 
     const result = metronomeEffect.activate(skillState);
 
-    expect(console.error).toHaveBeenCalledWith(
+    expect(logger.error).toHaveBeenCalledWith(
       expect.stringContaining("[mock skill] Couldn't trigger metronome on undefined")
     );
     expect(result).toEqual({ skill: skillState.skill, activations: [] });

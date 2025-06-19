@@ -366,7 +366,6 @@ export function activateHelperBoost(params: {
     }))
   };
 
-  logger.error(`Adjusted ${adjustedAmount} * ${helpAmount} / ${metronomeFactor}`);
   return {
     skill,
     adjustedAmount: (adjustedAmount * helpAmount) / metronomeFactor,

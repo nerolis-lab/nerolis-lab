@@ -5,9 +5,6 @@ export default {
     // Warn if commit message is more than 50 characters
     'header-max-length': [1, 'always', 50],
 
-    // Warn if body line is more than 72 characters
-    'body-max-line-length': [1, 'always', 72],
-
     'type-enum': [
       2,
       'always',
