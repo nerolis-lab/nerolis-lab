@@ -11,7 +11,7 @@ describe('CookingPowerUpS', () => {
 
   it('should have pot size activation', () => {
     expect(CookingPowerUpS.activations).toHaveProperty('potSize');
-    expect(CookingPowerUpS.activations.potSize.unit).toBe('cooking');
+    expect(CookingPowerUpS.activations.potSize.unit).toBe('pot size');
     expect(typeof CookingPowerUpS.activations.potSize.amount).toBe('function');
   });
 
@@ -24,7 +24,7 @@ describe('CookingPowerUpS', () => {
   });
 
   it('should have cooking unit only', () => {
-    expect(CookingPowerUpS.hasUnit('cooking')).toBe(true);
+    expect(CookingPowerUpS.hasUnit('pot size')).toBe(true);
     expect(CookingPowerUpS.hasUnit('energy')).toBe(false);
     expect(CookingPowerUpS.hasUnit('berries')).toBe(false);
   });

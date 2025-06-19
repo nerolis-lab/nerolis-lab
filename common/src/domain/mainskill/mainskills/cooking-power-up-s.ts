@@ -9,7 +9,7 @@ export const CookingPowerUpS = new (class extends Mainskill {
     `Increases the quantity of Cooking items you get by ${this.potSizeAmounts[skillLevel - 1]}.`;
   activations = {
     potSize: {
-      unit: 'cooking',
+      unit: 'pot size',
       amount: this.leveledAmount(this.potSizeAmounts)
     }
   };

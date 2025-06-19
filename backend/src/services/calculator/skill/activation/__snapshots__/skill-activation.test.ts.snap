@@ -434,7 +434,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "activations": {
         "potSize": {
           "amount": [Function],
-          "unit": "cooking",
+          "unit": "pot size",
         },
       },
       "description": [Function],
