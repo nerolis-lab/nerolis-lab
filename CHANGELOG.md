@@ -1,3 +1,10 @@
+## [2.15.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.2...v2.15.3) (2025-06-19)
+
+
+### Bug Fixes
+
+* validates all mainskills have valid units ([1e31d5d](https://github.com/nerolis-lab/nerolis-lab/commit/1e31d5decf1a2677f898a9b397da8db19aa63e82))
+
 ## [2.15.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.1...v2.15.2) (2025-06-19)
 
 
