@@ -1,3 +1,10 @@
+## [2.15.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.0...v2.15.1) (2025-06-19)
+
+
+### Bug Fixes
+
+* add sukiyaki to team finder ([03e7722](https://github.com/nerolis-lab/nerolis-lab/commit/03e77224506eb0bc59650b9b4b1bf1af5657006e))
+
 # [2.15.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.14.0...v2.15.0) (2025-06-19)
 
 
