@@ -6,7 +6,7 @@ import { TastyChanceS } from 'sleepapi-common';
 export class TastyChanceSEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = TastyChanceS;
-    const critAmount = skillState.skillAmount(skill.activations.chance);
+    const critAmount = skillState.skillAmount(skill.activations.critChance);
     skillState.memberState.cookingState?.addCritBonus(critAmount / 100);
 
     return {

@@ -89,8 +89,6 @@
   </v-container>
 </template>
 
-<script setup lang="ts"></script>
-
 <style lang="scss" scoped>
 .heading {
   margin: -12px 0 !important;

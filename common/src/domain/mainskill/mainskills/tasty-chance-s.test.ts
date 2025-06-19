@@ -9,13 +9,13 @@ describe('TastyChanceS', () => {
   });
 
   it('should have chance activation', () => {
-    expect(TastyChanceS.activations).toHaveProperty('chance');
-    expect(TastyChanceS.activations.chance.unit).toBe('chance');
-    expect(typeof TastyChanceS.activations.chance.amount).toBe('function');
+    expect(TastyChanceS.activations).toHaveProperty('critChance');
+    expect(TastyChanceS.activations.critChance.unit).toBe('crit chance');
+    expect(typeof TastyChanceS.activations.critChance.amount).toBe('function');
   });
 
   it('should have chance unit only', () => {
-    expect(TastyChanceS.hasUnit('chance')).toBe(true);
+    expect(TastyChanceS.hasUnit('crit chance')).toBe(true);
     expect(TastyChanceS.hasUnit('energy')).toBe(false);
     expect(TastyChanceS.hasUnit('berries')).toBe(false);
   });

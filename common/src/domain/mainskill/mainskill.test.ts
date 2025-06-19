@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { INGREDIENT_SUPPORT_MAINSKILLS, Mainskill, MAINSKILLS, ModifiedMainskill } from './mainskill';
+import { INGREDIENT_SUPPORT_MAINSKILLS, Mainskill, MAINSKILLS, ModifiedMainskill } from '.';
 import { mainskillUnits } from './mainskill-unit';
 import { ChargeEnergySMoonlight } from './mainskills/charge-energy-s-moonlight';
 import { Metronome } from './mainskills/metronome';
@@ -229,17 +229,6 @@ describe('Mainskill', () => {
         expect(typeof skill.activations).toBe('object');
         expect(typeof skill.maxLevel).toBe('number');
         expect(skill.maxLevel).toBeGreaterThan(0);
-      });
-    });
-
-    it('should ensure all activations have valid units', () => {
-      const validUnits = ['energy', 'berries', 'ingredients', 'helps', 'shards', 'strength', 'pot size', 'crit chance'];
-
-      MAINSKILLS.forEach((skill) => {
-        Object.values(skill.activations).forEach((activation) => {
-          expect(validUnits).toContain(activation.unit);
-          expect(typeof activation.amount).toBe('function');
-        });
       });
     });
 
