@@ -1,3 +1,10 @@
+## [2.15.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.1...v2.15.2) (2025-06-19)
+
+
+### Bug Fixes
+
+* pot mainskill uses valid unit ([015b781](https://github.com/nerolis-lab/nerolis-lab/commit/015b78166ed080881e2c1159afd97e67e2c97bac))
+
 ## [2.15.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.0...v2.15.1) (2025-06-19)
 
 
