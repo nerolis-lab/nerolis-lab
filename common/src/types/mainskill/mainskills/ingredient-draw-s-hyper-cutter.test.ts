@@ -48,6 +48,6 @@ describe('IngredientDrawSHyperCutter', () => {
     for (const key of Object.keys(IngredientDrawSHyperCutter.HyperCutterProbabilities) as HyperCutterOutput[]) {
       sum += IngredientDrawSHyperCutter.HyperCutterProbabilities[key];
     }
-    expect(sum).toBe(100);
+    expect(sum).toBeCloseTo(100, 6);
   });
 });

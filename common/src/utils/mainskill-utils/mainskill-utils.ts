@@ -4,6 +4,10 @@ export function rollToOutput<TSkillOutput extends string | number | symbol>(
 ): TSkillOutput {
   const allOutputs: TSkillOutput[] = Object.keys(probabilities) as TSkillOutput[];
 
+  if (allOutputs.length === 0) {
+    throw new Error('No skill outputs provided');
+  }
+
   let totalProbability = 0;
   for (const output of allOutputs) {
     totalProbability += probabilities[output];
