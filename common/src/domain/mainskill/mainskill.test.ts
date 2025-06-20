@@ -6,7 +6,6 @@ import { Metronome } from './mainskills/metronome';
 
 const TestMainskill = new (class extends Mainskill {
   name = 'Test Skill';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   description = (_skillLevel: number) => 'A test skill for testing purposes.';
   RP = [100, 200, 300];
   image = 'test';
@@ -21,7 +20,6 @@ const TestMainskill = new (class extends Mainskill {
 const TestModifiedMainskill = new (class extends ModifiedMainskill {
   baseSkill = TestMainskill;
   modifierName = 'Test Modified';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   description = (_skillLevel: number) => 'A test modified skill for testing purposes.';
   RP = [150, 300, 450];
   image = 'test';
@@ -281,7 +279,6 @@ describe('Additional validation tests', () => {
     // Create a test mainskill to test the leveledAmount helper
     const testSkill = new (class extends Mainskill {
       name = 'Test Skill 2';
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       description = (_skillLevel: number) => 'Another test skill.';
       RP = [100, 200, 300];
       image = 'test';

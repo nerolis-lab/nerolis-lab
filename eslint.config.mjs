@@ -98,6 +98,14 @@ export default typescriptEslint.config(
           prefer: 'type-imports'
         }
       ],
+      '@typescript-eslint/no-unused-vars': [
+        // this seems to apply to backend but not to common???
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          reportUsedIgnorePattern: true
+        }
+      ],
       'SleepAPILogger/no-console': 'error'
     }
   }

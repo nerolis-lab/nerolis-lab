@@ -12,7 +12,6 @@ export function getMigrations(): Migration[] {
   const migrationModules = import.meta.glob<{ default: Migration }>('./migrations/!(*.test).ts', { eager: true })
 
   const migrations: Migration[] = Object.entries(migrationModules)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .map(([_path, module]) => {
       return module.default
     })
