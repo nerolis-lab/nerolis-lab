@@ -61,6 +61,6 @@ describe('IngredientDrawSSuperLuck', () => {
     for (const key of Object.keys(IngredientDrawSSuperLuck.SuperLuckProbabilities) as SuperLuckOutput[]) {
       sum += IngredientDrawSSuperLuck.SuperLuckProbabilities[key];
     }
-    expect(sum).toBe(100);
+    expect(sum).toBeCloseTo(100, 6);
   });
 });

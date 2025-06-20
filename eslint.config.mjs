@@ -119,7 +119,6 @@ export default typescriptEslint.config(
         }
       ],
       '@typescript-eslint/no-unused-vars': [
-        // this seems to apply to backend but not to common???
         'error',
         {
           argsIgnorePattern: '^_',

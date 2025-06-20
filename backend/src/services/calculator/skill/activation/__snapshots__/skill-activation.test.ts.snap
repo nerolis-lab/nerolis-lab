@@ -935,14 +935,14 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     "nrOfHelpsToActivate": 2,
     "skill": IngredientDrawSHyperCutterImpl {
       "HyperCutterProbabilities": {
-        "Corn": 19,
-        "Corn (L)": 4,
-        "Oil": 20,
-        "Oil (L)": 3,
-        "Potato": 22,
-        "Potato (L)": 6,
-        "Tomato": 22,
-        "Tomato (L)": 4,
+        "Corn": 20.9,
+        "Corn (L)": 4.1,
+        "Oil": 20.9,
+        "Oil (L)": 4.1,
+        "Potato": 20.9,
+        "Potato (L)": 4.1,
+        "Tomato": 20.9,
+        "Tomato (L)": 4.1,
       },
       "HyperCutterResultConfig": {
         "Corn": {
@@ -1109,12 +1109,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         5843,
       ],
       "SuperLuckProbabilities": {
-        "Coffee": 22,
-        "Dream Shards (L)": 3,
-        "Dream Shards (S)": 13,
-        "Mushroom": 20,
-        "Sausage": 22,
-        "Soybeans": 20,
+        "Coffee": 21.3,
+        "Dream Shards (L)": 2.7,
+        "Dream Shards (S)": 12.1,
+        "Mushroom": 21.3,
+        "Sausage": 21.3,
+        "Soybeans": 21.3,
       },
       "SuperLuckResultConfig": {
         "Coffee": {
