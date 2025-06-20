@@ -30,10 +30,10 @@ class IngredientDrawSSuperLuckImpl extends ModifiedMainskill {
   };
 
   SuperLuckProbabilities: Record<SuperLuckOutput, number> = {
-    Mushroom: 20,
-    Sausage: 22,
-    Soybeans: 20,
-    Coffee: 22,
+    Mushroom: 21,
+    Sausage: 21,
+    Soybeans: 21,
+    Coffee: 21,
     'Dream Shards (S)': 13,
     'Dream Shards (L)': 3
   };

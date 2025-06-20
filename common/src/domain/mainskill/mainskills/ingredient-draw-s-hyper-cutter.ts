@@ -24,12 +24,12 @@ class IngredientDrawSHyperCutterImpl extends ModifiedMainskill {
   };
 
   HyperCutterProbabilities: Record<HyperCutterOutput, number> = {
-    Potato: 22,
-    Oil: 20,
-    Tomato: 22,
-    Corn: 19,
-    'Potato (L)': 6,
-    'Oil (L)': 3,
+    Potato: 21,
+    Oil: 21,
+    Tomato: 21,
+    Corn: 21,
+    'Potato (L)': 4,
+    'Oil (L)': 4,
     'Tomato (L)': 4,
     'Corn (L)': 4
   };
