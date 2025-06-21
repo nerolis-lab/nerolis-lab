@@ -1,8 +1,8 @@
-import { BELUE } from '../../../domain/berry/berries';
-import { BALANCED_GENDER } from '../../../domain/gender/gender';
-import { SLOWPOKE_TAIL } from '../../../domain/ingredient/ingredients';
-import { Mainskill } from '../../../domain/mainskill/mainskill';
-import type { Pokemon } from '../../../domain/pokemon/pokemon';
+import { BELUE } from '../../../types/berry/berries';
+import { BALANCED_GENDER } from '../../../types/gender/gender';
+import { SLOWPOKE_TAIL } from '../../../types/ingredient/ingredients';
+import { Mainskill } from '../../../types/mainskill/mainskill';
+import type { Pokemon } from '../../../types/pokemon/pokemon';
 
 export const mockMainskill = new (class extends Mainskill {
   name = 'mock skill';

@@ -30,5 +30,5 @@ export interface SetCoverPokemonSetupWithSettings extends SetCoverPokemonSetup {
   averageHelps: number;
   totalIngredientsFloat: IngredientIndexToFloatAmount;
 }
-
+export type IngredientProducerWithSettings = SetCoverPokemonSetupWithSettings;
 export type IngredientProducersWithSettings = SetCoverPokemonSetupWithSettings[];

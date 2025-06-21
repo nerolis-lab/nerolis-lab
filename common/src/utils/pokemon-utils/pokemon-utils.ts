@@ -1,5 +1,5 @@
-import type { Pokemon } from '../../domain/pokemon';
-import { COMPLETE_POKEDEX } from '../../domain/pokemon';
+import type { Pokemon } from '../../types/pokemon';
+import { COMPLETE_POKEDEX } from '../../types/pokemon';
 
 export function getPokemon(name: string): Pokemon {
   const pkmn = COMPLETE_POKEDEX.find((pokemon) => pokemon.name.toLowerCase() === name.toLowerCase());

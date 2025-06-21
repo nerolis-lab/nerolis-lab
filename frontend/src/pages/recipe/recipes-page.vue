@@ -45,18 +45,15 @@
       <!-- Chip Group Row for filtering by recipe type -->
       <v-row dense class="flex-left">
         <v-chip-group v-model="selectedTypes" multiple>
-          <v-chip
+          <CustomChip
             v-for="chip in chips"
             :key="chip"
             :value="chip"
             :color="chip"
-            :variant="selectedTypes.includes(chip) ? 'elevated' : 'outlined'"
+            :is-selected="selectedTypes.includes(chip)"
             :append-avatar="recipeTypeImage(chip)"
-            :style="!selectedTypes.includes(chip) ? { color: `var(--${chip})` } : {}"
-            class="text-body-1"
-          >
-            {{ capitalize(chip) }}
-          </v-chip>
+            :text="capitalize(chip)"
+          />
         </v-chip-group>
       </v-row>
 
@@ -138,6 +135,7 @@
 </template>
 
 <script lang="ts">
+import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
 import IngredientSelection from '@/components/custom-components/input/ingredient-selection/ingredient-selection.vue'
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import RecipeTableDesktop from '@/components/recipe/recipe-table-desktop.vue'
@@ -151,7 +149,7 @@ import { capitalize, defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   name: 'RecipesPage',
-  components: { RecipeTableDesktop, RecipeTableMobile, NumberInput, IngredientSelection },
+  components: { RecipeTableDesktop, RecipeTableMobile, NumberInput, IngredientSelection, CustomChip },
   async setup() {
     const userStore = useUserStore()
     const { isMobile, isLargeDesktop } = useBreakpoint()

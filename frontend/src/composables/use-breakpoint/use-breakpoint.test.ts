@@ -5,8 +5,8 @@ import { defineComponent, nextTick } from 'vue'
 
 const TestComponent = defineComponent({
   setup() {
-    const { isMobile, viewportWidth, isLargeDesktop } = useBreakpoint()
-    return { isMobile, viewportWidth, isLargeDesktop }
+    const { isMobile, viewportWidth, isLargeDesktop, isTinyMobile } = useBreakpoint()
+    return { isMobile, viewportWidth, isLargeDesktop, isTinyMobile }
   },
   template: '<div></div>'
 })
@@ -50,6 +50,7 @@ describe('useBreakpoint composable', () => {
     expect(vm.isMobile).toBe(false)
   })
 })
+
 it('should correctly determine if the viewport is large desktop on mount', () => {
   window.innerWidth = 1920
   const wrapper = mount(TestComponent)
@@ -72,4 +73,60 @@ it('should correctly determine if the viewport is not large desktop', async () =
 
   expect(vm.viewportWidth).toBe(2000)
   expect(vm.isLargeDesktop).toBe(true)
+})
+
+it('should correctly determine if the viewport is tiny mobile on mount', () => {
+  window.innerWidth = 400
+  const wrapper = mount(TestComponent)
+  const vm = wrapper.vm as unknown as { isTinyMobile: boolean; viewportWidth: number }
+  expect(vm.viewportWidth).toBe(400)
+  expect(vm.isTinyMobile).toBe(true)
+})
+
+it('should correctly determine if the viewport is not tiny mobile on mount', () => {
+  window.innerWidth = 600
+  const wrapper = mount(TestComponent)
+  const vm = wrapper.vm as unknown as { isTinyMobile: boolean; viewportWidth: number }
+  expect(vm.viewportWidth).toBe(600)
+  expect(vm.isTinyMobile).toBe(false)
+})
+
+it('should correctly determine tiny mobile boundary at 500px', () => {
+  window.innerWidth = 499
+  const wrapper = mount(TestComponent)
+  const vm = wrapper.vm as unknown as { isTinyMobile: boolean; viewportWidth: number }
+  expect(vm.viewportWidth).toBe(499)
+  expect(vm.isTinyMobile).toBe(true)
+
+  wrapper.unmount()
+
+  window.innerWidth = 500
+  const wrapper2 = mount(TestComponent)
+  const vm2 = wrapper2.vm as unknown as { isTinyMobile: boolean; viewportWidth: number }
+  expect(vm2.viewportWidth).toBe(500)
+  expect(vm2.isTinyMobile).toBe(false)
+})
+
+it('should correctly update tiny mobile state on resize', async () => {
+  window.innerWidth = 600
+  const wrapper = mount(TestComponent)
+  const vm = wrapper.vm as unknown as { isTinyMobile: boolean; viewportWidth: number }
+  expect(vm.viewportWidth).toBe(600)
+  expect(vm.isTinyMobile).toBe(false)
+
+  window.innerWidth = 400
+  window.dispatchEvent(new Event('resize'))
+  await flushPromises()
+  await nextTick()
+
+  expect(vm.viewportWidth).toBe(400)
+  expect(vm.isTinyMobile).toBe(true)
+
+  window.innerWidth = 550
+  window.dispatchEvent(new Event('resize'))
+  await flushPromises()
+  await nextTick()
+
+  expect(vm.viewportWidth).toBe(550)
+  expect(vm.isTinyMobile).toBe(false)
 })

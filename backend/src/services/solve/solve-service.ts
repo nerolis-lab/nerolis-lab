@@ -42,12 +42,12 @@ class SolveServiceImpl {
     }
 
     const allProducers = [...nonSupportProduction, ...supportProduction];
-    const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient(allProducers);
+    const producersByIngredientIndex = groupProducersByIngredient(allProducers);
     const settingsCache: Map<string, SetCoverPokemonSetupWithSettings> = createSettingsLookupTable(allProducers);
 
     const cache = new Map();
     const maxTeamSize = input.maxTeamSize - input.includedMembers.length;
-    const setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cache);
+    const setCover = new SetCover(allProducers, producersByIngredientIndex, cache);
     const solutions = setCover.solveRecipe(flatRecipeIngredients, maxTeamSize);
 
     return enrichSolutions(solutions, settingsCache);

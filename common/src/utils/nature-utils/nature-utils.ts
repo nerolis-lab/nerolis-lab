@@ -1,5 +1,5 @@
-import type { Nature } from '../../domain/nature';
-import { NATURES } from '../../domain/nature';
+import type { Nature } from '../../types/nature';
+import { NATURES } from '../../types/nature';
 import { MathUtils } from '../math-utils';
 
 export function getNature(name: string) {

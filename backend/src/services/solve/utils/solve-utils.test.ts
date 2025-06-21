@@ -419,19 +419,15 @@ Set {
       });
       const member2 = mocks.setCoverPokemonWithSettings({
         totalIngredients: ingredientSetToIntFlat([
-          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[1] })
+          commonMocks.mockIngredientSet({ amount: 10, ingredient: ingredient.INGREDIENTS[0] })
         ])
       });
 
-      const { ingredientProducers: groupedProducers, producersByIngredientIndex } = groupProducersByIngredient([
-        member1,
-        member2
-      ]);
+      const producersByIngredientIndex = groupProducersByIngredient([member1, member2]);
 
-      expect(groupedProducers).toHaveLength(2);
       expect(producersByIngredientIndex).toHaveLength(ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
-      expect(producersByIngredientIndex[0]).toEqual([0]); // one producer of apple
-      expect(producersByIngredientIndex[1]).toEqual([1]); // one producer of milk
+      expect(producersByIngredientIndex[0]).toEqual([0, 1]); // two producers of apple
+      expect(producersByIngredientIndex[1]).toEqual([]); // no producer of milk
     });
 
     it('should sort producers of same ingredient by amount DESC', () => {
@@ -446,14 +442,9 @@ Set {
         ])
       });
 
-      const { ingredientProducers, producersByIngredientIndex } = groupProducersByIngredient([member1, member2]);
-      expect(ingredientProducers).toHaveLength(2);
-      expect(ingredientProducers[0].pokemonSet.pokemon).toEqual(member2.pokemonSet.pokemon);
-      expect(ingredientProducers[1].pokemonSet.pokemon).toEqual(member1.pokemonSet.pokemon);
+      const producersByIngredientIndex = groupProducersByIngredient([member1, member2]);
       expect(producersByIngredientIndex).toHaveLength(ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
       expect(producersByIngredientIndex[0]).toHaveLength(2); // two producers of apple
-      expect(ingredientProducers[producersByIngredientIndex[0][0]].totalIngredients[0]).toBe(10);
-      expect(ingredientProducers[producersByIngredientIndex[0][1]].totalIngredients[0]).toBe(5);
     });
   });
 

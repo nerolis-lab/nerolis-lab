@@ -1,4 +1,4 @@
-import type { Pokemon } from '../../domain/pokemon';
+import type { Pokemon } from '../../types/pokemon';
 
 export function evolvesFrom(previousForm: Pokemon): Pokemon {
   return {

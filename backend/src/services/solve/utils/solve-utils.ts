@@ -360,10 +360,7 @@ export function convertAAAToAllIngredientSets(
   return result;
 }
 
-export function groupProducersByIngredient(producers: SetCoverPokemonSetupWithSettings[]): {
-  ingredientProducers: IngredientProducers;
-  producersByIngredientIndex: Array<Array<number>>;
-} {
+export function groupProducersByIngredient(producers: SetCoverPokemonSetupWithSettings[]): Array<Array<number>> {
   const ingredientProducers: IngredientProducers = producers.map((producer) => ({
     pokemonSet: producer.pokemonSet,
     totalIngredients: producer.totalIngredients
@@ -390,7 +387,7 @@ export function groupProducersByIngredient(producers: SetCoverPokemonSetupWithSe
     producersByIngredientIndex[ingredientIndex] = producersOfIngredientIndex;
   }
 
-  return { ingredientProducers, producersByIngredientIndex };
+  return producersByIngredientIndex;
 }
 
 export function pokemonProductionToRecipeSolutions(

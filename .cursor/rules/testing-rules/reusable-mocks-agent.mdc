@@ -1,0 +1,139 @@
+---
+description: `Rule for creating and using reusable mock interfaces in test files. This rule should be applied when developers create test files that use mock data, particularly when the mock data could be reused across multiple test files. It ensures consistency in mock creation patterns and promotes DRY principles by encouraging the use of centralized mocks rather than inline mock data. Apply this when writing tests for services, components, or utilities that use common data structures or API responses that could benefit other test files.`
+globs:
+alwaysApply: false
+---
+
+# Reusable Mocks Rule
+
+## Critical Rules
+
+- **Create centralized mocks**: For common interfaces that see reusability across multiple test files, create mock functions in the appropriate `mocks/` folder instead of inline mock data
+- **Follow naming convention**: Mock files should be named `mock-{type}.ts` (e.g., `mock-tierlist.ts`, `mock-user.ts`)
+- **Use factory functions**: Create mock functions that accept optional partial attributes for customization: `function mockType(attrs?: Partial<Type>): Type`
+- **Export through index**: Always export mocks through the folder's `index.ts` file using `export * from './mock-{type}'`
+- **Provide multiple variants**: For complex scenarios, provide additional helper functions like `multipleMockTypes()` for arrays of mock data
+- **Location hierarchy**: Place mocks in the most appropriate package:
+  - `common/src/vitest/mocks/` - for shared types used across frontend, backend, and common
+  - `frontend/src/vitest/mocks/` - for frontend-specific mocks
+  - `backend/src/vitest/mocks/` - for backend-specific mocks
+- **Import pattern**: Use the established import pattern: `import { commonMocks } from 'sleepapi-common'` or `import { mocks } from '@/vitest'`
+- **Build after changes**: After adding new mocks to common, run `npm run build` in the common package to make them available to other packages
+
+## Examples
+
+<example title="Creating Reusable Mock in Common">
+```typescript
+// common/src/vitest/mocks/tierlist/mock-tierlist.ts
+import type { TierlistSettings, PokemonWithTiering } from '../../../types/tierlist';
+
+export function tierlistSettings(attrs?: Partial<TierlistSettings>): TierlistSettings {
+  return {
+    camp: false,
+    level: 50,
+    ...attrs
+  };
+}
+
+export function pokemonWithTiering(attrs?: Partial<PokemonWithTiering>): PokemonWithTiering {
+  return {
+    pokemonWithSettings: {
+      pokemon: 'PIKACHU',
+      ingredientList: [{ amount: 1, name: 'FANCY_APPLE' }],
+      totalIngredients: new Float32Array([1, 0, 0]),
+      critMultiplier: 1.2,
+      averageWeekdayPotSize: 100,
+      settings: {
+        level: 50,
+        nature: 'ADAMANT',
+        subskills: [],
+        skillLevel: 6,
+        carrySize: 10,
+        ribbon: 0,
+        externalId: 'pikachu-1'
+      }
+    },
+    contributions: [],
+    score: 1000,
+    tier: 'S' as const,
+    ...attrs
+  };
+}
+
+export function multiplePokemonWithTiering(): PokemonWithTiering[] {
+  return [
+    pokemonWithTiering(),
+    pokemonWithTiering({ 
+      pokemonWithSettings: { ...pokemonWithTiering().pokemonWithSettings, pokemon: 'CHARIZARD' },
+      score: 1500 
+    })
+  ];
+}
+```
+
+```typescript
+// common/src/vitest/mocks/tierlist/index.ts
+export * from './mock-tierlist';
+```
+
+```typescript
+// common/src/vitest/mocks/index.ts
+export * from './tierlist';
+// ... other exports
+```
+</example>
+
+<example title="Using Reusable Mocks in Tests">
+```typescript
+// frontend/src/services/tierlist-service.test.ts
+import { commonMocks, type TierlistSettings } from 'sleepapi-common'
+
+describe('TierlistService', () => {
+  it('should fetch tierlist data', async () => {
+    const mockSettings = commonMocks.tierlistSettings({ level: 60 })
+    const mockData = commonMocks.multiplePokemonWithTiering()
+    
+    // Test implementation using reusable mocks
+  })
+})
+```
+</example>
+
+<example type="invalid" title="Inline Mock Data Instead of Reusable Mocks">
+```typescript
+// BAD: Inline mock data that could be reused
+const mockTierlistSettings = {
+  camp: false,
+  level: 50
+};
+
+const mockPokemonWithTiering = [
+  {
+    pokemonWithSettings: {
+      pokemon: 'PIKACHU',
+      // ... lots of mock data
+    },
+    score: 1000
+  }
+];
+```
+</example>
+
+<example type="invalid" title="Not Using Factory Functions">
+```typescript
+// BAD: Hard-coded mock without customization options
+export const mockTierlistSettings = {
+  camp: false,
+  level: 50
+};
+
+// GOOD: Factory function with optional customization
+export function tierlistSettings(attrs?: Partial<TierlistSettings>): TierlistSettings {
+  return {
+    camp: false,
+    level: 50,
+    ...attrs
+  };
+}
+```
+</example> 

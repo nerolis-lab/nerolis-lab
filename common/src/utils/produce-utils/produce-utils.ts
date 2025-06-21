@@ -1,4 +1,4 @@
-import type { Produce } from '../../api/production/produce';
+import type { Produce } from '../../types/production';
 
 export function multiplyProduce(produce: Produce, multiplyAmount: number): Produce {
   return {

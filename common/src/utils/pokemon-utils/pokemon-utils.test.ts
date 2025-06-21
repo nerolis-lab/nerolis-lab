@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { PINSIR } from '../../domain/pokemon';
+import { PINSIR } from '../../types/pokemon';
 import { getPokemon } from './pokemon-utils';
 
 describe('getPokemon', () => {

@@ -24,6 +24,13 @@ config.global.stubs = {
 
 vi.stubGlobal('visualViewport', new EventTarget())
 
+const intersectionObserverMock = () => ({
+  observe: () => null,
+  unobserve: () => null,
+  disconnect: () => null
+})
+vi.stubGlobal('IntersectionObserver', intersectionObserverMock)
+
 if (typeof window === 'undefined') {
   vi.stubGlobal('window', {
     addEventListener: vi.fn(),
@@ -36,10 +43,34 @@ if (typeof window === 'undefined') {
   })
 }
 
+// Add missing window properties that components might need
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'innerWidth', {
+    writable: true,
+    configurable: true,
+    value: 1024
+  })
+  Object.defineProperty(window, 'innerHeight', {
+    writable: true,
+    configurable: true,
+    value: 768
+  })
+}
+
 global.ResizeObserver = ResizeObserver
+global.requestAnimationFrame = vi.fn(() => 123)
+global.cancelAnimationFrame = vi.fn()
 
 beforeEach(() => {
   setActivePinia(createPinia())
+
+  vi.mock('vuetify/components', async () => {
+    const actual = await vi.importActual('vuetify/components')
+    return {
+      ...actual,
+      VImg: { name: 'VImg', template: '<div class="v-img"><slot /></div>' }
+    }
+  })
 })
 
 afterEach(() => {

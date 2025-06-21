@@ -1,0 +1,29 @@
+---
+description: `Test self-verification rule that applies when creating, modifying, or debugging test files. This rule should be applied when developers ask to create tests, write test files, fix failing tests, or need verification that tests work correctly. It ensures tests are automatically executed after creation to validate they pass and work as expected, providing immediate feedback on test quality and correctness.`
+globs: 
+alwaysApply: false
+---
+
+# Test Self-Verification
+
+## Critical Rules
+
+- **Always run tests after creation/modification:** When creating or modifying any test file, immediately execute the test using `npx vitest --run -- testname.test.ts` to verify it works and passes
+- **Self-feedback loop:** Use the test results to identify and fix any issues before considering the task complete
+- **Command format:** Use the exact command format `npx vitest --run -- {testname}.test.ts` where `{testname}` is the specific test file name
+- **Fix iterations:** If tests fail, analyze the output, fix the issues, and re-run the tests until they pass
+- **Complete verification:** Only consider test creation complete when all tests pass successfully
+- **Parallel execution:** When creating multiple test files, run each test individually to ensure specific validation per file
+
+## Examples
+
+<example title="Creating and Verifying a New Test File">
+  - Step 1: Create the test file using `edit_file` or `search_replace`
+  - Step 2: Immediately run `npx vitest --run -- newfeature.test.ts` to validate the test
+  - Step 3: If tests fail, analyze output, fix issues, and re-run until all tests pass
+  - Step 4: Confirm completion only after successful test execution
+</example>
+
+<example type="invalid" title="Creating Test Without Running It">
+  - Creating a test file and stopping without executing `npx vitest --run -- testname.test.ts` to verify it works. This violates the self-verification requirement.
+</example> 

@@ -30,6 +30,14 @@ async function initializeApp() {
       accent: '#9A95C3',
       strength: '#FFB81F',
 
+      'tier-s': '#E63946',
+      'tier-a': '#F37933',
+      'tier-b': '#FFB81F',
+      'tier-c': '#EFD269',
+      'tier-d': '#99C418',
+      'tier-e': '#9CE9ED',
+      'tier-f': '#B9A0E9',
+
       admin: '#E63946',
       supporter: '#FFB81F',
 
