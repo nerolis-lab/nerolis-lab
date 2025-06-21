@@ -7,7 +7,26 @@ import { DatabaseInsertError } from '@src/domain/error/database/database-error.j
 import type { Filter } from '@src/utils/database-utils/find-filter.js';
 import { inArray, like } from '@src/utils/database-utils/find-filter.js';
 import type { BaseUser, GetFriendsResponse } from 'sleepapi-common';
-import { NotificationType, uuid } from 'sleepapi-common';
+import { NotificationType, uuid, SleepAPIError } from 'sleepapi-common';
+
+// Define custom error classes
+export class UserNotFoundError extends SleepAPIError {
+  constructor(message: string) {
+    super('UserNotFoundError', 404, message);
+  }
+}
+
+export class CannotRemoveSelfError extends SleepAPIError {
+  constructor(message: string) {
+    super('CannotRemoveSelfError', 400, message);
+  }
+}
+
+export class FriendshipNotFoundError extends SleepAPIError {
+  constructor(message: string) {
+    super('FriendshipNotFoundError', 404, message);
+  }
+}
 
 class FriendServiceImpl {
   public async getFriends(user: DBUser): Promise<GetFriendsResponse> {
@@ -86,6 +105,71 @@ class FriendServiceImpl {
       fk_receiver_id: user.id,
       template: NotificationType.FriendRequest
     });
+  }
+
+  public async removeFriend(user: DBUser, friendCodeToRemove: string) {
+    console.log(`User [${user.id}] attempting to remove friend with code [${friendCodeToRemove}]`);
+
+    let friendToRemove: DBUser;
+    try {
+      friendToRemove = await UserDAO.get({ friend_code: friendCodeToRemove });
+    } catch (e) {
+      // Assuming UserDAO.get() throws DatabaseNotFoundError if not found,
+      // which is a reasonable assumption based on AbstractDAO
+      console.error(
+        `Error finding user with friend code [${friendCodeToRemove}]: ${e instanceof Error ? e.message : e}`
+      );
+      // Let the original error propagate or throw a custom one
+      // For now, let's throw a more specific UserNotFoundError
+      throw new UserNotFoundError(`User with friend code [${friendCodeToRemove}] not found.`);
+    }
+
+    if (friendToRemove.id === user.id) {
+      const message = `User [${user.id}] cannot remove themselves.`;
+      console.error(message);
+      throw new CannotRemoveSelfError(message);
+    }
+
+    const deleteFilter: Filter<Static<typeof FriendDAO.schema>> = {
+      some: {
+        fk_user1_id: user.id,
+        fk_user2_id: friendToRemove.id
+      },
+      // Knex 'orWhere' equivalent for the second condition
+      // This is a simplified representation. The actual implementation in AbstractDAO #createQuery
+      // handles 'some' by ORing conditions. We need to ensure our filter reflects that.
+      // The filter should be: (fk_user1_id = user.id AND fk_user2_id = friendToRemove.id) OR (fk_user1_id = friendToRemove.id AND fk_user2_id = user.id)
+      // The current 'some' in AbstractDAO seems to only work for OR conditions on the same field or different fields but not complex AND/OR like this.
+      // Let's try deleting twice, once for each combination, or refine the filter if possible.
+      // For now, we'll try a more direct approach with two separate delete attempts or a more complex filter.
+      // The AbstractDAO's `delete` method takes a single filter.
+      // We need to construct a filter that represents the OR condition for the two pair combinations.
+      // This is tricky with the current Filter type.
+      // Let's try deleting the first combination, and if 0 rows affected, try the second.
+    };
+
+    // Attempt to delete (user.id, friendToRemove.id)
+    let deletedCount = await FriendDAO.delete({
+      fk_user1_id: user.id,
+      fk_user2_id: friendToRemove.id,
+    });
+
+    // If not found, attempt to delete (friendToRemove.id, user.id)
+    if (deletedCount === 0) {
+      deletedCount = await FriendDAO.delete({
+        fk_user1_id: friendToRemove.id,
+        fk_user2_id: user.id,
+      });
+    }
+
+    if (deletedCount === 0) {
+      const message = `Friendship not found between user [${user.id}] and user [${friendToRemove.id}].`;
+      console.warn(message);
+      throw new FriendshipNotFoundError(message);
+    }
+
+    console.log(`Successfully removed friendship between user [${user.id}] and user [${friendToRemove.id}]. Deleted records: ${deletedCount}`);
+    // No explicit return value needed, or return void/boolean
   }
 }
 
