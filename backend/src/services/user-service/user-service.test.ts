@@ -8,7 +8,7 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { UpdateUserRequest } from 'sleepapi-common';
 import { MAX_POT_SIZE, Roles, uuid, type IslandShortName } from 'sleepapi-common';
-import { deleteUser, getUserSettings, updateUser, upsertUserSettings } from './user-service.js';
+import { deleteUser, getUserSettings, updateFriendCode, updateUser, upsertUserSettings } from './user-service.js';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
@@ -51,6 +51,48 @@ describe('updateUser', () => {
         friend_code: 'TESTFC'
       })
     );
+  });
+});
+
+describe('updateFriendCode', () => {
+  it('should update friend code and return user data excluding sensitive IDs', async () => {
+    const user: DBUser = mocks.dbUser({
+      external_id: uuid.v4(),
+      name: 'Test User',
+      role: Roles.Default,
+      friend_code: 'OLDCODE',
+      google_id: 'google-id',
+      discord_id: 'discord-id',
+      patreon_id: 'patreon-id'
+    });
+    await UserDAO.insert(user);
+
+    const newFriendCode = 'NEWCODE';
+    // UserDAO.update is automatically mocked by DaoFixture or similar if it's a real DB interaction
+    // If UserDAO.update needs specific mock behavior for this test:
+    const mockUpdatedUser = { ...user, friend_code: newFriendCode, updated_at: new Date() };
+    const updateSpy = vi.spyOn(UserDAO, 'update').mockResolvedValue(mockUpdatedUser);
+
+    const result = await updateFriendCode(user, newFriendCode);
+
+    expect(updateSpy).toHaveBeenCalledWith(expect.objectContaining({
+      id: user.id,
+      friend_code: newFriendCode,
+    }));
+
+    // Check that sensitive IDs are not returned
+    expect(result).not.toHaveProperty('google_id');
+    expect(result).not.toHaveProperty('discord_id');
+    expect(result).not.toHaveProperty('patreon_id');
+
+    expect(result).toEqual(expect.objectContaining({
+      external_id: user.external_id,
+      name: user.name,
+      role: user.role,
+      friend_code: newFriendCode, // new code
+    }));
+
+    updateSpy.mockRestore();
   });
 });
 
