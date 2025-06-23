@@ -109,8 +109,7 @@ describe('CompareSettings', () => {
 
     await wrapper.vm.$nextTick()
 
-    const campIcons = wrapper.findAll('.v-img')
-    const campIcon = campIcons.find((img) => img.html().includes('/images/misc/camp.png'))
+    const campIcon = wrapper.find('[data-testid="camp-image"]')
     expect(campIcon).toBeDefined()
     expect(campIcon?.classes()).toContain('camp-disabled')
   })
@@ -142,8 +141,7 @@ describe('CompareSettings', () => {
 
     await wrapper.vm.$nextTick()
 
-    const campIcons = wrapper.findAll('.v-img')
-    const campIcon = campIcons.find((img) => img.html().includes('/images/misc/camp.png'))
+    const campIcon = wrapper.find('[data-testid="camp-image"]')
     expect(campIcon).toBeDefined()
     expect(campIcon?.classes()).not.toContain('camp-disabled')
   })

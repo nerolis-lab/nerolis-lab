@@ -62,7 +62,9 @@
       <!-- Dream shard output with crit info -->
       <div class="flex-center mb-1">
         <v-img src="/images/unit/shard.png" height="20" width="20" alt="dream shards" title="dream shards"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ totalDreamShardValue }} total</span>
+        <span class="font-weight-medium text-no-wrap text-center ml-2" data-testid="dream-shard-total">
+          {{ totalDreamShardValue }} total</span
+        >
       </div>
     </v-col>
   </v-row>

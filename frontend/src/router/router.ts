@@ -33,6 +33,7 @@ export enum RouteName {
 const CalculatorPage = () => import('@/pages/calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
+const TierlistPage = () => import('@/pages/tierlist/tierlist-page.vue')
 
 // User
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
@@ -75,6 +76,30 @@ const router = createRouter({
       path: '/recipes',
       name: RouteName.Recipes,
       component: RecipesPage
+    },
+    {
+      path: '/tierlist',
+      name: 'Tierlist',
+      component: TierlistPage,
+      beforeEnter: (to, from, next) => {
+        if (to.query.level === undefined || to.query.camp === undefined) {
+          next({
+            name: 'Tierlist',
+            query: {
+              level: to.query.level ?? '60',
+              camp: to.query.camp ?? 'true',
+              ...to.query
+            },
+            replace: true
+          })
+        } else {
+          next()
+        }
+      },
+      props: (route) => ({
+        level: route.query.level ? Number(route.query.level) : undefined,
+        camp: route.query.camp ? route.query.camp === 'true' : undefined
+      })
     },
     {
       path: '/settings',

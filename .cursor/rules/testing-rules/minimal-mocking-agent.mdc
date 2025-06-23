@@ -1,0 +1,78 @@
+---
+description: `Rule for minimizing mocks in unit tests to only what's necessary. This rule should be applied when developers write or review test files, especially when considering what to mock vs what to test with real implementations. It ensures we only mock external dependencies that genuinely don't work in test environments (HTTP requests, database calls, file system operations, etc.) rather than internal utility functions that work perfectly fine in tests. Apply this when writing new tests, reviewing existing tests, or when developers are over-mocking utility functions.`
+globs:
+alwaysApply: false
+---
+
+# Minimal Mocking in Unit Tests
+
+## Critical Rules
+
+- **Mock Only External Dependencies**: Only mock HTTP requests, database calls, file system operations, external APIs, and browser-specific features that don't work in test environments
+- **Don't Mock Internal Utilities**: Utility functions like color calculators, formatters, validators, and simple transformations should use their real implementations in tests
+- **Test Real Behavior**: Prefer testing actual behavior over mocked implementations - this gives better confidence in your code
+- **Mock Sparingly**: If a function works fine in a test environment, don't mock it. Let it run naturally.
+- **Mock Composables When Needed**: Vue composables like `useBreakpoint` may need mocking for specific test scenarios, but only when testing responsive behavior
+
+## Examples
+
+<example title="❌ Over-Mocking (Bad)">
+  ```typescript
+  // DON'T do this - these work fine in tests!
+  vi.mock('@/services/utils/color-utils', () => ({
+    rarityColor: vi.fn(() => 'purple'),
+    withOpacity: vi.fn(() => 'rgba(0,0,0,0.5)')
+  }))
+  
+  vi.mock('@/services/utils/image-utils', () => ({
+    avatarImage: vi.fn(() => '/mock.png')
+  }))
+  
+  vi.mock('sleepapi-common', () => ({
+    localizeNumber: vi.fn(() => '1,234')
+  }))
+  ```
+</example>
+
+<example title="✅ Minimal Mocking (Good)">
+  ```typescript
+  // Only mock what doesn't work in tests
+  vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
+    useBreakpoint: vi.fn(() => ({
+      isMobile: ref(false),
+      isLargeDesktop: ref(false)
+    }))
+  }))
+  
+  // Mock HTTP requests
+  vi.mock('@/services/api/pokemon-api', () => ({
+    fetchPokemonData: vi.fn()
+  }))
+  ```
+</example>
+
+<example type="invalid" title="Testing Mock Calls Instead of Behavior">
+  ```typescript
+  // Don't test that mocks were called
+  expect(colorUtils.rarityColor).toHaveBeenCalledWith('gold')
+  
+  // Test actual behavior instead
+  expect(wrapper.text()).toContain('some expected result')
+  ```
+</example>
+
+## When to Mock
+
+**✅ DO Mock:**
+- HTTP requests (`fetch`, `axios`)
+- Database calls
+- File system operations
+- External APIs
+- Browser APIs that don't exist in test environments
+- Vue composables when testing specific reactive behavior
+
+**❌ DON'T Mock:**
+- Utility functions (formatters, calculators, validators)
+- Internal services that don't make external calls
+- Simple transformations and data manipulation
+- Functions from libraries that work in Node.js test environment 

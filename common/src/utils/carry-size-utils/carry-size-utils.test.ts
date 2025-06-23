@@ -1,9 +1,9 @@
-import { emptyProduce, type Produce } from '../../api/production/produce';
-import { BELUE, LEPPA } from '../../domain/berry/berries';
-import { SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../domain/ingredient/ingredients';
-import { HelperBoost } from '../../domain/mainskill/mainskills/helper-boost';
-import type { Pokemon } from '../../domain/pokemon';
-import { INVENTORY_S } from '../../domain/subskill/subskills';
+import { BELUE, LEPPA } from '../../types/berry/berries';
+import { SNOOZY_TOMATO, TASTY_MUSHROOM } from '../../types/ingredient/ingredients';
+import { HelperBoost } from '../../types/mainskill/mainskills/helper-boost';
+import type { Pokemon } from '../../types/pokemon';
+import { emptyProduce, type Produce } from '../../types/production/produce';
+import { INVENTORY_S } from '../../types/subskill/subskills';
 import { mockPokemon } from '../../vitest/mocks/pokemon/mock-pokemon';
 import { emptyBerryInventory } from '../berry-utils/berry-utils';
 import { prettifyIngredientDrop } from '../ingredient-utils/ingredient-utils';

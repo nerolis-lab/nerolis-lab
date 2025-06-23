@@ -1,0 +1,88 @@
+---
+description: 
+globs: frontend/**/*.test.ts, frontend/**/*.spec.ts
+alwaysApply: false
+---
+
+# Frontend Vue Testing Patterns
+
+## Critical Rules
+
+- **Wrapper Declaration**: Always declare wrapper as `let wrapper: VueWrapper<InstanceType<typeof ComponentName>>`
+- **Store Declaration**: For Pinia stores, use `let storeName: ReturnType<typeof useStoreName>` pattern
+- **BeforeEach Setup**: Use `beforeEach(() => { ... })` to mount components and initialize stores
+- **AfterEach Cleanup**: Always include `afterEach(() => { wrapper.unmount() })` for proper cleanup
+- **Store Reassignment**: Reassign stores in beforeEach using `storeName = useStoreName()`
+- **Component Mount**: Mount components with `wrapper = mount(ComponentName, { props: { ... } })`
+- **Mock Data Setup**: Set up mock data after store initialization but before component mount
+- **Consistent Imports**: Import VueWrapper type from '@vue/test-utils' and mount function
+
+## Examples
+
+<example title="Vue Component Test with Pinia Store">
+  ```typescript
+  import { useTeamStore } from '@/stores/team/team-store'
+  import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+  import type { VueWrapper } from '@vue/test-utils'
+  import { mount } from '@vue/test-utils'
+  import { beforeEach, afterEach, describe, expect, it } from 'vitest'
+  import MyComponent from './my-component.vue'
+
+  describe('MyComponent', () => {
+    let wrapper: VueWrapper<InstanceType<typeof MyComponent>>
+    let teamStore: ReturnType<typeof useTeamStore>
+    let pokemonStore: ReturnType<typeof usePokemonStore>
+
+    beforeEach(() => {
+      teamStore = useTeamStore()
+      pokemonStore = usePokemonStore()
+      
+      // Setup mock data
+      const mockData = createMockData()
+      teamStore.someProperty = mockData
+      
+      wrapper = mount(MyComponent, {
+        props: { someProp: 'value' }
+      })
+    })
+
+    afterEach(() => {
+      wrapper.unmount()
+    })
+
+    it('renders correctly', () => {
+      expect(wrapper.exists()).toBe(true)
+    })
+  })
+  ```
+</example>
+
+<example type="invalid" title="Incorrect Wrapper Declaration">
+  ```typescript
+  // ❌ Wrong - missing proper typing
+  let wrapper: any
+  
+  // ❌ Wrong - incorrect VueWrapper typing
+  let wrapper: VueWrapper
+  
+  // ❌ Wrong - using const instead of let
+  const wrapper: VueWrapper<InstanceType<typeof MyComponent>>
+  ```
+</example>
+
+<example type="invalid" title="Missing Cleanup">
+  ```typescript
+  describe('MyComponent', () => {
+    let wrapper: VueWrapper<InstanceType<typeof MyComponent>>
+    
+    beforeEach(() => {
+      wrapper = mount(MyComponent)
+    })
+    
+    // ❌ Missing afterEach cleanup
+    it('test', () => {
+      expect(wrapper.exists()).toBe(true)
+    })
+  })
+  ```
+</example> 

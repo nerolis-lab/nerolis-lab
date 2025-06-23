@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import type { PokemonInstanceExt } from '../../domain/instance/pokemon-instance';
-import type { Subskill } from '../../domain/subskill/subskill';
+import type { PokemonInstanceExt } from '../../types/instance/pokemon-instance';
+import type { Subskill } from '../../types/subskill/subskill';
 import {
   HELPING_SPEED_M,
   HELPING_SPEED_S,
@@ -9,7 +9,7 @@ import {
   INGREDIENT_FINDER_S,
   INVENTORY_L,
   SUBSKILLS
-} from '../../domain/subskill/subskills';
+} from '../../types/subskill/subskills';
 import { filterMembersWithSubskill, getSubskill, getSubskillNames, limitSubSkillsToLevel } from './subskill-utils';
 
 describe('getSubskillNames', () => {

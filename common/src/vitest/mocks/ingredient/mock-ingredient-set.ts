@@ -3,7 +3,7 @@ import type {
   IngredientIndexToIntAmount,
   IngredientSet,
   IngredientSetSimple
-} from '../../../domain/ingredient/ingredient';
+} from '../../../types/ingredient/ingredient';
 import { ingredientSetToFloatFlat, ingredientSetToIntFlat } from '../../../utils/ingredient-utils/ingredient-utils';
 import { mockIngredient } from './mock-ingredient';
 

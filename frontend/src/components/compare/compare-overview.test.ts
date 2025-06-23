@@ -101,7 +101,7 @@ describe('CompareOverview', () => {
 
     await nextTick()
 
-    const ingredientImages = wrapper.findAll('tbody tr td:nth-child(3) .v-img img')
+    const ingredientImages = wrapper.findAll('[data-testid="ingredient-image"]')
     expect(ingredientImages.length).toBe(2)
     expect(ingredientImages[0].attributes('src')).toBe('/images/ingredient/apple.png')
     expect(ingredientImages[1].attributes('src')).toBe('/images/ingredient/honey.png')

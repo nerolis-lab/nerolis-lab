@@ -49,6 +49,7 @@
                     :src="ingredientImage(ingredientSet.ingredient.name.toLowerCase())"
                     height="24"
                     width="24"
+                    data-testid="spilled-ingredient-image"
                   ></v-img>
                   <div class="text-center">
                     {{ ingredientSet.amount }}
@@ -60,7 +61,12 @@
 
           <template #item.sneakySnack="{ item }">
             <div class="flex-center" style="padding-right: 11px">
-              <v-img :src="berryImage(item.sneakySnackProduce.berry)" height="24" width="24"></v-img>
+              <v-img
+                :src="berryImage(item.sneakySnackProduce.berry)"
+                height="24"
+                width="24"
+                data-testid="sneaky-snack-image"
+              ></v-img>
             </div>
             <div class="text-center" style="padding-right: 11px">
               {{ item.sneakySnack }}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { MAX_POKEMON_LEVEL } from '../../domain/constants';
+import { MAX_POKEMON_LEVEL } from '../../types/constants';
 import {
   BEAN_SAUSAGE,
   FANCY_APPLE,
@@ -10,8 +10,8 @@ import {
   ROUSING_COFFEE,
   SOOTHING_CACAO,
   WARMING_GINGER
-} from '../../domain/ingredient/ingredients';
-import { ADAMANT, BASHFUL, CAREFUL, HARDY, JOLLY, LONELY, MILD, NAUGHTY, QUIET, SASSY } from '../../domain/nature';
+} from '../../types/ingredient/ingredients';
+import { ADAMANT, BASHFUL, CAREFUL, HARDY, JOLLY, LONELY, MILD, NAUGHTY, QUIET, SASSY } from '../../types/nature';
 import {
   CRESSELIA,
   EEVEE,
@@ -23,7 +23,7 @@ import {
   RAICHU,
   TOGEKISS,
   UMBREON
-} from '../../domain/pokemon';
+} from '../../types/pokemon';
 import {
   BERRY_FINDING_S,
   DREAM_SHARD_BONUS,
@@ -39,7 +39,7 @@ import {
   SKILL_TRIGGER_M,
   SKILL_TRIGGER_S,
   SLEEP_EXP_BONUS
-} from '../../domain/subskill/subskills';
+} from '../../types/subskill/subskills';
 import type { PokemonInstanceWithoutRP } from '../../utils/rp-utils/rp';
 import { RP } from '../../utils/rp-utils/rp';
 import { uuid } from '../../utils/uuid-utils';

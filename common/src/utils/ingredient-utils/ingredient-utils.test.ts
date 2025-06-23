@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { IngredientSet, IngredientSetSimple } from '../../domain/ingredient/ingredient';
+import type { Logger } from '../../prototype/logger/logger';
+import type { IngredientSet, IngredientSetSimple } from '../../types/ingredient/ingredient';
 import {
   BEAN_SAUSAGE,
   FANCY_APPLE,
@@ -11,12 +12,11 @@ import {
   ROUSING_COFFEE,
   SOFT_POTATO,
   SOOTHING_CACAO
-} from '../../domain/ingredient/ingredients';
-import { DARKRAI } from '../../domain/pokemon/all-pokemon';
-import { PINSIR } from '../../domain/pokemon/ingredient-pokemon';
-import type { PokemonWithIngredients } from '../../domain/pokemon/pokemon';
-import '../../domain/recipe/recipe'; // Import recipes to populate ingredient bonus cache
-import type { Logger } from '../../prototype/logger/logger';
+} from '../../types/ingredient/ingredients';
+import { DARKRAI } from '../../types/pokemon/all-pokemon';
+import { PINSIR } from '../../types/pokemon/ingredient-pokemon';
+import type { PokemonWithIngredients } from '../../types/pokemon/pokemon';
+import '../../types/recipe/recipe'; // Import recipes to populate ingredient bonus cache
 import { commonMocks } from '../../vitest';
 import {
   calculateAveragePokemonIngredientSet,

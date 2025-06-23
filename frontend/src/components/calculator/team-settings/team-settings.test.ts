@@ -27,7 +27,7 @@ describe('TeamSettings', () => {
     const teamStore = useTeamStore()
     const toggleCampSpy = vi.spyOn(teamStore, 'toggleCamp')
 
-    const campButton = wrapper.find('div[aria-label="camp icon"]')
+    const campButton = wrapper.find('[data-testid="camp-image"]')
     await campButton.trigger('click')
     expect(wrapper.vm.isCampButtonDisabled).toBe(true)
     expect(toggleCampSpy).toHaveBeenCalled()

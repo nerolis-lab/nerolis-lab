@@ -17,6 +17,14 @@ export function hexToRgba(hex: string, opacity: number) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`
 }
 
+export function withOpacity(color: string, opacity: number = 0.1) {
+  if (color.startsWith('#')) {
+    return hexToRgba(color, opacity)
+  }
+
+  return `rgba(var(--v-theme-${color}), ${opacity})`
+}
+
 export function rarityColor(subskill: Subskill) {
   return `subskill${capitalize(subskill.rarity)}`
 }

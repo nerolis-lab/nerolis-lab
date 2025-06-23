@@ -7,6 +7,7 @@ import { mount } from '@vue/test-utils'
 import { MathUtils, ingredient, type MemberProduction } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
+import { berryImage, ingredientImage } from '@/services/utils/image-utils'
 
 describe('CompareMisc', () => {
   let wrapper: VueWrapper<InstanceType<typeof CompareMisc>>
@@ -108,10 +109,10 @@ describe('CompareMisc', () => {
 
     await nextTick()
 
-    const spilledIngredientImages = wrapper.findAll('tbody tr td:nth-child(5) .v-img img')
+    const spilledIngredientImages = wrapper.findAll('[data-testid="spilled-ingredient-image"]')
     expect(spilledIngredientImages.length).toBe(2)
-    expect(spilledIngredientImages[0].attributes('src')).toBe('/images/ingredient/apple.png')
-    expect(spilledIngredientImages[1].attributes('src')).toBe('/images/ingredient/honey.png')
+    expect(spilledIngredientImages[0].attributes('src')).toBe(ingredientImage(ingredient.FANCY_APPLE.name))
+    expect(spilledIngredientImages[1].attributes('src')).toBe(ingredientImage(ingredient.HONEY.name))
   })
 
   it('displays sneaky snack image correctly', async () => {
@@ -126,8 +127,8 @@ describe('CompareMisc', () => {
 
     await nextTick()
 
-    const sneakySnackImage = wrapper.find('tbody tr td:nth-child(6) .v-img img')
-    expect(sneakySnackImage.attributes('src')).toBe('/images/berries/grepa.png')
+    const sneakySnackImage = wrapper.find('[data-testid="sneaky-snack-image"]')
+    expect(sneakySnackImage.attributes('src')).toBe(berryImage(mockPokemon.pokemon.berry))
   })
 
   it('displays the correct number of headers', () => {

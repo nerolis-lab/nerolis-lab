@@ -38,7 +38,7 @@ describe('RibbonButton', () => {
 
     const img = wrapper.find('img')
     expect(img.attributes('src')).toMatchInlineSnapshot(`"/images/misc/ribbon1.png"`)
-    const avatarImg = wrapper.find('.v-img')
+    const avatarImg = wrapper.find('[data-testid="ribbon-image"]')
     expect(avatarImg.classes()).toContain('greyScale')
   })
 

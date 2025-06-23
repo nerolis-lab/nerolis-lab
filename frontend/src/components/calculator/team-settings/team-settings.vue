@@ -15,7 +15,12 @@
     <v-col cols="12/5" class="flex-center">
       <v-btn :disabled="isCampButtonDisabled" icon color="transparent" elevation="0" @click="toggleCamp">
         <v-avatar size="48">
-          <v-img src="/images/misc/camp.png" :class="{ 'camp-disabled': !camp }" alt="camp icon" />
+          <v-img
+            src="/images/misc/camp.png"
+            :class="{ 'camp-disabled': !camp }"
+            alt="camp icon"
+            data-testid="camp-image"
+          />
         </v-avatar>
       </v-btn>
     </v-col>

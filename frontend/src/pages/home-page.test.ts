@@ -39,7 +39,7 @@ describe('HomePage.vue', () => {
       {
         title: 'Tier lists',
         description: 'Cooking tier lists based on millions of simulated recipe solutions.',
-        enabled: false
+        enabled: true
       }
     ]
 

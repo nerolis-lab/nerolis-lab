@@ -1,4 +1,4 @@
-import type { Recipe } from '../../../domain/recipe/recipe';
+import type { Recipe } from '../../../types/recipe/recipe';
 import { mockIngredientSet } from '../ingredient/mock-ingredient-set';
 
 export function mockRecipe(attrs?: Partial<Recipe>): Recipe {

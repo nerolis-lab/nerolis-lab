@@ -1,4 +1,4 @@
-import { hexToRgba, rarityColor } from '@/services/utils/color-utils'
+import { hexToRgba, rarityColor, withOpacity } from '@/services/utils/color-utils'
 import { subskill } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
@@ -33,5 +33,43 @@ describe('rarityColor', () => {
   })
   it('should return gold subskill', () => {
     expect(rarityColor(subskill.BERRY_FINDING_S)).toEqual('subskillGold')
+  })
+})
+
+describe('withOpacity', () => {
+  it('should handle hex colors by delegating to hexToRgba', () => {
+    expect(withOpacity('#ff5733', 0.5)).toBe('rgba(255, 87, 51, 0.5)')
+  })
+
+  it('should handle 3-character hex colors', () => {
+    expect(withOpacity('#f53', 0.3)).toBe('rgba(255, 85, 51, 0.3)')
+  })
+
+  it('should use default opacity of 0.1 for hex colors', () => {
+    expect(withOpacity('#ff5733')).toBe('rgba(255, 87, 51, 0.1)')
+  })
+
+  it('should handle theme colors with CSS custom properties', () => {
+    expect(withOpacity('primary', 0.5)).toBe('rgba(var(--v-theme-primary), 0.5)')
+  })
+
+  it('should handle theme colors with default opacity', () => {
+    expect(withOpacity('secondary')).toBe('rgba(var(--v-theme-secondary), 0.1)')
+  })
+
+  it('should handle theme colors with zero opacity', () => {
+    expect(withOpacity('error', 0)).toBe('rgba(var(--v-theme-error), 0)')
+  })
+
+  it('should handle theme colors with full opacity', () => {
+    expect(withOpacity('success', 1)).toBe('rgba(var(--v-theme-success), 1)')
+  })
+
+  it('should handle custom theme color names', () => {
+    expect(withOpacity('customColor', 0.25)).toBe('rgba(var(--v-theme-customColor), 0.25)')
+  })
+
+  it('should handle empty string as theme color', () => {
+    expect(withOpacity('', 0.5)).toBe('rgba(var(--v-theme-), 0.5)')
   })
 })

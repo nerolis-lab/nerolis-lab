@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { Produce } from '../../api/production/produce';
-import { berry, ingredient } from '../../domain';
+import { berry, ingredient } from '../../types';
+import type { Produce } from '../../types/production';
 import { multiplyProduce } from './produce-utils';
 
 const testProduce: Produce = {

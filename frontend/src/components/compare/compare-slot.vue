@@ -5,7 +5,7 @@
       <div class="text-center vertical-text" style="position: absolute; top: 0%; width: 100%; height: 100%">
         {{ pokemonInstance.name }}
       </div>
-      <v-img :src="imageUrl" class="pokemon-image" />
+      <v-img :src="imageUrl" class="pokemon-image" data-testid="pokemon-image" />
 
       <div style="position: absolute; bottom: 0%; width: 100%">
         <v-card class="text-center xsmall-responsive-text rounded-t-0" color="subskillWhite" location="bottom center">
