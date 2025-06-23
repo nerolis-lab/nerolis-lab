@@ -1,9 +1,6 @@
 name: Dependabot Auto-Merge
 
-on:
-  workflow_run:
-    workflows: ["CI"]
-    types: [completed]
+on: pull_request
 
 permissions:
   contents: write
@@ -12,38 +9,40 @@ permissions:
 jobs:
   dependabot:
     runs-on: ubuntu-latest
-    if: |
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event == 'pull_request' &&
-      github.event.workflow_run.pull_requests[0].user.login == 'dependabot[bot]'
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get PR details
-        id: pr
-        run: |
-          pr_number="${{ github.event.workflow_run.pull_requests[0].number }}"
-          echo "number=$pr_number" >> $GITHUB_OUTPUT
-
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2.0.0
+        uses: dependabot/fetch-metadata@v2.2.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+        continue-on-error: true
 
       - name: Enable auto-merge for Dependabot PRs
-        if: steps.metadata.outputs.update-type == 'version-update:semver-patch' || steps.metadata.outputs.update-type == 'version-update:semver-minor'
-        run: |
-          gh pr merge ${{ steps.pr.outputs.number }} --auto --squash
+        if: |
+          steps.metadata.outcome == 'success' && (
+            steps.metadata.outputs.update-type == 'version-update:semver-patch' || 
+            steps.metadata.outputs.update-type == 'version-update:semver-minor'
+          ) || steps.metadata.outcome == 'failure'
+        run: gh pr merge --auto --rebase "$PR_URL"
         env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Comment on major version updates
-        if: steps.metadata.outputs.update-type == 'version-update:semver-major'
+        if: |
+          steps.metadata.outcome == 'success' && 
+          steps.metadata.outputs.update-type == 'version-update:semver-major'
         run: |
-          gh pr comment ${{ steps.pr.outputs.number }} --body "⚠️ This is a major version update that requires manual review before merging."
+          gh pr comment "$PR_URL" --body "⚠️ This is a major version update that requires manual review before merging."
         env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment when metadata unavailable
+        if: steps.metadata.outcome == 'failure'
+        run: |
+          gh pr comment "$PR_URL" --body "ℹ️ Auto-merge enabled for this Dependabot PR. Unable to determine update type due to mixed commits."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
