@@ -39,7 +39,7 @@
     "vitest": "^3.2.3"
   },
   "dependencies": {
-    "@sinclair/typebox": "^0.34.33",
+    "@sinclair/typebox": "^0.34.36",
     "axios": "^1.10.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
