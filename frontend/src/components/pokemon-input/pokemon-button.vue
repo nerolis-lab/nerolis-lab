@@ -21,7 +21,7 @@
     <v-card>
       <GroupList
         :data="pokedexStore.groupedPokedex"
-        :selected-options="[pokemonInstance.pokemon.name]"
+        :selected-options="[pokemonInstance.pokemon.displayName]"
         @select-option="selectPokemon"
         @cancel="closeMenu"
       />
@@ -63,7 +63,7 @@ export default {
       this.pokemonMenu = false
     },
     selectPokemon(name: string) {
-      const pkmn = COMPLETE_POKEDEX.find((p) => p.name.toLowerCase() === name.toLowerCase())
+      const pkmn = COMPLETE_POKEDEX.find((p) => p.displayName.toLowerCase() === name.toLowerCase())
       if (!pkmn) {
         console.error('Error selecting Pokémon')
         return
