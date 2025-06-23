@@ -1,3 +1,10 @@
+# [2.16.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.3...v2.16.0) (2025-06-23)
+
+
+### Features
+
+* **pokedex:** add Farfetch'd ([f3ab39f](https://github.com/nerolis-lab/nerolis-lab/commit/f3ab39f6505412d4f3673566327c4ce522f83b71))
+
 ## [2.15.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.2...v2.15.3) (2025-06-19)
 
 
