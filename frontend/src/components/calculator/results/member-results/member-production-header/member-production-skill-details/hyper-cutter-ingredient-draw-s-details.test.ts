@@ -68,17 +68,17 @@ describe('HyperCutterIngredientDrawSDetails', () => {
         {
           "alt": "Ingredient Draw S (Hyper Cutter) level 1",
           "src": "/images/mainskill/ingredients.png",
-          "title": undefined,
+          "title": "Ingredient Draw S (Hyper Cutter)",
         },
         {
           "alt": "skill activations",
           "src": "/images/misc/skillproc.png",
-          "title": undefined,
+          "title": "skill activations",
         },
         {
           "alt": "ingredients",
           "src": "/images/ingredient/ingredients.png",
-          "title": undefined,
+          "title": "ingredients",
         },
       ]
     `)

@@ -68,22 +68,22 @@ describe('SuperLuckIngredientDrawSDetails', () => {
         {
           "alt": "Ingredient Draw S (Super Luck) level 1",
           "src": "/images/mainskill/ingredients.png",
-          "title": undefined,
+          "title": "Ingredient Draw S (Super Luck)",
         },
         {
           "alt": "skill activations",
           "src": "/images/misc/skillproc.png",
-          "title": undefined,
+          "title": "skill activations",
         },
         {
           "alt": "ingredients",
           "src": "/images/ingredient/ingredients.png",
-          "title": undefined,
+          "title": "ingredients",
         },
         {
           "alt": "dream shards",
           "src": "/images/unit/shard.png",
-          "title": undefined,
+          "title": "dream shards",
         },
       ]
     `)
@@ -135,13 +135,8 @@ describe('SuperLuckIngredientDrawSDetails', () => {
   })
 
   it('displays total dream shard value', () => {
-    const dreamShardElements = wrapper
-      .findAll('span')
-      .filter(
-        (el) =>
-          el.text().includes('total') && el.element.previousElementSibling?.querySelector('img[alt="dream shards"]')
-      )
-    expect(dreamShardElements.length).toBeGreaterThan(0)
+    const dreamShardElements = wrapper.find('[data-testid="dream-shard-total"]')
+    expect(dreamShardElements.exists()).toBe(true)
   })
 
   it('has the correct component name', () => {

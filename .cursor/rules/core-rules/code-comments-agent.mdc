@@ -1,0 +1,54 @@
+---
+description: `Rule for writing minimal, purposeful code comments. Apply when writing or reviewing code to ensure comments add value and avoid redundant explanations of obvious code. This rule should be applied when creating new code, reviewing existing code, or when code comments are being added or modified. Focus on eliminating comments that simply restate what the code does when it's already clear from context.`
+globs: 
+alwaysApply: false
+---
+
+# Code Comments - Minimal and Purposeful
+
+## Critical Rules
+
+- **Only add comments when necessary** to understand complex logic, business rules, or non-obvious implementation details
+- **Avoid redundant comments** that simply restate what the code obviously does
+- **Remove obvious comments** such as:
+  - `// Mock the module` above a clear mock setup
+  - `// Set variable to X` above a simple assignment
+  - `// Call function Y` above a straightforward function call
+  - `// Import module Z` above import statements
+- **Focus comments on WHY, not WHAT** - explain the reasoning behind code decisions, not the mechanics
+- **Use meaningful variable and function names** instead of comments when possible
+- **Keep comments concise** and directly relevant to the code context
+- **Update or remove comments** when code changes to avoid misleading information
+
+## Examples
+
+<example title="Good Comments - Explain WHY and Complex Logic">
+  ```typescript
+  // Using exponential backoff to handle rate limiting from the API
+  const delay = Math.pow(2, retryCount) * 1000;
+  
+  // Pokemon friendship calculation follows the original game formula
+  const friendshipBonus = Math.floor(pokemon.friendship / 10) * 0.1;
+  
+  // Skip processing if user has premium subscription (business requirement)
+  if (user.isPremium) return;
+  ```
+</example>
+
+<example type="invalid" title="Bad Comments - Redundant and Obvious">
+  ```typescript
+  // Mock the tierlist-utils module
+  vi.mock('@/services/utils/tierlist-utils', () => ({
+    getTierColor: vi.fn((tier: string) => `rgba(var(--tier-${tier.toLowerCase()}), 0.1)`)
+  }))
+  
+  // Set the user name to the input value
+  user.name = inputValue;
+  
+  // Call the save function
+  await save();
+  
+  // Import React
+  import React from 'react';
+  ```
+</example> 

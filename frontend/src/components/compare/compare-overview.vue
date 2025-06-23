@@ -50,6 +50,7 @@
                     width="24"
                     :alt="ingredient.name"
                     :title="ingredient.name"
+                    data-testid="ingredient-image"
                   ></v-img>
                   <div class="text-center">
                     {{ ingredient.amount }}
@@ -156,17 +157,17 @@ export default defineComponent({
             (amount - ingMagnetAmount) * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
             1
           ),
-          name: ingredient.name.toLowerCase()
+          name: ingredient.name
         }))
       } else {
         return ingredients.map(({ amount, ingredient }) => ({
           amount: MathUtils.round(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow), 1),
-          name: ingredient.name.toLowerCase()
+          name: ingredient.name
         }))
       }
     },
     ingredientImage(name: string) {
-      return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name}.png`
+      return name === 'magnet' ? '/images/ingredient/ingredients.png' : `/images/ingredient/${name.toLowerCase()}.png`
     }
   }
 })

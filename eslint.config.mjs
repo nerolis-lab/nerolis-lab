@@ -9,6 +9,8 @@ import tsParser from '@typescript-eslint/parser';
 import prettierConfig from 'eslint-config-prettier';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import vue from 'eslint-plugin-vue';
+import pluginVueA11y from 'eslint-plugin-vuejs-accessibility';
+
 import vuetify from 'eslint-plugin-vuetify';
 import globals from 'globals';
 
@@ -31,7 +33,11 @@ export default typescriptEslint.config(
       sourceType: 'module'
     },
     // @ts-expect-error - eslint-plugin-vuetify is not typed
-    extends: [...vue.configs['flat/recommended'], ...vuetify.configs['flat/recommended']]
+    extends: [
+      ...pluginVueA11y.configs['flat/recommended'],
+      ...vue.configs['flat/recommended'],
+      ...vuetify.configs['flat/recommended']
+    ]
   },
 
   // backend-specific rules

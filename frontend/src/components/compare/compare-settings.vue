@@ -23,6 +23,7 @@
                   height="36"
                   class="ml-2"
                   :class="{ 'camp-disabled': !camp }"
+                  data-testid="camp-image"
                 />
                 <v-avatar color="white" size="36" class="ml-2">
                   <v-progress-circular

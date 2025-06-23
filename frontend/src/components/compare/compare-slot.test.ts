@@ -26,7 +26,7 @@ describe('CompareSlot', () => {
   it('renders correctly with initial data', () => {
     expect(wrapper.exists()).toBe(true)
     expect(wrapper.find('.vertical-text').text()).toBe('Ash')
-    expect(wrapper.find('.pokemon-image img').attributes('src')).toBe(
+    expect(wrapper.find('[data-testid="pokemon-image"]').attributes('src')).toBe(
       `/images/pokemon/${pokemonInstance.pokemon.name.toLowerCase()}.png`
     )
     expect(wrapper.find('.xsmall-responsive-text').text()).toBe('RP 674')

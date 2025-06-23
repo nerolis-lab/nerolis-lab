@@ -1,7 +1,4 @@
-import type {
-  IngredientProducers,
-  IngredientProducersWithSettings
-} from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
+import type { IngredientProducersWithSettings } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
 import type { IngredientIndexToIntAmount, SolveSettingsExt, TeamMemberExt } from 'sleepapi-common';
 
 export interface SolveRecipeInput {
@@ -21,7 +18,7 @@ export interface SubRecipeMeta {
 export type RecipeSolutions = Array<Array<number>>;
 
 export interface SolveRecipeSolution {
-  members: IngredientProducers;
+  members: IngredientProducersWithSettings;
   producedIngredients: IngredientIndexToIntAmount;
 }
 export interface SolveRecipeSolutionWithSettings {

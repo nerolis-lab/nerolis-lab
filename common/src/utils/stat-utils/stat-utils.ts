@@ -1,6 +1,6 @@
-import { MAX_TEAM_SIZE } from '../../domain/constants';
-import type { Nature } from '../../domain/nature';
-import type { Pokemon, PokemonSpecialty } from '../../domain/pokemon';
+import { MAX_TEAM_SIZE } from '../../types/constants';
+import type { Nature } from '../../types/nature';
+import type { Pokemon, PokemonSpecialty } from '../../types/pokemon';
 import {
   BERRY_FINDING_S,
   ENERGY_RECOVERY_BONUS,
@@ -14,7 +14,7 @@ import {
   INVENTORY_S,
   SKILL_TRIGGER_M,
   SKILL_TRIGGER_S
-} from '../../domain/subskill/subskills';
+} from '../../types/subskill/subskills';
 import { MathUtils } from '../../utils/math-utils';
 
 export function calculateIngredientPercentage(params: { pokemon: Pokemon; nature: Nature; subskills: Set<string> }) {

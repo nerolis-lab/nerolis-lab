@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import type { IngredientProducers } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
+import type {
+  IngredientProducers,
+  IngredientProducersWithSettings
+} from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
 import type {
   RecipeSolutions,
   SolveRecipeResult,
@@ -32,10 +35,11 @@ import {
 import { combineProduction, hashPokemonSetIndexed } from '@src/services/solve/utils/solve-utils.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { IngredientIndexToIntAmount } from 'sleepapi-common';
-import { ingredient } from 'sleepapi-common';
+import { DARKRAI, ingredient } from 'sleepapi-common';
 
 export class SetCover {
   private ingredientProducers: IngredientProducers; // flat array of all ingredient producers
+  private ingredientProducersWithSettings: IngredientProducersWithSettings;
   private producersByIngredientIndexOriginal: Array<Array<number>>; // used to reset the producersByIngredientIndex between solves
   private producersByIngredientIndex: Array<Array<number>>; // each index of outer array maps to each ingredient's index in INGREDIENTS array, each inner array contains the indices of the producers that can produce that ingredient
   private cachedSubRecipeSolves: Map<number, Array<Array<number>>>; // a map of subrecipe memo key to an array of solutions, where each solution is an array of indices that point to the producer in ingredientProducers
@@ -45,13 +49,43 @@ export class SetCover {
   private originalMaxTeamSize = 0;
 
   constructor(
-    ingredientProducers: IngredientProducers,
+    ingredientProducersWithSettings: IngredientProducersWithSettings,
     producersByIngredientIndex: Array<Array<number>>,
     cachedSubRecipeSolves: Map<number, RecipeSolutions>
   ) {
-    this.ingredientProducers = ingredientProducers;
-    this.producersByIngredientIndex = producersByIngredientIndex;
-    this.producersByIngredientIndexOriginal = producersByIngredientIndex;
+    const ingredientProducers: IngredientProducers = ingredientProducersWithSettings.map((s) => ({
+      pokemonSet: s.pokemonSet,
+      totalIngredients: s.totalIngredients
+    }));
+
+    const filteredProducers: IngredientProducers = [];
+    const filteredProducersWithSettings: IngredientProducersWithSettings = [];
+    const oldToNewIndexMap: Map<number, number> = new Map();
+
+    for (let i = 0; i < ingredientProducers.length; i++) {
+      if (ingredientProducers[i].pokemonSet.pokemon !== DARKRAI.name) {
+        oldToNewIndexMap.set(i, filteredProducers.length);
+        filteredProducers.push(ingredientProducers[i]);
+        filteredProducersWithSettings.push(ingredientProducersWithSettings[i]);
+      }
+    }
+
+    const producersByIngredientIndexWithoutDarkrai = [];
+    const producersByIngredientIndexWithoutDarkraiOriginal = [];
+    for (let i = 0; i < producersByIngredientIndex.length; i++) {
+      const producerIndices = producersByIngredientIndex[i];
+      const filteredProducerIndices = producerIndices
+        .filter((pkmnIdx) => ingredientProducers[pkmnIdx].pokemonSet.pokemon !== DARKRAI.name)
+        .map((pkmnIdx) => oldToNewIndexMap.get(pkmnIdx)!);
+      producersByIngredientIndexWithoutDarkrai.push(filteredProducerIndices);
+      producersByIngredientIndexWithoutDarkraiOriginal.push(filteredProducerIndices);
+    }
+
+    this.ingredientProducers = filteredProducers;
+    this.ingredientProducersWithSettings = filteredProducersWithSettings;
+    this.producersByIngredientIndex = producersByIngredientIndexWithoutDarkrai;
+    this.producersByIngredientIndexOriginal = producersByIngredientIndexWithoutDarkraiOriginal;
+
     this.cachedSubRecipeSolves = cachedSubRecipeSolves;
   }
 
@@ -266,7 +300,7 @@ export class SetCover {
     const foundSolutions: Set<string> = new Set();
     const teams: SolveRecipeSolution[] = [];
     for (const memberIndices of solutions) {
-      const members = memberIndices.map((memberIndex) => this.ingredientProducers[memberIndex]);
+      const members = memberIndices.map((memberIndex) => this.ingredientProducersWithSettings[memberIndex]);
       members.sort((a, b) => {
         const hashA = hashPokemonSetIndexed(a.pokemonSet).toString();
         const hashB = hashPokemonSetIndexed(b.pokemonSet).toString();

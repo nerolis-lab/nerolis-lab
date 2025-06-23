@@ -1,5 +1,5 @@
-import { Roles } from '../../../domain/user/roles';
-import type { User } from '../../../domain/user/user';
+import { Roles } from '../../../types/user/roles';
+import type { User } from '../../../types/user/user';
 
 export function user(attrs?: Partial<User>): User {
   return {

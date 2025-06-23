@@ -130,7 +130,7 @@ export default defineComponent({
         src: '/images/misc/doctor3.png',
         icon: 'mdi-chart-line',
         to: '/tierlist',
-        enabled: false
+        enabled: true
       }
     ]
   })

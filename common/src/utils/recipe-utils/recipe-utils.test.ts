@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { IngredientIndexToIntAmount } from '../../domain/ingredient/ingredient';
-import { TOTAL_NUMBER_OF_INGREDIENTS } from '../../domain/ingredient/ingredients';
+import type { IngredientIndexToIntAmount } from '../../types/ingredient/ingredient';
+import { TOTAL_NUMBER_OF_INGREDIENTS } from '../../types/ingredient/ingredients';
 import { commonMocks } from '../../vitest';
 import { flatToIngredientSet, ingredientSetToIntFlat } from '../ingredient-utils';
 import { recipeCoverage } from './recipe-utils';
@@ -93,7 +93,7 @@ describe('recipeCoverage', () => {
   });
 });
 
-import type { IngredientSet } from '../../domain/ingredient';
+import type { IngredientSet } from '../../types/ingredient';
 import { mockIngredient } from '../../vitest/mocks';
 import { calculateRecipeValue, createCurry, createDessert, createSalad, recipesToFlat } from './recipe-utils';
 

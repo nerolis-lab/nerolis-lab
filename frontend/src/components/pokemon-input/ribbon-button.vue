@@ -4,7 +4,11 @@
       <template #activator="{ props }">
         <v-btn v-bind="props" icon elevation="0" size="40" color="surface">
           <v-avatar size="40">
-            <v-img :src="ribbonImage" :class="pokemonInstance.ribbon === 0 ? 'greyScale' : ''"></v-img>
+            <v-img
+              :src="ribbonImage"
+              :class="pokemonInstance.ribbon === 0 ? 'greyScale' : ''"
+              data-testid="ribbon-image"
+            ></v-img>
           </v-avatar>
         </v-btn>
       </template>

@@ -90,7 +90,6 @@
 <script setup lang="ts">
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import SettingsCard from '@/components/settings/settings-card.vue'
-import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { UserService } from '@/services/user/user-service'
 import { islandImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -119,8 +118,6 @@ const islandBonusData = computed(() => {
     shortName: islandObj.shortName as IslandShortName
   }))
 })
-
-const { isMobile } = useBreakpoint()
 
 let debounceTimer: ReturnType<typeof setTimeout> | undefined
 

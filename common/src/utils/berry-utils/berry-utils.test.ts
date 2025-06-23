@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { Berry, BerrySet } from '../../domain/berry';
-import { BELUE, BERRIES, ORAN, TOTAL_NUMBER_OF_BERRIES } from '../../domain/berry/berries';
+import type { Berry, BerrySet } from '../../types/berry';
+import { BELUE, BERRIES, ORAN, TOTAL_NUMBER_OF_BERRIES } from '../../types/berry/berries';
 import { commonMocks } from '../../vitest';
 import {
   berryPowerForLevel,

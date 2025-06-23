@@ -1,6 +1,6 @@
-import { MAX_RECIPE_LEVEL } from '../../domain/constants';
-import type { IngredientIndexToIntAmount, IngredientSet } from '../../domain/ingredient';
-import { type Recipe, type RecipeFlat, type RecipeType } from '../../domain/recipe';
+import { MAX_RECIPE_LEVEL } from '../../types/constants';
+import type { IngredientIndexToIntAmount, IngredientSet } from '../../types/ingredient';
+import { type Recipe, type RecipeFlat, type RecipeType } from '../../types/recipe';
 import { emptyIngredientInventoryFloat } from '../../utils/flat-utils';
 import { ING_ID_LOOKUP, updateMaxIngredientBonus } from '../ingredient-utils/ingredient-utils';
 

@@ -162,6 +162,9 @@ export default defineConfig(({ command }) => ({
       deps: {
         inline: ['vuetify']
       }
+    },
+    transformMode: {
+      web: [/\.[jt]sx$/]
     }
   },
   build: {
