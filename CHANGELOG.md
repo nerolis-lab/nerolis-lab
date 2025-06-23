@@ -1,3 +1,10 @@
+## [2.16.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.16.0...v2.16.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* search pokemon by display name ([15571b5](https://github.com/nerolis-lab/nerolis-lab/commit/15571b568eb8aa4accbf405d13d2a5d7248ae280))
+
 # [2.16.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.15.3...v2.16.0) (2025-06-23)
 
 
