@@ -334,6 +334,32 @@ export const GOLEM: Pokemon = {
   carrySize: 16
 };
 
+export const FARFETCHD: Pokemon = {
+  name: 'FARFETCHD',
+  displayName: "Farfetch'd",
+  pokedexNumber: 83,
+  specialty: 'ingredient',
+  frequency: toSeconds(0, 50, 0),
+  ingredientPercentage: 16,
+  skillPercentage: 4.3,
+  berry: PAMTRE,
+  genders: BALANCED_GENDER,
+  carrySize: 18,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredient0: [{ amount: 2, ingredient: LARGE_LEEK }],
+  ingredient30: [
+    { amount: 5, ingredient: LARGE_LEEK },
+    { amount: 8, ingredient: BEAN_SAUSAGE }
+  ],
+  ingredient60: [
+    { amount: 7, ingredient: LARGE_LEEK },
+    { amount: 13, ingredient: BEAN_SAUSAGE },
+    { amount: 12, ingredient: WARMING_GINGER }
+  ],
+  skill: ChargeStrengthS
+};
+
 export const GASTLY: Pokemon = {
   name: 'GASTLY',
   displayName: 'Gastly',
@@ -1254,6 +1280,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   DUGTRIO,
   VICTREEBEL,
   GOLEM,
+  FARFETCHD,
   GENGAR,
   KANGASKHAN,
   MR_MIME,
