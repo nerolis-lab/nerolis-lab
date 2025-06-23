@@ -21,7 +21,7 @@
     "@faker-js/faker": "^8.4.1",
     "@mdi/font": "^7.4.47",
     "axios": "^1.9.0",
-    "axios-mock-adapter": "^1.22.0",
+    "axios-mock-adapter": "^2.1.0",
     "chart.js": "^4.4.4",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.3.0",
