@@ -54,7 +54,7 @@
     "seedrandom": "^3.0.5",
     "swagger-ui-express": "^5.0.0",
     "tsoa": "^6.6.0",
-    "workerpool": "^9.2.0"
+    "workerpool": "^9.3.2"
   },
   "bundleDependencies": ["sleepapi-common"]
 }
