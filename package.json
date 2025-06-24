@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "release": "semantic-release",
-    "postinstall": "if [ -z \"$CI\" ]; then bash .github/install-commit-hook.sh; fi",
+    "postinstall": "node .github/install-commit-hook.js",
     "lint": "npm run eslint-check && npm run prettier-check",
     "lint-fix": "npm run eslint-fix && npm run prettier-fix",
     "eslint-check": "eslint .",

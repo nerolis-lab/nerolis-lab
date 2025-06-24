@@ -19,6 +19,20 @@ export default typescriptEslint.config(
     ignores: ['**/node_modules', '**/dist', '**/coverage', '**/.vscode', '**/dev-dist', '*.d.ts', '.venv/**']
   },
 
+  // github scripts
+  {
+    name: 'sleepapi/github-scripts',
+    files: ['.github/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node
+      }
+    },
+    rules: {
+      'SleepAPILogger/no-console': 'off'
+    }
+  },
+
   // frontend-specific rules
   {
     name: 'sleepapi/frontend-rules',
