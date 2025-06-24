@@ -23,8 +23,8 @@ function getRecipeImageFilename(recipeName: string): string {
  */
 function getRecipeImagePath(recipeName: string): string {
   const filename = getRecipeImageFilename(recipeName);
-  // Path should point to dist/assets since that's where vite copies the assets
-  return path.join(__dirname, 'assets', 'recipe', filename);
+  // Path should point to dist/recipe since that's where vite copies the public assets
+  return path.join(__dirname, 'recipe', filename);
 }
 
 export const command = {
@@ -96,7 +96,8 @@ export const command = {
         await interaction.reply({ embeds: [recipeEmbed] });
       }
     } catch (error) {
-      logger.error(error as Error);
+      // eslint-disable-next-line SleepAPILogger/no-console
+      console.error('Recipe command error:', error as Error);
       // Try to reply to the interaction if it hasn't been replied to yet
       if (!interaction.replied && !interaction.deferred) {
         await interaction.reply({ content: `Could not find recipe: ${recipeName}`, ephemeral: true });
