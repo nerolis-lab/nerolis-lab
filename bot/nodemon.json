@@ -1,0 +1,6 @@
+{
+  "watch": ["dist"],
+  "ext": "js",
+  "ignore": ["*.map"],
+  "delay": "1000"
+}

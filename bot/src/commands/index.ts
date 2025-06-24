@@ -5,5 +5,5 @@ import { command as recipeCommand } from './recipe';
 export const commands = {
   ping: pingCommand,
   help: helpCommand,
-  recipe: recipeCommand,
+  recipe: recipeCommand
 };
