@@ -12,9 +12,9 @@ class TierlistServiceImpl {
     const userRecipes = defaultUserRecipes();
 
     await CookingTierlist.seed({ camp: false, level: 30 }, userRecipes);
-    // await CookingTierlist.seed({ camp: true, level: 30 }, userRecipes);
+    await CookingTierlist.seed({ camp: true, level: 30 }, userRecipes);
     await CookingTierlist.seed({ camp: false, level: 60 }, userRecipes);
-    // await CookingTierlist.seed({ camp: true, level: 60 }, userRecipes);
+    await CookingTierlist.seed({ camp: true, level: 60 }, userRecipes);
   }
 }
 
