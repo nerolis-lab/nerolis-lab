@@ -31,7 +31,7 @@
     "rimraf": "^6.0.1",
     "sleepapi-common": "file:../common",
     "sqlite3": "^5.1.6",
-    "supertest": "^7.1.0",
+    "supertest": "^7.1.1",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.8.3",
