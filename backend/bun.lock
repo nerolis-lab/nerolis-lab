@@ -4,7 +4,7 @@
     "": {
       "name": "Sleep API",
       "dependencies": {
-        "@sinclair/typebox": "^0.34.33",
+        "@sinclair/typebox": "^0.34.36",
         "axios": "^1.10.0",
         "cookie-parser": "~1.4.4",
         "cors": "^2.8.5",
@@ -19,7 +19,7 @@
         "seedrandom": "^3.0.5",
         "swagger-ui-express": "^5.0.0",
         "tsoa": "^6.6.0",
-        "workerpool": "^9.2.0",
+        "workerpool": "^9.3.2",
       },
       "devDependencies": {
         "@types/bun": "^1.2.16",
@@ -252,7 +252,7 @@
 
     "@scarf/scarf": ["@scarf/scarf@1.4.0", "", {}, "sha512-xxeapPiUXdZAE3che6f3xogoJPeZgig6omHEy1rIY5WVsB3H2BHNnZH+gHG6x91SCWyQCzWGsuL2Hh3ClO5/qQ=="],
 
-    "@sinclair/typebox": ["@sinclair/typebox@0.34.35", "", {}, "sha512-C6ypdODf2VZkgRT6sFM8E1F8vR+HcffniX0Kp8MsU8PIfrlXbNCBz0jzj17GjdmjTx1OtZzdH8+iALL21UjF5A=="],
+    "@sinclair/typebox": ["@sinclair/typebox@0.34.37", "", {}, "sha512-2TRuQVgQYfy+EzHRTIvkhv2ADEouJ2xNS/Vq+W5EuuewBdOrvATvljZTxHWZSTYr2sTjTHpGvucaGAt67S2akw=="],
 
     "@tootallnate/once": ["@tootallnate/once@1.1.2", "", {}, "sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw=="],
 
