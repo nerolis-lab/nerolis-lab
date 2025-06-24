@@ -2,8 +2,8 @@
 export default {
   extends: ['@commitlint/config-conventional'],
   rules: {
-    // Warn if commit message is more than 50 characters
-    'header-max-length': [1, 'always', 50],
+    // Warn if commit message is more than 72 characters
+    'header-max-length': [1, 'always', 72],
 
     'type-enum': [
       2,
