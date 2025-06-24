@@ -1,18 +1,8 @@
 import path from 'path';
 import { defineConfig } from 'vite';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
-  plugins: [
-    viteStaticCopy({
-      targets: [
-        {
-          src: 'src/assets',
-          dest: '.'
-        }
-      ]
-    })
-  ],
+  plugins: [],
   resolve: {
     alias: {
       '@src': path.resolve(__dirname, 'src')
@@ -30,9 +20,6 @@ export default defineConfig({
       external: ['discord.js', 'common', 'dotenv', 'express', 'morgan', 'path', 'url', 'fs', 'os']
     },
     minify: false,
-    sourcemap: true,
-    copyPublicDir: false
-  },
-  // Copy assets directory to dist
-  assetsInclude: ['src/assets/**/*']
+    sourcemap: true
+  }
 });

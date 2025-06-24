@@ -47,7 +47,7 @@ jobs:
   common:
     name: Common
     needs: changes
-    if: needs.changes.outputs.common == 'true' || needs.changes.outputs.backend == 'true' || needs.changes.outputs.frontend == 'true'
+    if: needs.changes.outputs.common == 'true' || needs.changes.outputs.backend == 'true' || needs.changes.outputs.frontend == 'true' || needs.changes.outputs.bot == 'true'
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'common'
