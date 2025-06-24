@@ -1,3 +1,10 @@
+## [2.17.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.1...v2.17.2) (2025-06-24)
+
+
+### Bug Fixes
+
+* hasPokemonWithIngredients union type check ([e9709f1](https://github.com/nerolis-lab/nerolis-lab/commit/e9709f15b702ab9e51c8da3d0aca8b10880e927c))
+
 ## [2.17.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.0...v2.17.1) (2025-06-23)
 
 # [2.17.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.16.3...v2.17.0) (2025-06-23)
