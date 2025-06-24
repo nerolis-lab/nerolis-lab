@@ -8,11 +8,12 @@
         class="compare-slot flex-grow-1"
         style="position: relative; min-width: 18%; max-width: 18%"
       >
+        <!-- Filled slot, has its own nested pokemon slot menu -->
         <CompareSlot
           :pokemon-instance="mon"
           @edit-pokemon="editCompareMember"
           @duplicate-pokemon="duplicateCompareMember"
-          @remove-pokemon="removeCompareMember"
+          @remove-pokemon="(pokemon) => removeCompareMember(pokemon, index)"
           @toggle-save-state="toggleSaveState"
         />
       </v-col>
@@ -26,12 +27,12 @@
         </div>
       </v-col>
 
+      <!-- Menu that opens when clicking the plus icon -->
       <PokemonSlotMenu
         v-model:show="showDialog"
         :pokemon-from-pre-exist="undefined"
         :full-team="false"
         @update-pokemon="addToCompareMembers"
-        @remove-pokemon="removeCompareMember"
       />
     </v-row>
 
@@ -138,8 +139,8 @@ export default defineComponent({
 
       this.loading = false
     },
-    async removeCompareMember(pokemonInstance: PokemonInstanceExt) {
-      this.comparisonStore.removeMember(pokemonInstance.externalId)
+    async removeCompareMember(pokemonInstance: PokemonInstanceExt, index: number) {
+      this.comparisonStore.removeMember(pokemonInstance.externalId, index)
     },
     async editCompareMember(pokemonInstance: PokemonInstanceExt) {
       this.loading = true

@@ -49,10 +49,10 @@ export const useComparisonStore = defineStore('comparison', {
     addMember(member: MemberProduction) {
       this.members.push(member)
     },
-    removeMember(externalId: string) {
+    removeMember(externalId: string, index: number) {
       const pokemonStore = usePokemonStore()
       pokemonStore.removePokemon(externalId, 'compare')
-      this.members = this.members.filter((pkmn) => pkmn.externalId !== externalId)
+      this.members.splice(index, 1)
     }
   },
   persist: true

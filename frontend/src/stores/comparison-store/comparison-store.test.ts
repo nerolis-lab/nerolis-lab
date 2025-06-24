@@ -62,7 +62,7 @@ describe('removeMember', () => {
     comparisonStore.addMember({ ...mockMemberProduction, externalId: 'other id' })
 
     expect(comparisonStore.members).toHaveLength(2)
-    comparisonStore.removeMember(mockMemberProduction.externalId)
+    comparisonStore.removeMember(mockMemberProduction.externalId, 0)
     expect(comparisonStore.members).toHaveLength(1)
   })
 })
