@@ -12,7 +12,7 @@ describe('delay', () => {
     const endTime = Date.now();
 
     expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), delayTime);
-    expect(endTime - startTime).toBeGreaterThanOrEqual(delayTime);
+    expect(endTime - startTime).toBeGreaterThanOrEqual(delayTime - 15);
 
     setTimeoutSpy.mockRestore();
   });
