@@ -1,3 +1,15 @@
+# [2.18.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.3...v2.18.0) (2025-06-24)
+
+
+### Bug Fixes
+
+* discord bot code now compiles ([a7de79c](https://github.com/nerolis-lab/nerolis-lab/commit/a7de79cd8b766b3f7394f7ec2947c406dd9406b9))
+
+
+### Features
+
+* **bot:** Implement /recipe slash command ([448fd92](https://github.com/nerolis-lab/nerolis-lab/commit/448fd921c8fce9e763f8f40baedbad9f4824208c))
+
 ## [2.17.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.2...v2.17.3) (2025-06-24)
 
 
