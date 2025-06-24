@@ -8,7 +8,7 @@
         class="mb-2 elevation-3 rounded-lg bg-surface"
         eager
       ></v-img>
-      <div class="text-h6 font-weight-medium mt-1">{{ pokemonName }}</div>
+      <div class="text-h6 font-weight-medium mt-1">{{ pokemonDisplayName }}</div>
 
       <div class="text-caption text-medium-emphasis">
         <div class="mb-2">
@@ -152,7 +152,8 @@ const props = defineProps<{
 
 const { isMobile } = useBreakpoint()
 
-const pokemonName = computed(() => getPokemon(props.pokemon.pokemonWithSettings.pokemon).displayName)
+const pokemonDisplayName = computed(() => getPokemon(props.pokemon.pokemonWithSettings.pokemon).displayName)
+const pokemonName = computed(() => props.pokemon.pokemonWithSettings.pokemon)
 const pokemonDisplayImageUrl = computed(() =>
   getPokemonDisplayImageUrlUtil({ pokemonName: pokemonName.value, shiny: false, happy: true })
 )
