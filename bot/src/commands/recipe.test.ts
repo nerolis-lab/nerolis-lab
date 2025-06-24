@@ -1,14 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Recipe } from 'common';
-import { getRecipe } from 'common';
+import { curry, type Recipe } from 'common';
 import { EmbedBuilder } from 'discord.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { command } from './recipe';
-
-// Mock common
-vi.mock('common', () => ({
-  getRecipe: vi.fn()
-}));
 
 // We will use the actual EmbedBuilder and inspect its data for assertions.
 
@@ -22,9 +16,6 @@ describe('/recipe command', () => {
     replied: false,
     deferred: false
   };
-
-  // Cast getRecipe to vi.Mock for type safety in tests
-  const mockGetRecipe = getRecipe as any;
 
   beforeEach(() => {
     // Reset mocks before each test
@@ -49,27 +40,11 @@ describe('/recipe command', () => {
   });
 
   it('should fetch and display a recipe successfully', async () => {
-    const recipeName = 'Test Recipe';
-    const mockRecipeData: Recipe = {
-      // Use the Recipe type for the mock
-      name: recipeName,
-      displayName: 'Delicious Test Recipe',
-      ingredients: [
-        { ingredient: { name: 'Ing1', value: 1, taxedValue: 1, longName: 'Ingredient 1' }, amount: 2 },
-        { ingredient: { name: 'Ing2', value: 1, taxedValue: 1, longName: 'Ingredient 2' }, amount: 1 }
-      ],
-      value: 100,
-      valueMax: 200, // Added as per Recipe interface
-      type: 'curry',
-      bonus: 10,
-      nrOfIngredients: 2 // This is used as 'Servings' in the command
-    };
-    mockGetRecipe.mockReturnValue(mockRecipeData);
-    mockInteraction.options.getString.mockReturnValue(recipeName);
+    const mockRecipeData: Recipe = curry.CUT_SUKIYAKI_CURRY;
+    mockInteraction.options.getString.mockReturnValue(mockRecipeData.name);
 
     await command.execute(mockInteraction);
 
-    expect(getRecipe).toHaveBeenCalledWith(recipeName);
     expect(mockInteraction.reply).toHaveBeenCalledTimes(1);
     expect(mockInteraction.reply).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -85,21 +60,21 @@ describe('/recipe command', () => {
         expect.objectContaining({ name: 'Servings', value: mockRecipeData.nrOfIngredients.toString(), inline: true }),
         expect.objectContaining({ name: 'Value', value: mockRecipeData.value.toString(), inline: true }),
         expect.objectContaining({ name: 'Bonus', value: mockRecipeData.bonus.toString(), inline: true }),
-        expect.objectContaining({ name: 'Ingredients', value: 'Ing1 (x2)\nIng2 (x1)' })
+        expect.objectContaining({
+          name: 'Ingredients',
+          value: mockRecipeData.ingredients.map((ing) => `${ing.ingredient.name} (x${ing.amount})`).join('\n')
+        })
       ])
     );
   });
 
   it('should handle recipe not found error and reply', async () => {
     const recipeName = 'Unknown Recipe';
-    mockGetRecipe.mockImplementation(() => {
-      throw new Error(`Could not find recipe: ${recipeName}`); // Error message doesn't have to match exactly
-    });
+
     mockInteraction.options.getString.mockReturnValue(recipeName);
 
     await command.execute(mockInteraction);
 
-    expect(getRecipe).toHaveBeenCalledWith(recipeName);
     expect(mockInteraction.reply).toHaveBeenCalledTimes(1);
     expect(mockInteraction.reply).toHaveBeenCalledWith({
       content: `Could not find recipe: ${recipeName}`,
@@ -110,15 +85,12 @@ describe('/recipe command', () => {
 
   it('should handle recipe not found error with followUp if already replied', async () => {
     const recipeName = 'Unknown Recipe Followup';
-    mockGetRecipe.mockImplementation(() => {
-      throw new Error(`Could not find recipe: ${recipeName}`); // Error message doesn't have to match exactly
-    });
+
     mockInteraction.options.getString.mockReturnValue(recipeName);
     mockInteraction.replied = true; // Simulate already replied
 
     await command.execute(mockInteraction);
 
-    expect(getRecipe).toHaveBeenCalledWith(recipeName);
     expect(mockInteraction.followUp).toHaveBeenCalledTimes(1);
     expect(mockInteraction.followUp).toHaveBeenCalledWith({
       content: `Could not find recipe: ${recipeName}`,
@@ -129,15 +101,12 @@ describe('/recipe command', () => {
 
   it('should handle recipe not found error with followUp if deferred', async () => {
     const recipeName = 'Unknown Recipe Deferred';
-    mockGetRecipe.mockImplementation(() => {
-      throw new Error(`Could not find recipe: ${recipeName}`);
-    });
+
     mockInteraction.options.getString.mockReturnValue(recipeName);
     mockInteraction.deferred = true; // Simulate deferred
 
     await command.execute(mockInteraction);
 
-    expect(getRecipe).toHaveBeenCalledWith(recipeName);
     expect(mockInteraction.followUp).toHaveBeenCalledTimes(1);
     expect(mockInteraction.followUp).toHaveBeenCalledWith({
       content: `Could not find recipe: ${recipeName}`,

@@ -14,6 +14,7 @@ jobs:
       backend: ${{ steps.changes.outputs.backend }}
       frontend: ${{ steps.changes.outputs.frontend }}
       docs: ${{ steps.changes.outputs.docs }}
+      bot: ${{ steps.changes.outputs.bot }}
       workflows: ${{ steps.changes.outputs.workflows }}
     steps:
       - uses: actions/checkout@v4
@@ -29,6 +30,8 @@ jobs:
               - 'frontend/**'
             docs:
               - 'docs/**'
+            bot:
+              - 'bot/**'
             workflows:
               - '.github/workflows/**'
       
@@ -38,6 +41,7 @@ jobs:
           echo "Backend changes: ${{ steps.changes.outputs.backend }}"
           echo "Frontend changes: ${{ steps.changes.outputs.frontend }}"
           echo "Docs changes: ${{ steps.changes.outputs.docs }}"
+          echo "Bot changes: ${{ steps.changes.outputs.bot }}"
           echo "Workflow changes: ${{ steps.changes.outputs.workflows }}"
 
   common:
@@ -72,6 +76,15 @@ jobs:
       cache-key-suffix: '2'
       needs-common-build: true
 
+  bot:
+    name: Bot
+    needs: [changes, common]
+    if: needs.changes.outputs.bot == 'true' || needs.changes.outputs.common == 'true'
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'bot'
+      needs-common-build: true
+
   docs:
     name: Docs
     needs: changes
@@ -95,7 +108,7 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
-    needs: [common, backend, frontend, docs, lint]
+    needs: [common, backend, frontend, docs, bot, lint]
     if: |
       always() && 
       github.ref == 'refs/heads/develop' &&
@@ -103,6 +116,7 @@ jobs:
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
       (needs.docs.result == 'success' || needs.docs.result == 'skipped') &&
+      (needs.bot.result == 'success' || needs.bot.result == 'skipped') &&
       needs.lint.result == 'success'
     steps:
       - name: Checkout code
