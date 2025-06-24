@@ -23,7 +23,7 @@ export function hashPokemonWithIngredients(
       : pokemonWithIngredients.pokemon.name;
 
   const ingredients = pokemonWithIngredients.ingredientList
-    .map((i) => (i.ingredient ? i.ingredient.name : i.name))
+    .map((i) => ('ingredient' in i ? i.ingredient.name : i.name))
     .join(',');
 
   return `${pokemonName}:${ingredients}`;
