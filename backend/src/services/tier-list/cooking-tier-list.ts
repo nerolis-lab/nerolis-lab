@@ -197,7 +197,7 @@ class CookingTierlistImpl {
 
         // eslint-disable-next-line SleepAPILogger/no-console
         console.timeEnd(
-          // FIXME: this doesnt work because some mons only have 4 ing lists
+          // FIXME: this doesn't work because some mons only have 4 ing lists
           `[${counter}/${OPTIMAL_POKEDEX.length * pokemonIngredientLists.length}] ${pokemonWithIngredients.pokemonSet.pokemon}`
         );
 
@@ -579,27 +579,28 @@ class CookingTierlistImpl {
     return [...boostedRecipes, ...recipes.slice(nrOfRecipesToBoost, recipes.length)];
   }
 
-  private tierAndDiff(current: PokemonWithFinalContribution[], previous: PokemonWithTiering[]): PokemonWithTiering[] {
+  tierAndDiff(current: PokemonWithFinalContribution[], previous: PokemonWithTiering[]): PokemonWithTiering[] {
     const tiers: { tier: Tier; bucket: number }[] = [
-      { tier: 'S', bucket: 0.9 },
+      { tier: 'S', bucket: 0.8 },
       { tier: 'A', bucket: 0.8 },
       { tier: 'B', bucket: 0.8 },
-      { tier: 'C', bucket: 0.85 },
-      { tier: 'D', bucket: 0.85 },
-      { tier: 'E', bucket: 0.9 }
+      { tier: 'C', bucket: 0.8 },
+      { tier: 'D', bucket: 0.8 },
+      { tier: 'E', bucket: 0.8 }
     ];
 
     const previousRanks = createTierlistIndex(previous.map((p) => p.pokemonWithSettings.pokemon));
     const currentRanks = createTierlistIndex(current.map((c) => c.pokemonWithSettings.pokemon));
 
-    let threshold = current[0].score;
+    let topScoreOfTier = current[0].score;
+    const minScore = current.at(-1)!.score;
 
     const tieredEntries: PokemonWithTiering[] = [];
     for (let i = 0; i < current.length; ++i) {
       const entry = current[i];
       let currentTier = tiers.at(0);
-      if (currentTier && entry.score < currentTier.bucket * threshold) {
-        threshold = entry.score;
+      if (currentTier && entry.score < currentTier.bucket * topScoreOfTier + (1 - currentTier.bucket) * minScore) {
+        topScoreOfTier = entry.score;
         tiers.shift();
         currentTier = tiers.at(0);
       }
