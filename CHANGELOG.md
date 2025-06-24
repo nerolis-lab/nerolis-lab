@@ -1,3 +1,13 @@
+## [2.17.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.2...v2.17.3) (2025-06-24)
+
+
+### Bug Fixes
+
+* add buffer to flaky async-utils test ([10141eb](https://github.com/nerolis-lab/nerolis-lab/commit/10141eb007ae0bd7e437c49ff7fe66a2ac22509b))
+* compare remove duplicate from box will retain other copies ([86b1307](https://github.com/nerolis-lab/nerolis-lab/commit/86b1307a6ac77fd8bb313498d60131695cfcbdc0))
+* local git hook to work on windows ([5944e58](https://github.com/nerolis-lab/nerolis-lab/commit/5944e587ded4350b593849e3fb74a68b1ca4faa0))
+* tierlist overview shows image using name instead of displayName ([d2acd59](https://github.com/nerolis-lab/nerolis-lab/commit/d2acd592f82b98b1d7712753f173ba0e714768f5))
+
 ## [2.17.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.1...v2.17.2) (2025-06-24)
 
 
