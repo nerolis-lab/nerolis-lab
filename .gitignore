@@ -59,4 +59,3 @@ personal*
 coverage
 .vscode
 *.tsbuildinfo
-*.sh

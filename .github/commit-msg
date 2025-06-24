@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# This hook validates your commit message using commitlint.
+# It will print any linting errors or warnings to your terminal,
+# but it will NOT abort the commit. This is purely for informational purposes.
+
+COMMIT_MSG_FILE=$1
+
+# Run commitlint, capture its output and exit code.
+LINT_OUTPUT=$(npx --no-install commitlint --edit "$COMMIT_MSG_FILE" 2>&1)
+LINT_EXIT_CODE=$?
+
+# Print the original output from commitlint
+printf "%s\n" "$LINT_OUTPUT" >&2
+
+# Define colors
+RESET='\033[0m'
+ORANGE='\033[33m'
+GREEN='\033[32m'
+
+# Check for errors (non-zero exit code)
+if [ $LINT_EXIT_CODE -ne 0 ]; then
+    printf "${ORANGE}------------------------------------------------------------------${RESET}\n" >&2
+    printf "${ORANGE}  WARNING: Commit message is invalid (see errors above).${RESET}\n" >&2
+    printf "${ORANGE}  Proceeding with the commit anyway.${RESET}\n" >&2
+    printf "${ORANGE}------------------------------------------------------------------${RESET}\n\n" >&2
+# If no errors, check for warnings in the output
+elif printf "%s" "$LINT_OUTPUT" | grep -q "warning"; then
+    printf "${ORANGE}------------------------------------------------------------------${RESET}\n" >&2
+    printf "${ORANGE}  NOTE: Commit message has warnings (see above).${RESET}\n" >&2
+    printf "${ORANGE}  Proceeding with the commit anyway.${RESET}\n" >&2
+    printf "${ORANGE}------------------------------------------------------------------${RESET}\n\n" >&2
+else
+    printf "${GREEN}------------------------------------------------------------------${RESET}\n" >&2
+    printf "${GREEN}  Commit message is valid.${RESET}\n" >&2
+    printf "${GREEN}------------------------------------------------------------------${RESET}\n" >&2
+fi
+
+# Always exit with 0 to ensure the commit is never aborted by this hook.
+exit 0
