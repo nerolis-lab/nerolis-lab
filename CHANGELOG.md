@@ -1,3 +1,10 @@
+# [2.20.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.19.0...v2.20.0) (2025-06-25)
+
+
+### Features
+
+* Add user setting to toggle random Pokémon names ([4bf7584](https://github.com/nerolis-lab/nerolis-lab/commit/4bf7584aee38eebb643856fa21f20bb5bd132cc2))
+
 # [2.19.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.18.1...v2.19.0) (2025-06-25)
 
 
