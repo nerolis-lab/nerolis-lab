@@ -241,6 +241,28 @@
 		"contact": {}
 	},
 	"paths": {
+		"/api/changelog": {
+			"get": {
+				"operationId": "GetChangelog",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"changelog"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
 		"/api/ingredient": {
 			"get": {
 				"operationId": "GetIngredients",

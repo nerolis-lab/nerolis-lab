@@ -15,6 +15,7 @@ import LoginController from '@src/controllers/login/login.controller.js';
 import NotificationController from '@src/controllers/notification/notification.controller.js';
 import TeamController from '@src/controllers/team/team.controller.js';
 import UserController from '@src/controllers/user/user.controller.js';
+import { ChangelogController } from './controllers/changelog/changelog.controller.js';
 import HealthController from './controllers/health/health.controller.js';
 import IngredientController from './controllers/ingredient/ingredient.controller.js';
 import MainskillController from './controllers/mainskill/mainskill.controller.js';
@@ -34,6 +35,7 @@ import { TierlistService } from '@src/services/tier-list/tierlist-service.js';
 import { getDirname, joinPath } from '@src/utils/file-utils/file-utils.js';
 import { BaseRouter } from './routes/base-router.js';
 import { ProductionRouter } from './routes/calculator-router/production-router.js';
+import { ChangelogRouter } from './routes/changelog/changelog.route.js';
 import { FriendRouter } from './routes/friend-router/friend-router.js';
 import { HealthRouter } from './routes/health-router/health-router.js';
 import { IngredientRouter } from './routes/ingredient-router/ingredient-router.js';
@@ -105,6 +107,7 @@ async function main() {
   AdminRouter.register(new AdminController());
   FriendRouter.register(new FriendController());
   NotificationRouter.register(new NotificationController());
+  ChangelogRouter.register(new ChangelogController());
 
   return app;
 }
