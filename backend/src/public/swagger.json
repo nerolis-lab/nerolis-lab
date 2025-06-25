@@ -241,7 +241,7 @@
 		"contact": {}
 	},
 	"paths": {
-		"/api/changelog": {
+		"/changelog": {
 			"get": {
 				"operationId": "GetChangelog",
 				"responses": {
