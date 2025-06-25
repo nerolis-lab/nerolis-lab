@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.build.json && tsc-alias && tsoa spec",
-    "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* dist/",
+    "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* dist/ && cp ../CHANGELOG.md dist/",
     "test": "vitest --run --coverage",
     "test-watch": "vitest --changed",
     "compile": "bun x tsc --noEmit",
