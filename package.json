@@ -12,7 +12,8 @@
     "eslint-fix": "npm run eslint-check -- --fix",
     "prettier-check": "prettier --check .",
     "prettier-fix": "prettier --write .",
-    "commitlint": "commitlint"
+    "commitlint": "commitlint",
+    "browser-tools": "concurrently \"npx @agentdeskai/browser-tools-server@1.2.0\" \"npx @agentdeskai/browser-tools-mcp@latest\""
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.0",
@@ -28,6 +29,7 @@
     "@types/eslint-config-prettier": "^6.11.3",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
+    "concurrently": "^9.2.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
