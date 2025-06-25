@@ -1,3 +1,10 @@
+# [2.19.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.18.1...v2.19.0) (2025-06-25)
+
+
+### Features
+
+* Add API route to update your friend code ([d080505](https://github.com/nerolis-lab/nerolis-lab/commit/d080505f12598543cd6dc3adb2112769239a9459))
+
 ## [2.18.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.18.0...v2.18.1) (2025-06-24)
 
 # [2.18.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.17.3...v2.18.0) (2025-06-24)
