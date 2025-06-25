@@ -111,7 +111,7 @@ jobs:
     needs: [common, backend, frontend, docs, bot, lint]
     if: |
       always() && 
-      github.ref == 'refs/heads/develop' &&
+      github.ref == 'refs/heads/main' &&
       (needs.common.result == 'success' || needs.common.result == 'skipped') &&
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
