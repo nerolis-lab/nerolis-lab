@@ -9,7 +9,7 @@
   </div>
 
   <div v-else>
-    <div class="d-flex justify-space-between align-center">
+    <div class="d-flex justify-space-between align-center mb-4">
       <h2 class="text-h4">Changelog</h2>
       <div class="d-flex align-center">
         <v-select
