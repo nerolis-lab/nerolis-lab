@@ -472,9 +472,11 @@ class CookingTierlistImpl {
         ? this.calculateContributedIngredientsValue(recipe, supportedIngredientsRelevant, supportedIngredientsFiller)
         : { fillerValue: 0, relevantValue: 0 };
 
+    const recipeContribution = recipe.valueMax * teamSizePenalty;
+
     const ownContribution = ownCritMultiplier * ownRelevantValue * teamSizePenalty + ownFillerValue;
     const supportedContribution = ownCritMultiplier * supportedRelevantValue * teamSizePenalty + supportedFillerValue;
-    const contributedPower = ownContribution + supportedContribution + tastyChanceContribution;
+    const contributedPower = ownContribution + supportedContribution + tastyChanceContribution + recipeContribution;
 
     return {
       contributedPower,
