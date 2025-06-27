@@ -163,7 +163,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn variant="text" @click="showShareDialog = false" color="secondary">Close</v-btn>
+          <v-btn variant="text" @click="showShareDialog = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
