@@ -7,6 +7,81 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"ChangelogEntry": {
+				"properties": {
+					"commit": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"scope": {
+						"type": "string"
+					},
+					"isBreaking": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"commit",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Release": {
+				"properties": {
+					"version": {
+						"type": "string"
+					},
+					"date": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"major",
+							"minor",
+							"patch"
+						]
+					},
+					"features": {
+						"items": {
+							"$ref": "#/components/schemas/ChangelogEntry"
+						},
+						"type": "array"
+					},
+					"bugFixes": {
+						"items": {
+							"$ref": "#/components/schemas/ChangelogEntry"
+						},
+						"type": "array"
+					},
+					"breakingChanges": {
+						"items": {
+							"$ref": "#/components/schemas/ChangelogEntry"
+						},
+						"type": "array"
+					},
+					"otherChanges": {
+						"items": {
+							"$ref": "#/components/schemas/ChangelogEntry"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"version",
+					"date",
+					"type",
+					"features",
+					"bugFixes",
+					"breakingChanges",
+					"otherChanges"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Record_string._unit-string--amounts-number-Array__": {
 				"properties": {},
 				"type": "object",
@@ -250,7 +325,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string"
+									"items": {
+										"$ref": "#/components/schemas/Release"
+									},
+									"type": "array"
 								}
 							}
 						}

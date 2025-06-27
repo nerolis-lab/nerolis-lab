@@ -1,10 +1,7 @@
 import { app } from '@src/app.js';
-import { existsSync, readFileSync } from 'fs';
-import type { Logger } from 'sleepapi-common';
+import { type Logger } from 'sleepapi-common';
 import request from 'supertest';
-import { vi } from 'vitest';
-
-vi.mock('fs');
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('GET /api/changelog', () => {
   beforeEach(() => {
@@ -21,31 +18,18 @@ describe('GET /api/changelog', () => {
     vi.clearAllMocks();
   });
 
-  it('should respond with 200 and changelog content', async () => {
-    const mockChangelogContent = '# Changelog\n\n## [1.0.0] - 2023-01-01\n- Initial release';
+  it('should respond with 200 and return changelog data', async () => {
+    const response = await request(app).get('/api/changelog').set('Accept', 'application/json').expect(200);
 
-    vi.mocked(existsSync).mockReturnValue(true);
-    vi.mocked(readFileSync).mockReturnValue(mockChangelogContent);
+    const data = JSON.parse(response.text);
+    expect(Array.isArray(data)).toBe(true);
 
-    await request(app)
-      .get('/api/changelog')
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /text/)
-      .expect(200, mockChangelogContent);
-  });
-
-  it('should respond with 500 when changelog file not found', async () => {
-    vi.mocked(existsSync).mockReturnValue(false);
-
-    await request(app).get('/api/changelog').expect(500);
-  });
-
-  it('should respond with 500 when file read fails', async () => {
-    vi.mocked(existsSync).mockReturnValue(true);
-    vi.mocked(readFileSync).mockImplementation(() => {
-      throw new Error('File read error');
-    });
-
-    await request(app).get('/api/changelog').expect(500);
+    expect(data[0]).toHaveProperty('version');
+    expect(data[0]).toHaveProperty('date');
+    expect(data[0]).toHaveProperty('type');
+    expect(data[0]).toHaveProperty('features');
+    expect(data[0]).toHaveProperty('bugFixes');
+    expect(data[0]).toHaveProperty('breakingChanges');
+    expect(data[0]).toHaveProperty('otherChanges');
   });
 });

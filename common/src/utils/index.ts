@@ -1,6 +1,7 @@
 export * from './async-utils';
 export * from './berry-utils';
 export * from './carry-size-utils';
+export * from './changelog-utils';
 export * from './flat-utils';
 export * from './ingredient-utils';
 export * from './math-utils';
