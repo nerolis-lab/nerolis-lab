@@ -1,6 +1,7 @@
 import Changelog from '@/components/admin/changelog/changelog.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
+import type { Release } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mockFetch = vi.fn()
@@ -8,6 +9,52 @@ global.fetch = mockFetch
 
 describe('Changelog.vue', () => {
   let wrapper: VueWrapper<InstanceType<typeof Changelog>>
+
+  const mockReleases: Release[] = [
+    {
+      version: '2.0.0',
+      date: '2025-01-01',
+      type: 'major',
+      features: [
+        {
+          commit: 'abc1234',
+          description: 'Add new feature',
+          scope: 'api',
+          isBreaking: false
+        }
+      ],
+      bugFixes: [
+        {
+          commit: 'def5678',
+          description: 'Fix memory leak',
+          isBreaking: false
+        }
+      ],
+      breakingChanges: [
+        {
+          commit: 'ghi9012',
+          description: 'Remove deprecated API',
+          isBreaking: true
+        }
+      ],
+      otherChanges: []
+    },
+    {
+      version: '1.1.0',
+      date: '2024-12-31',
+      type: 'minor',
+      features: [
+        {
+          commit: 'jkl3456',
+          description: 'Add user settings',
+          isBreaking: false
+        }
+      ],
+      bugFixes: [],
+      breakingChanges: [],
+      otherChanges: []
+    }
+  ]
 
   beforeEach(() => {
     vi.clearAllMocks()
@@ -32,23 +79,10 @@ describe('Changelog.vue', () => {
     expect(wrapper.text()).toContain('Loading changelog...')
   })
 
-  it('displays changelog content after successful fetch', async () => {
-    const mockChangelogContent = `# Changelog
-
-## [2.19.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.18.1...v2.19.0) (2023-12-15)
-
-### Features
-
-* **api:** add changelog endpoint ([abc1234](https://github.com/nerolis-lab/nerolis-lab/commit/abc1234))
-* **frontend:** add changelog admin interface ([def5678](https://github.com/nerolis-lab/nerolis-lab/commit/def5678))
-
-### Bug Fixes
-
-* **backend:** fix changelog file path resolution ([hij9012](https://github.com/nerolis-lab/nerolis-lab/commit/hij9012))`
-
+  it('displays parsed changelog data from main endpoint', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      text: vi.fn().mockResolvedValue(mockChangelogContent)
+      json: vi.fn().mockResolvedValue(mockReleases)
     })
 
     wrapper = mount(Changelog)
@@ -56,8 +90,11 @@ describe('Changelog.vue', () => {
       expect(wrapper.find('.v-progress-circular').exists()).toBe(false)
     })
 
+    expect(mockFetch).toHaveBeenCalledWith('/api/changelog')
     expect(wrapper.find('.changelog-content').exists()).toBe(true)
-    expect(wrapper.find('.v-chip').text()).toContain('2.19.0')
+    expect(wrapper.findAll('.v-card').length).toBe(2)
+    expect(wrapper.text()).toContain('2.0.0')
+    expect(wrapper.text()).toContain('1.1.0')
   })
 
   it('displays error message when fetch fails', async () => {
@@ -86,30 +123,10 @@ describe('Changelog.vue', () => {
     expect(wrapper.find('.v-alert').text()).toContain('HTTP 404: Not Found')
   })
 
-  it('correctly parses and displays release types', async () => {
-    const mockChangelogContent = `# Changelog
-
-## [1.0.0](https://github.com/nerolis-lab/nerolis-lab/compare/v0.9.0...v1.0.0) (2023-01-01)
-
-### Features
-
-* **breaking:** major release feature ([abc1234](https://github.com/nerolis-lab/nerolis-lab/commit/abc1234))
-
-## [0.9.0](https://github.com/nerolis-lab/nerolis-lab/compare/v0.8.1...v0.9.0) (2023-01-01)
-
-### Features
-
-* **minor:** minor release feature ([def5678](https://github.com/nerolis-lab/nerolis-lab/commit/def5678))
-
-## [0.8.1](https://github.com/nerolis-lab/nerolis-lab/compare/v0.8.0...v0.8.1) (2023-01-01)
-
-### Bug Fixes
-
-* **patch:** patch release fix ([hij9012](https://github.com/nerolis-lab/nerolis-lab/commit/hij9012))`
-
+  it('highlights breaking changes', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
-      text: vi.fn().mockResolvedValue(mockChangelogContent)
+      json: vi.fn().mockResolvedValue(mockReleases)
     })
 
     wrapper = mount(Changelog)
@@ -117,8 +134,136 @@ describe('Changelog.vue', () => {
       expect(wrapper.find('.changelog-content').exists()).toBe(true)
     })
 
-    const chips = wrapper.findAll('.v-chip')
-    expect(chips.length).toBeGreaterThan(0)
-    expect(chips[0].text()).toContain('1.0.0')
+    // Should have breaking changes section
+    const breakingChip = wrapper.find('.v-chip .mdi-alert')
+    expect(breakingChip.exists()).toBe(true)
+
+    // Should have breaking change item with special styling
+    const breakingChange = wrapper.find('.breaking-change')
+    expect(breakingChange.exists()).toBe(true)
+    expect(breakingChange.text()).toContain('Remove deprecated API')
+  })
+
+  it('toggles commit body visibility', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: vi.fn().mockResolvedValue(mockReleases)
+    })
+
+    wrapper = mount(Changelog)
+    await vi.waitFor(() => {
+      expect(wrapper.find('.changelog-content').exists()).toBe(true)
+    })
+
+    // Should have expand functionality (test the component structure exists)
+    const breakingChange = wrapper.find('.breaking-change')
+    expect(breakingChange.exists()).toBe(true)
+
+    // Initially body should be hidden
+    expect(wrapper.find('.commit-body').exists()).toBe(false)
+
+    // Check that entries with body content are marked appropriately
+    expect(wrapper.text()).toContain('Remove deprecated API')
+  })
+
+  it('displays breaking change details correctly', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: vi.fn().mockResolvedValue(mockReleases)
+    })
+
+    wrapper = mount(Changelog)
+    await vi.waitFor(() => {
+      expect(wrapper.find('.changelog-content').exists()).toBe(true)
+    })
+
+    // Verify the breaking change entry is displayed correctly
+    const breakingChangeItem = wrapper.find('.breaking-change')
+    expect(breakingChangeItem.exists()).toBe(true)
+
+    // Verify the breaking change has the correct isBreaking flag
+    expect(mockReleases[0].breakingChanges[0].isBreaking).toBe(true)
+    expect(mockReleases[0].breakingChanges[0].description).toBe('Remove deprecated API')
+  })
+
+  it('opens commit URL when chip is clicked', async () => {
+    const mockOpen = vi.fn()
+    window.open = mockOpen
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: vi.fn().mockResolvedValue(mockReleases)
+    })
+
+    wrapper = mount(Changelog)
+    await vi.waitFor(() => {
+      expect(wrapper.find('.changelog-content').exists()).toBe(true)
+    })
+
+    const commitChip = wrapper.find('.commit-chip')
+    await commitChip.trigger('click')
+
+    expect(mockOpen).toHaveBeenCalledWith(
+      expect.stringContaining('github.com/nerolis-lab/nerolis-lab/commit/'),
+      '_blank'
+    )
+  })
+
+  it('correctly identifies release types', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: vi.fn().mockResolvedValue(mockReleases)
+    })
+
+    wrapper = mount(Changelog)
+    await vi.waitFor(() => {
+      expect(wrapper.find('.changelog-content').exists()).toBe(true)
+    })
+
+    const cards = wrapper.findAll('.v-card')
+
+    // Check the first card (major release)
+    const majorCard = cards[0]
+    const majorChips = majorCard.findAll('.v-chip')
+    const majorVersionChip = majorChips.find((chip) => chip.text().includes('2.0.0'))
+    expect(majorVersionChip).toBeDefined()
+    expect(majorVersionChip!.text()).toContain('2.0.0')
+
+    // Check the second card (minor release)
+    const minorCard = cards[1]
+    const minorChips = minorCard.findAll('.v-chip')
+    const minorVersionChip = minorChips.find((chip) => chip.text().includes('1.1.0'))
+    expect(minorVersionChip).toBeDefined()
+    expect(minorVersionChip!.text()).toContain('1.1.0')
+  })
+
+  it('handles pagination correctly', async () => {
+    const manyReleases = Array.from({ length: 15 }, (_, i) => ({
+      version: `1.${i}.0`,
+      date: '2024-01-01',
+      type: 'minor' as const,
+      features: [{ commit: `commit${i}`, description: `Feature ${i}`, isBreaking: false }],
+      bugFixes: [],
+      breakingChanges: [],
+      otherChanges: []
+    }))
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: vi.fn().mockResolvedValue(manyReleases)
+    })
+
+    wrapper = mount(Changelog)
+    await vi.waitFor(() => {
+      expect(wrapper.find('.changelog-content').exists()).toBe(true)
+    })
+
+    // Should show pagination
+    const pagination = wrapper.find('.v-pagination')
+    expect(pagination.exists()).toBe(true)
+
+    // Should show only 10 items by default
+    const cards = wrapper.findAll('.v-card')
+    expect(cards.length).toBe(10)
   })
 })

@@ -1,5 +1,6 @@
 export * from './admin';
 export * from './berry';
+export * from './changelog';
 export * from './constants';
 export * from './friend';
 export * from './gender';

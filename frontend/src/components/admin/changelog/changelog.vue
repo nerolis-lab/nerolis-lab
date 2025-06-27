@@ -38,6 +38,29 @@
         </v-card-title>
 
         <v-card-text>
+          <div v-if="release.breakingChanges.length > 0" class="mb-4">
+            <v-chip color="red" variant="flat" class="mb-2">
+              <v-icon start>mdi-alert</v-icon>
+              BREAKING CHANGES
+            </v-chip>
+            <ul class="ml-4">
+              <li v-for="change in release.breakingChanges" :key="change.commit" class="mb-2 breaking-change">
+                <div class="d-flex align-center">
+                  <strong v-if="change.scope" class="text-red">[{{ change.scope }}]</strong>
+                  <span :class="{ 'text-red': !change.scope }">{{ change.description }}</span>
+                  <v-chip
+                    size="x-small"
+                    variant="outlined"
+                    class="ml-2 commit-chip"
+                    @click="openCommitUrl(change.commit)"
+                  >
+                    {{ change.commit.substring(0, 7) }}
+                  </v-chip>
+                </div>
+              </li>
+            </ul>
+          </div>
+
           <div v-if="release.features.length > 0" class="mb-3">
             <v-chip color="green" variant="text" class="mb-2">
               <v-icon start>mdi-star</v-icon>
@@ -45,16 +68,18 @@
             </v-chip>
             <ul class="ml-4">
               <li v-for="feature in release.features" :key="feature.commit" class="mb-1">
-                <strong v-if="feature.scope">[{{ feature.scope }}]</strong>
-                {{ feature.description }}
-                <v-chip
-                  size="x-small"
-                  variant="outlined"
-                  class="ml-2 commit-chip"
-                  @click="openCommitUrl(feature.commit)"
-                >
-                  {{ feature.commit.substring(0, 7) }}
-                </v-chip>
+                <div class="d-flex align-center">
+                  <strong v-if="feature.scope">[{{ feature.scope }}]</strong>
+                  {{ feature.description }}
+                  <v-chip
+                    size="x-small"
+                    variant="outlined"
+                    class="ml-2 commit-chip"
+                    @click="openCommitUrl(feature.commit)"
+                  >
+                    {{ feature.commit.substring(0, 7) }}
+                  </v-chip>
+                </div>
               </li>
             </ul>
           </div>
@@ -66,11 +91,13 @@
             </v-chip>
             <ul class="ml-4">
               <li v-for="fix in release.bugFixes" :key="fix.commit" class="mb-1">
-                <strong v-if="fix.scope">[{{ fix.scope }}]</strong>
-                {{ fix.description }}
-                <v-chip size="x-small" variant="outlined" class="ml-2 commit-chip" @click="openCommitUrl(fix.commit)">
-                  {{ fix.commit.substring(0, 7) }}
-                </v-chip>
+                <div class="d-flex align-center">
+                  <strong v-if="fix.scope">[{{ fix.scope }}]</strong>
+                  {{ fix.description }}
+                  <v-chip size="x-small" variant="outlined" class="ml-2 commit-chip" @click="openCommitUrl(fix.commit)">
+                    {{ fix.commit.substring(0, 7) }}
+                  </v-chip>
+                </div>
               </li>
             </ul>
           </div>
@@ -85,134 +112,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
+import { useChangelog } from './composables/use-changelog'
 
-export interface ChangelogEntry {
-  commit: string
-  description: string
-  scope?: string
-}
-
-export interface Release {
-  version: string
-  date: string
-  type: 'major' | 'minor' | 'patch'
-  features: ChangelogEntry[]
-  bugFixes: ChangelogEntry[]
-}
-
-const loading = ref(true)
-const error = ref<string | null>(null)
-const releases = ref<Release[]>([])
-const currentPage = ref(1)
-const itemsPerPage = ref(10)
-
-const parseChangelog = (content: string): Release[] => {
-  const lines = content.split('\n')
-  const parsedReleases: Release[] = []
-  let currentRelease: Release | null = null
-  let currentSection: 'features' | 'bugfixes' | null = null
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim()
-
-    const versionMatch = line.match(/^#+\s*\[(\d+\.\d+\.\d+)\].*\((\d{4}-\d{2}-\d{2})\)/)
-    if (versionMatch) {
-      if (currentRelease) {
-        parsedReleases.push(currentRelease)
-      }
-
-      const [, version, date] = versionMatch
-      const versionParts = version.split('.').map(Number)
-      let type: 'major' | 'minor' | 'patch' = 'patch'
-
-      if (versionParts[1] === 0 && versionParts[2] === 0) {
-        type = 'major'
-      } else if (versionParts[2] === 0) {
-        type = 'minor'
-      } else {
-        type = 'patch'
-      }
-
-      currentRelease = {
-        version,
-        date,
-        type,
-        features: [],
-        bugFixes: []
-      }
-      currentSection = null
-      continue
-    }
-
-    if (line === '### Features') {
-      currentSection = 'features'
-      continue
-    }
-    if (line === '### Bug Fixes') {
-      currentSection = 'bugfixes'
-      continue
-    }
-
-    if (currentRelease && currentSection && line.startsWith('*')) {
-      const scopedMatch = line.match(/^\*\s*\*\*([^:]+):\*\*\s*(.+?)\s*\(\[([a-f0-9]{7,40})\]\([^)]+\)\)/)
-      if (scopedMatch) {
-        const [, scope, description, commit] = scopedMatch
-        const entry = { scope: scope.trim(), description: description.trim(), commit }
-        if (currentSection === 'features') {
-          currentRelease.features.push(entry)
-        } else {
-          currentRelease.bugFixes.push(entry)
-        }
-        continue
-      }
-
-      const simpleMatch = line.match(/^\*\s*(.+?)\s*\(\[([a-f0-9]{7,40})\]\([^)]+\)\)/)
-      if (simpleMatch) {
-        const [, description, commit] = simpleMatch
-        const entry = { description: description.trim(), commit }
-        if (currentSection === 'features') {
-          currentRelease.features.push(entry)
-        } else {
-          currentRelease.bugFixes.push(entry)
-        }
-        continue
-      }
-
-      const fallbackMatch = line.match(/^\*\s*(.+?)\s*\(.*\)/)
-      if (fallbackMatch) {
-        const [, description] = fallbackMatch
-        const entry = { description: description.trim(), commit: 'unknown' }
-        if (currentSection === 'features') {
-          currentRelease.features.push(entry)
-        } else {
-          currentRelease.bugFixes.push(entry)
-        }
-      }
-    }
-  }
-
-  if (currentRelease) {
-    parsedReleases.push(currentRelease)
-  }
-
-  return parsedReleases.filter((release) => release.features.length > 0 || release.bugFixes.length > 0)
-}
-
-const loadChangelog = async () => {
-  try {
-    const response = await fetch('/api/changelog')
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-    }
-    const content = await response.text()
-    releases.value = parseChangelog(content)
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Unknown error'
-  } finally {
-    loading.value = false
-  }
-}
+const { loading, error, currentPage, itemsPerPage, totalPages, paginatedReleases, loadChangelog } = useChangelog()
 
 const getReleaseTypeColor = (type: string) => {
   switch (type) {
@@ -247,14 +150,6 @@ const getReleaseTypeDescription = (type: string) => {
   }
 }
 
-const totalPages = computed(() => Math.ceil(releases.value.length / itemsPerPage.value))
-
-const paginatedReleases = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage.value
-  const end = start + itemsPerPage.value
-  return releases.value.slice(start, end)
-})
-
 onMounted(() => {
   loadChangelog()
 })
@@ -275,5 +170,14 @@ onMounted(() => {
 
 .commit-chip:hover {
   opacity: 0.8;
+}
+
+.breaking-change {
+  border-left: 3px solid #f44336;
+  padding-left: 12px;
+}
+
+.text-red {
+  color: #f44336 !important;
 }
 </style>

@@ -1,70 +1,27 @@
 import { ChangelogController } from '@src/controllers/changelog/changelog.controller.js';
-import { existsSync, readFileSync } from 'fs';
-import * as fileUtils from '@src/utils/file-utils/file-utils.js';
-import { vi } from 'vitest';
-
-vi.mock('fs');
-vi.mock('@src/utils/file-utils/file-utils.js');
+import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('changelog.controller', () => {
   let controller: ChangelogController;
 
   beforeEach(() => {
     controller = new ChangelogController();
-    vi.clearAllMocks();
-    vi.resetAllMocks();
   });
 
   describe('getChangelog', () => {
-    it('should return changelog content from production path when available', async () => {
-      const mockContent = '# Changelog\n\n## [1.0.0] - 2023-01-01\n- Initial release';
-      const mockProductionPath = '/dist/CHANGELOG.md';
-
-      vi.mocked(fileUtils.joinPath).mockReturnValueOnce(mockProductionPath).mockReturnValueOnce('/dev/CHANGELOG.md');
-      vi.mocked(existsSync).mockReturnValueOnce(true);
-      vi.mocked(readFileSync).mockReturnValue(mockContent);
-
+    it('should return changelog data from the real service', async () => {
       const result = await controller.getChangelog();
 
-      expect(result).toBe(mockContent);
-      expect(existsSync).toHaveBeenCalledWith(mockProductionPath);
-      expect(readFileSync).toHaveBeenCalledWith(mockProductionPath, 'utf-8');
-    });
+      expect(Array.isArray(result)).toBe(true);
+      expect(result.length).toBeGreaterThan(0);
 
-    it('should fallback to development path when production path not available', async () => {
-      const mockContent = '# Changelog\n\n## [1.0.0] - 2023-01-01\n- Initial release';
-      const mockProductionPath = '/dist/CHANGELOG.md';
-      const mockDevelopmentPath = '/dev/CHANGELOG.md';
-
-      vi.mocked(fileUtils.joinPath).mockReturnValueOnce(mockProductionPath).mockReturnValueOnce(mockDevelopmentPath);
-      vi.mocked(existsSync).mockReturnValueOnce(false).mockReturnValueOnce(true);
-      vi.mocked(readFileSync).mockReturnValue(mockContent);
-
-      const result = await controller.getChangelog();
-
-      expect(result).toBe(mockContent);
-      expect(existsSync).toHaveBeenCalledTimes(2);
-      expect(existsSync).toHaveBeenNthCalledWith(1, mockProductionPath);
-      expect(existsSync).toHaveBeenNthCalledWith(2, mockDevelopmentPath);
-      expect(readFileSync).toHaveBeenCalledWith(mockDevelopmentPath, 'utf-8');
-    });
-
-    it('should throw error when changelog file not found', async () => {
-      vi.mocked(fileUtils.joinPath).mockReturnValueOnce('/dist/CHANGELOG.md').mockReturnValueOnce('/dev/CHANGELOG.md');
-      vi.mocked(existsSync).mockReturnValue(false);
-
-      await expect(controller.getChangelog()).rejects.toThrow('Failed to read changelog file');
-      expect(existsSync).toHaveBeenCalledTimes(2);
-    });
-
-    it('should throw error when file read fails', async () => {
-      vi.mocked(fileUtils.joinPath).mockReturnValueOnce('/dist/CHANGELOG.md');
-      vi.mocked(existsSync).mockReturnValue(true);
-      vi.mocked(readFileSync).mockImplementation(() => {
-        throw new Error('File read error');
-      });
-
-      await expect(controller.getChangelog()).rejects.toThrow('Failed to read changelog file');
+      expect(result[0]).toHaveProperty('version');
+      expect(result[0]).toHaveProperty('date');
+      expect(result[0]).toHaveProperty('type');
+      expect(result[0]).toHaveProperty('features');
+      expect(result[0]).toHaveProperty('bugFixes');
+      expect(result[0]).toHaveProperty('breakingChanges');
+      expect(result[0]).toHaveProperty('otherChanges');
     });
   });
 });
