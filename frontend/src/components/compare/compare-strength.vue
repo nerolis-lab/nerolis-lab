@@ -238,7 +238,7 @@ export default defineComponent({
       { value: 'visual', label: 'Visual' },
       { value: 'data', label: 'Data' }
     ],
-    selectedIngredientOption: 'max',
+    selectedIngredientOption: 'min',
     ingredientMenu: false,
     options: [
       { label: 'Ignore ingredients', value: 'ignore' },

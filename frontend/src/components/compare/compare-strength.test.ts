@@ -70,18 +70,16 @@ describe('CompareStrength', () => {
     expect(firstRowCells[1].text()).toContain(berryPower.toString())
 
     // Check ingredient power range
-    const highestIngredientValue = Math.floor(
-      recipeLevelBonus[MAX_RECIPE_LEVEL] *
-        AVERAGE_WEEKLY_CRIT_MULTIPLIER *
+    const lowestIngredientValue = Math.floor(
+      AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
-          const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
-          return sum + cur.amount * ingredientBonus * cur.ingredient.value
+          return sum + cur.amount * cur.ingredient.value
         }, 0)
     )
-    expect(wrapper.vm.highestIngredientPower(mockMemberProduction)).toEqual(highestIngredientValue)
+    expect(wrapper.vm.lowestIngredientPower(mockMemberProduction)).toEqual(lowestIngredientValue)
 
     const ingredientPower = firstRowCells[2].text()
-    expect(ingredientPower).toContain(highestIngredientValue.toString())
+    expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
     // Check skill value
     const skillValue = StrengthService.skillStrength({
@@ -96,10 +94,10 @@ describe('CompareStrength', () => {
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
-    const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
+    const totalPower = Math.floor(berryPower + lowestIngredientValue + skillValue)
     expect(firstRowCells[4].text()).toContain(totalPower.toString())
 
-    expect(totalPower).toEqual(19512)
+    expect(totalPower).toEqual(3940)
   })
 
   it('renders 8h time window correctly in data tab', async () => {
@@ -135,19 +133,17 @@ describe('CompareStrength', () => {
     expect(+firstRowCells[1].text()).toEqual(berryPower)
 
     // Check ingredient power range
-    const highestIngredientValue = Math.floor(
-      (recipeLevelBonus[MAX_RECIPE_LEVEL] *
-        AVERAGE_WEEKLY_CRIT_MULTIPLIER *
+    const lowestIngredientValue = Math.floor(
+      (AVERAGE_WEEKLY_CRIT_MULTIPLIER *
         mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
-          const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
-          return sum + cur.amount * ingredientBonus * cur.ingredient.value
+          return sum + cur.amount * cur.ingredient.value
         }, 0)) /
         3
     )
-    expect(wrapper.vm.highestIngredientPower(mockMemberProduction)).toEqual(highestIngredientValue)
+    expect(wrapper.vm.lowestIngredientPower(mockMemberProduction)).toEqual(lowestIngredientValue)
 
     const ingredientPower = firstRowCells[2].text()
-    expect(ingredientPower).toContain(highestIngredientValue.toString())
+    expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
     // Check skill value
     const skillValue = StrengthService.skillStrength({
@@ -162,9 +158,9 @@ describe('CompareStrength', () => {
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
-    const totalPower = Math.floor(berryPower + highestIngredientValue + skillValue)
+    const totalPower = Math.floor(berryPower + lowestIngredientValue + skillValue)
     expect(Math.abs(+firstRowCells[4].text())).toEqual(totalPower)
-    expect(totalPower).toEqual(6503)
+    expect(totalPower).toEqual(1313)
   })
 
   it('displays the correct number of headers', async () => {
@@ -179,5 +175,44 @@ describe('CompareStrength', () => {
     expect(headers[2].text()).toBe('Ingredient')
     expect(headers[3].text()).toBe('Skill')
     expect(headers[4].text()).toBe('Total')
+  })
+
+  it('toggles between min and max ingredient power when switching options', async () => {
+    const comparisonStore = useComparisonStore()
+    comparisonStore.addMember(mockMemberProduction)
+
+    // Go to data tab
+    const dataTabButton = wrapper.find('button[value="data"]')
+    await dataTabButton.trigger('click')
+    await nextTick()
+
+    // Check initial state (min is default)
+    let rows = wrapper.findAll('tbody tr')
+    let firstRowCells = rows[0].findAll('td')
+    const minIngredientPower = Math.floor(
+      AVERAGE_WEEKLY_CRIT_MULTIPLIER *
+        mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
+          return sum + cur.amount * cur.ingredient.value
+        }, 0)
+    )
+    expect(firstRowCells[2].text()).toContain(minIngredientPower.toString())
+
+    wrapper.vm.selectedIngredientOption = 'max'
+    await nextTick()
+
+    // Check that it switched to max
+    rows = wrapper.findAll('tbody tr')
+    firstRowCells = rows[0].findAll('td')
+    const maxIngredientPower = Math.floor(
+      recipeLevelBonus[MAX_RECIPE_LEVEL] *
+        AVERAGE_WEEKLY_CRIT_MULTIPLIER *
+        mockMemberProduction.produceTotal.ingredients.reduce((sum, cur) => {
+          const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
+          return sum + cur.amount * ingredientBonus * cur.ingredient.value
+        }, 0)
+    )
+    expect(firstRowCells[2].text()).toContain(maxIngredientPower.toString())
+
+    expect(maxIngredientPower).toBeGreaterThan(minIngredientPower)
   })
 })
