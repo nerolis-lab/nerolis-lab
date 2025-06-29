@@ -42,123 +42,151 @@
       rounded="lg"
       @click="selectVariant(getOriginalIndex(variant))"
     >
-      <template #prepend>
-        <v-chip :color="`tier-${variant.tier.toLowerCase()}`" variant="flat" class="mr-2 tier-chip">
-          <span class="font-weight-bold">{{ variant.tier }}</span>
-        </v-chip>
-      </template>
+      <div class="tier-bookmark">
+        <span class="tier-text">{{ variant.tier }}</span>
+      </div>
 
-      <!-- Score in Title Slot -->
-      <template #title>
-        <v-row align="center" no-gutters>
-          <v-col cols="12" sm="auto" class="mb-1 mb-sm-0 mr-2">
-            <div class="d-flex align-center">
-              <span class="text-caption text-medium-emphasis mr-2">Score:</span>
-              <span class="font-weight-bold text-h6">{{ localizeNumber(variant.score) }}</span>
-            </div>
-          </v-col>
-          <v-col v-if="getSupportValue(variant) > 0" cols="12" sm="auto">
-            <div class="support-block">
-              <span class="text-caption text-medium-emphasis">
-                {{ localizeNumber(getSupportValue(variant)) }} ({{ getSupportPercentage(variant) }}%) support value
-              </span>
-            </div>
-          </v-col>
-        </v-row>
-      </template>
-
-      <!-- Ingredients Row -->
-      <v-row align="start" no-gutters class="mb-2">
-        <v-col cols="12" sm="auto" class="mb-1 mb-sm-0">
-          <span class="text-caption font-weight-medium text-medium-emphasis ingredient-label">Ingredients:</span>
-        </v-col>
-        <v-col cols="12" sm="">
-          <div class="d-flex align-center flex-wrap ga-1">
-            <CustomChip
-              v-for="(ing, i) in variant.pokemonWithSettings.ingredientList"
-              :key="i"
-              color="ingredient"
-              size="small"
-              :prepend-avatar="ingredientDisplayImageUrl(ing.name)"
+      <div class="pa-3">
+        <!-- Header with Pokemon name and ingredients -->
+        <div class="variant-header mb-3">
+          <div class="flex-left flex-nowrap">
+            <v-avatar
+              v-show="!(variant.pokemonWithSettings.ingredientList.length >= 3 && isNarrowScreen)"
+              size="32"
+              class="pokemon-avatar-small mr-1"
             >
-              <span class="text-caption ml-1">{{ ing.amount }}</span>
-            </CustomChip>
-          </div>
-        </v-col>
-      </v-row>
+              <v-img
+                :src="pokemonDisplayImageUrlByName(variant.pokemonWithSettings.pokemon)"
+                :alt="variant.pokemonWithSettings.pokemon"
+                eager
+              />
+            </v-avatar>
+            <h3 class="text-h6 font-weight-medium mr-1">
+              {{ pokemonDisplayData(variant.pokemonWithSettings.pokemon).displayName }}
+            </h3>
 
-      <!-- Production Row -->
-      <v-row align="start" no-gutters class="mb-2">
-        <v-col cols="12" sm="auto" class="mb-1 mb-sm-0">
-          <span class="text-caption font-weight-medium text-medium-emphasis production-label"
-            >Production per meal window:</span
-          >
-        </v-col>
-        <v-col cols="12" sm="">
-          <div class="d-flex align-center flex-wrap ga-1">
-            <!-- Berry Production -->
-            <CustomChip
-              v-if="getPokemonByName(variant.pokemonWithSettings.pokemon)"
-              color="berry"
-              size="small"
-              :prepend-avatar="berryDisplayImageUrl(getPokemonByName(variant.pokemonWithSettings.pokemon)!.berry)"
-            >
-              <span class="text-caption ml-1">{{ getBerryProduction(variant) }}</span>
-            </CustomChip>
-
-            <!-- Ingredient Production -->
-            <CustomChip
-              v-for="(production, i) in getIngredientProduction(variant)"
-              :key="`prod-${i}`"
-              color="ingredient"
-              size="small"
-              :prepend-avatar="ingredientDisplayImageUrl(production.name)"
-            >
-              <span class="text-caption ml-1">{{ production.amount }}</span>
-            </CustomChip>
-          </div>
-        </v-col>
-      </v-row>
-
-      <!-- Synergies Row -->
-      <v-row v-if="getSynergisticTeammates(variant).length > 0" align="start" no-gutters>
-        <v-col cols="12" sm="auto" class="mb-1 mb-sm-0">
-          <span class="text-caption font-weight-medium text-medium-emphasis synergy-label">Top synergies:</span>
-        </v-col>
-        <v-col cols="12" sm="">
-          <div class="d-flex align-center flex-wrap ga-1">
-            <CustomChip
-              v-for="(mate, mIndex) in getSynergisticTeammates(variant)"
-              :key="mIndex"
-              size="small"
-              :prepend-avatar="pokemonDisplayImageUrlByName(mate.pokemonWithIngredients.pokemon)"
-              color="accent"
-            >
-              <v-avatar
-                v-for="ing in mate.pokemonWithIngredients.ingredientList"
-                :key="ing.name"
-                size="20"
-                class="ingredient-avatar"
+            <!-- Ingredients with badges -->
+            <div class="flex-left flex-nowrap">
+              <v-badge
+                v-for="(ing, i) in variant.pokemonWithSettings.ingredientList"
+                :key="i"
+                :content="ing.amount"
+                color="accent"
+                text-color="background"
+                offset-x="5"
+                offset-y="5"
+                class="mr-1"
               >
-                <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager></v-img>
-              </v-avatar>
-
-              <v-divider vertical class="mx-1" thickness="1" opacity="0.8" />
-
-              <template #append>
-                <v-avatar v-for="recipe in mate.recipes" :key="recipe" size="22" class="mr-1">
-                  <v-img :src="recipeDisplayImageUrl(recipe)" :alt="recipe" eager></v-img>
+                <v-avatar size="36" class="ingredient-avatar">
+                  <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager />
                 </v-avatar>
-              </template>
-            </CustomChip>
+              </v-badge>
+            </div>
           </div>
-        </v-col>
-      </v-row>
+        </div>
+
+        <div class="flex-top-left variant-content">
+          <div class="left-column flex-shrink-0">
+            <!-- Score and Recipe Breakdown -->
+            <div class="score-breakdown">
+              <div class="flex-between">
+                <span class="text-caption text-medium-emphasis">Score:</span>
+                <span class="text-h6 font-weight-bold" :style="{ color: `rgb(var(--tier-color))` }">{{
+                  localizeNumber(variant.score)
+                }}</span>
+              </div>
+
+              <div class="flex-column ga-1 mt-2">
+                <div v-for="(contrib, index) in variant.contributions" :key="index" class="flex-between ga-2">
+                  <v-chip
+                    size="small"
+                    :color="recipeDisplayData(contrib.recipe).type"
+                    :prepend-avatar="recipeDisplayImageUrl(contrib.recipe)"
+                    :interactive="false"
+                    class="recipe-chip"
+                  >
+                    {{ recipeDisplayData(contrib.recipe).displayName }}
+                  </v-chip>
+                  <div class="flex-left flex-shrink-0">
+                    <v-chip v-if="index === 0" size="x-small" color="warning" class="mr-1"> 1.5x </v-chip>
+                    <span class="text-caption font-weight-medium" :style="{ color: `rgb(var(--tier-color))` }">{{
+                      localizeNumber(contrib.score)
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-column flex-grow-1">
+            <!-- Production -->
+            <div class="mb-2">
+              <div class="text-caption text-medium-emphasis mb-1">Production:</div>
+              <div class="flex-left flex-wrap ga-1">
+                <CustomChip
+                  v-for="(production, i) in getIngredientProduction(variant)"
+                  :key="`prod-${i}`"
+                  color="ingredient"
+                  size="x-small"
+                  :prepend-avatar="ingredientDisplayImageUrl(production.name)"
+                  :interactive="false"
+                >
+                  <span class="text-caption ml-1">{{ production.amount }}</span>
+                </CustomChip>
+              </div>
+            </div>
+
+            <!-- Synergies -->
+            <div v-if="getSynergisticTeammates(variant).length > 0">
+              <div class="text-caption text-medium-emphasis mb-1">Top synergies:</div>
+              <div class="flex-left flex-wrap ga-1">
+                <CustomChip
+                  v-for="(mate, mIndex) in getSynergisticTeammates(variant).slice(0, 3)"
+                  :key="mIndex"
+                  size="x-small"
+                  :prepend-avatar="pokemonDisplayImageUrlByName(mate.pokemonWithIngredients.pokemon)"
+                  color="accent"
+                  :interactive="false"
+                >
+                  <v-avatar
+                    v-for="ing in mate.pokemonWithIngredients.ingredientList"
+                    :key="ing.name"
+                    size="16"
+                    class="ingredient-avatar"
+                  >
+                    <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager></v-img>
+                  </v-avatar>
+
+                  <v-divider vertical class="mx-1" thickness="1" opacity="0.8" />
+
+                  <template #append>
+                    <v-avatar v-for="recipe in mate.recipes" :key="recipe" size="18" class="mr-1">
+                      <v-img :src="recipeDisplayImageUrl(recipe)" :alt="recipe" eager></v-img>
+                    </v-avatar>
+                  </template>
+                </CustomChip>
+
+                <!-- More indicator -->
+                <CustomChip
+                  v-if="getSynergisticTeammates(variant).length > 3"
+                  size="x-small"
+                  color="surface-variant"
+                  :interactive="false"
+                  class="more-synergies-chip"
+                >
+                  <v-icon size="12" class="mr-1">mdi-plus</v-icon>
+                  <span class="text-caption">{{ getSynergisticTeammates(variant).length - 3 }} more</span>
+                </CustomChip>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </v-list-item>
 
     <!-- No Results State - Inside the list -->
     <v-list-item v-if="pokemonVariants.length === 0 && searchQuery && searchQuery.trim()" class="text-center py-8">
-      <div class="no-results-container">
+      <div class="flex-column-center no-results-container">
         <v-icon size="48" color="primary" class="mb-4">mdi-magnify-scan</v-icon>
         <div class="text-h6 mb-2">No variants found</div>
         <div class="text-body-2 text-medium-emphasis mb-4">
@@ -193,7 +221,6 @@
 import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import {
-  berryImage as getBerryImageUrlUtil,
   ingredientImage as getIngredientImageUrlUtil,
   avatarImage as getPokemonDisplayImageUrlUtil,
   recipeImage as getRecipeImageUrlUtil
@@ -202,12 +229,13 @@ import { getTierColor } from '@/services/utils/tierlist-utils'
 import {
   flatToIngredientSet,
   getPokemon,
+  getRecipe,
   hashPokemonWithIngredients,
   localizeNumber,
   type PokemonWithIngredientsSimple,
   type PokemonWithTiering
 } from 'sleepapi-common'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 const props = defineProps<{
   pokemon: PokemonWithTiering
@@ -224,12 +252,50 @@ const searchQuery = ref('')
 const selectedSort = ref('score')
 const { isMobile } = useBreakpoint()
 
+// TODO: should probably just add a breakpoint for 360px to use-breakpoint
+const isNarrowScreen = ref(false)
+
+const updateNarrowScreen = () => {
+  isNarrowScreen.value = window.innerWidth <= 360
+}
+
+onMounted(() => {
+  updateNarrowScreen()
+  window.addEventListener('resize', updateNarrowScreen)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateNarrowScreen)
+})
+
 const sortOptions = [
   { text: 'Score (High to Low)', value: 'score' },
   { text: 'Score (Low to High)', value: 'score_asc' }
 ]
 
 const pokemonName = computed(() => props.pokemon.pokemonWithSettings.pokemon)
+
+const pokemonCache = new Map<string, any>()
+const recipeCache = new Map<string, any>()
+
+// Memoized lookups for performance
+const pokemonDisplayData = computed(() => {
+  return (pokemonName: string) => {
+    if (!pokemonCache.has(pokemonName)) {
+      pokemonCache.set(pokemonName, getPokemon(pokemonName))
+    }
+    return pokemonCache.get(pokemonName)
+  }
+})
+
+const recipeDisplayData = computed(() => {
+  return (recipeName: string) => {
+    if (!recipeCache.has(recipeName)) {
+      recipeCache.set(recipeName, getRecipe(recipeName))
+    }
+    return recipeCache.get(recipeName)
+  }
+})
 
 const originalVariantCount = computed(() => {
   return props.allPokemonVariantsData.length
@@ -296,26 +362,6 @@ const getOriginalIndex = (variant: PokemonWithTiering) => {
       JSON.stringify(v.pokemonWithSettings.ingredientList) ===
       JSON.stringify(variant.pokemonWithSettings.ingredientList)
   )
-}
-
-const getPokemonByName = (name: string) => {
-  return getPokemon(name)
-}
-
-const getBerryProduction = (variant: PokemonWithTiering) => {
-  const pokemon = getPokemonByName(variant.pokemonWithSettings.pokemon)
-  if (!pokemon) return '0'
-
-  // Estimate berry production based on ingredient percentage
-  // This is a rough estimate - actual production would need simulation
-  const ingredientPercentage = pokemon.ingredientPercentage / 100
-  const berryPercentage = 1 - ingredientPercentage
-
-  // Assume roughly 20-30 helps per day for estimation
-  const estimatedHelpsPerDay = 25
-  const estimatedBerryProduction = Math.round(estimatedHelpsPerDay * berryPercentage)
-
-  return estimatedBerryProduction.toString()
 }
 
 const getIngredientProduction = (variant: PokemonWithTiering) => {
@@ -395,10 +441,6 @@ const recipeDisplayImageUrl = (name: string) => {
   return getRecipeImageUrlUtil(name)
 }
 
-const berryDisplayImageUrl = (berry: any) => {
-  return getBerryImageUrlUtil(berry)
-}
-
 const pokemonDisplayImageUrlByName = (name: string) => {
   return getPokemonDisplayImageUrlUtil({ pokemonName: name, shiny: false, happy: false })
 }
@@ -415,69 +457,146 @@ const selectVariant = (index: number) => {
     transform 0.15s ease-out,
     box-shadow 0.2s ease;
   cursor: pointer;
+  overflow: hidden;
 
   &:hover {
     border-color: rgba(var(--tier-color), 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(var(--tier-color), 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(var(--tier-color), 0.15);
   }
 
-  @media (max-width: 599px) {
-    padding: 12px !important;
+  .pokemon-avatar {
+    border: 2px solid rgba(var(--tier-color), 0.3);
+    flex-shrink: 0;
+  }
 
-    .tier-chip {
-      margin-bottom: 8px;
+  .pokemon-avatar-small {
+    border: 2px solid rgba(var(--tier-color), 0.3);
+    flex-shrink: 0;
+  }
+
+  .variant-header {
+    border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.1);
+    padding-bottom: 8px;
+
+    h3 {
+      color: rgb(var(--v-theme-on-surface));
+      margin: 0;
+    }
+
+    .ingredient-avatar {
+      border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
     }
   }
-}
 
-.support-block {
-  @media (max-width: 599px) {
-    margin-left: 0;
+  .tier-bookmark {
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(var(--tier-color), 1);
+    transform: rotate(45deg);
+    z-index: 1;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+
+    .tier-text {
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1;
+      transform: rotate(-45deg) translate(-8px, 8px);
+      pointer-events: none;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    }
   }
-}
 
-.ingredient-label,
-.production-label,
-.synergy-label {
-  @media (max-width: 599px) {
-    display: block;
-    margin-bottom: 4px;
-    min-width: 100%;
+  // Horizontal layout
+  .left-column {
+    flex: 1;
+    min-width: 250px;
+    max-width: 400px;
+    margin-right: 16px;
   }
 
-  @media (min-width: 600px) {
-    margin-right: 8px;
-    white-space: nowrap;
+  .right-column {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .recipe-chip {
+    flex: 1;
+    max-width: 180px;
+  }
+
+  .more-synergies-chip {
+    opacity: 0.8;
+    font-style: italic;
+
+    .v-icon {
+      opacity: 0.7;
+    }
+  }
+
+  .more-synergies-chip {
+    opacity: 0.8;
+    font-style: italic;
+
+    .v-icon {
+      opacity: 0.7;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .variant-header {
+      .d-flex {
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+    }
+
+    .pokemon-avatar {
+      margin-right: 8px !important;
+    }
+
+    .variant-content {
+      flex-direction: column !important;
+      gap: 8px !important;
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .left-column {
+      max-width: 100% !important;
+      width: 100% !important;
+      min-width: 0;
+      overflow: hidden;
+      margin-right: 0;
+    }
+
+    .right-column {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
   }
 }
 
 @media (max-width: 599px) {
-  .variant-item {
-    .v-list-item__prepend {
-      margin-right: 8px;
-    }
-  }
-
   .d-flex.flex-wrap {
     gap: 2px;
   }
 
   .mb-2 {
-    margin-bottom: 8px !important;
-  }
-
-  .mb-3 {
-    margin-bottom: 12px !important;
+    margin-bottom: 6px !important;
   }
 }
 
 .no-results-container {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   min-height: 200px;
 }
 </style>

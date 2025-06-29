@@ -112,6 +112,30 @@ describe('CustomChip.vue', () => {
       expect(chip.props('disabled')).toBe(true)
     })
 
+    it('applies interactive prop correctly with default value', () => {
+      // Default should be true
+      const chip = wrapper.findComponent(VChip)
+      expect(chip.classes()).not.toContain('non-interactive')
+    })
+
+    it('applies interactive prop when set to true', () => {
+      wrapper = mount(CustomChip, {
+        props: { interactive: true }
+      })
+
+      const chip = wrapper.findComponent(VChip)
+      expect(chip.classes()).not.toContain('non-interactive')
+    })
+
+    it('applies interactive prop when set to false', () => {
+      wrapper = mount(CustomChip, {
+        props: { interactive: false }
+      })
+
+      const chip = wrapper.findComponent(VChip)
+      expect(chip.classes()).toContain('non-interactive')
+    })
+
     it('applies avatar props correctly', () => {
       const prependAvatar = 'path/to/prepend.jpg'
       const appendAvatar = 'path/to/append.jpg'
@@ -238,6 +262,42 @@ describe('CustomChip.vue', () => {
         expect(chip.classes()).toContain('another-active')
         expect(chip.classes()).not.toContain('inactive-class')
       })
+
+      it('includes non-interactive class when interactive is false', () => {
+        wrapper = mount(CustomChip, {
+          props: { interactive: false }
+        })
+
+        const chip = wrapper.findComponent(VChip)
+        expect(chip.classes()).toContain('text-body-1')
+        expect(chip.classes()).toContain('non-interactive')
+      })
+
+      it('does not include non-interactive class when interactive is true', () => {
+        wrapper = mount(CustomChip, {
+          props: { interactive: true }
+        })
+
+        const chip = wrapper.findComponent(VChip)
+        expect(chip.classes()).toContain('text-body-1')
+        expect(chip.classes()).not.toContain('non-interactive')
+      })
+
+      it('combines interactive class with custom classes', () => {
+        const customClasses = ['custom-1', 'custom-2']
+        wrapper = mount(CustomChip, {
+          props: {
+            interactive: false,
+            class: customClasses
+          }
+        })
+
+        const chip = wrapper.findComponent(VChip)
+        expect(chip.classes()).toContain('text-body-1')
+        expect(chip.classes()).toContain('non-interactive')
+        expect(chip.classes()).toContain('custom-1')
+        expect(chip.classes()).toContain('custom-2')
+      })
     })
   })
 
@@ -295,6 +355,80 @@ describe('CustomChip.vue', () => {
 
       expect(wrapper.emitted('click')).toBeTruthy()
       expect(wrapper.emitted('click')![0]).toEqual([complexValue])
+    })
+
+    it('emits click event when interactive is true (default)', async () => {
+      const testValue = 'interactive-true'
+      wrapper = mount(CustomChip, {
+        props: {
+          value: testValue
+          // interactive defaults to true
+        }
+      })
+
+      await wrapper.findComponent(VChip).trigger('click')
+
+      expect(wrapper.emitted('click')).toBeTruthy()
+      expect(wrapper.emitted('click')![0]).toEqual([testValue])
+    })
+
+    it('emits click event when interactive is explicitly true', async () => {
+      const testValue = 'interactive-explicit'
+      wrapper = mount(CustomChip, {
+        props: {
+          value: testValue,
+          interactive: true
+        }
+      })
+
+      await wrapper.findComponent(VChip).trigger('click')
+
+      expect(wrapper.emitted('click')).toBeTruthy()
+      expect(wrapper.emitted('click')![0]).toEqual([testValue])
+    })
+
+    it('does not emit click event when interactive is false', async () => {
+      const testValue = 'non-interactive'
+      wrapper = mount(CustomChip, {
+        props: {
+          value: testValue,
+          interactive: false
+        }
+      })
+
+      await wrapper.findComponent(VChip).trigger('click')
+
+      expect(wrapper.emitted('click')).toBeFalsy()
+    })
+
+    it('does not emit click event when both disabled and non-interactive', async () => {
+      const testValue = 'disabled-non-interactive'
+      wrapper = mount(CustomChip, {
+        props: {
+          value: testValue,
+          disabled: true,
+          interactive: false
+        }
+      })
+
+      await wrapper.findComponent(VChip).trigger('click')
+
+      expect(wrapper.emitted('click')).toBeFalsy()
+    })
+
+    it('does not emit click event when disabled even if interactive is true', async () => {
+      const testValue = 'disabled-but-interactive'
+      wrapper = mount(CustomChip, {
+        props: {
+          value: testValue,
+          disabled: true,
+          interactive: true
+        }
+      })
+
+      await wrapper.findComponent(VChip).trigger('click')
+
+      expect(wrapper.emitted('click')).toBeFalsy()
     })
   })
 
@@ -402,6 +536,7 @@ describe('CustomChip.vue', () => {
         size: 'large' as const,
         density: 'compact' as const,
         disabled: false,
+        interactive: true,
         class: ['custom-class-1', 'custom-class-2'],
         customStyle: { fontWeight: 'bold', fontSize: '18px' },
         prependAvatar: 'prepend.jpg',
@@ -425,14 +560,63 @@ describe('CustomChip.vue', () => {
       // Check text content
       expect(wrapper.text()).toContain(props.text)
 
-      // Check classes
+      // Check classes (interactive: true means no non-interactive class)
       expect(chip.classes()).toContain('text-body-1')
       expect(chip.classes()).toContain('custom-class-1')
       expect(chip.classes()).toContain('custom-class-2')
+      expect(chip.classes()).not.toContain('non-interactive')
 
       // Check styles
       expect(chip.attributes('style')).toContain('font-weight: bold')
       expect(chip.attributes('style')).toContain('font-size: 18px')
+    })
+
+    it('works correctly with non-interactive combination', () => {
+      const props = {
+        value: 'non-interactive-test',
+        text: 'Non-Interactive Test',
+        color: 'warning',
+        isSelected: false,
+        interactive: false,
+        class: 'non-interactive-chip'
+      }
+
+      wrapper = mount(CustomChip, { props })
+
+      const chip = wrapper.findComponent(VChip)
+
+      // Check props
+      expect(chip.props('value')).toBe(props.value)
+      expect(chip.props('color')).toBe(props.color)
+      expect(chip.props('variant')).toBe('outlined') // isSelected: false
+
+      // Check classes include non-interactive
+      expect(chip.classes()).toContain('text-body-1')
+      expect(chip.classes()).toContain('non-interactive')
+      expect(chip.classes()).toContain('non-interactive-chip')
+
+      // Check text content
+      expect(wrapper.text()).toContain(props.text)
+    })
+
+    it('handles interactive false with disabled true combination', async () => {
+      const props = {
+        value: 'disabled-non-interactive',
+        interactive: false,
+        disabled: true
+      }
+
+      wrapper = mount(CustomChip, { props })
+
+      const chip = wrapper.findComponent(VChip)
+
+      // Should have both disabled and non-interactive characteristics
+      expect(chip.props('disabled')).toBe(true)
+      expect(chip.classes()).toContain('non-interactive')
+
+      // Should not emit click when clicked
+      await chip.trigger('click')
+      expect(wrapper.emitted('click')).toBeFalsy()
     })
   })
 })

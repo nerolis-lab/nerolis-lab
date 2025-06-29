@@ -1,6 +1,18 @@
 <template>
+  <!-- Sticky avatar for mobile -->
+  <div v-if="isMobile" class="sticky-avatar" :class="{ 'sticky-avatar--visible': showStickyAvatar }">
+    <v-avatar size="32">
+      <v-img :src="pokemonAvatarUrl" :alt="pokemonName" />
+    </v-avatar>
+  </div>
+
   <v-tabs v-model="activeTab" bg-color="background" color="primary" grow slider-color="primary" class="rounded-t-lg">
-    <v-tab value="overview"><v-icon start size="small">mdi-account-details-outline</v-icon>Overview</v-tab>
+    <v-tab ref="overviewTabElement" value="overview">
+      <v-avatar size="20" class="mr-2">
+        <v-img :src="pokemonAvatarUrl" :alt="pokemonName" />
+      </v-avatar>
+      Overview
+    </v-tab>
     <v-tab value="variants">
       <v-icon start size="small">mdi-dna</v-icon>Variants
       <v-chip v-if="variantCount > 20" size="x-small" class="ml-1" color="warning">{{ variantCount }}</v-chip>
@@ -53,6 +65,9 @@
 </template>
 
 <script setup lang="ts">
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
+import { useStickyAvatar } from '@/composables/use-sticky-avatar/use-sticky-avatar'
+import { avatarImage } from '@/services/utils/image-utils'
 import { getPokemon, type PokemonWithTiering } from 'sleepapi-common'
 import { computed, nextTick, ref, watch } from 'vue'
 import OverviewTab from './tabs/OverviewTab.vue'
@@ -69,12 +84,24 @@ const selectedVariantIndex = ref(0)
 const shouldRenderVariantsTab = ref(false)
 const shouldRenderRecipesTab = ref(false)
 const isRecipesTabLoading = ref(false)
+const overviewTabElement = ref<HTMLElement | null>(null)
+
+const { isMobile } = useBreakpoint()
+const { showStickyAvatar } = useStickyAvatar(overviewTabElement, isMobile)
 
 const variantCount = computed(() => {
   return props.allPokemonVariantsData.length
 })
 
 const pokemonName = computed(() => getPokemon(props.pokemon.pokemonWithSettings.pokemon).displayName)
+
+const pokemonAvatarUrl = computed(() =>
+  avatarImage({
+    pokemonName: props.pokemon.pokemonWithSettings.pokemon,
+    shiny: false,
+    happy: true
+  })
+)
 
 const isHighVariantCount = computed(() => variantCount.value > 10)
 
@@ -113,6 +140,26 @@ const handleVariantSelection = (index: number) => {
 </script>
 
 <style scoped lang="scss">
+.sticky-avatar {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  z-index: 10;
+  background: rgba(var(--v-theme-surface), 0.9);
+  border-radius: 50%;
+  padding: 4px;
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  pointer-events: none;
+
+  &--visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .performance-warning {
   .v-alert {
     border-left: 4px solid rgb(var(--v-theme-warning));

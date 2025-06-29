@@ -73,53 +73,49 @@
       :style="{ backgroundColor: `${withOpacity(contrib.recipe.type, 0.1)}` }"
     >
       <template #prepend>
-        <v-avatar rounded="lg" size="48">
+        <v-avatar rounded="lg" size="48" class="align-self-start">
           <v-img :src="recipeDisplayImageUrl(contrib.recipe.name)" :alt="contrib.recipe.name" eager></v-img>
         </v-avatar>
       </template>
-      <v-list-item-title class="font-weight-bold text-subtitle-1 recipe-title">{{
-        contrib.recipe.displayName
-      }}</v-list-item-title>
-      <v-list-item-subtitle class="text-medium-emphasis contribution-info">
-        <div class="d-flex flex-column flex-sm-row align-start">
-          <div class="contribution-score">
+      <v-list-item-title class="font-weight-bold text-subtitle-1">{{ contrib.recipe.displayName }}</v-list-item-title>
+      <v-list-item-subtitle class="text-medium-emphasis">
+        <div class="d-flex flex-wrap align-center ga-1">
+          <span class="text-no-wrap">
             Contribution:
-            <span class="font-weight-medium" :style="{ color: tierColorMapping.A }">{{
+            <span class="font-weight-medium mr-2" :style="{ color: tierColorMapping.A }">{{
               localizeNumber(contrib.score)
             }}</span>
-            <span v-if="contrib.coverage !== undefined" class="skill-value">
-              Coverage: {{ contrib.coverage.toFixed(1) }}%</span
-            >
-            <span
-              v-if="contrib.skillValue !== undefined && contrib.skillValue > 0"
-              class="ml-1 text-caption skill-value"
-              >Support value: {{ localizeNumber(contrib.skillValue) }}</span
-            >
-          </div>
+          </span>
+          <span v-if="contrib.coverage !== undefined" class="text-no-wrap">
+            Coverage: <span class="mr-2">{{ contrib.coverage.toFixed(1) }}%</span>
+          </span>
+          <span v-if="contrib.skillValue !== undefined && contrib.skillValue > 0" class="text-no-wrap">
+            Support value: {{ localizeNumber(contrib.skillValue) }}
+          </span>
         </div>
       </v-list-item-subtitle>
-      <div
-        v-if="contrib.team && contrib.team.length > 0"
-        :class="['team-section', isMobile ? 'flex-column flex-top' : 'flex-left']"
-      >
-        <span class="text-medium-emphasis mr-1">Team:</span>
-        <CustomChip
-          v-for="(member, tIndex) in contrib.team"
-          :key="tIndex"
-          size="small"
-          class="mr-1"
-          color="accent"
-          :prepend-avatar="pokemonDisplayImageUrlByName(member.pokemon)"
-        >
-          <v-avatar
-            v-for="(ing, index) in member.ingredientList"
-            :key="index"
-            size="20"
-            :title="`${ing.amount} ${ing.name}`"
+      <div v-if="contrib.team && contrib.team.length > 0" class="d-flex flex-column flex-sm-row align-start mt-2">
+        <span class="text-medium-emphasis text-no-wrap mr-1">Team: </span>
+        <div class="d-flex flex-wrap ga-1">
+          <CustomChip
+            v-for="(member, tIndex) in contrib.team"
+            :key="tIndex"
+            size="small"
+            :interactive="false"
+            :color="isCurrentVariantTeamMember(member) ? 'primary' : ''"
+            :variant="isCurrentVariantTeamMember(member) ? 'elevated' : 'outlined'"
+            :prepend-avatar="pokemonDisplayImageUrlByName(member.pokemon)"
           >
-            <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager></v-img>
-          </v-avatar>
-        </CustomChip>
+            <v-avatar
+              v-for="(ing, index) in member.ingredientList"
+              :key="index"
+              size="20"
+              :title="`${ing.amount} ${ing.name}`"
+            >
+              <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager></v-img>
+            </v-avatar>
+          </CustomChip>
+        </div>
       </div>
     </v-list-item>
   </v-list>
@@ -288,6 +284,13 @@ const pokemonDisplayImageUrlByName = (name: string) => {
   return getPokemonDisplayImageUrlUtil({ pokemonName: name, shiny: false, happy: false })
 }
 
+const isCurrentVariantTeamMember = (member: any) => {
+  return (
+    member.pokemon === selectedVariant.value.pokemonWithSettings.pokemon &&
+    JSON.stringify(member.ingredientList) === JSON.stringify(selectedVariant.value.pokemonWithSettings.ingredientList)
+  )
+}
+
 const tierColorMapping: Record<Tier, string> = {
   S: 'var(--v-theme-primary)',
   A: 'var(--v-theme-strength)',
@@ -299,32 +302,6 @@ const tierColorMapping: Record<Tier, string> = {
 }
 </script>
 
-<style scoped lang="scss">
-.recipe-title {
-  @media (max-width: 599px) {
-    font-size: 0.9rem !important;
-    line-height: 1.3;
-  }
-}
-
-.contribution-info {
-  @media (max-width: 599px) {
-    font-size: 0.8rem;
-  }
-}
-
-.contribution-score {
-  @media (max-width: 599px) {
-    margin-bottom: 4px;
-  }
-}
-
-.skill-value {
-  margin-left: 10px !important;
-  @media (max-width: 599px) {
-    display: block;
-    margin-top: 2px;
-    margin-left: 0 !important;
-  }
-}
+<style scoped>
+/* Minimal custom styles - most styling handled by Vuetify utilities */
 </style>
