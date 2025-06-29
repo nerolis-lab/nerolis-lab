@@ -17,6 +17,12 @@
   justify-content: flex-end;
 }
 
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .flex-top {
   display: flex;
   align-items: flex-start;
@@ -33,6 +39,27 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .flex-200w {

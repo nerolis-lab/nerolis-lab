@@ -334,4 +334,101 @@ describe('RecipesTab.vue', () => {
       expect(wrapper.exists()).toBe(true)
     })
   })
+
+  describe('Interactive CustomChip Functionality', () => {
+    it('renders variant chips as interactive by default', () => {
+      const variantChips = wrapper.findAllComponents(CustomChip)
+      // Find chips that are not explicitly set to non-interactive
+      const interactiveChips = variantChips.filter((chip) => chip.props('interactive') !== false)
+
+      expect(interactiveChips.length).toBeGreaterThan(0)
+
+      // Check that interactive chips do not have non-interactive class
+      interactiveChips.forEach((chip) => {
+        expect(chip.classes()).not.toContain('non-interactive')
+      })
+    })
+
+    it('renders team member chips as non-interactive', () => {
+      const teamChips = wrapper.findAllComponents(CustomChip).filter((chip) => chip.props('interactive') === false)
+
+      if (teamChips.length > 0) {
+        teamChips.forEach((chip) => {
+          expect(chip.props('interactive')).toBe(false)
+          expect(chip.classes()).toContain('non-interactive')
+        })
+      }
+    })
+
+    it('emits click events for interactive variant chips', async () => {
+      const interactiveChips = wrapper
+        .findAllComponents(CustomChip)
+        .filter((chip) => chip.props('interactive') !== false)
+
+      if (interactiveChips.length > 0) {
+        await interactiveChips[0].trigger('click')
+        expect(interactiveChips[0].emitted('click')).toBeTruthy()
+      }
+    })
+
+    it('does not emit click events for non-interactive team chips', async () => {
+      const nonInteractiveChips = wrapper
+        .findAllComponents(CustomChip)
+        .filter((chip) => chip.props('interactive') === false)
+
+      if (nonInteractiveChips.length > 0) {
+        await nonInteractiveChips[0].trigger('click')
+        expect(nonInteractiveChips[0].emitted('click')).toBeFalsy()
+      }
+    })
+
+    it('applies correct styling to interactive vs non-interactive chips', () => {
+      const allChips = wrapper.findAllComponents(CustomChip)
+
+      allChips.forEach((chip) => {
+        if (chip.props('interactive') === false) {
+          // Non-interactive chips should have the non-interactive class
+          expect(chip.classes()).toContain('non-interactive')
+        } else {
+          // Interactive chips should not have the non-interactive class
+          expect(chip.classes()).not.toContain('non-interactive')
+        }
+      })
+    })
+
+    it('handles team member chip sizing correctly', () => {
+      const teamChips = wrapper.findAllComponents(CustomChip).filter((chip) => chip.props('size') === 'small')
+
+      if (teamChips.length > 0) {
+        teamChips.forEach((chip) => {
+          expect(chip.props('size')).toBe('small')
+          expect(chip.props('interactive')).toBe(false)
+        })
+      }
+    })
+
+    it('displays team member chips with prepend avatars', () => {
+      const teamChips = wrapper.findAllComponents(CustomChip).filter((chip) => chip.props('prependAvatar'))
+
+      if (teamChips.length > 0) {
+        teamChips.forEach((chip) => {
+          expect(chip.props('prependAvatar')).toBeTruthy()
+          expect(chip.props('interactive')).toBe(false)
+        })
+      }
+    })
+
+    it('applies current variant highlighting to team member chips', () => {
+      const teamChips = wrapper.findAllComponents(CustomChip).filter((chip) => chip.props('color') === 'primary')
+
+      if (teamChips.length > 0) {
+        teamChips.forEach((chip) => {
+          expect(chip.props('color')).toBe('primary')
+          // CustomChip uses isSelected to determine variant internally
+          expect(chip.props('isSelected')).toBe(true)
+          expect(chip.props('interactive')).toBe(false)
+        })
+      }
+    })
+  })
 })

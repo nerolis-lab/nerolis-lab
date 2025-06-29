@@ -1,228 +1,73 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-SleepAPI (Neroli's Lab) is a full-stack web application for Pokémon Sleep that provides production calculators, team composition algorithms, and simulation-based cooking tier lists. It's structured as a monorepo with three main packages: backend (Express API), frontend (Vue SPA), and common (shared TypeScript library).
+Neroli's Lab (SleepAPI) is a full-stack Pokémon Sleep application with three packages:
+
+- **backend**: Express API (Bun dev, Node.js production)
+- **frontend**: Vue 3 SPA with Vuetify 3
+- **common**: Shared TypeScript library
 
 ## Essential Commands
 
-### Initial Setup
+### Development
 
 ```bash
-# Clone and install dependencies
-npm install          # Root dependencies and git hooks
-cd backend && bun install
-cd ../frontend && npm install
-cd ../common && npm install
+# Start development servers
+cd backend && npm run dev        # Backend with Bun hot reload
+cd frontend && npm run dev       # Frontend with Vite
 
-# Database setup
-docker-compose up -d  # Start MySQL container
-Migrations run automatically if DATABASE_MIGRATION="UP" is set in .env in backend
+# Build common library (build first when changing shared types)
+cd common && npm run build
+cd common && npm run build-watch # Watch mode for development
 ```
 
-### Development Commands
-
-**Backend Development:**
+### Testing & Quality
 
 ```bash
-cd backend
-npm run dev               # Alternative dev server
-npm run test              # Run tests with coverage
-npm run test-watch        # Tests in watch mode
-npm run compile           # Type-check only
-npm run build             # Build for production
+# Run tests
+npm run test                     # All tests in package
+npm run test -- testname.test.ts # Specific test file
+npx vitest --run -- testname.test.ts # Direct vitest execution
+
+# Code quality (REQUIRED after changes)
+npx eslint .                     # Lint current directory
+npm run type-check               # Frontend type checking (in frontend/)
+npm run compile                  # Backend type checking (in backend/)
 ```
 
-**Frontend Development:**
+## Architecture Quick Reference
 
-```bash
-cd frontend
-npm run dev               # Start Vite dev server
-npm run test              # Run tests with coverage
-npm run test-watch        # Tests in watch mode
-npm run type-check        # Vue type checking
-npm run build             # Build for production
-```
+### File Structure
 
-**Common Library:**
+- **Backend**: `controllers/` → `services/` → `daos/` → database
+- **Frontend**: `pages/` (routes) → `components/` → `stores/` (Pinia)
+- **Common**: Shared types and utilities
 
-```bash
-cd common
-npm run build             # Build the library
-npm run build-watch       # Build in watch mode (use when developing)
-npm run test              # Run tests
-```
+### Key Patterns
 
-### Code Quality
+- Controllers use TSOA decorators (minimal, non-sensitive routes only)
+- DAOs extend AbstractDAO with repository pattern
+- Vue components follow atomic design
+- API clients in `frontend/src/services/` match backend endpoints
 
-```bash
-# From root directory
-npm run lint              # Run ESLint and Prettier checks
-npm run lint-fix          # Auto-fix linting issues
-```
+## Required Workflows
 
-### Testing Single Files
+### Code Changes Checklist
 
-```bash
-# Vitest supports pattern matching
-npm run test -- path/to/file.test.ts
-npm run test -- --grep "specific test name"
-```
+1. **Write/update tests** for any functionality changes
+2. **Run tests** to verify: `npx vitest --run -- testname.test.ts`
+3. **Lint changed files**: `npx eslint .`
+4. **Type check**: `npm run type-check` (frontend) or `npm run compile` (backend)
+5. **Build common** if shared types changed: `cd common && npm run build`
 
-## Architecture Overview
+### Testing Patterns
 
-### Backend Structure
-
-- **Controllers**: HTTP request handlers following TSOA decorators for OpenAPI generation. Only add OpenAPI decorators for trivial non-sensitive routes.
-- **Services**: Business logic layer with dependency injection pattern
-- **DAOs**: Data Access Objects for database operations, extending AbstractDAO
-- **Routes**: Express route definitions that bind controllers
-- **Domain**: Custom error classes and domain models
-- **Database**: Knex migrations and MySQL queries
-
-Key patterns:
-
-- Repository pattern with abstract DAO base class
-- Worker pool for CPU-intensive calculations (simulations)
-- OAuth2 authentication with Discord/Google/Patreon
-- JWT session management
-- Request validation using TypeBox schemas
-
-### Frontend Structure
-
-- **Pages**: Route-level components
-- **Components**: Reusable Vue components following atomic design
-- **Stores**: Pinia stores with persisted state
-- **Services**: API client services matching backend endpoints
-- **Composables**: Shared Vue composition functions
-
-Key patterns:
-
-- Service layer for API communication
-- Vuetify 3 for Material Design components
-- Chart.js for data visualization
-- PWA configuration for offline support
-
-### Common Package
-
-Shared TypeScript types and utilities used by both frontend and backend. Build this first when making changes to shared types.
-
-## Important Development Notes
-
-1. **Build Order**: Always build `common` before working on frontend/backend if you've modified shared types
-
-2. **Environment Variables**: Copy `.env.example` files and configure OAuth credentials and database settings
-
-3. **Database Migrations**:
-
-   - Create new migrations in `backend/src/database/migration/migrations/`
-   - Use sequential numbering (e.g., `012_add_feature.js`)
-   - Runs automatically when backend starts, if `.env DATABASE_MIGRATION=up`
-
-4. **API Documentation**: Available at `http://localhost:3000/docs` when backend is running
-
-5. **Testing**: All packages use Vitest. Tests are colocated with source files as `.test.ts`
-
-6. **Type Safety**: The project uses strict TypeScript. Run type checking before committing
-
-7. **Commits**: Follow conventional commits format (enforced by commitlint):
-   - `feat:` for new features
-   - `fix:` for bug fixes
-   - `chore:` for maintenance
-   - `docs:` for documentation
-
-## Key Technologies
-
-- **Runtime**: Bun (backend dev), Node.js (production)
-- **Backend**: Express 5, TypeScript, Knex, MySQL, TSOA
-- **Frontend**: Vue 3, Vuetify 3, Pinia, Vite, TypeScript
-- **Testing**: Vitest across all packages
-- **Build Tools**: TSC (backend), Vite (frontend), Rollup (common)
-
-## Common Tasks
-
-### Adding a New API Endpoint
-
-1. Create controller method with TSOA decorators in `backend/src/controllers/`
-2. Add service logic in `backend/src/services/`
-3. Create DAO methods if database access needed
-4. Add corresponding types in `common/src/types/`
-5. Build common package
-6. Add API client method in `frontend/src/services/`
-7. Update frontend components/stores to use new endpoint
-
-### Running Simulations
-
-The backend uses worker threads for Monte Carlo simulations. See `backend/src/services/calculator/team-simulator.ts` for the implementation.
-
-### Database Schema Changes
-
-1. Create migration file in `backend/src/database/migration/migrations/`
-2. Update TypeScript types in `common/src/types/`
-3. Update DAOs to handle new fields
-4. Run migration: `cd backend && npm run migrate`
-
-## Performance Considerations
-
-- Worker threads are used for CPU-intensive calculations
-- Database queries should use appropriate indexes
-- Frontend uses lazy loading for routes
-- Images are optimized with multiple formats (webp, png)
-
-## Development Workflow Requirements
-
-### Code Quality Enforcement
-
-**ALWAYS run these commands after making code changes:**
-
-```bash
-# Linting (run from root or specific package directory)
-npx eslint .                    # Lint current directory
-npm run lint                    # Project-wide linting
-npm run lint-fix                # Auto-fix linting issues
-
-# Compilation verification
-cd backend && npm run build     # Build backend
-cd backend && bun compile       # Additional backend type checking
-cd frontend && npm run build    # Build frontend
-cd common && npm run build      # Build common library
-
-# Type checking
-cd frontend && npm run type-check  # Vue-specific type checking
-cd backend && npm run compile      # Backend type checking
-```
-
-### Testing Requirements
-
-**ALL code changes must include tests:**
-
-1. **Write or update tests** for any new functionality or bug fixes
-2. **Run tests to verify they work**:
-
-   ```bash
-   # Run all tests in a package
-   npm run test
-
-   # Run specific test file
-   npm run test -- testname.test.ts
-
-   # Run specific test file with Vitest directly
-   npx vitest --run -- testname.test.ts
-   ```
-
-3. **Verify test coverage** remains adequate
-4. **Fix any failing tests** before considering changes complete
-
-### Test Structure and Patterns
-
-#### Frontend Vue Component Testing
-
-**Required patterns for Vue component tests:**
+**Vue Component Tests (required structure):**
 
 ```typescript
-import { useTeamStore } from '@/stores/team/team-store';
 import type { VueWrapper } from '@vue/test-utils';
 import { mount } from '@vue/test-utils';
 import { beforeEach, afterEach, describe, expect, it } from 'vitest';
@@ -230,15 +75,8 @@ import MyComponent from './my-component.vue';
 
 describe('MyComponent', () => {
   let wrapper: VueWrapper<InstanceType<typeof MyComponent>>;
-  let teamStore: ReturnType<typeof useTeamStore>;
 
   beforeEach(() => {
-    teamStore = useTeamStore();
-
-    // Setup mock data
-    const mockData = createMockData();
-    teamStore.someProperty = mockData;
-
     wrapper = mount(MyComponent, {
       props: { someProp: 'value' }
     });
@@ -254,88 +92,88 @@ describe('MyComponent', () => {
 });
 ```
 
-**Critical rules:**
+**Mocking Strategy:**
 
-- Always declare wrapper as `let wrapper: VueWrapper<InstanceType<typeof ComponentName>>`
-- Use `let storeName: ReturnType<typeof useStoreName>` for Pinia stores
-- Include `beforeEach` for component mounting and store initialization
-- Always include `afterEach(() => { wrapper.unmount() })` for cleanup
-- Reassign stores in beforeEach using `storeName = useStoreName()`
+- Only mock external dependencies (APIs, HTTP requests, browser features)
+- Don't mock utility functions or internal services
+- **Use mock factories from `{package}/src/vitest/mocks/`** instead of hard-coded inline mocks
+- Avoid `as any` casts - complex interfaces have proper mock factory methods
+- Each package has its own mocks directory that extends common mocks
 
-#### Minimal Mocking Strategy
+### Frontend Design Work
 
-**Only mock external dependencies that don't work in test environments:**
+- Use Playwright MCP with screenshots for self-feedback loops
+- Follow TDD approach for feature development
+- Prefer utility classes from `frontend/src/assets/common.scss` over Vuetify utilities
 
-```typescript
-// ✅ DO Mock: External APIs, HTTP requests, browser-specific features
-vi.mock('@/composables/use-breakpoint/use-breakpoint', () => ({
-  useBreakpoint: vi.fn(() => ({
-    isMobile: ref(false),
-    isLargeDesktop: ref(false)
-  }))
-}));
+## Environment & Setup
 
-vi.mock('@/services/api/pokemon-api', () => ({
-  fetchPokemonData: vi.fn()
-}));
+### Environment Files
 
-// ❌ DON'T Mock: Utility functions that work fine in tests
-// vi.mock('@/services/utils/color-utils') // These work fine!
-// vi.mock('sleepapi-common') // These work fine!
-```
+- Frontend: `.env` (copy from `.env.example`)
+- Backend: `.env` (copy from `.env.example`, set `DATABASE_MIGRATION=UP`)
 
-**Mock only when necessary:**
-
-- HTTP requests, database calls, file system operations
-- External APIs and browser-specific features
-- Vue composables when testing specific reactive behavior
-
-**Don't mock:**
-
-- Utility functions (formatters, calculators, validators)
-- Internal services without external dependencies
-- Functions from libraries that work in Node.js test environment
-
-#### Reusable Mock Patterns
-
-**Create centralized mocks for common interfaces:**
-
-```typescript
-// common/src/vitest/mocks/mock-tierlist.ts
-export function tierlistSettings(attrs?: Partial<TierlistSettings>): TierlistSettings {
-  return {
-    camp: false,
-    level: 50,
-    ...attrs
-  };
-}
-
-// Usage in tests
-import { commonMocks } from 'sleepapi-common';
-const mockSettings = commonMocks.tierlistSettings({ level: 60 });
-```
-
-**Mock file organization:**
-
-- `common/src/vitest/mocks/` - for shared types
-- `frontend/src/vitest/mocks/` - for frontend-specific mocks
-- `backend/src/vitest/mocks/` - for backend-specific mocks
-- Use factory functions: `function mockType(attrs?: Partial<Type>): Type`
-- Export through index files for clean imports
-
-#### Test Verification
-
-**Always verify tests after creation/modification:**
+### Database
 
 ```bash
-# Run the specific test file immediately after creating/modifying
-npx vitest --run -- testname.test.ts
+docker-compose up -d             # Start MySQL
+# Migrations run automatically on backend start
 ```
 
-**Self-verification workflow:**
+### Package Installation
 
-1. Create or modify test file
-2. Immediately run `npx vitest --run -- {testname}.test.ts`
-3. If tests fail, analyze output and fix issues
-4. Re-run tests until all pass
-5. Only consider task complete when tests pass successfully
+```bash
+npm install                      # Root (git hooks)
+cd backend && bun install        # Backend dependencies
+cd frontend && npm install       # Frontend dependencies
+cd common && npm install         # Common dependencies
+```
+
+## Commit Guidelines
+
+Follow conventional commits (enforced by commitlint):
+
+- `feat:` new features
+- `fix:` bug fixes
+- `style:` design/UI changes
+- `chore:` maintenance
+- `refactor:` code restructuring
+- `test:` test changes
+- `perf:` performance improvements
+
+**Rules:**
+
+- Header ≤72 characters
+- No sentence case (avoid capitals unless proper nouns)
+- No period at end
+- No Claude Code references in commit messages
+
+## Key Technologies
+
+- **Backend**: Express 5, TypeScript, Knex, MySQL, TSOA
+- **Frontend**: Vue 3, Vuetify 3, Pinia, Vite, Chart.js
+- **Testing**: Vitest across all packages
+- **Runtime**: Bun (dev), Node.js (production)
+
+## Common Tasks
+
+### Adding API Endpoint
+
+1. Controller in `backend/src/controllers/`
+2. Service in `backend/src/services/`
+3. Types in `common/src/types/`
+4. Build common package
+5. API client in `frontend/src/services/`
+
+### Database Changes
+
+1. Migration in `backend/src/database/migration/migrations/`
+2. Update types in `common/src/types/`
+3. Update DAOs
+
+### CSS Styling
+
+- Use utility classes from `frontend/src/assets/common.scss`
+- Common flex classes: `.flex-center`, `.flex-between`, `.flex-column`
+- Responsive text classes available
+- Prefer utility classes over Vuetify utilities or custom CSS
