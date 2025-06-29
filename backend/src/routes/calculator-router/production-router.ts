@@ -1,5 +1,6 @@
 import type { MaybeAuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import { withMaybeUser } from '@src/middleware/authorization-middleware.js';
+import type { RequestBody, ResponseBody } from '@src/routes/base-router.js';
 import { BaseRouter } from '@src/routes/base-router.js';
 import { calculatorPool } from '@src/services/worker/worker-pool.js';
 import type { Request, Response } from 'express';
@@ -65,6 +66,25 @@ class ProductionRouterImpl {
           logger.log('Entered /calculator/iv');
 
           const data = await calculatorPool.exec('calculateIv', [req.body]);
+
+          res.json(data);
+        } catch (err) {
+          logger.error(err as Error);
+          res.sendStatus(500);
+        }
+      }
+    );
+
+    BaseRouter.router.post(
+      '/calculator/quick',
+      withMaybeUser,
+      async (req: RequestBody<CalculateIvRequest>, res: ResponseBody<CalculateIvResponse>) => {
+        try {
+          logger.log('Entered /calculator/quick');
+
+          const user = (req as MaybeAuthenticatedRequest).user;
+
+          const data = await calculatorPool.exec('quickCalculate', [req.body, user]);
 
           res.json(data);
         } catch (err) {

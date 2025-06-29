@@ -20,8 +20,15 @@ async function calculateIv(body: any) {
   return await controller.calculateIv(body);
 }
 
+// TODO: might not be necessary at all, perhaps we can just use calculateIv directly
+async function quickCalculate(body: any, maybeUser?: DBUser) {
+  const controller = new ProductionController();
+  return await controller.quickCalculate(body, maybeUser);
+}
+
 workerpool.worker({
   calculateProduction,
   calculateTeam,
-  calculateIv
+  calculateIv,
+  quickCalculate
 });

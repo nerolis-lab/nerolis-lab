@@ -68,6 +68,27 @@ export default class ProductionController {
     return calculateIv(parsedInput);
   }
 
+  // TODO: might not be necessary at all, perhaps we can just call calculateIv directly
+  public async quickCalculate(body: CalculateIvRequest, _maybeUser?: DBUser) {
+    // Validate single Pokemon input
+    if (body.members.length !== 1) {
+      throw new BadRequestError('Quick calculator expects exactly one Pokemon, but got: ' + body.members.length);
+    }
+
+    // Validate E4E procs input
+    // TODO: move to parse input
+    if (body.settings.externalE4eProcs !== undefined) {
+      const e4eProcs = body.settings.externalE4eProcs;
+      if (e4eProcs < 0 || e4eProcs > 50) {
+        throw new BadRequestError('External E4E procs must be between 0 and 50, but got: ' + e4eProcs);
+      }
+    }
+
+    // Use IV calculation which gives us both production and IV variants without cooking
+    const parsedInput = await this.#parseIvInput(body);
+    return calculateIv(parsedInput);
+  }
+
   async #parseIvInput(body: CalculateIvRequest) {
     const { members, variants } = body;
     const settings = await this.#parseSettings({ settings: body.settings, includeCooking: false });
@@ -176,7 +197,8 @@ export default class ProductionController {
       wakeup,
       includeCooking,
       stockpiledIngredients,
-      potSize
+      potSize,
+      externalE4eProcs: settings.externalE4eProcs
     };
   }
 

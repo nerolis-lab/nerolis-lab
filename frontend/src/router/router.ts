@@ -6,6 +6,7 @@ export enum RouteName {
   Home = 'Home',
 
   Calculator = 'Calculator',
+  QuickCalc = 'QuickCalc',
   Compare = 'Compare',
   Recipes = 'Recipes',
 
@@ -31,6 +32,7 @@ export enum RouteName {
 }
 
 const CalculatorPage = () => import('@/pages/calculator-page.vue')
+const QuickCalculatorPage = () => import('@/pages/quick-calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
 const TierlistPage = () => import('@/pages/tierlist/tierlist-page.vue')
@@ -66,6 +68,11 @@ const router = createRouter({
       path: '/calculator',
       name: RouteName.Calculator,
       component: CalculatorPage
+    },
+    {
+      path: '/quick-calc',
+      name: RouteName.QuickCalc,
+      component: QuickCalculatorPage
     },
     {
       path: '/compare',

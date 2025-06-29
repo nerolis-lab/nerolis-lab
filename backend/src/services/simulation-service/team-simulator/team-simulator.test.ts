@@ -324,6 +324,52 @@ describe('TeamSimulator', () => {
 
     spy.mockRestore();
   });
+
+  it('shall apply external E4E procs at correct times', () => {
+    // Settings with specific sleep schedule: 06:00 to 21:30 (15.5 hour day = 930 minutes)
+    const settingsWithE4E: TeamSettingsExt = {
+      ...mockSettings,
+      externalE4eProcs: 3 // Should get E4E at minutes 0, 310, 620
+    };
+
+    const members: TeamMemberExt[] = [mockMembers[0]];
+
+    // Create simulator and verify E4E proc times are calculated correctly
+    const simulator = new TeamSimulator({
+      settings: settingsWithE4E,
+      members,
+      iterations: 1
+    });
+
+    // Access private member to check E4E proc times
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const e4eProcTimes = (simulator as any).e4eProcTimes;
+
+    expect(e4eProcTimes).toEqual([0, 310, 620]);
+
+    // Run simulation and compare results with and without E4E
+    const simulatorWithoutE4E = new TeamSimulator({
+      settings: mockSettings,
+      members,
+      iterations: 1
+    });
+
+    simulator.simulate();
+    simulatorWithoutE4E.simulate();
+
+    const resultWithE4E = simulator.results();
+    const resultWithoutE4E = simulatorWithoutE4E.results();
+
+    // With external E4E, the Pokemon should produce more due to increased energy
+    // The exact amount will depend on the Pokemon's energy usage pattern
+    expect(resultWithE4E.members[0].produceTotal.berries[0].amount).toBeGreaterThan(
+      resultWithoutE4E.members[0].produceTotal.berries[0].amount
+    );
+
+    // Verify that the nextE4eProcIndex was incremented correctly
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((simulator as any).nextE4eProcIndex).toBe(3);
+  });
 });
 
 describe('recoverMemberEnergy', () => {
