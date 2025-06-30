@@ -40,6 +40,6 @@
     "uuid": "~11.1.0"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "4.9.5"
+    "@rollup/rollup-linux-x64-gnu": "4.44.1"
   }
 }
