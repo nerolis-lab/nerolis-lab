@@ -18,7 +18,7 @@
   "dependencies": {
     "common": "file:../common",
     "discord.js": "^14.21.0",
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.0.0",
     "express": "^5.1.0",
     "morgan": "^1.10.0"
   },
