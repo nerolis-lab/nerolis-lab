@@ -73,7 +73,7 @@
           <v-col class="pa-0">
             <v-range-slider
               v-model="potSizeRange"
-              :max="102"
+              :max="Math.ceil(MAX_POT_SIZE * 1.5)"
               :min="7"
               :step="3"
               thumb-label
@@ -144,7 +144,7 @@ import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import type { UserRecipe } from '@/types/recipe/user-recipe'
-import { calculateRecipeValue, RECIPES, type Ingredient, type RecipeType } from 'sleepapi-common'
+import { calculateRecipeValue, MAX_POT_SIZE, RECIPES, type Ingredient, type RecipeType } from 'sleepapi-common'
 import { capitalize, defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
@@ -192,7 +192,8 @@ export default defineComponent({
       isLargeDesktop,
       loggedIn,
       userRecipes,
-      capitalize
+      capitalize,
+      MAX_POT_SIZE
     }
   },
   data() {
