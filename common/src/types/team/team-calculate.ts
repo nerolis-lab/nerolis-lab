@@ -59,7 +59,7 @@ export interface MemberProductionAdvanced {
   frequencySplit: {
     zero: number;
     one: number;
-    fourty: number;
+    forty: number;
     sixty: number;
     eighty: number;
   };

@@ -368,7 +368,7 @@ describe('addHelps', () => {
           },
           "frequencySplit": {
             "eighty": 0,
-            "fourty": 0,
+            "forty": 0,
             "one": 0,
             "sixty": 0,
             "zero": 0,
@@ -494,7 +494,7 @@ describe('addHelps', () => {
           },
           "frequencySplit": {
             "eighty": NaN,
-            "fourty": NaN,
+            "forty": NaN,
             "one": NaN,
             "sixty": NaN,
             "zero": NaN,
@@ -647,7 +647,7 @@ describe('attemptDayHelp', () => {
           },
           "frequencySplit": {
             "eighty": 0,
-            "fourty": 0,
+            "forty": 0,
             "one": 0,
             "sixty": 1,
             "zero": 0,
@@ -777,7 +777,7 @@ describe('attemptDayHelp', () => {
           },
           "frequencySplit": {
             "eighty": NaN,
-            "fourty": NaN,
+            "forty": NaN,
             "one": NaN,
             "sixty": Infinity,
             "zero": NaN,
@@ -1009,7 +1009,7 @@ describe('attemptNightHelp', () => {
           },
           "frequencySplit": {
             "eighty": 1,
-            "fourty": 0,
+            "forty": 0,
             "one": 0,
             "sixty": 0,
             "zero": 0,
