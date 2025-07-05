@@ -1,6 +1,7 @@
 import router from '@/router/router'
 import { AuthService } from '@/services/login/auth-service'
 import { UserService } from '@/services/user/user-service'
+import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import { AuthProvider, commonMocks, Roles } from 'sleepapi-common'
 import { describe, expect, it, vi } from 'vitest'
@@ -306,21 +307,47 @@ describe('User Store', () => {
   })
 
   it('should call Google on login and update user data', async () => {
-    AuthService.login = vi.fn().mockResolvedValue({
-      auth: {
-        google: {
-          access_token: 'some access token',
-          refresh_token: 'some refresh token',
-          expiry_date: '10'
+    AuthService.login = vi.fn().mockResolvedValue(
+      commonMocks.loginResponse({
+        name: 'some name',
+        avatar: 'some avatar',
+        role: Roles.Default,
+        auth: {
+          activeProvider: AuthProvider.Google,
+          linkedProviders: {
+            [AuthProvider.Google]: { linked: true },
+            [AuthProvider.Discord]: { linked: false },
+            [AuthProvider.Patreon]: { linked: false }
+          },
+          tokens: {
+            accessToken: 'some access token',
+            refreshToken: 'some refresh token',
+            expiryDate: 10
+          }
         }
-      },
+      })
+    )
+
+    router.push = vi.fn()
+    UserService.getUserSettings = vi.fn().mockResolvedValue({
       name: 'some name',
       avatar: 'some avatar',
-      role: 'default'
+      role: Roles.Default,
+      areaBonuses: {
+        cyan: 0,
+        greengrass: 0,
+        lapis: 0,
+        powerplant: 0,
+        snowdrop: 0,
+        taupe: 0
+      },
+      potSize: 69,
+      supporterSince: null,
+      randomizeNicknames: true
     })
 
-    router.go = vi.fn()
-
+    const teamStore = useTeamStore()
+    teamStore.syncTeams = vi.fn()
     const userStore = useUserStore()
     await userStore.login({
       authCode: 'some auth code',
@@ -330,6 +357,8 @@ describe('User Store', () => {
     })
 
     expect(AuthService.login).toHaveBeenCalledWith('some auth code', 'google', 'http://localhost:3000/patreon')
+    expect(router.push).toHaveBeenCalledWith('http://localhost:3000/original')
+    expect(teamStore.syncTeams).toHaveBeenCalled()
   })
 
   it('should refresh tokens if expired', async () => {

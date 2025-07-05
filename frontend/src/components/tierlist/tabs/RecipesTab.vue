@@ -105,7 +105,7 @@
             </span>
           </div>
 
-          <v-menu>
+          <v-menu :max-width="500">
             <template #activator="{ props }">
               <v-btn
                 v-if="isMobile"
