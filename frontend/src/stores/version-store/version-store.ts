@@ -32,7 +32,7 @@ export const useVersionStore = defineStore('version', {
         logger.debug('Migrated site to version: ' + this.version)
       }
     },
-    invalidateCache() {
+    async invalidateCache() {
       const teamStore = useTeamStore()
       teamStore.invalidateCache()
 
@@ -41,6 +41,8 @@ export const useVersionStore = defineStore('version', {
 
       const pokemonStore = usePokemonStore()
       pokemonStore.invalidateCache()
+
+      await teamStore.syncTeams()
     },
     updateStoreVersion(storeVersion: number) {
       this.storeVersion = storeVersion

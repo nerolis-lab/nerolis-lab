@@ -28,7 +28,21 @@ export const usePokemonStore = defineStore('pokemon', {
   actions: {
     invalidateCache() {
       if (this.domainVersion !== DOMAIN_VERSION) {
-        this.pokemon = {}
+        const teamStore = useTeamStore()
+        const memberIds = new Set<string>()
+        for (const team of teamStore.teams) {
+          for (const member of team.members) {
+            if (member) {
+              memberIds.add(member)
+            }
+          }
+        }
+        for (const pokemonId of Object.keys(this.pokemon)) {
+          if (!memberIds.has(pokemonId)) {
+            // remove pokemon that are not used in any team
+            this.removePokemon(pokemonId, 'team')
+          }
+        }
         this.domainVersion = DOMAIN_VERSION
       }
     },
