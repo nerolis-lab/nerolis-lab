@@ -150,34 +150,94 @@ describe('Pokemon Store', () => {
 
     expect(UserService.deletePokemon).toHaveBeenCalled()
   })
-  it('should invalidate cache correctly', () => {
-    const pokemonStore = usePokemonStore()
-    pokemonStore.domainVersion = -1 // guarantee outdated version
-
-    pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
-
-    pokemonStore.invalidateCache()
-
-    expect(pokemonStore.pokemon).toEqual({})
-  })
-
-  it('should not change pokemon that already have rp', () => {
+  it('should not invalidate cache if domain version is current', () => {
     const pokemonStore = usePokemonStore()
     pokemonStore.domainVersion = DOMAIN_VERSION
-    const mockPokemonWithRP = { ...mockPokemon, rp: 100 }
-    pokemonStore.upsertLocalPokemon(mockPokemonWithRP)
+
+    const unusedPokemon = mocks.createMockPokemon({ externalId: 'unused-pokemon' })
+    pokemonStore.upsertLocalPokemon(unusedPokemon)
 
     pokemonStore.invalidateCache()
 
-    expect(pokemonStore.pokemon[externalId].rp).toEqual(100)
+    expect(pokemonStore.pokemon).toEqual({
+      'unused-pokemon': unusedPokemon
+    })
   })
 
-  it('should outdate the store correctly', () => {
+  it('should remove unused pokemon when domain version is outdated', () => {
     const pokemonStore = usePokemonStore()
-    pokemonStore.upsertLocalPokemon(mockPokemon)
+    pokemonStore.domainVersion = -1 // outdated version
+
+    const unusedPokemon = mocks.createMockPokemon({ externalId: 'unused-pokemon' })
+    pokemonStore.upsertLocalPokemon(unusedPokemon)
 
     pokemonStore.invalidateCache()
 
     expect(pokemonStore.pokemon).toEqual({})
+    expect(pokemonStore.domainVersion).toBe(DOMAIN_VERSION)
+  })
+
+  it('should keep pokemon that are used in teams during cache invalidation', () => {
+    const pokemonStore = usePokemonStore()
+    const teamStore = useTeamStore()
+    pokemonStore.domainVersion = -1 // outdated version
+
+    const usedPokemon = mocks.createMockPokemon({ externalId: 'used-pokemon' })
+    const unusedPokemon = mocks.createMockPokemon({ externalId: 'unused-pokemon' })
+
+    pokemonStore.upsertLocalPokemon(usedPokemon)
+    pokemonStore.upsertLocalPokemon(unusedPokemon)
+
+    teamStore.teams = createMockTeams(1, { members: [usedPokemon.externalId] })
+
+    pokemonStore.invalidateCache()
+
+    expect(pokemonStore.pokemon).toEqual({
+      'used-pokemon': usedPokemon
+    })
+    expect(pokemonStore.domainVersion).toBe(DOMAIN_VERSION)
+  })
+
+  it('should keep pokemon used in multiple teams during cache invalidation', () => {
+    const pokemonStore = usePokemonStore()
+    const teamStore = useTeamStore()
+    pokemonStore.domainVersion = -1 // outdated version
+
+    const sharedPokemon = mocks.createMockPokemon({ externalId: 'shared-pokemon' })
+    const unusedPokemon = mocks.createMockPokemon({ externalId: 'unused-pokemon' })
+
+    pokemonStore.upsertLocalPokemon(sharedPokemon)
+    pokemonStore.upsertLocalPokemon(unusedPokemon)
+
+    teamStore.teams = [
+      ...createMockTeams(1, { members: [sharedPokemon.externalId] }),
+      ...createMockTeams(1, { members: [sharedPokemon.externalId] })
+    ]
+
+    pokemonStore.invalidateCache()
+
+    expect(pokemonStore.pokemon).toEqual({
+      'shared-pokemon': sharedPokemon
+    })
+  })
+
+  it('should handle null team members during cache invalidation', () => {
+    const pokemonStore = usePokemonStore()
+    const teamStore = useTeamStore()
+    pokemonStore.domainVersion = -1 // outdated version
+
+    const usedPokemon = mocks.createMockPokemon({ externalId: 'used-pokemon' })
+    const unusedPokemon = mocks.createMockPokemon({ externalId: 'unused-pokemon' })
+
+    pokemonStore.upsertLocalPokemon(usedPokemon)
+    pokemonStore.upsertLocalPokemon(unusedPokemon)
+
+    teamStore.teams = createMockTeams(1, { members: [usedPokemon.externalId, undefined, undefined] })
+
+    pokemonStore.invalidateCache()
+
+    expect(pokemonStore.pokemon).toEqual({
+      'used-pokemon': usedPokemon
+    })
   })
 })

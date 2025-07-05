@@ -41,5 +41,5 @@ export function clearCacheKeepLogin() {
 export async function migrateSite() {
   const versionStore = useVersionStore()
   await versionStore.migrate()
-  versionStore.invalidateCache()
+  await versionStore.invalidateCache()
 }
