@@ -45,9 +45,8 @@
                 <v-img
                   height="40"
                   width="40"
-                  src="/images/misc/camp.png"
+                  :src="camp ? '/images/misc/camp.png' : '/images/misc/camp-grayscale.png'"
                   :alt="camp ? 'Camp Mode On' : 'Camp Mode Off'"
-                  :class="{ 'camp-active': camp, 'camp-inactive': !camp }"
                   eager
                 />
               </v-btn>
@@ -128,6 +127,8 @@
         v-if="selectedPokemonForDetail"
         :pokemon="selectedPokemonForDetail"
         :allPokemonVariantsData="selectedPokemonAllVariants"
+        :camp="camp"
+        :level="selectedLevel"
       />
     </v-dialog>
 
@@ -508,10 +509,6 @@ watch(
   backdrop-filter: blur(10px);
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px 10px 0 0;
-}
-
-.camp-inactive {
-  filter: grayscale(80%) opacity(0.6);
 }
 
 @keyframes fadeInUp {

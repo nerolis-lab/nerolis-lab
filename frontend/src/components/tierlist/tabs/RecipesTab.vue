@@ -10,8 +10,8 @@
           :is-selected="selectedVariantIndex === index"
           :color="`tier-${variant.tier.toLowerCase()}`"
         >
-          <div class="d-flex align-center flex-wrap">
-            <div class="d-flex align-center">
+          <div class="flex-center flex-wrap">
+            <div class="flex-center">
               <v-avatar v-for="(ing, i) in variant.pokemonWithSettings.ingredientList" :key="i" size="25" tile>
                 <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager></v-img>
               </v-avatar>
@@ -72,28 +72,98 @@
       rounded="lg"
       :style="{ backgroundColor: `${withOpacity(contrib.recipe.type, 0.1)}` }"
     >
-      <template #prepend>
+      <v-list-item-title class="font-weight-bold text-subtitle-1 flex-left flex-nowrap">
         <v-avatar rounded="lg" size="48" class="align-self-start">
           <v-img :src="recipeDisplayImageUrl(contrib.recipe.name)" :alt="contrib.recipe.name" eager></v-img>
         </v-avatar>
-      </template>
-      <v-list-item-title class="font-weight-bold text-subtitle-1">{{ contrib.recipe.displayName }}</v-list-item-title>
-      <v-list-item-subtitle class="text-medium-emphasis">
-        <div class="d-flex flex-wrap align-center ga-1">
-          <span class="text-no-wrap">
-            Contribution:
-            <span class="font-weight-medium mr-2" :style="{ color: tierColorMapping.A }">{{
-              localizeNumber(contrib.score)
-            }}</span>
-          </span>
-          <span v-if="contrib.coverage !== undefined" class="text-no-wrap">
-            Coverage: <span class="mr-2">{{ contrib.coverage.toFixed(1) }}%</span>
-          </span>
-          <span v-if="contrib.skillValue !== undefined && contrib.skillValue > 0" class="text-no-wrap">
-            Support value: {{ localizeNumber(contrib.skillValue) }}
-          </span>
+        <div class="flex-left flex-wrap text-truncate">
+          <span class="mr-2 text-truncate">{{ contrib.recipe.displayName }}</span>
+          <div class="flex-center ga-1">
+            <div v-for="(ing, index) in contrib.recipe.ingredients" :key="index" class="flex-center flex-nowrap">
+              <v-avatar size="20">
+                <v-img :src="ingredientDisplayImageUrl(ing.ingredient.name)" :alt="ing.ingredient.name" eager></v-img>
+              </v-avatar>
+              <span>{{ ing.amount }}</span>
+            </div>
+          </div>
+        </div>
+      </v-list-item-title>
+      <v-list-item-subtitle>
+        <div class="flex-center justify-space-between">
+          <div class="text-medium-emphasis flex-left flex-wrap ga-1">
+            <span class="text-no-wrap">
+              Contribution:
+              <span class="font-weight-medium mr-2" :style="{ color: tierColorMapping.A }">{{
+                localizeNumber(contrib.score)
+              }}</span>
+            </span>
+            <span v-if="contrib.coverage !== undefined" class="text-no-wrap">
+              Coverage: <span class="mr-2">{{ contrib.coverage.toFixed(1) }}%</span>
+            </span>
+            <span v-if="contrib.skillValue !== undefined && contrib.skillValue > 0" class="text-no-wrap">
+              Support value: {{ localizeNumber(contrib.skillValue) }}
+            </span>
+          </div>
+
+          <v-menu>
+            <template #activator="{ props }">
+              <v-btn
+                v-if="isMobile"
+                icon="mdi-play"
+                size="x-small"
+                color="primary"
+                v-bind="props"
+                class="ml-4 force-opacity"
+              />
+              <v-btn
+                v-else
+                size="small"
+                color="primary"
+                v-bind="props"
+                append-icon="mdi-chevron-right"
+                class="force-opacity"
+              >
+                Simulate
+              </v-btn>
+            </template>
+            <v-card title="Simulate this recipe team" :loading="isSimulating">
+              <v-card-text>
+                <v-row dense>
+                  <v-col cols="12">
+                    <TeamSelect
+                      v-model="teamIndex"
+                      placeholder-text="Select team to replace"
+                      card-title="Select team"
+                      :show-full-details="true"
+                      :show-island="false"
+                      :show-delete-button="false"
+                      :show-camp="true"
+                      :show-sleep-score="true"
+                      :show-members="true"
+                      button-class="mb-2"
+                      :max-team-size="MAX_TEAM_SIZE"
+                    />
+                  </v-col>
+
+                  <v-col cols="12" class="mb-6">
+                    <v-alert type="warning"> Note that this will replace the selected team. </v-alert>
+                  </v-col>
+
+                  <v-col cols="12" class="flex-right">
+                    <v-btn
+                      color="primary"
+                      text="Simulate"
+                      :disabled="teamIndex === undefined || isSimulating"
+                      @click.stop="simulateRecipe(contrib)"
+                    />
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-menu>
         </div>
       </v-list-item-subtitle>
+
       <div v-if="contrib.team && contrib.team.length > 0" class="d-flex flex-column flex-sm-row align-start mt-2">
         <span class="text-medium-emphasis text-no-wrap mr-1">Team: </span>
         <div class="d-flex flex-wrap ga-1">
@@ -101,7 +171,7 @@
             v-for="(member, tIndex) in contrib.team"
             :key="tIndex"
             size="small"
-            :interactive="false"
+            :interactive="true"
             :color="isCurrentVariantTeamMember(member) ? 'primary' : ''"
             :variant="isCurrentVariantTeamMember(member) ? 'elevated' : 'outlined'"
             :prepend-avatar="pokemonDisplayImageUrlByName(member.pokemon)"
@@ -114,6 +184,39 @@
             >
               <v-img :src="ingredientDisplayImageUrl(ing.name)" :alt="ing.name" eager></v-img>
             </v-avatar>
+
+            <template #append>
+              <v-icon class="ml-2" icon="mdi-information" size="small" />
+            </template>
+
+            <template #menu-title>
+              <div class="flex-center ga-1">
+                <div
+                  v-for="(prod, ingIndex) in getDisplayProductionSummary(member)"
+                  :key="ingIndex"
+                  class="flex-center"
+                >
+                  <v-img
+                    height="28"
+                    width="28"
+                    :src="ingredientDisplayImageUrl(prod.name)"
+                    :alt="prod.isMagnet ? 'All other ingredients' : prod.name"
+                    eager
+                  ></v-img>
+                  <span class="mr-1">{{ prod.amount.toFixed(1) }}</span>
+                </div>
+              </div>
+            </template>
+
+            <template #menu-content>
+              <v-divider />
+              <v-card-text class="d-flex flex-column ga-1">
+                <div class="d-flex flex-column ga-1">
+                  <span>Nature: {{ member.nature }} </span>
+                  <span>Subskills: {{ member.subskills.map((s) => getSubskill(s).shortName).join(', ') }} </span>
+                </div>
+              </v-card-text>
+            </template>
           </CustomChip>
         </div>
       </div>
@@ -123,29 +226,59 @@
 
 <script setup lang="ts">
 import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
+import TeamSelect from '@/components/custom-components/team-select/TeamSelect.vue'
+import { error } from '@/components/snackbar/snackbar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { withOpacity } from '@/services/utils/color-utils'
 import {
-  ingredientImage as getIngredientImageUrlUtil,
   avatarImage as getPokemonDisplayImageUrlUtil,
   recipeImage as getRecipeImageUrlUtil
 } from '@/services/utils/image-utils'
-import { getRecipe, localizeNumber, type PokemonWithTiering, type Tier } from 'sleepapi-common'
-import { computed, nextTick, ref, watch } from 'vue'
+import { getIngredientImageUrl, processIngredientsForDisplay } from '@/services/utils/ingredient-display-utils'
+import { randomName } from '@/services/utils/name-utils'
+import { useTeamStore } from '@/stores/team/team-store'
+import type { TeamData } from '@/types/team/team-data'
+import {
+  CarrySizeUtils,
+  flatToIngredientSet,
+  getIngredient,
+  getNature,
+  getPokemon,
+  getRandomGender,
+  getRecipe,
+  getSubskill,
+  localizeNumber,
+  MAX_RIBBON_LEVEL,
+  MAX_TEAM_SIZE,
+  uuid,
+  type PokemonInstanceExt,
+  type PokemonWithTiering,
+  type RecipeContribution,
+  type TeamMemberProduction,
+  type Tier
+} from 'sleepapi-common'
+import { computed, nextTick, ref, watch, type ComputedRef } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   pokemon: PokemonWithTiering
   allPokemonVariantsData: PokemonWithTiering[]
   selectedVariantIndex?: number
+  camp: boolean
+  level: number
 }>()
 
 const { isMobile } = useBreakpoint()
+const router = useRouter()
 
 const selectedVariantIndex = ref(0)
 const isLoading = ref(false)
 const hasError = ref(false)
+const isSimulating = ref(false)
 const chunkSize = 10
 const currentChunkIndex = ref(0)
+const teamIndex = ref<number | undefined>(undefined)
+const teamStore = useTeamStore()
 
 // Sync with prop when it changes and calculate correct chunk
 watch(
@@ -200,7 +333,7 @@ const selectedVariant = computed(() => {
   return pokemonVariants.value[actualIndex] || props.pokemon
 })
 
-const topContributions = computed(() => {
+const topContributions: ComputedRef<RecipeContribution[]> = computed(() => {
   if (isLoading.value || hasError.value) {
     return []
   }
@@ -277,7 +410,7 @@ const recipeDisplayImageUrl = (name: string) => {
 }
 
 const ingredientDisplayImageUrl = (name: string) => {
-  return getIngredientImageUrlUtil(name)
+  return getIngredientImageUrl(name)
 }
 
 const pokemonDisplayImageUrlByName = (name: string) => {
@@ -300,8 +433,88 @@ const tierColorMapping: Record<Tier, string> = {
   E: 'var(--v-theme-surface-variant, #5b577c)',
   F: 'var(--v-theme-surface, #403d58)'
 }
+
+const getDisplayProductionSummary = (member: TeamMemberProduction) => {
+  const flatIngredients = new Float32Array(Object.values(member.totalProduction))
+  const ingredients = flatToIngredientSet(flatIngredients)
+  return processIngredientsForDisplay(ingredients)
+}
+
+const simulateRecipe = async (contribution: RecipeContribution) => {
+  const index = teamIndex.value
+  if (index === undefined) {
+    error('Team index is required')
+    return
+  }
+
+  isSimulating.value = true
+
+  try {
+    const teamData: TeamData = {
+      index,
+      memberIndex: 0,
+      name: 'Simulated Team',
+      version: 0,
+      memberIvs: {},
+      production: undefined,
+      favoredBerries: [],
+      wakeup: '06:00',
+      bedtime: '21:30',
+      stockpiledIngredients: [],
+      stockpiledBerries: [],
+      recipeType: contribution.recipe.type,
+      camp: props.camp,
+      members: contribution.team.map((member) => {
+        const pokemon = getPokemon(member.pokemon)
+        return {
+          carrySize: CarrySizeUtils.baseCarrySize(pokemon),
+          pokemon,
+          level: props.level,
+          ribbon: MAX_RIBBON_LEVEL,
+          ingredients: member.ingredientList.map(({ name, amount }, index) => ({
+            level: index * 30, // 0, 30, 60
+            amount,
+            ingredient: getIngredient(name)
+          })),
+          nature: getNature(member.nature),
+          subskills: member.subskills.map((subskill, index) => ({
+            level: index === 0 ? 10 : index * 25, // 10, 25, 50
+            subskill: getSubskill(subskill)
+          })),
+          skillLevel: pokemon.skill.maxLevel,
+          rp: 0,
+          shiny: false,
+          gender: getRandomGender(pokemon),
+          version: 0,
+          saved: false,
+          externalId: uuid.v4(),
+          name: randomName(pokemon, 12, getRandomGender(pokemon))
+        } as PokemonInstanceExt
+      })
+    }
+
+    await teamStore.setCurrentTeam(teamData)
+
+    router.push({
+      name: 'Calculator'
+    })
+  } finally {
+    isSimulating.value = false
+  }
+}
 </script>
 
 <style scoped>
-/* Minimal custom styles - most styling handled by Vuetify utilities */
+.force-opacity {
+  opacity: 1 !important;
+}
+
+:deep(.force-opacity) {
+  opacity: 1 !important;
+}
+
+:deep(.v-list-item .force-opacity),
+:deep(.v-list-item-subtitle .force-opacity) {
+  opacity: 1 !important;
+}
 </style>

@@ -224,7 +224,6 @@ import TeamName from '@/components/calculator/team-name.vue'
 import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import TeamSlot from '@/components/calculator/team-slot.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import { useNotificationStore } from '@/stores/notification-store/notification-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -243,11 +242,10 @@ export default defineComponent({
     const userStore = useUserStore()
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const notificationStore = useNotificationStore()
 
     const { isMobile } = useBreakpoint()
 
-    return { userStore, teamStore, pokemonStore, notificationStore, isMobile }
+    return { userStore, teamStore, pokemonStore, isMobile }
   },
   data: () => ({
     tabs: [

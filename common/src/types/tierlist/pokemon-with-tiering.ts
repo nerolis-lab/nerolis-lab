@@ -1,15 +1,27 @@
 import type { IngredientSetSimple } from '../ingredient';
 import type { PokemonWithIngredientsSimple } from '../pokemon/pokemon';
+import type { Recipe } from '../recipe/recipe';
 import type { TeamMemberSettings } from '../team';
 import type { Tier } from './tier';
+
+export interface TeamMemberProduction extends PokemonWithIngredientsSimple {
+  nature: string;
+  subskills: string[];
+  totalProduction: Float32Array;
+}
 
 export interface RecipeContributionSimple {
   coverage: number;
   skillValue: number;
   score: number;
   recipe: string;
-  team: PokemonWithIngredientsSimple[];
+  team: TeamMemberProduction[];
 }
+
+export interface RecipeContribution extends Omit<RecipeContributionSimple, 'recipe'> {
+  recipe: Recipe;
+}
+
 export interface PokemonWithRecipeContributions {
   pokemonWithSettings: {
     pokemon: string;

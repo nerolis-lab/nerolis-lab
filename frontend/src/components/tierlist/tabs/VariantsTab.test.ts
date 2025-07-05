@@ -71,10 +71,10 @@ describe('VariantsTab.vue', () => {
           coverage: 85.5,
           skillValue: 150,
           team: [
-            {
+            commonMocks.teamMemberProduction({
               pokemon: 'CHARIZARD',
               ingredientList: [{ amount: 1, name: 'FIERY_HERB' }]
-            }
+            })
           ]
         }
       ]
@@ -554,7 +554,8 @@ describe('VariantsTab.vue', () => {
       // Check that non-interactive chips have the non-interactive class
       nonInteractiveChips.forEach((chip) => {
         expect(chip.props('interactive')).toBe(false)
-        expect(chip.classes()).toContain('non-interactive')
+        const vChip = chip.find('.v-chip')
+        expect(vChip.classes()).toContain('non-interactive')
       })
     })
 
@@ -567,7 +568,8 @@ describe('VariantsTab.vue', () => {
         ingredientChips.forEach((chip) => {
           // In VariantsTab, ingredient chips are set to non-interactive
           expect(chip.props('interactive')).toBe(false)
-          expect(chip.classes()).toContain('non-interactive')
+          const vChip = chip.find('.v-chip')
+          expect(vChip.classes()).toContain('non-interactive')
         })
       }
     })
@@ -636,12 +638,13 @@ describe('VariantsTab.vue', () => {
       const productionChips = wrapper.findAllComponents(CustomChip)
 
       productionChips.forEach((chip) => {
+        const vChip = chip.find('.v-chip')
         if (chip.props('interactive') === false) {
           // Non-interactive chips should have the non-interactive class
-          expect(chip.classes()).toContain('non-interactive')
+          expect(vChip.classes()).toContain('non-interactive')
         } else {
           // Interactive chips should not have the non-interactive class
-          expect(chip.classes()).not.toContain('non-interactive')
+          expect(vChip.classes()).not.toContain('non-interactive')
         }
       })
     })

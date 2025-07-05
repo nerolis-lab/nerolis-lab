@@ -5,7 +5,17 @@ import { useUserStore } from '@/stores/user-store'
 import type { PerformanceDetails, TeamInstance } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
-import { berry, commonMocks, LEAFEON, subskill, uuid, WIGGLYTUFF, type PokemonInstanceExt } from 'sleepapi-common'
+import { createMockTeamData } from '@/vitest/mocks/team-data'
+import {
+  berry,
+  commonMocks,
+  LEAFEON,
+  Logger,
+  subskill,
+  uuid,
+  WIGGLYTUFF,
+  type PokemonInstanceExt
+} from 'sleepapi-common'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -56,7 +66,7 @@ describe('Team Store', () => {
               undefined,
               undefined,
             ],
-            "name": "Log in to save teams",
+            "name": "Team 1",
             "production": undefined,
             "recipeType": "curry",
             "stockpiledBerries": [],
@@ -147,7 +157,7 @@ describe('Team Store', () => {
               undefined,
               undefined,
             ],
-            "name": "Log in to save teams",
+            "name": "Team 1",
             "production": undefined,
             "recipeType": "curry",
             "stockpiledBerries": [],
@@ -332,7 +342,7 @@ describe('Team Store', () => {
           undefined,
           undefined,
         ],
-        "name": "Log in to save teams",
+        "name": "Helper team 2",
         "production": undefined,
         "recipeType": "curry",
         "stockpiledBerries": [],
@@ -437,7 +447,7 @@ describe('duplicateMember', () => {
       }
     ]
 
-    const loggerErrorSpy = vi.spyOn(logger, 'error').mockImplementation(() => {})
+    const loggerErrorSpy = vi.spyOn(Logger.prototype, 'error').mockImplementation(() => {})
 
     await teamStore.duplicateMember(1)
 
@@ -466,7 +476,7 @@ describe('duplicateMember', () => {
       }
     ]
 
-    const loggerSpy = vi.spyOn(logger, 'error').mockImplementation(() => {})
+    const loggerSpy = vi.spyOn(Logger.prototype, 'error').mockImplementation(() => {})
 
     await teamStore.duplicateMember(1)
 
@@ -965,5 +975,168 @@ describe('updateStockpile', () => {
     await teamStore.updateStockpile({ ingredients, berries })
 
     expect(teamStore.calculateProduction).toHaveBeenCalled()
+  })
+})
+
+describe('setCurrentTeam', () => {
+  it('should set current team index and replace team with provided data', async () => {
+    const teamStore = useTeamStore()
+    const pokemonStore = usePokemonStore()
+    const userStore = useUserStore()
+
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+
+    const mockPokemon1 = mocks.createMockPokemon({ externalId: 'member1' })
+    const mockPokemon2 = mocks.createMockPokemon({ externalId: 'member2' })
+    pokemonStore.upsertLocalPokemon(mockPokemon1)
+    pokemonStore.upsertLocalPokemon(mockPokemon2)
+
+    // Set up initial state with multiple teams
+    teamStore.teams = [createMockTeams(1)[0], createMockTeams(1, { index: 1, name: 'Team 2' })[0]]
+    teamStore.currentIndex = 0
+
+    const teamData = createMockTeamData({
+      index: 1,
+      name: 'New Team',
+      camp: true,
+      bedtime: '22:00',
+      wakeup: '07:00',
+      recipeType: 'dessert',
+      favoredBerries: [berry.BELUE],
+      stockpiledBerries: [{ name: 'BELUE', amount: 5, level: 30 }],
+      stockpiledIngredients: [{ name: 'Honey', amount: 10 }],
+      members: [mockPokemon1, mockPokemon2]
+    })
+
+    teamStore.updateTeam = vi.fn()
+    teamStore.updateTeamMember = vi.fn()
+    TeamService.deleteTeam = vi.fn()
+
+    await teamStore.setCurrentTeam(teamData)
+
+    expect(teamStore.currentIndex).toBe(1)
+    expect(teamStore.getCurrentTeam.name).toBe('New Team')
+    expect(teamStore.getCurrentTeam.camp).toBe(true)
+    expect(teamStore.getCurrentTeam.bedtime).toBe('22:00')
+    expect(teamStore.getCurrentTeam.wakeup).toBe('07:00')
+    expect(teamStore.getCurrentTeam.recipeType).toBe('dessert')
+    expect(teamStore.getCurrentTeam.favoredBerries).toEqual([berry.BELUE])
+    expect(teamStore.getCurrentTeam.stockpiledBerries).toEqual([{ name: 'BELUE', amount: 5, level: 30 }])
+    expect(teamStore.getCurrentTeam.stockpiledIngredients).toEqual([{ name: 'Honey', amount: 10 }])
+    expect(teamStore.getCurrentTeam.members).toEqual(['member1', 'member2'])
+    expect(teamStore.updateTeam).toHaveBeenCalled()
+    expect(teamStore.updateTeamMember).toHaveBeenCalledWith(mockPokemon1, 0, false)
+    expect(teamStore.updateTeamMember).toHaveBeenCalledWith(mockPokemon2, 1, false)
+  })
+
+  it('should handle team with no members', async () => {
+    const teamStore = useTeamStore()
+    const userStore = useUserStore()
+
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+
+    const teamData = createMockTeamData({
+      name: 'Empty Team',
+      members: []
+    })
+
+    teamStore.updateTeam = vi.fn()
+    teamStore.updateTeamMember = vi.fn()
+    TeamService.deleteTeam = vi.fn()
+
+    await teamStore.setCurrentTeam(teamData)
+
+    expect(teamStore.currentIndex).toBe(0)
+    expect(teamStore.getCurrentTeam.name).toBe('Empty Team')
+    expect(teamStore.getCurrentTeam.members).toEqual([])
+    expect(teamStore.updateTeam).toHaveBeenCalled()
+    expect(teamStore.updateTeamMember).not.toHaveBeenCalled()
+  })
+
+  it('should handle partial team members', async () => {
+    const teamStore = useTeamStore()
+    const pokemonStore = usePokemonStore()
+    const userStore = useUserStore()
+
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+
+    const mockPokemon = mocks.createMockPokemon({ externalId: 'member1' })
+    pokemonStore.upsertLocalPokemon(mockPokemon)
+
+    const teamData = createMockTeamData({
+      name: 'Partial Team',
+      members: [mockPokemon] // Only first member defined
+    })
+
+    teamStore.updateTeam = vi.fn()
+    teamStore.updateTeamMember = vi.fn()
+
+    await teamStore.setCurrentTeam(teamData)
+
+    expect(teamStore.getCurrentTeam.members).toEqual(['member1'])
+    expect(teamStore.updateTeamMember).toHaveBeenCalledTimes(1)
+    expect(teamStore.updateTeamMember).toHaveBeenCalledWith(mockPokemon, 0, false)
+  })
+
+  it('should call deleteTeam and reset team before setting new data', async () => {
+    const teamStore = useTeamStore()
+    const userStore = useUserStore()
+
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+
+    // Set up initial team with existing data
+    teamStore.teams = createMockTeams(1, {
+      memberIndex: 2,
+      name: 'Old Team',
+      camp: true,
+      bedtime: '23:00',
+      wakeup: '08:00',
+      recipeType: 'dessert',
+      favoredBerries: [berry.BELUE],
+      version: 5,
+      members: ['old-member', undefined, undefined, undefined, undefined],
+      memberIvs: { 'old-member': { berry: 10, ingredient: 20, skill: 15 } }
+    })
+
+    const teamData = createMockTeamData({
+      name: 'New Team',
+      members: []
+    })
+
+    teamStore.updateTeam = vi.fn()
+    TeamService.deleteTeam = vi.fn()
+
+    await teamStore.setCurrentTeam(teamData)
+
+    // Verify team was reset by deleteTeam before applying new data
+    expect(TeamService.deleteTeam).toHaveBeenCalledWith(0)
+    expect(teamStore.getCurrentTeam.name).toBe('New Team')
+    expect(teamStore.getCurrentTeam.camp).toBe(false)
+    expect(teamStore.getCurrentTeam.version).toBe(0) // Should be reset
+    expect(teamStore.getCurrentTeam.memberIvs).toEqual({}) // Should be reset
+    expect(teamStore.getCurrentTeam.production).toBeUndefined() // Should be reset
+  })
+
+  it('should work when user is not logged in', async () => {
+    const teamStore = useTeamStore()
+    const userStore = useUserStore()
+
+    // User not logged in
+    expect(userStore.loggedIn).toBe(false)
+
+    const teamData = createMockTeamData({
+      name: 'Offline Team',
+      members: []
+    })
+
+    teamStore.updateTeam = vi.fn()
+    TeamService.deleteTeam = vi.fn()
+
+    await teamStore.setCurrentTeam(teamData)
+
+    expect(teamStore.getCurrentTeam.name).toBe('Offline Team')
+    expect(teamStore.updateTeam).toHaveBeenCalled()
+    // deleteTeam should still be called but won't make server request
+    expect(TeamService.deleteTeam).not.toHaveBeenCalled()
   })
 })

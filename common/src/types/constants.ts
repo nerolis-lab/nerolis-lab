@@ -10,6 +10,7 @@ export const MAX_INGREDIENT_INVENTORY = 700;
 
 // pokemon
 export const MAX_POKEMON_LEVEL = 65;
+export const MAX_RIBBON_LEVEL = 4;
 export const MAX_STOCKPILED_BERRIES = 999;
 
 // cooking
