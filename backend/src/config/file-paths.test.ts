@@ -14,19 +14,20 @@ describe('FilePathResolver', () => {
   });
 
   it('should use environment variable when available', () => {
-    process.env.CHANGELOG_PATH = '/custom/changelog.md';
+    const customPath = '/custom/changelog.md';
+    process.env.CHANGELOG_PATH = customPath;
     vi.mocked(existsSync).mockReturnValue(true);
 
     const result = FilePathResolver.getChangelogPath();
 
-    expect(result).toBe('/custom/changelog.md');
-    expect(existsSync).toHaveBeenCalledWith('/custom/changelog.md');
+    expect(result).toBe(customPath);
+    expect(existsSync).toHaveBeenCalledWith(customPath);
   });
 
   it('should fall back to project root when env var not set', () => {
     vi.mocked(existsSync).mockReturnValue(true);
 
-    const result = FilePathResolver.getChangelogPath();
+    const result = FilePathResolver.getChangelogPath().replaceAll('\\', '/');
 
     expect(result).toBe('/project/root/CHANGELOG.md');
   });
