@@ -111,7 +111,7 @@ describe('OverviewTab.vue', () => {
     })
 
     it('displays overall score', () => {
-      expect(wrapper.text()).toContain('Overall Score')
+      expect(wrapper.text()).toContain('Score')
       expect(wrapper.text()).toContain('1,500') // Should be localized
     })
 

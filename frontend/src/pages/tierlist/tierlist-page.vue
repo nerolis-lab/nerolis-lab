@@ -129,6 +129,7 @@
         :allPokemonVariantsData="selectedPokemonAllVariants"
         :camp="camp"
         :level="selectedLevel"
+        @close="showDetailModal = false"
       />
     </v-dialog>
 

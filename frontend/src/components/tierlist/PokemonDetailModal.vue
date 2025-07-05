@@ -6,7 +6,25 @@
     </v-avatar>
   </div>
 
-  <v-tabs v-model="activeTab" bg-color="background" color="primary" grow slider-color="primary" class="rounded-t-lg">
+  <!-- Close button -->
+  <v-btn
+    icon="mdi-close"
+    variant="text"
+    size="small"
+    class="modal-close-btn"
+    @click="emit('close')"
+    aria-label="Close modal"
+  />
+
+  <v-tabs
+    v-model="activeTab"
+    center-active
+    bg-color="background"
+    color="primary"
+    grow
+    slider-color="primary"
+    class="rounded-t-lg"
+  >
     <v-tab ref="overviewTabElement" value="overview">
       <v-avatar size="20" class="mr-2">
         <v-img :src="pokemonAvatarUrl" :alt="pokemonName" />
@@ -23,7 +41,7 @@
     </v-tab>
   </v-tabs>
 
-  <v-window v-model="activeTab" class="bg-background pa-2 rounded-b-lg" style="height: 500px; overflow-y: auto">
+  <v-window v-model="activeTab" class="bg-background pa-2 rounded-b-lg" :style="modalWindowStyles">
     <!-- Overview Tab -->
     <v-window-item value="overview" class="pt-2">
       <div v-if="isHighVariantCount" class="performance-warning mb-3">
@@ -83,6 +101,10 @@ const props = defineProps<{
   level: number
 }>()
 
+const emit = defineEmits<{
+  close: []
+}>()
+
 const activeTab = ref('overview')
 const selectedVariantIndex = ref(0)
 const shouldRenderVariantsTab = ref(false)
@@ -108,6 +130,22 @@ const pokemonAvatarUrl = computed(() =>
 )
 
 const isHighVariantCount = computed(() => variantCount.value > 10)
+
+const modalWindowStyles = computed(() => {
+  if (isMobile.value) {
+    return {
+      height: '500px',
+      overflowY: 'auto' as const
+    }
+  } else {
+    return {
+      height: '80vh',
+      maxHeight: '800px',
+      minHeight: '500px',
+      overflowY: 'auto' as const
+    }
+  }
+})
 
 // Lazy load tabs based on user interaction
 watch(activeTab, async (newTab) => {
@@ -161,6 +199,21 @@ const handleVariantSelection = (index: number) => {
   &--visible {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+  background: rgba(var(--v-theme-surface), 0.5);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(var(--v-theme-surface), 1);
+    transform: scale(1.1);
   }
 }
 
