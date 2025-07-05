@@ -381,7 +381,7 @@ Int16Array [
           member: 0
         }
       ];
-      const result = findTeams(subRecipesAfterProducerSubtract, 0);
+      const result = findTeams(subRecipesAfterProducerSubtract);
       expect(result).toBeDefined();
       expect(result.length).toBeGreaterThan(0);
     });
@@ -398,7 +398,7 @@ Int16Array [
           member: 0
         }
       ];
-      const result = findTeams(subRecipesAfterProducerSubtract, 0);
+      const result = findTeams(subRecipesAfterProducerSubtract);
       expect(result).toBeDefined();
       expect(result.length).toBe(0);
     });

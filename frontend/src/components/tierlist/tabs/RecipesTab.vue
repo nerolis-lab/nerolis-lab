@@ -504,17 +504,12 @@ const simulateRecipe = async (contribution: RecipeContribution) => {
 }
 </script>
 
-<style scoped>
-.force-opacity {
+<style scoped lang="scss">
+.v-list-item-subtitle {
   opacity: 1 !important;
 }
 
-:deep(.force-opacity) {
-  opacity: 1 !important;
-}
-
-:deep(.v-list-item .force-opacity),
-:deep(.v-list-item-subtitle .force-opacity) {
-  opacity: 1 !important;
+.v-list-item-subtitle .text-medium-emphasis {
+  opacity: 0.6;
 }
 </style>

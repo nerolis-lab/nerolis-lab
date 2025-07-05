@@ -32,6 +32,7 @@
             <span class="font-weight-medium">Skill ({{ pokemonData.skillPercentage }}%):</span>
             {{ pokemonData.skill.name }}
           </div>
+          <div class="ml-6 text-body-2"><span class="font-weight-medium">Level:</span> {{ skillLevelDisplay }}</div>
         </div>
 
         <div class="mb-2">
@@ -172,6 +173,10 @@ const ribbonDisplay = computed(() => {
   return props.pokemon.pokemonWithSettings.settings.ribbon
 })
 
+const skillLevelDisplay = computed(() => {
+  return props.pokemon.pokemonWithSettings.settings.skillLevel
+})
+
 const ingredientOptions = computed(() => {
   const pokemon = pokemonData.value
   const options: { level: number; ingredients: IngredientSet[] }[] = []
@@ -215,7 +220,7 @@ const listItems = [
   },
   {
     icon: 'mdi-calculator-variant-outline',
-    title: 'Overall Score',
+    title: 'Score',
     value: localizeNumber(props.pokemon.score),
     bgColor: withOpacity('secondary', 0.2),
     color: `tier-${props.pokemon.tier.toLowerCase()}`
