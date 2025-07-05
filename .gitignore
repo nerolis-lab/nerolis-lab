@@ -58,6 +58,7 @@ target/
 TEST*.xml
 test-results/
 coverage/
+*benchmark.test.ts.snap
 
 ### OS Generated ###
 .DS_Store
