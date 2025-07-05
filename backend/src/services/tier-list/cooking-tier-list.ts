@@ -472,7 +472,7 @@ class CookingTierlistImpl {
         ? this.calculateContributedIngredientsValue(recipe, supportedIngredientsRelevant, supportedIngredientsFiller)
         : { fillerValue: 0, relevantValue: 0 };
 
-    const recipeContribution = recipe.valueMax * teamSizePenalty;
+    const recipeContribution = (recipe.valueMax / 3) * ownCritMultiplier * teamSizePenalty;
 
     const ownContribution = ownCritMultiplier * ownRelevantValue * teamSizePenalty + ownFillerValue;
     const supportedContribution = ownCritMultiplier * supportedRelevantValue * teamSizePenalty + supportedFillerValue;
@@ -557,7 +557,10 @@ class CookingTierlistImpl {
         recipe: recipeWithContributions.recipe.name,
         team: recipeWithContributions.team.map((member) => ({
           pokemon: member.pokemonSet.pokemon,
-          ingredientList: simplifyIngredientSet(member.ingredientList)
+          ingredientList: simplifyIngredientSet(member.ingredientList),
+          nature: member.settings.nature.name,
+          subskills: [...member.settings.subskills],
+          totalProduction: member.totalIngredientsFloat
         }))
       })),
       score: bestXRecipesWithBoost.reduce((acc, recipe) => acc + recipe.contributedPower, 0)

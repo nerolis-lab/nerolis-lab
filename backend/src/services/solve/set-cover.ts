@@ -132,7 +132,7 @@ export class SetCover {
       producerIndicesOfFirstIngredient
     );
 
-    const teams = this.findTeams(subRecipesAfterProducerSubtract, firstIngredientIndex);
+    const teams = this.findTeams(subRecipesAfterProducerSubtract);
 
     this.addCacheEntry(memoKey, teams);
     return teams;
@@ -171,6 +171,20 @@ export class SetCover {
       });
     }
 
+    if (subRecipesAfterProducerSubtract.length === 0) {
+      // if we have no producers of an ingredient then we'll never populate subRecipes
+      // so we need to add a subRecipe with spots left to 0 to indicate that we should not look deeper
+      recipeWithSpotsLeft[recipeWithSpotsLeft.length - 1] = 0;
+      return [
+        {
+          remainingRecipeWithSpotsLeft: recipeWithSpotsLeft,
+          remainingIngredientIndices: ingredientIndices,
+          sumRemainingRecipeIngredients: recipeWithSpotsLeft.reduce((acc, curr) => acc + curr, 0),
+          member: -1
+        }
+      ];
+    }
+
     // Sort sub-recipes by remaining ingredients (least to most), prioritizing the most promising solution first
     return subRecipesAfterProducerSubtract.sort(
       (a, b) => a.sumRemainingRecipeIngredients - b.sumRemainingRecipeIngredients
@@ -200,7 +214,7 @@ export class SetCover {
    * @returns The optimal teams that can solve the given sub-recipes.
    */
   // TODO: missleading function name, all this does is check if we should search deeper or finish the search (add the member to team etc)
-  private findTeams(subRecipesAfterProducerSubtract: SubRecipeMeta[], currentIngredientIndex: number): RecipeSolutions {
+  private findTeams(subRecipesAfterProducerSubtract: SubRecipeMeta[]): RecipeSolutions {
     const teams: RecipeSolutions = [];
 
     // every sub-solution has same spots left at same depth
@@ -228,22 +242,6 @@ export class SetCover {
           continue;
         }
 
-        // this if checks if we're all the way back up to the first member and
-        // since it checks if only spotsLeftInTeam only accounts for the first member and
-        // since we're after the subTeams.length === 0 condition we know we have solutions here
-        if (
-          spotsLeftInTeam === this.originalMaxTeamSize - 1 &&
-          this.producersByIngredientIndex[currentIngredientIndex].length > 1
-        ) {
-          // this was an accidental stroke of genius
-          // if first ingredient has found a solution that means
-          // we're never interested again in finding producers for that ingredient after this for loop has completed
-          // since we would have already gone through all of their producers and tested them in this for loop
-          // the producers for this ingredient have already been grouped and sent into this function by solve and thus
-          // mutating the original producers array here won't affect the next iterations
-          this.producersByIngredientIndex[currentIngredientIndex] = [member];
-        }
-
         const subTeamSize = subTeams[0].length;
         if (subTeamSize < spotsLeftInTeam) {
           // we found a solution and it did not require all the spots that were left in the team
@@ -256,8 +254,12 @@ export class SetCover {
           // we found a solution and we have previously found solutions of the same size (or we're at max depth)
           // add this solution to the result
           // teams = teams.concat(newTeams);
+
           addMemberToSubTeams(teams, subTeams, member);
         }
+      } else {
+        // there are still ingredients left in recipe and no room left in team
+        return teams; // will be empty array
       }
     }
 
@@ -274,8 +276,11 @@ export class SetCover {
     startTime: number;
     timeout: number;
   }): RecipeSolutions | undefined {
-    const maybeCachedSolution = this.cachedSubRecipeSolves.get(params.memoKey);
-    if (maybeCachedSolution) return maybeCachedSolution;
+    const { memoKey } = params;
+    const maybeCachedSolution = this.cachedSubRecipeSolves.get(memoKey);
+    if (maybeCachedSolution) {
+      return maybeCachedSolution;
+    }
 
     if (ifUnsolvableNode(params)) return [];
   }

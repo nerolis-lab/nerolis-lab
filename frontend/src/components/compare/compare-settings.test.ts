@@ -1,7 +1,7 @@
 import CompareSettings from '@/components/compare/compare-settings.vue'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
-import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
+import type { TeamInstance } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -25,36 +25,41 @@ describe('CompareSettings', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('toggles teamMenu when the button is clicked', async () => {
-    const button = wrapper.find('.v-btn')
-    expect(wrapper.vm.teamMenu).toBe(false)
-    await button.trigger('click')
-
-    expect(wrapper.vm.teamMenu).toBe(true)
+  it('renders TeamSelect component', async () => {
+    const teamSelect = wrapper.findComponent({ name: 'TeamSelect' })
+    expect(teamSelect.exists()).toBe(true)
   })
 
   it('updates comparisonStore when a team is selected', async () => {
     const comparisonStore = useComparisonStore()
+    const teamStore = useTeamStore()
+
+    // Create a mock team
+    const mockTeam: TeamInstance[] = mocks.createMockTeams(1, {
+      index: 0,
+      memberIndex: 0,
+      name: 'Test Team',
+      members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
+      favoredBerries: [],
+      camp: false,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      stockpiledIngredients: [],
+      stockpiledBerries: [],
+      recipeType: 'curry' as const,
+      version: 0,
+      memberIvs: {},
+      production: undefined
+    })
+
+    teamStore.teams = mockTeam
     expect(comparisonStore.teamIndex).toBeUndefined()
-    wrapper.vm.selectTeam(0)
-    expect(comparisonStore.teamIndex).not.toBeUndefined()
-  })
 
-  it('disables teams with more than 4 members', () => {
-    let result = wrapper.vm.teamDisabled(['member1', 'member2', 'member3', 'member4', 'member5'])
-    expect(result).toBe(true)
-    result = wrapper.vm.teamDisabled([])
-    expect(result).toBe(false)
-    result = wrapper.vm.teamDisabled(['member1', 'member2', 'member3', 'member4', undefined])
-    expect(result).toBe(false)
-  })
+    // Find TeamSelect component and update its v-model
+    const teamSelect = wrapper.findComponent({ name: 'TeamSelect' })
+    await teamSelect.vm.$emit('update:modelValue', 0)
 
-  it('correctly provides member image when member exists', () => {
-    const pokemonStore = usePokemonStore()
-    pokemonStore.upsertLocalPokemon(mockPokemon)
-
-    const imageUrl = wrapper.vm.memberImage(mockPokemon.externalId)
-    expect(imageUrl).toMatchInlineSnapshot(`"/images/avatar/portrait/pikachu.png"`)
+    expect(comparisonStore.teamIndex).toBe(0)
   })
 
   it('correctly toggles comparisonStore time window on clock container click', async () => {
@@ -82,7 +87,7 @@ describe('CompareSettings', () => {
     expect(comparisonStore.$reset).toHaveBeenCalled()
   })
 
-  it('applies camp-disabled class when camp is false', async () => {
+  it('passes correct props to TeamSelect for camp display', async () => {
     const comparisonStore = useComparisonStore()
     const teamStore = useTeamStore()
 
@@ -109,40 +114,9 @@ describe('CompareSettings', () => {
 
     await wrapper.vm.$nextTick()
 
-    const campIcon = wrapper.find('[data-testid="camp-image"]')
-    expect(campIcon).toBeDefined()
-    expect(campIcon?.classes()).toContain('camp-disabled')
-  })
-
-  it('does not apply camp-disabled class when camp is true', async () => {
-    const comparisonStore = useComparisonStore()
-    const teamStore = useTeamStore()
-
-    // Create a mock team with camp enabled
-    const mockTeam = {
-      index: 0,
-      memberIndex: 0,
-      name: 'Test Team',
-      members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
-      favoredBerries: [],
-      camp: true,
-      bedtime: '21:30',
-      wakeup: '06:00',
-      stockpiledIngredients: [],
-      stockpiledBerries: [],
-      recipeType: 'curry' as const,
-      version: 0,
-      memberIvs: {},
-      production: undefined
-    }
-
-    teamStore.teams = [mockTeam]
-    comparisonStore.teamIndex = 0
-
-    await wrapper.vm.$nextTick()
-
-    const campIcon = wrapper.find('[data-testid="camp-image"]')
-    expect(campIcon).toBeDefined()
-    expect(campIcon?.classes()).not.toContain('camp-disabled')
+    const teamSelect = wrapper.findComponent({ name: 'TeamSelect' })
+    expect(teamSelect.props('showCamp')).toBe(true)
+    expect(teamSelect.props('showSleepScore')).toBe(true)
+    expect(teamSelect.props('showIsland')).toBe(true)
   })
 })

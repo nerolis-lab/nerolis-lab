@@ -55,6 +55,8 @@
         :pokemon="props.pokemon"
         :all-pokemon-variants-data="props.allPokemonVariantsData"
         :selected-variant-index="selectedVariantIndex"
+        :camp="props.camp"
+        :level="props.level"
       />
       <div v-else class="text-center py-8">
         <v-progress-circular indeterminate color="primary" />
@@ -77,6 +79,8 @@ import VariantsTab from './tabs/VariantsTab.vue'
 const props = defineProps<{
   pokemon: PokemonWithTiering
   allPokemonVariantsData: PokemonWithTiering[]
+  camp: boolean
+  level: number
 }>()
 
 const activeTab = ref('overview')

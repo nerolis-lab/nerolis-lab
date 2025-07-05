@@ -1,24 +1,35 @@
 <template>
-  <v-chip
-    :value="value"
-    :color="color"
-    :variant="isSelected ? 'elevated' : 'outlined'"
-    :size="size"
-    :density="density"
-    :disabled="disabled"
-    :style="computedStyle"
-    :class="computedClass"
-    :prepend-avatar="prependAvatar"
-    :append-avatar="appendAvatar"
-    v-bind="$attrs"
-    @click="handleClick"
-  >
-    <slot>{{ text }}</slot>
+  <v-menu>
+    <template #activator="{ props: activatorProps }">
+      <v-chip
+        :value="value"
+        :color="color"
+        :variant="isSelected ? 'elevated' : 'outlined'"
+        :size="size"
+        :density="density"
+        :disabled="disabled"
+        :style="computedStyle"
+        :class="computedClass"
+        :prepend-avatar="prependAvatar"
+        :append-avatar="appendAvatar"
+        v-bind="{ ...$attrs, ...(interactive ? activatorProps : {}) }"
+        @click="handleClick"
+      >
+        <slot>{{ text }}</slot>
 
-    <template #append>
-      <slot name="append" />
+        <template #append>
+          <slot name="append" />
+        </template>
+      </v-chip>
     </template>
-  </v-chip>
+
+    <v-card :prepend-avatar="prependAvatar">
+      <template #title>
+        <slot name="menu-title" />
+      </template>
+      <slot name="menu-content" />
+    </v-card>
+  </v-menu>
 </template>
 
 <script setup lang="ts">

@@ -2,7 +2,7 @@ import type { Pokemon } from '../../../types';
 import { COMPLETE_POKEDEX } from '../../../types';
 import { INGREDIENTS } from '../../../types/ingredient/ingredients';
 import { NATURES } from '../../../types/nature';
-import type { PokemonWithTiering, Tier, TierlistSettings } from '../../../types/tierlist';
+import type { PokemonWithTiering, TeamMemberProduction, Tier, TierlistSettings } from '../../../types/tierlist';
 
 const TIERS: Tier[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
 
@@ -88,4 +88,20 @@ export function multiplePokemonWithTiering(count: number = 4): PokemonWithTierin
   }
 
   return results;
+}
+
+export function teamMemberProduction(attrs?: Partial<TeamMemberProduction>): TeamMemberProduction {
+  return {
+    pokemon: 'PIKACHU',
+    ingredientList: [
+      {
+        amount: 1,
+        name: 'FANCY_APPLE'
+      }
+    ],
+    nature: 'ADAMANT',
+    subskills: [],
+    totalProduction: new Float32Array([1, 0, 0]),
+    ...attrs
+  };
 }
