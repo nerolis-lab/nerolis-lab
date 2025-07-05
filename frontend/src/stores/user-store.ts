@@ -3,6 +3,7 @@ import { AuthService } from '@/services/login/auth-service'
 import { DISCORD_REDIRECT_URI } from '@/services/login/discord-service'
 import { UserService } from '@/services/user/user-service'
 import { clearCacheAndLogout } from '@/stores/store-service'
+import { useTeamStore } from '@/stores/team/team-store'
 import { defineStore } from 'pinia'
 import {
   AuthProvider,
@@ -108,6 +109,10 @@ export const useUserStore = defineStore('user', {
       this.setInitialLoginData(loginResponse)
 
       await this.syncUserSettings()
+
+      const teamStore = useTeamStore()
+      await teamStore.syncTeams()
+
       router.push(originalRoute)
     },
     async unlinkProvider(provider: AuthProvider) {
