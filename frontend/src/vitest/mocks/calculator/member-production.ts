@@ -97,7 +97,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
       frequencySplit: {
         eighty: 0,
         sixty: 0,
-        fourty: 0,
+        forty: 0,
         one: 0,
         zero: 0
       },

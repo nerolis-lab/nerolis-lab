@@ -658,7 +658,7 @@ export class MemberState {
         frequencySplit: {
           zero: this.helpsAtFrequency0 / totalHelps,
           one: this.helpsAtFrequency1 / totalHelps,
-          fourty: this.helpsAtFrequency40 / totalHelps,
+          forty: this.helpsAtFrequency40 / totalHelps,
           sixty: this.helpsAtFrequency60 / totalHelps,
           eighty: this.helpsAtFrequency80 / totalHelps
         },

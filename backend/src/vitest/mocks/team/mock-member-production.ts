@@ -40,7 +40,7 @@ export function memberProductionAdvanced(attrs?: Partial<MemberProductionAdvance
     frequencySplit: {
       eighty: 0,
       sixty: 0,
-      fourty: 0,
+      forty: 0,
       one: 0,
       zero: 0
     },

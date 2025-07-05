@@ -18,7 +18,7 @@ import {
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
 
-const mockpokemonWithIngredients: PokemonWithIngredients = {
+const mockPokemonWithIngredients: PokemonWithIngredients = {
   pokemon: commonMocks.mockPokemon({
     carrySize: 10,
     frequency: 3600,
@@ -39,7 +39,7 @@ const mockpokemonWithIngredients: PokemonWithIngredients = {
 const mockSettings: TeamSettingsExt = mocks.teamSettingsExt({ includeCooking: true });
 const mockMembers: TeamMemberExt[] = [
   {
-    pokemonWithIngredients: mockpokemonWithIngredients,
+    pokemonWithIngredients: mockPokemonWithIngredients,
     settings: {
       carrySize: 10,
       level: 60,
@@ -119,7 +119,7 @@ describe('TeamSimulator', () => {
 
   it('shall calculate team with multiple members', () => {
     const mockMember: TeamMemberExt = {
-      pokemonWithIngredients: mockpokemonWithIngredients,
+      pokemonWithIngredients: mockPokemonWithIngredients,
       settings: {
         carrySize: 10,
         level: 60,
@@ -163,7 +163,7 @@ describe('TeamSimulator', () => {
 
   it('team members shall affect each other', () => {
     const mockMember: TeamMemberExt = {
-      pokemonWithIngredients: mockpokemonWithIngredients,
+      pokemonWithIngredients: mockPokemonWithIngredients,
       settings: {
         carrySize: 10,
         level: 60,
@@ -176,8 +176,8 @@ describe('TeamSimulator', () => {
     };
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
-        ...mockpokemonWithIngredients,
-        pokemon: { ...mockpokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
+        ...mockPokemonWithIngredients,
+        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
       },
       settings: {
         carrySize: 10,
@@ -207,8 +207,8 @@ describe('TeamSimulator', () => {
   it('shall count wasted energy', () => {
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
-        ...mockpokemonWithIngredients,
-        pokemon: { ...mockpokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
+        ...mockPokemonWithIngredients,
+        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
       },
       settings: {
         carrySize: 10,
@@ -246,8 +246,8 @@ describe('TeamSimulator', () => {
 
   it('shall give pity procs when threshold met', () => {
     const mockMember = {
-      ...mockpokemonWithIngredients,
-      pokemon: { ...mockpokemonWithIngredients.pokemon, frequency: 3000, skillPercentage: 0 }
+      ...mockPokemonWithIngredients,
+      pokemon: { ...mockPokemonWithIngredients.pokemon, frequency: 3000, skillPercentage: 0 }
     };
     const members: TeamMemberExt[] = [
       {
@@ -288,7 +288,7 @@ describe('TeamSimulator', () => {
     const members: TeamMemberExt[] = [
       {
         pokemonWithIngredients: {
-          ...mockpokemonWithIngredients,
+          ...mockPokemonWithIngredients,
           pokemon: {
             ...commonMocks.mockPokemon(),
             skill: BerryBurstDisguise,
