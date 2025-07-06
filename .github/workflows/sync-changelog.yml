@@ -1,0 +1,79 @@
+name: Sync Changelog to Develop
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches: [main]
+
+jobs:
+  sync-changelog:
+    name: Sync Changelog Commit
+    runs-on: ubuntu-latest
+    # Only run if the CI workflow succeeded and we're on main
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT }}
+          ref: main
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check for changelog commit
+        id: check-commit
+        run: |
+          # Check if the latest commit is a release commit
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          if [[ "$COMMIT_MSG" == *"chore(release):"* ]] && [[ "$COMMIT_MSG" == *"[skip ci]"* ]]; then
+            echo "Found release commit: $COMMIT_MSG"
+            echo "should_sync=true" >> $GITHUB_OUTPUT
+            echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          else
+            echo "No release commit found"
+            echo "should_sync=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Sync to develop
+        if: steps.check-commit.outputs.should_sync == 'true'
+        run: |
+          # Fetch develop branch
+          git fetch origin develop:develop
+          
+          # Get the changelog commit hash
+          CHANGELOG_COMMIT=${{ steps.check-commit.outputs.commit_sha }}
+          
+          # Switch to develop branch
+          git checkout develop
+          
+          # Cherry-pick the changelog commit from main
+          git cherry-pick $CHANGELOG_COMMIT
+          
+          # Push to develop
+          git push origin develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+
+      - name: Handle cherry-pick conflicts
+        if: failure() && steps.check-commit.outputs.should_sync == 'true'
+        run: |
+          # If cherry-pick fails, try to merge the changes manually
+          git cherry-pick --abort || true
+          
+          # Checkout the files from main
+          git checkout main -- CHANGELOG.md package.json package-lock.json
+          
+          # Create a new commit
+          git add CHANGELOG.md package.json package-lock.json
+          git commit -m "chore(release): sync changelog from main [skip ci]"
+          
+          # Push to develop
+          git push origin develop
