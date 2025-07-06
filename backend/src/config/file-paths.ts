@@ -32,14 +32,14 @@ export class FilePathResolver {
     }
 
     // Get current file directory for ES modules
-    const __filename = fileURLToPath(import.meta.url);
-    const __dirname = dirname(__filename);
+    const currentFileName = fileURLToPath(import.meta.url);
+    const currentDir = dirname(currentFileName);
 
     // Manual fallback paths for common scenarios
     const fallbackPaths = [
       join(process.cwd(), '..', 'CHANGELOG.md'), // From backend/ to parent
       join(process.cwd(), 'CHANGELOG.md'), // From current directory
-      join(__dirname, '..', '..', '..', 'CHANGELOG.md') // From backend/src/config to root
+      join(currentDir, '..', '..', '..', 'CHANGELOG.md') // From backend/src/config to root
     ];
 
     for (const fallbackPath of fallbackPaths) {
