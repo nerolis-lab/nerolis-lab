@@ -48,32 +48,22 @@ jobs:
           # Fetch develop branch
           git fetch origin develop:develop
           
-          # Get the changelog commit hash
-          CHANGELOG_COMMIT=${{ steps.check-commit.outputs.commit_sha }}
+          # Check if develop is behind main
+          BEHIND_COUNT=$(git rev-list --count develop..main)
           
-          # Switch to develop branch
-          git checkout develop
-          
-          # Cherry-pick the changelog commit from main
-          git cherry-pick $CHANGELOG_COMMIT
-          
-          # Push to develop
-          git push origin develop
+          if [ "$BEHIND_COUNT" -gt 0 ]; then
+            echo "Develop is $BEHIND_COUNT commits behind main"
+            
+            # Switch to develop branch
+            git checkout develop
+            
+            # Rebase develop onto main to get the exact same commits
+            git rebase main
+            
+            # Push to develop
+            git push origin develop
+          else
+            echo "Develop is up to date with main"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-
-      - name: Handle cherry-pick conflicts
-        if: failure() && steps.check-commit.outputs.should_sync == 'true'
-        run: |
-          # If cherry-pick fails, try to merge the changes manually
-          git cherry-pick --abort || true
-          
-          # Checkout the files from main
-          git checkout main -- CHANGELOG.md package.json package-lock.json
-          
-          # Create a new commit
-          git add CHANGELOG.md package.json package-lock.json
-          git commit -m "chore(release): sync changelog from main [skip ci]"
-          
-          # Push to develop
-          git push origin develop
