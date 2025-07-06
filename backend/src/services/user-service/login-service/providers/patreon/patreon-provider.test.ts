@@ -270,6 +270,26 @@ describe('PatreonProvider', () => {
       await PatreonProvider.unlink(user);
       expect((await UserDAO.find({ id: user.id }))?.patreon_id).toBeUndefined();
     });
+
+    it('should downgrade supporter role to default when unlinking', async () => {
+      const user: DBUser = mocks.dbUser({ patreon_id: 'mockPatreonId', role: Roles.Supporter });
+      await UserDAO.insert(user);
+
+      await PatreonProvider.unlink(user);
+      const updatedUser = await UserDAO.find({ id: user.id });
+      expect(updatedUser?.patreon_id).toBeUndefined();
+      expect(updatedUser?.role).toBe(Roles.Default);
+    });
+
+    it('should preserve admin role when unlinking', async () => {
+      const user: DBUser = mocks.dbUser({ patreon_id: 'mockPatreonId', role: Roles.Admin });
+      await UserDAO.insert(user);
+
+      await PatreonProvider.unlink(user);
+      const updatedUser = await UserDAO.find({ id: user.id });
+      expect(updatedUser?.patreon_id).toBeUndefined();
+      expect(updatedUser?.role).toBe(Roles.Admin);
+    });
   });
 
   describe('verifyExistingUser', () => {
@@ -354,6 +374,57 @@ describe('PatreonProvider', () => {
           })
           .setRequestOptions({ count: 1000 })
       );
+
+      expect(role).toBe(Roles.Supporter);
+      expect(patronSince).toBe('2024-01-01T00:00:00.000Z');
+    });
+
+    it('should return default role when patreon_id is undefined', async () => {
+      const { role, patronSince } = await PatreonProvider.isSupporter({
+        patreon_id: undefined
+      });
+
+      expect(role).toBe(Roles.Default);
+      expect(patronSince).toBeNull();
+    });
+
+    it('should preserve admin role when patreon_id is undefined', async () => {
+      const { role, patronSince } = await PatreonProvider.isSupporter({
+        patreon_id: undefined,
+        previousRole: Roles.Admin
+      });
+
+      expect(role).toBe(Roles.Admin);
+      expect(patronSince).toBeNull();
+    });
+
+    it('should return default role for non-active patrons', async () => {
+      mockCreatorClient();
+      const { role, patronSince } = await PatreonProvider.isSupporter({
+        patreon_id: MOCK_NON_SUPPORTING_USER_ID
+      });
+
+      expect(role).toBe(Roles.Default);
+      expect(patronSince).toBeNull();
+    });
+
+    it('should preserve admin role for non-active patrons', async () => {
+      mockCreatorClient();
+      const { role, patronSince } = await PatreonProvider.isSupporter({
+        patreon_id: MOCK_NON_SUPPORTING_USER_ID,
+        previousRole: Roles.Admin
+      });
+
+      expect(role).toBe(Roles.Admin);
+      expect(patronSince).toBeNull();
+    });
+
+    it('should upgrade default role to supporter for active patrons', async () => {
+      mockCreatorClient();
+      const { role, patronSince } = await PatreonProvider.isSupporter({
+        patreon_id: MOCK_SUPPORTING_USER_ID,
+        previousRole: Roles.Default
+      });
 
       expect(role).toBe(Roles.Supporter);
       expect(patronSince).toBe('2024-01-01T00:00:00.000Z');

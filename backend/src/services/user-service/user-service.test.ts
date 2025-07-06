@@ -118,6 +118,11 @@ describe('getUserSettings', () => {
 
     await UserDAO.insert(user);
 
+    vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({
+      role: Roles.Default,
+      patronSince: null
+    });
+
     const areaBonuses: Array<{ fk_user_id: number; area: IslandShortName; bonus: number }> = [
       { fk_user_id: user.id, area: 'AREA1' as IslandShortName, bonus: 10 },
       { fk_user_id: user.id, area: 'AREA2' as IslandShortName, bonus: 20 }
@@ -180,6 +185,63 @@ describe('getUserSettings', () => {
     expect(PatreonProvider.isSupporter).toHaveBeenCalledWith({ patreon_id: user.patreon_id, previousRole: user.role });
   });
 
+  it('should check patreon status even when patreon_id is undefined', async () => {
+    const user: DBUser = mocks.dbUser({
+      external_id: uuid.v4(),
+      friend_code: 'TESTFC',
+      name: 'Test User',
+      avatar: 'test-avatar',
+      role: Roles.Default,
+      google_id: 'google-id',
+      patreon_id: undefined
+    });
+
+    await UserDAO.insert(user);
+
+    vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({
+      role: Roles.Default,
+      patronSince: null
+    });
+
+    const settings = await getUserSettings(user);
+
+    expect(settings).toEqual({
+      name: 'Test User',
+      avatar: 'test-avatar',
+      role: Roles.Default,
+      areaBonuses: {},
+      potSize: MAX_POT_SIZE,
+      supporterSince: null,
+      randomizeNicknames: true
+    });
+
+    expect(PatreonProvider.isSupporter).toHaveBeenCalledWith({ patreon_id: undefined, previousRole: user.role });
+  });
+
+  it('should update user role based on patreon status', async () => {
+    const user: DBUser = mocks.dbUser({
+      external_id: uuid.v4(),
+      friend_code: 'TESTFC',
+      name: 'Test User',
+      avatar: 'test-avatar',
+      role: Roles.Supporter,
+      google_id: 'google-id',
+      patreon_id: 'patreon-id'
+    });
+
+    await UserDAO.insert(user);
+
+    vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({
+      role: Roles.Default,
+      patronSince: null
+    });
+
+    await getUserSettings(user);
+
+    const updatedUser = await UserDAO.find({ id: user.id });
+    expect(updatedUser?.role).toBe(Roles.Default);
+  });
+
   it('should return custom pot size if set', async () => {
     const user: DBUser = mocks.dbUser({
       external_id: uuid.v4(),
@@ -195,6 +257,11 @@ describe('getUserSettings', () => {
       fk_user_id: user.id,
       pot_size: 150,
       randomize_nicknames: true
+    });
+
+    vi.mocked(PatreonProvider.isSupporter).mockResolvedValue({
+      role: Roles.Default,
+      patronSince: null
     });
 
     const settings = await getUserSettings(user);
