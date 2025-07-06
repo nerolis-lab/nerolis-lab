@@ -1,3 +1,30 @@
+# [2.21.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.20.0...v2.21.0) (2025-07-06)
+
+
+### Bug Fixes
+
+* add margin to changelog title ([8c913fb](https://github.com/nerolis-lab/nerolis-lab/commit/8c913fbebf0354faa49838745eba2cb16b659067))
+* **ingredient draw:** update probabilities ([c05e7ab](https://github.com/nerolis-lab/nerolis-lab/commit/c05e7ab0dc2b806aacd77d5a431bff5e16a02f7d))
+* **lint:** allow unused arguments beginning with _ ([0897eb5](https://github.com/nerolis-lab/nerolis-lab/commit/0897eb54711c5ce27acd4f6bcae50fbb1885b7d9))
+* **OAuth:** check supporter status even if patreon unlinked ([a6c343d](https://github.com/nerolis-lab/nerolis-lab/commit/a6c343d16e941957ad234b8c13bdf515c03a1e07))
+* pokemon cache no longer out of sync ([26bf38a](https://github.com/nerolis-lab/nerolis-lab/commit/26bf38aa3f292c1d27a10caa8cc8d756eeb51221))
+* pot size in recipes page uses MAX_POT_SIZE constant ([88b7f40](https://github.com/nerolis-lab/nerolis-lab/commit/88b7f409c5aa8ffcb9c351dbcc4e3022b31a159a))
+* refresh teams on login ([1bb6b21](https://github.com/nerolis-lab/nerolis-lab/commit/1bb6b21e564198ef1cdba811575ec7ead76affb7))
+* tierlist share close button now legible ([f5d2a14](https://github.com/nerolis-lab/nerolis-lab/commit/f5d2a1492cca5e09496aa2d3a6c5fcec2f715782))
+* **tierlist:** Re-bucket tiers ([985164f](https://github.com/nerolis-lab/nerolis-lab/commit/985164f4c7bd44d3da5e234aa79e9a2a82606f89))
+
+
+### Features
+
+* add changelog API and admin interface ([bb9cebe](https://github.com/nerolis-lab/nerolis-lab/commit/bb9cebeae9ddd6a066f31c3e780d0e9fca7e5561))
+* add changelog support for breaking changes ([59cb1bd](https://github.com/nerolis-lab/nerolis-lab/commit/59cb1bd8162699ceaf00c09cdb43f81cfadd0e86))
+* add close button to tierlist pokemon menu ([edd192b](https://github.com/nerolis-lab/nerolis-lab/commit/edd192bae07128859035ff4396c2f582b684f647))
+* adds recreate functionality for tier list solutions ([03fc2f3](https://github.com/nerolis-lab/nerolis-lab/commit/03fc2f380c8f5d61098223d2d6f9eb444695feab))
+* Allow subskill editing from member-results page ([3be293c](https://github.com/nerolis-lab/nerolis-lab/commit/3be293c61b5637a6071d42c3fd45f5a24e0dea4f))
+* **hyper cutter:** use updated probabilities ([96957a9](https://github.com/nerolis-lab/nerolis-lab/commit/96957a9a394b77d3c1104f9a7e15aeef2cc1a409))
+* **super luck:** use updated probabilities ([2f8e683](https://github.com/nerolis-lab/nerolis-lab/commit/2f8e683991d635bc5619a5e688f5911388461dab))
+* **tierlist:** add contribution for recipe strength ([24ce38a](https://github.com/nerolis-lab/nerolis-lab/commit/24ce38a556942c50814d3827c54870ffa0de1c6c))
+
 # [2.20.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.19.0...v2.20.0) (2025-06-25)
 
 
