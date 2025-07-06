@@ -32,15 +32,13 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
   }
 
   let supporterSince: string | null = null;
-  if (user.patreon_id) {
-    const { role, patronSince } = await PatreonProvider.isSupporter({
-      patreon_id: user.patreon_id,
-      previousRole: user.role
-    });
+  const { role, patronSince } = await PatreonProvider.isSupporter({
+    patreon_id: user.patreon_id,
+    previousRole: user.role
+  });
 
-    await UserDAO.update({ ...user, role });
-    supporterSince = patronSince;
-  }
+  await UserDAO.update({ ...user, role });
+  supporterSince = patronSince;
 
   const userSettings = await UserSettingsDAO.find({ fk_user_id: user.id });
   const potSize = userSettings?.pot_size ?? MAX_POT_SIZE;

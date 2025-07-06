@@ -111,7 +111,8 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }
 
   async unlink(user: DBUser): Promise<void> {
-    await UserDAO.update({ ...user, patreon_id: undefined });
+    const role = user.role === Roles.Supporter ? Roles.Default : user.role;
+    await UserDAO.update({ ...user, patreon_id: undefined, role });
   }
 
   async verifyExistingUser(userHeader: UserHeader): Promise<DBUser> {
@@ -147,27 +148,26 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     };
   }
 
-  public async isSupporter(params: { patreon_id: string; previousRole?: Roles }): Promise<{
+  public async isSupporter({ patreon_id, previousRole }: { patreon_id?: string; previousRole?: Roles }): Promise<{
     role: Roles;
     patronSince: string | null;
   }> {
-    const { patreon_id, previousRole } = params;
-    let patronSince: string | null = null;
-    let role = previousRole ?? Roles.Default;
+    // default to admin or default
+    let role: Roles = previousRole && previousRole !== Roles.Supporter ? previousRole : Roles.Default;
 
+    // if patreon not linked return default if they were a supporter, otherwise return current role
+    if (!patreon_id) return { role, patronSince: null };
+
+    // update patrons cache and check if they are a supporter
     await this.getPatrons();
     const patron = this.patrons.get(patreon_id);
-
-    if (patron) {
-      const { patronStatus, pledgeRelationshipStart } = patron;
-      if (patronStatus === 'active_patron') {
-        // if user was default, we upgrade to supporter, but we dont downgrade admins
-        role = role === Roles.Default ? Roles.Supporter : role;
-        patronSince = pledgeRelationshipStart;
-      }
+    if (!patron || patron.patronStatus !== 'active_patron') {
+      return { role, patronSince: null };
     }
 
-    return { role, patronSince };
+    if (role === Roles.Default) role = Roles.Supporter;
+
+    return { role, patronSince: patron.pledgeRelationshipStart };
   }
 
   private async getPatrons(): Promise<Map<string, Patron>> {
