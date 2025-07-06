@@ -1,3 +1,11 @@
+## [2.21.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.1...v2.21.2) (2025-07-06)
+
+
+### Bug Fixes
+
+* **backend:** rename __dirname variables to avoid global conflicts ([ea3a3b1](https://github.com/nerolis-lab/nerolis-lab/commit/ea3a3b1dda0c725066ca0dcc8373fb0b969da93d))
+* **backend:** replace __dirname with import.meta.url for ESM compatibility ([3b28ba8](https://github.com/nerolis-lab/nerolis-lab/commit/3b28ba8fb55535b0314fd067d4a5c1bc590483bd))
+
 ## [2.21.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.0...v2.21.1) (2025-07-06)
 
 # [2.21.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.20.0...v2.21.0) (2025-07-06)
