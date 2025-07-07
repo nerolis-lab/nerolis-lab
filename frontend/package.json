@@ -57,7 +57,7 @@
     "vitest": "^3.2.3",
     "vitest-canvas-mock": "^0.3.3",
     "vue-tsc": "^2.0.6",
-    "vuetify": "^3.8.11"
+    "vuetify": "^3.8.12"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.9.5"
