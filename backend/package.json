@@ -50,7 +50,7 @@
     "express": "^5.1.0",
     "google-auth-library": "^9.10.0",
     "knex": "^3.1.0",
-    "morgan": "~1.9.1",
+    "morgan": "~1.10.0",
     "mysql2": "~3.14.1",
     "patreon-api.ts": "^0.14.2",
     "seedrandom": "^3.0.5",
