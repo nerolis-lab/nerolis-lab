@@ -6,6 +6,7 @@ export enum RouteName {
   Home = 'Home',
 
   Calculator = 'Calculator',
+  QuickCalc = 'Quick Calc',
   Compare = 'Compare',
   Recipes = 'Recipes',
 
@@ -31,6 +32,7 @@ export enum RouteName {
 }
 
 const CalculatorPage = () => import('@/pages/calculator-page.vue')
+const QuickCalculatorPage = () => import('@/pages/quick-calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
 const TierlistPage = () => import('@/pages/tierlist/tierlist-page.vue')
@@ -68,6 +70,11 @@ const router = createRouter({
       component: CalculatorPage
     },
     {
+      path: '/quick-calc',
+      name: RouteName.QuickCalc,
+      component: QuickCalculatorPage
+    },
+    {
       path: '/compare',
       name: RouteName.Compare,
       component: ComparisonPage
@@ -81,7 +88,7 @@ const router = createRouter({
       path: '/tierlist',
       name: 'Tierlist',
       component: TierlistPage,
-      beforeEnter: (to, from, next) => {
+      beforeEnter: (to, _from, next) => {
         if (to.query.level === undefined || to.query.camp === undefined) {
           next({
             name: 'Tierlist',
@@ -177,7 +184,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _from, next) => {
   if (to.meta.requiresAdmin) {
     const { AdminService } = await import('@/services/admin/admin-service')
     const { useUserStore } = await import('@/stores/user-store')

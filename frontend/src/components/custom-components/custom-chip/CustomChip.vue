@@ -12,6 +12,8 @@
         :class="computedClass"
         :prepend-avatar="prependAvatar"
         :append-avatar="appendAvatar"
+        :prepend-icon="prependIcon"
+        :append-icon="appendIcon"
         v-bind="chipBindings(activatorProps)"
         @click="handleClick"
       >
@@ -64,6 +66,8 @@ export interface Props {
   isSelected?: boolean
   appendAvatar?: string
   prependAvatar?: string
+  prependIcon?: string
+  appendIcon?: string
   size?: 'x-small' | 'small' | 'default' | 'large' | 'x-large'
   density?: 'default' | 'comfortable' | 'compact'
   disabled?: boolean
