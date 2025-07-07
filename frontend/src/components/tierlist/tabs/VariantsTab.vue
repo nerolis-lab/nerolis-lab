@@ -1,7 +1,7 @@
 <!-- TODO: add production and skill procs to each variant -->
 <template>
   <v-row v-if="originalVariantCount > 10" dense class="flex-center mb-4" :class="{ 'flex-column': isMobile }">
-    <v-col>
+    <v-col class="flex-center-y">
       <CustomSearchBar v-model="searchQuery" density="compact" label="Search ingredients..." />
     </v-col>
 
