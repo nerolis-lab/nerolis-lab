@@ -44,7 +44,7 @@ import PokemonInput from '@/components/pokemon-input/pokemon-input.vue'
 import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
 import { useUserStore } from '@/stores/user-store'
 import type { PokemonInstanceExt } from 'sleepapi-common'
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, nextTick, type PropType } from 'vue'
 
 export default defineComponent({
   name: 'PokemonSlotMenu',
@@ -66,6 +66,11 @@ export default defineComponent({
     fullTeam: {
       type: Boolean,
       required: true
+    },
+    initialAction: {
+      type: String as PropType<'' | 'add' | 'pokebox'>,
+      default: '',
+      required: false
     }
   },
   emits: ['update:show', 'update-pokemon', 'duplicate-pokemon', 'toggle-saved-pokemon', 'remove-pokemon'],
@@ -100,6 +105,18 @@ export default defineComponent({
   watch: {
     pokemonFromPreExist() {
       this.updateInitialSavedState()
+    },
+    show(newVal) {
+      if (newVal && this.initialAction && this.emptySlot) {
+        // Wait for dialog to be visible before triggering sub-dialog
+        nextTick(() => {
+          if (this.initialAction === 'add') {
+            this.handleAddClick()
+          } else if (this.initialAction === 'pokebox') {
+            this.handleSavedClick()
+          }
+        })
+      }
     }
   },
   mounted() {
