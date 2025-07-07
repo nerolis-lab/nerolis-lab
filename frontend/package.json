@@ -22,7 +22,7 @@
     "@mdi/font": "^7.4.47",
     "axios": "^1.9.0",
     "axios-mock-adapter": "^2.1.0",
-    "chart.js": "^4.4.4",
+    "chart.js": "^4.5.0",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.4.0",
     "vue": "^3.4.21",
