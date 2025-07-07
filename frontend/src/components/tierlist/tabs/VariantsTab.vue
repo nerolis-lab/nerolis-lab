@@ -2,15 +2,7 @@
 <template>
   <v-row v-if="originalVariantCount > 10" dense class="flex-center mb-4" :class="{ 'flex-column': isMobile }">
     <v-col>
-      <v-text-field
-        v-model="searchQuery"
-        prepend-inner-icon="mdi-magnify"
-        label="Search ingredients..."
-        variant="outlined"
-        density="compact"
-        hide-details
-        clearable
-      />
+      <CustomSearchBar v-model="searchQuery" density="compact" label="Search ingredients..." />
     </v-col>
 
     <v-col :cols="isMobile ? 12 : 'auto'">
@@ -219,6 +211,7 @@
 
 <script setup lang="ts">
 import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
+import CustomSearchBar from '@/components/custom-components/search-bar/CustomSearchBar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import {
   ingredientImage as getIngredientImageUrlUtil,

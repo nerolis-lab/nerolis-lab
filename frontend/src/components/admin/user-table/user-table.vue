@@ -14,13 +14,7 @@
     >
       <template #top>
         <v-toolbar flat>
-          <v-text-field
-            v-model="search"
-            label="Search users..."
-            clearable
-            prepend-inner-icon="mdi-magnify"
-            hide-details
-          ></v-text-field>
+          <CustomSearchBar v-model="search" />
           <v-btn icon @click="refreshUsers">
             <v-icon>mdi-refresh</v-icon>
           </v-btn>
@@ -63,6 +57,7 @@
 
 <script lang="ts">
 import UserAdminOptions from '@/components/admin/user-table/UserAdminOptions.vue'
+import CustomSearchBar from '@/components/custom-components/search-bar/CustomSearchBar.vue'
 import { AdminService } from '@/services/admin/admin-service'
 import { UserService } from '@/services/user/user-service'
 import { DateUtils } from '@/services/utils/date/date-utils'
@@ -75,7 +70,8 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 export default defineComponent({
   name: 'UserTable',
   components: {
-    UserAdminOptions
+    UserAdminOptions,
+    CustomSearchBar
   },
   setup() {
     const avatarStore = useAvatarStore()

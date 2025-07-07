@@ -115,16 +115,7 @@
         </v-col>
         <v-col cols="1" class="flex-center" v-if="!isMobile && !isLargeDesktop" style="align-self: stretch"> </v-col>
         <v-col :cols="isMobile || isLargeDesktop ? '' : '5'" class="flex-right">
-          <v-text-field
-            v-model="searchQuery"
-            density="compact"
-            variant="outlined"
-            color="secondary"
-            hide-details
-            clearable
-            prepend-inner-icon="mdi-magnify"
-            label="Search recipes..."
-          />
+          <CustomSearchBar v-model="searchQuery" density="compact" label="Search recipes..." />
         </v-col>
       </v-row>
     </v-row>
@@ -138,6 +129,7 @@
 import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
 import IngredientSelection from '@/components/custom-components/input/ingredient-selection/ingredient-selection.vue'
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
+import CustomSearchBar from '@/components/custom-components/search-bar/CustomSearchBar.vue'
 import RecipeTableDesktop from '@/components/recipe/recipe-table-desktop.vue'
 import RecipeTableMobile from '@/components/recipe/recipe-table-mobile.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
@@ -149,7 +141,7 @@ import { capitalize, defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   name: 'RecipesPage',
-  components: { RecipeTableDesktop, RecipeTableMobile, NumberInput, IngredientSelection, CustomChip },
+  components: { RecipeTableDesktop, RecipeTableMobile, NumberInput, IngredientSelection, CustomChip, CustomSearchBar },
   async setup() {
     const userStore = useUserStore()
     const { isMobile, isLargeDesktop } = useBreakpoint()
