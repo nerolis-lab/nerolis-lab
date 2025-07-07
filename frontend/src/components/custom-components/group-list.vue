@@ -2,15 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <v-text-field
-          v-model="searchQuery"
-          label="Search for your Pokémon"
-          hide-details
-          variant="outlined"
-          no-resize
-          autofocus
-          @keydown.enter="selectFirstOption"
-        ></v-text-field>
+        <CustomSearchBar v-model="searchQuery" @keydown.enter="selectFirstOption" label="Search for your Pokémon" />
       </v-col>
     </v-row>
     <v-list v-model:opened="openedGroups" density="compact" style="height: 50dvh">
@@ -37,6 +29,7 @@
 </template>
 
 <script lang="ts">
+import CustomSearchBar from '@/components/custom-components/search-bar/CustomSearchBar.vue'
 import { capitalize } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
@@ -63,6 +56,9 @@ export default defineComponent({
     }
   },
   emits: ['select-option', 'cancel'],
+  components: {
+    CustomSearchBar
+  },
   data() {
     return {
       searchQuery: '',
