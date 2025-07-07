@@ -114,9 +114,11 @@ const containerStyle = computed(() => {
 
   if (isExpanded.value) {
     if (props.maxWidth) {
+      // Set width to max-width when expanded, but allow flex-shrink to prevent wrapping
       style.width = typeof props.maxWidth === 'number' ? `${props.maxWidth}px` : props.maxWidth
-    } else if (props.width) {
-      style.width = typeof props.width === 'number' ? `${props.width}px` : props.width
+      style.flexShrink = '1'
+    } else {
+      style.width = '100%'
     }
   }
 

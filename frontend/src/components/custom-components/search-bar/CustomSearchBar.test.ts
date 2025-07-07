@@ -112,11 +112,11 @@ describe('CustomSearchBar', () => {
   })
 
   describe('Styling', () => {
-    it('applies custom width when expanded', async () => {
-      wrapper = mount(CustomSearchBar, { props: { startMinimized: false, width: 400 } })
+    it('applies 100% width when expanded without maxWidth', async () => {
+      wrapper = mount(CustomSearchBar, { props: { startMinimized: false } })
 
       const container = wrapper.find('.search-bar-container')
-      expect(container.attributes('style')).toContain('width: 400px')
+      expect(container.attributes('style')).toContain('width: 100%')
     })
 
     it('applies maxWidth when expanded', async () => {
@@ -124,6 +124,7 @@ describe('CustomSearchBar', () => {
 
       const container = wrapper.find('.search-bar-container')
       expect(container.attributes('style')).toContain('width: 350px')
+      expect(container.attributes('style')).toContain('flex-shrink: 1')
     })
 
     it('prefers maxWidth over width', async () => {
@@ -131,6 +132,7 @@ describe('CustomSearchBar', () => {
 
       const container = wrapper.find('.search-bar-container')
       expect(container.attributes('style')).toContain('width: 350px')
+      expect(container.attributes('style')).toContain('flex-shrink: 1')
     })
 
     it('has no width style when minimized', async () => {
