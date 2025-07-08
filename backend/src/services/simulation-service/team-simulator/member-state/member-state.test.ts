@@ -68,6 +68,14 @@ const member: TeamMemberExt = {
   }
 };
 
+const sneakySnackingMember: TeamMemberExt = {
+  pokemonWithIngredients: guaranteedSkillProcMember.pokemonWithIngredients,
+  settings: {
+    ...guaranteedSkillProcMember.settings,
+    sneakySnacking: true
+  }
+};
+
 const settings: TeamSettingsExt = {
   bedtime: TimeUtils.parseTime('21:30'),
   wakeup: TimeUtils.parseTime('06:00'),
@@ -102,6 +110,22 @@ describe('results', () => {
     expect(results.skillAmount).toBe(0);
     expect(results.skillProcs).toBe(0);
   });
+
+  it('should return only berries for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const results = memberState.results(1);
+
+    expect(results.produceTotal.berries.length).toBeGreaterThan(0);
+    expect(results.produceTotal.ingredients.length).toBe(0);
+    expect(results.skillProcs).toBe(0);
+  });
 });
 
 describe('simpleResults', () => {
@@ -122,6 +146,21 @@ describe('simpleResults', () => {
 
     expect(simpleResults.skillProcs).toBe(0);
     expect(simpleResults.totalHelps).toBe(0);
+  });
+
+  it('should return zero skill procs for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const simpleResults = memberState.simpleResults(10);
+
+    expect(simpleResults.totalHelps).toBe(0.1);
+    expect(simpleResults.skillProcs).toBe(0);
   });
 });
 
@@ -595,6 +634,20 @@ describe('addHelpsFromSkill', () => {
       }
     `);
   });
+
+  it('shall add ingredients for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.addHelpsFromSkill({ regular: 10, crit: 0 }, memberState);
+    memberState.collectInventory();
+
+    expect(memberState.results(1).produceTotal.ingredients.length).toBeGreaterThan(0);
+    expect(memberState.results(1).produceTotal.ingredients[0].amount).toBeGreaterThan(0);
+  });
 });
 
 describe('recoverMeal', () => {
@@ -920,6 +973,20 @@ describe('attemptDayHelp', () => {
     memberState.attemptDayHelp(0);
 
     expect(memberState.results(1).skillProcs).toBe(1);
+  });
+
+  it('shall not proc skill for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.wakeUp();
+    memberState.collectInventory();
+    memberState.attemptDayHelp(0);
+
+    expect(memberState.results(1).skillProcs).toBe(0);
   });
 
   it('shall still count metronome proc as 1 proc', () => {
