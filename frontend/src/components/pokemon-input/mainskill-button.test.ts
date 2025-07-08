@@ -31,10 +31,9 @@ describe('MainskillButton', () => {
         pokemonInstance: mocks.createMockPokemon({ pokemon: GENGAR, skillLevel: 3 })
       }
     })
-    expect(wrapper.find('.responsive-text').text()).toBe('Charge Strength S RangeLv.3')
-    expect(wrapper.find('.responsive-text-small').text()).toContain(
-      "Increases Snorlax's Strength on average by 981.25."
-    )
+    const textElements = wrapper.findAll('.text-x-small')
+    expect(textElements[0].text()).toBe('Charge Strength S RangeLv.3')
+    expect(textElements[1].text()).toContain("Increases Snorlax's Strength on average by 981.25.")
     expect(wrapper.find('img').attributes('src')).toBe('/images/mainskill/strength.png')
   })
 
@@ -59,8 +58,7 @@ describe('MainskillButton', () => {
     const skillWithLowMaxLevel: Mainskill = new (class extends Mainskill {
       name = 'Test skill'
       amount = (skillLevel: number) => skillLevel
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      description = (skillLevel: number) => `Test.`
+      description = (_skillLevel: number) => `Test.`
       RP = [880, 1251, 1726, 2383]
       image = 'strength'
       activations = {}

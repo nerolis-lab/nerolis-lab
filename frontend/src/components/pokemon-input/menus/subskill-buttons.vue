@@ -17,10 +17,9 @@
 
         <v-btn
           :color="maybeRarityColor(subskillLevel)"
-          class="w-100"
+          class="w-100 text-x-small"
           rounded="xs"
           height="36px"
-          style="font-size: xx-small"
           @click="toggleSubskillMenu"
         >
           {{ subskillName(subskillLevel) }}

@@ -10,14 +10,7 @@
     :content="level"
     :model-value="level !== undefined"
   >
-    <v-btn
-      :color="rarityColor(subskill)"
-      class="w-100 button-height"
-      rounded="lg"
-      size="xx-small"
-      style="font-size: x-small"
-      stacked
-    >
+    <v-btn :color="rarityColor(subskill)" class="w-100 button-height text-small" rounded="lg" size="xx-small" stacked>
       {{ subskillLabel }}
     </v-btn>
   </v-badge>

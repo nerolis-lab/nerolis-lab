@@ -55,7 +55,7 @@
         ></v-img>
         <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ totalSkillValue }} total</span>
       </div>
-      <span class="font-weight-light font-italic responsive-text text-center">
+      <span class="font-weight-light font-italic text-x-small text-center">
         {{ amountOfEachIngredient }} of each ing</span
       >
     </v-col>

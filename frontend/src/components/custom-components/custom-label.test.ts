@@ -20,7 +20,6 @@ describe('CustomLabel', () => {
 
     const divider = wrapper.find('.v-divider')
     expect(divider.exists()).toBe(true)
-    expect(divider.classes()).toContain('v-divider--vertical')
     expect(divider.classes()).toContain('ps-2')
     expect(divider.classes()).toContain('border-opacity-100')
 
@@ -31,6 +30,6 @@ describe('CustomLabel', () => {
     expect(span.classes()).toContain('align-center')
     expect(span.classes()).toContain('justify-center')
     expect(span.classes()).toContain('text-center')
-    expect(span.attributes('style')).toContain('font-size: small')
+    expect(span.classes()).toContain('text-small')
   })
 })

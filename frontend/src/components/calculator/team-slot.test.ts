@@ -133,7 +133,7 @@ describe('TeamSlot', () => {
       }
     })
 
-    const subskillBadge = wrapper.find('.responsive-text.rounded-t-0')
+    const subskillBadge = wrapper.find('.text-x-small.rounded-t-0')
     expect(subskillBadge.exists()).toBe(true)
     expect(subskillBadge.text()).toContain('HB + ERB')
   })

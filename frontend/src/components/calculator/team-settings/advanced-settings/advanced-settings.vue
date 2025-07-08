@@ -262,7 +262,7 @@
           <v-col cols="6">
             <v-btn
               id="cancelButton"
-              class="w-100 responsive-text"
+              class="w-100"
               size="large"
               rounded="lg"
               color="secondary"
@@ -274,7 +274,7 @@
             <v-btn
               :disabled="isSaveDisabled"
               id="saveButton"
-              class="w-100 responsive-text"
+              class="w-100"
               size="large"
               rounded="lg"
               color="primary"

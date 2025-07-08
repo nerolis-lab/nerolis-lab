@@ -156,7 +156,7 @@ describe('MemberStats.vue', () => {
 
     const wrapper = mount(MemberStats, { props: { pokemonProduction: productionWithSubskills } })
     expect(wrapper.text()).toContain('from subskills')
-    const subskillDiv = wrapper.find('.text-caption.mr-4.flex-center')
+    const subskillDiv = wrapper.find('.text-small.mr-4.flex-center')
     expect(subskillDiv.exists()).toBe(true)
   })
 
@@ -167,7 +167,7 @@ describe('MemberStats.vue', () => {
 
     const wrapper = mount(MemberStats, { props: { pokemonProduction: productionWithRibbon } })
     expect(wrapper.text()).toContain('from ribbon')
-    const ribbonDiv = wrapper.find('.text-caption.flex-center')
+    const ribbonDiv = wrapper.find('.text-small.flex-center')
     expect(ribbonDiv.exists()).toBe(true)
   })
 
@@ -197,8 +197,8 @@ describe('MemberStats.vue', () => {
     expect(wrapper.text()).toContain('from ribbon')
 
     // Should have both divs with proper spacing
-    const subskillDiv = wrapper.find('.text-caption.mr-4.flex-center')
-    const ribbonDiv = wrapper.find('.text-caption.flex-center:not(.mr-4)')
+    const subskillDiv = wrapper.find('.text-small.mr-4.flex-center')
+    const ribbonDiv = wrapper.find('.text-small.flex-center:not(.mr-4)')
     expect(subskillDiv.exists()).toBe(true)
     expect(ribbonDiv.exists()).toBe(true)
   })

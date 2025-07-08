@@ -21,7 +21,7 @@ describe('NatureButton', () => {
   })
 
   it('renders correctly with provided data', () => {
-    expect(wrapper.find('.responsive-text').text()).toContain(sampleNature.name)
+    expect(wrapper.find('.text-body').text()).toContain(sampleNature.name)
   })
 
   it('computes natureName correctly when enabled', () => {

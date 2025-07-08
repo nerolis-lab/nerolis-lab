@@ -39,10 +39,10 @@
         Carry limit: <span class="font-weight-medium">{{ carrySize }} </span>
       </span>
       <div v-if="carryGainFromSubskills > 0 || carryGainFromRibbon > 0" class="ml-4 d-flex">
-        <div v-if="carryGainFromSubskills > 0" class="text-caption mr-4 flex-center">
+        <div v-if="carryGainFromSubskills > 0" class="text-small mr-4 flex-center">
           +{{ carryGainFromSubskills }} from subskills
         </div>
-        <div v-if="carryGainFromRibbon > 0" class="text-caption flex-center">
+        <div v-if="carryGainFromRibbon > 0" class="text-small flex-center">
           +{{ carryGainFromRibbon }} from ribbon <v-img class="ribbon-image" :src="ribbonImage"></v-img>
         </div>
       </div>

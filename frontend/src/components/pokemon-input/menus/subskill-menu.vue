@@ -1,5 +1,6 @@
 <template>
   <v-card class="pa-4">
+    <!-- Choose the subskill for level -->
     <v-row>
       <v-col cols="12" class="py-5">
         <div v-if="lowestAvailableLevel" style="height: 50px">
@@ -16,15 +17,17 @@
         </div>
       </v-col>
     </v-row>
+
+    <!-- Golden subskills -->
     <v-row dense>
-      <v-col cols="6">
+      <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.BERRY_FINDING_S"
           :selected-subskills="selectedSubskills"
           @click="toggleSubskill(availableSubskills.BERRY_FINDING_S)"
         />
       </v-col>
-      <v-col cols="6">
+      <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.HELPING_BONUS"
           :selected-subskills="selectedSubskills"
@@ -34,14 +37,14 @@
     </v-row>
 
     <v-row dense>
-      <v-col cols="6">
+      <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.ENERGY_RECOVERY_BONUS"
           :selected-subskills="selectedSubskills"
           @click="toggleSubskill(availableSubskills.ENERGY_RECOVERY_BONUS)"
         />
       </v-col>
-      <v-col cols="6">
+      <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.SLEEP_EXP_BONUS"
           :selected-subskills="selectedSubskills"
@@ -51,14 +54,14 @@
     </v-row>
 
     <v-row dense>
-      <v-col cols="6">
+      <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.DREAM_SHARD_BONUS"
           :selected-subskills="selectedSubskills"
           @click="toggleSubskill(availableSubskills.DREAM_SHARD_BONUS)"
         />
       </v-col>
-      <v-col cols="6">
+      <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.RESEARCH_EXP_BONUS"
           :selected-subskills="selectedSubskills"
@@ -188,30 +191,18 @@
 
     <v-row dense class="mt-3">
       <v-col cols="4">
-        <v-btn
-          class="w-100 responsive-text"
-          size="large"
-          rounded="lg"
-          color="secondary"
-          data-testid="cancel-button"
-          @click="cancel"
+        <v-btn class="w-100" size="large" rounded="lg" color="secondary" data-testid="cancel-button" @click="cancel"
           >Cancel</v-btn
         >
       </v-col>
       <v-col cols="4">
-        <v-btn
-          class="w-100 responsive-text"
-          size="large"
-          rounded="lg"
-          color="surface"
-          data-testid="clear-button"
-          @click="clear"
+        <v-btn class="w-100" size="large" rounded="lg" color="surface" data-testid="clear-button" @click="clear"
           >Clear</v-btn
         >
       </v-col>
       <v-col cols="4">
         <v-btn
-          class="w-100 responsive-text"
+          class="w-100"
           size="large"
           rounded="lg"
           color="primary"

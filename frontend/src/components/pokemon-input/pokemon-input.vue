@@ -88,7 +88,7 @@
         />
       </v-col>
       <v-col cols="12" v-if="!ingsAreValid">
-        <div class="text-center text-error-3 text-caption">
+        <div class="text-center text-error-3 text-small">
           Level 30 ingredient must unlock before level 60 ingredient.
         </div>
       </v-col>
@@ -119,7 +119,7 @@
 
     <v-row dense class="mt-2">
       <v-col cols="6">
-        <v-btn id="cancelButton" class="w-100 responsive-text" size="large" rounded="lg" color="surface" @click="cancel"
+        <v-btn id="cancelButton" class="w-100 text-body" size="large" rounded="lg" color="surface" @click="cancel"
           >Cancel</v-btn
         >
       </v-col>
@@ -127,7 +127,7 @@
         <v-btn
           id="saveButton"
           :disabled="!isValid"
-          class="w-100 responsive-text"
+          class="w-100 text-body"
           size="large"
           rounded="lg"
           color="primary"
@@ -325,23 +325,5 @@ export default defineComponent({
 .nowrap {
   display: flex;
   align-items: center;
-}
-
-.responsive-text {
-  font-size: 0.875rem !important;
-}
-
-.responsive-icon {
-  font-size: 0.875rem !important;
-}
-
-@media (max-width: 360px) {
-  .responsive-text {
-    font-size: 0.7rem !important;
-  }
-
-  .responsive-icon {
-    font-size: 0.7rem !important;
-  }
 }
 </style>

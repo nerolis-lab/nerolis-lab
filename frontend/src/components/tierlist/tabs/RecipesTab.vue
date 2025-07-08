@@ -33,7 +33,7 @@
   <!-- Custom navigation outside chip group -->
   <div v-if="totalChunks > 1" class="d-flex justify-center align-center">
     <v-btn :disabled="!hasPrevChunk" icon="mdi-chevron-left" variant="text" size="small" @click="goToPrevChunk" />
-    <span class="mx-2 text-caption"
+    <span class="mx-2 text-small"
       >Showing {{ currentChunkIndex * chunkSize + 1 }}-{{
         Math.min((currentChunkIndex + 1) * chunkSize, pokemonVariants.length)
       }}
@@ -46,7 +46,7 @@
   <div v-if="isLoading" class="text-center py-8">
     <v-progress-circular indeterminate color="primary" size="64" />
     <div class="text-h6 mt-4">Loading recipe contributions...</div>
-    <div class="text-caption text-medium-emphasis">
+    <div class="text-small text-medium-emphasis">
       Processing {{ pokemonVariants.length }} variants may take a moment
     </div>
   </div>
@@ -172,6 +172,7 @@
             :key="tIndex"
             size="small"
             :interactive="true"
+            :show-menu="true"
             :color="isCurrentVariantTeamMember(member) ? 'primary' : ''"
             :variant="isCurrentVariantTeamMember(member) ? 'elevated' : 'outlined'"
             :prepend-avatar="pokemonDisplayImageUrlByName(member.pokemon)"

@@ -21,7 +21,7 @@
               label="Search..."
               :autofocus="false"
               :start-minimized="true"
-              :max-width="350"
+              :max-width="!isMobile ? 350 : undefined"
               class="ma-1"
             />
 
@@ -92,7 +92,7 @@
         <v-alert type="error" prominent border="start" variant="tonal" class="frosted-glass-error">
           <template v-slot:title><span class="font-weight-bold">Data Lookup Failed</span></template>
           Could not retrieve tier list data. The server may be temporarily offline, please contact the developers.
-          <div class="text-caption mt-2">Error: {{ error }}</div>
+          <div class="text-small mt-2">Error: {{ error }}</div>
         </v-alert>
       </v-col>
     </v-row>
@@ -181,11 +181,14 @@ import CustomSearchBar from '@/components/custom-components/search-bar/CustomSea
 import TrendingTicker from '@/components/custom-components/TrendingTicker.vue'
 import PokemonDetailModal from '@/components/tierlist/PokemonDetailModal.vue'
 import TierRow from '@/components/tierlist/TierRow.vue'
+import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { tierlistService } from '@/services/tierlist-service'
 import { getDiffDisplayInfo } from '@/services/utils/ui-utils'
 import { getPokemon, type PokemonWithTiering, type Tier, type TierlistSettings } from 'sleepapi-common'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+const { isMobile } = useBreakpoint()
 
 const route = useRoute()
 const router = useRouter()

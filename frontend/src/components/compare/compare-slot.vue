@@ -8,14 +8,14 @@
       <v-img :src="imageUrl" class="pokemon-image" data-testid="pokemon-image" />
 
       <div style="position: absolute; bottom: 0%; width: 100%">
-        <v-card class="text-center xsmall-responsive-text rounded-t-0" color="subskillWhite" location="bottom center">
+        <v-card class="text-center text-x-small rounded-t-0" color="subskillWhite" location="bottom center">
           {{ rpBadge }}
         </v-card>
       </div>
     </v-card>
 
     <v-card
-      class="text-center xsmall-responsive-text"
+      class="text-center text-x-small"
       rounded="lg"
       style="position: absolute; top: 0%; width: 80%; font-size: 0.8rem"
       color="primary"
@@ -126,15 +126,5 @@ export default defineComponent({
   transform: rotate(180deg);
   white-space: nowrap;
   text-align: center;
-}
-
-.xsmall-responsive-text {
-  font-size: 0.8rem !important;
-}
-
-@media (max-width: 365px) {
-  .xsmall-responsive-text {
-    font-size: 0.7rem !important;
-  }
 }
 </style>

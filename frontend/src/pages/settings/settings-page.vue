@@ -104,3 +104,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.flex-200w {
+  flex: 0 0 200px;
+}
+
+.flex-800w {
+  flex: 0 0 800px;
+}
+</style>
