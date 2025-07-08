@@ -21,13 +21,13 @@
           <v-img :src="imageUrl" class="pokemon-image" style="left: 10%" />
 
           <div style="position: absolute; bottom: 0%; width: 100%">
-            <v-card class="text-center responsive-text rounded-t-0" color="subskillGold" location="bottom center">
+            <v-card class="text-center text-x-small rounded-t-0" color="subskillGold" location="bottom center">
               {{ subskillBadge }}
             </v-card>
           </div>
         </v-card>
 
-        <v-card class="text-center responsive-text level-card" rounded="lg" color="primary">
+        <v-card class="text-center text-x-small level-card" rounded="lg" color="primary">
           {{ level }}
         </v-card>
       </div>

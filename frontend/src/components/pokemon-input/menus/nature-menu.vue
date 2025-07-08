@@ -26,7 +26,7 @@
     <v-row dense>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="positiveModifier === 'speed' ? 'bg-primary' : 'bg-secondary'"
           @click="changePositiveModifier('speed')"
         >
@@ -37,7 +37,7 @@
       </v-col>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="negativeModifier === 'speed' ? 'bg-primary' : 'bg-secondary'"
           @click="changeNegativeModifier('speed')"
         >
@@ -50,7 +50,7 @@
     <v-row dense>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="positiveModifier === 'ingredient' ? 'bg-primary' : 'bg-secondary'"
           @click="changePositiveModifier('ingredient')"
         >
@@ -61,7 +61,7 @@
       </v-col>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="negativeModifier === 'ingredient' ? 'bg-primary' : 'bg-secondary'"
           @click="changeNegativeModifier('ingredient')"
         >
@@ -74,7 +74,7 @@
     <v-row dense>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="positiveModifier === 'skill' ? 'bg-primary' : 'bg-secondary'"
           @click="changePositiveModifier('skill')"
         >
@@ -85,7 +85,7 @@
       </v-col>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="negativeModifier === 'skill' ? 'bg-primary' : 'bg-secondary'"
           @click="changeNegativeModifier('skill')"
         >
@@ -98,7 +98,7 @@
     <v-row dense>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="positiveModifier === 'energy' ? 'bg-primary' : 'bg-secondary'"
           @click="changePositiveModifier('energy')"
         >
@@ -109,7 +109,7 @@
       </v-col>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="negativeModifier === 'energy' ? 'bg-primary' : 'bg-secondary'"
           @click="changeNegativeModifier('energy')"
         >
@@ -122,7 +122,7 @@
     <v-row dense>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="positiveModifier === 'exp' ? 'bg-primary' : 'bg-secondary'"
           @click="changePositiveModifier('exp')"
         >
@@ -133,7 +133,7 @@
       </v-col>
       <v-col cols="6">
         <v-btn
-          class="w-100 text-body-2"
+          class="w-100 text-small"
           :class="negativeModifier === 'exp' ? 'bg-primary' : 'bg-secondary'"
           @click="changeNegativeModifier('exp')"
         >
@@ -187,7 +187,7 @@
     <v-row dense class="mt-3">
       <v-col cols="6">
         <v-btn
-          class="w-100 responsive-text"
+          class="w-100 text-body"
           size="large"
           rounded="lg"
           color="secondary"
@@ -198,7 +198,7 @@
       </v-col>
       <v-col cols="6">
         <v-btn
-          class="w-100 responsive-text"
+          class="w-100 text-body"
           size="large"
           rounded="lg"
           color="primary"
@@ -294,7 +294,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @media (min-width: 400px) {
   .ingredient-text::after {
     content: 'finding';
@@ -308,5 +308,9 @@ export default {
   .energy-text::before {
     content: '';
   }
+}
+
+.responsive-icon {
+  font-size: 0.875rem !important;
 }
 </style>

@@ -10,13 +10,13 @@
           </v-col>
           <v-col cols="9">
             <v-card class="fill-height rounded-ts-0 rounded-bs-0 flex-column px-2" style="align-content: center">
-              <div class="nowrap responsive-text">
+              <div class="nowrap text-x-small">
                 <span class="my-1">{{ skillName }}</span>
                 <v-spacer></v-spacer>
                 <span class="my-1">Lv.{{ mainskillLevel }}</span>
               </div>
               <v-divider />
-              <div class="nowrap responsive-text-small">
+              <div class="nowrap text-x-small">
                 <span class="my-1"> {{ description }} </span>
               </div>
             </v-card>
@@ -97,23 +97,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.responsive-text {
-  font-size: 0.875rem !important;
-}
-
-.responsive-text-small {
-  font-size: 0.8rem !important;
-}
-
-@media (max-width: 360px) {
-  .responsive-text {
-    font-size: 0.7rem !important;
-  }
-
-  .responsive-text-small {
-    font-size: 0.6rem !important;
-  }
-}
-</style>

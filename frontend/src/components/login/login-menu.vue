@@ -77,7 +77,7 @@
           </v-list-item>
         </v-list>
 
-        <div class="mt-4 text-caption text-center">
+        <div class="mt-4 text-small text-center">
           You can link additional login providers in Account Settings after logging in.
         </div>
 

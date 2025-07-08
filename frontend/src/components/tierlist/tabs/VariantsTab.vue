@@ -82,7 +82,7 @@
             <!-- Score and Recipe Breakdown -->
             <div class="score-breakdown">
               <div class="flex-between">
-                <span class="text-caption text-medium-emphasis">Score:</span>
+                <span class="text-small text-medium-emphasis">Score:</span>
                 <span class="text-h6 font-weight-bold" :style="{ color: `rgb(var(--tier-color))` }">{{
                   localizeNumber(variant.score)
                 }}</span>
@@ -101,7 +101,7 @@
                   </v-chip>
                   <div class="flex-left flex-shrink-0">
                     <v-chip v-if="index === 0" size="x-small" color="warning" class="mr-1"> 1.5x </v-chip>
-                    <span class="text-caption font-weight-medium" :style="{ color: `rgb(var(--tier-color))` }">{{
+                    <span class="text-small font-weight-medium" :style="{ color: `rgb(var(--tier-color))` }">{{
                       localizeNumber(contrib.score)
                     }}</span>
                   </div>
@@ -113,7 +113,7 @@
           <div class="right-column flex-grow-1">
             <!-- Production -->
             <div class="mb-2">
-              <div class="text-caption text-medium-emphasis mb-1">Production:</div>
+              <div class="text-small text-medium-emphasis mb-1">Production:</div>
               <div class="flex-left flex-wrap ga-1">
                 <CustomChip
                   v-for="(production, i) in getIngredientProduction(variant)"
@@ -123,14 +123,14 @@
                   :prepend-avatar="ingredientDisplayImageUrl(production.name)"
                   :interactive="false"
                 >
-                  <span class="text-caption ml-1">{{ production.amount }}</span>
+                  <span class="text-small ml-1">{{ production.amount }}</span>
                 </CustomChip>
               </div>
             </div>
 
             <!-- Synergies -->
             <div v-if="getSynergisticTeammates(variant).length > 0">
-              <div class="text-caption text-medium-emphasis mb-1">Top synergies:</div>
+              <div class="text-small text-medium-emphasis mb-1">Top synergies:</div>
               <div class="flex-left flex-wrap ga-1">
                 <CustomChip
                   v-for="(mate, mIndex) in getSynergisticTeammates(variant).slice(0, 3)"
@@ -167,7 +167,7 @@
                   class="more-synergies-chip"
                 >
                   <v-icon size="12" class="mr-1">mdi-plus</v-icon>
-                  <span class="text-caption">{{ getSynergisticTeammates(variant).length - 3 }} more</span>
+                  <span class="text-small">{{ getSynergisticTeammates(variant).length - 3 }} more</span>
                 </CustomChip>
               </div>
             </div>

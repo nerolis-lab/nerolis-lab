@@ -10,7 +10,7 @@
       ></v-img>
       <div class="text-h6 font-weight-medium mt-1">{{ pokemonDisplayName }}</div>
 
-      <div class="text-caption text-medium-emphasis">
+      <div class="text-small text-medium-emphasis">
         <div class="mb-2">
           <v-icon size="small" class="mr-1">mdi-clock-outline</v-icon>
           <span class="font-weight-medium">Frequency:</span> {{ frequencyDisplay }}
@@ -84,7 +84,7 @@
                       :alt="ingredient.ingredient.name"
                       :title="ingredient.ingredient.name"
                     />
-                    <span class="text-caption">{{
+                    <span class="text-small">{{
                       `${ingredient.amount}${j < ingredientOption.ingredients.length - 1 ? ',' : ''}`
                     }}</span>
                   </div>
