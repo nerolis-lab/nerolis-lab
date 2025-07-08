@@ -55,7 +55,7 @@
             height="24"
             width="24"
           ></v-img>
-          <span class="font-weight-light font-italic responsive-text text-center">{{ ing.amount }}</span>
+          <span class="font-weight-light font-italic text-x-small text-center">{{ ing.amount }}</span>
         </div>
       </div>
     </v-col>

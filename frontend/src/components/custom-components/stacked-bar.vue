@@ -19,7 +19,7 @@
             <span
               v-if="section.percentage > minDisplayPercentage"
               :style="{ zIndex: sections.length - index }"
-              class="font-weight-regular text-black responsive-text"
+              class="font-weight-regular text-black text-x-small"
             >
               {{ section.sectionText }}
             </span>
