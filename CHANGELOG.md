@@ -1,3 +1,11 @@
+## [2.21.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.2...v2.21.3) (2025-07-09)
+
+
+### Bug Fixes
+
+* level 30 tier list simulate no longer creates empty team ([9cc354e](https://github.com/nerolis-lab/nerolis-lab/commit/9cc354e1ad6f5df64a74eb2ccef0a0b6f76598ef))
+* search bar fills space within max-width limit ([4cbe84d](https://github.com/nerolis-lab/nerolis-lab/commit/4cbe84d8963b336524c4d43f696e489782b1c934))
+
 ## [2.21.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.1...v2.21.2) (2025-07-06)
 
 
