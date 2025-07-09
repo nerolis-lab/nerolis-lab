@@ -1,10 +1,20 @@
 import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
 import { error } from '@/components/snackbar/snackbar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
+import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { commonMocks, type PokemonWithTiering, type RecipeContribution } from 'sleepapi-common'
+import {
+  commonMocks,
+  curry,
+  ingredient,
+  nature,
+  PIKACHU,
+  subskill,
+  type PokemonWithTiering,
+  type RecipeContribution
+} from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -724,6 +734,11 @@ describe('RecipesTab.vue', () => {
       }
       componentInstance.teamIndex = 1
 
+      // Set level to 60 to test with 3 ingredients
+      await wrapper.setProps({
+        level: 60
+      })
+
       const threeIngredientContribution = {
         ...mockContribution,
         team: [
@@ -781,6 +796,143 @@ describe('RecipesTab.vue', () => {
       expect(member.subskills[0].level).toBe(10) // First subskill at level 10
       expect(member.subskills[1].level).toBe(25) // Second subskill at level 25
       expect(member.subskills[2].level).toBe(50) // Third subskill at level 50
+    })
+
+    it('should handle level 30 pokemon with only 2 ingredients correctly', async () => {
+      const componentInstance = wrapper.vm as unknown as {
+        teamIndex: number
+        simulateRecipe: (contribution: RecipeContribution) => Promise<void>
+      }
+      componentInstance.teamIndex = 1
+
+      await wrapper.setProps({
+        level: 30
+      })
+
+      const level30Contribution: RecipeContribution = {
+        ...mockContribution,
+        team: [
+          {
+            pokemon: PIKACHU.name,
+            nature: nature.MODEST.name,
+            subskills: [subskill.HELPING_SPEED_S.name, subskill.HELPING_BONUS.name],
+            ingredientList: [
+              { amount: 2, name: 'FANCY_APPLE' },
+              { amount: 3, name: 'WARMING_GINGER' }
+            ],
+            totalProduction: new Float32Array([10, 5, 2])
+          }
+        ]
+      }
+
+      await componentInstance.simulateRecipe(level30Contribution)
+
+      const teamData = vi.mocked(useTeamStore().setCurrentTeam).mock.calls[0][0]
+      const member = teamData.members[0]
+
+      // Verify that 3 ingredients are created (with default A ingredient for level 60)
+      expect(member.ingredients).toHaveLength(3)
+      expect(member.ingredients[0].level).toBe(0) // First ingredient at level 0
+      expect(member.ingredients[1].level).toBe(30) // Second ingredient at level 30
+      expect(member.ingredients[2].level).toBe(60) // Third ingredient at level 60 (A ingredient)
+      expect(member.ingredients[2].amount).toBe(PIKACHU.ingredient0[0].amount) // Third ingredient has correct amount
+      expect(member.level).toBe(30)
+    })
+
+    it('should handle level 60 pokemon with 3 ingredients correctly', async () => {
+      const componentInstance = wrapper.vm as unknown as {
+        teamIndex: number
+        simulateRecipe: (contribution: RecipeContribution) => Promise<void>
+      }
+      componentInstance.teamIndex = 1
+
+      await wrapper.setProps({
+        level: 60
+      })
+
+      const level60Contribution: RecipeContribution = {
+        ...mockContribution,
+        team: [
+          {
+            pokemon: PIKACHU.name,
+            nature: nature.MODEST.name,
+            subskills: [subskill.HELPING_SPEED_S.name, subskill.HELPING_BONUS.name, subskill.SKILL_TRIGGER_S.name],
+            ingredientList: [
+              { amount: 2, name: 'FANCY_APPLE' },
+              { amount: 3, name: 'WARMING_GINGER' },
+              { amount: 4, name: 'HONEY' }
+            ],
+            totalProduction: new Float32Array([10, 5, 2])
+          }
+        ]
+      }
+
+      await componentInstance.simulateRecipe(level60Contribution)
+
+      const teamData = vi.mocked(useTeamStore().setCurrentTeam).mock.calls[0][0]
+      const member = teamData.members[0]
+
+      // Verify that all 3 ingredients are created for level 60
+      expect(member.ingredients).toHaveLength(3)
+      expect(member.ingredients[0].level).toBe(0) // First ingredient at level 0
+      expect(member.ingredients[1].level).toBe(30) // Second ingredient at level 30
+      expect(member.ingredients[2].level).toBe(60) // Third ingredient at level 60
+      expect(member.level).toBe(60)
+    })
+  })
+
+  describe('simulateRecipe Validation', () => {
+    it('should pass validation when creating team data', async () => {
+      const teamStore = useTeamStore()
+      teamStore.setCurrentTeam = vi.fn()
+
+      const wrapper = mount(RecipesTab, {
+        props: {
+          pokemon: mockPokemon,
+          allPokemonVariantsData: mockAllVariantsData,
+          selectedVariantIndex: 0,
+          camp: false,
+          level: 30
+        }
+      })
+
+      const componentInstance = wrapper.vm as unknown as {
+        teamIndex: number
+        simulateRecipe: (contribution: RecipeContribution) => Promise<void>
+      }
+      componentInstance.teamIndex = 1
+
+      const contribution: RecipeContribution = {
+        recipe: curry.FANCY_APPLE_CURRY,
+        score: 1000,
+        coverage: 85.5,
+        skillValue: 150,
+        team: [
+          {
+            pokemon: PIKACHU.name,
+            nature: nature.MODEST.name,
+            subskills: [subskill.HELPING_SPEED_S.name, subskill.HELPING_BONUS.name],
+            ingredientList: [
+              { amount: 2, name: ingredient.FANCY_APPLE.name },
+              { amount: 3, name: ingredient.WARMING_GINGER.name }
+            ],
+            totalProduction: new Float32Array([10, 5, 2])
+          }
+        ]
+      }
+
+      await componentInstance.simulateRecipe(contribution)
+
+      const teamData = vi.mocked(teamStore.setCurrentTeam).mock.calls[0][0]
+      const member = teamData.members[0]
+
+      expect(member.ingredients).toHaveLength(3)
+      expect(member.ingredients[2].ingredient.name).toBe(PIKACHU.ingredient0[0].ingredient.name)
+      expect(member.ingredients[2].amount).toBe(PIKACHU.ingredient0[0].amount)
+
+      expect(() => {
+        PokemonInstanceUtils.toUpsertTeamMemberRequest(member)
+      }).not.toThrow()
     })
   })
 })

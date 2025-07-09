@@ -247,6 +247,7 @@ import {
   getRandomGender,
   getRecipe,
   getSubskill,
+  ingredient,
   localizeNumber,
   MAX_RIBBON_LEVEL,
   MAX_TEAM_SIZE,
@@ -471,11 +472,26 @@ const simulateRecipe = async (contribution: RecipeContribution) => {
           pokemon,
           level: props.level,
           ribbon: MAX_RIBBON_LEVEL,
-          ingredients: member.ingredientList.map(({ name, amount }, index) => ({
-            level: index * 30, // 0, 30, 60
-            amount,
-            ingredient: getIngredient(name)
-          })),
+          ingredients: (() => {
+            // Map the ingredients we have
+            const mappedIngredients = member.ingredientList.map(({ name, amount }, index) => ({
+              level: index * 30, // 0, 30, 60
+              amount,
+              ingredient: getIngredient(name)
+            }))
+
+            // Fill with A ingredient until we have 3
+            while (mappedIngredients.length < 3) {
+              // Add placeholder ingredient for missing slots
+              mappedIngredients.push({
+                level: mappedIngredients.length * 30,
+                amount: pokemon.ingredient0.at(0)?.amount ?? 0,
+                ingredient: pokemon.ingredient0.at(0)?.ingredient ?? ingredient.LOCKED_INGREDIENT
+              })
+            }
+
+            return mappedIngredients
+          })(),
           nature: getNature(member.nature),
           subskills: member.subskills.map((subskill, index) => ({
             level: index === 0 ? 10 : index * 25, // 10, 25, 50
