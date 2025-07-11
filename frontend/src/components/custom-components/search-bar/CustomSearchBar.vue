@@ -20,7 +20,6 @@
       @update:model-value="handleInput"
       @blur="handleBlur"
       :class="computedClass"
-      :style="computedStyle"
       :placeholder="isExpanded ? placeholder : undefined"
       :readonly="!isExpanded"
     ></v-text-field>
@@ -91,35 +90,24 @@ const computedClass = computed(() => {
   return classes
 })
 
-const computedStyle = computed(() => {
-  const style: Record<string, any> = props.customStyle || {}
+const containerStyle = computed(() => {
+  const style: Record<string, any> = {}
 
-  if (props.width) {
-    style.width = typeof props.width === 'number' ? `${props.width}px` : props.width
+  if (!isExpanded.value) {
+    // Minimized state handled by CSS class
+    return style
   }
 
+  // Expanded state
   if (props.minWidth) {
     style.minWidth = typeof props.minWidth === 'number' ? `${props.minWidth}px` : props.minWidth
   }
 
   if (props.maxWidth) {
     style.maxWidth = typeof props.maxWidth === 'number' ? `${props.maxWidth}px` : props.maxWidth
-  }
-
-  return style
-})
-
-const containerStyle = computed(() => {
-  const style: Record<string, any> = {}
-
-  if (isExpanded.value) {
-    if (props.maxWidth) {
-      // Set width to max-width when expanded, but allow flex-shrink to prevent wrapping
-      style.width = typeof props.maxWidth === 'number' ? `${props.maxWidth}px` : props.maxWidth
-      style.flexShrink = '1'
-    } else {
-      style.width = '100%'
-    }
+    style.width = typeof props.maxWidth === 'number' ? `${props.maxWidth}px` : props.maxWidth
+  } else {
+    style.width = '100%'
   }
 
   return style

@@ -28,7 +28,7 @@
       </v-col>
 
       <!-- Menu that opens when clicking the plus icon -->
-      <PokemonSlotMenu
+      <FilledSlotMenu
         v-model:show="showDialog"
         :pokemon-from-pre-exist="undefined"
         :full-team="false"
@@ -77,7 +77,7 @@ import CompareOverview from '@/components/compare/compare-overview.vue'
 import CompareSettings from '@/components/compare/compare-settings.vue'
 import CompareSlot from '@/components/compare/compare-slot.vue'
 import CompareStrength from '@/components/compare/compare-strength.vue'
-import PokemonSlotMenu from '@/components/pokemon-input/menus/pokemon-slot-menu.vue'
+import FilledSlotMenu from '@/components/pokemon-input/menus/FilledSlotMenu.vue'
 import { TeamService } from '@/services/team/team-service'
 import { randomName } from '@/services/utils/name-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
@@ -89,7 +89,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'ComparisonPage',
   components: {
-    PokemonSlotMenu,
+    FilledSlotMenu,
     CompareSlot,
     CompareOverview,
     CompareStrength,

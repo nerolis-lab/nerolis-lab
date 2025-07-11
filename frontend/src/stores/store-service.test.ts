@@ -1,5 +1,4 @@
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
-import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { clearCacheAndLogout, clearCacheKeepLogin, migrateSite } from '@/stores/store-service'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -16,14 +15,12 @@ describe('Store Service', () => {
     const userStore = useUserStore()
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const pokedexStore = usePokedexStore()
     const comparisonStore = useComparisonStore()
 
     // Set some state to verify it gets reset
     userStore.avatar = 'some avatar'
     teamStore.teams = createMockTeams(2)
     pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
-    pokedexStore.groupedPokedex = []
     comparisonStore.members = [mocks.createMockMemberProduction()]
 
     clearCacheAndLogout()
@@ -31,7 +28,6 @@ describe('Store Service', () => {
     expect(userStore.avatar).toBeNull()
     expect(teamStore.teams).toHaveLength(1)
     expect(Object.keys(pokemonStore.pokemon)).toHaveLength(0)
-    expect(pokedexStore.groupedPokedex).not.toEqual([])
     expect(comparisonStore.members).toHaveLength(0)
   })
 
@@ -39,14 +35,12 @@ describe('Store Service', () => {
     const userStore = useUserStore()
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const pokedexStore = usePokedexStore()
     const comparisonStore = useComparisonStore()
 
     // Set some state to verify it gets reset
     userStore.avatar = 'some avatar'
     teamStore.teams = createMockTeams(2)
     pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
-    pokedexStore.groupedPokedex = []
     comparisonStore.members = [mocks.createMockMemberProduction()]
 
     clearCacheKeepLogin()
@@ -54,7 +48,6 @@ describe('Store Service', () => {
     expect(userStore.avatar).toEqual('some avatar')
     expect(teamStore.teams).toHaveLength(1)
     expect(Object.keys(pokemonStore.pokemon)).toHaveLength(0)
-    expect(pokedexStore.groupedPokedex).not.toEqual([])
     expect(comparisonStore.members).toHaveLength(0)
   })
 

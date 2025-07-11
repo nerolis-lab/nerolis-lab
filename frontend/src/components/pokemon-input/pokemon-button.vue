@@ -19,27 +19,21 @@
     </template>
 
     <v-card>
-      <GroupList
-        :data="pokedexStore.groupedPokedex"
-        :selected-options="[pokemonInstance.pokemon.displayName]"
-        @select-option="selectPokemon"
-        @cancel="closeMenu"
-      />
+      <PokemonSearch @cancel="closeMenu" @save="selectPokemon" />
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts">
-import GroupList from '@/components/custom-components/group-list.vue'
+import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
 import { pokemonImage } from '@/services/utils/image-utils'
-import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
-import { COMPLETE_POKEDEX, type PokemonInstanceExt } from 'sleepapi-common'
+import { type Pokemon, type PokemonInstanceExt } from 'sleepapi-common'
 import type { PropType } from 'vue'
 
 export default {
   name: 'PokemonButton',
   components: {
-    GroupList
+    PokemonSearch
   },
   props: {
     pokemonInstance: {
@@ -49,8 +43,7 @@ export default {
   },
   emits: ['update-pokemon'],
   setup() {
-    const pokedexStore = usePokedexStore()
-    return { pokedexStore, pokemonImage }
+    return { pokemonImage }
   },
   data: () => ({
     pokemonMenu: false
@@ -62,14 +55,9 @@ export default {
     closeMenu() {
       this.pokemonMenu = false
     },
-    selectPokemon(name: string) {
-      const pkmn = COMPLETE_POKEDEX.find((p) => p.displayName.toLowerCase() === name.toLowerCase())
-      if (!pkmn) {
-        console.error('Error selecting Pokémon')
-        return
-      }
+    selectPokemon(pokemon: Pokemon) {
       this.pokemonMenu = false
-      this.$emit('update-pokemon', pkmn)
+      this.$emit('update-pokemon', pokemon)
     }
   }
 }

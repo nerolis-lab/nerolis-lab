@@ -177,3 +177,8 @@ Follow conventional commits (enforced by commitlint):
 - Common flex classes: `.flex-center`, `.flex-between`, `.flex-column`
 - Responsive text classes available
 - Prefer utility classes over Vuetify utilities or custom CSS
+
+## Code Comments Guidelines
+
+- Only use code comments if vital for explaining the code block
+- Avoid unnecessary comments that do not add meaningful context or explanation

@@ -18,12 +18,7 @@
       <v-container>
         <v-row dense>
           <v-col v-for="{ name, path } in filteredAvatars" :key="name" class="flex-center">
-            <v-avatar
-              color="secondary"
-              class="cursor-pointer"
-              @click="selectAvatar(name)"
-              style="min-height: 80px; min-width: 80px"
-            >
+            <v-avatar color="secondary" class="cursor-pointer" @click="selectAvatar(name)" :size="80" rounded="lg">
               <v-img :src="`/images/avatar/${path}`"></v-img>
             </v-avatar>
           </v-col>
@@ -78,7 +73,7 @@ const filteredAvatars = computed(() => {
   const query = searchQuery.value.toLowerCase().trim()
 
   return avatarStore.getBasePokemonAvatars.filter(
-    ({ name, path, displayName }) => !query || displayName.toLowerCase().includes(query)
+    ({ displayName }) => !query || displayName.toLowerCase().includes(query)
   )
 })
 </script>

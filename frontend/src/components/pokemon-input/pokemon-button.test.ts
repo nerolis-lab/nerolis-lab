@@ -74,7 +74,7 @@ describe('PokemonButton', () => {
 
   it('selects Pokémon correctly', async () => {
     const pkmn = PIKACHU
-    wrapper.vm.selectPokemon(pkmn.name)
+    wrapper.vm.selectPokemon(pkmn)
 
     expect(wrapper.emitted('update-pokemon')).toBeTruthy()
     expect(wrapper.emitted('update-pokemon')![0]).toEqual([pkmn])

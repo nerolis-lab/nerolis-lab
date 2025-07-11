@@ -17,13 +17,21 @@
       </Suspense>
     </v-main>
     <TheFooter></TheFooter>
+
+    <!-- Global dialogs -->
+    <PokemonSearch />
+    <PokemonInputDialog />
+    <FilledSlotMenu />
   </v-app>
 </template>
 
 <script lang="ts">
 import TheBackground from '@/components/background/background.vue'
+import FilledSlotMenu from '@/components/pokemon-input/menus/FilledSlotMenu.vue'
 import TheFooter from '@/components/footer/footer.vue'
 import TheNavbar from '@/components/nav-bar/nav-bar.vue'
+import PokemonInputDialog from '@/components/pokemon-input/PokemonInputDialog.vue'
+import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
 import TheSnackbar from '@/components/snackbar/snackbar.vue'
 import { defineComponent } from 'vue'
 
@@ -32,7 +40,10 @@ export default defineComponent({
     TheNavbar,
     TheBackground,
     TheSnackbar,
-    TheFooter
+    TheFooter,
+    PokemonSearch,
+    PokemonInputDialog,
+    FilledSlotMenu
   }
 })
 </script>

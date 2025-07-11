@@ -25,11 +25,8 @@ describe('CustomLabel', () => {
 
     const span = wrapper.find('span')
     expect(span.exists()).toBe(true)
-    expect(span.classes()).toContain('d-flex')
     expect(span.classes()).toContain('w-100')
-    expect(span.classes()).toContain('align-center')
-    expect(span.classes()).toContain('justify-center')
-    expect(span.classes()).toContain('text-center')
+    expect(span.classes()).toContain('flex-center')
     expect(span.classes()).toContain('text-small')
   })
 })

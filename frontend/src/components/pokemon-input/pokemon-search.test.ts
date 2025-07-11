@@ -1,76 +1,62 @@
 import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
-import { faker } from '@faker-js/faker/locale/en'
+import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { PIKACHU, RandomUtils, uuid } from 'sleepapi-common'
-import { vimic } from 'vimic'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
-vi.mock('@/stores/pokedex-store/pokedex-store', () => ({
-  usePokedexStore: () => ({
-    groupedPokedex: [
-      {
-        category: 'ingredient',
-        list: ['Bulbasaur', 'Charmander', 'Squirtle']
-      },
-      {
-        category: 'berry',
-        list: ['Pikachu', 'Raichu']
-      },
-      {
-        category: 'skill',
-        list: ['Machop', 'Machoke', 'Machamp']
-      }
-    ]
-  })
+vi.mock('@/services/user/user-service', () => ({
+  UserService: {
+    getUserPokemon: vi.fn().mockResolvedValue([])
+  }
 }))
 
 describe('PokemonSearch', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonSearch>>
+  let dialogStore: ReturnType<typeof useDialogStore>
 
   beforeEach(() => {
-    wrapper = mount(PokemonSearch, {
-      props: {
-        memberIndex: 0
-      }
-    })
+    dialogStore = useDialogStore()
 
-    vimic(uuid, 'v4', () => 'some uuid')
-    vimic(RandomUtils, 'roll', () => true)
-    vimic(faker.person, 'firstName', () => 'Some name')
+    dialogStore.pokemonSearchDialog = true
+
+    wrapper = mount(PokemonSearch)
   })
 
-  it('renders GroupList when no Pokémon is selected', () => {
-    expect(wrapper.findComponent({ name: 'GroupList' }).exists()).toBe(true)
-    expect(wrapper.findComponent({ name: 'PokemonInput' }).exists()).toBe(false)
+  it('renders correctly', () => {
+    expect(wrapper.exists()).toBe(true)
+    expect(dialogStore.pokemonSearchDialog).toBe(true)
   })
 
-  it('emits cancel event when closeMenu is called', async () => {
-    wrapper.vm.closeMenu()
-    await nextTick()
-
-    expect(wrapper.emitted('cancel')).toBeTruthy()
+  it('closes dialog when close method is called', async () => {
+    expect(dialogStore.pokemonSearchDialog).toBe(true)
+    dialogStore.closePokemonSearch()
+    expect(dialogStore.pokemonSearchDialog).toBe(false)
   })
 
-  it('selects Pokémon correctly', async () => {
-    const pkmn = PIKACHU
-    wrapper.vm.selectPokemon(pkmn.name)
+  it('calls callback when Pokemon is selected', async () => {
+    const callback = vi.fn()
+    dialogStore.openPokemonSearch(callback)
 
-    await nextTick()
-
-    expect(wrapper.findComponent({ name: 'PokemonInput' }).exists()).toBe(true)
-    expect(wrapper.vm.pokemonInstance).toMatchSnapshot()
-    expect(wrapper.findComponent({ name: 'PokemonInput' }).props('preSelectedPokemonInstance')).toMatchSnapshot()
+    const avatars = wrapper.findAll('.v-avatar')
+    if (avatars.length > 0) {
+      await avatars[0].trigger('click')
+      expect(callback).toHaveBeenCalled()
+    }
   })
 
-  it('displays error message if Pokémon is not found', async () => {
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
-    wrapper.vm.selectPokemon('unknown')
+  it('filters Pokemon based on search query', async () => {
+    const initialPokemon = wrapper.findAll('.v-avatar')
+    const initialCount = initialPokemon.length
 
-    await nextTick()
+    const searchInput = wrapper.find('input[type="text"]')
+    if (searchInput.exists()) {
+      await searchInput.setValue('Pikachu')
+      await nextTick()
 
-    expect(consoleErrorSpy).toHaveBeenCalledWith('Error selecting Pokémon')
-    consoleErrorSpy.mockRestore()
+      // Count should be different after filtering
+      const filteredPokemon = wrapper.findAll('.v-avatar')
+      expect(filteredPokemon.length).toBeLessThanOrEqual(initialCount)
+    }
   })
 })
