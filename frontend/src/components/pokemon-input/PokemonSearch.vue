@@ -71,14 +71,19 @@
       <v-divider class="my-2" />
 
       <!-- Pokemon list -->
-      <div ref="pokemonListContainer" class="pokemon-list-container">
+      <!-- TODO: this is a hack to ensure the container is the correct height -->
+      <!-- TODO: it takes max height and removes, 2x24px for margin and then removes all the heights for the header above the pokemon list section -->
+      <div
+        ref="pokemonListContainer"
+        class="pokemon-list-container"
+        style="min-height: calc(100vh - 48px - 40px - 40px - 48px - 12px - 16px - 4px - 4px - 5px)"
+      >
         <div v-if="loading" class="d-flex justify-center align-center" style="height: 200px">
           <v-progress-circular indeterminate color="primary" size="48"></v-progress-circular>
         </div>
         <div
           v-else-if="pokemonSearchStore.showPokebox && savedPokemon.length === 0"
           class="d-flex justify-center align-center pa-6"
-          style="height: 200px"
         >
           <div class="text-center">
             <v-icon icon="mdi-pokeball" size="48" color="grey-lighten-1" class="mb-3"></v-icon>
@@ -281,7 +286,6 @@ watch(
 
 <style scoped>
 .pokemon-list-container {
-  min-height: calc(100dvh - 48px);
   transition: min-height 0.3s ease;
 }
 </style>
