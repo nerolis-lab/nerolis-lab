@@ -27,11 +27,11 @@
 
 <script lang="ts">
 import TheBackground from '@/components/background/background.vue'
-import FilledSlotMenu from '@/components/pokemon-input/menus/FilledSlotMenu.vue'
 import TheFooter from '@/components/footer/footer.vue'
 import TheNavbar from '@/components/nav-bar/nav-bar.vue'
+import FilledSlotMenu from '@/components/pokemon-input/menus/FilledSlotMenu.vue'
 import PokemonInputDialog from '@/components/pokemon-input/PokemonInputDialog.vue'
-import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
+import PokemonSearch from '@/components/pokemon-input/PokemonSearch.vue'
 import TheSnackbar from '@/components/snackbar/snackbar.vue'
 import { defineComponent } from 'vue'
 

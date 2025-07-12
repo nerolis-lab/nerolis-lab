@@ -23,32 +23,19 @@
     >
       {{ level }}
     </v-card>
-
-    <PokemonSlotMenu
-      v-model:show="showDialog"
-      :pokemon-from-pre-exist="pokemonInstance"
-      :full-team="comparisonStore.fullTeam"
-      @update-pokemon="editCompareMember"
-      @duplicate-pokemon="duplicateCompareMember"
-      @toggle-saved-pokemon="toggleSavedState"
-      @remove-pokemon="removeCompareMember"
-    />
   </div>
 </template>
 
 <script lang="ts">
-import PokemonSlotMenu from '@/components/pokemon-input/menus/pokemon-slot-menu.vue'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
+import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { RP, type PokemonInstanceExt } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
   name: 'CompareSlot',
-  components: {
-    PokemonSlotMenu
-  },
   props: {
     pokemonInstance: {
       type: Object as PropType<PokemonInstanceExt>,
@@ -59,12 +46,10 @@ export default defineComponent({
   setup() {
     const pokemonStore = usePokemonStore()
     const comparisonStore = useComparisonStore()
+    const dialogStore = useDialogStore()
 
-    return { pokemonStore, comparisonStore }
+    return { pokemonStore, comparisonStore, dialogStore }
   },
-  data: () => ({
-    showDialog: false
-  }),
   computed: {
     imageUrl(): string | undefined {
       return (
@@ -86,16 +71,20 @@ export default defineComponent({
   },
   methods: {
     openDialog() {
-      this.showDialog = true
-    },
-    editCompareMember(pokemonInstance: PokemonInstanceExt) {
-      this.$emit('edit-pokemon', pokemonInstance)
-    },
-    duplicateCompareMember(pokemonInstance: PokemonInstanceExt) {
-      this.$emit('duplicate-pokemon', pokemonInstance)
-    },
-    removeCompareMember(pokemonInstance: PokemonInstanceExt) {
-      this.$emit('remove-pokemon', pokemonInstance)
+      this.dialogStore.openSlotActions(this.pokemonInstance, this.comparisonStore.fullTeam, {
+        onUpdate: (pokemon) => {
+          this.$emit('edit-pokemon', pokemon)
+        },
+        onDuplicate: () => {
+          this.$emit('duplicate-pokemon', this.pokemonInstance)
+        },
+        onToggleSaved: (state) => {
+          this.toggleSavedState(state)
+        },
+        onRemove: () => {
+          this.$emit('remove-pokemon', this.pokemonInstance)
+        }
+      })
     },
     async toggleSavedState(state: boolean) {
       const updatedMon = { ...this.pokemonInstance, saved: state }

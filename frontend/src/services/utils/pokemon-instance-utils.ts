@@ -1,10 +1,16 @@
+import { randomName } from '@/services/utils/name-utils'
 import {
   CarrySizeUtils,
   getIngredient,
   getNature,
   getPokemon,
+  getRandomGender,
   getSubskill,
+  nature,
+  Ribbon,
   RP,
+  uuid,
+  type Pokemon,
   type PokemonInstanceExt,
   type PokemonInstanceIdentity,
   type PokemonInstanceWithMeta,
@@ -12,6 +18,32 @@ import {
 } from 'sleepapi-common'
 
 class PokemonInstanceUtilsImpl {
+  public createDefaultPokemonInstance(pokemon: Pokemon, attrs?: Partial<PokemonInstanceExt>): PokemonInstanceExt {
+    const gender = attrs?.gender ?? getRandomGender(pokemon)
+    return {
+      pokemon,
+      carrySize: CarrySizeUtils.baseCarrySize(pokemon),
+      externalId: uuid.v4(),
+      gender,
+      level: 60,
+      name: randomName(pokemon, 12, gender),
+      nature: nature.BASHFUL,
+      ribbon: Ribbon.NONE,
+      saved: false,
+      shiny: false,
+      skillLevel: pokemon.previousEvolutions + 1,
+      subskills: [],
+      ingredients: [
+        { ...pokemon.ingredient0[0], level: 0 },
+        { ...pokemon.ingredient30[0], level: 30 },
+        { ...pokemon.ingredient60[0], level: 60 }
+      ],
+      rp: 0,
+      version: 0,
+      ...attrs
+    }
+  }
+
   public toPokemonInstanceExt(pokemonInstance: PokemonInstanceWithMeta): PokemonInstanceExt {
     if (pokemonInstance.ingredients.length !== 3) {
       throw new Error('Received corrupt ingredient data')

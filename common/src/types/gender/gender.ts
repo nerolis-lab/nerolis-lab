@@ -8,7 +8,7 @@ export interface GenderRatio {
 
 export type PokemonGender = 'male' | 'female' | undefined;
 
-export function getRandomGender(pkmn: Pokemon) {
+export function getRandomGender(pkmn: Pokemon): PokemonGender {
   const unknownGender = pkmn.genders.female + pkmn.genders.male === 0;
   return unknownGender ? undefined : RandomUtils.roll(pkmn.genders.male) ? 'male' : 'female';
 }

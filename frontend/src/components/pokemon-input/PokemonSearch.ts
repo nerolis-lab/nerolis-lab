@@ -1,4 +1,4 @@
-import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
+import PokemonSearch from '@/components/pokemon-input/PokemonSearch.vue'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'

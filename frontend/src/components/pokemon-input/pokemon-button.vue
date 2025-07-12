@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import PokemonSearch from '@/components/pokemon-input/pokemon-search.vue'
+import PokemonSearch from '@/components/pokemon-input/PokemonSearch.vue'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { type Pokemon, type PokemonInstanceExt } from 'sleepapi-common'
 import type { PropType } from 'vue'
