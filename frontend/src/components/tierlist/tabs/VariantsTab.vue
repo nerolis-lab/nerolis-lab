@@ -2,7 +2,7 @@
 <template>
   <v-row v-if="originalVariantCount > 10" dense class="flex-center mb-4" :class="{ 'flex-column': isMobile }">
     <v-col class="flex-center-y">
-      <CustomSearchBar v-model="searchQuery" density="compact" label="Search ingredients..." />
+      <CustomSearchBar v-model="searchQuery" density="compact" placeholder="Search ingredients..." />
     </v-col>
 
     <v-col :cols="isMobile ? 12 : 'auto'">

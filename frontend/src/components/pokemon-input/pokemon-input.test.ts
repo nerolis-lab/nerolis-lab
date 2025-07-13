@@ -1,4 +1,5 @@
 import PokemonInput from '@/components/pokemon-input/pokemon-input.vue'
+import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useUserStore } from '@/stores/user-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
@@ -84,7 +85,7 @@ describe('PokemonInput', () => {
     vimic(RandomUtils, 'roll', () => false)
     expect(wrapper.vm.pokemonInstance.gender).toBeUndefined()
 
-    wrapper.vm.updatePokemon(WEAVILE)
+    wrapper.vm.updatePokemon(PokemonInstanceUtils.createDefaultPokemonInstance(WEAVILE))
 
     const pokemonInstance = wrapper.vm.pokemonInstance
     expect(pokemonInstance.pokemon).toBe(WEAVILE)
@@ -93,7 +94,7 @@ describe('PokemonInput', () => {
       { ...SNEASEL.ingredient30[0], level: 30 },
       { ...SNEASEL.ingredient60[0], level: 60 }
     ])
-    expect(pokemonInstance.skillLevel).toBe(1)
+    expect(pokemonInstance.skillLevel).toBe(2)
     expect(pokemonInstance.gender).toEqual('female')
     expect(pokemonInstance.carrySize).toBe(CarrySizeUtils.baseCarrySize(WEAVILE))
   })

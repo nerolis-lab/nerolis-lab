@@ -154,14 +154,11 @@ import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import {
-  CarrySizeUtils,
   getPokemon,
-  getRandomGender,
   ingredientIndex,
   nature,
   RP,
   type IngredientSet,
-  type Pokemon,
   type PokemonGender,
   type PokemonInstanceExt,
   type SubskillInstanceExt
@@ -250,16 +247,8 @@ export default defineComponent({
       this.pokemonInstance.subskills = updatedSubskills
       this.pokemonInstance.subskills.sort((a, b) => a.level - b.level)
     },
-    updatePokemon(pokemon: Pokemon) {
-      this.pokemonInstance.pokemon = pokemon
-      this.pokemonInstance.ingredients = [
-        { ...pokemon.ingredient0[0], level: 0 },
-        { ...pokemon.ingredient30[0], level: 30 },
-        { ...pokemon.ingredient60[0], level: 60 }
-      ]
-      this.pokemonInstance.skillLevel = Math.min(this.pokemonInstance.skillLevel, pokemon.skill.maxLevel)
-      this.pokemonInstance.gender = getRandomGender(pokemon)
-      this.pokemonInstance.carrySize = CarrySizeUtils.baseCarrySize(pokemon)
+    updatePokemon(instance: PokemonInstanceExt) {
+      this.pokemonInstance = instance
     },
     updateName(newName: string) {
       this.pokemonInstance.name = newName

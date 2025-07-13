@@ -21,19 +21,11 @@
       <!-- Click to add new pokemon -->
       <v-col class="compare-slot flex-grow-1" style="min-width: 20%; max-width: 20%" :hidden="comparisonStore.fullTeam">
         <div class="d-flex w-100 fill-height transparent">
-          <v-card class="d-flex w-100 fill-height frosted-glass" @click="openDialog">
+          <v-card class="d-flex w-100 fill-height frosted-glass" @click="openPokemonSearch">
             <v-icon size="48" color="secondary" class="fill-height w-100 frosted-text">mdi-plus</v-icon>
           </v-card>
         </div>
       </v-col>
-
-      <!-- Menu that opens when clicking the plus icon -->
-      <PokemonSlotMenu
-        v-model:show="showDialog"
-        :pokemon-from-pre-exist="undefined"
-        :full-team="false"
-        @update-pokemon="addToCompareMembers"
-      />
     </v-row>
 
     <CompareSettings class="py-2" />
@@ -77,10 +69,10 @@ import CompareOverview from '@/components/compare/compare-overview.vue'
 import CompareSettings from '@/components/compare/compare-settings.vue'
 import CompareSlot from '@/components/compare/compare-slot.vue'
 import CompareStrength from '@/components/compare/compare-strength.vue'
-import PokemonSlotMenu from '@/components/pokemon-input/menus/pokemon-slot-menu.vue'
 import { TeamService } from '@/services/team/team-service'
 import { randomName } from '@/services/utils/name-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
+import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
 import { uuid, type PokemonInstanceExt, type TeamSettings } from 'sleepapi-common'
@@ -89,7 +81,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'ComparisonPage',
   components: {
-    PokemonSlotMenu,
     CompareSlot,
     CompareOverview,
     CompareStrength,
@@ -99,10 +90,10 @@ export default defineComponent({
   setup() {
     const pokemonStore = usePokemonStore()
     const comparisonStore = useComparisonStore()
-    return { pokemonStore, comparisonStore }
+    const dialogStore = useDialogStore()
+    return { pokemonStore, comparisonStore, dialogStore }
   },
   data: () => ({
-    showDialog: false,
     tab: null,
     tabs: [
       { value: 'overview', label: 'Overview' },
@@ -122,8 +113,10 @@ export default defineComponent({
     }
   },
   methods: {
-    openDialog() {
-      this.showDialog = true
+    openPokemonSearch() {
+      this.dialogStore.openPokemonSearch((pokemonInstance) => {
+        this.addToCompareMembers(pokemonInstance)
+      })
     },
     async addToCompareMembers(pokemonInstance: PokemonInstanceExt) {
       this.loading = true

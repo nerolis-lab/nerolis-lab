@@ -57,7 +57,7 @@ describe('ComparisonPage', () => {
     expect(addCard.exists()).toBe(true)
 
     await addCard.trigger('click')
-    expect(wrapper.vm.showDialog).toBe(true)
+    expect(wrapper.vm.dialogStore.pokemonSearchDialog).toBe(true)
   })
 
   it('adds a new pokemon to compare members', async () => {

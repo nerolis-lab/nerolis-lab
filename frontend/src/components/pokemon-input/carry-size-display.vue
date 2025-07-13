@@ -47,5 +47,6 @@ export default {
 <style lang="scss" scoped>
 .carry-size-display {
   letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 </style>

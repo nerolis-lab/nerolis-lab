@@ -1,4 +1,5 @@
 import CompareSlot from '@/components/compare/compare-slot.vue'
+import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -7,6 +8,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('CompareSlot', () => {
   let wrapper: VueWrapper<InstanceType<typeof CompareSlot>>
+  let dialogStore: ReturnType<typeof useDialogStore>
 
   const pokemonInstance = mocks.createMockPokemon({
     name: 'Ash',
@@ -15,10 +17,10 @@ describe('CompareSlot', () => {
   })
 
   beforeEach(() => {
+    dialogStore = useDialogStore()
     wrapper = mount(CompareSlot, {
       props: {
-        pokemonInstance,
-        fullTeam: true
+        pokemonInstance
       }
     })
   })
@@ -29,7 +31,7 @@ describe('CompareSlot', () => {
     expect(wrapper.find('[data-testid="pokemon-image"]').attributes('src')).toBe(
       `/images/pokemon/${pokemonInstance.pokemon.name.toLowerCase()}.png`
     )
-    expect(wrapper.find('.xsmall-text-x-small').text()).toBe('RP 674')
+    expect(wrapper.find('.text-x-small').text()).toBe('RP 674')
   })
 
   it('computed properties return correct values', () => {
@@ -38,49 +40,52 @@ describe('CompareSlot', () => {
     expect(wrapper.vm.rpBadge).toBe('RP 674')
   })
 
-  it('openDialog method sets showDialog to true', async () => {
-    expect(wrapper.vm.showDialog).toBe(false)
+  it('openDialog method opens slot actions dialog', async () => {
+    expect(dialogStore.filledSlotDialog).toBe(false)
     await wrapper.find('.v-card').trigger('click')
-    expect(wrapper.vm.showDialog).toBe(true)
+    expect(dialogStore.filledSlotDialog).toBe(true)
   })
 
-  it('emits edit-pokemon event correctly', async () => {
+  it('emits edit-pokemon event when onUpdate callback is triggered', async () => {
     const mockPokemonInstanceExt: PokemonInstanceExt = {
       ...pokemonInstance,
       name: 'New Name'
     }
-    wrapper.vm.editCompareMember(mockPokemonInstanceExt)
+    await wrapper.find('.v-card').trigger('click')
+
+    if (dialogStore.filledSlotProps.onUpdate) {
+      dialogStore.filledSlotProps.onUpdate(mockPokemonInstanceExt)
+    }
+
     expect(wrapper.emitted('edit-pokemon')).toBeTruthy()
     expect(wrapper.emitted('edit-pokemon')![0][0]).toEqual(mockPokemonInstanceExt)
   })
 
-  it('emits duplicate-pokemon event correctly', async () => {
-    const mockPokemonInstanceExt: PokemonInstanceExt = {
-      ...pokemonInstance,
-      name: 'New Name'
-    }
-    wrapper.vm.duplicateCompareMember(mockPokemonInstanceExt)
-    expect(wrapper.emitted('duplicate-pokemon')).toBeTruthy()
-    expect(wrapper.emitted('duplicate-pokemon')![0][0]).toEqual(mockPokemonInstanceExt)
-  })
-
-  it('emits remove-pokemon event correctly', async () => {
-    const mockPokemonInstanceExt: PokemonInstanceExt = {
-      ...pokemonInstance,
-      name: 'New Name'
-    }
-    wrapper.vm.removeCompareMember(mockPokemonInstanceExt)
-    expect(wrapper.emitted('remove-pokemon')).toBeTruthy()
-    expect(wrapper.emitted('remove-pokemon')![0][0]).toEqual(mockPokemonInstanceExt)
-  })
-
-  it('shows PokemonSlotMenu when the card is clicked', async () => {
-    const pokemonSlotMenu = wrapper.findComponent({ name: 'PokemonSlotMenu' })
-    expect(wrapper.vm.showDialog).toBe(false)
-    expect(pokemonSlotMenu.exists()).toBe(true)
-
+  it('emits duplicate-pokemon event when onDuplicate callback is triggered', async () => {
     await wrapper.find('.v-card').trigger('click')
-    expect(wrapper.vm.showDialog).toBe(true)
-    expect(pokemonSlotMenu.props('show')).toBe(true)
+
+    if (dialogStore.filledSlotProps.onDuplicate) {
+      dialogStore.filledSlotProps.onDuplicate()
+    }
+
+    expect(wrapper.emitted('duplicate-pokemon')).toBeTruthy()
+    expect(wrapper.emitted('duplicate-pokemon')![0][0]).toEqual(pokemonInstance)
+  })
+
+  it('emits remove-pokemon event when onRemove callback is triggered', async () => {
+    await wrapper.find('.v-card').trigger('click')
+
+    if (dialogStore.filledSlotProps.onRemove) {
+      dialogStore.filledSlotProps.onRemove()
+    }
+
+    expect(wrapper.emitted('remove-pokemon')).toBeTruthy()
+    expect(wrapper.emitted('remove-pokemon')![0][0]).toEqual(pokemonInstance)
+  })
+
+  it('opens slot actions dialog when card is clicked', async () => {
+    expect(dialogStore.filledSlotDialog).toBe(false)
+    await wrapper.find('.v-card').trigger('click')
+    expect(dialogStore.filledSlotDialog).toBe(true)
   })
 })
