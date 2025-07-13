@@ -124,7 +124,7 @@ describe('CustomSearchBar', () => {
 
       const container = wrapper.find('.search-bar-container')
       expect(container.attributes('style')).toContain('width: 350px')
-      expect(container.attributes('style')).toContain('flex-shrink: 1')
+      expect(container.attributes('style')).toContain('max-width: 350px')
     })
 
     it('prefers maxWidth over width', async () => {
@@ -132,7 +132,7 @@ describe('CustomSearchBar', () => {
 
       const container = wrapper.find('.search-bar-container')
       expect(container.attributes('style')).toContain('width: 350px')
-      expect(container.attributes('style')).toContain('flex-shrink: 1')
+      expect(container.attributes('style')).toContain('max-width: 350px')
     })
 
     it('has no width style when minimized', async () => {

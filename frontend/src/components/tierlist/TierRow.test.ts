@@ -1,3 +1,4 @@
+import { darkTheme } from '@/assets/theme'
 import { getTierColor } from '@/services/utils/tierlist-utils'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -14,6 +15,7 @@ vi.mock('@/services/utils/tierlist-utils', () => ({
 
 describe('TierRow', () => {
   let wrapper: VueWrapper<InstanceType<typeof TierRow>>
+  const themeColors = darkTheme.colors!
 
   const mockPokemonData: PokemonWithTiering[] = [
     commonMocks.pokemonWithTiering({
@@ -98,18 +100,15 @@ describe('TierRow', () => {
   describe('Computed Properties', () => {
     describe('tierLabelColor', () => {
       it('uses correct tier-s color from theme', () => {
-        const tierCard = wrapper.findAllComponents(VCard)[1] // Second card is the tier label
-        // Get the theme colors from the global vuetify instance
-        const vuetifyInstance = wrapper.vm.$vuetify
-        const expectedColor = vuetifyInstance.theme.current.colors['tier-s']
+        const tierCard = wrapper.findAllComponents(VCard)[1]
+        const expectedColor = themeColors['tier-s']
         expect(tierCard.props('color')).toBe(expectedColor)
       })
 
       it('falls back to surface color when tier color not found', async () => {
         await wrapper.setProps({ tier: 'INVALID' as Tier })
         const tierCard = wrapper.findAllComponents(VCard)[1]
-        const vuetifyInstance = wrapper.vm.$vuetify
-        const expectedColor = vuetifyInstance.theme.current.colors.surface
+        const expectedColor = themeColors.surface
         expect(tierCard.props('color')).toBe(expectedColor)
       })
 
@@ -119,26 +118,19 @@ describe('TierRow', () => {
         for (const tier of tierValues) {
           await wrapper.setProps({ tier })
           const tierCard = wrapper.findAllComponents(VCard)[1]
-          const vuetifyInstance = wrapper.vm.$vuetify
-          const expectedColor = vuetifyInstance.theme.current.colors[`tier-${tier.toLowerCase()}`]
+          const expectedColor = themeColors[`tier-${tier.toLowerCase()}`]
           expect(tierCard.props('color')).toBe(expectedColor)
         }
       })
 
       it('verifies tier colors are accessible from theme', () => {
-        // Verify all tier colors exist in theme
-        const tierColors = ['tier-s', 'tier-a', 'tier-b', 'tier-c', 'tier-d', 'tier-e', 'tier-f']
-        const vuetifyInstance = wrapper.vm.$vuetify
-
-        tierColors.forEach((tierColor) => {
-          expect(vuetifyInstance.theme.current.colors[tierColor]).toBeDefined()
-          expect(typeof vuetifyInstance.theme.current.colors[tierColor]).toBe('string')
-        })
-
-        // Test that the tier-s color (current prop) matches theme
         const tierCard = wrapper.findAllComponents(VCard)[1]
-        const expectedColor = vuetifyInstance.theme.current.colors['tier-s']
+        const expectedColor = themeColors['tier-s']
         expect(tierCard.props('color')).toBe(expectedColor)
+
+        // Also verify the color exists in theme
+        expect(expectedColor).toBeDefined()
+        expect(typeof expectedColor).toBe('string')
       })
     })
 

@@ -14,30 +14,12 @@
         >
           {{ isLargeDesktop ? 'Filters' : 'Recipes' }}
           <div v-if="isMobile">
-            <v-menu>
-              <template #activator="{ props }">
-                <v-btn color="secondary" v-bind="props">
-                  <span>Sort: {{ currentSortLabel }}</span>
-                  <v-divider vertical class="mx-2"></v-divider>
-                  <v-icon @click.stop="sortAscending = !sortAscending">
-                    {{ sortAscending ? 'mdi-arrow-up' : 'mdi-arrow-down' }}
-                  </v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="option in computedSortOptions"
-                  :key="option.value"
-                  :disabled="option.disabled"
-                  @click="option.disabled ? null : selectSort(option.value)"
-                >
-                  <v-list-item-title>{{ option.title }}</v-list-item-title>
-                  <v-list-item-subtitle :class="option.disabled ? 'text-primary' : ''">
-                    {{ option.description }}
-                  </v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+            <DropdownSort
+              v-model="selectedSort"
+              v-model:sort-ascending="sortAscending"
+              :sort-options="computedSortOptions"
+              color="secondary"
+            />
           </div>
         </v-col>
       </v-row>
@@ -127,6 +109,7 @@
 
 <script lang="ts">
 import CustomChip from '@/components/custom-components/custom-chip/CustomChip.vue'
+import DropdownSort from '@/components/custom-components/dropdown-sort/DropdownSort.vue'
 import IngredientSelection from '@/components/custom-components/input/ingredient-selection/ingredient-selection.vue'
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import CustomSearchBar from '@/components/custom-components/search-bar/CustomSearchBar.vue'
@@ -141,7 +124,15 @@ import { capitalize, defineComponent, reactive, ref } from 'vue'
 
 export default defineComponent({
   name: 'RecipesPage',
-  components: { RecipeTableDesktop, RecipeTableMobile, NumberInput, IngredientSelection, CustomChip, CustomSearchBar },
+  components: {
+    RecipeTableDesktop,
+    RecipeTableMobile,
+    NumberInput,
+    IngredientSelection,
+    CustomChip,
+    CustomSearchBar,
+    DropdownSort
+  },
   async setup() {
     const userStore = useUserStore()
     const { isMobile, isLargeDesktop } = useBreakpoint()
@@ -209,37 +200,32 @@ export default defineComponent({
       return [
         {
           value: 'value',
-          label: 'Value',
           title: 'Value',
           description: 'Strength value at current recipe level',
           disabled: false
         },
         {
           value: 'baseValue',
-          label: 'Base Value',
           title: 'Base Value',
           description: 'Base strength value without recipe level',
           disabled: false
         },
         {
           value: 'level',
-          label: 'Level',
           title: 'Level',
           description: this.loggedIn ? 'Your current recipe level' : 'Requires logging in',
           disabled: !this.loggedIn
         },
         {
           value: 'ingredientCount',
-          label: 'Size',
           title: 'Size',
           description: 'The number of ingredients in the recipe',
           disabled: false
         },
-        { value: 'name', label: 'Name', title: 'Name', description: "The recipe's name", disabled: false },
+        { value: 'name', title: 'Name', description: "The recipe's name", disabled: false },
         {
           value: 'recipeBonus',
-          label: 'Bonus %',
-          title: 'Recipe bonus %',
+          title: 'Bonus %',
           description: 'The bonus % the recipe applies to its ingredients',
           disabled: false
         }
@@ -315,21 +301,9 @@ export default defineComponent({
           return compareValue * order
         })
       }
-    },
-    currentSortLabel(): string {
-      const found = this.computedSortOptions.find((option) => option.value === this.selectedSort)
-      return found ? found.label : ''
     }
   },
   methods: {
-    selectSort(newSort: string) {
-      if (this.selectedSort === newSort) {
-        this.sortAscending = !this.sortAscending
-      } else {
-        this.selectedSort = newSort
-        this.sortAscending = false
-      }
-    },
     updateRecipeLevel(recipe: UserRecipe, newLevel: number) {
       const index = this.userRecipes.findIndex((r) => r.name === recipe.name)
       if (index !== -1) {
