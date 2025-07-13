@@ -132,3 +132,55 @@ describe('toPokemonInstanceIdentity', () => {
     })
   })
 })
+
+describe('createDefaultPokemonInstance', () => {
+  it('should create a default pokemon instance with expected values', () => {
+    const mockPokemon = mocks.createMockPokemon().pokemon
+    const result = PokemonInstanceUtils.createDefaultPokemonInstance(mockPokemon)
+
+    expect(result.pokemon).toBe(mockPokemon)
+    expect(result.level).toBe(60)
+    expect(result.nature.name).toBe('Bashful')
+    expect(result.ribbon).toBe(0)
+    expect(result.saved).toBe(false)
+    expect(result.shiny).toBe(false)
+    expect(result.skillLevel).toBe(mockPokemon.previousEvolutions + 1)
+    expect(result.subskills).toEqual([])
+    expect(result.ingredients).toHaveLength(3)
+    expect(result.ingredients[0].level).toBe(0)
+    expect(result.ingredients[1].level).toBe(30)
+    expect(result.ingredients[2].level).toBe(60)
+    expect(result.rp).toBe(0)
+    expect(result.version).toBe(0)
+    expect(result.carrySize).toBe(CarrySizeUtils.baseCarrySize(mockPokemon))
+    expect(typeof result.externalId).toBe('string')
+    expect(typeof result.name).toBe('string')
+  })
+
+  it('should override attributes when provided', () => {
+    const mockPokemon = mocks.createMockPokemon().pokemon
+    const customAttrs = {
+      level: 100,
+      name: 'Custom Name',
+      shiny: true,
+      saved: true,
+      version: 5
+    }
+
+    const result = PokemonInstanceUtils.createDefaultPokemonInstance(mockPokemon, customAttrs)
+
+    expect(result.level).toBe(100)
+    expect(result.name).toBe('Custom Name')
+    expect(result.shiny).toBe(true)
+    expect(result.saved).toBe(true)
+    expect(result.version).toBe(5)
+    expect(result.pokemon).toBe(mockPokemon)
+  })
+
+  it('should use provided gender when specified', () => {
+    const mockPokemon = mocks.createMockPokemon().pokemon
+    const result = PokemonInstanceUtils.createDefaultPokemonInstance(mockPokemon, { gender: 'male' })
+
+    expect(result.gender).toBe('male')
+  })
+})

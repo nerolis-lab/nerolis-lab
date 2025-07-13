@@ -1,3 +1,4 @@
+import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
@@ -12,10 +13,12 @@ describe('TeamSlot', () => {
   let wrapper: VueWrapper<InstanceType<typeof TeamSlot>>
   let teamStore: ReturnType<typeof useTeamStore>
   let pokemonStore: ReturnType<typeof usePokemonStore>
+  let dialogStore: ReturnType<typeof useDialogStore>
 
   beforeEach(() => {
     teamStore = useTeamStore()
     pokemonStore = usePokemonStore()
+    dialogStore = useDialogStore()
 
     const mockPokemon = mocks.createMockPokemon({ level: 50 })
     teamStore.teams = createMockTeams(1, { members: [mockPokemon.externalId] })
@@ -60,10 +63,10 @@ describe('TeamSlot', () => {
     expect(desktopLayout.exists()).toBe(true)
   })
 
-  it('opens details dialog when card is clicked', async () => {
+  it('opens filled slot dialog when card is clicked', async () => {
     const card = wrapper.find('.v-card')
     await card.trigger('click')
-    expect(wrapper.vm.showTeamSlotDialog).toBe(true)
+    expect(dialogStore.filledSlotDialog).toBe(true)
   })
 
   it('displays level card correctly', async () => {

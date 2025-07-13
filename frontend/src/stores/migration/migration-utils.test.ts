@@ -1,7 +1,6 @@
 import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
-import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -36,7 +35,6 @@ describe('migration-utils', () => {
         'avatar',
         'comparison',
         'notification',
-        'pokedex',
         'pokemon',
         'team',
         'user',
@@ -46,7 +44,6 @@ describe('migration-utils', () => {
       expect(useAvatarStore).toHaveBeenCalled()
       expect(useComparisonStore).toHaveBeenCalled()
       expect(useNotificationStore).toHaveBeenCalled()
-      expect(usePokedexStore).toHaveBeenCalled()
       expect(usePokemonStore).toHaveBeenCalled()
       expect(useTeamStore).toHaveBeenCalled()
       expect(useUserStore).toHaveBeenCalled()

@@ -5,7 +5,7 @@ $typoOptions:
   text-md-h3, text-lg-h3, text-h4, text-sm-h4, text-md-h4, text-lg-h4, text-h5, text-sm-h5, text-md-h5, text-lg-h5,
   text-h6, text-sm-h6, text-md-h6, text-lg-h6, headline, title, subtitle-1, subtitle-2, text-body, text-body-1,
   text-sm-body-1, text-md-body-1, text-lg-body-1, text-body-2, text-sm-body-2, text-md-body-2, text-lg-body-2,
-  text-small, text-x-small;
+  text-small, text-x-small, text-xx-small;
 
 .fine-print {
   font-size: 14px;
@@ -28,6 +28,12 @@ $typoOptions:
 
 .text-x-small {
   font-size: 12px !important;
+  letter-spacing: 0.03em !important;
+  font-weight: 400 !important;
+}
+
+.text-xx-small {
+  font-size: 10px !important;
   letter-spacing: 0.03em !important;
   font-weight: 400 !important;
 }

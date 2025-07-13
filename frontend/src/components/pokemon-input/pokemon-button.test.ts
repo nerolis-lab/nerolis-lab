@@ -1,4 +1,5 @@
 import PokemonButton from '@/components/pokemon-input/pokemon-button.vue'
+import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -73,8 +74,8 @@ describe('PokemonButton', () => {
   })
 
   it('selects Pokémon correctly', async () => {
-    const pkmn = PIKACHU
-    wrapper.vm.selectPokemon(pkmn.name)
+    const pkmn = PokemonInstanceUtils.createDefaultPokemonInstance(PIKACHU)
+    wrapper.vm.selectPokemon(pkmn)
 
     expect(wrapper.emitted('update-pokemon')).toBeTruthy()
     expect(wrapper.emitted('update-pokemon')![0]).toEqual([pkmn])

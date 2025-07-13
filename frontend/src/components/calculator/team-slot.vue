@@ -13,7 +13,7 @@
               ? 'bg-surface'
               : 'frosted-glass'
           ]"
-          @click="openDetailsDialog"
+          @click="openFilledSlotActions(pokemonInstance)"
         >
           <div class="text-center vertical-text" style="position: absolute; top: 0%; width: 100%; height: 100%">
             {{ pokemonInstance.name }}
@@ -33,7 +33,7 @@
       </div>
     </div>
     <template v-else>
-      <v-card class="fill-height frosted-glass" @click="openDetailsDialog">
+      <v-card class="fill-height frosted-glass" @click="openPokemonSearch">
         <v-icon size="48" color="secondary" class="fill-height w-100">mdi-plus</v-icon>
       </v-card>
     </template>
@@ -48,7 +48,7 @@
       :loading="teamStore.getMemberLoading(memberIndex)"
       :class="['fill-height', currentMemberSelected ? 'bg-surface' : 'frosted-glass']"
       style="max-height: 14dvh"
-      @click="openDetailsDialog"
+      @click="openFilledSlotActions(pokemonInstance)"
     >
       <v-row class="flex-bottom fill-height" no-gutters :style="['position: absolute', 'bottom: 0', 'width: 50%']">
         <v-col v-for="(subskill, i) in supportSubskills" :key="i">
@@ -103,28 +103,18 @@
         </v-col>
       </v-row>
     </v-card>
-    <v-card v-else class="fill-height frosted-glass" @click="openDetailsDialog">
+    <v-card v-else class="fill-height frosted-glass" @click="openPokemonSearch">
       <v-icon size="48" color="secondary" class="fill-height w-100">mdi-plus</v-icon>
     </v-card>
   </template>
-
-  <PokemonSlotMenu
-    v-model:show="showTeamSlotDialog"
-    :pokemon-from-pre-exist="pokemonInstance"
-    :full-team="fullTeam"
-    @update-pokemon="updateTeamMember"
-    @duplicate-pokemon="duplicateTeamMember"
-    @toggle-saved-pokemon="toggleSavedState"
-    @remove-pokemon="removeTeamMember"
-  />
 </template>
 
 <script lang="ts">
-import PokemonSlotMenu from '@/components/pokemon-input/menus/pokemon-slot-menu.vue'
 import SpeechBubble from '@/components/speech-bubble/speech-bubble.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { rarityColor } from '@/services/utils/color-utils'
 import { avatarImage, pokemonImage } from '@/services/utils/image-utils'
+import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { MAX_TEAM_SIZE, subskill, type PokemonInstanceExt } from 'sleepapi-common'
 import { defineComponent } from 'vue'
@@ -132,7 +122,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'TeamSlot',
   components: {
-    PokemonSlotMenu,
     SpeechBubble
   },
   props: {
@@ -143,14 +132,12 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
+    const dialogStore = useDialogStore()
 
     const { isMobile } = useBreakpoint()
 
-    return { teamStore, isMobile, rarityColor }
+    return { teamStore, dialogStore, isMobile, rarityColor }
   },
-  data: () => ({
-    showTeamSlotDialog: false
-  }),
   computed: {
     pokemonInstance() {
       return this.teamStore.getPokemon(this.memberIndex)
@@ -229,8 +216,26 @@ export default defineComponent({
     }
   },
   methods: {
-    openDetailsDialog() {
-      this.showTeamSlotDialog = true
+    openFilledSlotActions(pokemonInstance: PokemonInstanceExt) {
+      this.dialogStore.openFilledSlot(pokemonInstance, this.fullTeam, {
+        onUpdate: (pokemonInstance: PokemonInstanceExt) => {
+          this.updateTeamMember(pokemonInstance)
+        },
+        onDuplicate: () => {
+          this.duplicateTeamMember()
+        },
+        onToggleSaved: (state) => {
+          this.toggleSavedState(state)
+        },
+        onRemove: () => {
+          this.removeTeamMember()
+        }
+      })
+    },
+    openPokemonSearch() {
+      this.dialogStore.openPokemonSearch((pokemonInstance: PokemonInstanceExt) => {
+        this.updateTeamMember(pokemonInstance)
+      })
     },
     updateTeamMember(pokemonInstance: PokemonInstanceExt) {
       this.teamStore.updateTeamMember(pokemonInstance, this.memberIndex)

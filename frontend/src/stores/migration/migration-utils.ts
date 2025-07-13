@@ -2,7 +2,6 @@ import { useAvatarStore } from '@/stores/avatar-store/avatar-store'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import type { Migration, StoreMap } from '@/stores/migration/migration-type'
 import { useNotificationStore } from '@/stores/notification-store/notification-store'
-import { usePokedexStore } from '@/stores/pokedex-store/pokedex-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -25,7 +24,6 @@ export function getStores() {
     avatar: useAvatarStore,
     comparison: useComparisonStore,
     notification: useNotificationStore,
-    pokedex: usePokedexStore,
     pokemon: usePokemonStore,
     team: useTeamStore,
     user: useUserStore,
