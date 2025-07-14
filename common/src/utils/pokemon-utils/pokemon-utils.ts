@@ -1,5 +1,62 @@
-import type { Pokemon, PokemonWithIngredients } from '../../types/pokemon';
+import type { Berry, GenderRatio, IngredientSet, Mainskill } from '../../types';
+import type { Pokemon, PokemonSpecialty, PokemonWithIngredients } from '../../types/pokemon';
 import { COMPLETE_POKEDEX } from '../../types/pokemon';
+
+export function basePokemon(params: {
+  name: string;
+  displayName: string;
+  pokedexNumber: number;
+  specialty: PokemonSpecialty;
+  frequency: number;
+  ingredientPercentage: number;
+  skillPercentage: number;
+  berry: Berry;
+  genders: GenderRatio;
+  carrySize: number;
+  previousEvolutions: number;
+  remainingEvolutions: number;
+  ingredient0: IngredientSet[];
+  ingredient30: IngredientSet[];
+  ingredient60: IngredientSet[];
+  skill: Mainskill;
+}): Pokemon {
+  const {
+    name,
+    displayName,
+    pokedexNumber,
+    specialty,
+    frequency,
+    ingredientPercentage,
+    skillPercentage,
+    berry,
+    genders,
+    carrySize,
+    previousEvolutions,
+    remainingEvolutions,
+    ingredient0,
+    ingredient30,
+    ingredient60,
+    skill
+  } = params;
+  return {
+    name,
+    displayName,
+    pokedexNumber,
+    specialty,
+    frequency,
+    ingredientPercentage,
+    skillPercentage,
+    berry,
+    genders,
+    carrySize,
+    previousEvolutions,
+    remainingEvolutions,
+    ingredient0,
+    ingredient30,
+    ingredient60,
+    skill
+  };
+}
 
 export function getPokemon(name: string): Pokemon {
   const pkmn = COMPLETE_POKEDEX.find((pokemon) => pokemon.name.toLowerCase() === name.toLowerCase());
