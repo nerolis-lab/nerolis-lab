@@ -1,3 +1,4 @@
+import { basePokemon } from '../../utils';
 import { evolvesFrom, evolvesInto } from '../../utils/pokemon-utils/evolution-utils';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import {
@@ -57,8 +58,7 @@ import {
 
 import type { Pokemon } from './pokemon';
 
-export const BULBASAUR: Pokemon = {
-  name: 'BULBASAUR',
+export const BULBASAUR: Pokemon = basePokemon({
   displayName: 'Bulbasaur',
   pokedexNumber: 1,
   specialty: 'ingredient',
@@ -81,7 +81,7 @@ export const BULBASAUR: Pokemon = {
     { amount: 6, ingredient: SOFT_POTATO }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const IVYSAUR: Pokemon = {
   ...evolvesFrom(BULBASAUR),
@@ -105,8 +105,7 @@ export const VENUSAUR: Pokemon = {
   carrySize: 17
 };
 
-export const CHARMANDER: Pokemon = {
-  name: 'CHARMANDER',
+export const CHARMANDER: Pokemon = basePokemon({
   displayName: 'Charmander',
   pokedexNumber: 4,
   specialty: 'ingredient',
@@ -129,7 +128,7 @@ export const CHARMANDER: Pokemon = {
     { amount: 6, ingredient: FIERY_HERB }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const CHARMELEON: Pokemon = {
   ...evolvesFrom(CHARMANDER),
@@ -153,8 +152,7 @@ export const CHARIZARD: Pokemon = {
   carrySize: 19
 };
 
-export const SQUIRTLE: Pokemon = {
-  name: 'SQUIRTLE',
+export const SQUIRTLE: Pokemon = basePokemon({
   displayName: 'Squirtle',
   pokedexNumber: 7,
   specialty: 'ingredient',
@@ -177,7 +175,7 @@ export const SQUIRTLE: Pokemon = {
     { amount: 7, ingredient: BEAN_SAUSAGE }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const WARTORTLE: Pokemon = {
   ...evolvesFrom(SQUIRTLE),
@@ -201,8 +199,7 @@ export const BLASTOISE: Pokemon = {
   carrySize: 17
 };
 
-export const DIGLETT: Pokemon = {
-  name: 'DIGLETT',
+export const DIGLETT: Pokemon = basePokemon({
   displayName: 'Diglett',
   pokedexNumber: 50,
   specialty: 'ingredient',
@@ -225,7 +222,7 @@ export const DIGLETT: Pokemon = {
     { amount: 8, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: ChargeStrengthS
-};
+});
 
 export const DUGTRIO: Pokemon = {
   ...evolvesFrom(DIGLETT),
@@ -238,8 +235,7 @@ export const DUGTRIO: Pokemon = {
   carrySize: 16
 };
 
-export const BELLSPROUT: Pokemon = {
-  name: 'BELLSPROUT',
+export const BELLSPROUT: Pokemon = basePokemon({
   displayName: 'Bellsprout',
   pokedexNumber: 69,
   specialty: 'ingredient',
@@ -262,7 +258,7 @@ export const BELLSPROUT: Pokemon = {
     { amount: 4, ingredient: LARGE_LEEK }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const WEEPINBELL: Pokemon = {
   ...evolvesFrom(BELLSPROUT),
@@ -286,8 +282,7 @@ export const VICTREEBEL: Pokemon = {
   carrySize: 17
 };
 
-export const GEODUDE: Pokemon = {
-  name: 'GEODUDE',
+export const GEODUDE: Pokemon = basePokemon({
   displayName: 'Geodude',
   pokedexNumber: 74,
   specialty: 'ingredient',
@@ -310,7 +305,7 @@ export const GEODUDE: Pokemon = {
     { amount: 4, ingredient: TASTY_MUSHROOM }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const GRAVELER: Pokemon = {
   ...evolvesFrom(GEODUDE),
@@ -334,8 +329,7 @@ export const GOLEM: Pokemon = {
   carrySize: 16
 };
 
-export const FARFETCHD: Pokemon = {
-  name: 'FARFETCHD',
+export const FARFETCHD: Pokemon = basePokemon({
   displayName: "Farfetch'd",
   pokedexNumber: 83,
   specialty: 'ingredient',
@@ -358,10 +352,9 @@ export const FARFETCHD: Pokemon = {
     { amount: 12, ingredient: WARMING_GINGER }
   ],
   skill: ChargeStrengthS
-};
+});
 
-export const GASTLY: Pokemon = {
-  name: 'GASTLY',
+export const GASTLY: Pokemon = basePokemon({
   displayName: 'Gastly',
   pokedexNumber: 92,
   specialty: 'ingredient',
@@ -384,7 +377,7 @@ export const GASTLY: Pokemon = {
     { amount: 8, ingredient: PURE_OIL }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const HAUNTER: Pokemon = {
   ...evolvesFrom(GASTLY),
@@ -408,8 +401,7 @@ export const GENGAR: Pokemon = {
   carrySize: 18
 };
 
-export const KANGASKHAN: Pokemon = {
-  name: 'KANGASKHAN',
+export const KANGASKHAN: Pokemon = basePokemon({
   displayName: 'Kangaskhan',
   pokedexNumber: 115,
   specialty: 'ingredient',
@@ -432,10 +424,9 @@ export const KANGASKHAN: Pokemon = {
     { amount: 8, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: IngredientMagnetS
-};
+});
 
-export const CHANSEY: Pokemon = {
-  name: 'CHANSEY',
+export const CHANSEY: Pokemon = basePokemon({
   displayName: 'Chansey',
   pokedexNumber: 113,
   specialty: 'ingredient',
@@ -458,10 +449,9 @@ export const CHANSEY: Pokemon = {
     { amount: 8, ingredient: HONEY }
   ],
   skill: EnergyForEveryone
-};
+});
 
-export const MR_MIME: Pokemon = {
-  name: 'MR_MIME',
+export const MR_MIME: Pokemon = basePokemon({
   displayName: 'Mr. Mime',
   pokedexNumber: 122,
   specialty: 'ingredient',
@@ -484,10 +474,9 @@ export const MR_MIME: Pokemon = {
     { amount: 4, ingredient: LARGE_LEEK }
   ],
   skill: SkillCopyMimic
-};
+});
 
-export const PINSIR: Pokemon = {
-  name: 'PINSIR',
+export const PINSIR: Pokemon = basePokemon({
   displayName: 'Pinsir',
   pokedexNumber: 127,
   specialty: 'ingredient',
@@ -510,10 +499,9 @@ export const PINSIR: Pokemon = {
     { amount: 7, ingredient: BEAN_SAUSAGE }
   ],
   skill: ChargeStrengthS
-};
+});
 
-export const DITTO: Pokemon = {
-  name: 'DITTO',
+export const DITTO: Pokemon = basePokemon({
   displayName: 'Ditto',
   pokedexNumber: 132,
   specialty: 'ingredient',
@@ -536,10 +524,9 @@ export const DITTO: Pokemon = {
     { amount: 3, ingredient: SLOWPOKE_TAIL }
   ],
   skill: SkillCopyTransform
-};
+});
 
-export const DRATINI: Pokemon = {
-  name: 'DRATINI',
+export const DRATINI: Pokemon = basePokemon({
   displayName: 'Dratini',
   pokedexNumber: 147,
   specialty: 'ingredient',
@@ -562,7 +549,7 @@ export const DRATINI: Pokemon = {
     { amount: 8, ingredient: PURE_OIL }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const DRAGONAIR: Pokemon = {
   ...evolvesFrom(DRATINI),
@@ -586,8 +573,7 @@ export const DRAGONITE: Pokemon = {
   carrySize: 20
 };
 
-export const WOOPER: Pokemon = {
-  name: 'WOOPER',
+export const WOOPER: Pokemon = basePokemon({
   displayName: 'Wooper',
   pokedexNumber: 194,
   specialty: 'ingredient',
@@ -610,10 +596,9 @@ export const WOOPER: Pokemon = {
     { amount: 12, ingredient: BEAN_SAUSAGE }
   ],
   skill: ChargeEnergyS
-};
+});
 
-export const WOOPER_PALDEAN: Pokemon = {
-  name: 'WOOPER_PALDEAN',
+export const WOOPER_PALDEAN: Pokemon = basePokemon({
   displayName: 'Wooper (Paldean Form)',
   pokedexNumber: 194,
   specialty: 'ingredient',
@@ -636,7 +621,7 @@ export const WOOPER_PALDEAN: Pokemon = {
     { amount: 9, ingredient: SOFT_POTATO }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const QUAGSIRE: Pokemon = {
   ...evolvesFrom(WOOPER),
@@ -649,8 +634,7 @@ export const QUAGSIRE: Pokemon = {
   carrySize: 16
 };
 
-export const DELIBIRD: Pokemon = {
-  name: 'DELIBIRD',
+export const DELIBIRD: Pokemon = basePokemon({
   displayName: 'Delibird',
   pokedexNumber: 225,
   specialty: 'ingredient',
@@ -673,7 +657,7 @@ export const DELIBIRD: Pokemon = {
     { amount: 5, ingredient: SOOTHING_CACAO }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const BLISSEY: Pokemon = {
   ...evolvesFrom(CHANSEY),
@@ -686,8 +670,7 @@ export const BLISSEY: Pokemon = {
   carrySize: 21
 };
 
-export const LARVITAR: Pokemon = {
-  name: 'LARVITAR',
+export const LARVITAR: Pokemon = basePokemon({
   displayName: 'Larvitar',
   pokedexNumber: 246,
   specialty: 'ingredient',
@@ -710,7 +693,7 @@ export const LARVITAR: Pokemon = {
     { amount: 8, ingredient: BEAN_SAUSAGE }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const PUPITAR: Pokemon = {
   ...evolvesFrom(LARVITAR),
@@ -735,8 +718,7 @@ export const TYRANITAR: Pokemon = {
   carrySize: 19
 };
 
-export const MAWILE: Pokemon = {
-  name: 'MAWILE',
+export const MAWILE: Pokemon = basePokemon({
   displayName: 'Mawile',
   pokedexNumber: 303,
   specialty: 'ingredient',
@@ -759,10 +741,9 @@ export const MAWILE: Pokemon = {
     { amount: 8, ingredient: SNOOZY_TOMATO }
   ],
   skill: IngredientDrawSHyperCutter
-};
+});
 
-export const ARON: Pokemon = {
-  name: 'ARON',
+export const ARON: Pokemon = basePokemon({
   displayName: 'Aron',
   pokedexNumber: 304,
   specialty: 'ingredient',
@@ -785,7 +766,7 @@ export const ARON: Pokemon = {
     { amount: 7, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const LAIRON: Pokemon = {
   ...evolvesFrom(ARON),
@@ -809,8 +790,7 @@ export const AGGRON: Pokemon = {
   carrySize: 18
 };
 
-export const ABSOL: Pokemon = {
-  name: 'ABSOL',
+export const ABSOL: Pokemon = basePokemon({
   displayName: 'Absol',
   pokedexNumber: 359,
   specialty: 'ingredient',
@@ -833,10 +813,9 @@ export const ABSOL: Pokemon = {
     { amount: 7, ingredient: TASTY_MUSHROOM }
   ],
   skill: ChargeStrengthS
-};
+});
 
-export const SHINX: Pokemon = {
-  name: 'SHINX',
+export const SHINX: Pokemon = basePokemon({
   displayName: 'Shinx',
   pokedexNumber: 403,
   specialty: 'ingredient',
@@ -859,7 +838,7 @@ export const SHINX: Pokemon = {
     { amount: 5, ingredient: ROUSING_COFFEE }
   ],
   skill: CookingPowerUpS
-};
+});
 
 export const LUXIO: Pokemon = {
   ...evolvesFrom(SHINX),
@@ -905,8 +884,7 @@ export const HAPPINY: Pokemon = {
   carrySize: 7
 };
 
-export const CROAGUNK: Pokemon = {
-  name: 'CROAGUNK',
+export const CROAGUNK: Pokemon = basePokemon({
   displayName: 'Croagunk',
   pokedexNumber: 453,
   specialty: 'ingredient',
@@ -928,7 +906,7 @@ export const CROAGUNK: Pokemon = {
     { amount: 8, ingredient: BEAN_SAUSAGE }
   ],
   skill: ChargeStrengthS
-};
+});
 
 export const TOXICROAK: Pokemon = {
   ...evolvesFrom(CROAGUNK),
@@ -941,8 +919,7 @@ export const TOXICROAK: Pokemon = {
   carrySize: 14
 };
 
-export const SNOVER: Pokemon = {
-  name: 'SNOVER',
+export const SNOVER: Pokemon = basePokemon({
   displayName: 'Snover',
   pokedexNumber: 459,
   specialty: 'ingredient',
@@ -965,7 +942,7 @@ export const SNOVER: Pokemon = {
     { amount: 5, ingredient: TASTY_MUSHROOM }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const ABOMASNOW: Pokemon = {
   ...evolvesFrom(SNOVER),
@@ -978,8 +955,7 @@ export const ABOMASNOW: Pokemon = {
   carrySize: 21
 };
 
-export const GRUBBIN: Pokemon = {
-  name: 'GRUBBIN',
+export const GRUBBIN: Pokemon = basePokemon({
   displayName: 'Grubbin',
   pokedexNumber: 736,
   specialty: 'ingredient',
@@ -1002,7 +978,7 @@ export const GRUBBIN: Pokemon = {
     { amount: 11, ingredient: HONEY }
   ],
   skill: ChargeStrengthS
-};
+});
 
 export const CHARJABUG: Pokemon = {
   ...evolvesFrom(GRUBBIN),
@@ -1026,8 +1002,7 @@ export const VIKAVOLT: Pokemon = {
   carrySize: 19
 };
 
-export const STUFFUL: Pokemon = {
-  name: 'STUFFUL',
+export const STUFFUL: Pokemon = basePokemon({
   displayName: 'Stufful',
   pokedexNumber: 759,
   specialty: 'ingredient',
@@ -1050,7 +1025,7 @@ export const STUFFUL: Pokemon = {
     { amount: 9, ingredient: FANCY_EGG }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const BEWEAR: Pokemon = {
   ...evolvesFrom(STUFFUL),
@@ -1063,8 +1038,7 @@ export const BEWEAR: Pokemon = {
   carrySize: 20
 };
 
-export const COMFEY: Pokemon = {
-  name: 'COMFEY',
+export const COMFEY: Pokemon = basePokemon({
   displayName: 'Comfey',
   pokedexNumber: 764,
   specialty: 'ingredient',
@@ -1087,10 +1061,9 @@ export const COMFEY: Pokemon = {
     { amount: 7, ingredient: SOOTHING_CACAO }
   ],
   skill: EnergizingCheerS
-};
+});
 
-export const CRAMORANT: Pokemon = {
-  name: 'CRAMORANT',
+export const CRAMORANT: Pokemon = basePokemon({
   displayName: 'Cramorant',
   pokedexNumber: 845,
   specialty: 'ingredient',
@@ -1113,10 +1086,9 @@ export const CRAMORANT: Pokemon = {
     { amount: 8, ingredient: FANCY_EGG }
   ],
   skill: TastyChanceS
-};
+});
 
-export const SPRIGATITO: Pokemon = {
-  name: 'SPRIGATITO',
+export const SPRIGATITO: Pokemon = basePokemon({
   displayName: 'Sprigatito',
   pokedexNumber: 906,
   specialty: 'ingredient',
@@ -1139,7 +1111,7 @@ export const SPRIGATITO: Pokemon = {
     { amount: 8, ingredient: WARMING_GINGER }
   ],
   skill: CookingPowerUpS
-};
+});
 
 export const FLORAGATO: Pokemon = {
   ...evolvesFrom(SPRIGATITO),
@@ -1164,8 +1136,7 @@ export const MEOWSCARADA: Pokemon = {
   carrySize: 18
 };
 
-export const FUECOCO: Pokemon = {
-  name: 'FUECOCO',
+export const FUECOCO: Pokemon = basePokemon({
   displayName: 'Fuecoco',
   pokedexNumber: 909,
   specialty: 'ingredient',
@@ -1188,7 +1159,7 @@ export const FUECOCO: Pokemon = {
     { amount: 5, ingredient: FIERY_HERB }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const CROCALOR: Pokemon = {
   ...evolvesFrom(FUECOCO),
@@ -1213,8 +1184,7 @@ export const SKELEDIRGE: Pokemon = {
   carrySize: 19
 };
 
-export const QUAXLY: Pokemon = {
-  name: 'QUAXLY',
+export const QUAXLY: Pokemon = basePokemon({
   displayName: 'Quaxly',
   pokedexNumber: 912,
   specialty: 'ingredient',
@@ -1237,7 +1207,7 @@ export const QUAXLY: Pokemon = {
     { amount: 6, ingredient: PURE_OIL }
   ],
   skill: ChargeStrengthM
-};
+});
 
 export const QUAXWELL: Pokemon = {
   ...evolvesFrom(QUAXLY),
