@@ -4,8 +4,16 @@ import type { IngredientSet } from '../../types/ingredient';
 import type { Mainskill } from '../../types/mainskill';
 import type { Pokemon, PokemonSpecialty } from '../../types/pokemon';
 
+export function nameFromDisplayName(displayName: string): string {
+  return displayName
+    .toUpperCase()
+    .replace(/\bFORM\b/, '')
+    .replace("'", '')
+    .replace(/\b\W+\b/, '_')
+    .replace(/\W+/, '');
+}
+
 export function basePokemon(params: {
-  name: string;
   displayName: string;
   pokedexNumber: number;
   specialty: PokemonSpecialty;
@@ -23,7 +31,6 @@ export function basePokemon(params: {
   skill: Mainskill;
 }): Pokemon {
   const {
-    name,
     displayName,
     pokedexNumber,
     specialty,
@@ -41,7 +48,7 @@ export function basePokemon(params: {
     skill
   } = params;
   return {
-    name,
+    name: nameFromDisplayName(displayName),
     displayName,
     pokedexNumber,
     specialty,

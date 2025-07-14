@@ -59,7 +59,6 @@ import {
 import type { Pokemon } from './pokemon';
 
 export const BULBASAUR: Pokemon = basePokemon({
-  name: 'BULBASAUR',
   displayName: 'Bulbasaur',
   pokedexNumber: 1,
   specialty: 'ingredient',
@@ -85,9 +84,7 @@ export const BULBASAUR: Pokemon = basePokemon({
 });
 
 export const IVYSAUR: Pokemon = {
-  ...evolvesFrom(BULBASAUR),
-  name: 'IVYSAUR',
-  displayName: 'Ivysaur',
+  ...evolvesFrom(BULBASAUR, 'Ivysaur'),
   pokedexNumber: 2,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 25.5,
@@ -96,9 +93,7 @@ export const IVYSAUR: Pokemon = {
 };
 
 export const VENUSAUR: Pokemon = {
-  ...evolvesFrom(IVYSAUR),
-  name: 'VENUSAUR',
-  displayName: 'Venusaur',
+  ...evolvesFrom(IVYSAUR, 'Venusaur'),
   pokedexNumber: 3,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 26.6,
@@ -107,7 +102,6 @@ export const VENUSAUR: Pokemon = {
 };
 
 export const CHARMANDER: Pokemon = basePokemon({
-  name: 'CHARMANDER',
   displayName: 'Charmander',
   pokedexNumber: 4,
   specialty: 'ingredient',
@@ -133,9 +127,7 @@ export const CHARMANDER: Pokemon = basePokemon({
 });
 
 export const CHARMELEON: Pokemon = {
-  ...evolvesFrom(CHARMANDER),
-  name: 'CHARMELEON',
-  displayName: 'Charmeleon',
+  ...evolvesFrom(CHARMANDER, 'Charmeleon'),
   pokedexNumber: 5,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 22.7,
@@ -144,9 +136,7 @@ export const CHARMELEON: Pokemon = {
 };
 
 export const CHARIZARD: Pokemon = {
-  ...evolvesFrom(CHARMELEON),
-  name: 'CHARIZARD',
-  displayName: 'Charizard',
+  ...evolvesFrom(CHARMELEON, 'Charizard'),
   pokedexNumber: 6,
   frequency: toSeconds(0, 40, 0),
   ingredientPercentage: 22.4,
@@ -155,7 +145,6 @@ export const CHARIZARD: Pokemon = {
 };
 
 export const SQUIRTLE: Pokemon = basePokemon({
-  name: 'SQUIRTLE',
   displayName: 'Squirtle',
   pokedexNumber: 7,
   specialty: 'ingredient',
@@ -181,9 +170,7 @@ export const SQUIRTLE: Pokemon = basePokemon({
 });
 
 export const WARTORTLE: Pokemon = {
-  ...evolvesFrom(SQUIRTLE),
-  name: 'WARTORTLE',
-  displayName: 'Wartortle',
+  ...evolvesFrom(SQUIRTLE, 'Wartortle'),
   pokedexNumber: 8,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 27.1,
@@ -192,9 +179,7 @@ export const WARTORTLE: Pokemon = {
 };
 
 export const BLASTOISE: Pokemon = {
-  ...evolvesFrom(WARTORTLE),
-  name: 'BLASTOISE',
-  displayName: 'Blastoise',
+  ...evolvesFrom(WARTORTLE, 'Blastoise'),
   pokedexNumber: 9,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 27.5,
@@ -203,7 +188,6 @@ export const BLASTOISE: Pokemon = {
 };
 
 export const DIGLETT: Pokemon = basePokemon({
-  name: 'DIGLETT',
   displayName: 'Diglett',
   pokedexNumber: 50,
   specialty: 'ingredient',
@@ -229,9 +213,7 @@ export const DIGLETT: Pokemon = basePokemon({
 });
 
 export const DUGTRIO: Pokemon = {
-  ...evolvesFrom(DIGLETT),
-  name: 'DUGTRIO',
-  displayName: 'Dugtrio',
+  ...evolvesFrom(DIGLETT, 'Dugtrio'),
   pokedexNumber: 51,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 19.0,
@@ -240,7 +222,6 @@ export const DUGTRIO: Pokemon = {
 };
 
 export const BELLSPROUT: Pokemon = basePokemon({
-  name: 'BELLSPROUT',
   displayName: 'Bellsprout',
   pokedexNumber: 69,
   specialty: 'ingredient',
@@ -266,9 +247,7 @@ export const BELLSPROUT: Pokemon = basePokemon({
 });
 
 export const WEEPINBELL: Pokemon = {
-  ...evolvesFrom(BELLSPROUT),
-  name: 'WEEPINBELL',
-  displayName: 'Weepinbell',
+  ...evolvesFrom(BELLSPROUT, 'Weepinbell'),
   pokedexNumber: 70,
   frequency: toSeconds(1, 3, 20),
   ingredientPercentage: 23.5,
@@ -277,9 +256,7 @@ export const WEEPINBELL: Pokemon = {
 };
 
 export const VICTREEBEL: Pokemon = {
-  ...evolvesFrom(WEEPINBELL),
-  name: 'VICTREEBEL',
-  displayName: 'Victreebel',
+  ...evolvesFrom(WEEPINBELL, 'Victreebel'),
   pokedexNumber: 71,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 23.3,
@@ -288,7 +265,6 @@ export const VICTREEBEL: Pokemon = {
 };
 
 export const GEODUDE: Pokemon = basePokemon({
-  name: 'GEODUDE',
   displayName: 'Geodude',
   pokedexNumber: 74,
   specialty: 'ingredient',
@@ -314,9 +290,7 @@ export const GEODUDE: Pokemon = basePokemon({
 });
 
 export const GRAVELER: Pokemon = {
-  ...evolvesFrom(GEODUDE),
-  name: 'GRAVELER',
-  displayName: 'Graveler',
+  ...evolvesFrom(GEODUDE, 'Graveler'),
   pokedexNumber: 75,
   frequency: toSeconds(1, 6, 40),
   ingredientPercentage: 27.2,
@@ -325,9 +299,7 @@ export const GRAVELER: Pokemon = {
 };
 
 export const GOLEM: Pokemon = {
-  ...evolvesFrom(GRAVELER),
-  name: 'GOLEM',
-  displayName: 'Golem',
+  ...evolvesFrom(GRAVELER, 'Golem'),
   pokedexNumber: 76,
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 28.0,
@@ -336,7 +308,6 @@ export const GOLEM: Pokemon = {
 };
 
 export const FARFETCHD: Pokemon = basePokemon({
-  name: 'FARFETCHD',
   displayName: "Farfetch'd",
   pokedexNumber: 83,
   specialty: 'ingredient',
@@ -362,7 +333,6 @@ export const FARFETCHD: Pokemon = basePokemon({
 });
 
 export const GASTLY: Pokemon = basePokemon({
-  name: 'GASTLY',
   displayName: 'Gastly',
   pokedexNumber: 92,
   specialty: 'ingredient',
@@ -388,9 +358,7 @@ export const GASTLY: Pokemon = basePokemon({
 });
 
 export const HAUNTER: Pokemon = {
-  ...evolvesFrom(GASTLY),
-  name: 'HAUNTER',
-  displayName: 'Haunter',
+  ...evolvesFrom(GASTLY, 'Haunter'),
   pokedexNumber: 93,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 15.7,
@@ -399,9 +367,7 @@ export const HAUNTER: Pokemon = {
 };
 
 export const GENGAR: Pokemon = {
-  ...evolvesFrom(HAUNTER),
-  name: 'GENGAR',
-  displayName: 'Gengar',
+  ...evolvesFrom(HAUNTER, 'Gengar'),
   pokedexNumber: 94,
   frequency: toSeconds(0, 36, 40),
   ingredientPercentage: 16.1,
@@ -410,7 +376,6 @@ export const GENGAR: Pokemon = {
 };
 
 export const KANGASKHAN: Pokemon = basePokemon({
-  name: 'KANGASKHAN',
   displayName: 'Kangaskhan',
   pokedexNumber: 115,
   specialty: 'ingredient',
@@ -436,7 +401,6 @@ export const KANGASKHAN: Pokemon = basePokemon({
 });
 
 export const CHANSEY: Pokemon = basePokemon({
-  name: 'CHANSEY',
   displayName: 'Chansey',
   pokedexNumber: 113,
   specialty: 'ingredient',
@@ -462,7 +426,6 @@ export const CHANSEY: Pokemon = basePokemon({
 });
 
 export const MR_MIME: Pokemon = basePokemon({
-  name: 'MR_MIME',
   displayName: 'Mr. Mime',
   pokedexNumber: 122,
   specialty: 'ingredient',
@@ -488,7 +451,6 @@ export const MR_MIME: Pokemon = basePokemon({
 });
 
 export const PINSIR: Pokemon = basePokemon({
-  name: 'PINSIR',
   displayName: 'Pinsir',
   pokedexNumber: 127,
   specialty: 'ingredient',
@@ -514,7 +476,6 @@ export const PINSIR: Pokemon = basePokemon({
 });
 
 export const DITTO: Pokemon = basePokemon({
-  name: 'DITTO',
   displayName: 'Ditto',
   pokedexNumber: 132,
   specialty: 'ingredient',
@@ -540,7 +501,6 @@ export const DITTO: Pokemon = basePokemon({
 });
 
 export const DRATINI: Pokemon = basePokemon({
-  name: 'DRATINI',
   displayName: 'Dratini',
   pokedexNumber: 147,
   specialty: 'ingredient',
@@ -566,9 +526,7 @@ export const DRATINI: Pokemon = basePokemon({
 });
 
 export const DRAGONAIR: Pokemon = {
-  ...evolvesFrom(DRATINI),
-  name: 'DRAGONAIR',
-  displayName: 'Dragonair',
+  ...evolvesFrom(DRATINI, 'Dragonair'),
   pokedexNumber: 148,
   frequency: toSeconds(1, 3, 20),
   ingredientPercentage: 26.2,
@@ -577,9 +535,7 @@ export const DRAGONAIR: Pokemon = {
 };
 
 export const DRAGONITE: Pokemon = {
-  ...evolvesFrom(DRAGONAIR),
-  name: 'DRAGONITE',
-  displayName: 'Dragonite',
+  ...evolvesFrom(DRAGONAIR, 'Dragonite'),
   pokedexNumber: 149,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 26.4,
@@ -588,7 +544,6 @@ export const DRAGONITE: Pokemon = {
 };
 
 export const WOOPER: Pokemon = basePokemon({
-  name: 'WOOPER',
   displayName: 'Wooper',
   pokedexNumber: 194,
   specialty: 'ingredient',
@@ -614,7 +569,6 @@ export const WOOPER: Pokemon = basePokemon({
 });
 
 export const WOOPER_PALDEAN: Pokemon = basePokemon({
-  name: 'WOOPER_PALDEAN',
   displayName: 'Wooper (Paldean Form)',
   pokedexNumber: 194,
   specialty: 'ingredient',
@@ -640,9 +594,7 @@ export const WOOPER_PALDEAN: Pokemon = basePokemon({
 });
 
 export const QUAGSIRE: Pokemon = {
-  ...evolvesFrom(WOOPER),
-  name: 'QUAGSIRE',
-  displayName: 'Quagsire',
+  ...evolvesFrom(WOOPER, 'Quagsire'),
   pokedexNumber: 195,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 19,
@@ -651,7 +603,6 @@ export const QUAGSIRE: Pokemon = {
 };
 
 export const DELIBIRD: Pokemon = basePokemon({
-  name: 'DELIBIRD',
   displayName: 'Delibird',
   pokedexNumber: 225,
   specialty: 'ingredient',
@@ -677,9 +628,7 @@ export const DELIBIRD: Pokemon = basePokemon({
 });
 
 export const BLISSEY: Pokemon = {
-  ...evolvesFrom(CHANSEY),
-  name: 'BLISSEY',
-  displayName: 'Blissey',
+  ...evolvesFrom(CHANSEY, 'Blissey'),
   pokedexNumber: 242,
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 23.8,
@@ -688,7 +637,6 @@ export const BLISSEY: Pokemon = {
 };
 
 export const LARVITAR: Pokemon = basePokemon({
-  name: 'LARVITAR',
   displayName: 'Larvitar',
   pokedexNumber: 246,
   specialty: 'ingredient',
@@ -714,9 +662,7 @@ export const LARVITAR: Pokemon = basePokemon({
 });
 
 export const PUPITAR: Pokemon = {
-  ...evolvesFrom(LARVITAR),
-  name: 'PUPITAR',
-  displayName: 'Pupitar',
+  ...evolvesFrom(LARVITAR, 'Pupitar'),
   pokedexNumber: 247,
   frequency: toSeconds(1, 0, 0),
   ingredientPercentage: 24.7,
@@ -725,9 +671,7 @@ export const PUPITAR: Pokemon = {
 };
 
 export const TYRANITAR: Pokemon = {
-  ...evolvesFrom(PUPITAR),
-  name: 'TYRANITAR',
-  displayName: 'Tyranitar',
+  ...evolvesFrom(PUPITAR, 'Tyranitar'),
   pokedexNumber: 248,
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 26.6,
@@ -737,7 +681,6 @@ export const TYRANITAR: Pokemon = {
 };
 
 export const MAWILE: Pokemon = basePokemon({
-  name: 'MAWILE',
   displayName: 'Mawile',
   pokedexNumber: 303,
   specialty: 'ingredient',
@@ -763,7 +706,6 @@ export const MAWILE: Pokemon = basePokemon({
 });
 
 export const ARON: Pokemon = basePokemon({
-  name: 'ARON',
   displayName: 'Aron',
   pokedexNumber: 304,
   specialty: 'ingredient',
@@ -789,9 +731,7 @@ export const ARON: Pokemon = basePokemon({
 });
 
 export const LAIRON: Pokemon = {
-  ...evolvesFrom(ARON),
-  name: 'LAIRON',
-  displayName: 'Lairon',
+  ...evolvesFrom(ARON, 'Lairon'),
   pokedexNumber: 305,
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 27.7,
@@ -800,9 +740,7 @@ export const LAIRON: Pokemon = {
 };
 
 export const AGGRON: Pokemon = {
-  ...evolvesFrom(LAIRON),
-  name: 'AGGRON',
-  displayName: 'Aggron',
+  ...evolvesFrom(LAIRON, 'Aggron'),
   pokedexNumber: 306,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 28.5,
@@ -811,7 +749,6 @@ export const AGGRON: Pokemon = {
 };
 
 export const ABSOL: Pokemon = basePokemon({
-  name: 'ABSOL',
   displayName: 'Absol',
   pokedexNumber: 359,
   specialty: 'ingredient',
@@ -837,7 +774,6 @@ export const ABSOL: Pokemon = basePokemon({
 });
 
 export const SHINX: Pokemon = basePokemon({
-  name: 'SHINX',
   displayName: 'Shinx',
   pokedexNumber: 403,
   specialty: 'ingredient',
@@ -863,9 +799,7 @@ export const SHINX: Pokemon = basePokemon({
 });
 
 export const LUXIO: Pokemon = {
-  ...evolvesFrom(SHINX),
-  name: 'LUXIO',
-  displayName: 'Luxio',
+  ...evolvesFrom(SHINX, 'Luxio'),
   pokedexNumber: 404,
   frequency: toSeconds(0, 53, 20),
   ingredientPercentage: 18.2,
@@ -874,9 +808,7 @@ export const LUXIO: Pokemon = {
 };
 
 export const LUXRAY: Pokemon = {
-  ...evolvesFrom(LUXIO),
-  name: 'LUXRAY',
-  displayName: 'Luxray',
+  ...evolvesFrom(LUXIO, 'Luxray'),
   pokedexNumber: 405,
   frequency: toSeconds(0, 40, 0),
   ingredientPercentage: 20,
@@ -885,9 +817,7 @@ export const LUXRAY: Pokemon = {
 };
 
 export const MIME_JR: Pokemon = {
-  ...evolvesInto(MR_MIME),
-  name: 'MIME_JR',
-  displayName: 'Mime Jr.',
+  ...evolvesInto(MR_MIME, 'Mime Jr.'),
   pokedexNumber: 439,
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 20.1,
@@ -896,9 +826,7 @@ export const MIME_JR: Pokemon = {
 };
 
 export const HAPPINY: Pokemon = {
-  ...evolvesInto(CHANSEY),
-  name: 'HAPPINY',
-  displayName: 'Happiny',
+  ...evolvesInto(CHANSEY, 'Happiny'),
   pokedexNumber: 440,
   frequency: toSeconds(1, 30, 0),
   ingredientPercentage: 21,
@@ -907,7 +835,6 @@ export const HAPPINY: Pokemon = {
 };
 
 export const CROAGUNK: Pokemon = basePokemon({
-  name: 'CROAGUNK',
   displayName: 'Croagunk',
   pokedexNumber: 453,
   specialty: 'ingredient',
@@ -932,9 +859,7 @@ export const CROAGUNK: Pokemon = basePokemon({
 });
 
 export const TOXICROAK: Pokemon = {
-  ...evolvesFrom(CROAGUNK),
-  name: 'TOXICROAK',
-  displayName: 'Toxicroak',
+  ...evolvesFrom(CROAGUNK, 'Toxicroak'),
   pokedexNumber: 454,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 22.9,
@@ -943,7 +868,6 @@ export const TOXICROAK: Pokemon = {
 };
 
 export const SNOVER: Pokemon = basePokemon({
-  name: 'SNOVER',
   displayName: 'Snover',
   pokedexNumber: 459,
   specialty: 'ingredient',
@@ -969,9 +893,7 @@ export const SNOVER: Pokemon = basePokemon({
 });
 
 export const ABOMASNOW: Pokemon = {
-  ...evolvesFrom(SNOVER),
-  name: 'ABOMASNOW',
-  displayName: 'Abomasnow',
+  ...evolvesFrom(SNOVER, 'Abomasnow'),
   pokedexNumber: 460,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 25.0,
@@ -980,7 +902,6 @@ export const ABOMASNOW: Pokemon = {
 };
 
 export const GRUBBIN: Pokemon = basePokemon({
-  name: 'GRUBBIN',
   displayName: 'Grubbin',
   pokedexNumber: 736,
   specialty: 'ingredient',
@@ -1006,9 +927,7 @@ export const GRUBBIN: Pokemon = basePokemon({
 });
 
 export const CHARJABUG: Pokemon = {
-  ...evolvesFrom(GRUBBIN),
-  name: 'CHARJABUG',
-  displayName: 'Charjabug',
+  ...evolvesFrom(GRUBBIN, 'Charjabug'),
   pokedexNumber: 737,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 15.4,
@@ -1017,9 +936,7 @@ export const CHARJABUG: Pokemon = {
 };
 
 export const VIKAVOLT: Pokemon = {
-  ...evolvesFrom(CHARJABUG),
-  name: 'VIKAVOLT',
-  displayName: 'Vikavolt',
+  ...evolvesFrom(CHARJABUG, 'Vikavolt'),
   pokedexNumber: 738,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 19.4,
@@ -1028,7 +945,6 @@ export const VIKAVOLT: Pokemon = {
 };
 
 export const STUFFUL: Pokemon = basePokemon({
-  name: 'STUFFUL',
   displayName: 'Stufful',
   pokedexNumber: 759,
   specialty: 'ingredient',
@@ -1054,9 +970,7 @@ export const STUFFUL: Pokemon = basePokemon({
 });
 
 export const BEWEAR: Pokemon = {
-  ...evolvesFrom(STUFFUL),
-  name: 'BEWEAR',
-  displayName: 'Bewear',
+  ...evolvesFrom(STUFFUL, 'Bewear'),
   pokedexNumber: 760,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 22.9,
@@ -1065,7 +979,6 @@ export const BEWEAR: Pokemon = {
 };
 
 export const COMFEY: Pokemon = basePokemon({
-  name: 'COMFEY',
   displayName: 'Comfey',
   pokedexNumber: 764,
   specialty: 'ingredient',
@@ -1091,7 +1004,6 @@ export const COMFEY: Pokemon = basePokemon({
 });
 
 export const CRAMORANT: Pokemon = basePokemon({
-  name: 'CRAMORANT',
   displayName: 'Cramorant',
   pokedexNumber: 845,
   specialty: 'ingredient',
@@ -1117,7 +1029,6 @@ export const CRAMORANT: Pokemon = basePokemon({
 });
 
 export const SPRIGATITO: Pokemon = basePokemon({
-  name: 'SPRIGATITO',
   displayName: 'Sprigatito',
   pokedexNumber: 906,
   specialty: 'ingredient',
@@ -1143,9 +1054,7 @@ export const SPRIGATITO: Pokemon = basePokemon({
 });
 
 export const FLORAGATO: Pokemon = {
-  ...evolvesFrom(SPRIGATITO),
-  name: 'FLORAGATO',
-  displayName: 'Floragato',
+  ...evolvesFrom(SPRIGATITO, 'Floragato'),
   pokedexNumber: 907,
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 20.9,
@@ -1154,9 +1063,7 @@ export const FLORAGATO: Pokemon = {
 };
 
 export const MEOWSCARADA: Pokemon = {
-  ...evolvesFrom(FLORAGATO),
-  name: 'MEOWSCARADA',
-  displayName: 'Meowscarada',
+  ...evolvesFrom(FLORAGATO, 'Meowscarada'),
   pokedexNumber: 908,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 19,
@@ -1166,7 +1073,6 @@ export const MEOWSCARADA: Pokemon = {
 };
 
 export const FUECOCO: Pokemon = basePokemon({
-  name: 'FUECOCO',
   displayName: 'Fuecoco',
   pokedexNumber: 909,
   specialty: 'ingredient',
@@ -1192,9 +1098,7 @@ export const FUECOCO: Pokemon = basePokemon({
 });
 
 export const CROCALOR: Pokemon = {
-  ...evolvesFrom(FUECOCO),
-  name: 'CROCALOR',
-  displayName: 'Crocalor',
+  ...evolvesFrom(FUECOCO, 'Crocalor'),
   pokedexNumber: 910,
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 24.7,
@@ -1203,9 +1107,7 @@ export const CROCALOR: Pokemon = {
 };
 
 export const SKELEDIRGE: Pokemon = {
-  ...evolvesFrom(CROCALOR),
-  name: 'SKELEDIRGE',
-  displayName: 'Skeledirge',
+  ...evolvesFrom(CROCALOR, 'Skeledirge'),
   pokedexNumber: 911,
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 26.8,
@@ -1215,7 +1117,6 @@ export const SKELEDIRGE: Pokemon = {
 };
 
 export const QUAXLY: Pokemon = basePokemon({
-  name: 'QUAXLY',
   displayName: 'Quaxly',
   pokedexNumber: 912,
   specialty: 'ingredient',
@@ -1241,9 +1142,7 @@ export const QUAXLY: Pokemon = basePokemon({
 });
 
 export const QUAXWELL: Pokemon = {
-  ...evolvesFrom(QUAXLY),
-  name: 'QUAXWELL',
-  displayName: 'Quaxwell',
+  ...evolvesFrom(QUAXLY, 'Quaxwell'),
   pokedexNumber: 913,
   frequency: toSeconds(1, 0, 0),
   ingredientPercentage: 25.9,
@@ -1252,9 +1151,7 @@ export const QUAXWELL: Pokemon = {
 };
 
 export const QUAQUAVAL: Pokemon = {
-  ...evolvesFrom(QUAXWELL),
-  name: 'QUAQUAVAL',
-  displayName: 'Quaquaval',
+  ...evolvesFrom(QUAXWELL, 'Quaquaval'),
   pokedexNumber: 914,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 23.2,
@@ -1264,9 +1161,7 @@ export const QUAQUAVAL: Pokemon = {
 };
 
 export const CLODSIRE: Pokemon = {
-  ...evolvesFrom(WOOPER_PALDEAN),
-  name: 'CLODSIRE',
-  displayName: 'Clodsire',
+  ...evolvesFrom(WOOPER_PALDEAN, 'Clodsire'),
   pokedexNumber: 980,
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 20.8,
