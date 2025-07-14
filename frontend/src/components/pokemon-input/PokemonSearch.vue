@@ -57,8 +57,15 @@
       </v-badge>
     </v-row>
 
-    <v-row dense class="flex-center px-3 mt-0 justify-space-between flex-nowrap">
-      <v-checkbox v-model="finalStageOnly" label="Final Stage Only" density="compact" hide-details />
+    <v-row dense class="flex-center px-3 mt-0 flex-nowrap">
+      <v-checkbox
+        v-if="!pokemonSearchStore.showPokebox"
+        v-model="finalStageOnly"
+        label="Final Stage Only"
+        density="compact"
+        hide-details
+      />
+      <v-spacer />
       <DropdownSort
         v-model="selectedSort"
         v-model:sort-ascending="sortAscending"
@@ -240,7 +247,8 @@ const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
   const nameFilter = (p: PokemonWithPath) => !query || p.pokemon.displayName.toLowerCase().includes(query)
   const specialtyFilter = (p: PokemonWithPath) =>
     selectedSpecialties.value.length === 0 || selectedSpecialties.value.some((s) => p.pokemon.specialty === s)
-  const finalStageFilter = (p: PokemonWithPath) => !finalStageOnly.value || p.pokemon.remainingEvolutions === 0
+  const finalStageFilter = (p: PokemonWithPath) =>
+    !finalStageOnly.value || pokemonSearchStore.showPokebox || p.pokemon.remainingEvolutions === 0
 
   const filtered = pokemonCollection.value.filter(nameFilter).filter(specialtyFilter).filter(finalStageFilter)
 
