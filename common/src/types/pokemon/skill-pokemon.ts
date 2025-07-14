@@ -694,6 +694,54 @@ export const SUICUNE: Pokemon = {
   skill: HelperBoost
 };
 
+export const TREECKO: Pokemon = {
+  name: 'TREECKO',
+  displayName: 'Treecko',
+  pokedexNumber: 252,
+  specialty: 'skill',
+  frequency: toSeconds(1, 15, 0),
+  ingredientPercentage: 17.2,
+  skillPercentage: 3.5,
+  berry: DURIN,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 8,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredient0: [{ amount: 1, ingredient: FANCY_EGG }],
+  ingredient30: [
+    { amount: 2, ingredient: FANCY_EGG },
+    { amount: 2, ingredient: ROUSING_COFFEE }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: FANCY_EGG },
+    { amount: 3, ingredient: ROUSING_COFFEE },
+    { amount: 2, ingredient: LARGE_LEEK }
+  ],
+  skill: BerryBurst
+};
+
+export const GROVYLE: Pokemon = {
+  ...evolvesFrom(TREECKO),
+  name: 'GROVYLE',
+  displayName: 'Grovyle',
+  pokedexNumber: 253,
+  frequency: toSeconds(0, 55, 0),
+  ingredientPercentage: 15,
+  skillPercentage: 3.5,
+  carrySize: 11
+};
+
+export const SCEPTILE: Pokemon = {
+  ...evolvesFrom(GROVYLE),
+  name: 'SCEPTILE',
+  displayName: 'Sceptile',
+  pokedexNumber: 254,
+  frequency: toSeconds(0, 38, 20),
+  ingredientPercentage: 10.7,
+  skillPercentage: 3,
+  carrySize: 17
+};
+
 export const RALTS: Pokemon = {
   name: 'RALTS',
   displayName: 'Ralts',
@@ -1168,6 +1216,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   RAIKOU,
   ENTEI,
   SUICUNE,
+  SCEPTILE,
   GARDEVOIR,
   SABLEYE,
   SWALOT,
@@ -1203,6 +1252,8 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   MAREEP,
   FLAAFFY,
   MURKROW,
+  TREECKO,
+  GROVYLE,
   RALTS,
   KIRLIA,
   GULPIN,
