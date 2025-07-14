@@ -753,6 +753,106 @@ export const HOUNDOOM: Pokemon = {
   carrySize: 16
 };
 
+export const TORCHIC: Pokemon = {
+  name: 'TORCHIC',
+  displayName: 'Torchic',
+  pokedexNumber: 255,
+  specialty: 'berry',
+  frequency: toSeconds(1, 11, 40),
+  ingredientPercentage: 16,
+  skillPercentage: 4.4,
+  berry: LEPPA,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredient0: [{ amount: 1, ingredient: TASTY_MUSHROOM }],
+  ingredient30: [
+    { amount: 2, ingredient: TASTY_MUSHROOM },
+    { amount: 4, ingredient: GREENGRASS_SOYBEANS }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: TASTY_MUSHROOM },
+    { amount: 6, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 5, ingredient: PURE_OIL }
+  ],
+  skill: ChargeEnergyS
+};
+
+export const COMBUSKEN: Pokemon = {
+  ...evolvesFrom(TORCHIC),
+  name: 'COMBUSKEN',
+  displayName: 'Combusken',
+  pokedexNumber: 256,
+  frequency: toSeconds(0, 55, 0),
+  ingredientPercentage: 17,
+  skillPercentage: 5.2,
+  carrySize: 16,
+  berry: CHERI
+};
+
+export const BLAZIKEN: Pokemon = {
+  ...evolvesFrom(COMBUSKEN),
+  name: 'BLAZIKEN',
+  displayName: 'Blaziken',
+  pokedexNumber: 257,
+  frequency: toSeconds(0, 43, 20),
+  ingredientPercentage: 15.3,
+  skillPercentage: 4.9,
+  carrySize: 22,
+  berry: CHERI
+};
+
+export const MUDKIP: Pokemon = {
+  name: 'MUDKIP',
+  displayName: 'Mudkip',
+  pokedexNumber: 258,
+  specialty: 'berry',
+  frequency: toSeconds(1, 18, 20),
+  ingredientPercentage: 19.2,
+  skillPercentage: 2.4,
+  berry: ORAN,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 11,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredient0: [{ amount: 1, ingredient: GREENGRASS_CORN }],
+  ingredient30: [
+    { amount: 2, ingredient: GREENGRASS_CORN },
+    { amount: 3, ingredient: MOOMOO_MILK }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: GREENGRASS_CORN },
+    { amount: 5, ingredient: MOOMOO_MILK },
+    { amount: 3, ingredient: TASTY_MUSHROOM }
+  ],
+  skill: TastyChanceS
+};
+
+export const MARSHTOMP: Pokemon = {
+  ...evolvesFrom(MUDKIP),
+  name: 'MARSHTOMP',
+  displayName: 'Marshtomp',
+  pokedexNumber: 259,
+  frequency: toSeconds(0, 58, 20),
+  ingredientPercentage: 16.8,
+  skillPercentage: 2.8,
+  carrySize: 16,
+  berry: FIGY
+};
+
+export const SWAMPERT: Pokemon = {
+  ...evolvesFrom(MARSHTOMP),
+  name: 'SWAMPERT',
+  displayName: 'Swampert',
+  pokedexNumber: 260,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 14.6,
+  skillPercentage: 3.4,
+  carrySize: 20,
+  berry: FIGY
+};
+
 export const SLAKOTH: Pokemon = {
   name: 'SLAKOTH',
   displayName: 'Slakoth',
@@ -990,6 +1090,8 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   FERALIGATR,
   STEELIX,
   HOUNDOOM,
+  BLAZIKEN,
+  SWAMPERT,
   VIGOROTH,
   SLAKING,
   ALTARIA,
@@ -1022,6 +1124,10 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   CLEFFA,
   SNEASEL,
   HOUNDOUR,
+  TORCHIC,
+  COMBUSKEN,
+  MUDKIP,
+  MARSHTOMP,
   SLAKOTH,
   SWABLU,
   SHUPPET,
