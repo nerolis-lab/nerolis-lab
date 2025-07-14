@@ -72,16 +72,9 @@ export const BULBASAUR: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: HONEY }],
-    ingredient30: [
-      { amount: 5, ingredient: HONEY },
-      { amount: 4, ingredient: SNOOZY_TOMATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: HONEY },
-      { amount: 7, ingredient: SNOOZY_TOMATO },
-      { amount: 6, ingredient: SOFT_POTATO }
-    ]
+    a: HONEY,
+    b: SNOOZY_TOMATO,
+    c: SOFT_POTATO
   },
   skill: IngredientMagnetS
 });
@@ -121,16 +114,9 @@ export const CHARMANDER: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
-    ingredient30: [
-      { amount: 5, ingredient: BEAN_SAUSAGE },
-      { amount: 4, ingredient: WARMING_GINGER }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: BEAN_SAUSAGE },
-      { amount: 7, ingredient: WARMING_GINGER },
-      { amount: 6, ingredient: FIERY_HERB }
-    ]
+    a: BEAN_SAUSAGE,
+    b: WARMING_GINGER,
+    c: FIERY_HERB
   },
   skill: IngredientMagnetS
 });
@@ -170,16 +156,9 @@ export const SQUIRTLE: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: MOOMOO_MILK }],
-    ingredient30: [
-      { amount: 5, ingredient: MOOMOO_MILK },
-      { amount: 3, ingredient: SOOTHING_CACAO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: MOOMOO_MILK },
-      { amount: 5, ingredient: SOOTHING_CACAO },
-      { amount: 7, ingredient: BEAN_SAUSAGE }
-    ]
+    a: MOOMOO_MILK,
+    b: SOOTHING_CACAO,
+    c: BEAN_SAUSAGE
   },
   skill: IngredientMagnetS
 });
@@ -219,16 +198,9 @@ export const DIGLETT: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-    ingredient30: [
-      { amount: 5, ingredient: SNOOZY_TOMATO },
-      { amount: 3, ingredient: LARGE_LEEK }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SNOOZY_TOMATO },
-      { amount: 4, ingredient: LARGE_LEEK },
-      { amount: 8, ingredient: GREENGRASS_SOYBEANS }
-    ]
+    a: SNOOZY_TOMATO,
+    b: LARGE_LEEK,
+    c: GREENGRASS_SOYBEANS
   },
   skill: ChargeStrengthS
 });
@@ -257,16 +229,9 @@ export const BELLSPROUT: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-    ingredient30: [
-      { amount: 5, ingredient: SNOOZY_TOMATO },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SNOOZY_TOMATO },
-      { amount: 6, ingredient: SOFT_POTATO },
-      { amount: 4, ingredient: LARGE_LEEK }
-    ]
+    a: SNOOZY_TOMATO,
+    b: SOFT_POTATO,
+    c: LARGE_LEEK
   },
   skill: ChargeEnergyS
 });
@@ -306,16 +271,9 @@ export const GEODUDE: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: GREENGRASS_SOYBEANS }],
-    ingredient30: [
-      { amount: 5, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 6, ingredient: SOFT_POTATO },
-      { amount: 4, ingredient: TASTY_MUSHROOM }
-    ]
+    a: GREENGRASS_SOYBEANS,
+    b: SOFT_POTATO,
+    c: TASTY_MUSHROOM
   },
   skill: ChargeStrengthSRange
 });
@@ -355,16 +313,9 @@ export const FARFETCHD: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: LARGE_LEEK }],
-    ingredient30: [
-      { amount: 5, ingredient: LARGE_LEEK },
-      { amount: 8, ingredient: BEAN_SAUSAGE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: LARGE_LEEK },
-      { amount: 13, ingredient: BEAN_SAUSAGE },
-      { amount: 12, ingredient: WARMING_GINGER }
-    ]
+    a: LARGE_LEEK,
+    b: BEAN_SAUSAGE,
+    c: WARMING_GINGER
   },
   skill: ChargeStrengthS
 });
@@ -382,16 +333,9 @@ export const GASTLY: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: FIERY_HERB }],
-    ingredient30: [
-      { amount: 5, ingredient: FIERY_HERB },
-      { amount: 4, ingredient: TASTY_MUSHROOM }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: FIERY_HERB },
-      { amount: 6, ingredient: TASTY_MUSHROOM },
-      { amount: 8, ingredient: PURE_OIL }
-    ]
+    a: FIERY_HERB,
+    b: TASTY_MUSHROOM,
+    c: PURE_OIL
   },
   skill: ChargeStrengthSRange
 });
@@ -431,16 +375,9 @@ export const KANGASKHAN: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: WARMING_GINGER }],
-    ingredient30: [
-      { amount: 5, ingredient: WARMING_GINGER },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: WARMING_GINGER },
-      { amount: 6, ingredient: SOFT_POTATO },
-      { amount: 8, ingredient: GREENGRASS_SOYBEANS }
-    ]
+    a: WARMING_GINGER,
+    b: SOFT_POTATO,
+    c: GREENGRASS_SOYBEANS
   },
   skill: IngredientMagnetS
 });
@@ -458,16 +395,9 @@ export const CHANSEY: Pokemon = createIngredientSpecialist({
   previousEvolutions: 1,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: FANCY_EGG }],
-    ingredient30: [
-      { amount: 5, ingredient: FANCY_EGG },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: FANCY_EGG },
-      { amount: 7, ingredient: SOFT_POTATO },
-      { amount: 8, ingredient: HONEY }
-    ]
+    a: FANCY_EGG,
+    b: SOFT_POTATO,
+    c: HONEY
   },
   skill: EnergyForEveryone
 });
@@ -485,16 +415,9 @@ export const MR_MIME: Pokemon = createIngredientSpecialist({
   previousEvolutions: 1,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-    ingredient30: [
-      { amount: 5, ingredient: SNOOZY_TOMATO },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SNOOZY_TOMATO },
-      { amount: 6, ingredient: SOFT_POTATO },
-      { amount: 4, ingredient: LARGE_LEEK }
-    ]
+    a: SNOOZY_TOMATO,
+    b: SOFT_POTATO,
+    c: LARGE_LEEK
   },
   skill: SkillCopyMimic
 });
@@ -512,16 +435,9 @@ export const PINSIR: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: HONEY }],
-    ingredient30: [
-      { amount: 5, ingredient: HONEY },
-      { amount: 5, ingredient: FANCY_APPLE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: HONEY },
-      { amount: 8, ingredient: FANCY_APPLE },
-      { amount: 7, ingredient: BEAN_SAUSAGE }
-    ]
+    a: HONEY,
+    b: FANCY_APPLE,
+    c: BEAN_SAUSAGE
   },
   skill: ChargeStrengthS
 });
@@ -539,16 +455,9 @@ export const DITTO: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 5, ingredient: PURE_OIL },
-      { amount: 3, ingredient: LARGE_LEEK }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: PURE_OIL },
-      { amount: 5, ingredient: LARGE_LEEK },
-      { amount: 3, ingredient: SLOWPOKE_TAIL }
-    ]
+    a: PURE_OIL,
+    b: LARGE_LEEK,
+    c: SLOWPOKE_TAIL
   },
   skill: SkillCopyTransform
 });
@@ -566,16 +475,9 @@ export const DRATINI: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: FIERY_HERB }],
-    ingredient30: [
-      { amount: 5, ingredient: FIERY_HERB },
-      { amount: 4, ingredient: GREENGRASS_CORN }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: FIERY_HERB },
-      { amount: 7, ingredient: GREENGRASS_CORN },
-      { amount: 8, ingredient: PURE_OIL }
-    ]
+    a: FIERY_HERB,
+    b: GREENGRASS_CORN,
+    c: PURE_OIL
   },
   skill: ChargeEnergyS
 });
@@ -615,16 +517,9 @@ export const WOOPER: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: TASTY_MUSHROOM }],
-    ingredient30: [
-      { amount: 5, ingredient: TASTY_MUSHROOM },
-      { amount: 6, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: TASTY_MUSHROOM },
-      { amount: 10, ingredient: SOFT_POTATO },
-      { amount: 12, ingredient: BEAN_SAUSAGE }
-    ]
+    a: TASTY_MUSHROOM,
+    b: SOFT_POTATO,
+    c: BEAN_SAUSAGE
   },
   skill: ChargeEnergyS
 });
@@ -642,16 +537,9 @@ export const WOOPER_PALDEAN: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SOOTHING_CACAO }],
-    ingredient30: [
-      { amount: 5, ingredient: SOOTHING_CACAO },
-      { amount: 4, ingredient: ROUSING_COFFEE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SOOTHING_CACAO },
-      { amount: 7, ingredient: ROUSING_COFFEE },
-      { amount: 9, ingredient: SOFT_POTATO }
-    ]
+    a: SOOTHING_CACAO,
+    b: ROUSING_COFFEE,
+    c: SOFT_POTATO
   },
   skill: ChargeEnergyS
 });
@@ -680,16 +568,9 @@ export const DELIBIRD: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: FANCY_EGG }],
-    ingredient30: [
-      { amount: 5, ingredient: FANCY_EGG },
-      { amount: 6, ingredient: FANCY_APPLE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: FANCY_EGG },
-      { amount: 9, ingredient: FANCY_APPLE },
-      { amount: 5, ingredient: SOOTHING_CACAO }
-    ]
+    a: FANCY_EGG,
+    b: FANCY_APPLE,
+    c: SOOTHING_CACAO
   },
   skill: IngredientMagnetS
 });
@@ -718,16 +599,9 @@ export const LARVITAR: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: WARMING_GINGER }],
-    ingredient30: [
-      { amount: 5, ingredient: WARMING_GINGER },
-      { amount: 5, ingredient: GREENGRASS_SOYBEANS }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: WARMING_GINGER },
-      { amount: 8, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 8, ingredient: BEAN_SAUSAGE }
-    ]
+    a: WARMING_GINGER,
+    b: GREENGRASS_SOYBEANS,
+    c: BEAN_SAUSAGE
   },
   skill: ChargeEnergyS
 });
@@ -768,16 +642,9 @@ export const MAWILE: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 5, ingredient: PURE_OIL },
-      { amount: 4, ingredient: GREENGRASS_CORN }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: PURE_OIL },
-      { amount: 6, ingredient: GREENGRASS_CORN },
-      { amount: 8, ingredient: SNOOZY_TOMATO }
-    ]
+    a: PURE_OIL,
+    b: GREENGRASS_CORN,
+    c: SNOOZY_TOMATO
   },
   skill: IngredientDrawSHyperCutter
 });
@@ -795,16 +662,9 @@ export const ARON: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
-    ingredient30: [
-      { amount: 5, ingredient: BEAN_SAUSAGE },
-      { amount: 3, ingredient: ROUSING_COFFEE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: BEAN_SAUSAGE },
-      { amount: 5, ingredient: ROUSING_COFFEE },
-      { amount: 7, ingredient: GREENGRASS_SOYBEANS }
-    ]
+    a: BEAN_SAUSAGE,
+    b: ROUSING_COFFEE,
+    c: GREENGRASS_SOYBEANS
   },
   skill: ChargeEnergyS
 });
@@ -844,16 +704,9 @@ export const ABSOL: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SOOTHING_CACAO }],
-    ingredient30: [
-      { amount: 5, ingredient: SOOTHING_CACAO },
-      { amount: 8, ingredient: FANCY_APPLE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SOOTHING_CACAO },
-      { amount: 12, ingredient: FANCY_APPLE },
-      { amount: 7, ingredient: TASTY_MUSHROOM }
-    ]
+    a: SOOTHING_CACAO,
+    b: FANCY_APPLE,
+    c: TASTY_MUSHROOM
   },
   skill: ChargeStrengthS
 });
@@ -871,16 +724,9 @@ export const SHINX: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-    ingredient30: [
-      { amount: 5, ingredient: SNOOZY_TOMATO },
-      { amount: 4, ingredient: PURE_OIL }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SNOOZY_TOMATO },
-      { amount: 7, ingredient: PURE_OIL },
-      { amount: 5, ingredient: ROUSING_COFFEE }
-    ]
+    a: SNOOZY_TOMATO,
+    b: PURE_OIL,
+    c: ROUSING_COFFEE
   },
   skill: CookingPowerUpS
 });
@@ -942,15 +788,8 @@ export const CROAGUNK: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 5, ingredient: PURE_OIL },
-      { amount: 5, ingredient: BEAN_SAUSAGE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: PURE_OIL },
-      { amount: 8, ingredient: BEAN_SAUSAGE }
-    ]
+    a: PURE_OIL,
+    b: BEAN_SAUSAGE
   },
   skill: ChargeStrengthS
 });
@@ -979,16 +818,9 @@ export const SNOVER: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-    ingredient30: [
-      { amount: 5, ingredient: SNOOZY_TOMATO },
-      { amount: 4, ingredient: FANCY_EGG }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SNOOZY_TOMATO },
-      { amount: 7, ingredient: FANCY_EGG },
-      { amount: 5, ingredient: TASTY_MUSHROOM }
-    ]
+    a: SNOOZY_TOMATO,
+    b: FANCY_EGG,
+    c: TASTY_MUSHROOM
   },
   skill: ChargeStrengthSRange
 });
@@ -1017,16 +849,9 @@ export const PUMPKABOO_SMALL: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: PLUMP_PUMPKIN }],
-    ingredient30: [
-      { amount: 5, ingredient: PLUMP_PUMPKIN },
-      { amount: 11, ingredient: GREENGRASS_SOYBEANS }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: PLUMP_PUMPKIN },
-      { amount: 18, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 15, ingredient: SOFT_POTATO }
-    ]
+    a: PLUMP_PUMPKIN,
+    b: GREENGRASS_SOYBEANS,
+    c: SOFT_POTATO
   },
   skill: ChargeStrengthS
 });
@@ -1112,16 +937,9 @@ export const GRUBBIN: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: ROUSING_COFFEE }],
-    ingredient30: [
-      { amount: 5, ingredient: ROUSING_COFFEE },
-      { amount: 4, ingredient: TASTY_MUSHROOM }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: ROUSING_COFFEE },
-      { amount: 7, ingredient: TASTY_MUSHROOM },
-      { amount: 11, ingredient: HONEY }
-    ]
+    a: ROUSING_COFFEE,
+    b: TASTY_MUSHROOM,
+    c: HONEY
   },
   skill: ChargeStrengthS
 });
@@ -1161,16 +979,9 @@ export const STUFFUL: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: GREENGRASS_CORN }],
-    ingredient30: [
-      { amount: 5, ingredient: GREENGRASS_CORN },
-      { amount: 6, ingredient: BEAN_SAUSAGE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: GREENGRASS_CORN },
-      { amount: 10, ingredient: BEAN_SAUSAGE },
-      { amount: 9, ingredient: FANCY_EGG }
-    ]
+    a: GREENGRASS_CORN,
+    b: BEAN_SAUSAGE,
+    c: FANCY_EGG
   },
   skill: ChargeStrengthSRange
 });
@@ -1199,16 +1010,9 @@ export const COMFEY: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: GREENGRASS_CORN }],
-    ingredient30: [
-      { amount: 5, ingredient: GREENGRASS_CORN },
-      { amount: 6, ingredient: WARMING_GINGER }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: GREENGRASS_CORN },
-      { amount: 9, ingredient: WARMING_GINGER },
-      { amount: 7, ingredient: SOOTHING_CACAO }
-    ]
+    a: GREENGRASS_CORN,
+    b: WARMING_GINGER,
+    c: SOOTHING_CACAO
   },
   skill: EnergizingCheerS
 });
@@ -1226,16 +1030,9 @@ export const CRAMORANT: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 5, ingredient: PURE_OIL },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: PURE_OIL },
-      { amount: 7, ingredient: SOFT_POTATO },
-      { amount: 8, ingredient: FANCY_EGG }
-    ]
+    a: PURE_OIL,
+    b: SOFT_POTATO,
+    c: FANCY_EGG
   },
   skill: TastyChanceS
 });
@@ -1253,16 +1050,9 @@ export const SPRIGATITO: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: SOFT_POTATO }],
-    ingredient30: [
-      { amount: 5, ingredient: SOFT_POTATO },
-      { amount: 6, ingredient: MOOMOO_MILK }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: SOFT_POTATO },
-      { amount: 9, ingredient: MOOMOO_MILK },
-      { amount: 8, ingredient: WARMING_GINGER }
-    ]
+    a: SOFT_POTATO,
+    b: MOOMOO_MILK,
+    c: WARMING_GINGER
   },
   skill: CookingPowerUpS
 });
@@ -1303,16 +1093,9 @@ export const FUECOCO: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 5, ingredient: FANCY_APPLE },
-      { amount: 4, ingredient: BEAN_SAUSAGE }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: FANCY_APPLE },
-      { amount: 6, ingredient: BEAN_SAUSAGE },
-      { amount: 5, ingredient: FIERY_HERB }
-    ]
+    a: FANCY_APPLE,
+    b: BEAN_SAUSAGE,
+    c: FIERY_HERB
   },
   skill: ChargeEnergyS
 });
@@ -1353,16 +1136,9 @@ export const QUAXLY: Pokemon = createIngredientSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 2, ingredient: GREENGRASS_SOYBEANS }],
-    ingredient30: [
-      { amount: 5, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 2, ingredient: LARGE_LEEK }
-    ],
-    ingredient60: [
-      { amount: 7, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 4, ingredient: LARGE_LEEK },
-      { amount: 6, ingredient: PURE_OIL }
-    ]
+    a: GREENGRASS_SOYBEANS,
+    b: LARGE_LEEK,
+    c: PURE_OIL
   },
   skill: ChargeStrengthM
 });
