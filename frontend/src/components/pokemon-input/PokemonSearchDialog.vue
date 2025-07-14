@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="dialogStore.pokemonSearchDialog" max-width="600px">
-    <PokemonSearch :standalone="false" @cancel="dialogStore.closePokemonSearch" @save="handlePokemonSave" />
+    <PokemonSearch @cancel="dialogStore.closePokemonSearch" @save="handlePokemonSave" />
   </v-dialog>
 </template>
 

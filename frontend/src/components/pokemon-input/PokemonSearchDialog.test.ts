@@ -86,7 +86,7 @@ describe('PokemonSearchDialog', () => {
   })
 
   describe('PokemonSearch Integration', () => {
-    it('should render PokemonSearch with standalone=false', async () => {
+    it('should render PokemonSearch component', async () => {
       dialogStore.openPokemonSearch(vi.fn())
 
       wrapper = mountComponent()
@@ -94,7 +94,6 @@ describe('PokemonSearchDialog', () => {
 
       const pokemonSearch = wrapper.findComponent({ name: 'PokemonSearch' })
       expect(pokemonSearch.exists()).toBe(true)
-      expect(pokemonSearch.props('standalone')).toBe(false)
     })
 
     it('should handle cancel event from PokemonSearch', async () => {

@@ -18,7 +18,7 @@
       </v-btn>
     </template>
 
-    <PokemonSearch :standalone="false" @cancel="closeMenu" @save="selectPokemon" />
+    <PokemonSearch @cancel="closeMenu" @save="selectPokemon" />
   </v-dialog>
 </template>
 
