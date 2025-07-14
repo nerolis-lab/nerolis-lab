@@ -86,16 +86,9 @@ export const PIKACHU_HOLIDAY: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: WARMING_GINGER }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 3, ingredient: FANCY_EGG },
-      { amount: 3, ingredient: WARMING_GINGER }
-    ]
+    a: FANCY_APPLE,
+    b: WARMING_GINGER,
+    c: FANCY_EGG
   },
   skill: DreamShardMagnetS
 });
@@ -113,16 +106,9 @@ export const JIGGLYPUFF: Pokemon = createSkillSpecialist({
   previousEvolutions: 1,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: HONEY }],
-    ingredient30: [
-      { amount: 2, ingredient: HONEY },
-      { amount: 2, ingredient: PURE_OIL }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: HONEY },
-      { amount: 3, ingredient: PURE_OIL },
-      { amount: 2, ingredient: SOOTHING_CACAO }
-    ]
+    a: HONEY,
+    b: PURE_OIL,
+    c: SOOTHING_CACAO
   },
   skill: EnergyForEveryone
 });
@@ -151,15 +137,8 @@ export const MEOWTH: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
-    ingredient30: [
-      { amount: 2, ingredient: MOOMOO_MILK },
-      { amount: 2, ingredient: BEAN_SAUSAGE }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: MOOMOO_MILK },
-      { amount: 3, ingredient: BEAN_SAUSAGE }
-    ]
+    a: MOOMOO_MILK,
+    b: BEAN_SAUSAGE
   },
   skill: DreamShardMagnetS
 });
@@ -188,16 +167,9 @@ export const PSYDUCK: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: SOOTHING_CACAO }],
-    ingredient30: [
-      { amount: 2, ingredient: SOOTHING_CACAO },
-      { amount: 4, ingredient: FANCY_APPLE }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: SOOTHING_CACAO },
-      { amount: 6, ingredient: FANCY_APPLE },
-      { amount: 5, ingredient: BEAN_SAUSAGE }
-    ]
+    a: SOOTHING_CACAO,
+    b: FANCY_APPLE,
+    c: BEAN_SAUSAGE
   },
   skill: ChargeStrengthSRange
 });
@@ -226,16 +198,9 @@ export const GROWLITHE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FIERY_HERB }],
-    ingredient30: [
-      { amount: 2, ingredient: FIERY_HERB },
-      { amount: 3, ingredient: BEAN_SAUSAGE }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FIERY_HERB },
-      { amount: 5, ingredient: BEAN_SAUSAGE },
-      { amount: 5, ingredient: MOOMOO_MILK }
-    ]
+    a: FIERY_HERB,
+    b: BEAN_SAUSAGE,
+    c: MOOMOO_MILK
   },
   skill: ExtraHelpfulS
 });
@@ -264,16 +229,9 @@ export const SLOWPOKE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: SOOTHING_CACAO }],
-    ingredient30: [
-      { amount: 2, ingredient: SOOTHING_CACAO },
-      { amount: 1, ingredient: SLOWPOKE_TAIL }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: SOOTHING_CACAO },
-      { amount: 2, ingredient: SLOWPOKE_TAIL },
-      { amount: 5, ingredient: SNOOZY_TOMATO }
-    ]
+    a: SOOTHING_CACAO,
+    b: SLOWPOKE_TAIL,
+    c: SNOOZY_TOMATO
   },
   skill: EnergizingCheerS
 });
@@ -302,15 +260,8 @@ export const MAGNEMITE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 2, ingredient: PURE_OIL },
-      { amount: 2, ingredient: FIERY_HERB }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: PURE_OIL },
-      { amount: 3, ingredient: FIERY_HERB }
-    ]
+    a: PURE_OIL,
+    b: FIERY_HERB
   },
   skill: CookingPowerUpS
 });
@@ -339,16 +290,9 @@ export const EEVEE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
-    ingredient30: [
-      { amount: 2, ingredient: MOOMOO_MILK },
-      { amount: 1, ingredient: SOOTHING_CACAO }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: MOOMOO_MILK },
-      { amount: 2, ingredient: SOOTHING_CACAO },
-      { amount: 3, ingredient: BEAN_SAUSAGE }
-    ]
+    a: MOOMOO_MILK,
+    b: SOOTHING_CACAO,
+    c: BEAN_SAUSAGE
   },
   skill: IngredientMagnetS
 });
@@ -366,16 +310,9 @@ export const EEVEE_HALLOWEEN: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: PLUMP_PUMPKIN }],
-    ingredient30: [
-      { amount: 2, ingredient: PLUMP_PUMPKIN },
-      { amount: 4, ingredient: SOOTHING_CACAO }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: PLUMP_PUMPKIN },
-      { amount: 6, ingredient: SOOTHING_CACAO },
-      { amount: 9, ingredient: MOOMOO_MILK }
-    ]
+    a: PLUMP_PUMPKIN,
+    b: SOOTHING_CACAO,
+    c: MOOMOO_MILK
   },
   skill: IngredientMagnetS
 });
@@ -443,16 +380,9 @@ export const TOGEPI: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_EGG }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_EGG },
-      { amount: 2, ingredient: WARMING_GINGER }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_EGG },
-      { amount: 4, ingredient: WARMING_GINGER },
-      { amount: 3, ingredient: SOOTHING_CACAO }
-    ]
+    a: FANCY_EGG,
+    b: WARMING_GINGER,
+    c: SOOTHING_CACAO
   },
   skill: Metronome
 });
@@ -481,15 +411,8 @@ export const MAREEP: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FIERY_HERB }],
-    ingredient30: [
-      { amount: 2, ingredient: FIERY_HERB },
-      { amount: 3, ingredient: FANCY_EGG }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FIERY_HERB },
-      { amount: 4, ingredient: FANCY_EGG }
-    ]
+    a: FIERY_HERB,
+    b: FANCY_EGG
   },
   skill: ChargeStrengthM
 });
@@ -529,16 +452,9 @@ export const SUDOWOODO: Pokemon = createSkillSpecialist({
   previousEvolutions: 1,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: SNOOZY_TOMATO }],
-    ingredient30: [
-      { amount: 2, ingredient: SNOOZY_TOMATO },
-      { amount: 2, ingredient: GREENGRASS_SOYBEANS }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: SNOOZY_TOMATO },
-      { amount: 4, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 2, ingredient: TASTY_MUSHROOM }
-    ]
+    a: SNOOZY_TOMATO,
+    b: GREENGRASS_SOYBEANS,
+    c: TASTY_MUSHROOM
   },
   skill: ChargeStrengthM
 });
@@ -582,16 +498,9 @@ export const MURKROW: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: ROUSING_COFFEE }],
-    ingredient30: [
-      { amount: 2, ingredient: ROUSING_COFFEE },
-      { amount: 3, ingredient: GREENGRASS_SOYBEANS }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: ROUSING_COFFEE },
-      { amount: 6, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 4, ingredient: FIERY_HERB }
-    ]
+    a: ROUSING_COFFEE,
+    b: GREENGRASS_SOYBEANS,
+    c: FIERY_HERB
   },
   skill: IngredientDrawSSuperLuck
 });
@@ -620,16 +529,9 @@ export const WOBBUFFET: Pokemon = createSkillSpecialist({
   previousEvolutions: 1,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_APPLE },
-      { amount: 1, ingredient: TASTY_MUSHROOM }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: TASTY_MUSHROOM },
-      { amount: 3, ingredient: PURE_OIL }
-    ]
+    a: FANCY_APPLE,
+    b: TASTY_MUSHROOM,
+    c: PURE_OIL
   },
   skill: EnergizingCheerS
 });
@@ -647,16 +549,9 @@ export const HERACROSS: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: HONEY }],
-    ingredient30: [
-      { amount: 2, ingredient: HONEY },
-      { amount: 1, ingredient: TASTY_MUSHROOM }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: HONEY },
-      { amount: 2, ingredient: TASTY_MUSHROOM },
-      { amount: 4, ingredient: BEAN_SAUSAGE }
-    ]
+    a: HONEY,
+    b: TASTY_MUSHROOM,
+    c: BEAN_SAUSAGE
   },
   skill: IngredientMagnetS
 });
@@ -674,16 +569,9 @@ export const RAIKOU: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
-    ingredient30: [
-      { amount: 2, ingredient: BEAN_SAUSAGE },
-      { amount: 2, ingredient: FIERY_HERB }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: BEAN_SAUSAGE },
-      { amount: 3, ingredient: FIERY_HERB },
-      { amount: 2, ingredient: LARGE_LEEK }
-    ]
+    a: BEAN_SAUSAGE,
+    b: FIERY_HERB,
+    c: LARGE_LEEK
   },
   skill: HelperBoost
 });
@@ -701,16 +589,9 @@ export const ENTEI: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 2, ingredient: PURE_OIL },
-      { amount: 2, ingredient: SNOOZY_TOMATO }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: PURE_OIL },
-      { amount: 4, ingredient: SNOOZY_TOMATO },
-      { amount: 3, ingredient: TASTY_MUSHROOM }
-    ]
+    a: PURE_OIL,
+    b: SNOOZY_TOMATO,
+    c: TASTY_MUSHROOM
   },
   skill: HelperBoost
 });
@@ -728,16 +609,9 @@ export const SUICUNE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: PURE_OIL }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 3, ingredient: PURE_OIL },
-      { amount: 2, ingredient: GREENGRASS_CORN }
-    ]
+    a: FANCY_APPLE,
+    b: PURE_OIL,
+    c: GREENGRASS_CORN
   },
   skill: HelperBoost
 });
@@ -755,16 +629,9 @@ export const TREECKO: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_EGG }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_EGG },
-      { amount: 2, ingredient: ROUSING_COFFEE }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_EGG },
-      { amount: 3, ingredient: ROUSING_COFFEE },
-      { amount: 2, ingredient: LARGE_LEEK }
-    ]
+    a: FANCY_EGG,
+    b: ROUSING_COFFEE,
+    c: LARGE_LEEK
   },
   skill: BerryBurst
 });
@@ -804,16 +671,9 @@ export const RALTS: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_APPLE },
-      { amount: 1, ingredient: GREENGRASS_CORN }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: GREENGRASS_CORN },
-      { amount: 2, ingredient: LARGE_LEEK }
-    ]
+    a: FANCY_APPLE,
+    b: GREENGRASS_CORN,
+    c: LARGE_LEEK
   },
   skill: EnergyForEveryone
 });
@@ -853,16 +713,9 @@ export const SABLEYE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 2, ingredient: PURE_OIL },
-      { amount: 2, ingredient: TASTY_MUSHROOM }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: PURE_OIL },
-      { amount: 3, ingredient: TASTY_MUSHROOM },
-      { amount: 3, ingredient: SOOTHING_CACAO }
-    ]
+    a: PURE_OIL,
+    b: TASTY_MUSHROOM,
+    c: SOOTHING_CACAO
   },
   skill: DreamShardMagnetSRange
 });
@@ -880,16 +733,9 @@ export const PLUSLE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: ROUSING_COFFEE }],
-    ingredient30: [
-      { amount: 2, ingredient: ROUSING_COFFEE },
-      { amount: 2, ingredient: LARGE_LEEK }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: ROUSING_COFFEE },
-      { amount: 3, ingredient: LARGE_LEEK },
-      { amount: 6, ingredient: MOOMOO_MILK }
-    ]
+    a: ROUSING_COFFEE,
+    b: LARGE_LEEK,
+    c: MOOMOO_MILK
   },
   skill: IngredientMagnetSPlus
 });
@@ -907,16 +753,9 @@ export const MINUN: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: HONEY }],
-    ingredient30: [
-      { amount: 2, ingredient: HONEY },
-      { amount: 2, ingredient: FANCY_EGG }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: HONEY },
-      { amount: 3, ingredient: FANCY_EGG },
-      { amount: 4, ingredient: MOOMOO_MILK }
-    ]
+    a: HONEY,
+    b: FANCY_EGG,
+    c: MOOMOO_MILK
   },
   skill: CookingPowerUpSMinus
 });
@@ -934,16 +773,9 @@ export const GULPIN: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: GREENGRASS_SOYBEANS }],
-    ingredient30: [
-      { amount: 2, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 1, ingredient: TASTY_MUSHROOM }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: GREENGRASS_SOYBEANS },
-      { amount: 2, ingredient: TASTY_MUSHROOM },
-      { amount: 4, ingredient: HONEY }
-    ]
+    a: GREENGRASS_SOYBEANS,
+    b: TASTY_MUSHROOM,
+    c: HONEY
   },
   skill: DreamShardMagnetSRange
 });
@@ -994,16 +826,9 @@ export const DRIFLOON: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: GREENGRASS_CORN }],
-    ingredient30: [
-      { amount: 2, ingredient: GREENGRASS_CORN },
-      { amount: 3, ingredient: PURE_OIL }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: GREENGRASS_CORN },
-      { amount: 4, ingredient: PURE_OIL },
-      { amount: 4, ingredient: SOFT_POTATO }
-    ]
+    a: GREENGRASS_CORN,
+    b: PURE_OIL,
+    c: SOFT_POTATO
   },
   skill: ChargeStrengthSStockpile
 });
@@ -1043,16 +868,9 @@ export const RIOLU: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: PURE_OIL }],
-    ingredient30: [
-      { amount: 2, ingredient: PURE_OIL },
-      { amount: 2, ingredient: SOFT_POTATO }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: PURE_OIL },
-      { amount: 4, ingredient: SOFT_POTATO },
-      { amount: 4, ingredient: FANCY_EGG }
-    ]
+    a: PURE_OIL,
+    b: SOFT_POTATO,
+    c: FANCY_EGG
   },
   skill: DreamShardMagnetS
 });
@@ -1143,16 +961,9 @@ export const CRESSELIA: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: WARMING_GINGER }],
-    ingredient30: [
-      { amount: 2, ingredient: WARMING_GINGER },
-      { amount: 2, ingredient: SOOTHING_CACAO }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: WARMING_GINGER },
-      { amount: 3, ingredient: SOOTHING_CACAO },
-      { amount: 4, ingredient: SNOOZY_TOMATO }
-    ]
+    a: WARMING_GINGER,
+    b: SOOTHING_CACAO,
+    c: SNOOZY_TOMATO
   },
   skill: EnergyForEveryoneLunarBlessing
 });
@@ -1170,16 +981,9 @@ export const RUFFLET: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
-    ingredient30: [
-      { amount: 2, ingredient: BEAN_SAUSAGE },
-      { amount: 2, ingredient: GREENGRASS_CORN }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: BEAN_SAUSAGE },
-      { amount: 3, ingredient: GREENGRASS_CORN },
-      { amount: 2, ingredient: ROUSING_COFFEE }
-    ]
+    a: BEAN_SAUSAGE,
+    b: GREENGRASS_CORN,
+    c: ROUSING_COFFEE
   },
   skill: BerryBurst
 });
@@ -1221,16 +1025,9 @@ export const DEDENNE: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_APPLE },
-      { amount: 1, ingredient: SOOTHING_CACAO }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: SOOTHING_CACAO },
-      { amount: 2, ingredient: GREENGRASS_CORN }
-    ]
+    a: FANCY_APPLE,
+    b: SOOTHING_CACAO,
+    c: GREENGRASS_CORN
   },
   skill: TastyChanceS
 });
@@ -1248,16 +1045,9 @@ export const MIMIKYU: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: FANCY_APPLE }],
-    ingredient30: [
-      { amount: 2, ingredient: FANCY_APPLE },
-      { amount: 1, ingredient: ROUSING_COFFEE }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: ROUSING_COFFEE },
-      { amount: 2, ingredient: TASTY_MUSHROOM }
-    ]
+    a: FANCY_APPLE,
+    b: ROUSING_COFFEE,
+    c: TASTY_MUSHROOM
   },
   skill: BerryBurstDisguise
 });
@@ -1275,16 +1065,9 @@ export const TOXEL: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
-    ingredient30: [
-      { amount: 2, ingredient: MOOMOO_MILK },
-      { amount: 2, ingredient: FANCY_APPLE }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: MOOMOO_MILK },
-      { amount: 4, ingredient: FANCY_APPLE },
-      { amount: 2, ingredient: LARGE_LEEK }
-    ]
+    a: MOOMOO_MILK,
+    b: FANCY_APPLE,
+    c: LARGE_LEEK
   },
   skill: IngredientMagnetS
 });
@@ -1326,16 +1109,9 @@ export const PAWMI: Pokemon = createSkillSpecialist({
   previousEvolutions: 0,
   remainingEvolutions: 2,
   ingredients: {
-    ingredient0: [{ amount: 1, ingredient: SOOTHING_CACAO }],
-    ingredient30: [
-      { amount: 2, ingredient: SOOTHING_CACAO },
-      { amount: 3, ingredient: MOOMOO_MILK }
-    ],
-    ingredient60: [
-      { amount: 4, ingredient: SOOTHING_CACAO },
-      { amount: 6, ingredient: MOOMOO_MILK },
-      { amount: 5, ingredient: FANCY_EGG }
-    ]
+    a: SOOTHING_CACAO,
+    b: MOOMOO_MILK,
+    c: FANCY_EGG
   },
   skill: EnergyForEveryone
 });
