@@ -1,3 +1,23 @@
+# [2.22.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.3...v2.22.0) (2025-07-14)
+
+
+### Bug Fixes
+
+* adding a pokemon from pokedex in search should open PokemonInput ([974ba4f](https://github.com/nerolis-lab/nerolis-lab/commit/974ba4f34b9fd4fc8f5a2884700dc3c601d89149))
+* calculate RP for mons added from pokedex collection ([e7f1790](https://github.com/nerolis-lab/nerolis-lab/commit/e7f1790cfa70aa94c7ccfe18461a63e4002ede99))
+* keyboard now opens for CustomSearchBar on iOS ([a212d75](https://github.com/nerolis-lab/nerolis-lab/commit/a212d758782131d218c4bf2bfd17eb40f96c09a5))
+* **pokemon search:** filter input now supports instance name ([cbba3e0](https://github.com/nerolis-lab/nerolis-lab/commit/cbba3e0f88668a6e779bc476758978ac6c28f5a6))
+* **pokemon search:** long display names now truncate ([da08d4d](https://github.com/nerolis-lab/nerolis-lab/commit/da08d4dfe0a08ee31f556157a637093b699c16eb))
+* **pokemon search:** pokemon button now swaps pokedex mons ([d558c8c](https://github.com/nerolis-lab/nerolis-lab/commit/d558c8c76d362312cd1cdf34103b5d0d64404354))
+* use external id as identifier in pokebox ([7c8e8a0](https://github.com/nerolis-lab/nerolis-lab/commit/7c8e8a00a807523825ba763fa4658d6ed9775b4c))
+
+
+### Features
+
+* adds hoenn starters ([74f8019](https://github.com/nerolis-lab/nerolis-lab/commit/74f8019b3343554c16f0c0afd94ab32bb5768dce))
+* **pokemon search:** clear button now updates the filter ([697d046](https://github.com/nerolis-lab/nerolis-lab/commit/697d0469c023134a56fe9a786d3fbaef3e510e06))
+* redesign Pokémon search ([4772e70](https://github.com/nerolis-lab/nerolis-lab/commit/4772e70c42bb4d8bfda0543c2a2cd0748a1cc359))
+
 ## [2.21.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.2...v2.21.3) (2025-07-09)
 
 
