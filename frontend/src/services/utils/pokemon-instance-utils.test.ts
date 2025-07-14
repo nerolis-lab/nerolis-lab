@@ -3,6 +3,7 @@ import { mocks } from '@/vitest'
 import {
   CarrySizeUtils,
   ingredient,
+  RP,
   subskill,
   type PokemonInstanceExt,
   type PokemonInstanceWithMeta
@@ -150,7 +151,7 @@ describe('createDefaultPokemonInstance', () => {
     expect(result.ingredients[0].level).toBe(0)
     expect(result.ingredients[1].level).toBe(30)
     expect(result.ingredients[2].level).toBe(60)
-    expect(result.rp).toBe(0)
+    expect(result.rp).toBe(new RP(result).calc())
     expect(result.version).toBe(0)
     expect(result.carrySize).toBe(CarrySizeUtils.baseCarrySize(mockPokemon))
     expect(typeof result.externalId).toBe('string')

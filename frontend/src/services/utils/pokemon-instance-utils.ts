@@ -20,7 +20,7 @@ import {
 class PokemonInstanceUtilsImpl {
   public createDefaultPokemonInstance(pokemon: Pokemon, attrs?: Partial<PokemonInstanceExt>): PokemonInstanceExt {
     const gender = attrs?.gender ?? getRandomGender(pokemon)
-    return {
+    const instance = {
       pokemon,
       carrySize: CarrySizeUtils.baseCarrySize(pokemon),
       externalId: uuid.v4(),
@@ -41,6 +41,12 @@ class PokemonInstanceUtilsImpl {
       rp: 0,
       version: 0,
       ...attrs
+    }
+
+    const rp = new RP(instance).calc()
+    return {
+      ...instance,
+      rp
     }
   }
 
