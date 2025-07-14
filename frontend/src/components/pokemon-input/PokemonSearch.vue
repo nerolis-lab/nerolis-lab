@@ -285,8 +285,17 @@ const selectFirstOption = () => {
 }
 
 const selectPokemon = (instance: PokemonInstanceExt) => {
-  dialogStore.handlePokemonSelected(instance)
-  emit('save', instance)
+  if (pokemonSearchStore.showPokebox) {
+    // For Pokébox Pokémon, emit directly
+    dialogStore.handlePokemonSelected(instance)
+    emit('save', instance)
+  } else {
+    // For Pokédex Pokémon, open the PokemonInputDialog first
+    dialogStore.openPokemonInput((updatedInstance: PokemonInstanceExt) => {
+      dialogStore.handlePokemonSelected(updatedInstance)
+      emit('save', updatedInstance)
+    }, instance)
+  }
 }
 
 const closePokemonSearch = () => {

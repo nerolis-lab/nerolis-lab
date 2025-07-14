@@ -1,5 +1,6 @@
 import PokemonSearch from '@/components/pokemon-input/PokemonSearch.vue'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
+import { usePokemonSearchStore } from '@/stores/pokemon-search-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
@@ -14,9 +15,11 @@ vi.mock('@/services/user/user-service', () => ({
 describe('PokemonSearch', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonSearch>>
   let dialogStore: ReturnType<typeof useDialogStore>
+  let pokemonSearchStore: ReturnType<typeof usePokemonSearchStore>
 
   beforeEach(() => {
     dialogStore = useDialogStore()
+    pokemonSearchStore = usePokemonSearchStore()
 
     dialogStore.pokemonSearchDialog = true
 
@@ -34,7 +37,9 @@ describe('PokemonSearch', () => {
     expect(dialogStore.pokemonSearchDialog).toBe(false)
   })
 
-  it('calls callback when Pokemon is selected', async () => {
+  it('calls callback when Pokemon is selected from Pokebox', async () => {
+    pokemonSearchStore.showPokebox = true
+
     const callback = vi.fn()
     dialogStore.openPokemonSearch(callback)
 
@@ -57,6 +62,64 @@ describe('PokemonSearch', () => {
       // Count should be different after filtering
       const filteredPokemon = wrapper.findAll('.v-avatar')
       expect(filteredPokemon.length).toBeLessThanOrEqual(initialCount)
+    }
+  })
+
+  it('opens PokemonInputDialog when selecting from Pokedex', async () => {
+    pokemonSearchStore.showPokebox = false
+
+    const openPokemonInputSpy = vi.spyOn(dialogStore, 'openPokemonInput')
+    const callback = vi.fn()
+    dialogStore.openPokemonSearch(callback)
+
+    // Click on a Pokemon avatar
+    const avatars = wrapper.findAll('.v-avatar')
+    if (avatars.length > 0) {
+      await avatars[0].trigger('click')
+
+      // Should open PokemonInputDialog
+      expect(openPokemonInputSpy).toHaveBeenCalledWith(
+        expect.any(Function),
+        expect.objectContaining({
+          pokemon: expect.any(Object)
+        })
+      )
+
+      expect(callback).not.toHaveBeenCalled()
+    }
+  })
+
+  it('emits directly when selecting from Pokebox', async () => {
+    pokemonSearchStore.showPokebox = true
+
+    const handlePokemonSelectedSpy = vi.spyOn(dialogStore, 'handlePokemonSelected')
+    const callback = vi.fn()
+    dialogStore.openPokemonSearch(callback)
+
+    // Click on a Pokemon avatar
+    const avatars = wrapper.findAll('.v-avatar')
+    if (avatars.length > 0) {
+      await avatars[0].trigger('click')
+
+      // Should handle selection directly
+      expect(handlePokemonSelectedSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          pokemon: expect.any(Object)
+        })
+      )
+    }
+  })
+
+  it('toggles between Pokebox and Pokedex view', async () => {
+    const pokeboxButton = wrapper.find('v-btn[title*="Pokebox"]')
+
+    // Initially showing Pokedex
+    expect(pokemonSearchStore.showPokebox).toBe(false)
+
+    // Click pokebox button
+    if (pokeboxButton.exists()) {
+      await pokeboxButton.trigger('click')
+      expect(pokemonSearchStore.showPokebox).toBe(true)
     }
   })
 })
