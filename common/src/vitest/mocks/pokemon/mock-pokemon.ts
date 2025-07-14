@@ -3,6 +3,7 @@ import { BALANCED_GENDER } from '../../../types/gender/gender';
 import { SLOWPOKE_TAIL } from '../../../types/ingredient/ingredients';
 import { Mainskill } from '../../../types/mainskill/mainskill';
 import type { Pokemon } from '../../../types/pokemon/pokemon';
+import { basePokemon } from '../../../utils';
 
 export const mockMainskill = new (class extends Mainskill {
   name = 'mock skill';
@@ -16,7 +17,7 @@ export const mockMainskill = new (class extends Mainskill {
 })(false, true);
 
 export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
-  return {
+  const base: Pokemon = basePokemon({
     name: 'MOCKEMON',
     displayName: 'Mockemon',
     pokedexNumber: 0,
@@ -32,7 +33,10 @@ export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
     ingredient0: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
     ingredient30: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
     ingredient60: [{ amount: 0, ingredient: SLOWPOKE_TAIL }],
-    skill: mockMainskill,
+    skill: mockMainskill
+  });
+  return {
+    ...base,
     ...attrs
   };
 }

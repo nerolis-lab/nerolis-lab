@@ -1,3 +1,4 @@
+import { basePokemon } from '../../utils';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import { WIKI } from '../berry/berries';
 import { GENDER_UNKNOWN } from '../gender';
@@ -15,7 +16,7 @@ import {
 import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strength-m-bad-dreams';
 import type { Pokemon } from './pokemon';
 
-export const DARKRAI: Pokemon = {
+export const DARKRAI: Pokemon = basePokemon({
   name: 'DARKRAI',
   displayName: 'Darkrai',
   pokedexNumber: 491,
@@ -61,7 +62,7 @@ export const DARKRAI: Pokemon = {
     { amount: 4, ingredient: ROUSING_COFFEE }
   ],
   skill: ChargeStrengthMBadDreams
-};
+});
 
 export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [DARKRAI];
 export const INFERIOR_ALL_SPECIALISTS: Pokemon[] = [];

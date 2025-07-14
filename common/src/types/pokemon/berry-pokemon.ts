@@ -1,3 +1,4 @@
+import { basePokemon } from '../../utils';
 import { evolvesFrom, evolvesInto } from '../../utils/pokemon-utils/evolution-utils';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import {
@@ -55,7 +56,7 @@ import {
 
 import type { Pokemon } from './pokemon';
 
-export const CATERPIE: Pokemon = {
+export const CATERPIE: Pokemon = basePokemon({
   name: 'CATERPIE',
   displayName: 'Caterpie',
   pokedexNumber: 10,
@@ -79,7 +80,7 @@ export const CATERPIE: Pokemon = {
     { amount: 4, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const METAPOD: Pokemon = {
   ...evolvesFrom(CATERPIE),
@@ -103,7 +104,7 @@ export const BUTTERFREE: Pokemon = {
   carrySize: 21
 };
 
-export const RATTATA: Pokemon = {
+export const RATTATA: Pokemon = basePokemon({
   name: 'RATTATA',
   displayName: 'Rattata',
   pokedexNumber: 19,
@@ -127,7 +128,7 @@ export const RATTATA: Pokemon = {
     { amount: 3, ingredient: BEAN_SAUSAGE }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const RATICATE: Pokemon = {
   ...evolvesFrom(RATTATA),
@@ -140,7 +141,7 @@ export const RATICATE: Pokemon = {
   carrySize: 16
 };
 
-export const EKANS: Pokemon = {
+export const EKANS: Pokemon = basePokemon({
   name: 'EKANS',
   displayName: 'Ekans',
   pokedexNumber: 23,
@@ -164,7 +165,7 @@ export const EKANS: Pokemon = {
     { amount: 3, ingredient: FIERY_HERB }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const ARBOK: Pokemon = {
   ...evolvesFrom(EKANS),
@@ -177,7 +178,7 @@ export const ARBOK: Pokemon = {
   carrySize: 14
 };
 
-export const PIKACHU: Pokemon = {
+export const PIKACHU: Pokemon = basePokemon({
   name: 'PIKACHU',
   displayName: 'Pikachu',
   pokedexNumber: 25,
@@ -201,9 +202,9 @@ export const PIKACHU: Pokemon = {
     { amount: 3, ingredient: WARMING_GINGER }
   ],
   skill: ChargeStrengthS
-};
+});
 
-export const PIKACHU_HALLOWEEN: Pokemon = {
+export const PIKACHU_HALLOWEEN: Pokemon = basePokemon({
   name: 'PIKACHU_HALLOWEEN',
   displayName: 'Pikachu (Halloween)',
   pokedexNumber: 25,
@@ -227,7 +228,7 @@ export const PIKACHU_HALLOWEEN: Pokemon = {
     { amount: 3, ingredient: WARMING_GINGER }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const RAICHU: Pokemon = {
   ...evolvesFrom(PIKACHU),
@@ -240,7 +241,7 @@ export const RAICHU: Pokemon = {
   carrySize: 21
 };
 
-export const CLEFAIRY: Pokemon = {
+export const CLEFAIRY: Pokemon = basePokemon({
   name: 'CLEFAIRY',
   displayName: 'Clefairy',
   pokedexNumber: 35,
@@ -264,7 +265,7 @@ export const CLEFAIRY: Pokemon = {
     { amount: 3, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: Metronome
-};
+});
 
 export const CLEFABLE: Pokemon = {
   ...evolvesFrom(CLEFAIRY),
@@ -277,7 +278,7 @@ export const CLEFABLE: Pokemon = {
   carrySize: 24
 };
 
-export const VULPIX: Pokemon = {
+export const VULPIX: Pokemon = basePokemon({
   name: 'VULPIX',
   displayName: 'Vulpix',
   pokedexNumber: 37,
@@ -301,9 +302,9 @@ export const VULPIX: Pokemon = {
     { amount: 3, ingredient: SOFT_POTATO }
   ],
   skill: EnergizingCheerS
-};
+});
 
-export const VULPIX_ALOLAN: Pokemon = {
+export const VULPIX_ALOLAN: Pokemon = basePokemon({
   name: 'VULPIX_ALOLAN',
   displayName: 'Vulpix (Alolan Form)',
   pokedexNumber: 37,
@@ -327,7 +328,7 @@ export const VULPIX_ALOLAN: Pokemon = {
     { amount: 3, ingredient: SOFT_POTATO }
   ],
   skill: ExtraHelpfulS
-};
+});
 
 export const NINETALES: Pokemon = {
   ...evolvesFrom(VULPIX),
@@ -351,7 +352,7 @@ export const NINETALES_ALOLAN: Pokemon = {
   carrySize: 20
 };
 
-export const MANKEY: Pokemon = {
+export const MANKEY: Pokemon = basePokemon({
   name: 'MANKEY',
   displayName: 'Mankey',
   pokedexNumber: 56,
@@ -375,7 +376,7 @@ export const MANKEY: Pokemon = {
     { amount: 4, ingredient: HONEY }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const PRIMEAPE: Pokemon = {
   ...evolvesFrom(MANKEY),
@@ -388,7 +389,7 @@ export const PRIMEAPE: Pokemon = {
   carrySize: 17
 };
 
-export const DODUO: Pokemon = {
+export const DODUO: Pokemon = basePokemon({
   name: 'DODUO',
   displayName: 'Doduo',
   pokedexNumber: 84,
@@ -412,7 +413,7 @@ export const DODUO: Pokemon = {
     { amount: 3, ingredient: BEAN_SAUSAGE }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const DODRIO: Pokemon = {
   ...evolvesFrom(DODUO),
@@ -425,7 +426,7 @@ export const DODRIO: Pokemon = {
   carrySize: 21
 };
 
-export const ONIX: Pokemon = {
+export const ONIX: Pokemon = basePokemon({
   name: 'ONIX',
   displayName: 'Onix',
   pokedexNumber: 95,
@@ -449,9 +450,9 @@ export const ONIX: Pokemon = {
     { amount: 3, ingredient: SOFT_POTATO }
   ],
   skill: IngredientMagnetS
-};
+});
 
-export const CUBONE: Pokemon = {
+export const CUBONE: Pokemon = basePokemon({
   name: 'CUBONE',
   displayName: 'Cubone',
   pokedexNumber: 104,
@@ -474,7 +475,7 @@ export const CUBONE: Pokemon = {
     { amount: 3, ingredient: SOOTHING_CACAO }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const MAROWAK: Pokemon = {
   ...evolvesFrom(CUBONE),
@@ -487,7 +488,7 @@ export const MAROWAK: Pokemon = {
   carrySize: 15
 };
 
-export const EEVEE_HOLIDAY: Pokemon = {
+export const EEVEE_HOLIDAY: Pokemon = basePokemon({
   name: 'EEVEE_HOLIDAY',
   displayName: 'Eevee (Holiday)',
   pokedexNumber: 133,
@@ -511,9 +512,9 @@ export const EEVEE_HOLIDAY: Pokemon = {
     { amount: 3, ingredient: BEAN_SAUSAGE }
   ],
   skill: DreamShardMagnetS
-};
+});
 
-export const CHIKORITA: Pokemon = {
+export const CHIKORITA: Pokemon = basePokemon({
   name: 'CHIKORITA',
   displayName: 'Chikorita',
   pokedexNumber: 152,
@@ -537,7 +538,7 @@ export const CHIKORITA: Pokemon = {
     { amount: 3, ingredient: LARGE_LEEK }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const BAYLEEF: Pokemon = {
   ...evolvesFrom(CHIKORITA),
@@ -561,7 +562,7 @@ export const MEGANIUM: Pokemon = {
   carrySize: 20
 };
 
-export const CYNDAQUIL: Pokemon = {
+export const CYNDAQUIL: Pokemon = basePokemon({
   name: 'CYNDAQUIL',
   displayName: 'Cyndaquil',
   pokedexNumber: 155,
@@ -585,7 +586,7 @@ export const CYNDAQUIL: Pokemon = {
     { amount: 3, ingredient: PURE_OIL }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const QUILAVA: Pokemon = {
   ...evolvesFrom(CYNDAQUIL),
@@ -609,7 +610,7 @@ export const TYPHLOSION: Pokemon = {
   carrySize: 23
 };
 
-export const TOTODILE: Pokemon = {
+export const TOTODILE: Pokemon = basePokemon({
   name: 'TOTODILE',
   displayName: 'Totodile',
   pokedexNumber: 158,
@@ -632,7 +633,7 @@ export const TOTODILE: Pokemon = {
     { amount: 3, ingredient: PURE_OIL }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const CROCONAW: Pokemon = {
   ...evolvesFrom(TOTODILE),
@@ -690,7 +691,7 @@ export const STEELIX: Pokemon = {
   carrySize: 25
 };
 
-export const SNEASEL: Pokemon = {
+export const SNEASEL: Pokemon = basePokemon({
   name: 'SNEASEL',
   displayName: 'Sneasel',
   pokedexNumber: 215,
@@ -714,9 +715,9 @@ export const SNEASEL: Pokemon = {
     { amount: 4, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: TastyChanceS
-};
+});
 
-export const HOUNDOUR: Pokemon = {
+export const HOUNDOUR: Pokemon = basePokemon({
   name: 'HOUNDOUR',
   displayName: 'Houndour',
   pokedexNumber: 228,
@@ -740,7 +741,7 @@ export const HOUNDOUR: Pokemon = {
     { amount: 3, ingredient: LARGE_LEEK }
   ],
   skill: ChargeStrengthM
-};
+});
 
 export const HOUNDOOM: Pokemon = {
   ...evolvesFrom(HOUNDOUR),
@@ -753,7 +754,7 @@ export const HOUNDOOM: Pokemon = {
   carrySize: 16
 };
 
-export const SLAKOTH: Pokemon = {
+export const SLAKOTH: Pokemon = basePokemon({
   name: 'SLAKOTH',
   displayName: 'Slakoth',
   pokedexNumber: 287,
@@ -777,7 +778,7 @@ export const SLAKOTH: Pokemon = {
     { amount: 4, ingredient: FANCY_APPLE }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const VIGOROTH: Pokemon = {
   ...evolvesFrom(SLAKOTH),
@@ -801,7 +802,7 @@ export const SLAKING: Pokemon = {
   carrySize: 16
 };
 
-export const SWABLU: Pokemon = {
+export const SWABLU: Pokemon = basePokemon({
   name: 'SWABLU',
   displayName: 'Swablu',
   pokedexNumber: 333,
@@ -825,7 +826,7 @@ export const SWABLU: Pokemon = {
     { amount: 5, ingredient: FANCY_APPLE }
   ],
   skill: ChargeEnergyS
-};
+});
 
 export const ALTARIA: Pokemon = {
   ...evolvesFrom(SWABLU),
@@ -839,7 +840,7 @@ export const ALTARIA: Pokemon = {
   carrySize: 14
 };
 
-export const SHUPPET: Pokemon = {
+export const SHUPPET: Pokemon = basePokemon({
   name: 'SHUPPET',
   displayName: 'Shuppet',
   pokedexNumber: 353,
@@ -863,7 +864,7 @@ export const SHUPPET: Pokemon = {
     { amount: 3, ingredient: TASTY_MUSHROOM }
   ],
   skill: ChargeStrengthSRange
-};
+});
 
 export const BANETTE: Pokemon = {
   ...evolvesFrom(SHUPPET),
@@ -876,7 +877,7 @@ export const BANETTE: Pokemon = {
   carrySize: 19
 };
 
-export const SPHEAL: Pokemon = {
+export const SPHEAL: Pokemon = basePokemon({
   name: 'SPHEAL',
   displayName: 'Spheal',
   pokedexNumber: 363,
@@ -900,7 +901,7 @@ export const SPHEAL: Pokemon = {
     { amount: 4, ingredient: WARMING_GINGER }
   ],
   skill: IngredientMagnetS
-};
+});
 
 export const SEALEO: Pokemon = {
   ...evolvesFrom(SPHEAL),
@@ -935,7 +936,7 @@ export const WEAVILE: Pokemon = {
   carrySize: 21
 };
 
-export const MUNNA: Pokemon = {
+export const MUNNA: Pokemon = basePokemon({
   name: 'MUNNA',
   displayName: 'Munna',
   pokedexNumber: 517,
@@ -959,7 +960,7 @@ export const MUNNA: Pokemon = {
     { amount: 2, ingredient: ROUSING_COFFEE }
   ],
   skill: DreamShardMagnetSRange
-};
+});
 
 export const MUSHARNA: Pokemon = {
   ...evolvesFrom(MUNNA),
