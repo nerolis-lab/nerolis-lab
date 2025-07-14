@@ -59,7 +59,7 @@ describe('CustomSearchBar', () => {
 
       expect(wrapper.vm.isExpanded).toBe(false)
 
-      await wrapper.find('.search-bar-container').trigger('click')
+      await wrapper.findComponent({ name: 'VTextField' }).trigger('click')
       await nextTick()
 
       expect(wrapper.vm.isExpanded).toBe(true)
@@ -70,7 +70,7 @@ describe('CustomSearchBar', () => {
 
       expect(wrapper.vm.isExpanded).toBe(false)
 
-      await wrapper.find('.search-bar-container').trigger('click')
+      await wrapper.findComponent({ name: 'VTextField' }).trigger('click')
       await nextTick()
 
       expect(wrapper.vm.isExpanded).toBe(false)
@@ -82,7 +82,7 @@ describe('CustomSearchBar', () => {
       const initialExpanded = wrapper.vm.isExpanded
       expect(initialExpanded).toBe(true)
 
-      await wrapper.find('.search-bar-container').trigger('click')
+      await wrapper.findComponent({ name: 'VTextField' }).trigger('click')
       await nextTick()
 
       expect(wrapper.vm.isExpanded).toBe(initialExpanded)
@@ -148,7 +148,7 @@ describe('CustomSearchBar', () => {
       wrapper = mount(CustomSearchBar, { props: { startMinimized: true } })
 
       // First expand it
-      await wrapper.find('.search-bar-container').trigger('click')
+      await wrapper.findComponent({ name: 'VTextField' }).trigger('click')
       await nextTick()
       expect(wrapper.vm.isExpanded).toBe(true)
 
@@ -161,7 +161,7 @@ describe('CustomSearchBar', () => {
       wrapper = mount(CustomSearchBar, { props: { startMinimized: true, modelValue: 'test' } })
 
       // First expand it
-      await wrapper.find('.search-bar-container').trigger('click')
+      await wrapper.findComponent({ name: 'VTextField' }).trigger('click')
       await nextTick()
       expect(wrapper.vm.isExpanded).toBe(true)
 
@@ -179,17 +179,15 @@ describe('CustomSearchBar', () => {
     })
   })
 
-  describe('Container click behavior', () => {
-    it('expands and sets up for focus when clicked while minimized', async () => {
+  describe('Text field click behavior', () => {
+    it('expands when clicked while minimized', async () => {
       wrapper = mount(CustomSearchBar, { props: { startMinimized: true } })
 
       expect(wrapper.vm.isExpanded).toBe(false)
 
-      // Call the handler directly since we can't properly mock the ref
-      await wrapper.vm.handleContainerClick()
+      await wrapper.vm.handleTextFieldClick()
       await nextTick()
 
-      // Verify it expanded
       expect(wrapper.vm.isExpanded).toBe(true)
     })
   })

@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="search-bar-container"
-    :class="{ minimized: !isExpanded, expanded: isExpanded }"
-    :style="containerStyle"
-    @click="handleContainerClick"
-  >
+  <div class="search-bar-container" :class="{ minimized: !isExpanded, expanded: isExpanded }" :style="containerStyle">
     <v-text-field
       ref="textFieldRef"
       v-model="searchQuery"
@@ -21,7 +16,7 @@
       @blur="handleBlur"
       :class="computedClass"
       :placeholder="isExpanded ? placeholder : undefined"
-      :readonly="!isExpanded"
+      @click="handleTextFieldClick"
     ></v-text-field>
   </div>
 </template>
@@ -121,7 +116,7 @@ const handleEnter = () => {
   emit('enter', searchQuery.value)
 }
 
-const handleContainerClick = async () => {
+const handleTextFieldClick = async () => {
   if (!isExpanded.value && props.expandOnClick) {
     isExpanded.value = true
     await nextTick()
@@ -140,7 +135,7 @@ defineExpose({
   isExpanded,
   handleInput,
   handleEnter,
-  handleContainerClick,
+  handleTextFieldClick,
   handleBlur,
   textFieldRef
 })
