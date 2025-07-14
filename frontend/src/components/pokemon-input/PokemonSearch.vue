@@ -258,7 +258,8 @@ const pokemonCollection: ComputedRef<PokemonWithPath[]> = computed(() => {
 const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
   const query = (searchQuery.value || '').toLowerCase().trim()
 
-  const nameFilter = (p: PokemonWithPath) => !query || p.pokemon.displayName.toLowerCase().includes(query)
+  const nameFilter = (p: PokemonWithPath) =>
+    !query || p.pokemon.displayName.toLowerCase().includes(query) || p.instance.name.toLowerCase().includes(query)
   const specialtyFilter = (p: PokemonWithPath) =>
     selectedSpecialties.value.length === 0 || selectedSpecialties.value.some((s) => p.pokemon.specialty === s)
   const finalStageFilter = (p: PokemonWithPath) =>

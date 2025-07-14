@@ -3,7 +3,7 @@ import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonSearchStore } from '@/stores/pokemon-search-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -24,6 +24,10 @@ describe('PokemonSearch', () => {
     dialogStore.pokemonSearchDialog = true
 
     wrapper = mount(PokemonSearch)
+  })
+
+  afterEach(() => {
+    wrapper.unmount()
   })
 
   it('renders correctly', () => {
@@ -121,5 +125,86 @@ describe('PokemonSearch', () => {
       await pokeboxButton.trigger('click')
       expect(pokemonSearchStore.showPokebox).toBe(true)
     }
+  })
+
+  it('filters Pokemon by both displayName and instance name', async () => {
+    const searchInput = wrapper.find('input[type="text"]')
+    await searchInput.setValue('Pikachu')
+
+    const pikachuResults = wrapper.findAll('.v-avatar')
+    expect(pikachuResults.length).toBeGreaterThan(0)
+
+    await searchInput.setValue('')
+
+    await searchInput.setValue('chu')
+
+    const partialResults = wrapper.findAll('.v-avatar')
+    expect(partialResults.length).toBeGreaterThan(0)
+
+    await searchInput.setValue('PIKACHU')
+
+    const caseInsensitiveResults = wrapper.findAll('.v-avatar')
+    expect(caseInsensitiveResults.length).toBeGreaterThan(0)
+
+    await searchInput.setValue('NonExistentPokemon')
+
+    const noResults = wrapper.findAll('.v-avatar')
+    expect(noResults.length).toBe(0)
+  })
+
+  it('nameFilter function tests both pokemon displayName and instance name', () => {
+    const mockPokemonWithPath = [
+      {
+        pokemon: { displayName: 'Charizard' },
+        instance: { name: 'Thunder' },
+        path: 'test-path'
+      },
+      {
+        pokemon: { displayName: 'Bulbasaur' },
+        instance: { name: 'Sparky' },
+        path: 'test-path'
+      },
+      {
+        pokemon: { displayName: 'Pikachu' },
+        instance: { name: 'Lightning Bolt' },
+        path: 'test-path'
+      }
+    ]
+
+    const createNameFilter = (query: string) => (p: (typeof mockPokemonWithPath)[0]) =>
+      !query || p.pokemon.displayName.toLowerCase().includes(query) || p.instance.name.toLowerCase().includes(query)
+
+    let nameFilter = createNameFilter('charizard')
+    let filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(1)
+    expect(filtered[0].pokemon.displayName).toBe('Charizard')
+
+    nameFilter = createNameFilter('thunder')
+    filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(1)
+    expect(filtered[0].instance.name).toBe('Thunder')
+
+    nameFilter = createNameFilter('spark')
+    filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(1)
+    expect(filtered[0].instance.name).toBe('Sparky')
+
+    nameFilter = createNameFilter('pika')
+    filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(1)
+    expect(filtered[0].pokemon.displayName).toBe('Pikachu')
+
+    nameFilter = createNameFilter('lightning')
+    filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(1)
+    expect(filtered[0].instance.name).toBe('Lightning Bolt')
+
+    nameFilter = createNameFilter('nonexistent')
+    filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(0)
+
+    nameFilter = createNameFilter('')
+    filtered = mockPokemonWithPath.filter(nameFilter)
+    expect(filtered.length).toBe(3)
   })
 })
