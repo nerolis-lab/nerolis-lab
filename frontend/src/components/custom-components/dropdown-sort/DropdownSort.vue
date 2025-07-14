@@ -82,5 +82,6 @@ const toggleSortDirection = () => {
 .v-btn {
   min-width: 0px;
   padding: 0 6px !important;
+  height: 40px;
 }
 </style>
