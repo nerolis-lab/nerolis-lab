@@ -2,7 +2,7 @@
   <v-card class="py-3">
     <!-- Title, search and close button -->
     <v-row no-gutters class="flex-nowrap align-center">
-      <v-col class="flex-grow-1 flex-shrink-1" style="min-width: 0">
+      <v-col class="flex-grow-1 flex-shrink-1">
         <v-card-title class="px-2 text-truncate">Select a Pokémon</v-card-title>
       </v-col>
       <v-col class="flex-grow-0 flex-shrink-0">
@@ -33,15 +33,9 @@
           size="x-small"
         />
       </v-chip-group>
-      <v-badge
-        v-model="pokemonSearchStore.showPokeboxBadge"
-        dot
-        location="top right"
-        color="primary"
-        @click="showPokeboxInfo"
-      >
+      <v-badge v-model="pokemonSearchStore.showPokeboxBadge" dot location="top right" color="primary">
         <v-btn
-          @click="pokemonSearchStore.togglePokebox()"
+          @click="handlePokeboxClick"
           :title="pokemonSearchStore.showPokebox ? 'Showing Pokebox' : 'Showing All Pokemon'"
           size="small"
           elevation="0"
@@ -51,7 +45,7 @@
             src="/images/misc/pokebox.png"
             width="36"
             height="36"
-            :style="{ filter: pokemonSearchStore.showPokebox ? 'none' : 'grayscale(100%)' }"
+            :class="pokemonSearchStore.showPokebox ? '' : 'grayscale'"
           />
         </v-btn>
       </v-badge>
@@ -78,7 +72,7 @@
 
     <!-- Pokemon list -->
     <div ref="pokemonListContainer" :style="containerStyle">
-      <div v-if="loading" class="d-flex justify-center align-center" style="height: 200px">
+      <div v-if="loading" class="d-flex justify-center align-center">
         <v-progress-circular indeterminate color="primary" size="48"></v-progress-circular>
       </div>
       <div
@@ -87,8 +81,8 @@
       >
         <div class="text-center">
           <v-icon icon="mdi-pokeball" size="48" color="grey-lighten-1" class="mb-3"></v-icon>
-          <div class="text-h6 text-grey-darken-1 mb-2">Your Pokebox is empty</div>
-          <div class="text-body-2 text-grey-darken-2" style="max-width: 300px">
+          <div class="text-h6 mb-2">Your Pokebox is empty</div>
+          <div>
             <span v-if="!userStore.loggedIn"> Please log in to save Pokémon to your Pokebox </span>
             <span v-else> Add Pokémon from your teams to start building your personal collection </span>
           </div>
@@ -109,7 +103,7 @@
             >
               <v-img :src="path"></v-img>
             </v-avatar>
-            <div v-if="pokemonSearchStore.showPokebox" class="text-center text-caption mt-1" style="max-width: 100px">
+            <div v-if="pokemonSearchStore.showPokebox" class="text-center text-caption mt-1">
               {{ instance ? instance.name : pokemon.displayName }}
             </div>
           </div>
@@ -126,17 +120,13 @@
         What is the Pokébox?
       </v-card-title>
       <v-card-text class="text-body-2">
-        <p class="mb-3">
-          The Pokébox is your personal collection of Pokémon that you save to reuse them in the future.
-        </p>
-        <p class="mb-3">
-          When you add a Pokémon to Neroli's Lab, you have the option to save it to your Pokébox either by clicking the
-          bookmark icon in the top right of the Pokémon edit menu, or by clicking the Pokémon slot in the team after you
-          have added it and checking "Save to Pokébox".
-        </p>
-        <p class="mb-0">
-          Toggle between viewing all Pokémon or just your personal collection using the Pokébox button.
-        </p>
+        <div class="flex-center mb-3">
+          <v-img src="/images/misc/pokebox.png" width="32" height="32" class="grayscale mr-2" />
+          <span class="mr-2">→</span>
+          <v-img src="/images/misc/pokebox.png" width="32" height="32" class="mr-2" />
+          <span class="text-body-2">Click to toggle between all Pokémon and your saved collection</span>
+        </div>
+        <p class="mb-0">Save any Pokémon from your teams to your Pokébox to quickly reuse them later.</p>
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="primary" @click="closePokeboxInfo">Got it!</v-btn>
@@ -329,16 +319,25 @@ const loadPokebox = async () => {
 }
 
 const showPokeboxInfo = () => {
-  showPokeboxInfoDialog.value = pokemonSearchStore.showPokeboxBadge
+  showPokeboxInfoDialog.value = true
 }
 
 const closePokeboxInfo = () => {
   showPokeboxInfoDialog.value = false
+}
+
+const handlePokeboxClick = () => {
+  pokemonSearchStore.togglePokebox()
   pokemonSearchStore.hidePokeboxBadge()
 }
 
 if (userStore.loggedIn) {
   loadPokebox()
+}
+
+// Show pokebox info dialog automatically on first component open
+if (pokemonSearchStore.showPokeboxBadge) {
+  showPokeboxInfo()
 }
 
 // Also watch for pokebox toggle and load data if needed
