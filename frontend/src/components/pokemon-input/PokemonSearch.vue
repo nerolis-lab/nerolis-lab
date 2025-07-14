@@ -2,7 +2,7 @@
   <v-card class="py-3">
     <!-- Title, search and close button -->
     <v-row no-gutters class="flex-nowrap align-center">
-      <v-col class="flex-grow-1 flex-shrink-1">
+      <v-col class="flex-grow-1 flex-shrink-1 min-width-0">
         <v-card-title class="px-2 text-truncate">Select a Pokémon</v-card-title>
       </v-col>
       <v-col class="flex-grow-0 flex-shrink-0">
@@ -103,7 +103,11 @@
             >
               <v-img :src="path"></v-img>
             </v-avatar>
-            <div v-if="pokemonSearchStore.showPokebox" class="text-center text-caption mt-1">
+            <div
+              v-if="pokemonSearchStore.showPokebox"
+              class="text-center text-caption mt-1 text-truncate pokemon-name"
+              :class="{ 'pokemon-name--mobile': isMobile }"
+            >
               {{ instance ? instance.name : pokemon.displayName }}
             </div>
           </div>
@@ -371,3 +375,17 @@ watch(
   { immediate: true }
 )
 </script>
+
+<style scoped lang="scss">
+.pokemon-name {
+  max-width: 100px;
+
+  &--mobile {
+    max-width: 60px;
+  }
+}
+
+.min-width-0 {
+  min-width: 0;
+}
+</style>
