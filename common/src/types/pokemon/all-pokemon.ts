@@ -1,3 +1,4 @@
+import { createAllSpecialist } from '../../utils/pokemon-utils/pokemon-constructors';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import { WIKI } from '../berry/berries';
 import { GENDER_UNKNOWN } from '../gender';
@@ -15,11 +16,10 @@ import {
 import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strength-m-bad-dreams';
 import type { Pokemon } from './pokemon';
 
-export const DARKRAI: Pokemon = {
+export const DARKRAI: Pokemon = createAllSpecialist({
   name: 'DARKRAI',
   displayName: 'Darkrai',
   pokedexNumber: 491,
-  specialty: 'all',
   frequency: toSeconds(0, 48, 20),
   ingredientPercentage: 19.2,
   skillPercentage: 2.3,
@@ -61,7 +61,7 @@ export const DARKRAI: Pokemon = {
     { amount: 4, ingredient: ROUSING_COFFEE }
   ],
   skill: ChargeStrengthMBadDreams
-};
+});
 
 export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [DARKRAI];
 export const INFERIOR_ALL_SPECIALISTS: Pokemon[] = [];
