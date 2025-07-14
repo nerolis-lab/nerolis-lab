@@ -3,7 +3,6 @@ import type { Pokemon, PokemonSpecialty, PokemonWithIngredients } from '../../ty
 import { COMPLETE_POKEDEX } from '../../types/pokemon';
 
 export function basePokemon(params: {
-  name: string;
   displayName: string;
   pokedexNumber: number;
   specialty: PokemonSpecialty;
@@ -21,7 +20,6 @@ export function basePokemon(params: {
   skill: Mainskill;
 }): Pokemon {
   const {
-    name,
     displayName,
     pokedexNumber,
     specialty,
@@ -39,7 +37,11 @@ export function basePokemon(params: {
     skill
   } = params;
   return {
-    name,
+    name: displayName
+      .toUpperCase()
+      .replace(/\bFORM\b/, '')
+      .replace(/\b\W+\b/, '_')
+      .replace(/\W+/, ''),
     displayName,
     pokedexNumber,
     specialty,

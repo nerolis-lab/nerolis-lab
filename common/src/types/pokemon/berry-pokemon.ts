@@ -57,7 +57,6 @@ import {
 import type { Pokemon } from './pokemon';
 
 export const CATERPIE: Pokemon = basePokemon({
-  name: 'CATERPIE',
   displayName: 'Caterpie',
   pokedexNumber: 10,
   specialty: 'berry',
@@ -105,7 +104,6 @@ export const BUTTERFREE: Pokemon = {
 };
 
 export const RATTATA: Pokemon = basePokemon({
-  name: 'RATTATA',
   displayName: 'Rattata',
   pokedexNumber: 19,
   specialty: 'berry',
@@ -142,7 +140,6 @@ export const RATICATE: Pokemon = {
 };
 
 export const EKANS: Pokemon = basePokemon({
-  name: 'EKANS',
   displayName: 'Ekans',
   pokedexNumber: 23,
   specialty: 'berry',
@@ -179,7 +176,6 @@ export const ARBOK: Pokemon = {
 };
 
 export const PIKACHU: Pokemon = basePokemon({
-  name: 'PIKACHU',
   displayName: 'Pikachu',
   pokedexNumber: 25,
   specialty: 'berry',
@@ -205,7 +201,6 @@ export const PIKACHU: Pokemon = basePokemon({
 });
 
 export const PIKACHU_HALLOWEEN: Pokemon = basePokemon({
-  name: 'PIKACHU_HALLOWEEN',
   displayName: 'Pikachu (Halloween)',
   pokedexNumber: 25,
   specialty: 'berry',
@@ -242,7 +237,6 @@ export const RAICHU: Pokemon = {
 };
 
 export const CLEFAIRY: Pokemon = basePokemon({
-  name: 'CLEFAIRY',
   displayName: 'Clefairy',
   pokedexNumber: 35,
   specialty: 'berry',
@@ -279,7 +273,6 @@ export const CLEFABLE: Pokemon = {
 };
 
 export const VULPIX: Pokemon = basePokemon({
-  name: 'VULPIX',
   displayName: 'Vulpix',
   pokedexNumber: 37,
   specialty: 'berry',
@@ -305,7 +298,6 @@ export const VULPIX: Pokemon = basePokemon({
 });
 
 export const VULPIX_ALOLAN: Pokemon = basePokemon({
-  name: 'VULPIX_ALOLAN',
   displayName: 'Vulpix (Alolan Form)',
   pokedexNumber: 37,
   specialty: 'berry',
@@ -353,7 +345,6 @@ export const NINETALES_ALOLAN: Pokemon = {
 };
 
 export const MANKEY: Pokemon = basePokemon({
-  name: 'MANKEY',
   displayName: 'Mankey',
   pokedexNumber: 56,
   specialty: 'berry',
@@ -390,7 +381,6 @@ export const PRIMEAPE: Pokemon = {
 };
 
 export const DODUO: Pokemon = basePokemon({
-  name: 'DODUO',
   displayName: 'Doduo',
   pokedexNumber: 84,
   specialty: 'berry',
@@ -427,7 +417,6 @@ export const DODRIO: Pokemon = {
 };
 
 export const ONIX: Pokemon = basePokemon({
-  name: 'ONIX',
   displayName: 'Onix',
   pokedexNumber: 95,
   specialty: 'berry',
@@ -453,7 +442,6 @@ export const ONIX: Pokemon = basePokemon({
 });
 
 export const CUBONE: Pokemon = basePokemon({
-  name: 'CUBONE',
   displayName: 'Cubone',
   pokedexNumber: 104,
   specialty: 'berry',
@@ -489,7 +477,6 @@ export const MAROWAK: Pokemon = {
 };
 
 export const EEVEE_HOLIDAY: Pokemon = basePokemon({
-  name: 'EEVEE_HOLIDAY',
   displayName: 'Eevee (Holiday)',
   pokedexNumber: 133,
   specialty: 'berry',
@@ -515,7 +502,6 @@ export const EEVEE_HOLIDAY: Pokemon = basePokemon({
 });
 
 export const CHIKORITA: Pokemon = basePokemon({
-  name: 'CHIKORITA',
   displayName: 'Chikorita',
   pokedexNumber: 152,
   specialty: 'berry',
@@ -563,7 +549,6 @@ export const MEGANIUM: Pokemon = {
 };
 
 export const CYNDAQUIL: Pokemon = basePokemon({
-  name: 'CYNDAQUIL',
   displayName: 'Cyndaquil',
   pokedexNumber: 155,
   specialty: 'berry',
@@ -611,7 +596,6 @@ export const TYPHLOSION: Pokemon = {
 };
 
 export const TOTODILE: Pokemon = basePokemon({
-  name: 'TOTODILE',
   displayName: 'Totodile',
   pokedexNumber: 158,
   specialty: 'berry',
@@ -692,7 +676,6 @@ export const STEELIX: Pokemon = {
 };
 
 export const SNEASEL: Pokemon = basePokemon({
-  name: 'SNEASEL',
   displayName: 'Sneasel',
   pokedexNumber: 215,
   specialty: 'berry',
@@ -718,7 +701,6 @@ export const SNEASEL: Pokemon = basePokemon({
 });
 
 export const HOUNDOUR: Pokemon = basePokemon({
-  name: 'HOUNDOUR',
   displayName: 'Houndour',
   pokedexNumber: 228,
   specialty: 'berry',
@@ -755,7 +737,6 @@ export const HOUNDOOM: Pokemon = {
 };
 
 export const SLAKOTH: Pokemon = basePokemon({
-  name: 'SLAKOTH',
   displayName: 'Slakoth',
   pokedexNumber: 287,
   specialty: 'berry',
@@ -803,7 +784,6 @@ export const SLAKING: Pokemon = {
 };
 
 export const SWABLU: Pokemon = basePokemon({
-  name: 'SWABLU',
   displayName: 'Swablu',
   pokedexNumber: 333,
   specialty: 'berry',
@@ -841,7 +821,6 @@ export const ALTARIA: Pokemon = {
 };
 
 export const SHUPPET: Pokemon = basePokemon({
-  name: 'SHUPPET',
   displayName: 'Shuppet',
   pokedexNumber: 353,
   specialty: 'berry',
@@ -878,7 +857,6 @@ export const BANETTE: Pokemon = {
 };
 
 export const SPHEAL: Pokemon = basePokemon({
-  name: 'SPHEAL',
   displayName: 'Spheal',
   pokedexNumber: 363,
   specialty: 'berry',
@@ -937,7 +915,6 @@ export const WEAVILE: Pokemon = {
 };
 
 export const MUNNA: Pokemon = basePokemon({
-  name: 'MUNNA',
   displayName: 'Munna',
   pokedexNumber: 517,
   specialty: 'berry',

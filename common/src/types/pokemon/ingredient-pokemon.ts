@@ -59,7 +59,6 @@ import {
 import type { Pokemon } from './pokemon';
 
 export const BULBASAUR: Pokemon = basePokemon({
-  name: 'BULBASAUR',
   displayName: 'Bulbasaur',
   pokedexNumber: 1,
   specialty: 'ingredient',
@@ -107,7 +106,6 @@ export const VENUSAUR: Pokemon = {
 };
 
 export const CHARMANDER: Pokemon = basePokemon({
-  name: 'CHARMANDER',
   displayName: 'Charmander',
   pokedexNumber: 4,
   specialty: 'ingredient',
@@ -155,7 +153,6 @@ export const CHARIZARD: Pokemon = {
 };
 
 export const SQUIRTLE: Pokemon = basePokemon({
-  name: 'SQUIRTLE',
   displayName: 'Squirtle',
   pokedexNumber: 7,
   specialty: 'ingredient',
@@ -203,7 +200,6 @@ export const BLASTOISE: Pokemon = {
 };
 
 export const DIGLETT: Pokemon = basePokemon({
-  name: 'DIGLETT',
   displayName: 'Diglett',
   pokedexNumber: 50,
   specialty: 'ingredient',
@@ -240,7 +236,6 @@ export const DUGTRIO: Pokemon = {
 };
 
 export const BELLSPROUT: Pokemon = basePokemon({
-  name: 'BELLSPROUT',
   displayName: 'Bellsprout',
   pokedexNumber: 69,
   specialty: 'ingredient',
@@ -288,7 +283,6 @@ export const VICTREEBEL: Pokemon = {
 };
 
 export const GEODUDE: Pokemon = basePokemon({
-  name: 'GEODUDE',
   displayName: 'Geodude',
   pokedexNumber: 74,
   specialty: 'ingredient',
@@ -336,7 +330,6 @@ export const GOLEM: Pokemon = {
 };
 
 export const FARFETCHD: Pokemon = basePokemon({
-  name: 'FARFETCHD',
   displayName: "Farfetch'd",
   pokedexNumber: 83,
   specialty: 'ingredient',
@@ -362,7 +355,6 @@ export const FARFETCHD: Pokemon = basePokemon({
 });
 
 export const GASTLY: Pokemon = basePokemon({
-  name: 'GASTLY',
   displayName: 'Gastly',
   pokedexNumber: 92,
   specialty: 'ingredient',
@@ -410,7 +402,6 @@ export const GENGAR: Pokemon = {
 };
 
 export const KANGASKHAN: Pokemon = basePokemon({
-  name: 'KANGASKHAN',
   displayName: 'Kangaskhan',
   pokedexNumber: 115,
   specialty: 'ingredient',
@@ -436,7 +427,6 @@ export const KANGASKHAN: Pokemon = basePokemon({
 });
 
 export const CHANSEY: Pokemon = basePokemon({
-  name: 'CHANSEY',
   displayName: 'Chansey',
   pokedexNumber: 113,
   specialty: 'ingredient',
@@ -462,7 +452,6 @@ export const CHANSEY: Pokemon = basePokemon({
 });
 
 export const MR_MIME: Pokemon = basePokemon({
-  name: 'MR_MIME',
   displayName: 'Mr. Mime',
   pokedexNumber: 122,
   specialty: 'ingredient',
@@ -488,7 +477,6 @@ export const MR_MIME: Pokemon = basePokemon({
 });
 
 export const PINSIR: Pokemon = basePokemon({
-  name: 'PINSIR',
   displayName: 'Pinsir',
   pokedexNumber: 127,
   specialty: 'ingredient',
@@ -514,7 +502,6 @@ export const PINSIR: Pokemon = basePokemon({
 });
 
 export const DITTO: Pokemon = basePokemon({
-  name: 'DITTO',
   displayName: 'Ditto',
   pokedexNumber: 132,
   specialty: 'ingredient',
@@ -540,7 +527,6 @@ export const DITTO: Pokemon = basePokemon({
 });
 
 export const DRATINI: Pokemon = basePokemon({
-  name: 'DRATINI',
   displayName: 'Dratini',
   pokedexNumber: 147,
   specialty: 'ingredient',
@@ -588,7 +574,6 @@ export const DRAGONITE: Pokemon = {
 };
 
 export const WOOPER: Pokemon = basePokemon({
-  name: 'WOOPER',
   displayName: 'Wooper',
   pokedexNumber: 194,
   specialty: 'ingredient',
@@ -614,7 +599,6 @@ export const WOOPER: Pokemon = basePokemon({
 });
 
 export const WOOPER_PALDEAN: Pokemon = basePokemon({
-  name: 'WOOPER_PALDEAN',
   displayName: 'Wooper (Paldean Form)',
   pokedexNumber: 194,
   specialty: 'ingredient',
@@ -651,7 +635,6 @@ export const QUAGSIRE: Pokemon = {
 };
 
 export const DELIBIRD: Pokemon = basePokemon({
-  name: 'DELIBIRD',
   displayName: 'Delibird',
   pokedexNumber: 225,
   specialty: 'ingredient',
@@ -688,7 +671,6 @@ export const BLISSEY: Pokemon = {
 };
 
 export const LARVITAR: Pokemon = basePokemon({
-  name: 'LARVITAR',
   displayName: 'Larvitar',
   pokedexNumber: 246,
   specialty: 'ingredient',
@@ -737,7 +719,6 @@ export const TYRANITAR: Pokemon = {
 };
 
 export const MAWILE: Pokemon = basePokemon({
-  name: 'MAWILE',
   displayName: 'Mawile',
   pokedexNumber: 303,
   specialty: 'ingredient',
@@ -763,7 +744,6 @@ export const MAWILE: Pokemon = basePokemon({
 });
 
 export const ARON: Pokemon = basePokemon({
-  name: 'ARON',
   displayName: 'Aron',
   pokedexNumber: 304,
   specialty: 'ingredient',
@@ -811,7 +791,6 @@ export const AGGRON: Pokemon = {
 };
 
 export const ABSOL: Pokemon = basePokemon({
-  name: 'ABSOL',
   displayName: 'Absol',
   pokedexNumber: 359,
   specialty: 'ingredient',
@@ -837,7 +816,6 @@ export const ABSOL: Pokemon = basePokemon({
 });
 
 export const SHINX: Pokemon = basePokemon({
-  name: 'SHINX',
   displayName: 'Shinx',
   pokedexNumber: 403,
   specialty: 'ingredient',
@@ -907,7 +885,6 @@ export const HAPPINY: Pokemon = {
 };
 
 export const CROAGUNK: Pokemon = basePokemon({
-  name: 'CROAGUNK',
   displayName: 'Croagunk',
   pokedexNumber: 453,
   specialty: 'ingredient',
@@ -943,7 +920,6 @@ export const TOXICROAK: Pokemon = {
 };
 
 export const SNOVER: Pokemon = basePokemon({
-  name: 'SNOVER',
   displayName: 'Snover',
   pokedexNumber: 459,
   specialty: 'ingredient',
@@ -980,7 +956,6 @@ export const ABOMASNOW: Pokemon = {
 };
 
 export const GRUBBIN: Pokemon = basePokemon({
-  name: 'GRUBBIN',
   displayName: 'Grubbin',
   pokedexNumber: 736,
   specialty: 'ingredient',
@@ -1028,7 +1003,6 @@ export const VIKAVOLT: Pokemon = {
 };
 
 export const STUFFUL: Pokemon = basePokemon({
-  name: 'STUFFUL',
   displayName: 'Stufful',
   pokedexNumber: 759,
   specialty: 'ingredient',
@@ -1065,7 +1039,6 @@ export const BEWEAR: Pokemon = {
 };
 
 export const COMFEY: Pokemon = basePokemon({
-  name: 'COMFEY',
   displayName: 'Comfey',
   pokedexNumber: 764,
   specialty: 'ingredient',
@@ -1091,7 +1064,6 @@ export const COMFEY: Pokemon = basePokemon({
 });
 
 export const CRAMORANT: Pokemon = basePokemon({
-  name: 'CRAMORANT',
   displayName: 'Cramorant',
   pokedexNumber: 845,
   specialty: 'ingredient',
@@ -1117,7 +1089,6 @@ export const CRAMORANT: Pokemon = basePokemon({
 });
 
 export const SPRIGATITO: Pokemon = basePokemon({
-  name: 'SPRIGATITO',
   displayName: 'Sprigatito',
   pokedexNumber: 906,
   specialty: 'ingredient',
@@ -1166,7 +1137,6 @@ export const MEOWSCARADA: Pokemon = {
 };
 
 export const FUECOCO: Pokemon = basePokemon({
-  name: 'FUECOCO',
   displayName: 'Fuecoco',
   pokedexNumber: 909,
   specialty: 'ingredient',
@@ -1215,7 +1185,6 @@ export const SKELEDIRGE: Pokemon = {
 };
 
 export const QUAXLY: Pokemon = basePokemon({
-  name: 'QUAXLY',
   displayName: 'Quaxly',
   pokedexNumber: 912,
   specialty: 'ingredient',

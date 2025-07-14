@@ -71,7 +71,6 @@ import { IngredientDrawSSuperLuck } from '../mainskill/mainskills/ingredient-dra
 import type { Pokemon } from './pokemon';
 
 export const PIKACHU_HOLIDAY: Pokemon = basePokemon({
-  name: 'PIKACHU_HOLIDAY',
   displayName: 'Pikachu (Holiday)',
   pokedexNumber: 25,
   specialty: 'skill',
@@ -97,7 +96,6 @@ export const PIKACHU_HOLIDAY: Pokemon = basePokemon({
 });
 
 export const JIGGLYPUFF: Pokemon = basePokemon({
-  name: 'JIGGLYPUFF',
   displayName: 'Jigglypuff',
   pokedexNumber: 39,
   specialty: 'skill',
@@ -134,7 +132,6 @@ export const WIGGLYTUFF: Pokemon = {
 };
 
 export const MEOWTH: Pokemon = basePokemon({
-  name: 'MEOWTH',
   displayName: 'Meowth',
   pokedexNumber: 52,
   specialty: 'skill',
@@ -170,7 +167,6 @@ export const PERSIAN: Pokemon = {
 };
 
 export const PSYDUCK: Pokemon = basePokemon({
-  name: 'PSYDUCK',
   displayName: 'Psyduck',
   pokedexNumber: 54,
   specialty: 'skill',
@@ -207,7 +203,6 @@ export const GOLDUCK: Pokemon = {
 };
 
 export const GROWLITHE: Pokemon = basePokemon({
-  name: 'GROWLITHE',
   displayName: 'Growlithe',
   pokedexNumber: 58,
   specialty: 'skill',
@@ -244,7 +239,6 @@ export const ARCANINE: Pokemon = {
 };
 
 export const SLOWPOKE: Pokemon = basePokemon({
-  name: 'SLOWPOKE',
   displayName: 'Slowpoke',
   pokedexNumber: 79,
   specialty: 'skill',
@@ -281,7 +275,6 @@ export const SLOWBRO: Pokemon = {
 };
 
 export const MAGNEMITE: Pokemon = basePokemon({
-  name: 'MAGNEMITE',
   displayName: 'Magnemite',
   pokedexNumber: 81,
   specialty: 'skill',
@@ -317,7 +310,6 @@ export const MAGNETON: Pokemon = {
 };
 
 export const EEVEE: Pokemon = basePokemon({
-  name: 'EEVEE',
   displayName: 'Eevee',
   pokedexNumber: 133,
   specialty: 'skill',
@@ -393,7 +385,6 @@ export const IGGLYBUFF: Pokemon = {
 };
 
 export const TOGEPI: Pokemon = basePokemon({
-  name: 'TOGEPI',
   displayName: 'Togepi',
   pokedexNumber: 175,
   specialty: 'skill',
@@ -430,7 +421,6 @@ export const TOGETIC: Pokemon = {
 };
 
 export const MAREEP: Pokemon = basePokemon({
-  name: 'MAREEP',
   displayName: 'Mareep',
   pokedexNumber: 179,
   specialty: 'skill',
@@ -477,7 +467,6 @@ export const AMPHAROS: Pokemon = {
 };
 
 export const SUDOWOODO: Pokemon = basePokemon({
-  name: 'SUDOWOODO',
   displayName: 'Sudowoodo',
   pokedexNumber: 185,
   specialty: 'skill',
@@ -529,7 +518,6 @@ export const UMBREON: Pokemon = {
 };
 
 export const MURKROW: Pokemon = basePokemon({
-  name: 'MURKROW',
   displayName: 'Murkrow',
   pokedexNumber: 198,
   specialty: 'skill',
@@ -566,7 +554,6 @@ export const SLOWKING: Pokemon = {
 };
 
 export const WOBBUFFET: Pokemon = basePokemon({
-  name: 'WOBBUFFET',
   displayName: 'Wobbuffet',
   pokedexNumber: 202,
   specialty: 'skill',
@@ -592,7 +579,6 @@ export const WOBBUFFET: Pokemon = basePokemon({
 });
 
 export const HERACROSS: Pokemon = basePokemon({
-  name: 'HERACROSS',
   displayName: 'Heracross',
   pokedexNumber: 214,
   specialty: 'skill',
@@ -618,7 +604,6 @@ export const HERACROSS: Pokemon = basePokemon({
 });
 
 export const RAIKOU: Pokemon = basePokemon({
-  name: 'RAIKOU',
   displayName: 'Raikou',
   pokedexNumber: 243,
   specialty: 'skill',
@@ -644,7 +629,6 @@ export const RAIKOU: Pokemon = basePokemon({
 });
 
 export const ENTEI: Pokemon = basePokemon({
-  name: 'ENTEI',
   displayName: 'Entei',
   pokedexNumber: 244,
   specialty: 'skill',
@@ -670,7 +654,6 @@ export const ENTEI: Pokemon = basePokemon({
 });
 
 export const SUICUNE: Pokemon = basePokemon({
-  name: 'SUICUNE',
   displayName: 'Suicune',
   pokedexNumber: 245,
   specialty: 'skill',
@@ -696,7 +679,6 @@ export const SUICUNE: Pokemon = basePokemon({
 });
 
 export const RALTS: Pokemon = basePokemon({
-  name: 'RALTS',
   displayName: 'Ralts',
   pokedexNumber: 280,
   specialty: 'skill',
@@ -744,7 +726,6 @@ export const GARDEVOIR: Pokemon = {
 };
 
 export const SABLEYE: Pokemon = basePokemon({
-  name: 'SABLEYE',
   displayName: 'Sableye',
   pokedexNumber: 302,
   specialty: 'skill',
@@ -770,7 +751,6 @@ export const SABLEYE: Pokemon = basePokemon({
 });
 
 export const GULPIN: Pokemon = basePokemon({
-  name: 'GULPIN',
   displayName: 'Gulpin',
   pokedexNumber: 316,
   specialty: 'skill',
@@ -829,7 +809,6 @@ export const BONSLY: Pokemon = {
 };
 
 export const DRIFLOON: Pokemon = basePokemon({
-  name: 'DRIFLOON',
   displayName: 'Drifloon',
   pokedexNumber: 425,
   specialty: 'skill',
@@ -877,7 +856,6 @@ export const HONCHKROW: Pokemon = {
 };
 
 export const RIOLU: Pokemon = basePokemon({
-  name: 'RIOLU',
   displayName: 'Riolu',
   pokedexNumber: 447,
   specialty: 'skill',
@@ -976,7 +954,6 @@ export const GALLADE: Pokemon = {
 };
 
 export const CRESSELIA: Pokemon = basePokemon({
-  name: 'CRESSELIA',
   displayName: 'Cresselia',
   pokedexNumber: 488,
   specialty: 'skill',
@@ -1002,7 +979,6 @@ export const CRESSELIA: Pokemon = basePokemon({
 });
 
 export const RUFFLET: Pokemon = basePokemon({
-  name: 'RUFFLET',
   displayName: 'Rufflet',
   pokedexNumber: 627,
   specialty: 'skill',
@@ -1052,7 +1028,6 @@ export const SYLVEON: Pokemon = {
 };
 
 export const DEDENNE: Pokemon = basePokemon({
-  name: 'DEDENNE',
   displayName: 'Dedenne',
   pokedexNumber: 702,
   specialty: 'skill',
@@ -1078,7 +1053,6 @@ export const DEDENNE: Pokemon = basePokemon({
 });
 
 export const MIMIKYU: Pokemon = basePokemon({
-  name: 'MIMIKYU',
   displayName: 'Mimikyu',
   pokedexNumber: 778,
   specialty: 'skill',
@@ -1104,7 +1078,6 @@ export const MIMIKYU: Pokemon = basePokemon({
 });
 
 export const PAWMI: Pokemon = basePokemon({
-  name: 'PAWMI',
   displayName: 'Pawmi',
   pokedexNumber: 921,
   specialty: 'skill',

@@ -18,7 +18,6 @@ export const mockMainskill = new (class extends Mainskill {
 
 export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   const base: Pokemon = basePokemon({
-    name: 'MOCKEMON',
     displayName: 'Mockemon',
     pokedexNumber: 0,
     specialty: 'berry',

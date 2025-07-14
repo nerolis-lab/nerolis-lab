@@ -17,7 +17,6 @@ import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strengt
 import type { Pokemon } from './pokemon';
 
 export const DARKRAI: Pokemon = basePokemon({
-  name: 'DARKRAI',
   displayName: 'Darkrai',
   pokedexNumber: 491,
   specialty: 'all',
