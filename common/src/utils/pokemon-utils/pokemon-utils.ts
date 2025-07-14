@@ -1,6 +1,7 @@
-import type { Berry, GenderRatio, IngredientSet, Mainskill } from '../../types';
+import type { Berry, GenderRatio, Ingredient, IngredientSet, Mainskill } from '../../types';
 import type { Pokemon, PokemonSpecialty, PokemonWithIngredients } from '../../types/pokemon';
 import { COMPLETE_POKEDEX } from '../../types/pokemon';
+import { getIngredientAmount } from '../ingredient-utils';
 
 export function basePokemon(params: {
   displayName: string;
@@ -14,9 +15,12 @@ export function basePokemon(params: {
   carrySize: number;
   previousEvolutions: number;
   remainingEvolutions: number;
-  ingredient0: IngredientSet[];
-  ingredient30: IngredientSet[];
-  ingredient60: IngredientSet[];
+  ingredient0?: IngredientSet[];
+  ingredient30?: IngredientSet[];
+  ingredient60?: IngredientSet[];
+  ingredientA?: Ingredient;
+  ingredientB?: Ingredient;
+  ingredientC?: Ingredient;
   skill: Mainskill;
 }): Pokemon {
   const {
@@ -34,8 +38,44 @@ export function basePokemon(params: {
     ingredient0,
     ingredient30,
     ingredient60,
+    ingredientA,
+    ingredientB,
+    ingredientC,
     skill
   } = params;
+  const abcSpecified = ingredientA !== undefined && ingredientB !== undefined;
+  const dropsSpecified = ingredient0 !== undefined && ingredient30 !== undefined && ingredient60 !== undefined;
+  if (abcSpecified === dropsSpecified) {
+    throw new Error(
+      'Expected either AB(C) ingredients or 0/30/60 ingredient sets to be specified. Got both or neither.'
+    );
+  }
+  let ingredient0Normalized: IngredientSet[];
+  let ingredient30Normalized: IngredientSet[];
+  let ingredient60Normalized: IngredientSet[];
+  if (ingredient0 && ingredient30 && ingredient60) {
+    ingredient0Normalized = ingredient0;
+    ingredient30Normalized = ingredient30;
+    ingredient60Normalized = ingredient60;
+  } else if (ingredientA && ingredientB) {
+    ingredient0Normalized = [
+      { amount: getIngredientAmount(ingredientA, ingredientA, 0, specialty), ingredient: ingredientA }
+    ];
+    ingredient30Normalized = [
+      { amount: getIngredientAmount(ingredientA, ingredientA, 30, specialty), ingredient: ingredientA },
+      { amount: getIngredientAmount(ingredientB, ingredientA, 30, specialty), ingredient: ingredientB }
+    ];
+    ingredient60Normalized = [
+      { amount: getIngredientAmount(ingredientA, ingredientA, 60, specialty), ingredient: ingredientA },
+      { amount: getIngredientAmount(ingredientB, ingredientA, 60, specialty), ingredient: ingredientB }
+    ];
+    if (ingredientC) {
+      ingredient60Normalized.push({
+        amount: getIngredientAmount(ingredientC, ingredientA, 60, specialty),
+        ingredient: ingredientC
+      });
+    }
+  }
   return {
     name: displayName
       .toUpperCase()
@@ -53,9 +93,9 @@ export function basePokemon(params: {
     carrySize,
     previousEvolutions,
     remainingEvolutions,
-    ingredient0,
-    ingredient30,
-    ingredient60,
+    ingredient0: ingredient0Normalized,
+    ingredient30: ingredient30Normalized,
+    ingredient60: ingredient60Normalized,
     skill
   };
 }

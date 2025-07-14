@@ -11,7 +11,7 @@ import {
   LOCKED_INGREDIENT,
   TOTAL_NUMBER_OF_INGREDIENTS
 } from '../../types/ingredient/ingredients';
-import type { Pokemon } from '../../types/pokemon/pokemon';
+import type { Pokemon, PokemonSpecialty } from '../../types/pokemon/pokemon';
 import { emptyIngredientInventoryFloat, emptyIngredientInventoryInt } from '../flat-utils';
 import { MathUtils } from '../math-utils/math-utils';
 import { capitalize } from '../string-utils/string-utils';
@@ -259,4 +259,16 @@ export function getMaxIngredientBonus(ingredientName: string): number {
     return 0;
   }
   return bonus;
+}
+
+export function getIngredientAmount(
+  ingredientDrop: Ingredient,
+  ingredientA: Ingredient,
+  level: 0 | 30 | 60,
+  specialty: PokemonSpecialty
+) {
+  const baseStrength = ingredientA.value;
+  const levelFactor = level === 0 ? 1 : level === 30 ? 2.25 : 3.6;
+  const specialtyFactor = specialty === 'ingredient' || specialty === 'all' ? 2 : 1;
+  return Math.round((baseStrength * levelFactor * specialtyFactor) / ingredientDrop.value);
 }
