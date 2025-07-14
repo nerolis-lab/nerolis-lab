@@ -88,7 +88,7 @@
         </div>
       </div>
       <v-row v-else dense class="d-flex justify-space-around mx-1">
-        <v-col v-for="{ path, pokemon, instance } in filteredPokemon" :key="pokemon.name" class="flex-center">
+        <v-col v-for="{ path, pokemon, instance } in filteredPokemon" :key="instance.externalId" class="flex-center">
           <div class="flex-column align-center">
             <div v-if="pokemonSearchStore.showPokebox && instance" class="text-center text-caption mb-1">
               <div>Level {{ instance.level }}</div>
@@ -294,14 +294,20 @@ const closePokemonSearch = () => {
 }
 
 const loadPokebox = async () => {
+  if (loading.value) {
+    logger.debug('Already loading, skipping concurrent call')
+    return
+  }
+
   loading.value = true
-  savedPokemon.value = await UserService.getUserPokemon().then((instances) => {
-    return instances.map((instance) => ({
+
+  savedPokemon.value = await UserService.getUserPokemon().then((instances) =>
+    instances.map((instance) => ({
       pokemon: instance.pokemon,
       instance,
       path: avatarImage({ pokemonName: instance.pokemon.name, shiny: instance.shiny, happy: false })
     }))
-  })
+  )
   loading.value = false
 }
 
