@@ -68,6 +68,9 @@ export const CATERPIE: Pokemon = basePokemon({
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
+  ingredientA: HONEY,
+  ingredientB: SNOOZY_TOMATO,
+  ingredientC: GREENGRASS_SOYBEANS,
   ingredient0: [{ amount: 1, ingredient: HONEY }],
   ingredient30: [
     { amount: 2, ingredient: HONEY },
