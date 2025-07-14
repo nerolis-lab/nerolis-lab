@@ -6,15 +6,21 @@ export const useDialogStore = defineStore('dialog', () => {
   // ==================== POKEMON SEARCH DIALOG ====================
   const pokemonSearchDialog = ref(false)
   const pokemonSearchCallback = ref<((pokemonInstance: PokemonInstanceExt) => void) | null>(null)
+  const pokemonSearchCurrentInstance = ref<PokemonInstanceExt | null>(null)
 
-  const openPokemonSearch = (callback: (pokemonInstance: PokemonInstanceExt) => void) => {
+  const openPokemonSearch = (
+    callback: (pokemonInstance: PokemonInstanceExt) => void,
+    currentInstance?: PokemonInstanceExt
+  ) => {
     pokemonSearchCallback.value = callback
+    pokemonSearchCurrentInstance.value = currentInstance || null
     pokemonSearchDialog.value = true
   }
 
   const closePokemonSearch = () => {
     pokemonSearchDialog.value = false
     pokemonSearchCallback.value = null
+    pokemonSearchCurrentInstance.value = null
   }
 
   const handlePokemonSelected = (pokemonInstance: PokemonInstanceExt) => {
@@ -110,6 +116,7 @@ export const useDialogStore = defineStore('dialog', () => {
     // Pokemon Search
     pokemonSearchDialog,
     pokemonSearchCallback,
+    pokemonSearchCurrentInstance,
     openPokemonSearch,
     closePokemonSearch,
     handlePokemonSelected,

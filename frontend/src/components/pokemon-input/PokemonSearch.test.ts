@@ -69,10 +69,11 @@ describe('PokemonSearch', () => {
     }
   })
 
-  it('opens PokemonInputDialog when selecting from Pokedex', async () => {
+  it('calls callback directly when coming from pokemon-button (regardless of Pokebox/Pokedex)', async () => {
     pokemonSearchStore.showPokebox = false
 
     const openPokemonInputSpy = vi.spyOn(dialogStore, 'openPokemonInput')
+    const handlePokemonSelectedSpy = vi.spyOn(dialogStore, 'handlePokemonSelected')
     const callback = vi.fn()
     dialogStore.openPokemonSearch(callback)
 
@@ -81,7 +82,31 @@ describe('PokemonSearch', () => {
     if (avatars.length > 0) {
       await avatars[0].trigger('click')
 
-      // Should open PokemonInputDialog
+      // Should NOT open PokemonInputDialog when callback exists (coming from pokemon-button)
+      expect(openPokemonInputSpy).not.toHaveBeenCalled()
+
+      // Should call handlePokemonSelected instead
+      expect(handlePokemonSelectedSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          pokemon: expect.any(Object)
+        })
+      )
+    }
+  })
+
+  it('opens PokemonInputDialog when selecting from Pokedex without callback', async () => {
+    pokemonSearchStore.showPokebox = false
+    dialogStore.pokemonSearchCallback = null
+
+    const openPokemonInputSpy = vi.spyOn(dialogStore, 'openPokemonInput')
+    const handlePokemonSelectedSpy = vi.spyOn(dialogStore, 'handlePokemonSelected')
+
+    // Click on a Pokemon avatar
+    const avatars = wrapper.findAll('.v-avatar')
+    if (avatars.length > 0) {
+      await avatars[0].trigger('click')
+
+      // Should open PokemonInputDialog when no callback exists
       expect(openPokemonInputSpy).toHaveBeenCalledWith(
         expect.any(Function),
         expect.objectContaining({
@@ -89,7 +114,8 @@ describe('PokemonSearch', () => {
         })
       )
 
-      expect(callback).not.toHaveBeenCalled()
+      // Should NOT call handlePokemonSelected directly
+      expect(handlePokemonSelectedSpy).not.toHaveBeenCalled()
     }
   })
 

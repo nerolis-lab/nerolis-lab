@@ -21,7 +21,6 @@ class PokemonInstanceUtilsImpl {
   public createDefaultPokemonInstance(pokemon: Pokemon, attrs?: Partial<PokemonInstanceExt>): PokemonInstanceExt {
     const gender = attrs?.gender ?? getRandomGender(pokemon)
     const instance = {
-      pokemon,
       carrySize: CarrySizeUtils.baseCarrySize(pokemon),
       externalId: uuid.v4(),
       gender,
@@ -40,7 +39,32 @@ class PokemonInstanceUtilsImpl {
       ],
       rp: 0,
       version: 0,
-      ...attrs
+      ...attrs,
+      pokemon
+    }
+
+    const rp = new RP(instance).calc()
+    return {
+      ...instance,
+      rp
+    }
+  }
+
+  public createPokemonInstanceWithPreservedAttributes(
+    newPokemon: Pokemon,
+    existingInstance: PokemonInstanceExt
+  ): PokemonInstanceExt {
+    const instance = {
+      ...existingInstance,
+      pokemon: newPokemon,
+      ingredients: [
+        { ...newPokemon.ingredient0[0], level: 0 },
+        { ...newPokemon.ingredient30[0], level: 30 },
+        { ...newPokemon.ingredient60[0], level: 60 }
+      ],
+      skillLevel: Math.min(existingInstance.skillLevel, newPokemon.skill.maxLevel),
+      carrySize: CarrySizeUtils.baseCarrySize(newPokemon),
+      gender: getRandomGender(newPokemon)
     }
 
     const rp = new RP(instance).calc()

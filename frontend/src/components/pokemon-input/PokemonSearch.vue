@@ -309,12 +309,24 @@ const selectFirstOption = () => {
 }
 
 const selectPokemon = (instance: PokemonInstanceExt) => {
-  if (pokemonSearchStore.showPokebox) {
-    // For Pokébox Pokémon, emit directly
+  if (dialogStore.pokemonSearchCallback) {
+    let finalInstance = instance
+
+    // If we have a current instance and we're selecting from Pokedex (not Pokebox),
+    // preserve existing attributes but update Pokemon-specific ones
+    if (dialogStore.pokemonSearchCurrentInstance && !pokemonSearchStore.showPokebox) {
+      finalInstance = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(
+        instance.pokemon,
+        dialogStore.pokemonSearchCurrentInstance
+      )
+    }
+
+    dialogStore.handlePokemonSelected(finalInstance)
+    emit('save', finalInstance)
+  } else if (pokemonSearchStore.showPokebox) {
     dialogStore.handlePokemonSelected(instance)
     emit('save', instance)
   } else {
-    // For Pokédex Pokémon, open the PokemonInputDialog first
     dialogStore.openPokemonInput((updatedInstance: PokemonInstanceExt) => {
       dialogStore.handlePokemonSelected(updatedInstance)
       emit('save', updatedInstance)

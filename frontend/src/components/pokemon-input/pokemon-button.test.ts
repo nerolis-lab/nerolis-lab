@@ -1,9 +1,8 @@
 import PokemonButton from '@/components/pokemon-input/pokemon-button.vue'
-import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { ABOMASNOW, PIKACHU } from 'sleepapi-common'
+import { ABOMASNOW } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -26,10 +25,19 @@ vi.mock('@/stores/pokedex-store/pokedex-store', () => ({
   })
 }))
 
+const mockOpenPokemonSearch = vi.fn()
+
+vi.mock('@/stores/dialog-store/dialog-store', () => ({
+  useDialogStore: () => ({
+    openPokemonSearch: mockOpenPokemonSearch
+  })
+}))
+
 describe('PokemonButton', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonButton>>
 
   beforeEach(() => {
+    vi.clearAllMocks()
     const mockPokemon = mocks.createMockPokemon({ pokemon: ABOMASNOW })
     wrapper = mount(PokemonButton, {
       props: {
@@ -64,22 +72,27 @@ describe('PokemonButton', () => {
     expect(img.attributes('src')).toBe('/images/pokemon/pikachu.png')
   })
 
-  it('opens Pokémon menu on button click', async () => {
+  it('opens pokemon search dialog on button click', async () => {
     const button = wrapper.find('button')
     await button.trigger('click')
 
-    expect(wrapper.vm.pokemonMenu).toBe(true)
-    const dialog = wrapper.findComponent({ name: 'v-dialog' })
-    expect(dialog.exists()).toBe(true)
+    expect(mockOpenPokemonSearch).toHaveBeenCalledTimes(1)
+    expect(mockOpenPokemonSearch).toHaveBeenCalledWith(
+      expect.any(Function),
+      expect.objectContaining({
+        pokemon: ABOMASNOW
+      })
+    )
   })
 
-  it('selects Pokémon correctly', async () => {
-    const pkmn = PokemonInstanceUtils.createDefaultPokemonInstance(PIKACHU)
-    wrapper.vm.selectPokemon(pkmn)
+  it('calls dialog store with current pokemon instance', async () => {
+    const mockPokemon = mocks.createMockPokemon({ pokemon: ABOMASNOW })
+    await wrapper.setProps({ pokemonInstance: mockPokemon })
 
-    expect(wrapper.emitted('update-pokemon')).toBeTruthy()
-    expect(wrapper.emitted('update-pokemon')![0]).toEqual([pkmn])
-    expect(wrapper.vm.pokemonMenu).toBe(false)
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(mockOpenPokemonSearch).toHaveBeenCalledWith(expect.any(Function), mockPokemon)
   })
 
   it('displays Pokémon image correctly', async () => {
@@ -93,11 +106,18 @@ describe('PokemonButton', () => {
     expect(img.attributes('src')).toBe('/images/pokemon/pikachu.png')
   })
 
-  it('closes Pokémon menu on cancel', async () => {
-    wrapper.vm.openMenu()
-    expect(wrapper.vm.pokemonMenu).toBe(true)
+  it('emits update-pokemon when callback is executed', async () => {
+    const mockPokemon = mocks.createMockPokemon({ pokemon: ABOMASNOW })
+    const button = wrapper.find('button')
+    await button.trigger('click')
 
-    wrapper.vm.closeMenu()
-    expect(wrapper.vm.pokemonMenu).toBe(false)
+    // Get the callback function that was passed to openPokemonSearch
+    const callback = mockOpenPokemonSearch.mock.calls[0][0]
+
+    // Execute the callback with a pokemon
+    callback(mockPokemon)
+
+    expect(wrapper.emitted('update-pokemon')).toBeTruthy()
+    expect(wrapper.emitted('update-pokemon')![0]).toEqual([mockPokemon])
   })
 })
