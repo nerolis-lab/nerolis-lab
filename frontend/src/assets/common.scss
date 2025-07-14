@@ -72,8 +72,11 @@
   flex-wrap: nowrap;
 }
 
-// Global button text override
 .v-btn {
   font-size: 16px !important;
   text-transform: none !important;
+}
+
+.grayscale {
+  filter: grayscale(100%);
 }
