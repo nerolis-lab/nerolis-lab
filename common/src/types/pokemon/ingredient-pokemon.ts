@@ -70,16 +70,18 @@ export const BULBASAUR: Pokemon = basePokemon({
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: HONEY }],
-  ingredient30: [
-    { amount: 5, ingredient: HONEY },
-    { amount: 4, ingredient: SNOOZY_TOMATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: HONEY },
-    { amount: 7, ingredient: SNOOZY_TOMATO },
-    { amount: 6, ingredient: SOFT_POTATO }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: HONEY }],
+    ingredient30: [
+      { amount: 5, ingredient: HONEY },
+      { amount: 4, ingredient: SNOOZY_TOMATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: HONEY },
+      { amount: 7, ingredient: SNOOZY_TOMATO },
+      { amount: 6, ingredient: SOFT_POTATO }
+    ]
+  },
   skill: IngredientMagnetS
 });
 
@@ -113,16 +115,18 @@ export const CHARMANDER: Pokemon = basePokemon({
   carrySize: 12,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
-  ingredient30: [
-    { amount: 5, ingredient: BEAN_SAUSAGE },
-    { amount: 4, ingredient: WARMING_GINGER }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: BEAN_SAUSAGE },
-    { amount: 7, ingredient: WARMING_GINGER },
-    { amount: 6, ingredient: FIERY_HERB }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
+    ingredient30: [
+      { amount: 5, ingredient: BEAN_SAUSAGE },
+      { amount: 4, ingredient: WARMING_GINGER }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: BEAN_SAUSAGE },
+      { amount: 7, ingredient: WARMING_GINGER },
+      { amount: 6, ingredient: FIERY_HERB }
+    ]
+  },
   skill: IngredientMagnetS
 });
 
@@ -156,16 +160,18 @@ export const SQUIRTLE: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: MOOMOO_MILK }],
-  ingredient30: [
-    { amount: 5, ingredient: MOOMOO_MILK },
-    { amount: 3, ingredient: SOOTHING_CACAO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: MOOMOO_MILK },
-    { amount: 5, ingredient: SOOTHING_CACAO },
-    { amount: 7, ingredient: BEAN_SAUSAGE }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: MOOMOO_MILK }],
+    ingredient30: [
+      { amount: 5, ingredient: MOOMOO_MILK },
+      { amount: 3, ingredient: SOOTHING_CACAO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: MOOMOO_MILK },
+      { amount: 5, ingredient: SOOTHING_CACAO },
+      { amount: 7, ingredient: BEAN_SAUSAGE }
+    ]
+  },
   skill: IngredientMagnetS
 });
 
@@ -199,16 +205,18 @@ export const DIGLETT: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-  ingredient30: [
-    { amount: 5, ingredient: SNOOZY_TOMATO },
-    { amount: 3, ingredient: LARGE_LEEK }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SNOOZY_TOMATO },
-    { amount: 4, ingredient: LARGE_LEEK },
-    { amount: 8, ingredient: GREENGRASS_SOYBEANS }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
+    ingredient30: [
+      { amount: 5, ingredient: SNOOZY_TOMATO },
+      { amount: 3, ingredient: LARGE_LEEK }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SNOOZY_TOMATO },
+      { amount: 4, ingredient: LARGE_LEEK },
+      { amount: 8, ingredient: GREENGRASS_SOYBEANS }
+    ]
+  },
   skill: ChargeStrengthS
 });
 
@@ -233,16 +241,18 @@ export const BELLSPROUT: Pokemon = basePokemon({
   carrySize: 8,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-  ingredient30: [
-    { amount: 5, ingredient: SNOOZY_TOMATO },
-    { amount: 4, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SNOOZY_TOMATO },
-    { amount: 6, ingredient: SOFT_POTATO },
-    { amount: 4, ingredient: LARGE_LEEK }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
+    ingredient30: [
+      { amount: 5, ingredient: SNOOZY_TOMATO },
+      { amount: 4, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SNOOZY_TOMATO },
+      { amount: 6, ingredient: SOFT_POTATO },
+      { amount: 4, ingredient: LARGE_LEEK }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -276,16 +286,18 @@ export const GEODUDE: Pokemon = basePokemon({
   carrySize: 9,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: GREENGRASS_SOYBEANS }],
-  ingredient30: [
-    { amount: 5, ingredient: GREENGRASS_SOYBEANS },
-    { amount: 4, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: GREENGRASS_SOYBEANS },
-    { amount: 6, ingredient: SOFT_POTATO },
-    { amount: 4, ingredient: TASTY_MUSHROOM }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: GREENGRASS_SOYBEANS }],
+    ingredient30: [
+      { amount: 5, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 4, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 6, ingredient: SOFT_POTATO },
+      { amount: 4, ingredient: TASTY_MUSHROOM }
+    ]
+  },
   skill: ChargeStrengthSRange
 });
 
@@ -319,16 +331,18 @@ export const FARFETCHD: Pokemon = basePokemon({
   carrySize: 18,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: LARGE_LEEK }],
-  ingredient30: [
-    { amount: 5, ingredient: LARGE_LEEK },
-    { amount: 8, ingredient: BEAN_SAUSAGE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: LARGE_LEEK },
-    { amount: 13, ingredient: BEAN_SAUSAGE },
-    { amount: 12, ingredient: WARMING_GINGER }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: LARGE_LEEK }],
+    ingredient30: [
+      { amount: 5, ingredient: LARGE_LEEK },
+      { amount: 8, ingredient: BEAN_SAUSAGE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: LARGE_LEEK },
+      { amount: 13, ingredient: BEAN_SAUSAGE },
+      { amount: 12, ingredient: WARMING_GINGER }
+    ]
+  },
   skill: ChargeStrengthS
 });
 
@@ -344,16 +358,18 @@ export const GASTLY: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: FIERY_HERB }],
-  ingredient30: [
-    { amount: 5, ingredient: FIERY_HERB },
-    { amount: 4, ingredient: TASTY_MUSHROOM }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: FIERY_HERB },
-    { amount: 6, ingredient: TASTY_MUSHROOM },
-    { amount: 8, ingredient: PURE_OIL }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: FIERY_HERB }],
+    ingredient30: [
+      { amount: 5, ingredient: FIERY_HERB },
+      { amount: 4, ingredient: TASTY_MUSHROOM }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: FIERY_HERB },
+      { amount: 6, ingredient: TASTY_MUSHROOM },
+      { amount: 8, ingredient: PURE_OIL }
+    ]
+  },
   skill: ChargeStrengthSRange
 });
 
@@ -387,16 +403,18 @@ export const KANGASKHAN: Pokemon = basePokemon({
   carrySize: 21,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: WARMING_GINGER }],
-  ingredient30: [
-    { amount: 5, ingredient: WARMING_GINGER },
-    { amount: 4, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: WARMING_GINGER },
-    { amount: 6, ingredient: SOFT_POTATO },
-    { amount: 8, ingredient: GREENGRASS_SOYBEANS }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: WARMING_GINGER }],
+    ingredient30: [
+      { amount: 5, ingredient: WARMING_GINGER },
+      { amount: 4, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: WARMING_GINGER },
+      { amount: 6, ingredient: SOFT_POTATO },
+      { amount: 8, ingredient: GREENGRASS_SOYBEANS }
+    ]
+  },
   skill: IngredientMagnetS
 });
 
@@ -412,16 +430,18 @@ export const CHANSEY: Pokemon = basePokemon({
   carrySize: 15,
   previousEvolutions: 1,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: FANCY_EGG }],
-  ingredient30: [
-    { amount: 5, ingredient: FANCY_EGG },
-    { amount: 4, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: FANCY_EGG },
-    { amount: 7, ingredient: SOFT_POTATO },
-    { amount: 8, ingredient: HONEY }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: FANCY_EGG }],
+    ingredient30: [
+      { amount: 5, ingredient: FANCY_EGG },
+      { amount: 4, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: FANCY_EGG },
+      { amount: 7, ingredient: SOFT_POTATO },
+      { amount: 8, ingredient: HONEY }
+    ]
+  },
   skill: EnergyForEveryone
 });
 
@@ -437,16 +457,18 @@ export const MR_MIME: Pokemon = basePokemon({
   carrySize: 17,
   previousEvolutions: 1,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-  ingredient30: [
-    { amount: 5, ingredient: SNOOZY_TOMATO },
-    { amount: 4, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SNOOZY_TOMATO },
-    { amount: 6, ingredient: SOFT_POTATO },
-    { amount: 4, ingredient: LARGE_LEEK }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
+    ingredient30: [
+      { amount: 5, ingredient: SNOOZY_TOMATO },
+      { amount: 4, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SNOOZY_TOMATO },
+      { amount: 6, ingredient: SOFT_POTATO },
+      { amount: 4, ingredient: LARGE_LEEK }
+    ]
+  },
   skill: SkillCopyMimic
 });
 
@@ -462,16 +484,18 @@ export const PINSIR: Pokemon = basePokemon({
   carrySize: 24,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: HONEY }],
-  ingredient30: [
-    { amount: 5, ingredient: HONEY },
-    { amount: 5, ingredient: FANCY_APPLE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: HONEY },
-    { amount: 8, ingredient: FANCY_APPLE },
-    { amount: 7, ingredient: BEAN_SAUSAGE }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: HONEY }],
+    ingredient30: [
+      { amount: 5, ingredient: HONEY },
+      { amount: 5, ingredient: FANCY_APPLE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: HONEY },
+      { amount: 8, ingredient: FANCY_APPLE },
+      { amount: 7, ingredient: BEAN_SAUSAGE }
+    ]
+  },
   skill: ChargeStrengthS
 });
 
@@ -487,16 +511,18 @@ export const DITTO: Pokemon = basePokemon({
   carrySize: 17,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-  ingredient30: [
-    { amount: 5, ingredient: PURE_OIL },
-    { amount: 3, ingredient: LARGE_LEEK }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: PURE_OIL },
-    { amount: 5, ingredient: LARGE_LEEK },
-    { amount: 3, ingredient: SLOWPOKE_TAIL }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
+    ingredient30: [
+      { amount: 5, ingredient: PURE_OIL },
+      { amount: 3, ingredient: LARGE_LEEK }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: PURE_OIL },
+      { amount: 5, ingredient: LARGE_LEEK },
+      { amount: 3, ingredient: SLOWPOKE_TAIL }
+    ]
+  },
   skill: SkillCopyTransform
 });
 
@@ -512,16 +538,18 @@ export const DRATINI: Pokemon = basePokemon({
   carrySize: 9,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: FIERY_HERB }],
-  ingredient30: [
-    { amount: 5, ingredient: FIERY_HERB },
-    { amount: 4, ingredient: GREENGRASS_CORN }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: FIERY_HERB },
-    { amount: 7, ingredient: GREENGRASS_CORN },
-    { amount: 8, ingredient: PURE_OIL }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: FIERY_HERB }],
+    ingredient30: [
+      { amount: 5, ingredient: FIERY_HERB },
+      { amount: 4, ingredient: GREENGRASS_CORN }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: FIERY_HERB },
+      { amount: 7, ingredient: GREENGRASS_CORN },
+      { amount: 8, ingredient: PURE_OIL }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -555,16 +583,18 @@ export const WOOPER: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: TASTY_MUSHROOM }],
-  ingredient30: [
-    { amount: 5, ingredient: TASTY_MUSHROOM },
-    { amount: 6, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: TASTY_MUSHROOM },
-    { amount: 10, ingredient: SOFT_POTATO },
-    { amount: 12, ingredient: BEAN_SAUSAGE }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: TASTY_MUSHROOM }],
+    ingredient30: [
+      { amount: 5, ingredient: TASTY_MUSHROOM },
+      { amount: 6, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: TASTY_MUSHROOM },
+      { amount: 10, ingredient: SOFT_POTATO },
+      { amount: 12, ingredient: BEAN_SAUSAGE }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -580,16 +610,18 @@ export const WOOPER_PALDEAN: Pokemon = basePokemon({
   carrySize: 9,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: SOOTHING_CACAO }],
-  ingredient30: [
-    { amount: 5, ingredient: SOOTHING_CACAO },
-    { amount: 4, ingredient: ROUSING_COFFEE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SOOTHING_CACAO },
-    { amount: 7, ingredient: ROUSING_COFFEE },
-    { amount: 9, ingredient: SOFT_POTATO }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SOOTHING_CACAO }],
+    ingredient30: [
+      { amount: 5, ingredient: SOOTHING_CACAO },
+      { amount: 4, ingredient: ROUSING_COFFEE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SOOTHING_CACAO },
+      { amount: 7, ingredient: ROUSING_COFFEE },
+      { amount: 9, ingredient: SOFT_POTATO }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -614,16 +646,18 @@ export const DELIBIRD: Pokemon = basePokemon({
   carrySize: 20,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: FANCY_EGG }],
-  ingredient30: [
-    { amount: 5, ingredient: FANCY_EGG },
-    { amount: 6, ingredient: FANCY_APPLE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: FANCY_EGG },
-    { amount: 9, ingredient: FANCY_APPLE },
-    { amount: 5, ingredient: SOOTHING_CACAO }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: FANCY_EGG }],
+    ingredient30: [
+      { amount: 5, ingredient: FANCY_EGG },
+      { amount: 6, ingredient: FANCY_APPLE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: FANCY_EGG },
+      { amount: 9, ingredient: FANCY_APPLE },
+      { amount: 5, ingredient: SOOTHING_CACAO }
+    ]
+  },
   skill: IngredientMagnetS
 });
 
@@ -648,16 +682,18 @@ export const LARVITAR: Pokemon = basePokemon({
   carrySize: 9,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: WARMING_GINGER }],
-  ingredient30: [
-    { amount: 5, ingredient: WARMING_GINGER },
-    { amount: 5, ingredient: GREENGRASS_SOYBEANS }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: WARMING_GINGER },
-    { amount: 8, ingredient: GREENGRASS_SOYBEANS },
-    { amount: 8, ingredient: BEAN_SAUSAGE }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: WARMING_GINGER }],
+    ingredient30: [
+      { amount: 5, ingredient: WARMING_GINGER },
+      { amount: 5, ingredient: GREENGRASS_SOYBEANS }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: WARMING_GINGER },
+      { amount: 8, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 8, ingredient: BEAN_SAUSAGE }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -692,16 +728,18 @@ export const MAWILE: Pokemon = basePokemon({
   carrySize: 17,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-  ingredient30: [
-    { amount: 5, ingredient: PURE_OIL },
-    { amount: 4, ingredient: GREENGRASS_CORN }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: PURE_OIL },
-    { amount: 6, ingredient: GREENGRASS_CORN },
-    { amount: 8, ingredient: SNOOZY_TOMATO }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
+    ingredient30: [
+      { amount: 5, ingredient: PURE_OIL },
+      { amount: 4, ingredient: GREENGRASS_CORN }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: PURE_OIL },
+      { amount: 6, ingredient: GREENGRASS_CORN },
+      { amount: 8, ingredient: SNOOZY_TOMATO }
+    ]
+  },
   skill: IngredientDrawSHyperCutter
 });
 
@@ -717,16 +755,18 @@ export const ARON: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
-  ingredient30: [
-    { amount: 5, ingredient: BEAN_SAUSAGE },
-    { amount: 3, ingredient: ROUSING_COFFEE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: BEAN_SAUSAGE },
-    { amount: 5, ingredient: ROUSING_COFFEE },
-    { amount: 7, ingredient: GREENGRASS_SOYBEANS }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: BEAN_SAUSAGE }],
+    ingredient30: [
+      { amount: 5, ingredient: BEAN_SAUSAGE },
+      { amount: 3, ingredient: ROUSING_COFFEE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: BEAN_SAUSAGE },
+      { amount: 5, ingredient: ROUSING_COFFEE },
+      { amount: 7, ingredient: GREENGRASS_SOYBEANS }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -760,16 +800,18 @@ export const ABSOL: Pokemon = basePokemon({
   carrySize: 21,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: SOOTHING_CACAO }],
-  ingredient30: [
-    { amount: 5, ingredient: SOOTHING_CACAO },
-    { amount: 8, ingredient: FANCY_APPLE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SOOTHING_CACAO },
-    { amount: 12, ingredient: FANCY_APPLE },
-    { amount: 7, ingredient: TASTY_MUSHROOM }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SOOTHING_CACAO }],
+    ingredient30: [
+      { amount: 5, ingredient: SOOTHING_CACAO },
+      { amount: 8, ingredient: FANCY_APPLE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SOOTHING_CACAO },
+      { amount: 12, ingredient: FANCY_APPLE },
+      { amount: 7, ingredient: TASTY_MUSHROOM }
+    ]
+  },
   skill: ChargeStrengthS
 });
 
@@ -785,16 +827,18 @@ export const SHINX: Pokemon = basePokemon({
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-  ingredient30: [
-    { amount: 5, ingredient: SNOOZY_TOMATO },
-    { amount: 4, ingredient: PURE_OIL }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SNOOZY_TOMATO },
-    { amount: 7, ingredient: PURE_OIL },
-    { amount: 5, ingredient: ROUSING_COFFEE }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
+    ingredient30: [
+      { amount: 5, ingredient: SNOOZY_TOMATO },
+      { amount: 4, ingredient: PURE_OIL }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SNOOZY_TOMATO },
+      { amount: 7, ingredient: PURE_OIL },
+      { amount: 5, ingredient: ROUSING_COFFEE }
+    ]
+  },
   skill: CookingPowerUpS
 });
 
@@ -846,15 +890,17 @@ export const CROAGUNK: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-  ingredient30: [
-    { amount: 5, ingredient: PURE_OIL },
-    { amount: 5, ingredient: BEAN_SAUSAGE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: PURE_OIL },
-    { amount: 8, ingredient: BEAN_SAUSAGE }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
+    ingredient30: [
+      { amount: 5, ingredient: PURE_OIL },
+      { amount: 5, ingredient: BEAN_SAUSAGE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: PURE_OIL },
+      { amount: 8, ingredient: BEAN_SAUSAGE }
+    ]
+  },
   skill: ChargeStrengthS
 });
 
@@ -879,16 +925,18 @@ export const SNOVER: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
-  ingredient30: [
-    { amount: 5, ingredient: SNOOZY_TOMATO },
-    { amount: 4, ingredient: FANCY_EGG }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SNOOZY_TOMATO },
-    { amount: 7, ingredient: FANCY_EGG },
-    { amount: 5, ingredient: TASTY_MUSHROOM }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SNOOZY_TOMATO }],
+    ingredient30: [
+      { amount: 5, ingredient: SNOOZY_TOMATO },
+      { amount: 4, ingredient: FANCY_EGG }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SNOOZY_TOMATO },
+      { amount: 7, ingredient: FANCY_EGG },
+      { amount: 5, ingredient: TASTY_MUSHROOM }
+    ]
+  },
   skill: ChargeStrengthSRange
 });
 
@@ -913,16 +961,18 @@ export const GRUBBIN: Pokemon = basePokemon({
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: ROUSING_COFFEE }],
-  ingredient30: [
-    { amount: 5, ingredient: ROUSING_COFFEE },
-    { amount: 4, ingredient: TASTY_MUSHROOM }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: ROUSING_COFFEE },
-    { amount: 7, ingredient: TASTY_MUSHROOM },
-    { amount: 11, ingredient: HONEY }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: ROUSING_COFFEE }],
+    ingredient30: [
+      { amount: 5, ingredient: ROUSING_COFFEE },
+      { amount: 4, ingredient: TASTY_MUSHROOM }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: ROUSING_COFFEE },
+      { amount: 7, ingredient: TASTY_MUSHROOM },
+      { amount: 11, ingredient: HONEY }
+    ]
+  },
   skill: ChargeStrengthS
 });
 
@@ -956,16 +1006,18 @@ export const STUFFUL: Pokemon = basePokemon({
   carrySize: 13,
   previousEvolutions: 0,
   remainingEvolutions: 1,
-  ingredient0: [{ amount: 2, ingredient: GREENGRASS_CORN }],
-  ingredient30: [
-    { amount: 5, ingredient: GREENGRASS_CORN },
-    { amount: 6, ingredient: BEAN_SAUSAGE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: GREENGRASS_CORN },
-    { amount: 10, ingredient: BEAN_SAUSAGE },
-    { amount: 9, ingredient: FANCY_EGG }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: GREENGRASS_CORN }],
+    ingredient30: [
+      { amount: 5, ingredient: GREENGRASS_CORN },
+      { amount: 6, ingredient: BEAN_SAUSAGE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: GREENGRASS_CORN },
+      { amount: 10, ingredient: BEAN_SAUSAGE },
+      { amount: 9, ingredient: FANCY_EGG }
+    ]
+  },
   skill: ChargeStrengthSRange
 });
 
@@ -990,16 +1042,18 @@ export const COMFEY: Pokemon = basePokemon({
   carrySize: 20,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: GREENGRASS_CORN }],
-  ingredient30: [
-    { amount: 5, ingredient: GREENGRASS_CORN },
-    { amount: 6, ingredient: WARMING_GINGER }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: GREENGRASS_CORN },
-    { amount: 9, ingredient: WARMING_GINGER },
-    { amount: 7, ingredient: SOOTHING_CACAO }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: GREENGRASS_CORN }],
+    ingredient30: [
+      { amount: 5, ingredient: GREENGRASS_CORN },
+      { amount: 6, ingredient: WARMING_GINGER }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: GREENGRASS_CORN },
+      { amount: 9, ingredient: WARMING_GINGER },
+      { amount: 7, ingredient: SOOTHING_CACAO }
+    ]
+  },
   skill: EnergizingCheerS
 });
 
@@ -1015,16 +1069,18 @@ export const CRAMORANT: Pokemon = basePokemon({
   carrySize: 19,
   previousEvolutions: 0,
   remainingEvolutions: 0,
-  ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
-  ingredient30: [
-    { amount: 5, ingredient: PURE_OIL },
-    { amount: 4, ingredient: SOFT_POTATO }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: PURE_OIL },
-    { amount: 7, ingredient: SOFT_POTATO },
-    { amount: 8, ingredient: FANCY_EGG }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: PURE_OIL }],
+    ingredient30: [
+      { amount: 5, ingredient: PURE_OIL },
+      { amount: 4, ingredient: SOFT_POTATO }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: PURE_OIL },
+      { amount: 7, ingredient: SOFT_POTATO },
+      { amount: 8, ingredient: FANCY_EGG }
+    ]
+  },
   skill: TastyChanceS
 });
 
@@ -1040,16 +1096,18 @@ export const SPRIGATITO: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: SOFT_POTATO }],
-  ingredient30: [
-    { amount: 5, ingredient: SOFT_POTATO },
-    { amount: 6, ingredient: MOOMOO_MILK }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: SOFT_POTATO },
-    { amount: 9, ingredient: MOOMOO_MILK },
-    { amount: 8, ingredient: WARMING_GINGER }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: SOFT_POTATO }],
+    ingredient30: [
+      { amount: 5, ingredient: SOFT_POTATO },
+      { amount: 6, ingredient: MOOMOO_MILK }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: SOFT_POTATO },
+      { amount: 9, ingredient: MOOMOO_MILK },
+      { amount: 8, ingredient: WARMING_GINGER }
+    ]
+  },
   skill: CookingPowerUpS
 });
 
@@ -1084,16 +1142,18 @@ export const FUECOCO: Pokemon = basePokemon({
   carrySize: 11,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: FANCY_APPLE }],
-  ingredient30: [
-    { amount: 5, ingredient: FANCY_APPLE },
-    { amount: 4, ingredient: BEAN_SAUSAGE }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: FANCY_APPLE },
-    { amount: 6, ingredient: BEAN_SAUSAGE },
-    { amount: 5, ingredient: FIERY_HERB }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: FANCY_APPLE }],
+    ingredient30: [
+      { amount: 5, ingredient: FANCY_APPLE },
+      { amount: 4, ingredient: BEAN_SAUSAGE }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: FANCY_APPLE },
+      { amount: 6, ingredient: BEAN_SAUSAGE },
+      { amount: 5, ingredient: FIERY_HERB }
+    ]
+  },
   skill: ChargeEnergyS
 });
 
@@ -1128,16 +1188,18 @@ export const QUAXLY: Pokemon = basePokemon({
   carrySize: 10,
   previousEvolutions: 0,
   remainingEvolutions: 2,
-  ingredient0: [{ amount: 2, ingredient: GREENGRASS_SOYBEANS }],
-  ingredient30: [
-    { amount: 5, ingredient: GREENGRASS_SOYBEANS },
-    { amount: 2, ingredient: LARGE_LEEK }
-  ],
-  ingredient60: [
-    { amount: 7, ingredient: GREENGRASS_SOYBEANS },
-    { amount: 4, ingredient: LARGE_LEEK },
-    { amount: 6, ingredient: PURE_OIL }
-  ],
+  ingredients: {
+    ingredient0: [{ amount: 2, ingredient: GREENGRASS_SOYBEANS }],
+    ingredient30: [
+      { amount: 5, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 2, ingredient: LARGE_LEEK }
+    ],
+    ingredient60: [
+      { amount: 7, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 4, ingredient: LARGE_LEEK },
+      { amount: 6, ingredient: PURE_OIL }
+    ]
+  },
   skill: ChargeStrengthM
 });
 
