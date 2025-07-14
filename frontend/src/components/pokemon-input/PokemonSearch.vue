@@ -174,8 +174,28 @@ const searchQuery = ref('')
 const selectedSpecialties = ref<PokemonSpecialty[]>([])
 const specialties: PokemonSpecialty[] = ['berry', 'ingredient', 'skill']
 const finalStageOnly = ref(true)
-const selectedSort = ref('pokedex')
-const sortAscending = ref(true)
+const selectedSort = computed({
+  get: () => (pokemonSearchStore.showPokebox ? pokemonSearchStore.pokeboxSort : pokemonSearchStore.pokedexSort),
+  set: (value: string) => {
+    if (pokemonSearchStore.showPokebox) {
+      pokemonSearchStore.setPokeboxSort(value, sortAscending.value)
+    } else {
+      pokemonSearchStore.setPokedexSort(value, sortAscending.value)
+    }
+  }
+})
+
+const sortAscending = computed({
+  get: () =>
+    pokemonSearchStore.showPokebox ? pokemonSearchStore.pokeboxSortAscending : pokemonSearchStore.pokedexSortAscending,
+  set: (value: boolean) => {
+    if (pokemonSearchStore.showPokebox) {
+      pokemonSearchStore.setPokeboxSort(selectedSort.value, value)
+    } else {
+      pokemonSearchStore.setPokedexSort(selectedSort.value, value)
+    }
+  }
+})
 const showPokeboxInfoDialog = ref(false)
 
 const sortOptions = computed(() => {
@@ -232,7 +252,7 @@ const pokemonCollection: ComputedRef<PokemonWithPath[]> = computed(() => {
 })
 
 const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
-  const query = searchQuery.value.toLowerCase().trim()
+  const query = (searchQuery.value || '').toLowerCase().trim()
 
   const nameFilter = (p: PokemonWithPath) => !query || p.pokemon.displayName.toLowerCase().includes(query)
   const specialtyFilter = (p: PokemonWithPath) =>
