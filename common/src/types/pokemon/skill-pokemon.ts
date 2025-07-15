@@ -1063,7 +1063,7 @@ export const RUFFLET: Pokemon = {
   ingredient0: [{ amount: 1, ingredient: BEAN_SAUSAGE }],
   ingredient30: [
     { amount: 2, ingredient: BEAN_SAUSAGE },
-    { amount: 1, ingredient: GREENGRASS_CORN }
+    { amount: 2, ingredient: GREENGRASS_CORN }
   ],
   ingredient60: [
     { amount: 4, ingredient: BEAN_SAUSAGE },
