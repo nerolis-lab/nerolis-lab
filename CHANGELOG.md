@@ -1,3 +1,10 @@
+## [2.22.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.22.0...v2.22.1) (2025-07-15)
+
+
+### Bug Fixes
+
+* **pokemon search:** remove autofocus since it broke browsers ([5b3ea5d](https://github.com/nerolis-lab/nerolis-lab/commit/5b3ea5dba86257ff1a10d55a2c572b3857dd58d2))
+
 # [2.22.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.21.3...v2.22.0) (2025-07-14)
 
 
