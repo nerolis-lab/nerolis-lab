@@ -3,7 +3,6 @@
     <v-text-field
       ref="textFieldRef"
       v-model="searchQuery"
-      :autofocus="autofocus && isExpanded"
       :label="isExpanded ? 'Search' : undefined"
       variant="outlined"
       dense
