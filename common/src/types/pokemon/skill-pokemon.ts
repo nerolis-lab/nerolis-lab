@@ -54,6 +54,7 @@ import {
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
   CookingPowerUpS,
+  CookingPowerUpSMinus,
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
@@ -62,6 +63,7 @@ import {
   ExtraHelpfulS,
   HelperBoost,
   IngredientMagnetS,
+  IngredientMagnetSPlus,
   Metronome,
   TastyChanceS
 } from '../mainskill/mainskills';
@@ -816,6 +818,58 @@ export const SABLEYE: Pokemon = {
   skill: DreamShardMagnetSRange
 };
 
+export const PLUSLE: Pokemon = {
+  name: 'PLUSLE',
+  displayName: 'Plusle',
+  pokedexNumber: 311,
+  specialty: 'skill',
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 10.3,
+  skillPercentage: 4.9,
+  berry: GREPA,
+  genders: BALANCED_GENDER,
+  carrySize: 16,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredient0: [{ amount: 1, ingredient: ROUSING_COFFEE }],
+  ingredient30: [
+    { amount: 2, ingredient: ROUSING_COFFEE },
+    { amount: 2, ingredient: LARGE_LEEK }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: ROUSING_COFFEE },
+    { amount: 3, ingredient: LARGE_LEEK },
+    { amount: 6, ingredient: MOOMOO_MILK }
+  ],
+  skill: IngredientMagnetSPlus
+};
+
+export const MINUN: Pokemon = {
+  name: 'MINUN',
+  displayName: 'Minun',
+  pokedexNumber: 312,
+  specialty: 'skill',
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 17.4,
+  skillPercentage: 4.9,
+  berry: GREPA,
+  genders: BALANCED_GENDER,
+  carrySize: 16,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredient0: [{ amount: 1, ingredient: HONEY }],
+  ingredient30: [
+    { amount: 2, ingredient: HONEY },
+    { amount: 2, ingredient: FANCY_EGG }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: HONEY },
+    { amount: 4, ingredient: FANCY_EGG },
+    { amount: 4, ingredient: MOOMOO_MILK }
+  ],
+  skill: CookingPowerUpSMinus
+};
+
 export const GULPIN: Pokemon = {
   name: 'GULPIN',
   displayName: 'Gulpin',
@@ -1219,6 +1273,8 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   SCEPTILE,
   GARDEVOIR,
   SABLEYE,
+  PLUSLE,
+  MINUN,
   SWALOT,
   DRIFBLIM,
   HONCHKROW,
