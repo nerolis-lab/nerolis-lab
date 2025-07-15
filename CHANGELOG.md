@@ -1,3 +1,10 @@
+## [2.22.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.22.1...v2.22.2) (2025-07-15)
+
+
+### Bug Fixes
+
+* **pokemon search:** open pokemon input after new pokemon select ([531147d](https://github.com/nerolis-lab/nerolis-lab/commit/531147d5a2fd065c262fcb8843a73c499e17e9f2))
+
 ## [2.22.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.22.0...v2.22.1) (2025-07-15)
 
 
