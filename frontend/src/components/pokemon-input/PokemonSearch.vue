@@ -310,25 +310,31 @@ const selectFirstOption = () => {
 
 const selectPokemon = (instance: PokemonInstanceExt) => {
   if (dialogStore.pokemonSearchCallback) {
-    let finalInstance = instance
-
-    // If we have a current instance and we're selecting from Pokedex (not Pokebox),
-    // preserve existing attributes but update Pokemon-specific ones
-    if (dialogStore.pokemonSearchCurrentInstance && !pokemonSearchStore.showPokebox) {
-      finalInstance = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(
-        instance.pokemon,
-        dialogStore.pokemonSearchCurrentInstance
-      )
+    // If selecting from Pokebox, use the instance directly
+    if (pokemonSearchStore.showPokebox) {
+      dialogStore.handlePokemonSelected(instance)
+      emit('save', instance)
+    } else {
+      // Selecting from Pokedex with callback
+      // If we have a current instance (pokemon-button scenario), preserve attributes and use directly
+      if (dialogStore.pokemonSearchCurrentInstance) {
+        const finalInstance = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(
+          instance.pokemon,
+          dialogStore.pokemonSearchCurrentInstance
+        )
+        dialogStore.handlePokemonSelected(finalInstance)
+        emit('save', finalInstance)
+      } else {
+        // No current instance (new pokemon scenario) - open pokemon input for customization
+        dialogStore.openPokemonInput((updatedInstance: PokemonInstanceExt) => {
+          dialogStore.handlePokemonSelected(updatedInstance)
+          emit('save', updatedInstance)
+        }, instance)
+      }
     }
-
-    dialogStore.handlePokemonSelected(finalInstance)
-    emit('save', finalInstance)
-  } else if (pokemonSearchStore.showPokebox) {
-    dialogStore.handlePokemonSelected(instance)
-    emit('save', instance)
   } else {
+    // No callback - open pokemon input dialog for standalone usage
     dialogStore.openPokemonInput((updatedInstance: PokemonInstanceExt) => {
-      dialogStore.handlePokemonSelected(updatedInstance)
       emit('save', updatedInstance)
     }, instance)
   }

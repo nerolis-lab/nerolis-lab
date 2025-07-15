@@ -1,8 +1,10 @@
 import PokemonSearch from '@/components/pokemon-input/PokemonSearch.vue'
+import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonSearchStore } from '@/stores/pokemon-search-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
+import { COMPLETE_POKEDEX } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -69,20 +71,24 @@ describe('PokemonSearch', () => {
     }
   })
 
-  it('calls callback directly when coming from pokemon-button (regardless of Pokebox/Pokedex)', async () => {
+  it('calls callback directly when coming from pokemon-button with current instance', async () => {
     pokemonSearchStore.showPokebox = false
 
     const openPokemonInputSpy = vi.spyOn(dialogStore, 'openPokemonInput')
     const handlePokemonSelectedSpy = vi.spyOn(dialogStore, 'handlePokemonSelected')
     const callback = vi.fn()
-    dialogStore.openPokemonSearch(callback)
+
+    // Simulate pokemon-button scenario with current instance
+    const mockCurrentInstance = PokemonInstanceUtils.createDefaultPokemonInstance(COMPLETE_POKEDEX[0])
+    mockCurrentInstance.level = 25
+    dialogStore.openPokemonSearch(callback, mockCurrentInstance)
 
     // Click on a Pokemon avatar
     const avatars = wrapper.findAll('.v-avatar')
     if (avatars.length > 0) {
       await avatars[0].trigger('click')
 
-      // Should NOT open PokemonInputDialog when callback exists (coming from pokemon-button)
+      // Should NOT open PokemonInputDialog when callback exists with current instance (pokemon-button)
       expect(openPokemonInputSpy).not.toHaveBeenCalled()
 
       // Should call handlePokemonSelected instead
@@ -91,6 +97,34 @@ describe('PokemonSearch', () => {
           pokemon: expect.any(Object)
         })
       )
+    }
+  })
+
+  it('opens PokemonInputDialog when coming from team slot (callback but no current instance)', async () => {
+    pokemonSearchStore.showPokebox = false
+
+    const openPokemonInputSpy = vi.spyOn(dialogStore, 'openPokemonInput')
+    const handlePokemonSelectedSpy = vi.spyOn(dialogStore, 'handlePokemonSelected')
+    const callback = vi.fn()
+
+    // Simulate team slot scenario - callback but no current instance
+    dialogStore.openPokemonSearch(callback) // No second parameter = no current instance
+
+    // Click on a Pokemon avatar
+    const avatars = wrapper.findAll('.v-avatar')
+    if (avatars.length > 0) {
+      await avatars[0].trigger('click')
+
+      // Should open PokemonInputDialog when callback exists but no current instance (team slot)
+      expect(openPokemonInputSpy).toHaveBeenCalledWith(
+        expect.any(Function),
+        expect.objectContaining({
+          pokemon: expect.any(Object)
+        })
+      )
+
+      // Should NOT call handlePokemonSelected directly
+      expect(handlePokemonSelectedSpy).not.toHaveBeenCalled()
     }
   })
 

@@ -187,3 +187,4 @@ Follow conventional commits (enforced by commitlint):
 ## Best Practices
 
 - Never use inline styles
+- Never use any as a type unless working with generics
