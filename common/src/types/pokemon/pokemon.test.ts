@@ -29,3 +29,11 @@ describe('previousEvolutions', () => {
     });
   });
 });
+
+describe('COMPLETE_POKEDEX', () => {
+  COMPLETE_POKEDEX.forEach((pokemon: Pokemon) => {
+    it(`shall not change ${pokemon.name} unexpectedly`, () => {
+      expect(pokemon).toMatchSnapshot();
+    });
+  });
+});
