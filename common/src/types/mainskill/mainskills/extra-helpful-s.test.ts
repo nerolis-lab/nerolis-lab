@@ -4,7 +4,7 @@ import { ExtraHelpfulS } from './extra-helpful-s';
 describe('ExtraHelpfulS', () => {
   it('should have correct basic properties', () => {
     expect(ExtraHelpfulS.name).toBe('Extra Helpful S');
-    expect(ExtraHelpfulS.description(1)).toBe('Instantly gets you x5 the usual help from a helper Pokémon.');
+    expect(ExtraHelpfulS.description(1)).toBe('Instantly gets you ×5 the usual help from a helper Pokémon.');
     expect(ExtraHelpfulS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(ExtraHelpfulS.maxLevel).toBe(7);
   });
