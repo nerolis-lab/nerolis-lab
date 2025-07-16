@@ -7,6 +7,11 @@ export const usePokemonSearchStore = defineStore(
     const showPokebox = ref(false)
     const showPokeboxBadge = ref(true)
 
+    // Persisted user preference for final stage only
+    const userFinalStageOnly = ref(true)
+    // Temporary state that can be auto-unchecked when typing (not persisted)
+    const finalStageOnly = ref(true)
+
     // Separate sort settings for pokedex and pokebox
     const pokedexSort = ref('pokedex')
     const pokedexSortAscending = ref(true)
@@ -31,9 +36,24 @@ export const usePokemonSearchStore = defineStore(
       pokeboxSortAscending.value = ascending
     }
 
+    const setFinalStageOnly = (value: boolean) => {
+      finalStageOnly.value = value
+    }
+
+    const setUserFinalStageOnly = (value: boolean) => {
+      userFinalStageOnly.value = value
+      finalStageOnly.value = value
+    }
+
+    const restoreFinalStageOnly = () => {
+      finalStageOnly.value = userFinalStageOnly.value
+    }
+
     return {
       showPokebox,
       showPokeboxBadge,
+      userFinalStageOnly,
+      finalStageOnly,
       pokedexSort,
       pokedexSortAscending,
       pokeboxSort,
@@ -41,10 +61,23 @@ export const usePokemonSearchStore = defineStore(
       togglePokebox,
       hidePokeboxBadge,
       setPokedexSort,
-      setPokeboxSort
+      setPokeboxSort,
+      setFinalStageOnly,
+      setUserFinalStageOnly,
+      restoreFinalStageOnly
     }
   },
   {
-    persist: true
+    persist: {
+      pick: [
+        'showPokebox',
+        'showPokeboxBadge',
+        'userFinalStageOnly',
+        'pokedexSort',
+        'pokedexSortAscending',
+        'pokeboxSort',
+        'pokeboxSortAscending'
+      ]
+    }
   }
 )

@@ -178,7 +178,13 @@ const dialogStore = useDialogStore()
 const searchQuery = ref('')
 const selectedSpecialties = ref<PokemonSpecialty[]>([])
 const specialties: PokemonSpecialty[] = ['berry', 'ingredient', 'skill']
-const finalStageOnly = ref(true)
+const finalStageOnly = computed({
+  get: () => pokemonSearchStore.finalStageOnly,
+  set: (value: boolean) => {
+    // When user manually toggles, update the persistent preference
+    pokemonSearchStore.setUserFinalStageOnly(value)
+  }
+})
 const selectedSort = computed({
   get: () => (pokemonSearchStore.showPokebox ? pokemonSearchStore.pokeboxSort : pokemonSearchStore.pokedexSort),
   set: (value: string) => {
@@ -368,12 +374,15 @@ const showPokeboxInfo = () => {
 
 const closePokeboxInfo = () => {
   showPokeboxInfoDialog.value = false
+  pokemonSearchStore.hidePokeboxBadge()
 }
 
 const handlePokeboxClick = () => {
   pokemonSearchStore.togglePokebox()
-  pokemonSearchStore.hidePokeboxBadge()
 }
+
+// Initialize temporary state from persistent state
+pokemonSearchStore.restoreFinalStageOnly()
 
 if (userStore.loggedIn) {
   loadPokebox()
@@ -393,6 +402,22 @@ watch(
     }
   },
   { immediate: true }
+)
+
+// Uncheck finalStageOnly when user starts typing in search, restore when cleared
+watch(
+  () => searchQuery.value,
+  (newQuery) => {
+    if (newQuery && newQuery.trim() !== '') {
+      // User is typing - temporarily disable final stage only
+      if (finalStageOnly.value) {
+        pokemonSearchStore.setFinalStageOnly(false)
+      }
+    } else {
+      // Search cleared - restore from user preference
+      pokemonSearchStore.restoreFinalStageOnly()
+    }
+  }
 )
 </script>
 
