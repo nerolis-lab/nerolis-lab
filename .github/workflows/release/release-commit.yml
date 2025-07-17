@@ -1,0 +1,89 @@
+name: Release commit
+# TODO: pm2 restart all assumes that the app is already running, perhaps this script should ensure that. this script could then also set env variables, or should that be handled elsewhere?
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA to release'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to release to'
+        required: true
+        type: string
+        default: 'development'
+        # TODO: derive some variables from env, like development goes to dev-SleepAPI, production goes to SleepAPI folder
+
+jobs:
+  checkout:
+    name: Checkout
+    uses: actions/checkout@v4
+    with:
+      ref: ${{ inputs.commit_sha }}
+
+  common:
+    name: Build Common
+    needs: checkout
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'common'
+      commit_sha: ${{ inputs.commit_sha }}
+
+  frontend:
+    name: Build Frontend
+    needs: [checkout, common]
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'frontend'
+      needs-common-build: true
+      commit_sha: ${{ inputs.commit_sha }}
+
+  backend:
+    name: Build Backend
+    needs: [checkout, common]
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'backend'
+      needs-common-build: true
+      commit_sha: ${{ inputs.commit_sha }}
+
+  docs:
+    name: Build Docs
+    needs: [checkout, common]
+    if: ${{ inputs.environment == 'production' }}
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'docs'
+      needs-common-build: true
+      commit_sha: ${{ inputs.commit_sha }}
+
+  release:
+    name: Release Commit
+    needs: [checkout, common, frontend, backend]
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Rsync backend dist
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" backend/dist/ root@${{ secrets.SERVER_IP }}:/var/www/backend-dist/
+
+      - name: Rsync frontend dist
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" frontend/dist/ root@${{ secrets.SERVER_IP }}:/var/www/frontend/
+
+      - name: Rsync docs dist
+        if: ${{ inputs.environment == 'production' }}
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" docs/.vitepress/dist/ root@${{ secrets.SERVER_IP }}:/var/www/docs/
+
+      - name: Restart PM2
+        run: |
+          ssh root@${{ secrets.SERVER_IP }} 'pm2 restart all'
+  

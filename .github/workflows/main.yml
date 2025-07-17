@@ -73,7 +73,6 @@ jobs:
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'frontend'
-      cache-key-suffix: '2'
       needs-common-build: true
 
   bot:
