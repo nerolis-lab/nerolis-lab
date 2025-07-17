@@ -7,11 +7,10 @@ on:
         required: true
         type: string
         description: 'The working directory for the module'
-      cache-key-suffix:
+      commit_sha:
+        description: 'Commit SHA to release'
         required: false
         type: string
-        default: ''
-        description: 'Optional suffix for cache key (e.g., "2" for frontend2)'
       node-version:
         required: false
         type: string
@@ -22,16 +21,6 @@ on:
         type: boolean
         default: false
         description: 'Whether this module needs the common build'
-      has-build-step:
-        required: false
-        type: boolean
-        default: true
-        description: 'Whether this module has a build step'
-      has-test-step:
-        required: false
-        type: boolean
-        default: true
-        description: 'Whether this module has a test step'
       additional-setup:
         required: false
         type: string
@@ -39,10 +28,30 @@ on:
         description: 'Additional setup commands to run'
 
 jobs:
+  check-for-artifact:
+    runs-on: ubuntu-latest
+    outputs:
+      exists: ${{ steps.set-output.outputs.exists }}
+    steps:
+      - name: Check for existing artifact
+        id: check
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.working-directory }}-${{ inputs.commit_sha || github.sha }}
+
+      - name: Set output
+        id: set-output
+        run: echo "exists=${{ steps.check.outcome == 'success' }}" >> $GITHUB_OUTPUT
+
   build-and-test:
+    needs: check-for-artifact
+    if: needs.check-for-artifact.outputs.exists != 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -61,10 +70,10 @@ jobs:
         uses: ./.github/actions/npm-install-with-cache
         with:
           working-directory: ${{ inputs.working-directory }}
-          cache-key-prefix: ${{ inputs.working-directory }}${{ inputs.cache-key-suffix }}
+          cache-key-prefix: ${{ inputs.working-directory }}
 
       - name: Cache build output
-        if: ${{ inputs.working-directory == 'common' && inputs.has-build-step }}
+        if: ${{ inputs.working-directory == 'common' }}
         id: cache-build
         uses: actions/cache@v4
         with:
@@ -76,22 +85,28 @@ jobs:
         run: ${{ inputs.additional-setup }}
 
       - name: Build
-        if: ${{ inputs.has-build-step && (inputs.working-directory != 'common' || steps.cache-build.outputs.cache-hit != 'true') }}
+        if: ${{ (inputs.working-directory != 'common' || steps.cache-build.outputs.cache-hit != 'true') }}
         run: |
           cd ${{ inputs.working-directory }}
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
 
       - name: Test
-        if: ${{ inputs.has-test-step }}
         run: |
           cd ${{ inputs.working-directory }}
           npm run test
 
       - name: Upload Coverage
-        if: ${{ inputs.has-test-step }}
         uses: codecov/codecov-action@v4-beta
         with:
           flags: ${{ inputs.working-directory }}
           directory: ${{ inputs.working-directory }}
         env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }} 
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload build artifacts
+        if: ${{ (inputs.working-directory == 'frontend' || inputs.working-directory == 'backend' || inputs.working-directory == 'common' || inputs.working-directory == 'docs') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.working-directory }}-${{ inputs.commit_sha || github.sha }}
+          path: ${{ inputs.working-directory }}/dist/
+          retention-days: 7
