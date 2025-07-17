@@ -31,7 +31,7 @@
         </div>
         <div class="flex-left">
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
-            >x{{ skillValuePerProc }}-{{ skillValuePerProc }}</span
+            >x{{ skillValuePerProc }}</span
           >
           <v-img src="/images/berries/berries.png" height="20" width="20" alt="berries" title="berries"></v-img>
         </div>
