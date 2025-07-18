@@ -6,7 +6,7 @@ export const ExtraHelpfulS = new (class extends Mainskill {
   helpAmounts = [5, 6, 7, 8, 9, 10, 11];
   image = 'helps';
   description = (skillLevel: number) =>
-    `Instantly gets you x${this.helpAmounts[skillLevel - 1]} the usual help from a helper Pokémon.`;
+    `Instantly gets you ×${this.helpAmounts[skillLevel - 1]} the usual help from a helper Pokémon.`;
   activations = {
     helps: {
       unit: 'helps',

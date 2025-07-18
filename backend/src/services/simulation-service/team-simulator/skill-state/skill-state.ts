@@ -12,6 +12,7 @@ import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-sim
 import { ChargeStrengthSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-range-effect.js';
 import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-effect.js';
+import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-minus-effect.js';
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
@@ -23,6 +24,7 @@ import { IngredientDrawSEffect } from '@src/services/simulation-service/team-sim
 import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-hyper-cutter-effect.js';
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
+import { IngredientMagnetSPlusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-plus-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-effect.js';
 import { SkillCopyMimicEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-mimic-effect.js';
@@ -46,6 +48,7 @@ import {
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
   CookingPowerUpS,
+  CookingPowerUpSMinus,
   defaultZero,
   DreamShardMagnetS,
   DreamShardMagnetSRange,
@@ -58,6 +61,7 @@ import {
   IngredientDrawSHyperCutter,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
+  IngredientMagnetSPlus,
   mainskillUnits,
   Metronome,
   SkillCopy,
@@ -103,6 +107,7 @@ export class SkillState {
       [ChargeStrengthSRange, new ChargeStrengthSRangeEffect()],
       [ChargeStrengthSStockpile, new ChargeStrengthSStockpileEffect()],
       [CookingPowerUpS, new CookingPowerUpSEffect()],
+      [CookingPowerUpSMinus, new CookingPowerUpSMinusEffect()],
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
       [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
       [EnergizingCheerS, new EnergizingCheerSEffect()],
@@ -111,6 +116,7 @@ export class SkillState {
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
+      [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
       [IngredientDrawS, new IngredientDrawSEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],

@@ -5,7 +5,7 @@ describe('HelperBoost', () => {
   it('should have correct basic properties', () => {
     expect(HelperBoost.name).toBe('Helper Boost');
     expect(HelperBoost.description(1)).toBe(
-      'Instantly gets your x2 the usual help from all Pokémon on your team. Meet certain conditions to boost effect.'
+      'Instantly gets you ×2 the usual help from all Pokémon on your team. Meet certain conditions to boost effect.'
     );
     expect(HelperBoost.RP).toEqual([2800, 3902, 5273, 6975, 9317, 12438]);
     expect(HelperBoost.maxLevel).toBe(6);

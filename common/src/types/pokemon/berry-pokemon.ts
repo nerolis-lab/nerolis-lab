@@ -709,8 +709,8 @@ export const SNEASEL: Pokemon = {
     { amount: 2, ingredient: FANCY_EGG }
   ],
   ingredient60: [
-    { amount: 3, ingredient: BEAN_SAUSAGE },
-    { amount: 4, ingredient: FANCY_EGG },
+    { amount: 4, ingredient: BEAN_SAUSAGE },
+    { amount: 3, ingredient: FANCY_EGG },
     { amount: 4, ingredient: GREENGRASS_SOYBEANS }
   ],
   skill: TastyChanceS

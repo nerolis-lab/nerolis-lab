@@ -16,8 +16,8 @@ export const HelperBoost = new (class extends Mainskill {
 
   description = (skillLevel: number, extra?: number) =>
     extra === undefined
-      ? `Instantly gets your x${this.baseAmounts[skillLevel - 1]} the usual help from all Pokémon on your team. Meet certain conditions to boost effect.`
-      : `Instantly gets your x${this.getHelps(skillLevel, extra)} the usual help from all Pokémon on your team.`;
+      ? `Instantly gets you ×${this.baseAmounts[skillLevel - 1]} the usual help from all Pokémon on your team. Meet certain conditions to boost effect.`
+      : `Instantly gets you ×${this.getHelps(skillLevel, extra)} the usual help from all Pokémon on your team.`;
 
   activations = {
     helps: {

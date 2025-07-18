@@ -31,7 +31,7 @@
         </div>
         <div class="flex-left">
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
-            >x{{ skillValuePerProc }}</span
+            >x{{ skillValuePerNormalProc }}-{{ skillValuePerCritProc }}</span
           >
           <v-img
             src="/images/ingredient/ingredients.png"
@@ -68,7 +68,7 @@ import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils } from 'sleepapi-common'
+import { IngredientDrawSHyperCutter, MathUtils } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -85,8 +85,11 @@ export default defineComponent({
     return { userStore, teamStore, MathUtils, mainskillImage }
   },
   computed: {
-    skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
+    skillValuePerNormalProc() {
+      return IngredientDrawSHyperCutter.activations.ingredients.amount(this.memberWithProduction.member.skillLevel)
+    },
+    skillValuePerCritProc() {
+      return IngredientDrawSHyperCutter.activations.ingredients.critAmount(this.memberWithProduction.member.skillLevel)
     },
     preparedIngredients() {
       return this.memberWithProduction.production.produceFromSkill.ingredients.map((ing) => ({
