@@ -130,7 +130,8 @@ describe('getTeams', () => {
               { level: 0, name: ingredient.FANCY_APPLE.name, amount: 2 },
               { level: 30, name: ingredient.FANCY_APPLE.name, amount: 5 },
               { level: 60, name: ingredient.FANCY_APPLE.name, amount: 7 }
-            ]
+            ],
+            sneakySnacking: false
           }
         ]
       }
@@ -281,7 +282,8 @@ describe('createOrUpdateMember', () => {
         level: ingredientSet.level,
         name: ingredientSet.ingredient.name,
         amount: ingredientSet.amount
-      }))
+      })),
+      sneakySnacking: false
     })
   })
 
@@ -313,7 +315,8 @@ describe('createOrUpdateMember', () => {
         level: ingredientSet.level,
         name: ingredientSet.ingredient.name,
         amount: ingredientSet.amount
-      }))
+      })),
+      sneakySnacking: false
     })
   })
 })
@@ -404,7 +407,8 @@ describe('calculateProduction', () => {
           level: i.level,
           name: i.ingredient.name,
           amount: i.amount
-        }))
+        })),
+        sneakySnacking: false
       })),
       settings
     })
@@ -510,7 +514,8 @@ describe('calculateIv', () => {
             level: i.level,
             name: i.ingredient.name,
             amount: i.amount
-          }))
+          })),
+          sneakySnacking: false
         }
       ],
       variants: expect.any(Array),
