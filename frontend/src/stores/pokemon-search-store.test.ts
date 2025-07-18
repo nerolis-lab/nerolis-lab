@@ -1,4 +1,4 @@
-import { setActivePinia, createPinia } from 'pinia'
+import { createPinia, setActivePinia } from 'pinia'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { usePokemonSearchStore } from './pokemon-search-store'
 
@@ -157,6 +157,123 @@ describe('Pokemon Search Store', () => {
     })
   })
 
+  describe('Final Stage Only Functionality', () => {
+    it('should initialize with correct default values for finalStageOnly', () => {
+      const store = usePokemonSearchStore()
+
+      expect(store.userFinalStageOnly).toBe(true)
+      expect(store.finalStageOnly).toBe(true)
+    })
+
+    it('should set both userFinalStageOnly and finalStageOnly when using setUserFinalStageOnly', () => {
+      const store = usePokemonSearchStore()
+
+      store.setUserFinalStageOnly(false)
+
+      expect(store.userFinalStageOnly).toBe(false)
+      expect(store.finalStageOnly).toBe(false)
+
+      store.setUserFinalStageOnly(true)
+
+      expect(store.userFinalStageOnly).toBe(true)
+      expect(store.finalStageOnly).toBe(true)
+    })
+
+    it('should set only finalStageOnly when using setFinalStageOnly', () => {
+      const store = usePokemonSearchStore()
+
+      store.setFinalStageOnly(false)
+
+      expect(store.userFinalStageOnly).toBe(true) // Should remain unchanged
+      expect(store.finalStageOnly).toBe(false)
+
+      store.setFinalStageOnly(true)
+
+      expect(store.userFinalStageOnly).toBe(true) // Should remain unchanged
+      expect(store.finalStageOnly).toBe(true)
+    })
+
+    it('should restore finalStageOnly from userFinalStageOnly', () => {
+      const store = usePokemonSearchStore()
+
+      // Set user preference to false
+      store.setUserFinalStageOnly(false)
+      expect(store.userFinalStageOnly).toBe(false)
+      expect(store.finalStageOnly).toBe(false)
+
+      // Temporarily change finalStageOnly
+      store.setFinalStageOnly(true)
+      expect(store.userFinalStageOnly).toBe(false) // Should remain unchanged
+      expect(store.finalStageOnly).toBe(true)
+
+      // Restore from user preference
+      store.restoreFinalStageOnly()
+      expect(store.finalStageOnly).toBe(false) // Should match userFinalStageOnly
+    })
+
+    it('should handle multiple restore operations correctly', () => {
+      const store = usePokemonSearchStore()
+
+      // Set user preference
+      store.setUserFinalStageOnly(false)
+
+      // Temporarily change finalStageOnly multiple times
+      store.setFinalStageOnly(true)
+      store.setFinalStageOnly(false)
+      store.setFinalStageOnly(true)
+
+      // Restore should always go back to user preference
+      store.restoreFinalStageOnly()
+      expect(store.finalStageOnly).toBe(false)
+
+      // Change user preference and restore again
+      store.setUserFinalStageOnly(true)
+      store.restoreFinalStageOnly()
+      expect(store.finalStageOnly).toBe(true)
+    })
+  })
+
+  describe('Sort Settings', () => {
+    it('should initialize with correct default sort values', () => {
+      const store = usePokemonSearchStore()
+
+      expect(store.pokedexSort).toBe('pokedex')
+      expect(store.pokedexSortAscending).toBe(true)
+      expect(store.pokeboxSort).toBe('rp')
+      expect(store.pokeboxSortAscending).toBe(false)
+    })
+
+    it('should update pokedex sort settings', () => {
+      const store = usePokemonSearchStore()
+
+      store.setPokedexSort('name', false)
+
+      expect(store.pokedexSort).toBe('name')
+      expect(store.pokedexSortAscending).toBe(false)
+    })
+
+    it('should update pokebox sort settings', () => {
+      const store = usePokemonSearchStore()
+
+      store.setPokeboxSort('level', true)
+
+      expect(store.pokeboxSort).toBe('level')
+      expect(store.pokeboxSortAscending).toBe(true)
+    })
+
+    it('should maintain separate sort settings for pokedex and pokebox', () => {
+      const store = usePokemonSearchStore()
+
+      store.setPokedexSort('name', false)
+      store.setPokeboxSort('level', true)
+
+      expect(store.pokedexSort).toBe('name')
+      expect(store.pokedexSortAscending).toBe(false)
+      expect(store.pokeboxSort).toBe('level')
+      expect(store.pokeboxSortAscending).toBe(true)
+    })
+  })
+
   describe('Store Persistence', () => {
     it('should have persist configuration enabled', () => {
       // The store is configured with persist: true
@@ -167,8 +284,13 @@ describe('Pokemon Search Store', () => {
       expect(store).toBeDefined()
       expect(store.showPokebox).toBeDefined()
       expect(store.showPokeboxBadge).toBeDefined()
+      expect(store.userFinalStageOnly).toBeDefined()
+      expect(store.finalStageOnly).toBeDefined()
       expect(store.togglePokebox).toBeDefined()
       expect(store.hidePokeboxBadge).toBeDefined()
+      expect(store.setUserFinalStageOnly).toBeDefined()
+      expect(store.setFinalStageOnly).toBeDefined()
+      expect(store.restoreFinalStageOnly).toBeDefined()
     })
   })
 })
