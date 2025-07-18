@@ -262,11 +262,28 @@ const pokemonCollection: ComputedRef<PokemonWithPath[]> = computed(() => {
   return pokemonSearchStore.showPokebox ? savedPokemon.value : completePokedex.value
 })
 
+const hasExactIngredientMatch = (pokemon: Pokemon, query: string): boolean => {
+  const allIngredients = [...pokemon.ingredient0, ...pokemon.ingredient30, ...pokemon.ingredient60]
+  return allIngredients.some(
+    (ingredientSet) =>
+      ingredientSet.ingredient.name.toLowerCase() === query || ingredientSet.ingredient.longName.toLowerCase() === query
+  )
+}
+
 const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
   const query = (searchQuery.value || '').toLowerCase().trim()
 
-  const nameFilter = (p: PokemonWithPath) =>
-    !query || p.pokemon.displayName.toLowerCase().includes(query) || p.instance.name.toLowerCase().includes(query)
+  const nameFilter = (p: PokemonWithPath) => {
+    if (!query) return true
+
+    const nameMatches =
+      p.pokemon.displayName.toLowerCase().includes(query) || p.instance.name.toLowerCase().includes(query)
+
+    const ingredientMatches = hasExactIngredientMatch(p.pokemon, query)
+
+    return nameMatches || ingredientMatches
+  }
+
   const specialtyFilter = (p: PokemonWithPath) =>
     selectedSpecialties.value.length === 0 || selectedSpecialties.value.some((s) => p.pokemon.specialty === s)
   const finalStageFilter = (p: PokemonWithPath) =>
@@ -274,7 +291,6 @@ const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
 
   const filtered = pokemonCollection.value.filter(nameFilter).filter(specialtyFilter).filter(finalStageFilter)
 
-  // Sort the filtered results
   const sorted = filtered.sort((a, b) => {
     let compareValue = 0
 
