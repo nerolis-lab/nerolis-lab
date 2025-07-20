@@ -105,7 +105,7 @@ jobs:
       - name: Deploy backend to server
         run: |
           # SSH to server and verify deployment would work
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} << 'ENDSSH'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << 'ENDSSH'
             set -e
             echo "[${{ inputs.environment }}] TEST MODE - Verifying backend deployment..."
             
@@ -162,10 +162,10 @@ jobs:
             echo "Files to deploy: $(find frontend-${{ inputs.commit_sha }}/dist -type f | wc -l)"
             
             # COMMENTED OUT FOR TESTING:
-            # rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" frontend-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.frontend_dir }}/
+            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.frontend_dir }}/
             
             # Verify target directory exists on server
-            ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.frontend_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.frontend_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.frontend_dir }}'"
+            ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.frontend_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.frontend_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.frontend_dir }}'"
           else
             echo "✗ Frontend artifacts not found at: frontend-${{ inputs.commit_sha }}/dist"
           fi
@@ -181,10 +181,10 @@ jobs:
             echo "Files to deploy: $(find docs-${{ inputs.commit_sha }}/dist -type f | wc -l)"
             
             # COMMENTED OUT FOR TESTING:
-            # rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" docs-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.docs_dir }}/
+            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.docs_dir }}/
             
             # Verify target directory exists on server
-            ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.docs_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.docs_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.docs_dir }}'"
+            ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.docs_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.docs_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.docs_dir }}'"
           else
             echo "✗ Docs artifacts not found at: docs-${{ inputs.commit_sha }}/dist"
           fi
@@ -192,7 +192,7 @@ jobs:
       - name: Restart PM2 services
         run: |
           echo "TEST MODE - Verifying PM2 restart..."
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} << 'ENDSSH'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << 'ENDSSH'
             # Load NVM
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
