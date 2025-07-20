@@ -85,14 +85,9 @@ jobs:
           ls -la docs-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No docs artifacts"
       
       - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # Extract hostname/IP from SSH_HOST (remove user@ prefix if present)
-          HOST_ONLY=$(echo "${{ secrets.SSH_HOST }}" | sed 's/.*@//')
-          # Add server to known hosts
-          ssh-keyscan -H "$HOST_ONLY" >> ~/.ssh/known_hosts
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Set deployment paths
         id: paths
