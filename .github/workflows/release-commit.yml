@@ -89,8 +89,10 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          # Add server to known hosts (ssh-keyscan ignores the user@ part)
-          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          # Extract hostname/IP from SSH_HOST (remove user@ prefix if present)
+          HOST_ONLY=$(echo "${{ secrets.SSH_HOST }}" | sed 's/.*@//')
+          # Add server to known hosts
+          ssh-keyscan -H "$HOST_ONLY" >> ~/.ssh/known_hosts
 
       - name: Set deployment paths
         id: paths
