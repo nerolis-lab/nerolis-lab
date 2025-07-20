@@ -77,12 +77,12 @@ jobs:
         run: |
           echo "Downloaded artifacts:"
           ls -la
-          echo "Frontend artifacts:"
-          ls -la frontend-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No frontend artifacts"
-          echo "Backend artifacts:"
-          ls -la backend-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No backend artifacts"
-          echo "Docs artifacts:"
-          ls -la docs-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No docs artifacts"
+          echo "Frontend artifacts structure:"
+          ls -la frontend-${{ inputs.commit_sha }}/ 2>/dev/null || echo "No frontend artifacts directory"
+          echo "Backend artifacts structure:"
+          ls -la backend-${{ inputs.commit_sha }}/ 2>/dev/null || echo "No backend artifacts directory"
+          echo "Docs artifacts structure:"
+          ls -la docs-${{ inputs.commit_sha }}/ 2>/dev/null || echo "No docs artifacts directory"
       
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -155,38 +155,38 @@ jobs:
       - name: Deploy frontend dist
         run: |
           echo "TEST MODE - Verifying frontend deployment..."
-          if [ -d "frontend-${{ inputs.commit_sha }}/dist" ]; then
-            echo "✓ Frontend artifacts found at: frontend-${{ inputs.commit_sha }}/dist"
+          if [ -d "frontend-${{ inputs.commit_sha }}" ]; then
+            echo "✓ Frontend artifacts found at: frontend-${{ inputs.commit_sha }}"
             echo "Would deploy to: ${{ steps.paths.outputs.frontend_dir }}/"
             # Count files that would be deployed
-            echo "Files to deploy: $(find frontend-${{ inputs.commit_sha }}/dist -type f | wc -l)"
+            echo "Files to deploy: $(find frontend-${{ inputs.commit_sha }} -type f | wc -l)"
             
             # COMMENTED OUT FOR TESTING:
-            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.frontend_dir }}/
+            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.frontend_dir }}/
             
             # Verify target directory exists on server
             ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.frontend_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.frontend_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.frontend_dir }}'"
           else
-            echo "✗ Frontend artifacts not found at: frontend-${{ inputs.commit_sha }}/dist"
+            echo "✗ Frontend artifacts not found at: frontend-${{ inputs.commit_sha }}"
           fi
 
       - name: Deploy docs dist
         if: ${{ inputs.environment == 'production' }}
         run: |
           echo "TEST MODE - Verifying docs deployment..."
-          if [ -d "docs-${{ inputs.commit_sha }}/dist" ]; then
-            echo "✓ Docs artifacts found at: docs-${{ inputs.commit_sha }}/dist"
+          if [ -d "docs-${{ inputs.commit_sha }}" ]; then
+            echo "✓ Docs artifacts found at: docs-${{ inputs.commit_sha }}"
             echo "Would deploy to: ${{ steps.paths.outputs.docs_dir }}/"
             # Count files that would be deployed
-            echo "Files to deploy: $(find docs-${{ inputs.commit_sha }}/dist -type f | wc -l)"
+            echo "Files to deploy: $(find docs-${{ inputs.commit_sha }} -type f | wc -l)"
             
             # COMMENTED OUT FOR TESTING:
-            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.docs_dir }}/
+            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.docs_dir }}/
             
             # Verify target directory exists on server
             ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.docs_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.docs_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.docs_dir }}'"
           else
-            echo "✗ Docs artifacts not found at: docs-${{ inputs.commit_sha }}/dist"
+            echo "✗ Docs artifacts not found at: docs-${{ inputs.commit_sha }}"
           fi
 
       - name: Restart PM2 services
