@@ -1,0 +1,218 @@
+name: Release commit
+# TODO: pm2 restart all assumes that the app is already running, perhaps this script should ensure that. this script could then also set env variables, or should that be handled elsewhere?
+
+on:
+  workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: 'Commit SHA to release'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to release to'
+        required: true
+        type: string
+        default: 'development'
+        # TODO: derive some variables from env, like development goes to dev-SleepAPI, production goes to SleepAPI folder
+
+jobs:
+
+  common:
+    name: Build Common
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'common'
+      commit_sha: ${{ inputs.commit_sha }}
+
+  frontend:
+    name: Build Frontend
+    needs: common
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'frontend'
+      needs-common-build: true
+      commit_sha: ${{ inputs.commit_sha }}
+
+  backend:
+    name: Build Backend
+    needs: common
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'backend'
+      needs-common-build: true
+      commit_sha: ${{ inputs.commit_sha }}
+
+  docs:
+    name: Build Docs
+    needs: common
+    if: ${{ inputs.environment == 'production' }}
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'docs'
+      needs-common-build: true
+      commit_sha: ${{ inputs.commit_sha }}
+
+  release:
+    name: Release Commit
+    needs: [common, frontend, backend, docs]
+    if: |
+      always() &&
+      (needs.common.result == 'success' || needs.common.result == 'skipped') &&
+      (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
+      (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
+      (needs.docs.result == 'success' || needs.docs.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit_sha }}
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*-${{ inputs.commit_sha }}'
+      
+      - name: Display artifact structure
+        run: |
+          echo "Downloaded artifacts:"
+          ls -la
+          echo "Frontend artifacts:"
+          ls -la frontend-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No frontend artifacts"
+          echo "Backend artifacts:"
+          ls -la backend-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No backend artifacts"
+          echo "Docs artifacts:"
+          ls -la docs-${{ inputs.commit_sha }}/dist/ 2>/dev/null || echo "No docs artifacts"
+      
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          # Add server to known hosts (ssh-keyscan ignores the user@ part)
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Set deployment paths
+        id: paths
+        run: |
+          if [ "${{ inputs.environment }}" == "production" ]; then
+            echo "server_dir=/root/SleepAPI" >> $GITHUB_OUTPUT
+            echo "frontend_dir=/var/www/frontend" >> $GITHUB_OUTPUT
+            echo "docs_dir=/var/www/docs" >> $GITHUB_OUTPUT
+          else
+            echo "server_dir=/root/dev-SleepAPI" >> $GITHUB_OUTPUT
+            echo "frontend_dir=/var/www/frontend-dev" >> $GITHUB_OUTPUT
+            echo "docs_dir=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy backend to server
+        run: |
+          # SSH to server and verify deployment would work
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} << 'ENDSSH'
+            set -e
+            echo "[${{ inputs.environment }}] TEST MODE - Verifying backend deployment..."
+            
+            # Load NVM
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            
+            # Navigate to server directory
+            echo "Would navigate to: ${{ steps.paths.outputs.server_dir }}"
+            cd "${{ steps.paths.outputs.server_dir }}"
+            pwd
+            
+            # Verify git status
+            echo "Current git status:"
+            git status --short
+            echo "Current commit: $(git rev-parse HEAD)"
+            echo "Would checkout: ${{ inputs.commit_sha }}"
+            
+            # Verify Node version
+            echo "Current Node version:"
+            nvm current
+            node --version
+            
+            # Verify directories exist
+            echo "Checking directories:"
+            [ -d "${{ steps.paths.outputs.server_dir }}/common" ] && echo "✓ common directory exists" || echo "✗ common directory missing"
+            [ -d "${{ steps.paths.outputs.server_dir }}/backend" ] && echo "✓ backend directory exists" || echo "✗ backend directory missing"
+            
+            # Check PM2 status
+            echo "Current PM2 status:"
+            pm2 list
+            
+            echo "[${{ inputs.environment }}] TEST MODE - Backend deployment verification complete!"
+            
+            # COMMENTED OUT FOR TESTING:
+            # git fetch origin
+            # git checkout ${{ inputs.commit_sha }}
+            # cd "${{ steps.paths.outputs.server_dir }}/common"
+            # npm ci
+            # npm run build
+            # cd "${{ steps.paths.outputs.server_dir }}/backend"
+            # npm ci
+            # npm run build
+            # rsync -a --chown=www-data:www-data "${{ steps.paths.outputs.server_dir }}/backend/src/assets/" /var/www/backend --delete
+          ENDSSH
+
+      - name: Deploy frontend dist
+        run: |
+          echo "TEST MODE - Verifying frontend deployment..."
+          if [ -d "frontend-${{ inputs.commit_sha }}/dist" ]; then
+            echo "✓ Frontend artifacts found at: frontend-${{ inputs.commit_sha }}/dist"
+            echo "Would deploy to: ${{ steps.paths.outputs.frontend_dir }}/"
+            # Count files that would be deployed
+            echo "Files to deploy: $(find frontend-${{ inputs.commit_sha }}/dist -type f | wc -l)"
+            
+            # COMMENTED OUT FOR TESTING:
+            # rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" frontend-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.frontend_dir }}/
+            
+            # Verify target directory exists on server
+            ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.frontend_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.frontend_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.frontend_dir }}'"
+          else
+            echo "✗ Frontend artifacts not found at: frontend-${{ inputs.commit_sha }}/dist"
+          fi
+
+      - name: Deploy docs dist
+        if: ${{ inputs.environment == 'production' }}
+        run: |
+          echo "TEST MODE - Verifying docs deployment..."
+          if [ -d "docs-${{ inputs.commit_sha }}/dist" ]; then
+            echo "✓ Docs artifacts found at: docs-${{ inputs.commit_sha }}/dist"
+            echo "Would deploy to: ${{ steps.paths.outputs.docs_dir }}/"
+            # Count files that would be deployed
+            echo "Files to deploy: $(find docs-${{ inputs.commit_sha }}/dist -type f | wc -l)"
+            
+            # COMMENTED OUT FOR TESTING:
+            # rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" docs-${{ inputs.commit_sha }}/dist/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.docs_dir }}/
+            
+            # Verify target directory exists on server
+            ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.docs_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.docs_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.docs_dir }}'"
+          else
+            echo "✗ Docs artifacts not found at: docs-${{ inputs.commit_sha }}/dist"
+          fi
+
+      - name: Restart PM2 services
+        run: |
+          echo "TEST MODE - Verifying PM2 restart..."
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SSH_HOST }} << 'ENDSSH'
+            # Load NVM
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            
+            # Check PM2 status without restarting
+            echo "Current PM2 processes:"
+            pm2 list
+            
+            echo "Would run: pm2 restart all"
+            
+            # Check if PM2 processes are running
+            pm2_count=$(pm2 list | grep -c "online" || true)
+            echo "Online processes: $pm2_count"
+            
+            echo "[${{ inputs.environment }}] TEST MODE - Deployment verification complete!"
+            
+            # COMMENTED OUT FOR TESTING:
+            # pm2 restart all
+          ENDSSH
+  
