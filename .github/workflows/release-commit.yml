@@ -1,5 +1,4 @@
 name: Release commit
-# TODO: pm2 restart all assumes that the app is already running, perhaps this script should ensure that. this script could then also set env variables, or should that be handled elsewhere?
 
 on:
   workflow_dispatch:
@@ -13,7 +12,6 @@ on:
         required: true
         type: string
         default: 'development'
-        # TODO: derive some variables from env, like development goes to dev-SleepAPI, production goes to SleepAPI folder
 
 jobs:
 
@@ -54,20 +52,15 @@ jobs:
 
   release:
     name: Release Commit
-    needs: [common, frontend, backend, docs]
+    needs: [frontend, backend, docs]
     if: |
       always() &&
-      (needs.common.result == 'success' || needs.common.result == 'skipped') &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
       (needs.docs.result == 'success' || needs.docs.result == 'skipped')
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.commit_sha }}
-      
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
@@ -89,127 +82,110 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Set deployment paths
-        id: paths
-        run: |
-          if [ "${{ inputs.environment }}" == "production" ]; then
-            echo "server_dir=/root/SleepAPI" >> $GITHUB_OUTPUT
-            echo "frontend_dir=/var/www/frontend" >> $GITHUB_OUTPUT
-            echo "docs_dir=/var/www/docs" >> $GITHUB_OUTPUT
-          else
-            echo "server_dir=/root/dev-SleepAPI" >> $GITHUB_OUTPUT
-            echo "frontend_dir=/var/www/frontend-dev" >> $GITHUB_OUTPUT
-            echo "docs_dir=" >> $GITHUB_OUTPUT
-          fi
-
       - name: Deploy backend to server
         run: |
-          # SSH to server and verify deployment would work
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << 'ENDSSH'
-            set -e
-            echo "[${{ inputs.environment }}] TEST MODE - Verifying backend deployment..."
-            
-            # Load NVM
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            
-            # Navigate to server directory
-            echo "Would navigate to: ${{ steps.paths.outputs.server_dir }}"
-            cd "${{ steps.paths.outputs.server_dir }}"
-            pwd
-            
-            # Verify git status
-            echo "Current git status:"
-            git status --short
-            echo "Current commit: $(git rev-parse HEAD)"
-            echo "Would checkout: ${{ inputs.commit_sha }}"
-            
-            # Verify Node version
-            echo "Current Node version:"
-            nvm current
-            node --version
-            
-            # Verify directories exist
-            echo "Checking directories:"
-            [ -d "${{ steps.paths.outputs.server_dir }}/common" ] && echo "✓ common directory exists" || echo "✗ common directory missing"
-            [ -d "${{ steps.paths.outputs.server_dir }}/backend" ] && echo "✓ backend directory exists" || echo "✗ backend directory missing"
-            
-            # Check PM2 status
-            echo "Current PM2 status:"
-            pm2 list
-            
-            echo "[${{ inputs.environment }}] TEST MODE - Backend deployment verification complete!"
-            
-            # COMMENTED OUT FOR TESTING:
-            # git fetch origin
-            # git checkout ${{ inputs.commit_sha }}
-            # cd "${{ steps.paths.outputs.server_dir }}/common"
-            # npm ci
-            # npm run build
-            # cd "${{ steps.paths.outputs.server_dir }}/backend"
-            # npm ci
-            # npm run build
-            # rsync -a --chown=www-data:www-data "${{ steps.paths.outputs.server_dir }}/backend/src/assets/" /var/www/backend --delete
-          ENDSSH
+          echo "[${{ inputs.environment }}] Deploying backend..."
+          
+          # Check for backend artifacts
+          if [ ! -d "backend-${{ inputs.commit_sha }}" ]; then
+            echo "✗ Backend artifacts not found at: backend-${{ inputs.commit_sha }}"
+            exit 1
+          fi
+          
+          echo "✓ Backend artifacts found"
+          echo "Backend files: $(find backend-${{ inputs.commit_sha }} -type f | wc -l)"
+          
+          # Create deployment directory structure on server
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "mkdir -p ${{ vars.DEPLOY_DIR }}/backend"
+          
+          # Deploy backend files
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" backend-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
+          
+          # Deploy backend assets to web server
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/assets/ /var/www/backend --delete"
+          
+          echo "✓ Backend deployment complete!"
 
       - name: Deploy frontend dist
         run: |
-          echo "TEST MODE - Verifying frontend deployment..."
-          if [ -d "frontend-${{ inputs.commit_sha }}" ]; then
-            echo "✓ Frontend artifacts found at: frontend-${{ inputs.commit_sha }}"
-            echo "Would deploy to: ${{ steps.paths.outputs.frontend_dir }}/"
-            # Count files that would be deployed
-            echo "Files to deploy: $(find frontend-${{ inputs.commit_sha }} -type f | wc -l)"
-            
-            # COMMENTED OUT FOR TESTING:
-            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.frontend_dir }}/
-            
-            # Verify target directory exists on server
-            ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.frontend_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.frontend_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.frontend_dir }}'"
-          else
+          echo "[${{ inputs.environment }}] Deploying frontend..."
+          
+          # Check for frontend artifacts
+          if [ ! -d "frontend-${{ inputs.commit_sha }}" ]; then
             echo "✗ Frontend artifacts not found at: frontend-${{ inputs.commit_sha }}"
+            exit 1
           fi
+          
+          echo "✓ Frontend artifacts found"
+          echo "Frontend files: $(find frontend-${{ inputs.commit_sha }} -type f | wc -l)"
+          
+          # Deploy frontend files
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.FRONTEND_DIR }}/
+          
+          echo "✓ Frontend deployment complete!"
 
       - name: Deploy docs dist
-        if: ${{ inputs.environment == 'production' }}
+        if: ${{ inputs.environment == 'production' && vars.DOCS_DIR != '' }}
         run: |
-          echo "TEST MODE - Verifying docs deployment..."
-          if [ -d "docs-${{ inputs.commit_sha }}" ]; then
-            echo "✓ Docs artifacts found at: docs-${{ inputs.commit_sha }}"
-            echo "Would deploy to: ${{ steps.paths.outputs.docs_dir }}/"
-            # Count files that would be deployed
-            echo "Files to deploy: $(find docs-${{ inputs.commit_sha }} -type f | wc -l)"
-            
-            # COMMENTED OUT FOR TESTING:
-            # rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ steps.paths.outputs.docs_dir }}/
-            
-            # Verify target directory exists on server
-            ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "[ -d '${{ steps.paths.outputs.docs_dir }}' ] && echo '✓ Target directory exists: ${{ steps.paths.outputs.docs_dir }}' || echo '✗ Target directory missing: ${{ steps.paths.outputs.docs_dir }}'"
-          else
+          echo "[${{ inputs.environment }}] Deploying docs..."
+          
+          # Check for docs artifacts
+          if [ ! -d "docs-${{ inputs.commit_sha }}" ]; then
             echo "✗ Docs artifacts not found at: docs-${{ inputs.commit_sha }}"
+            exit 1
           fi
+          
+          echo "✓ Docs artifacts found"
+          echo "Docs files: $(find docs-${{ inputs.commit_sha }} -type f | wc -l)"
+          
+          # Deploy docs files
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
+          
+          echo "✓ Docs deployment complete!"
 
-      - name: Restart PM2 services
+      - name: Deploy PM2 services
         run: |
-          echo "TEST MODE - Verifying PM2 restart..."
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << 'ENDSSH'
-            # Load NVM
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          echo "[${{ inputs.environment }}] Managing PM2 services..."
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << ENDSSH
+            # Set environment variables for PM2
+            export NODE_ENV="${{ vars.NODE_ENV }}"
+            export PORT="${{ vars.PORT }}"
+            export DB_HOST="${{ secrets.DB_HOST }}"
+            export DB_PORT="${{ secrets.DB_PORT }}"
+            export DB_USER="${{ secrets.DB_USER }}"
+            export DB_PASS="${{ secrets.DB_PASS }}"
+            export DATABASE_NAME="${{ secrets.DATABASE_NAME }}"
+            export DATABASE_MIGRATION="${{ vars.DATABASE_MIGRATION }}"
+            export ROLLBACK_BATCHES="${{ vars.ROLLBACK_BATCHES }}"
+            export GOOGLE_CLIENT_ID="${{ vars.GOOGLE_CLIENT_ID }}"
+            export GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+            export DISCORD_CLIENT_ID="${{ vars.DISCORD_CLIENT_ID }}"
+            export DISCORD_CLIENT_SECRET="${{ secrets.DISCORD_CLIENT_SECRET }}"
+            export PATREON_CLIENT_ID="${{ vars.PATREON_CLIENT_ID }}"
+            export PATREON_CLIENT_SECRET="${{ secrets.PATREON_CLIENT_SECRET }}"
+            export PATREON_CREATOR_ACCESS_TOKEN="${{ secrets.PATREON_CREATOR_ACCESS_TOKEN }}"
+            export PATREON_CREATOR_REFRESH_TOKEN="${{ secrets.PATREON_CREATOR_REFRESH_TOKEN }}"
             
-            # Check PM2 status without restarting
-            echo "Current PM2 processes:"
-            pm2 list
+            # Check if process exists and reload, otherwise start
+            if pm2 list | grep -q "${{ vars.APP_NAME }}"; then
+              echo "Reloading existing PM2 process..."
+              pm2 reload "${{ vars.APP_NAME }}"
+            else
+              echo "Starting new PM2 process..."
+              pm2 start "${{ vars.DEPLOY_DIR }}/backend/index.js" \
+                --name "${{ vars.APP_NAME }}" \
+                --time
+            fi
             
-            echo "Would run: pm2 restart all"
+            # Verify process is online
+            if pm2 list | grep -q "${{ vars.APP_NAME }}.*online"; then
+              echo "✓ ${{ vars.APP_NAME }} deployed successfully"
+              pm2 save
+            else
+              echo "✗ ${{ vars.APP_NAME }} failed to deploy"
+              pm2 logs ${{ vars.APP_NAME }} --lines 20
+              exit 1
+            fi
             
-            # Check if PM2 processes are running
-            pm2_count=$(pm2 list | grep -c "online" || true)
-            echo "Online processes: $pm2_count"
-            
-            echo "[${{ inputs.environment }}] TEST MODE - Deployment verification complete!"
-            
-            # COMMENTED OUT FOR TESTING:
-            # pm2 restart all
+            echo "[${{ inputs.environment }}] Deployment complete!"
           ENDSSH
-  
