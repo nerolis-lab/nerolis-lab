@@ -3,15 +3,15 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      commit_sha:
-        description: 'Commit SHA to release (leave empty for latest)'
-        required: false
-        type: string
       environment:
         description: 'Environment to release to'
         required: true
         type: string
         default: 'development'
+      commit_sha:
+        description: 'Commit SHA to release (leave empty for latest)'
+        required: false
+        type: string
 
 jobs:
   
