@@ -133,6 +133,22 @@ jobs:
           # Deploy backend files
           rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" backend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
           
+          # Install production dependencies on server
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} << ENDSSH
+            echo "Installing backend dependencies..."
+            cd ${{ vars.DEPLOY_DIR }}/backend
+            
+            # Load nvm and use the correct Node version
+            export NVM_DIR="\$HOME/.nvm"
+            [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+            nvm install
+            nvm use
+            
+            # Clean install production dependencies
+            npm ci --only=production
+            echo "✓ Dependencies installed"
+          ENDSSH
+          
           # Deploy backend assets to web server
           ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/assets/ /var/www/backend --delete"
           

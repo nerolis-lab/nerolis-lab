@@ -115,5 +115,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.working-directory }}-${{ inputs.commit_sha || github.sha }}
-          path: ${{ inputs.working-directory == 'docs' && 'docs/.vitepress/dist/' || format('{0}/dist/', inputs.working-directory) }}
+          path: |
+            ${{ inputs.working-directory == 'docs' && 'docs/.vitepress/dist/' || format('{0}/dist/', inputs.working-directory) }}
+            ${{ inputs.working-directory == 'backend' && format('{0}/package.json', inputs.working-directory) || '' }}
+            ${{ inputs.working-directory == 'backend' && format('{0}/package-lock.json', inputs.working-directory) || '' }}
           retention-days: 7
