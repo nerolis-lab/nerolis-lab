@@ -89,19 +89,24 @@ jobs:
         if: ${{ inputs.additional-setup != '' }}
         run: ${{ inputs.additional-setup }}
 
+      - name: Debug Variables
+        if: ${{ inputs.working-directory == 'frontend' }}
+        run: |
+          echo "All repository variables available:"
+          echo "${{ toJson(vars) }}"
+          
       - name: Build
         if: ${{ (inputs.working-directory != 'common' || steps.cache-build.outputs.cache-hit != 'true') }}
-        env:
-          VITE_GOOGLE_CLIENT_ID: ${{ inputs.working-directory == 'frontend' && vars.VITE_GOOGLE_CLIENT_ID || '' }}
-          VITE_DISCORD_CLIENT_ID: ${{ inputs.working-directory == 'frontend' && vars.VITE_DISCORD_CLIENT_ID || '' }}
-          VITE_PATREON_CLIENT_ID: ${{ inputs.working-directory == 'frontend' && vars.VITE_PATREON_CLIENT_ID || '' }}
         run: |
           cd ${{ inputs.working-directory }}
           if [ "${{ inputs.working-directory }}" == "frontend" ]; then
             echo "Frontend build environment variables:"
-            echo "VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}"
-            echo "VITE_DISCORD_CLIENT_ID=${VITE_DISCORD_CLIENT_ID}"
-            echo "VITE_PATREON_CLIENT_ID=${VITE_PATREON_CLIENT_ID}"
+            echo "VITE_GOOGLE_CLIENT_ID=${{ vars.VITE_GOOGLE_CLIENT_ID }}"
+            echo "VITE_DISCORD_CLIENT_ID=${{ vars.VITE_DISCORD_CLIENT_ID }}"
+            echo "VITE_PATREON_CLIENT_ID=${{ vars.VITE_PATREON_CLIENT_ID }}"
+            export VITE_GOOGLE_CLIENT_ID="${{ vars.VITE_GOOGLE_CLIENT_ID }}"
+            export VITE_DISCORD_CLIENT_ID="${{ vars.VITE_DISCORD_CLIENT_ID }}"
+            export VITE_PATREON_CLIENT_ID="${{ vars.VITE_PATREON_CLIENT_ID }}"
           fi
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
 
