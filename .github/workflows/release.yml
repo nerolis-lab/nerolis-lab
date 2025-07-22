@@ -60,7 +60,6 @@ jobs:
       needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
       skip-tests: true
-      environment: ${{ inputs.environment }}
 
   backend:
     name: Build Backend
