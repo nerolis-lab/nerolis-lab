@@ -84,9 +84,10 @@ jobs:
 
   release:
     name: Release
-    needs: [determine-sha, frontend, backend, docs]
+    needs: [determine-sha, common, frontend, backend, docs]
     if: |
       always() &&
+      (needs.common.result == 'success' || needs.common.result == 'skipped') &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
       (needs.docs.result == 'success' || needs.docs.result == 'skipped')
@@ -102,6 +103,8 @@ jobs:
         run: |
           echo "Downloaded artifacts:"
           ls -la
+          echo "Common artifacts structure:"
+          ls -la common-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No common artifacts directory"
           echo "Frontend artifacts structure:"
           ls -la frontend-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No frontend artifacts directory"
           echo "Backend artifacts structure:"
@@ -118,13 +121,20 @@ jobs:
         run: |
           echo "[${{ inputs.environment }}] Deploying backend..."
           
-          # Check for backend artifacts
+          # Check for required artifacts
+          if [ ! -d "common-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Common artifacts not found at: common-${{ needs.determine-sha.outputs.sha }}"
+            exit 1
+          fi
+          
           if [ ! -d "backend-${{ needs.determine-sha.outputs.sha }}" ]; then
             echo "✗ Backend artifacts not found at: backend-${{ needs.determine-sha.outputs.sha }}"
             exit 1
           fi
           
-          echo "✓ Backend artifacts found"
+          echo "✓ Common artifacts found"
+          echo "Common files: $(find common-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
+          echo "✓ Backend artifacts found"  
           echo "Backend files: $(find backend-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Create deployment directory structure on server
@@ -133,20 +143,30 @@ jobs:
           # Deploy backend files
           rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" backend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
           
+          # Deploy common package (required for backend)
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" common-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/common/
+          
           # Install production dependencies on server
           ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} << ENDSSH
-            echo "Installing backend dependencies..."
-            cd ${{ vars.DEPLOY_DIR }}/backend
-            
             # Load nvm and use the correct Node version
             export NVM_DIR="\$HOME/.nvm"
             [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+             
+            cd ${{ vars.DEPLOY_DIR }}
             nvm install
             nvm use
             
-            # Clean install production dependencies
+            # Install common dependencies first
+            echo "Installing common dependencies..."
+            cd ${{ vars.DEPLOY_DIR }}/common
             npm ci --only=production
-            echo "✓ Dependencies installed"
+            echo "✓ Common dependencies installed"
+            
+            # Install backend dependencies
+            echo "Installing backend dependencies..."
+            cd ${{ vars.DEPLOY_DIR }}/backend
+            npm ci --only=production
+            echo "✓ Backend dependencies installed"
           ENDSSH
           
           # Deploy backend assets to web server
