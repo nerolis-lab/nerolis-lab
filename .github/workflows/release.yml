@@ -121,13 +121,13 @@ jobs:
           echo "Backend files: $(find backend-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Create deployment directory structure on server
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "mkdir -p ${{ vars.DEPLOY_DIR }}/backend"
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} "mkdir -p ${{ vars.DEPLOY_DIR }}/backend"
           
           # Deploy backend files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" backend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" backend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
           
           # Deploy backend assets to web server
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/assets/ /var/www/backend --delete"
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/assets/ /var/www/backend --delete"
           
           echo "✓ Backend deployment complete!"
 
@@ -145,7 +145,7 @@ jobs:
           echo "Frontend files: $(find frontend-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Deploy frontend files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.FRONTEND_DIR }}/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" frontend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.FRONTEND_DIR }}/
           
           echo "✓ Frontend deployment complete!"
 
@@ -164,14 +164,14 @@ jobs:
           echo "Docs files: $(find docs-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Deploy docs files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
           
           echo "✓ Docs deployment complete!"
 
       - name: Deploy PM2 services
         run: |
           echo "[${{ inputs.environment }}] Managing PM2 services..."
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << ENDSSH
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} << ENDSSH
             # Load nvm and use the correct Node version
             export NVM_DIR="\$HOME/.nvm"
             [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
