@@ -203,12 +203,12 @@ jobs:
             export PATREON_CREATOR_ACCESS_TOKEN="${{ secrets.PATREON_CREATOR_ACCESS_TOKEN }}"
             export PATREON_CREATOR_REFRESH_TOKEN="${{ secrets.PATREON_CREATOR_REFRESH_TOKEN }}"
             
-            # Check if process exists and reload, otherwise start
-            if pm2 list | grep -q "${{ vars.APP_NAME }}"; then
-              echo "Reloading existing PM2 process..."
-              pm2 reload "${{ vars.APP_NAME }}"
+            # Check if process exists
+            if pm2 describe "${{ vars.APP_NAME }}" > /dev/null 2>&1; then
+              echo "✅ Process exists. Reloading..."
+              pm2 reload "${{ vars.APP_NAME }}" --update-env
             else
-              echo "Starting new PM2 process..."
+              echo "ℹ️ Process does not exist. Starting..."
               pm2 start "${{ vars.DEPLOY_DIR }}/backend/index.js" \
                 --name "${{ vars.APP_NAME }}" \
                 --time
