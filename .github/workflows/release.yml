@@ -151,7 +151,7 @@ jobs:
             # Load nvm and use the correct Node version
             export NVM_DIR="\$HOME/.nvm"
             [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
-             
+
             cd ${{ vars.DEPLOY_DIR }}
             nvm install
             nvm use
@@ -159,13 +159,13 @@ jobs:
             # Install common dependencies first
             echo "Installing common dependencies..."
             cd ${{ vars.DEPLOY_DIR }}/common
-            npm ci --only=production
+            npm ci --omit=dev
             echo "✓ Common dependencies installed"
             
             # Install backend dependencies
             echo "Installing backend dependencies..."
             cd ${{ vars.DEPLOY_DIR }}/backend
-            npm ci --only=production
+            npm ci --omit=dev
             echo "✓ Backend dependencies installed"
           ENDSSH
           
@@ -245,8 +245,8 @@ jobs:
             
             # Check if process exists
             if pm2 describe "${{ vars.APP_NAME }}" > /dev/null 2>&1; then
-              echo "✅ Process exists. Reloading..."
-              pm2 reload "${{ vars.APP_NAME }}" --update-env
+              echo "✅ Process exists. Restarting..."
+              pm2 restart "${{ vars.APP_NAME }}" --update-env
             else
               echo "ℹ️ Process does not exist. Starting..."
               pm2 start "${{ vars.DEPLOY_DIR }}/backend/dist/app.js" \
