@@ -31,6 +31,10 @@ on:
         type: boolean
         default: false
         description: 'Skip running tests'
+      environment:
+        required: false
+        type: string
+        description: 'The environment name for environment-specific variables'
 
 jobs:
   check-for-artifact:
@@ -53,6 +57,7 @@ jobs:
     needs: check-for-artifact
     if: needs.check-for-artifact.outputs.exists != 'true'
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v4
         with:
