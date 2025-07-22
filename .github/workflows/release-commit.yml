@@ -147,6 +147,15 @@ jobs:
         run: |
           echo "[${{ inputs.environment }}] Managing PM2 services..."
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} << ENDSSH
+            # Load nvm and use the correct Node version
+            export NVM_DIR="\$HOME/.nvm"
+            [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
+                        
+            # Use the Node version specified in .nvmrc
+            cd ${{ vars.DEPLOY_DIR }}
+            nvm install
+            nvm use
+            
             # Set environment variables for PM2
             export NODE_ENV="${{ vars.NODE_ENV }}"
             export PORT="${{ vars.PORT }}"
