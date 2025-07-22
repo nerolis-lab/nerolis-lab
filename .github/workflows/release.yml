@@ -6,7 +6,10 @@ on:
       environment:
         description: 'Environment to release to'
         required: true
-        type: string
+        type: choice
+        options:
+          - development
+          - production
         default: 'development'
       commit_sha:
         description: 'Commit SHA to release (leave empty for latest)'
