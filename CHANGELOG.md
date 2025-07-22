@@ -1,3 +1,25 @@
+# [2.23.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.22.2...v2.23.0) (2025-07-22)
+
+
+### Bug Fixes
+
+* **berry-burst:** remove range from skill detail ([63aaa21](https://github.com/nerolis-lab/nerolis-lab/commit/63aaa21c3c2656fa20be835a57ebd8716b08bb9d))
+* **hyper-cutter:** show ing range in details ([a3b0d19](https://github.com/nerolis-lab/nerolis-lab/commit/a3b0d19b06be8a338d0a7a37065d59b408da36a0))
+* **pokemon:** ing counts for Sneasel&Rufflet ([a29ef59](https://github.com/nerolis-lab/nerolis-lab/commit/a29ef5907e5211aa51690fa5563560db666af205))
+* **release:** extract IP from secret ([87a98dc](https://github.com/nerolis-lab/nerolis-lab/commit/87a98dc672714988356379807e8b10ceab605712))
+* **release:** setup ssh with webfactory ([a647445](https://github.com/nerolis-lab/nerolis-lab/commit/a647445de063632a6c293aface7f72eefb7aa233))
+* **release:** skip manual ssh key path ([ddee1da](https://github.com/nerolis-lab/nerolis-lab/commit/ddee1dafd835b5003f279a648a3bd19a523b87d2))
+* **release:** use correct artifact paths ([5d522f6](https://github.com/nerolis-lab/nerolis-lab/commit/5d522f66cc4e9d2b098e4baf334dda4b3b9fa40c))
+* **skills:** minor typos in descriptions ([39a5a84](https://github.com/nerolis-lab/nerolis-lab/commit/39a5a843eccebe1ba03b2df750dbb270d40e5f58))
+
+
+### Features
+
+* **pokedex:** add Plusle and Minun ([04bfc4d](https://github.com/nerolis-lab/nerolis-lab/commit/04bfc4d95c8848952ecf92e6dd32f720e12d1e0a))
+* **pokemon search:** search by ingredients ([ab2cc87](https://github.com/nerolis-lab/nerolis-lab/commit/ab2cc8729c87ab0372459e757e311ca60d38b29a))
+* **pokemon search:** uncheck final stage when searching and persist ([f9c019c](https://github.com/nerolis-lab/nerolis-lab/commit/f9c019c5d0fcb0cdede922f4ee0c505edaddae5e))
+* **skills:** add Plus and Minus ([fd42741](https://github.com/nerolis-lab/nerolis-lab/commit/fd427415645a354a8f9ddc0830861fcdb147abed))
+
 ## [2.22.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.22.1...v2.22.2) (2025-07-15)
 
 
