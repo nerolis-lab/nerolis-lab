@@ -49,6 +49,7 @@ jobs:
     with:
       working-directory: 'common'
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
+      skip-tests: true
 
   frontend:
     name: Build Frontend
@@ -58,6 +59,7 @@ jobs:
       working-directory: 'frontend'
       needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
+      skip-tests: true
 
   backend:
     name: Build Backend
@@ -67,6 +69,7 @@ jobs:
       working-directory: 'backend'
       needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
+      skip-tests: true
 
   docs:
     name: Build Docs
@@ -77,6 +80,7 @@ jobs:
       working-directory: 'docs'
       needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
+      skip-tests: true
 
   release:
     name: Release

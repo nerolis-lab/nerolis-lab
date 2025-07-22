@@ -26,6 +26,11 @@ on:
         type: string
         default: ''
         description: 'Additional setup commands to run'
+      skip-tests:
+        required: false
+        type: boolean
+        default: false
+        description: 'Skip running tests'
 
 jobs:
   check-for-artifact:
@@ -91,11 +96,13 @@ jobs:
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
 
       - name: Test
+        if: ${{ !inputs.skip-tests }}
         run: |
           cd ${{ inputs.working-directory }}
           npm run test
 
       - name: Upload Coverage
+        if: ${{ !inputs.skip-tests }}
         uses: codecov/codecov-action@v4-beta
         with:
           flags: ${{ inputs.working-directory }}
