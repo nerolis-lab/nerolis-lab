@@ -213,7 +213,7 @@ jobs:
               pm2 reload "${{ vars.APP_NAME }}" --update-env
             else
               echo "ℹ️ Process does not exist. Starting..."
-              pm2 start "${{ vars.DEPLOY_DIR }}/backend/index.js" \
+              pm2 start "${{ vars.DEPLOY_DIR }}/backend/app.js" \
                 --name "${{ vars.APP_NAME }}" \
                 --time
             fi
