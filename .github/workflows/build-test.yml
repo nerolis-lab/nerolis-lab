@@ -97,6 +97,12 @@ jobs:
           VITE_PATREON_CLIENT_ID: ${{ inputs.working-directory == 'frontend' && vars.VITE_PATREON_CLIENT_ID || '' }}
         run: |
           cd ${{ inputs.working-directory }}
+          if [ "${{ inputs.working-directory }}" == "frontend" ]; then
+            echo "Frontend build environment variables:"
+            echo "VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}"
+            echo "VITE_DISCORD_CLIENT_ID=${VITE_DISCORD_CLIENT_ID}"
+            echo "VITE_PATREON_CLIENT_ID=${VITE_PATREON_CLIENT_ID}"
+          fi
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
 
       - name: Test
