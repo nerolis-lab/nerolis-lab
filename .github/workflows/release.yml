@@ -150,7 +150,7 @@ jobs:
           ENDSSH
           
           # Deploy backend assets to web server
-          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/assets/ /var/www/backend --delete"
+          ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/dist/assets/ /var/www/backend --delete"
           
           echo "✓ Backend deployment complete!"
 
@@ -229,7 +229,7 @@ jobs:
               pm2 reload "${{ vars.APP_NAME }}" --update-env
             else
               echo "ℹ️ Process does not exist. Starting..."
-              pm2 start "${{ vars.DEPLOY_DIR }}/backend/app.js" \
+              pm2 start "${{ vars.DEPLOY_DIR }}/backend/dist/app.js" \
                 --name "${{ vars.APP_NAME }}" \
                 --time
             fi
