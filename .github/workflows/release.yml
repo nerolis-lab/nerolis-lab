@@ -1,4 +1,4 @@
-name: Release commit
+name: Release
 
 on:
   workflow_dispatch:
@@ -76,7 +76,7 @@ jobs:
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
 
   release:
-    name: Release Commit
+    name: Release
     needs: [determine-sha, frontend, backend, docs]
     if: |
       always() &&
