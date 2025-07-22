@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       commit_sha:
-        description: 'Commit SHA to release'
-        required: true
+        description: 'Commit SHA to release (leave empty for latest)'
+        required: false
         type: string
       environment:
         description: 'Environment to release to'
@@ -14,45 +14,70 @@ on:
         default: 'development'
 
 jobs:
+  
+  determine-sha:
+    name: Determine Commit SHA
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.get-sha.outputs.sha }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          
+      - name: Get commit SHA
+        id: get-sha
+        run: |
+          if [ -n "${{ inputs.commit_sha }}" ]; then
+            echo "Using provided commit SHA: ${{ inputs.commit_sha }}"
+            echo "sha=${{ inputs.commit_sha }}" >> $GITHUB_OUTPUT
+          else
+            echo "Using latest commit SHA from branch: ${{ github.ref_name }}"
+            LATEST_SHA=$(git rev-parse HEAD)
+            echo "Latest commit SHA: $LATEST_SHA"
+            echo "sha=$LATEST_SHA" >> $GITHUB_OUTPUT
+          fi
 
   common:
     name: Build Common
+    needs: determine-sha
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'common'
-      commit_sha: ${{ inputs.commit_sha }}
+      commit_sha: ${{ needs.determine-sha.outputs.sha }}
 
   frontend:
     name: Build Frontend
-    needs: common
+    needs: [determine-sha, common]
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'frontend'
       needs-common-build: true
-      commit_sha: ${{ inputs.commit_sha }}
+      commit_sha: ${{ needs.determine-sha.outputs.sha }}
 
   backend:
     name: Build Backend
-    needs: common
+    needs: [determine-sha, common]
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'backend'
       needs-common-build: true
-      commit_sha: ${{ inputs.commit_sha }}
+      commit_sha: ${{ needs.determine-sha.outputs.sha }}
 
   docs:
     name: Build Docs
-    needs: common
+    needs: [determine-sha, common]
     if: ${{ inputs.environment == 'production' }}
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'docs'
       needs-common-build: true
-      commit_sha: ${{ inputs.commit_sha }}
+      commit_sha: ${{ needs.determine-sha.outputs.sha }}
 
   release:
     name: Release Commit
-    needs: [frontend, backend, docs]
+    needs: [determine-sha, frontend, backend, docs]
     if: |
       always() &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
@@ -64,18 +89,18 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: '*-${{ inputs.commit_sha }}'
+          pattern: '*-${{ needs.determine-sha.outputs.sha }}'
       
       - name: Display artifact structure
         run: |
           echo "Downloaded artifacts:"
           ls -la
           echo "Frontend artifacts structure:"
-          ls -la frontend-${{ inputs.commit_sha }}/ 2>/dev/null || echo "No frontend artifacts directory"
+          ls -la frontend-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No frontend artifacts directory"
           echo "Backend artifacts structure:"
-          ls -la backend-${{ inputs.commit_sha }}/ 2>/dev/null || echo "No backend artifacts directory"
+          ls -la backend-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No backend artifacts directory"
           echo "Docs artifacts structure:"
-          ls -la docs-${{ inputs.commit_sha }}/ 2>/dev/null || echo "No docs artifacts directory"
+          ls -la docs-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No docs artifacts directory"
       
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -87,19 +112,19 @@ jobs:
           echo "[${{ inputs.environment }}] Deploying backend..."
           
           # Check for backend artifacts
-          if [ ! -d "backend-${{ inputs.commit_sha }}" ]; then
-            echo "✗ Backend artifacts not found at: backend-${{ inputs.commit_sha }}"
+          if [ ! -d "backend-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Backend artifacts not found at: backend-${{ needs.determine-sha.outputs.sha }}"
             exit 1
           fi
           
           echo "✓ Backend artifacts found"
-          echo "Backend files: $(find backend-${{ inputs.commit_sha }} -type f | wc -l)"
+          echo "Backend files: $(find backend-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Create deployment directory structure on server
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "mkdir -p ${{ vars.DEPLOY_DIR }}/backend"
           
           # Deploy backend files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" backend-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" backend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DEPLOY_DIR }}/backend/
           
           # Deploy backend assets to web server
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "rsync -a --chown=www-data:www-data ${{ vars.DEPLOY_DIR }}/backend/assets/ /var/www/backend --delete"
@@ -111,16 +136,16 @@ jobs:
           echo "[${{ inputs.environment }}] Deploying frontend..."
           
           # Check for frontend artifacts
-          if [ ! -d "frontend-${{ inputs.commit_sha }}" ]; then
-            echo "✗ Frontend artifacts not found at: frontend-${{ inputs.commit_sha }}"
+          if [ ! -d "frontend-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Frontend artifacts not found at: frontend-${{ needs.determine-sha.outputs.sha }}"
             exit 1
           fi
           
           echo "✓ Frontend artifacts found"
-          echo "Frontend files: $(find frontend-${{ inputs.commit_sha }} -type f | wc -l)"
+          echo "Frontend files: $(find frontend-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Deploy frontend files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.FRONTEND_DIR }}/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" frontend-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.FRONTEND_DIR }}/
           
           echo "✓ Frontend deployment complete!"
 
@@ -130,16 +155,16 @@ jobs:
           echo "[${{ inputs.environment }}] Deploying docs..."
           
           # Check for docs artifacts
-          if [ ! -d "docs-${{ inputs.commit_sha }}" ]; then
-            echo "✗ Docs artifacts not found at: docs-${{ inputs.commit_sha }}"
+          if [ ! -d "docs-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Docs artifacts not found at: docs-${{ needs.determine-sha.outputs.sha }}"
             exit 1
           fi
           
           echo "✓ Docs artifacts found"
-          echo "Docs files: $(find docs-${{ inputs.commit_sha }} -type f | wc -l)"
+          echo "Docs files: $(find docs-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Deploy docs files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ inputs.commit_sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no" docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
           
           echo "✓ Docs deployment complete!"
 
