@@ -6,22 +6,22 @@
       </v-col>
       <v-col cols="auto" class="text-center text-lg-start mb-8">
         <h1 class="title text-h3 font-weight-bold mb-3">
-          Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
+          {{ t('homepage.title') }} <RouterLink to="/beta" class="beta">beta</RouterLink>
         </h1>
-        <p class="mx-auto text-center">Helping you overthink sleep tracking.</p>
-        <p class="mb-6 mx-auto text-center">Optimize your strategies with our simulations.</p>
+        <p class="mx-auto text-center">{{ t('homepage.subtitle') }}</p>
+        <p class="mb-6 mx-auto text-center">{{ t('homepage.description') }}</p>
 
         <v-row class="flex-center">
           <v-col cols="10" class="flex-center">
             <v-btn
               class="w-100 fx01"
-              title="Get started"
+              :title="t('homepage.getStarted')"
               height="50px"
               size="large"
               rounded="lg"
-              aria-label="Get started"
+              :aria-label="t('homepage.getStarted')"
               :to="'/calculator'"
-              >Get started</v-btn
+              >{{ t('homepage.getStarted') }}</v-btn
             >
           </v-col>
         </v-row>
@@ -51,19 +51,19 @@
       <v-row class="justify-space-between flex-nowrap">
         <v-col cols="auto">
           <h1 class="title text-h1 font-weight-bold mb-3">
-            Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
+            {{ t('homepage.title') }} <RouterLink to="/beta" class="beta">beta</RouterLink>
           </h1>
-          <p class="text-h6 mx-auto text-left">Helping you overthink sleep tracking.</p>
-          <p class="text-h6 mb-6 mx-auto text-left">Optimize your strategies with our simulations.</p>
+          <p class="text-h6 mx-auto text-left">{{ t('homepage.subtitle') }}</p>
+          <p class="text-h6 mb-6 mx-auto text-left">{{ t('homepage.description') }}</p>
           <v-btn
             class="w-100 fx01"
-            title="Get started"
+            :title="t('homepage.getStarted')"
             height="50px"
             size="large"
             rounded="lg"
-            aria-label="get started"
+            :aria-label="t('homepage.getStarted')"
             :to="'/calculator'"
-            >Get started</v-btn
+            >{{ t('homepage.getStarted') }}</v-btn
           >
         </v-col>
         <v-col cols="auto">
@@ -97,6 +97,7 @@
 import SneaselHomeIcon from '@/components/icons/sneasel-home-icon.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   components: {
@@ -104,7 +105,8 @@ export default defineComponent({
   },
   setup() {
     const { isMobile } = useBreakpoint()
-    return { isMobile }
+    const { t } = useI18n()
+    return { isMobile, t }
   },
   data: () => ({
     features: [

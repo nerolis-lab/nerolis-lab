@@ -31,6 +31,12 @@
 
       <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings"></v-list-item>
       <v-list-item v-if="isAdmin" prepend-icon="mdi-shield-account" title="Admin" to="/admin"></v-list-item>
+
+      <v-list-item>
+        <v-divider />
+      </v-list-item>
+
+      <LanguageSelection />
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -39,20 +45,36 @@
 import AccountMenu from '@/components/account/account-menu.vue'
 import DonateMenu from '@/components/donate/donate-menu.vue'
 import InboxMenu from '@/components/inbox/inbox-menu.vue'
+import LanguageSelection from '@/components/language/language-selection.vue'
+import { useLanguageStore } from '@/stores/language-store'
 import { useUserStore } from '@/stores/user-store'
 import { Roles } from 'sleepapi-common'
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'TheNavBar',
   components: {
     AccountMenu,
     DonateMenu,
-    InboxMenu
+    InboxMenu,
+    LanguageSelection
   },
   setup() {
     const userStore = useUserStore()
-    return { isAdmin: userStore.role === Roles.Admin, loggedIn: userStore.loggedIn }
+    const languageStore = useLanguageStore()
+    const { locale } = useI18n()
+
+    // Initialize language on app load
+    onMounted(() => {
+      languageStore.initializeLanguage()
+      locale.value = languageStore.currentLanguage
+    })
+
+    return {
+      isAdmin: userStore.role === Roles.Admin,
+      loggedIn: userStore.loggedIn
+    }
   },
   data: () => ({
     drawer: false
