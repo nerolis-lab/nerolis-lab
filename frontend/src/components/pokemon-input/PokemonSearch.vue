@@ -276,12 +276,13 @@ const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
   const nameFilter = (p: PokemonWithPath) => {
     if (!query) return true
 
-    const nameMatches =
-      p.pokemon.displayName.toLowerCase().includes(query) || p.instance.name.toLowerCase().includes(query)
+    const pokemonNameMatches = p.pokemon.displayName.toLowerCase().includes(query)
+
+    const instanceNameMatches = pokemonSearchStore.showPokebox && p.instance.name.toLowerCase().includes(query)
 
     const ingredientMatches = hasExactIngredientMatch(p.pokemon, query)
 
-    return nameMatches || ingredientMatches
+    return pokemonNameMatches || instanceNameMatches || ingredientMatches
   }
 
   const specialtyFilter = (p: PokemonWithPath) =>
