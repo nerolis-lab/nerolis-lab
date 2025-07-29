@@ -6,7 +6,6 @@ import { createApp } from 'vue'
 // Vuetify
 import '@mdi/font/css/materialdesignicons.css'
 import { createVuetify } from 'vuetify'
-import { VTimePicker } from 'vuetify/labs/VTimePicker'
 import 'vuetify/styles'
 
 import App from '@/app.vue'
@@ -27,9 +26,6 @@ async function initializeApp() {
       themes: {
         darkTheme
       }
-    },
-    components: {
-      VTimePicker
     }
   })
 
