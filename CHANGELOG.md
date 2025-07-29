@@ -1,3 +1,11 @@
+## [2.23.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.23.2...v2.23.3) (2025-07-29)
+
+
+### Bug Fixes
+
+* bump vuetify to fix infinite autofocus loop ([d9fc5c4](https://github.com/nerolis-lab/nerolis-lab/commit/d9fc5c4bfc48355386bcd8aef4628d6967be455b))
+* **pokemon search:** exclude instance name from pokedex search ([fbda649](https://github.com/nerolis-lab/nerolis-lab/commit/fbda6490da310da0422e7f4288d9286f5778f248))
+
 ## [2.23.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.23.1...v2.23.2) (2025-07-23)
 
 ## [2.23.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.23.0...v2.23.1) (2025-07-22)
