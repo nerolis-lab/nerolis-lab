@@ -115,7 +115,8 @@ export async function upsertTeamMember(params: {
     skillLevel: upsertedMember.skill_level,
     nature: upsertedMember.nature,
     subskills: request.subskills,
-    ingredients: request.ingredients
+    ingredients: request.ingredients,
+    sneakySnacking: request.sneakySnacking
   };
 }
 
