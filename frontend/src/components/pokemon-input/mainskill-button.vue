@@ -51,8 +51,7 @@ export default {
   name: 'MainskillButton',
   props: {
     pokemonInstance: {
-      type: Object as PropType<PokemonInstanceExt>,
-      required: true
+      type: Object as PropType<PokemonInstanceExt>
     }
   },
   emits: ['update-skill-level'],

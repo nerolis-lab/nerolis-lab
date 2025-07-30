@@ -37,8 +37,7 @@ export default {
   },
   props: {
     pokemonInstance: {
-      type: Object as PropType<PokemonInstanceExt>,
-      required: true
+      type: Object as PropType<PokemonInstanceExt>
     }
   },
   emits: ['update-ribbon'],

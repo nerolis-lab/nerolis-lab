@@ -176,7 +176,8 @@ export default class ProductionController {
       wakeup,
       includeCooking,
       stockpiledIngredients,
-      potSize
+      potSize,
+      externalE4eProcs: settings.externalE4eProcs
     };
   }
 

@@ -49,8 +49,7 @@ export default {
   name: 'PokemonName',
   props: {
     pokemonInstance: {
-      type: Object as PropType<PokemonInstanceExt>,
-      required: true
+      type: Object as PropType<PokemonInstanceExt>
     }
   },
   setup() {

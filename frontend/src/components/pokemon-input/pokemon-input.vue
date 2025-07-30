@@ -4,7 +4,7 @@
       <v-row style="position: absolute; top: 0; width: 100%">
         <v-col class="flex-left">
           <h5 class="mr-1 text-primary">RP</h5>
-          <h2>{{ pokemonInstance.rp }}</h2>
+          <h2>{{ pokemonInstance?.rp ?? '?' }}</h2>
         </v-col>
         <v-col class="flex-right pr-0">
           <v-btn
@@ -15,7 +15,7 @@
             :class="{ nudge: !userStore.loggedIn }"
             @click="toggleSave"
           >
-            <v-icon v-if="pokemonInstance.saved" color="strength" size="32">mdi-bookmark</v-icon>
+            <v-icon v-if="pokemonInstance?.saved" color="strength" size="32">mdi-bookmark</v-icon>
             <v-icon v-else size="32">mdi-bookmark-outline</v-icon>
           </v-btn>
         </v-col>
@@ -23,11 +23,19 @@
     </div>
 
     <v-sheet color="surface" width="100%" :height="85" location="top left" position="absolute" style="margin-top: 50px">
-      <v-btn icon color="surface" elevation="0" style="right: 4px; position: absolute" size="40" @click="toggleShiny">
+      <v-btn
+        v-if="pokemonInstance"
+        icon
+        color="surface"
+        elevation="0"
+        style="right: 4px; position: absolute"
+        size="40"
+        @click="toggleShiny"
+      >
         <v-icon v-if="pokemonInstance.shiny" color="strength" size="24">mdi-creation</v-icon>
         <v-icon v-else size="24">mdi-creation-outline</v-icon>
       </v-btn>
-      <GenderButton :pokemon-instance="pokemonInstance" @update-gender="updateGender" />
+      <GenderButton v-if="pokemonInstance" :pokemon-instance="pokemonInstance" @update-gender="updateGender" />
     </v-sheet>
 
     <v-row no-gutters class="py-0">
@@ -38,13 +46,13 @@
 
     <v-row dense>
       <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
-        <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
+        <LevelButton :disabled="!pokemonInstance" :level="pokemonInstance?.level ?? 0" @update-level="updateLevel" />
       </v-col>
       <v-col :cols="viewportWidth >= pokemonNameBreakpoint ? 4 : 12" class="flex-center">
-        <PokemonName :pokemon-instance="pokemonInstance" @update-name="updateName" />
+        <PokemonName :disabled="!pokemonInstance" :pokemon-instance="pokemonInstance" @update-name="updateName" />
       </v-col>
       <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
-        <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
+        <RibbonButton :disabled="!pokemonInstance" :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
       </v-col>
     </v-row>
 
@@ -56,7 +64,7 @@
 
     <v-row dense class="mt-2" v-if="viewportWidth < pokemonNameBreakpoint">
       <v-col cols="12" class="level-ribbon-container">
-        <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
+        <LevelButton :level="pokemonInstance?.level ?? 0" @update-level="updateLevel" />
         <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
       </v-col>
     </v-row>
@@ -97,6 +105,7 @@
     <!-- Mainskill -->
     <v-row no-gutters class="mt-2">
       <v-col cols="12">
+        <!-- TODO: why does this say undefined is not supported when it should be optional in MainskillButton? -->
         <MainskillButton :pokemon-instance="pokemonInstance" @update-skill-level="updateSkillLevel" />
       </v-col>
     </v-row>
@@ -104,8 +113,8 @@
     <v-row dense class="mt-2">
       <v-col cols="12">
         <SubskillButtons
-          :pokemon-level="pokemonInstance.level"
-          :selected-subskills="pokemonInstance.subskills"
+          :pokemon-level="pokemonInstance?.level ?? 0"
+          :selected-subskills="pokemonInstance?.subskills ?? []"
           @update-subskills="updateSubskills"
         />
       </v-col>
@@ -113,7 +122,7 @@
 
     <v-row id="nature" class="mt-2" dense>
       <v-col cols="12">
-        <NatureButton :nature="pokemonInstance.nature" @update-nature="updateNature" />
+        <NatureButton :nature="pokemonInstance?.nature ?? nature.BASHFUL" @update-nature="updateNature" />
       </v-col>
     </v-row>
 
@@ -139,8 +148,7 @@
   </v-card>
 </template>
 
-<script lang="ts">
-import CarrySizeDisplay from '@/components/pokemon-input/carry-size-display.vue'
+<script setup lang="ts">
 import GenderButton from '@/components/pokemon-input/gender-button.vue'
 import IngredientButton from '@/components/pokemon-input/ingredient-button.vue'
 import LevelButton from '@/components/pokemon-input/level-button.vue'
@@ -163,130 +171,157 @@ import {
   type PokemonInstanceExt,
   type SubskillInstanceExt
 } from 'sleepapi-common'
-import { defineComponent, nextTick, type PropType } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 
-export default defineComponent({
-  name: 'PokemonInput',
-  components: {
-    SubskillButtons,
-    PokemonButton,
-    PokemonName,
-    LevelButton,
-    CarrySizeDisplay,
-    IngredientButton,
-    MainskillButton,
-    NatureButton,
-    RibbonButton,
-    GenderButton
-  },
-  props: {
-    preSelectedPokemonInstance: {
-      type: Object as PropType<PokemonInstanceExt>,
-      required: true
-    }
-  },
-  emits: ['cancel', 'save'],
-  setup() {
-    const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    const { viewportWidth } = useBreakpoint()
+interface Props {
+  preSelectedPokemonInstance?: PokemonInstanceExt
+}
 
-    const pokemonNameBreakpoint = 600
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  cancel: []
+  save: [pokemonInstance: PokemonInstanceExt]
+}>()
 
-    return { teamStore, userStore, viewportWidth, pokemonNameBreakpoint }
-  },
-  data(this: { preSelectedPokemonInstance: PokemonInstanceExt }) {
-    const { pokemon: _, ...pokemonInstanceWithoutPokemon } = this.preSelectedPokemonInstance
+const teamStore = useTeamStore()
+const userStore = useUserStore()
+const { viewportWidth } = useBreakpoint()
+
+const pokemonNameBreakpoint = 600
+
+const initializePokemonInstance = (): PokemonInstanceExt | undefined => {
+  if (props.preSelectedPokemonInstance) {
+    const { pokemon: _, ...pokemonInstanceWithoutPokemon } = props.preSelectedPokemonInstance
 
     return {
-      pokemonInstance: {
-        // Deep clone all properties except pokemon to avoid mutating the original
-        ...JSON.parse(JSON.stringify(pokemonInstanceWithoutPokemon)),
-        // Get fresh pokemon instance with classes intact
-        pokemon: getPokemon(this.preSelectedPokemonInstance.pokemon.name)
-      } as PokemonInstanceExt
-    }
-  },
-  watch: {
-    pokemonInstance: {
-      deep: true,
-      handler(newPokemon: PokemonInstanceExt) {
-        nextTick(() => {
-          const rp = new RP({ ...newPokemon, ingredients: newPokemon.ingredients.filter(Boolean) })
-          this.pokemonInstance.rp = rp.calc()
-        })
-      }
-    }
-  },
-  computed: {
-    isValid() {
-      return this.ingsAreValid
-    },
-    ingsAreValid() {
-      // if the second ingredient is locked, the third cannot be selected
-      // this refers to mythicals' locked ingredients, not level-based locking
-      return !(
-        this.pokemonInstance.ingredients[1].ingredient.name == 'Locked' &&
-        this.pokemonInstance.ingredients[2].ingredient.name !== 'Locked'
-      )
-    }
-  },
-  methods: {
-    toggleSave() {
-      if (this.userStore.loggedIn) {
-        this.pokemonInstance.saved = !this.pokemonInstance.saved
-      }
-    },
-    toggleShiny() {
-      this.pokemonInstance.shiny = !this.pokemonInstance.shiny
-    },
-    updateGender(gender: PokemonGender) {
-      this.pokemonInstance.gender = gender
-    },
-    updateSubskills(updatedSubskills: SubskillInstanceExt[]) {
-      this.pokemonInstance.subskills = updatedSubskills
-      this.pokemonInstance.subskills.sort((a, b) => a.level - b.level)
-    },
-    updatePokemon(instance: PokemonInstanceExt) {
-      this.pokemonInstance = instance
-    },
-    updateName(newName: string) {
-      this.pokemonInstance.name = newName
-    },
-    updateLevel(newLevel: number) {
-      this.pokemonInstance.level = newLevel
-    },
-    updateCarry(newLimit: number) {
-      this.pokemonInstance.carrySize = newLimit
-    },
-    updateIngredient(params: { ingredientSet: IngredientSet; ingredientLevel: number }) {
-      const index = ingredientIndex(params.ingredientLevel)
-      this.pokemonInstance.ingredients[index] = {
-        level: params.ingredientLevel,
-        ingredient: params.ingredientSet.ingredient,
-        amount: params.ingredientSet.amount
-      }
-    },
-    updateSkillLevel(skillLevel: number) {
-      this.pokemonInstance.skillLevel = skillLevel
-    },
-    updateNature(newNature: nature.Nature) {
-      this.pokemonInstance.nature = newNature
-    },
-    updateRibbon(newRibbon: number) {
-      this.pokemonInstance.ribbon = newRibbon
-    },
-    resetSubskills() {
-      this.pokemonInstance.subskills = []
-    },
-    cancel() {
-      this.$emit('cancel')
-    },
-    save() {
-      this.$emit('save', this.pokemonInstance)
+      // Deep clone all properties except pokemon to avoid mutating the original
+      ...JSON.parse(JSON.stringify(pokemonInstanceWithoutPokemon)),
+      // Get fresh pokemon instance with classes intact
+      pokemon: getPokemon(props.preSelectedPokemonInstance.pokemon.name)
     }
   }
+  return undefined
+}
+
+const pokemonInstance = ref<PokemonInstanceExt | undefined>(initializePokemonInstance())
+
+watch(
+  pokemonInstance,
+  (newPokemon: PokemonInstanceExt | undefined) => {
+    if (!newPokemon) return
+
+    nextTick(() => {
+      if (!pokemonInstance.value) {
+        pokemonInstance.value = newPokemon
+      }
+      const rp = new RP({ ...newPokemon, ingredients: newPokemon.ingredients.filter(Boolean) })
+      pokemonInstance.value.rp = rp.calc()
+    })
+  },
+  { deep: true }
+)
+
+const ingsAreValid = computed(() => {
+  if (!pokemonInstance.value) return true
+  return !(
+    pokemonInstance.value?.ingredients.at(1)?.ingredient.name == 'Locked' &&
+    pokemonInstance.value?.ingredients.at(2)?.ingredient.name !== 'Locked'
+  )
 })
+
+const isValid = computed(() => ingsAreValid.value && pokemonInstance.value !== undefined)
+
+const toggleSave = () => {
+  if (userStore.loggedIn && pokemonInstance.value) {
+    pokemonInstance.value.saved = !pokemonInstance.value.saved
+  }
+}
+
+const toggleShiny = () => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.shiny = !pokemonInstance.value.shiny
+  }
+}
+
+const updateGender = (gender: PokemonGender) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.gender = gender
+  }
+}
+
+const updateSubskills = (updatedSubskills: SubskillInstanceExt[]) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.subskills = updatedSubskills
+    pokemonInstance.value.subskills.sort((a, b) => a.level - b.level)
+  }
+}
+
+const updatePokemon = (instance: PokemonInstanceExt) => {
+  pokemonInstance.value = instance
+}
+
+const updateName = (newName: string) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.name = newName
+  }
+}
+
+const updateLevel = (newLevel: number) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.level = newLevel
+  }
+}
+
+const updateCarry = (newLimit: number) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.carrySize = newLimit
+  }
+}
+
+const updateIngredient = (params: { ingredientSet: IngredientSet; ingredientLevel: number }) => {
+  if (pokemonInstance.value) {
+    const index = ingredientIndex(params.ingredientLevel)
+    pokemonInstance.value.ingredients[index] = {
+      level: params.ingredientLevel,
+      ingredient: params.ingredientSet.ingredient,
+      amount: params.ingredientSet.amount
+    }
+  }
+}
+
+const updateSkillLevel = (skillLevel: number) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.skillLevel = skillLevel
+  }
+}
+
+const updateNature = (newNature: nature.Nature) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.nature = newNature
+  }
+}
+
+const updateRibbon = (newRibbon: number) => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.ribbon = newRibbon
+  }
+}
+
+const resetSubskills = () => {
+  if (pokemonInstance.value) {
+    pokemonInstance.value.subskills = []
+  }
+}
+
+const cancel = () => {
+  emit('cancel')
+}
+
+const save = () => {
+  if (pokemonInstance.value) {
+    emit('save', pokemonInstance.value)
+  }
+}
 </script>
 
 <style lang="scss">

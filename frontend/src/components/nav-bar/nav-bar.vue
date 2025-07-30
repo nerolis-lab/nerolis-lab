@@ -20,6 +20,12 @@
   <v-navigation-drawer v-model="drawer" temporary>
     <v-list nav>
       <v-list-item prepend-icon="mdi-home" title="Home" to="/"></v-list-item>
+
+      <v-list-item>
+        <v-divider />
+      </v-list-item>
+
+      <v-list-item prepend-icon="mdi-calculator" title="Quick Calc" to="/quick-calc"></v-list-item>
       <v-list-item prepend-icon="mdi-calculator" title="Calculator" to="/calculator"></v-list-item>
       <v-list-item prepend-icon="mdi-compare-horizontal" title="Compare" to="/compare"></v-list-item>
       <v-list-item prepend-icon="mdi-podium" title="Tier lists" to="/tierlist"></v-list-item>

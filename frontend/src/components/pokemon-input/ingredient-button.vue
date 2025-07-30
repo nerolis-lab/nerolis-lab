@@ -48,8 +48,7 @@ export default {
       required: true
     },
     pokemonInstance: {
-      type: Object as PropType<PokemonInstanceExt>,
-      required: true
+      type: Object as PropType<PokemonInstanceExt>
     }
   },
   emits: ['update-ingredient'],

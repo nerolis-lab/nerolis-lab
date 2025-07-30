@@ -2,6 +2,7 @@
   <v-btn icon size="120" color="transparent" elevation="0" class="flex-center" @click="openMenu">
     <v-badge icon="mdi-pencil" color="primary" offset-x="30" offset-y="40">
       <v-img
+        v-if="pokemonInstance"
         :src="
           pokemonImage({
             pokemonName: pokemonInstance.pokemon.name,
@@ -12,6 +13,7 @@
         width="150px"
         cover
       />
+      <v-icon v-else size="64" color="primary">mdi-plus-circle</v-icon>
     </v-badge>
   </v-btn>
 </template>
@@ -22,7 +24,7 @@ import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import type { PokemonInstanceExt } from 'sleepapi-common'
 
 const props = defineProps<{
-  pokemonInstance: PokemonInstanceExt
+  pokemonInstance?: PokemonInstanceExt
 }>()
 
 const emit = defineEmits<{
