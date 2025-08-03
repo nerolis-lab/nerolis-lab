@@ -1,4 +1,4 @@
-import IngredientButton from '@/components/pokemon-input/ingredient-button.vue'
+import IngredientButton from '@/components/pokemon-input/IngredientButton.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
@@ -45,11 +45,10 @@ describe('IngredientButton', () => {
     })
 
     const badge = wrapper.findComponent({ name: 'v-badge' })
-    expect(wrapper.vm.locked).toBeFalsy()
     expect(wrapper.text()).toContain('Lv.60')
 
-    const lockIcon = badge.find('i.mdi-lock')
-    expect(lockIcon.isVisible()).toBe(false)
+    // Check that lock icon is not shown (badge not active) since level is 60
+    expect(badge.props('modelValue')).toBe(false)
   })
 
   it('displays ingredient image correctly', async () => {
@@ -88,9 +87,11 @@ describe('IngredientButton', () => {
         ]
       }
     })
-    await wrapper.setData({ fab: true })
+    // Open the speed dial by clicking the button
+    const activatorBtn = wrapper.find('.v-btn')
+    await activatorBtn.trigger('click')
 
-    expect(wrapper.vm.otherIngredientOptions).toHaveLength(2)
+    // Check that 2 other options are displayed
     const speedDialBtns = wrapper.findAllComponents({ name: 'v-btn' }).filter((btn) => btn.vm.$props.icon)
     expect(speedDialBtns.length).toBe(3) // including the activator button
 
@@ -117,7 +118,9 @@ describe('IngredientButton', () => {
     // Use fake timers
     vitest.useFakeTimers()
 
-    await wrapper.setData({ fab: true })
+    // Open the speed dial by clicking the button
+    const activatorBtn = wrapper.find('.v-btn')
+    await activatorBtn.trigger('click')
     const otherIngredientBtns = wrapper
       .findAllComponents({ name: 'v-btn' })
       .filter((btn) => btn.vm.$props.icon)
@@ -163,6 +166,8 @@ describe('IngredientButton', () => {
         ]
       }
     })
-    expect(wrapper.vm.ingredientSet?.ingredient.name).toBe('Herb')
+    // Check that the ingredient image is displayed correctly for level 30
+    const img = wrapper.find('img#ingredientImage')
+    expect(img.attributes('src')).toBe('/images/ingredient/herb.png')
   })
 })

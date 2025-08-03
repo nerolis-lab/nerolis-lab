@@ -5,7 +5,11 @@
         <v-row no-gutters>
           <v-col cols="3">
             <v-card class="flex-center rounded-te-0 rounded-be-0 fill-height" color="secondary">
-              <v-img class="ma-2" :src="mainskillImage(pokemonInstance.pokemon)" max-height="50px"></v-img>
+              <v-img
+                class="ma-2"
+                :src="pokemonInstance ? mainskillImage(pokemonInstance.pokemon) : ''"
+                max-height="50px"
+              ></v-img>
             </v-card>
           </v-col>
           <v-col cols="9">
@@ -31,7 +35,7 @@
         <v-slider
           v-model="mainskillLevel"
           min="1"
-          :max="pokemonInstance.pokemon.skill.maxLevel"
+          :max="maxLevel"
           :ticks="defaultValues"
           show-ticks="always"
           step="1"
@@ -42,58 +46,55 @@
   </v-menu>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
 import { type PokemonInstanceExt } from 'sleepapi-common'
-import type { PropType } from 'vue'
+import { computed, ref, watch } from 'vue'
 
-export default {
-  name: 'MainskillButton',
-  props: {
-    pokemonInstance: {
-      type: Object as PropType<PokemonInstanceExt>,
-      required: true
-    }
-  },
-  emits: ['update-skill-level'],
-  setup() {
-    return { mainskillImage }
-  },
-  data(this: { pokemonInstance: PokemonInstanceExt }) {
-    return {
-      mainskillLevel: this.pokemonInstance.skillLevel,
-      menu: false
-    }
-  },
-  computed: {
-    skillName() {
-      return this.pokemonInstance.pokemon.skill.name
+interface Props {
+  pokemonInstance?: PokemonInstanceExt
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<{
+  'update-skill-level': [level: number]
+}>()
+
+const menu = ref(false)
+const mainskillLevel = ref(props.pokemonInstance?.skillLevel ?? 1)
+const maxLevel = computed(() => props.pokemonInstance?.pokemon.skill.maxLevel ?? 1)
+
+const skillName = computed(() => {
+  return props.pokemonInstance?.pokemon.skill.name ?? 'Unknown skill'
+})
+
+const description = computed(() => {
+  if (!props.pokemonInstance) return 'Unknown description'
+  return props.pokemonInstance.pokemon.skill.description(mainskillLevel.value)
+})
+
+const defaultValues = computed(() => {
+  if (!props.pokemonInstance) return undefined
+
+  return Array.from({ length: props.pokemonInstance.pokemon.skill.maxLevel }, (_, i) => i + 1).reduce(
+    (acc, val) => {
+      acc[val] = val.toString()
+      return acc
     },
-    description() {
-      return this.pokemonInstance.pokemon.skill.description(this.mainskillLevel)
-    },
-    pokemon() {
-      return this.pokemonInstance.pokemon
-    },
-    defaultValues() {
-      return Array.from({ length: this.pokemon.skill.maxLevel }, (_, i) => i + 1).reduce(
-        (acc, val) => {
-          acc[val] = val.toString()
-          return acc
-        },
-        {} as Record<number, string>
-      )
-    }
-  },
-  watch: {
-    pokemon: {
-      handler() {
-        this.mainskillLevel = this.pokemonInstance.skillLevel
-      }
-    },
-    mainskillLevel(newLevel: number) {
-      this.$emit('update-skill-level', newLevel)
+    {} as Record<number, string>
+  )
+})
+
+watch(
+  () => props.pokemonInstance,
+  (newInstance) => {
+    if (newInstance) {
+      mainskillLevel.value = newInstance.skillLevel
     }
   }
-}
+)
+
+watch(mainskillLevel, (newLevel) => {
+  emit('update-skill-level', newLevel)
+})
 </script>

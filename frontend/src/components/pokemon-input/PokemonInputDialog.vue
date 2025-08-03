@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
-import PokemonInput from './pokemon-input.vue'
+import PokemonInput from './PokemonInput.vue'
 
 const dialogStore = useDialogStore()
 </script>

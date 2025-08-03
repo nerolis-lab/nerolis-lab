@@ -8,6 +8,7 @@ export interface TeamSettings {
   bedtime: string;
   wakeup: string;
   stockpiledIngredients?: IngredientSetSimple[];
+  externalE4eProcs?: number;
 }
 export interface TeamSettingsExt {
   camp: boolean;
@@ -16,6 +17,7 @@ export interface TeamSettingsExt {
   includeCooking: boolean;
   stockpiledIngredients: IngredientIndexToFloatAmount;
   potSize: number;
+  externalE4eProcs?: number;
 }
 
 export interface TeamSolution {

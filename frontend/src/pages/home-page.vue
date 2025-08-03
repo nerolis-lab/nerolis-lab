@@ -187,7 +187,7 @@ export default defineComponent({
   transform: rotate(35deg);
   z-index: 1;
   animation: lightSweep 7s cubic-bezier(0.175, 0.52, 0.165, 1) infinite;
-  animation-delay: 7s;
+  animation-delay: 3s;
 }
 
 @keyframes lightSweep {

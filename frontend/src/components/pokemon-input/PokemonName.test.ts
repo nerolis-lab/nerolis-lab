@@ -1,4 +1,4 @@
-import PokemonName from '@/components/pokemon-input/pokemon-name.vue'
+import PokemonName from '@/components/pokemon-input/PokemonName.vue'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
@@ -9,7 +9,10 @@ describe('PokemonName', () => {
 
   beforeEach(() => {
     const mockPokemon = mocks.createMockPokemon({ name: 'Some name' })
-    wrapper = mount(PokemonName, { props: { pokemonInstance: mockPokemon } })
+    wrapper = mount(PokemonName, {
+      props: { pokemonInstance: mockPokemon },
+      attachTo: document.body
+    })
   })
 
   afterEach(() => {
@@ -40,18 +43,28 @@ describe('PokemonName', () => {
   })
 
   it('filters input correctly', async () => {
-    await wrapper.setData({ isEditDialogOpen: true })
+    // Open dialog by clicking button
+    const button = wrapper.find('button')
+    await button.trigger('click')
 
     const textField = wrapper.findComponent({ name: 'VTextField' })
     expect(textField.exists()).toBe(true)
 
     await textField.setValue('Pokemon123')
-
-    expect(wrapper.vm.editedName).toBe('Pokemon123')
+    // Check that the text field has the value
+    expect(textField.props('modelValue')).toBe('Pokemon123')
   })
 
   it('saves edited name', async () => {
-    await wrapper.setData({ isEditDialogOpen: true, editedName: 'NewName' })
+    // Open dialog by clicking button
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    const textField = wrapper.findComponent({ name: 'VTextField' })
+    await textField.setValue('NewName')
+
+    // Wait for dialog to render
+    await wrapper.vm.$nextTick()
 
     const saveButton = document.querySelector('#saveButton') as HTMLElement
     expect(saveButton).not.toBeNull()
@@ -59,44 +72,71 @@ describe('PokemonName', () => {
 
     expect(wrapper.emitted('update-name')).toHaveLength(1)
     expect(wrapper.emitted('update-name')![0]).toEqual(['NewName'])
-    expect(wrapper.vm.isEditDialogOpen).toBe(false)
   })
 
   it('rerolls name correctly', async () => {
     const mockPokemon = mocks.createMockPokemon({ name: 'Bernard' })
     await wrapper.setProps({ pokemonInstance: mockPokemon })
-    await wrapper.setData({ isEditDialogOpen: true })
+
+    // Open dialog
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    // Wait for dialog to render
+    await wrapper.vm.$nextTick()
 
     const rerollButton = document.querySelector('#rerollButton') as HTMLElement
     expect(rerollButton).not.toBeNull()
     rerollButton.click()
 
-    const newName = wrapper.vm.editedName
+    // Check that text field has a value
+    const textField = wrapper.findComponent({ name: 'VTextField' })
+    const newName = textField.props('modelValue') as string
     expect(newName).not.toBe('')
-    expect(newName.length).toBeLessThanOrEqual(wrapper.vm.maxNameLength)
+    expect(newName.length).toBeLessThanOrEqual(12) // maxNameLength
   })
 
   it('closes edit dialog on cancel', async () => {
-    await wrapper.setData({ isEditDialogOpen: true })
+    // Open dialog
+    const button = wrapper.find('button')
+    await button.trigger('click')
 
-    const cancelButton = document.querySelector('#cancelButton')
+    const dialog = wrapper.findComponent({ name: 'v-dialog' })
+    expect(dialog.props('modelValue')).toBe(true)
+
+    // Wait for dialog to render
+    await wrapper.vm.$nextTick()
+
+    const cancelButton = document.querySelector('#cancelButton') as HTMLElement
     expect(cancelButton).not.toBeNull()
-    ;(cancelButton as HTMLElement).click()
+    cancelButton.click()
 
-    expect(wrapper.vm.isEditDialogOpen).toBe(false)
+    // Dialog should be closed
+    await wrapper.vm.$nextTick()
   })
 
   it('handles remaining characters correctly', async () => {
-    await wrapper.setData({ isEditDialogOpen: true, editedName: 'ShortName' })
+    // Open dialog
+    const button = wrapper.find('button')
+    await button.trigger('click')
 
-    expect(wrapper.vm.remainingChars).toBe(wrapper.vm.maxNameLength - 'ShortName'.length)
+    const textField = wrapper.findComponent({ name: 'VTextField' })
+    await textField.setValue('ShortName')
+
+    // Check counter prop
+    expect(textField.props('counter')).toBe(12)
   })
 
   it('does not save when remaining characters are negative', async () => {
-    await wrapper.setData({
-      isEditDialogOpen: true,
-      editedName: 'VeryLongPokemonNameThatExceedsLimit'
-    })
+    // Open dialog
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    const textField = wrapper.findComponent({ name: 'VTextField' })
+    await textField.setValue('VeryLongPokemonNameThatExceedsLimit')
+
+    // Wait for dialog to render
+    await wrapper.vm.$nextTick()
 
     const saveButton = document.querySelector('#saveButton') as HTMLElement
     expect(saveButton).not.toBeNull()

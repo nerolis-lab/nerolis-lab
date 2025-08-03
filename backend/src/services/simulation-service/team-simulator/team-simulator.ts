@@ -26,6 +26,7 @@ import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import {
   commonMocks,
+  EnergyForEveryone,
   type CalculateTeamResponse,
   type MemberProductionBase,
   type SimpleTeamResult,
@@ -51,6 +52,11 @@ export class TeamSimulator {
   private cookedMealsCounter = 0;
   private fullDayDuration = 1440;
   private energyDegradeCounter = -1; // -1 so it takes 3 iterations and first degrade is after 10 minutes, then 10 minutes between each
+
+  // External E4E simulation
+  private e4eLevel: number = EnergyForEveryone.maxLevel;
+  private e4eProcTimes: number[] = []; // Minutes since wakeup when E4E procs
+  private nextE4eProcIndex = 0; // Index of next E4E proc to apply
 
   constructor(params: {
     settings: TeamSettingsExt;
@@ -90,6 +96,13 @@ export class TeamSimulator {
 
     this.nightStartMinutes = TimeUtils.timeToMinutesSinceStart(this.nightPeriod.start, this.dayPeriod.start);
 
+    if (settings.externalE4eProcs !== undefined && settings.externalE4eProcs > 0) {
+      const interval = Math.floor(this.nightStartMinutes / settings.externalE4eProcs);
+      for (let i = 0; i < settings.externalE4eProcs; i++) {
+        this.e4eProcTimes.push(i * interval);
+      }
+    }
+
     const mealTimes = getDefaultMealTimes(dayPeriod);
     this.cookingState?.setMealTimes(mealTimes.meals);
     this.mealTimeMinutesSinceStart = mealTimes.sorted.map((time) =>
@@ -119,9 +132,12 @@ export class TeamSimulator {
     this.init();
 
     let minutesSinceWakeup = 0;
+
     // Day loop
     while (minutesSinceWakeup <= this.nightStartMinutes) {
       this.attemptCooking(minutesSinceWakeup);
+
+      this.maybeApplyExternalE4E(minutesSinceWakeup);
 
       for (const member of this.memberStatesWithoutFillers) {
         for (const skillActivation of member.attemptDayHelp(minutesSinceWakeup)) {
@@ -189,6 +205,7 @@ export class TeamSimulator {
 
     this.energyDegradeCounter = -1;
     this.cookedMealsCounter = 0;
+    this.nextE4eProcIndex = 0;
   }
 
   private startDay() {
@@ -221,6 +238,24 @@ export class TeamSimulator {
       for (const member of this.memberStates) {
         member.degradeEnergy();
       }
+    }
+  }
+
+  private maybeApplyExternalE4E(minutesSinceWakeup: number) {
+    // Check if it's time for the next scheduled E4E proc
+    if (
+      this.nextE4eProcIndex < this.e4eProcTimes.length &&
+      minutesSinceWakeup >= this.e4eProcTimes[this.nextE4eProcIndex]
+    ) {
+      // Apply E4E energy to all team members
+      const energyAmount = EnergyForEveryone.activations.energy.amount(this.e4eLevel);
+
+      for (const member of this.memberStatesWithoutFillers) {
+        member.recoverEnergy(energyAmount, member);
+      }
+
+      // Move to next E4E proc
+      this.nextE4eProcIndex++;
     }
   }
 
