@@ -160,6 +160,14 @@ import {
 } from 'sleepapi-common'
 import { computed, ref, watch, type ComputedRef, type Ref } from 'vue'
 
+interface Props {
+  preventDialog?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  preventDialog: false
+})
+
 const emit = defineEmits<{
   cancel: []
   save: [pokemon: PokemonInstanceExt]
@@ -332,6 +340,12 @@ const selectFirstOption = () => {
 }
 
 const selectPokemon = (instance: PokemonInstanceExt) => {
+  // If preventDialog is true, always emit directly without opening dialogs
+  if (props.preventDialog) {
+    emit('save', instance)
+    return
+  }
+
   if (dialogStore.pokemonSearchCallback) {
     // If selecting from Pokebox, use the instance directly
     if (pokemonSearchStore.showPokebox) {

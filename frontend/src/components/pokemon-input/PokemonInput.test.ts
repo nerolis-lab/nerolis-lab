@@ -71,12 +71,4 @@ describe('PokemonInput', () => {
     const emittedEventPayload = wrapper.emitted('save')![0][0]
     expect(emittedEventPayload).toBeInstanceOf(Object)
   })
-
-  it('renders correctly without preSelectedPokemonInstance prop', () => {
-    const wrapperWithoutProp = mount(PokemonInput, {
-      props: {}
-    })
-    expect(wrapperWithoutProp.exists()).toBe(true)
-    wrapperWithoutProp.unmount()
-  })
 })
