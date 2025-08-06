@@ -25,14 +25,7 @@
 
     <!-- Pokemon header -->
     <v-sheet color="surface" width="100%" :height="85" location="top left" position="absolute" style="margin-top: 50px">
-      <v-btn
-        icon
-        color="surface"
-        elevation="0"
-        style="right: 4px; position: absolute"
-        size="40"
-        @click="toggleShiny"
-      >
+      <v-btn icon color="surface" elevation="0" style="right: 4px; position: absolute" size="40" @click="toggleShiny">
         <v-icon v-if="pokemonInstance.shiny" color="strength" size="24">mdi-creation</v-icon>
         <v-icon v-else size="24">mdi-creation-outline</v-icon>
       </v-btn>
@@ -46,122 +39,127 @@
     </v-row>
 
     <!-- Body -->
-      <!-- Body on desktop -->
-      <v-row dense>
-        <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
-          <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
-        </v-col>
-        <v-col :cols="viewportWidth >= pokemonNameBreakpoint ? 4 : 12" class="flex-center">
-          <PokemonName :pokemon-instance="pokemonInstance" @update-name="updateName" />
-        </v-col>
-        <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
-          <RibbonButton
-            :pokemon-instance="pokemonInstance"
-            @update-ribbon="updateRibbon"
-          />
-        </v-col>
-      </v-row>
+    <!-- Body on desktop -->
+    <v-row dense>
+      <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
+        <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
+      </v-col>
+      <v-col :cols="viewportWidth >= pokemonNameBreakpoint ? 4 : 12" class="flex-center">
+        <PokemonName :pokemon-instance="pokemonInstance" @update-name="updateName" />
+      </v-col>
+      <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
+        <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
+      </v-col>
+    </v-row>
 
-      <v-row dense>
-        <v-col>
-          <v-divider />
-        </v-col>
-      </v-row>
+    <v-row dense>
+      <v-col>
+        <v-divider />
+      </v-col>
+    </v-row>
 
-      <!-- Body on mobile -->
-      <v-row dense class="mt-2" v-if="viewportWidth < pokemonNameBreakpoint">
-        <v-col cols="12" class="level-ribbon-container">
-          <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
-          <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
-        </v-col>
-      </v-row>
+    <!-- Body on mobile -->
+    <v-row dense class="mt-2" v-if="viewportWidth < pokemonNameBreakpoint">
+      <v-col cols="12" class="level-ribbon-container">
+        <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
+        <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
+      </v-col>
+    </v-row>
 
-      <!-- Ingredients -->
-      <v-row no-gutters class="mt-2 validatable-section" :class="{ 'invalid-section': !ingsAreValid }">
-        <v-col cols="4" class="mr-2 flex-center">
-          <span class="w-100 h-50 text-center flex-center ingredients-label">Ingredients</span>
-        </v-col>
-        <v-col class="flex-center">
-          <IngredientButton
-            :ingredient-level="0"
-            :pokemon-instance="pokemonInstance"
-            @update-ingredient="updateIngredient"
-          />
-        </v-col>
-        <v-col class="flex-center">
-          <IngredientButton
-            :ingredient-level="30"
-            :pokemon-instance="pokemonInstance"
-            @update-ingredient="updateIngredient"
-          />
-        </v-col>
-        <v-col class="flex-center">
-          <IngredientButton
-            :ingredient-level="60"
-            :pokemon-instance="pokemonInstance"
-            @update-ingredient="updateIngredient"
-          />
-        </v-col>
-        <v-col cols="12" v-if="!ingsAreValid">
-          <div class="text-center text-error-3 text-small">
-            Level 30 ingredient must unlock before level 60 ingredient.
-          </div>
-        </v-col>
-      </v-row>
+    <!-- Ingredients -->
+    <v-row no-gutters class="mt-2 validatable-section" :class="{ 'invalid-section': !ingsAreValid }">
+      <v-col cols="4" class="mr-2 flex-center">
+        <span class="w-100 h-50 text-center flex-center ingredients-label">Ingredients</span>
+      </v-col>
+      <v-col class="flex-center">
+        <IngredientButton
+          :ingredient-level="0"
+          :pokemon-instance="pokemonInstance"
+          @update-ingredient="updateIngredient"
+        />
+      </v-col>
+      <v-col class="flex-center">
+        <IngredientButton
+          :ingredient-level="30"
+          :pokemon-instance="pokemonInstance"
+          @update-ingredient="updateIngredient"
+        />
+      </v-col>
+      <v-col class="flex-center">
+        <IngredientButton
+          :ingredient-level="60"
+          :pokemon-instance="pokemonInstance"
+          @update-ingredient="updateIngredient"
+        />
+      </v-col>
+      <v-col cols="12" v-if="!ingsAreValid">
+        <div class="text-center text-error-3 text-small">
+          Level 30 ingredient must unlock before level 60 ingredient.
+        </div>
+      </v-col>
+    </v-row>
 
-      <!-- Mainskill -->
-      <v-row no-gutters class="mt-2">
-        <v-col cols="12">
-          <!-- TODO: why does this say undefined is not supported when it should be optional in MainskillButton? -->
-          <MainskillButton :pokemon-instance="pokemonInstance" @update-skill-level="updateSkillLevel" />
-        </v-col>
-      </v-row>
+    <!-- Mainskill -->
+    <v-row no-gutters class="mt-2">
+      <v-col cols="12">
+        <!-- TODO: why does this say undefined is not supported when it should be optional in MainskillButton? -->
+        <MainskillButton :pokemon-instance="pokemonInstance" @update-skill-level="updateSkillLevel" />
+      </v-col>
+    </v-row>
 
-      <!-- Subskills -->
-      <v-row dense class="mt-2">
-        <v-col cols="12">
-          <SubskillButtons
-            :pokemon-level="pokemonInstance.level"
-            :selected-subskills="pokemonInstance.subskills"
-            @update-subskills="updateSubskills"
-          />
-        </v-col>
-      </v-row>
+    <!-- Subskills -->
+    <v-row dense class="mt-2">
+      <v-col cols="12">
+        <SubskillButtons
+          v-if="!quickMode"
+          :pokemon-level="pokemonInstance.level"
+          :selected-subskills="pokemonInstance.subskills"
+          @update-subskills="updateSubskills"
+        />
+        <SubskillGrid
+          v-else
+          :current-subskills="pokemonInstance.subskills"
+          :available-subskills="availableSubskills"
+          :quick-mode="quickMode"
+          @update-subskills="updateSubskills"
+        />
+      </v-col>
+    </v-row>
 
-      <!-- Nature -->
-      <v-row id="nature" class="mt-2" dense>
-        <v-col cols="12">
-          <NatureButton :nature="pokemonInstance.nature" @update-nature="updateNature" />
-        </v-col>
-      </v-row>
+    <!-- Nature -->
+    <v-row id="nature" class="mt-2" dense>
+      <v-col cols="12">
+        <NatureButton :nature="pokemonInstance.nature" @update-nature="updateNature" />
+      </v-col>
+    </v-row>
 
-      <!-- Action buttons (cancel, save) -->
-      <v-row dense class="mt-2" v-if="preSelectedPokemonInstance">
-        <v-col cols="6">
-          <v-btn id="cancelButton" class="w-100 text-body" size="large" rounded="lg" color="surface" @click="cancel"
-            >Cancel</v-btn
-          >
-        </v-col>
-        <v-col cols="6">
-          <v-btn
-            id="saveButton"
-            :disabled="!isValid"
-            class="w-100 text-body"
-            size="large"
-            rounded="lg"
-            color="primary"
-            @click="save"
-            >Save</v-btn
-          >
-        </v-col>
-      </v-row>
-      <v-row dense class="mt-6" v-else>
-        <v-col cols="12">
-          <v-btn id="continueButton" class="w-100 text-body" size="large" rounded="lg" color="primary" @click="save">
-            Continue
-          </v-btn>
-        </v-col>
-      </v-row>
+    <!-- Action buttons (cancel, save) -->
+    <v-row dense class="mt-2" v-if="!quickMode">
+      <v-col cols="6">
+        <v-btn id="cancelButton" class="w-100 text-body" size="large" rounded="lg" color="surface" @click="cancel"
+          >Cancel</v-btn
+        >
+      </v-col>
+      <v-col cols="6">
+        <v-btn
+          id="saveButton"
+          :disabled="!isValid"
+          class="w-100 text-body"
+          size="large"
+          rounded="lg"
+          color="primary"
+          @click="save"
+          >Save</v-btn
+        >
+      </v-col>
+    </v-row>
+    <v-row dense class="mt-6" v-else>
+      <v-col cols="12">
+        <v-btn id="continueButton" class="w-100 text-body" size="large" rounded="lg" color="primary" @click="save">
+          Continue
+        </v-btn>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
@@ -171,6 +169,7 @@ import IngredientButton from '@/components/pokemon-input/IngredientButton.vue'
 import LevelButton from '@/components/pokemon-input/level-button.vue'
 import MainskillButton from '@/components/pokemon-input/MainskillButton.vue'
 import SubskillButtons from '@/components/pokemon-input/menus/subskill-buttons.vue'
+import SubskillGrid from '@/components/pokemon-input/menus/subskill-grid.vue'
 import NatureButton from '@/components/pokemon-input/nature-button.vue'
 import PokemonButton from '@/components/pokemon-input/pokemon-button.vue'
 import PokemonName from '@/components/pokemon-input/PokemonName.vue'
@@ -182,6 +181,7 @@ import {
   ingredientIndex,
   nature,
   RP,
+  subskill,
   type IngredientSet,
   type PokemonGender,
   type PokemonInstanceExt,
@@ -189,11 +189,10 @@ import {
 } from 'sleepapi-common'
 import { computed, nextTick, ref, watch } from 'vue'
 
-interface Props {
+const props = defineProps<{
   preSelectedPokemonInstance: PokemonInstanceExt
-}
-
-const props = defineProps<Props>()
+  quickMode?: boolean
+}>()
 const emit = defineEmits<{
   cancel: []
   save: [pokemonInstance: PokemonInstanceExt]
@@ -203,6 +202,27 @@ const userStore = useUserStore()
 const { viewportWidth } = useBreakpoint()
 
 const pokemonNameBreakpoint = 600
+
+// Available subskills for SubskillMenu
+const availableSubskills = {
+  BERRY_FINDING_S: subskill.BERRY_FINDING_S,
+  HELPING_BONUS: subskill.HELPING_BONUS,
+  ENERGY_RECOVERY_BONUS: subskill.ENERGY_RECOVERY_BONUS,
+  SLEEP_EXP_BONUS: subskill.SLEEP_EXP_BONUS,
+  DREAM_SHARD_BONUS: subskill.DREAM_SHARD_BONUS,
+  RESEARCH_EXP_BONUS: subskill.RESEARCH_EXP_BONUS,
+  HELPING_SPEED_S: subskill.HELPING_SPEED_S,
+  HELPING_SPEED_M: subskill.HELPING_SPEED_M,
+  INGREDIENT_FINDER_S: subskill.INGREDIENT_FINDER_S,
+  INGREDIENT_FINDER_M: subskill.INGREDIENT_FINDER_M,
+  SKILL_TRIGGER_S: subskill.SKILL_TRIGGER_S,
+  SKILL_TRIGGER_M: subskill.SKILL_TRIGGER_M,
+  INVENTORY_S: subskill.INVENTORY_S,
+  INVENTORY_M: subskill.INVENTORY_M,
+  INVENTORY_L: subskill.INVENTORY_L,
+  SKILL_LEVEL_UP_S: subskill.SKILL_LEVEL_UP_S,
+  SKILL_LEVEL_UP_M: subskill.SKILL_LEVEL_UP_M
+}
 
 const initializePokemonInstance = (): PokemonInstanceExt => {
   const { pokemon: _, ...pokemonInstanceWithoutPokemon } = props.preSelectedPokemonInstance

@@ -1,49 +1,49 @@
 <template>
-  <v-menu v-model="menu" :close-on-content-click="true" offset-y>
-    <template #activator="{ props }">
-      <v-card v-bind="props">
-        <v-row no-gutters>
-          <v-col cols="3">
-            <v-card class="flex-center rounded-te-0 rounded-be-0 fill-height" color="secondary">
-              <v-img
-                class="ma-2"
-                :src="pokemonInstance ? mainskillImage(pokemonInstance.pokemon) : ''"
-                max-height="50px"
-              ></v-img>
-            </v-card>
-          </v-col>
-          <v-col cols="9">
-            <v-card class="fill-height rounded-ts-0 rounded-bs-0 flex-column px-2" style="align-content: center">
-              <div class="nowrap text-x-small">
-                <span class="my-1">{{ skillName }}</span>
-                <v-spacer></v-spacer>
-                <span class="my-1">Lv.{{ mainskillLevel }}</span>
-              </div>
-              <v-divider />
-              <div class="nowrap text-x-small">
-                <span class="my-1"> {{ description }} </span>
-              </div>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-card>
-    </template>
-
-    <v-card>
-      <!-- hide overflow since selecting max value appears to give slight scrollbar -->
-      <v-col cols="12" class="flex-center" style="overflow: hidden">
-        <v-slider
-          v-model="mainskillLevel"
-          min="1"
-          :max="maxLevel"
-          :ticks="defaultValues"
-          show-ticks="always"
-          step="1"
-          color="primary"
-        ></v-slider>
+  <v-card color="transparent">
+    <v-row no-gutters>
+      <v-col cols="3">
+        <v-card @click="menu = !menu" class="flex-center skill-card" color="secondary" height="76">
+          <v-img :src="pokemonInstance ? mainskillImage(pokemonInstance.pokemon) : ''" height="50" width="50"></v-img>
+          <v-icon class="info-icon" size="16" color="white">mdi-information</v-icon>
+        </v-card>
       </v-col>
+      <v-col cols="9">
+        <v-card class="fill-height flex-column px-2" color="transparent">
+          <div class="nowrap text-x-small">
+            <span class="my-1 skill-name">{{ skillName }}</span>
+            <v-spacer></v-spacer>
+            <span class="my-1">Lv.{{ mainskillLevel }}</span>
+          </div>
+          <v-divider />
+          <v-slider
+            v-model="mainskillLevel"
+            min="1"
+            :max="maxLevel"
+            :ticks="defaultValues"
+            show-ticks="always"
+            step="1"
+            color="primary"
+            hide-details
+            density="compact"
+            class="ml-1 mr-0 text-x-small"
+            thumb-size="12"
+          ></v-slider>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-card>
+
+  <v-expand-transition>
+    <v-card v-if="menu" variant="plain">
+      <v-row>
+        <v-col cols="12">
+          <v-card-text>
+            {{ description }}
+          </v-card-text>
+        </v-col>
+      </v-row>
     </v-card>
-  </v-menu>
+  </v-expand-transition>
 </template>
 
 <script setup lang="ts">
@@ -98,3 +98,26 @@ watch(mainskillLevel, (newLevel) => {
   emit('update-skill-level', newLevel)
 })
 </script>
+
+<style scoped lang="scss">
+.skill-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100% - 40px); // Leave room for the level text
+}
+
+.skill-card {
+  position: relative;
+  cursor: pointer;
+}
+
+.info-icon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  padding: 2px;
+}
+</style>

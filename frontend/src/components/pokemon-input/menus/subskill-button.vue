@@ -58,5 +58,9 @@ export default {
 <style lang="scss">
 .button-height {
   height: 36px !important;
+  
+  &.text-small {
+    font-size: 14px !important;
+  }
 }
 </style>

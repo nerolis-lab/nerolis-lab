@@ -4,7 +4,7 @@
       <v-text-field
         v-bind="props"
         v-model.number="customValue"
-        class="w-100 text-center level-input"
+        class="w-100 level-input"
         label="Level"
         density="compact"
         persistent-hint
@@ -91,6 +91,9 @@ export default {
   flex-grow: 1;
   flex-shrink: 0;
   max-width: 150px;
-  text-align: center;
+
+  input {
+    text-align: center;
+  }
 }
 </style>
