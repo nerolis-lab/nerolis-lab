@@ -4,7 +4,7 @@ import { ExtraHelpfulS } from './extra-helpful-s';
 describe('ExtraHelpfulS', () => {
   it('should have correct basic properties', () => {
     expect(ExtraHelpfulS.name).toBe('Extra Helpful S');
-    expect(ExtraHelpfulS.description(1)).toBe('Instantly gets you ×5 the usual help from a helper Pokémon.');
+    expect(ExtraHelpfulS.description(1)).toBe('Instantly gets you ×6 the usual help from a helper Pokémon.');
     expect(ExtraHelpfulS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(ExtraHelpfulS.maxLevel).toBe(7);
   });
@@ -19,8 +19,8 @@ describe('ExtraHelpfulS', () => {
     const level1Amount = ExtraHelpfulS.activations.helps.amount(1);
     const level6Amount = ExtraHelpfulS.activations.helps.amount(6);
 
-    expect(level1Amount).toBe(5);
-    expect(level6Amount).toBe(10);
+    expect(level1Amount).toBe(6);
+    expect(level6Amount).toBe(11);
   });
 
   it('should have helps unit only', () => {

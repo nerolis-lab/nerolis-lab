@@ -232,7 +232,7 @@ export const DUGTRIO: Pokemon = {
   name: 'DUGTRIO',
   displayName: 'Dugtrio',
   pokedexNumber: 51,
-  frequency: toSeconds(0, 46, 40),
+  frequency: toSeconds(0, 44, 10),
   ingredientPercentage: 19.0,
   skillPercentage: 2.0,
   carrySize: 16

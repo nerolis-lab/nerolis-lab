@@ -481,7 +481,7 @@ export const MAROWAK: Pokemon = {
   name: 'MAROWAK',
   displayName: 'Marowak',
   pokedexNumber: 105,
-  frequency: toSeconds(0, 58, 20),
+  frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 22.5,
   skillPercentage: 4.5,
   carrySize: 15
