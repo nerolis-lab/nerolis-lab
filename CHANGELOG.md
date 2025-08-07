@@ -1,3 +1,10 @@
+# [2.24.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.23.3...v2.24.0) (2025-08-07)
+
+
+### Features
+
+* **2.11.0:** buff marowak/dugtrio/extra helpfus S ([68a6446](https://github.com/nerolis-lab/nerolis-lab/commit/68a64469c2b352846f50c33844bac977a2d29a80))
+
 ## [2.23.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.23.2...v2.23.3) (2025-07-29)
 
 
