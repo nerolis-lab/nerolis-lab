@@ -44,11 +44,11 @@ describe('getExtraHelpfulEvents', () => {
         SkillEvent {
           "description": "Team Extra Helpful",
           "skillActivation": {
-            "adjustedAmount": 2.2,
+            "adjustedAmount": 2.4,
             "adjustedProduce": {
               "berries": [
                 {
-                  "amount": 4.4,
+                  "amount": 4.8,
                   "berry": {
                     "name": "GREPA",
                     "type": "electric",
@@ -59,7 +59,7 @@ describe('getExtraHelpfulEvents', () => {
               ],
               "ingredients": [
                 {
-                  "amount": 2.2,
+                  "amount": 2.4,
                   "ingredient": {
                     "longName": "Fancy Apple",
                     "name": "Apple",
@@ -89,13 +89,13 @@ describe('getExtraHelpfulEvents', () => {
               },
               "description": [Function],
               "helpAmounts": [
-                5,
                 6,
                 7,
                 8,
                 9,
                 10,
                 11,
+                12,
               ],
               "image": "helps",
               "name": "Extra Helpful S",
@@ -111,11 +111,11 @@ describe('getExtraHelpfulEvents', () => {
         SkillEvent {
           "description": "Team Extra Helpful",
           "skillActivation": {
-            "adjustedAmount": 1.1,
+            "adjustedAmount": 1.2,
             "adjustedProduce": {
               "berries": [
                 {
-                  "amount": 2.2,
+                  "amount": 2.4,
                   "berry": {
                     "name": "GREPA",
                     "type": "electric",
@@ -126,7 +126,7 @@ describe('getExtraHelpfulEvents', () => {
               ],
               "ingredients": [
                 {
-                  "amount": 1.1,
+                  "amount": 1.2,
                   "ingredient": {
                     "longName": "Fancy Apple",
                     "name": "Apple",
@@ -156,13 +156,13 @@ describe('getExtraHelpfulEvents', () => {
               },
               "description": [Function],
               "helpAmounts": [
-                5,
                 6,
                 7,
                 8,
                 9,
                 10,
                 11,
+                12,
               ],
               "image": "helps",
               "name": "Extra Helpful S",
