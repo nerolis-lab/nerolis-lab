@@ -77,8 +77,13 @@ class OptimalImpl {
    * Filters subskills on level
    * @returns {TeamMemberSettingsExt}
    */
-  public toMemberSettings(params: { stats: Optimal; level: number; externalId: string }): TeamMemberSettingsExt {
-    const { stats, level, externalId } = params;
+  public toMemberSettings(params: {
+    stats: Optimal;
+    level: number;
+    externalId: string;
+    sneakySnacking: boolean;
+  }): TeamMemberSettingsExt {
+    const { stats, level, externalId, sneakySnacking } = params;
 
     const subskills = new Set<string>();
     for (const subskill of stats.subskills) {
@@ -94,7 +99,8 @@ class OptimalImpl {
       skillLevel: stats.skillLevel,
       subskills,
       level,
-      externalId
+      externalId,
+      sneakySnacking
     };
   }
 }

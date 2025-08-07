@@ -209,7 +209,8 @@ export default class ProductionController {
           nature: getNature(member.nature),
           skillLevel: member.skillLevel,
           subskills,
-          externalId: member.externalId
+          externalId: member.externalId,
+          sneakySnacking: member.sneakySnacking
         }
       });
     }
