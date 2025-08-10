@@ -12,6 +12,7 @@ DB_PORT=3306
 DB_USER=root
 DB_PASS=admin
 DATABASE_MIGRATION="UP"
+DATABASE_NAME="pokemonsleep"
 ```
 
 Then start the database (MySQL) with docker compose, run this inside the backend folder:
