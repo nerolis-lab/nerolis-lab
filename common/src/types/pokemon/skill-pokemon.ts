@@ -1203,6 +1203,56 @@ export const MIMIKYU: Pokemon = {
   skill: BerryBurstDisguise
 };
 
+export const TOXEL: Pokemon = {
+  name: 'TOXEL',
+  displayName: 'Toxel',
+  pokedexNumber: 848,
+  specialty: 'skill',
+  frequency: toSeconds(1, 33, 20),
+  ingredientPercentage: 20.9,
+  skillPercentage: 4.8,
+  berry: CHESTO,
+  genders: BALANCED_GENDER,
+  carrySize: 6,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
+  ingredient30: [
+    { amount: 2, ingredient: MOOMOO_MILK },
+    { amount: 2, ingredient: SNOOZY_TOMATO }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: MOOMOO_MILK },
+    { amount: 4, ingredient: SNOOZY_TOMATO },
+    { amount: 2, ingredient: LARGE_LEEK }
+  ],
+  skill: IngredientMagnetS
+};
+
+export const TOXTRICITY_AMPED: Pokemon = {
+  ...evolvesFrom(TOXEL),
+  name: 'TOXTRICITY_AMPED',
+  displayName: 'Toxtricity (Amped Form)',
+  pokedexNumber: 849,
+  frequency: toSeconds(0, 51, 40),
+  ingredientPercentage: 23.9,
+  skillPercentage: 6.4,
+  carrySize: 18,
+  skill: IngredientMagnetSPlus
+};
+
+export const TOXTRICITY_LOW_KEY: Pokemon = {
+  ...evolvesFrom(TOXEL),
+  name: 'TOXTRICITY_LOW_KEY',
+  displayName: 'Toxtricity (Low Key Form)',
+  pokedexNumber: 849,
+  frequency: toSeconds(0, 51, 40),
+  ingredientPercentage: 23.9,
+  skillPercentage: 6.4,
+  carrySize: 18,
+  skill: CookingPowerUpSMinus
+};
+
 export const PAWMI: Pokemon = {
   name: 'PAWMI',
   displayName: 'Pawmi',
@@ -1289,6 +1339,8 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   SYLVEON,
   DEDENNE,
   MIMIKYU,
+  TOXTRICITY_AMPED,
+  TOXTRICITY_LOW_KEY,
   PAWMOT
 ];
 
@@ -1318,6 +1370,7 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   DRIFLOON,
   RIOLU,
   RUFFLET,
+  TOXEL,
   PAWMI,
   PAWMO
 ];
