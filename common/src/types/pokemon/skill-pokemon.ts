@@ -1219,11 +1219,11 @@ export const TOXEL: Pokemon = {
   ingredient0: [{ amount: 1, ingredient: MOOMOO_MILK }],
   ingredient30: [
     { amount: 2, ingredient: MOOMOO_MILK },
-    { amount: 2, ingredient: SNOOZY_TOMATO }
+    { amount: 2, ingredient: FANCY_APPLE }
   ],
   ingredient60: [
     { amount: 4, ingredient: MOOMOO_MILK },
-    { amount: 4, ingredient: SNOOZY_TOMATO },
+    { amount: 4, ingredient: FANCY_APPLE },
     { amount: 2, ingredient: LARGE_LEEK }
   ],
   skill: IngredientMagnetS
