@@ -4,7 +4,7 @@ import { Metronome } from './metronome';
 describe('Metronome', () => {
   it('should have correct basic properties', () => {
     expect(Metronome.name).toBe('Metronome');
-    expect(Metronome.description(1)).toBe('Uses one randomly chosen main skill.');
+    expect(Metronome.description({ skillLevel: 1 })).toBe('Uses one randomly chosen main skill.');
     expect(Metronome.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(Metronome.maxLevel).toBe(7);
   });

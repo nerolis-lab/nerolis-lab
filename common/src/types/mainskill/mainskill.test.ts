@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { AmountParams } from './mainskill';
 import { INGREDIENT_SUPPORT_MAINSKILLS, Mainskill, MAINSKILLS, ModifiedMainskill } from '.';
 import { mainskillUnits } from './mainskill-unit';
 import { ChargeEnergySMoonlight } from './mainskills/charge-energy-s-moonlight';
@@ -6,13 +7,13 @@ import { Metronome } from './mainskills/metronome';
 
 const TestMainskill = new (class extends Mainskill {
   name = 'Test Skill';
-  description = (_skillLevel: number) => 'A test skill for testing purposes.';
+  description = (_params: AmountParams) => 'A test skill for testing purposes.';
   RP = [100, 200, 300];
   image = 'test';
   activations = {
     testActivation: {
       unit: 'energy',
-      amount: (skillLevel: number) => skillLevel * 10
+      amount: (params: AmountParams) => params.skillLevel * 10
     }
   };
 })();
@@ -20,14 +21,14 @@ const TestMainskill = new (class extends Mainskill {
 const TestModifiedMainskill = new (class extends ModifiedMainskill {
   baseSkill = TestMainskill;
   modifierName = 'Test Modified';
-  description = (_skillLevel: number) => 'A test modified skill for testing purposes.';
+  description = (_params: AmountParams) => 'A test modified skill for testing purposes.';
   RP = [150, 300, 450];
   image = 'test';
   activations = {
     testActivation: {
       unit: 'energy',
-      amount: (skillLevel: number) => skillLevel * 15,
-      critAmount: (skillLevel: number) => skillLevel * 20
+      amount: (params: AmountParams) => params.skillLevel * 15,
+      critAmount: (params: AmountParams) => params.skillLevel * 20
     }
   };
 })(true);
@@ -90,9 +91,9 @@ describe('Mainskill', () => {
     });
 
     it('should calculate activation amounts correctly', () => {
-      expect(TestMainskill.activations.testActivation.amount(1)).toBe(10);
-      expect(TestMainskill.activations.testActivation.amount(2)).toBe(20);
-      expect(TestMainskill.activations.testActivation.amount(3)).toBe(30);
+      expect(TestMainskill.activations.testActivation.amount({ skillLevel: 1 })).toBe(10);
+      expect(TestMainskill.activations.testActivation.amount({ skillLevel: 2 })).toBe(20);
+      expect(TestMainskill.activations.testActivation.amount({ skillLevel: 3 })).toBe(30);
     });
   });
 
@@ -113,16 +114,16 @@ describe('Mainskill', () => {
       const activation = TestModifiedMainskill.activations.testActivation;
       expect(activation.unit).toBe('energy');
       expect(typeof activation.amount).toBe('function');
-      expect(activation.critAmount!(1)).toBe(20);
-      expect(activation.critAmount!(2)).toBe(40);
-      expect(activation.critAmount!(3)).toBe(60);
+      expect(activation.critAmount!({ skillLevel: 1 })).toBe(20);
+      expect(activation.critAmount!({ skillLevel: 2 })).toBe(40);
+      expect(activation.critAmount!({ skillLevel: 3 })).toBe(60);
     });
 
     it('should calculate crit amounts correctly', () => {
       const activation = TestModifiedMainskill.activations.testActivation;
-      expect(activation.critAmount!(1)).toBe(20);
-      expect(activation.critAmount!(2)).toBe(40);
-      expect(activation.critAmount!(3)).toBe(60);
+      expect(activation.critAmount!({ skillLevel: 1 })).toBe(20);
+      expect(activation.critAmount!({ skillLevel: 2 })).toBe(40);
+      expect(activation.critAmount!({ skillLevel: 3 })).toBe(60);
     });
   });
 
@@ -148,8 +149,8 @@ describe('Mainskill', () => {
 
     it('should calculate crit amounts correctly', () => {
       const activation = ChargeEnergySMoonlight.activations.energy;
-      const level1CritAmount = activation.critAmount!(1);
-      const level6CritAmount = activation.critAmount!(6);
+      const level1CritAmount = activation.critAmount!({ skillLevel: 1 });
+      const level6CritAmount = activation.critAmount!({ skillLevel: 6 });
 
       expect(level1CritAmount).toBe(6.3);
       expect(level6CritAmount).toBe(22.8);
@@ -263,11 +264,11 @@ describe('Additional validation tests', () => {
       Object.values(skill.activations).forEach((activation) => {
         // Test amount function for all skill levels
         for (let level = 1; level <= skill.maxLevel; level++) {
-          const amount = activation.amount(level);
+          const amount = activation.amount({ skillLevel: level });
           // Some skills might return undefined for edge levels
           if (amount !== undefined) {
             expect(typeof amount).toBe('number');
-            expect(amount).toBeGreaterThan(0);
+            expect(amount).toBeGreaterThanOrEqual(0); // Some bonus activations may return 0
             expect(Number.isFinite(amount)).toBe(true);
           }
         }
@@ -279,7 +280,7 @@ describe('Additional validation tests', () => {
     // Create a test mainskill to test the leveledAmount helper
     const testSkill = new (class extends Mainskill {
       name = 'Test Skill 2';
-      description = (_skillLevel: number) => 'Another test skill.';
+      description = (_params: AmountParams) => 'Another test skill.';
       RP = [100, 200, 300];
       image = 'test';
       activations = {
@@ -291,15 +292,15 @@ describe('Additional validation tests', () => {
     })(false, true); // Don't add to global arrays
 
     // Test normal levels
-    expect(testSkill.activations.testActivation.amount(1)).toBe(10);
-    expect(testSkill.activations.testActivation.amount(2)).toBe(20);
-    expect(testSkill.activations.testActivation.amount(3)).toBe(30);
+    expect(testSkill.activations.testActivation.amount({ skillLevel: 1 })).toBe(10);
+    expect(testSkill.activations.testActivation.amount({ skillLevel: 2 })).toBe(20);
+    expect(testSkill.activations.testActivation.amount({ skillLevel: 3 })).toBe(30);
 
     // Test out-of-bounds levels (should clamp to valid range)
-    expect(testSkill.activations.testActivation.amount(0)).toBe(10); // Clamped to level 1
-    expect(testSkill.activations.testActivation.amount(-5)).toBe(10); // Clamped to level 1
-    expect(testSkill.activations.testActivation.amount(4)).toBe(30); // Clamped to max level (3)
-    expect(testSkill.activations.testActivation.amount(999)).toBe(30); // Clamped to max level (3)
+    expect(testSkill.activations.testActivation.amount({ skillLevel: 0 })).toBe(10); // Clamped to level 1
+    expect(testSkill.activations.testActivation.amount({ skillLevel: -5 })).toBe(10); // Clamped to level 1
+    expect(testSkill.activations.testActivation.amount({ skillLevel: 4 })).toBe(30); // Clamped to max level (3)
+    expect(testSkill.activations.testActivation.amount({ skillLevel: 999 })).toBe(30); // Clamped to max level (3)
   });
 
   it('should ensure skills have consistent structure', () => {

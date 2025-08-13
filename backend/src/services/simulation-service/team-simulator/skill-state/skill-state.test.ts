@@ -112,7 +112,9 @@ describe('SkillState', () => {
   it('should return correct skill amount', () => {
     const skill = BerryBurst;
     const skillAmount = skillState.skillAmount(skill.activations.berries);
-    expect(skillAmount).toBe(skill.activations.berries.amount(mockMemberState.member.settings.skillLevel));
+    expect(skillAmount).toBe(
+      skill.activations.berries.amount({ skillLevel: mockMemberState.member.settings.skillLevel })
+    );
   });
 
   it('should initialize skillEffects map with all mainskills', () => {

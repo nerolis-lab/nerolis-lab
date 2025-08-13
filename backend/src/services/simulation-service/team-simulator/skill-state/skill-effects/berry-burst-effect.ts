@@ -9,7 +9,7 @@ export class BerryBurstEffect implements SkillEffect {
     const memberState = skillState.memberState;
     const skill = BerryBurst;
     const regularSelfAmount = skillState.skillAmount(skill.activations.berries);
-    const regularOtherAmount = BerryBurst.activations.berries.teamAmount(skillState.skillLevel);
+    const regularOtherAmount = BerryBurst.activations.berries.teamAmount({ skillLevel: skillState.skillLevel });
 
     const berries = memberState.otherMembers.map((member) => ({
       berry: member.berry,

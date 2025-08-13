@@ -17,7 +17,7 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
     memberState.totalRecovery += clampedEnergyRecovered;
 
     if (skillState.rng() < ChargeEnergySMoonlight.activations.energy.critChance) {
-      const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount(skillState.skillLevel);
+      const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount({ skillLevel: skillState.skillLevel });
 
       // currently uses equal chance to hit every member
       return {

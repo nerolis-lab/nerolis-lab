@@ -15,13 +15,16 @@ export class IngredientMagnetSPlusEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = IngredientMagnetSPlus;
     const ingMagnetAmount = skillState.skillAmount(skill.activations.solo);
+
     const ingredients = emptyIngredientInventoryFloat().fill(ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
+
     const bonusAmount =
       skillState.memberState.otherMembers.filter((member) =>
         member.skill.is(IngredientMagnetSPlus, CookingPowerUpSMinus)
       ).length === 0
         ? 0
         : skillState.skillAmount(skill.activations.paired);
+
     ingredients[
       ING_ID_LOOKUP[skillState.memberState.member.pokemonWithIngredients.ingredientList[0].ingredient.name]
     ] += bonusAmount;

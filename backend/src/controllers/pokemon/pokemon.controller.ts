@@ -19,7 +19,7 @@ export default class PokemonController extends Controller {
       skill: {
         ...pokemon.skill,
         activations: skillActivations,
-        description: pokemon.skill.description(1)
+        description: pokemon.skill.description({ skillLevel: 1 })
       }
     };
   }

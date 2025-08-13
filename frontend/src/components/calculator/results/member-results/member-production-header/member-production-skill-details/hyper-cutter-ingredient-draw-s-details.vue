@@ -86,10 +86,14 @@ export default defineComponent({
   },
   computed: {
     skillValuePerNormalProc() {
-      return IngredientDrawSHyperCutter.activations.ingredients.amount(this.memberWithProduction.member.skillLevel)
+      return IngredientDrawSHyperCutter.activations.ingredients.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
     },
     skillValuePerCritProc() {
-      return IngredientDrawSHyperCutter.activations.ingredients.critAmount(this.memberWithProduction.member.skillLevel)
+      return IngredientDrawSHyperCutter.activations.ingredients.critAmount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
     },
     preparedIngredients() {
       return this.memberWithProduction.production.produceFromSkill.ingredients.map((ing) => ({

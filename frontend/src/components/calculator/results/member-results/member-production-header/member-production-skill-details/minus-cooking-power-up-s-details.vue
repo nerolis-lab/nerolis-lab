@@ -90,7 +90,9 @@ export default defineComponent({
   },
   computed: {
     skillValuePerProc() {
-      return CookingPowerUpSMinus.activations.solo.amount(this.memberWithProduction.member.skillLevel)
+      return CookingPowerUpSMinus.activations.solo.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
     },
     totalPotValue() {
       return compactNumber(

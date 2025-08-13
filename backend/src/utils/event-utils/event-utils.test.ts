@@ -433,7 +433,7 @@ describe('scheduleEnergyForEveryoneEvents', () => {
       const energyEvent = event as EnergyEvent;
       expect(energyEvent.description).toEqual('E4E');
       expect(energyEvent.delta).toEqual(
-        MathUtils.round(EnergyForEveryone.activations.energy.amount(6) * nature.RELAXED.energy, 2)
+        MathUtils.round(EnergyForEveryone.activations.energy.amount({ skillLevel: 6 }) * nature.RELAXED.energy, 2)
       );
     });
   });
@@ -480,8 +480,8 @@ describe('getDefaultRecoveryEvents', () => {
 
     expect(recoveryEvents.length).toBe(2);
     expect(recoveryEvents.map((e) => e.delta)).toEqual([
-      EnergyForEveryone.activations.energy.amount(6),
-      EnergyForEveryone.activations.energy.amount(6) / 2
+      EnergyForEveryone.activations.energy.amount({ skillLevel: 6 }),
+      EnergyForEveryone.activations.energy.amount({ skillLevel: 6 }) / 2
     ]);
   });
 

@@ -3,7 +3,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { GENGAR, Mainskill, type PokemonInstanceExt } from 'sleepapi-common'
+import { GENGAR, Mainskill, type AmountParams, type PokemonInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('MainskillButton', () => {
@@ -58,7 +58,7 @@ describe('MainskillButton', () => {
     const skillWithLowMaxLevel: Mainskill = new (class extends Mainskill {
       name = 'Test skill'
       amount = (skillLevel: number) => skillLevel
-      description = (_skillLevel: number) => `Test.`
+      description = (params: AmountParams) => `Test. ${params.skillLevel}`
       RP = [880, 1251, 1726, 2383]
       image = 'strength'
       activations = {}

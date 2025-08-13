@@ -17,7 +17,7 @@ export default class MainskillController extends Controller {
     return {
       ...mainskill,
       activations,
-      description: mainskill.description(1),
+      description: mainskill.description({ skillLevel: 1 }),
       units: mainskill.getUnits(),
       maxLevel: mainskill.maxLevel,
       isModified: mainskill.isModified,

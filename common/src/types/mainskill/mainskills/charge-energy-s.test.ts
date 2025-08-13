@@ -4,7 +4,7 @@ import { ChargeEnergyS } from './charge-energy-s';
 describe('ChargeEnergyS', () => {
   it('should have the correct specific properties', () => {
     expect(ChargeEnergyS.name).toBe('Charge Energy S');
-    expect(ChargeEnergyS.description(1)).toBe('Restores 12 Energy to the user.');
+    expect(ChargeEnergyS.description({ skillLevel: 1 })).toBe('Restores 12 Energy to the user.');
     expect(ChargeEnergyS.RP).toEqual([400, 569, 785, 1083, 1496, 2066]);
     expect(ChargeEnergyS.maxLevel).toBe(6);
   });
@@ -16,8 +16,8 @@ describe('ChargeEnergyS', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    const level1Amount = ChargeEnergyS.activations.energy.amount(1);
-    const level6Amount = ChargeEnergyS.activations.energy.amount(6);
+    const level1Amount = ChargeEnergyS.activations.energy.amount({ skillLevel: 1 });
+    const level6Amount = ChargeEnergyS.activations.energy.amount({ skillLevel: 6 });
 
     expect(level1Amount).toBe(12);
     expect(level6Amount).toBe(43.4);

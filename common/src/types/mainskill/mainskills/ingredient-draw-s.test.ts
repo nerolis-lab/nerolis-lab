@@ -4,7 +4,7 @@ import { IngredientDrawS } from './ingredient-draw-s';
 describe('IngredientDrawS', () => {
   it('should have correct basic properties', () => {
     expect(IngredientDrawS.name).toBe('Ingredient Draw S');
-    expect(IngredientDrawS.description(1)).toBe(
+    expect(IngredientDrawS.description({ skillLevel: 1 })).toBe(
       'Gets 6 of one type of ingredient chosen randomly from a specific selection of ingredients.'
     );
     expect(IngredientDrawS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4846, 5843]);
@@ -18,8 +18,8 @@ describe('IngredientDrawS', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    const level1Amount = IngredientDrawS.activations.ingredients.amount(1);
-    const level6Amount = IngredientDrawS.activations.ingredients.amount(6);
+    const level1Amount = IngredientDrawS.activations.ingredients.amount({ skillLevel: 1 });
+    const level6Amount = IngredientDrawS.activations.ingredients.amount({ skillLevel: 6 });
 
     expect(level1Amount).toBe(6);
     expect(level6Amount).toBe(21);

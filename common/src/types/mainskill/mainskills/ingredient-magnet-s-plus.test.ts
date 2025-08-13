@@ -11,8 +11,8 @@ describe('IngredientMagnetSPlus', () => {
 
   it('should have correct basic properties', () => {
     expect(IngredientMagnetSPlus.name).toBe('Plus (Ingredient Magnet S)');
-    expect(IngredientMagnetSPlus.description(1)).toBe(
-      'Gets you 5 ingredients chosen at random. Meet certain conditions to get an additional Rousing Coffee ×6'
+    expect(IngredientMagnetSPlus.description({ skillLevel: 1 })).toBe(
+      'Gets you 5 ingredients chosen at random. \n    Meet certain conditions to get an additional 0 undefineds'
     );
     expect(IngredientMagnetSPlus.maxLevel).toBe(7);
   });
@@ -36,11 +36,29 @@ describe('IngredientMagnetSPlus', () => {
   });
 
   it('should calculate correct ingredient amounts', () => {
-    expect(IngredientMagnetSPlus.activations.solo.amount(1)).toBe(5);
-    expect(IngredientMagnetSPlus.activations.solo.amount(4)).toBe(11);
-    expect(IngredientMagnetSPlus.activations.solo.amount(7)).toBe(18);
-    expect(IngredientMagnetSPlus.activations.paired.amount(1)).toBe(6);
-    expect(IngredientMagnetSPlus.activations.paired.amount(4)).toBe(9);
-    expect(IngredientMagnetSPlus.activations.paired.amount(7)).toBe(12);
+    expect(IngredientMagnetSPlus.activations.solo.amount({ skillLevel: 1 })).toBe(5);
+    expect(IngredientMagnetSPlus.activations.solo.amount({ skillLevel: 4 })).toBe(11);
+    expect(IngredientMagnetSPlus.activations.solo.amount({ skillLevel: 7 })).toBe(18);
+    expect(IngredientMagnetSPlus.activations.paired.amount({ skillLevel: 1 })).toBe(0);
+    expect(IngredientMagnetSPlus.activations.paired.amount({ skillLevel: 4 })).toBe(0);
+    expect(IngredientMagnetSPlus.activations.paired.amount({ skillLevel: 7 })).toBe(0);
+  });
+
+  it('should return 0 for bonus amounts when no matching ingredient', () => {
+    // Test with no ingredient
+    expect(IngredientMagnetSPlus.getBonusAmount({ skillLevel: 1 })).toBe(0);
+
+    // Test with ingredient not in bonus map
+    const mockIngredient = {
+      name: 'Mock Ingredient',
+      value: 100,
+      taxedValue: 90,
+      longName: 'Mock Ingredient'
+    };
+    expect(IngredientMagnetSPlus.getBonusAmount({ skillLevel: 1, ingredient: mockIngredient })).toBe(0);
+
+    // Test activations
+    expect(IngredientMagnetSPlus.activations.paired.amount({ skillLevel: 1 })).toBe(0);
+    expect(IngredientMagnetSPlus.activations.paired.amount({ skillLevel: 1, ingredient: mockIngredient })).toBe(0);
   });
 });

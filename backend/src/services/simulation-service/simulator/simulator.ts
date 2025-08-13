@@ -263,9 +263,9 @@ export function simulation(params: {
             if (skillActivation.skill.is(ChargeEnergySMoonlight)) {
               const energyFromCrit =
                 skillActivation.fractionOfProc *
-                (ChargeEnergySMoonlight.activations.energy.critAmount(
-                  input.skillLevel ?? skillActivation.skill.maxLevel
-                ) /
+                (ChargeEnergySMoonlight.activations.energy.critAmount({
+                  skillLevel: input.skillLevel ?? skillActivation.skill.maxLevel
+                }) /
                   5);
 
               skillEnergyOthersValue += energyFromCrit * ChargeEnergySMoonlight.activations.energy.critChance;
@@ -282,7 +282,7 @@ export function simulation(params: {
             const metronomeFactor = metronomeUser ? Metronome.metronomeSkills.length : 1;
 
             const amountNoCrit =
-              BerryBurstDisguise.activations.berries.teamAmount(skillLevel) * skillActivation.fractionOfProc;
+              BerryBurstDisguise.activations.berries.teamAmount({ skillLevel }) * skillActivation.fractionOfProc;
             const critChance = skillActivation.critChance ?? BerryBurstDisguise.activations.berries.critChance;
 
             const averageTeamBerryAmount =
@@ -295,7 +295,8 @@ export function simulation(params: {
             const metronomeUser = pokemon.skill.is(Metronome);
             const metronomeFactor = metronomeUser ? Metronome.metronomeSkills.length : 1;
 
-            const amountNoCrit = BerryBurst.activations.berries.teamAmount(skillLevel) * skillActivation.fractionOfProc;
+            const amountNoCrit =
+              BerryBurst.activations.berries.teamAmount({ skillLevel }) * skillActivation.fractionOfProc;
 
             const averageTeamBerryAmount = amountNoCrit / metronomeFactor;
 

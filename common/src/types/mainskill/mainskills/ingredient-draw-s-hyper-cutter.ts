@@ -1,4 +1,4 @@
-import type { AmountFunction, Ingredient } from '../..';
+import type { AmountFunction, AmountParams, Ingredient } from '../..';
 import { rollToOutput } from '../../../utils/mainskill-utils/mainskill-utils';
 import { GREENGRASS_CORN, PURE_OIL, SNOOZY_TOMATO, SOFT_POTATO } from '../../ingredient/ingredients';
 import { ModifiedMainskill, ZeroAmount } from '../mainskill';
@@ -12,8 +12,8 @@ class IngredientDrawSHyperCutterImpl extends ModifiedMainskill {
   critIngredientAmounts = this.ingredientAmounts.map((normalAmount) => normalAmount * 2);
   image = 'ingredient_draw';
 
-  description = (skillLevel: number) =>
-    `Gets ${this.ingredientAmounts[skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. Sometimes gets an additional ${this.ingredientAmounts[skillLevel - 1]} ingredients.`;
+  description = (params: AmountParams) =>
+    `Gets ${this.ingredientAmounts[params.skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. Sometimes gets an additional ${this.ingredientAmounts[params.skillLevel - 1]} ingredients.`;
 
   activations = {
     ingredients: {

@@ -4,7 +4,9 @@ import { EnergyForEveryone } from './energy-for-everyone';
 describe('EnergyForEveryone', () => {
   it('should have correct basic properties', () => {
     expect(EnergyForEveryone.name).toBe('Energy For Everyone');
-    expect(EnergyForEveryone.description(1)).toBe('Restores 5 Energy to each helper Pokémon on your team.');
+    expect(EnergyForEveryone.description({ skillLevel: 1 })).toBe(
+      'Restores 5 Energy to each helper Pokémon on your team.'
+    );
     expect(EnergyForEveryone.RP).toEqual([1120, 1593, 2197, 3033, 4187, 5785]);
     expect(EnergyForEveryone.maxLevel).toBe(6);
   });
@@ -16,8 +18,8 @@ describe('EnergyForEveryone', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    const level1Amount = EnergyForEveryone.activations.energy.amount(1);
-    const level6Amount = EnergyForEveryone.activations.energy.amount(6);
+    const level1Amount = EnergyForEveryone.activations.energy.amount({ skillLevel: 1 });
+    const level6Amount = EnergyForEveryone.activations.energy.amount({ skillLevel: 6 });
 
     expect(level1Amount).toBe(5);
     expect(level6Amount).toBe(18.1);
