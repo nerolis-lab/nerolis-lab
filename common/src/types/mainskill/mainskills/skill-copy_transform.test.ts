@@ -13,7 +13,7 @@ describe('SkillCopyTransform', () => {
 
   it('should have correct basic properties', () => {
     expect(SkillCopyTransform.name).toBe('Transform (Skill Copy)');
-    expect(SkillCopyTransform.description(1)).toBe(
+    expect(SkillCopyTransform.description({ skillLevel: 1 })).toBe(
       'Copies and performs the main skill of one randomly selected Pokémon on the team.'
     );
     expect(SkillCopyTransform.RP).toEqual([600, 853, 1177, 1625, 2243, 3099, 3984]);

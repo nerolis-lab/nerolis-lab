@@ -15,8 +15,8 @@ export class IngredientDrawSSuperLuckEffect implements SkillEffect {
 
     const roll = skillState.rng();
     const { amountFunc, critAmountFunc, ingredient, unit } = skill.rollToResult(roll);
-    const amount = amountFunc(skillState.skillLevel);
-    const critAmount = critAmountFunc(skillState.skillLevel);
+    const amount = amountFunc({ skillLevel: skillState.skillLevel });
+    const critAmount = critAmountFunc({ skillLevel: skillState.skillLevel });
 
     if (ingredient !== undefined) {
       const nrOfIngredients = amount + critAmount;

@@ -15,8 +15,8 @@ export class IngredientDrawSHyperCutterEffect implements SkillEffect {
 
     const roll = skillState.rng();
     const { amountFunc, critAmountFunc, ingredient } = skill.rollToResult(roll);
-    const amount = amountFunc(skillState.skillLevel);
-    const critAmount = critAmountFunc(skillState.skillLevel);
+    const amount = amountFunc({ skillLevel: skillState.skillLevel });
+    const critAmount = critAmountFunc({ skillLevel: skillState.skillLevel });
     const nrOfIngredients = amount + critAmount;
 
     const ingredientDrawIngredients = emptyIngredientInventoryFloat();

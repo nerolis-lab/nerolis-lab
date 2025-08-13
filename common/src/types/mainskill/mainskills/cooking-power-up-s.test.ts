@@ -4,7 +4,9 @@ import { CookingPowerUpS } from './cooking-power-up-s';
 describe('CookingPowerUpS', () => {
   it('should have correct basic properties', () => {
     expect(CookingPowerUpS.name).toBe('Cooking Power-Up S');
-    expect(CookingPowerUpS.description(1)).toBe('Increases the quantity of Cooking items you get by 7.');
+    expect(CookingPowerUpS.description({ skillLevel: 1 })).toBe(
+      'Increases the quantity of Cooking items you get by 7.'
+    );
     expect(CookingPowerUpS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(CookingPowerUpS.maxLevel).toBe(7);
   });
@@ -16,8 +18,8 @@ describe('CookingPowerUpS', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    const level1Amount = CookingPowerUpS.activations.potSize.amount(1);
-    const level7Amount = CookingPowerUpS.activations.potSize.amount(7);
+    const level1Amount = CookingPowerUpS.activations.potSize.amount({ skillLevel: 1 });
+    const level7Amount = CookingPowerUpS.activations.potSize.amount({ skillLevel: 7 });
 
     expect(level1Amount).toBe(7);
     expect(level7Amount).toBe(31);

@@ -1,4 +1,5 @@
 import { MAX_TEAM_SIZE } from '../../constants';
+import type { AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { EnergyForEveryone } from './energy-for-everyone';
 
@@ -7,8 +8,8 @@ export const EnergyForEveryoneLunarBlessing = new (class extends ModifiedMainski
   modifierName = 'Lunar Blessing';
   energyAmounts = [3, 4, 5, 7, 9, 11];
   image = 'energy';
-  description = (skillLevel: number) =>
-    `Restores ${this.energyAmounts[skillLevel - 1]} Energy to all helper Pokémon on your team plus gives ${this.teamBerries[1][skillLevel - 1]} - ${this.selfBerries[MAX_TEAM_SIZE][skillLevel - 1]} of each of the Berries other Pokémon on your team collect.`;
+  description = (params: AmountParams) =>
+    `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to all helper Pokémon on your team plus gives ${this.teamBerries[1][params.skillLevel - 1]} - ${this.selfBerries[MAX_TEAM_SIZE][params.skillLevel - 1]} of each of the Berries other Pokémon on your team collect.`;
   RP = [1400, 1991, 2747, 3791, 5234, 7232];
 
   readonly selfBerries: Record<number, number[]> = {
@@ -33,11 +34,11 @@ export const EnergyForEveryoneLunarBlessing = new (class extends ModifiedMainski
     },
     selfBerries: {
       unit: 'berries',
-      amount: (skillLevel: number, unique?: number) => this.selfBerries[unique ?? 1][skillLevel - 1]
+      amount: (params: AmountParams) => this.selfBerries[params.extra ?? 1][params.skillLevel - 1]
     },
     teamBerries: {
       unit: 'berries',
-      amount: (skillLevel: number, unique?: number) => this.teamBerries[unique ?? 1][skillLevel - 1]
+      amount: (params: AmountParams) => this.teamBerries[params.extra ?? 1][params.skillLevel - 1]
     }
   };
 })(true);

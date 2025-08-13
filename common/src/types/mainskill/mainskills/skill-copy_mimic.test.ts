@@ -13,7 +13,7 @@ describe('SkillCopyMimic', () => {
 
   it('should have correct basic properties', () => {
     expect(SkillCopyMimic.name).toBe('Mimic (Skill Copy)');
-    expect(SkillCopyMimic.description(1)).toBe(
+    expect(SkillCopyMimic.description({ skillLevel: 1 })).toBe(
       'Copies and performs the main skill of one randomly selected Pokémon on the team.'
     );
     expect(SkillCopyMimic.RP).toEqual([600, 853, 1177, 1625, 2243, 3099, 3984]);

@@ -1,3 +1,4 @@
+import type { AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { ChargeStrengthS } from './charge-strength-s';
 
@@ -18,7 +19,7 @@ export const ChargeStrengthSStockpile = new (class extends ModifiedMainskill {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  description = (skillLevel: number) =>
+  description = (params: AmountParams) =>
     `Stockpile or Spit Up is selected. When Spit Up triggers, Snorlax gains Strength from Stockpile's number.`;
 
   activations = {

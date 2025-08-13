@@ -12,7 +12,7 @@ describe('BerryBurstDisguise', () => {
   it('should have modified RP values and description', () => {
     expect(BerryBurstDisguise.RP).toEqual([1400, 1991, 2747, 3791, 5234, 7232]);
     expect(BerryBurstDisguise.maxLevel).toBe(6);
-    expect(BerryBurstDisguise.description(1)).toContain(
+    expect(BerryBurstDisguise.description({ skillLevel: 1 })).toContain(
       'Gets 8 Berries plus 1 of each of the Berries other Pokémon on your team collect'
     );
   });
@@ -28,13 +28,13 @@ describe('BerryBurstDisguise', () => {
 
   it('should calculate team amounts correctly', () => {
     const activation = BerryBurstDisguise.activations.berries;
-    expect(activation.teamAmount(1)).toBe(1);
-    expect(activation.teamAmount(6)).toBe(5);
+    expect(activation.teamAmount({ skillLevel: 1 })).toBe(1);
+    expect(activation.teamAmount({ skillLevel: 6 })).toBe(5);
   });
 
   it('should calculate activation amounts correctly', () => {
     const activation = BerryBurstDisguise.activations.berries;
-    expect(activation.amount(1)).toBe(8);
-    expect(activation.amount(6)).toBe(21);
+    expect(activation.amount({ skillLevel: 1 })).toBe(8);
+    expect(activation.amount({ skillLevel: 6 })).toBe(21);
   });
 });

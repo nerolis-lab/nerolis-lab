@@ -11,7 +11,7 @@ describe('ChargeStrengthSStockpile', () => {
 
   it('should have correct basic properties', () => {
     expect(ChargeStrengthSStockpile.name).toBe('Stockpile (Charge Strength S)');
-    expect(ChargeStrengthSStockpile.description(1)).toBe(
+    expect(ChargeStrengthSStockpile.description({ skillLevel: 1 })).toBe(
       "Stockpile or Spit Up is selected. When Spit Up triggers, Snorlax gains Strength from Stockpile's number."
     );
     expect(ChargeStrengthSStockpile.RP).toEqual([600, 853, 1177, 1625, 2243, 3099, 3984]);
@@ -26,9 +26,9 @@ describe('ChargeStrengthSStockpile', () => {
   });
 
   it('should calculate correct strength amounts', () => {
-    expect(ChargeStrengthSStockpile.activations.strength.amount(1)).toBe(600);
-    expect(ChargeStrengthSStockpile.activations.strength.amount(4)).toBe(1625);
-    expect(ChargeStrengthSStockpile.activations.strength.amount(7)).toBe(4497);
+    expect(ChargeStrengthSStockpile.activations.strength.amount({ skillLevel: 1 })).toBe(600);
+    expect(ChargeStrengthSStockpile.activations.strength.amount({ skillLevel: 4 })).toBe(1625);
+    expect(ChargeStrengthSStockpile.activations.strength.amount({ skillLevel: 7 })).toBe(4497);
   });
 
   it('should have spit up amounts for all skill levels', () => {

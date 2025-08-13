@@ -108,8 +108,13 @@ export default defineComponent({
       }
     },
     combinedIngCountPerProc() {
-      const magnetIngs = IngredientMagnetSPlus.activations.solo.amount(this.memberWithProduction.member.skillLevel)
-      const aSlotIngs = IngredientMagnetSPlus.activations.paired.amount(this.memberWithProduction.member.skillLevel)
+      const magnetIngs = IngredientMagnetSPlus.activations.solo.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
+      const aSlotIngs = IngredientMagnetSPlus.activations.paired.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel,
+        ingredient: this.memberWithProduction.member.pokemon.ingredient0.at(0)?.ingredient
+      })
       const teamMembers = this.teamStore.getCurrentTeam.members
         .filter(Boolean)
         .map((member) => this.pokemonStore.getPokemon(member!)!.pokemon)

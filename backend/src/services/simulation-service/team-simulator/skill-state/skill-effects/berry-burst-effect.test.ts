@@ -37,7 +37,7 @@ describe('BerryBurstEffect', () => {
         berries: [
           ...memberState.otherMembers.map((member) => ({
             berry: member.berry,
-            amount: BerryBurst.activations.berries.teamAmount(skillState.skillLevel),
+            amount: BerryBurst.activations.berries.teamAmount({ skillLevel: skillState.skillLevel }),
             level: member.level
           })),
           {
@@ -56,7 +56,8 @@ describe('BerryBurstEffect', () => {
           self: {
             regular:
               regularSelfAmount +
-              BerryBurst.activations.berries.teamAmount(skillState.skillLevel) * memberState.otherMembers.length,
+              BerryBurst.activations.berries.teamAmount({ skillLevel: skillState.skillLevel }) *
+                memberState.otherMembers.length,
             crit: 0
           }
         }
@@ -98,7 +99,7 @@ describe('BerryBurstEffect', () => {
         berries: [
           ...memberState.otherMembers.map((member) => ({
             berry: member.berry,
-            amount: BerryBurst.activations.berries.teamAmount(skillState.skillLevel),
+            amount: BerryBurst.activations.berries.teamAmount({ skillLevel: skillState.skillLevel }),
             level: member.level
           })),
           {
@@ -117,7 +118,8 @@ describe('BerryBurstEffect', () => {
           self: {
             regular:
               regularSelfAmount +
-              BerryBurst.activations.berries.teamAmount(skillState.skillLevel) * memberState.otherMembers.length,
+              BerryBurst.activations.berries.teamAmount({ skillLevel: skillState.skillLevel }) *
+                memberState.otherMembers.length,
             crit: 0
           }
         }

@@ -11,7 +11,7 @@ describe('CookingPowerUpSMinus', () => {
 
   it('should have correct basic properties', () => {
     expect(CookingPowerUpSMinus.name).toBe('Minus (Cooking Power-Up S)');
-    expect(CookingPowerUpSMinus.description(1)).toBe(
+    expect(CookingPowerUpSMinus.description({ skillLevel: 1 })).toBe(
       'Gives your cooking pot room for 5 more ingredients next time you cook. Meet certain conditions to also restore 8 Energy to one random Pokémon on your team.'
     );
     expect(CookingPowerUpSMinus.maxLevel).toBe(7);
@@ -36,11 +36,11 @@ describe('CookingPowerUpSMinus', () => {
   });
 
   it('should calculate correct ingredient amounts', () => {
-    expect(CookingPowerUpSMinus.activations.solo.amount(1)).toBe(5);
-    expect(CookingPowerUpSMinus.activations.solo.amount(4)).toBe(12);
-    expect(CookingPowerUpSMinus.activations.solo.amount(7)).toBe(24);
-    expect(CookingPowerUpSMinus.activations.paired.amount(1)).toBe(8);
-    expect(CookingPowerUpSMinus.activations.paired.amount(4)).toBe(17);
-    expect(CookingPowerUpSMinus.activations.paired.amount(7)).toBe(35);
+    expect(CookingPowerUpSMinus.activations.solo.amount({ skillLevel: 1 })).toBe(5);
+    expect(CookingPowerUpSMinus.activations.solo.amount({ skillLevel: 4 })).toBe(12);
+    expect(CookingPowerUpSMinus.activations.solo.amount({ skillLevel: 7 })).toBe(24);
+    expect(CookingPowerUpSMinus.activations.paired.amount({ skillLevel: 1 })).toBe(8);
+    expect(CookingPowerUpSMinus.activations.paired.amount({ skillLevel: 4 })).toBe(17);
+    expect(CookingPowerUpSMinus.activations.paired.amount({ skillLevel: 7 })).toBe(35);
   });
 });

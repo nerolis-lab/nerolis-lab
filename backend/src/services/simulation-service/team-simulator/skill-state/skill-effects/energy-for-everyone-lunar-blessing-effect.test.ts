@@ -24,8 +24,14 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const energyForEveryoneAmount = 15;
 
     const preExistingSkillProduce = mocks.produce();
-    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(skillLevel, unique);
-    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(skillLevel, unique);
+    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
+      skillLevel,
+      extra: unique
+    });
+    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
+      skillLevel,
+      extra: unique
+    });
 
     const mockTeam = [mocks.teamMemberExt()];
     Object.defineProperty(memberState, 'team', {
@@ -92,8 +98,14 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     skillState.memberState.member.settings.skillLevel = skillLevel;
     vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
-    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(skillLevel, unique);
-    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(skillLevel, unique);
+    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
+      skillLevel,
+      extra: unique
+    });
+    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
+      skillLevel,
+      extra: unique
+    });
 
     const preExistingSkillProduce = mocks.produce();
     Object.defineProperty(memberState, 'skillProduce', {
@@ -159,14 +171,14 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
 
     // When team size exceeds MAX_TEAM_SIZE, unique is forced to 1
     const expectedUnique = 1;
-    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(
+    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
       skillLevel,
-      expectedUnique
-    );
-    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(
+      extra: expectedUnique
+    });
+    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
       skillLevel,
-      expectedUnique
-    );
+      extra: expectedUnique
+    });
 
     const preExistingSkillProduce = mocks.produce();
     Object.defineProperty(memberState, 'skillProduce', {
