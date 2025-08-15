@@ -64,7 +64,8 @@ function randomTeamMemberSettings(pokemon: Pokemon): TeamMemberSettingsExt {
     skillLevel: (rng.getUint8() % pokemon.skill.maxLevel) + 1,
     carrySize: CarrySizeUtils.baseCarrySize(pokemon),
     ribbon: 0,
-    externalId: 'something' + rng.getUint8() + rng.getUint8() + rng.getUint8() + rng.getUint8() + rng.getUint8()
+    externalId: 'something' + rng.getUint8() + rng.getUint8() + rng.getUint8() + rng.getUint8() + rng.getUint8(),
+    sneakySnacking: false
   };
 }
 
