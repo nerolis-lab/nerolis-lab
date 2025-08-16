@@ -6,22 +6,22 @@
       </v-col>
       <v-col cols="auto" class="text-center text-lg-start mb-8">
         <h1 class="title text-h3 font-weight-bold mb-3">
-          Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
+          {{ t('homepage.title') }} <RouterLink to="/beta" class="beta">beta</RouterLink>
         </h1>
-        <p class="mx-auto text-center">Helping you overthink sleep tracking.</p>
-        <p class="mb-6 mx-auto text-center">Optimize your strategies with our simulations.</p>
+        <p class="mx-auto text-center">{{ t('homepage.subtitle') }}</p>
+        <p class="mb-6 mx-auto text-center">{{ t('homepage.description') }}</p>
 
         <v-row class="flex-center">
           <v-col cols="10" class="flex-center">
             <v-btn
               class="w-100 fx01"
-              title="Get started"
+              :title="t('homepage.getStarted')"
               height="50px"
               size="large"
               rounded="lg"
-              aria-label="Get started"
+              :aria-label="t('homepage.getStarted')"
               :to="'/calculator'"
-              >Get started</v-btn
+              >{{ t('homepage.getStarted') }}</v-btn
             >
           </v-col>
         </v-row>
@@ -29,17 +29,19 @@
 
       <v-row class="flex-center align-stretch pt-2">
         <v-col v-for="(feature, i) in features" :key="i" cols="auto">
-          <v-card max-width="300" class="fill-height feature-card" :to="feature.to" :disabled="!feature.enabled">
+          <v-card width="300" class="fill-height feature-card" :to="feature.to" :disabled="!feature.enabled">
             <v-img :src="feature.src" :aspect-ratio="2" width="100%" cover></v-img>
 
             <v-card-text>
               <div class="d-flex">
                 <v-icon class="mr-2">{{ feature.icon }}</v-icon>
                 <h3 class="text-subheading-1 font-weight-bold mb-2">
-                  {{ feature.title }}
+                  {{ t('homepage.features.' + feature.featkey + '.title') }}
                 </h3>
               </div>
-              <p class="mb-2">{{ feature.description }}</p>
+              <p class="mb-2">
+                {{ t('homepage.features.' + feature.featkey + '.description') }}
+              </p>
             </v-card-text>
 
             <v-card-actions> </v-card-actions>
@@ -51,19 +53,19 @@
       <v-row class="justify-space-between flex-nowrap">
         <v-col cols="auto">
           <h1 class="title text-h1 font-weight-bold mb-3">
-            Neroli's Lab <RouterLink to="/beta" class="beta">beta</RouterLink>
+            {{ t('homepage.title') }} <RouterLink to="/beta" class="beta">beta</RouterLink>
           </h1>
-          <p class="text-h6 mx-auto text-left">Helping you overthink sleep tracking.</p>
-          <p class="text-h6 mb-6 mx-auto text-left">Optimize your strategies with our simulations.</p>
+          <p class="text-h6 mx-auto text-left">{{ t('homepage.subtitle') }}</p>
+          <p class="text-h6 mb-6 mx-auto text-left">{{ t('homepage.description') }}</p>
           <v-btn
             class="w-100 fx01"
-            title="Get started"
+            :title="t('homepage.getStarted')"
             height="50px"
             size="large"
             rounded="lg"
-            aria-label="get started"
+            :aria-label="t('homepage.getStarted')"
             :to="'/calculator'"
-            >Get started</v-btn
+            >{{ t('homepage.getStarted') }}</v-btn
           >
         </v-col>
         <v-col cols="auto">
@@ -72,17 +74,19 @@
       </v-row>
       <v-row class="justify-space-between flex-nowrap">
         <v-col v-for="(feature, i) in features" :key="i" cols="auto">
-          <v-card max-width="300" class="fill-height feature-card" :to="feature.to" :disabled="!feature.enabled">
+          <v-card width="300" class="fill-height feature-card" :to="feature.to" :disabled="!feature.enabled">
             <v-img :src="feature.src" :aspect-ratio="2" width="100%" cover></v-img>
 
             <v-card-text>
               <div class="d-flex">
                 <v-icon class="mr-2">{{ feature.icon }}</v-icon>
                 <h3 class="text-subheading-1 font-weight-bold mb-2">
-                  {{ feature.title }}
+                  {{ t('homepage.features.' + feature.featkey + '.title') }}
                 </h3>
               </div>
-              <p class="mb-2">{{ feature.description }}</p>
+              <p class="mb-2">
+                {{ t('homepage.features.' + feature.featkey + '.description') }}
+              </p>
             </v-card-text>
 
             <v-card-actions> </v-card-actions>
@@ -97,6 +101,7 @@
 import SneaselHomeIcon from '@/components/icons/sneasel-home-icon.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   components: {
@@ -104,29 +109,31 @@ export default defineComponent({
   },
   setup() {
     const { isMobile } = useBreakpoint()
-    return { isMobile }
+    const { t } = useI18n()
+
+    return {
+      isMobile,
+      t
+    }
   },
   data: () => ({
     features: [
       {
-        description: "Calculate your team's or pokemon's production with our realistic Sleep API-powered simulations.",
-        title: 'Calculator',
+        featkey: 'calculator',
         src: '/images/misc/doctor4.png',
         icon: 'mdi-square-root',
         to: '/calculator',
         enabled: true
       },
       {
-        description: 'Compare your Pokémon to each other before deciding on your investments.',
-        title: 'Compare',
+        featkey: 'compare',
         src: '/images/misc/doctor2.png',
         icon: 'mdi-compare-horizontal',
         to: '/compare',
         enabled: true
       },
       {
-        description: 'Cooking tier lists based on millions of simulated recipe solutions.',
-        title: 'Tier lists',
+        featkey: 'tierlists',
         src: '/images/misc/doctor3.png',
         icon: 'mdi-chart-line',
         to: '/tierlist',
