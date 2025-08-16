@@ -1570,12 +1570,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "name": "Ingredient Magnet S",
       },
       "bonusIngredientAmounts": Map {
-        {
-          "longName": "Rousing Coffee",
-          "name": "Coffee",
-          "taxedValue": 68.4,
-          "value": 153,
-        } => [
+        "Coffee" => [
           6,
           7,
           8,
@@ -1584,12 +1579,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           11,
           12,
         ],
-        {
-          "longName": "Moomoo Milk",
-          "name": "Milk",
-          "taxedValue": 28.1,
-          "value": 98,
-        } => [
+        "Milk" => [
           6,
           7,
           9,

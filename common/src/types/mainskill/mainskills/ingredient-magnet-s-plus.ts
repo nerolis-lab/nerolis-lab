@@ -1,4 +1,4 @@
-import type { Ingredient } from '../../ingredient/ingredient';
+import type { Ingredient } from '../../ingredient';
 import { MOOMOO_MILK, ROUSING_COFFEE } from '../../ingredient/ingredients';
 import type { AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
@@ -10,9 +10,9 @@ export const IngredientMagnetSPlus = new (class extends ModifiedMainskill {
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];
   ingredientAmounts = [5, 7, 9, 11, 13, 16, 18];
 
-  bonusIngredientAmounts = new Map<Ingredient, number[]>([
-    [ROUSING_COFFEE, [6, 7, 8, 9, 10, 11, 12]],
-    [MOOMOO_MILK, [6, 7, 9, 10, 12, 13, 14]]
+  bonusIngredientAmounts = new Map<Ingredient['name'], number[]>([
+    [ROUSING_COFFEE.name, [6, 7, 8, 9, 10, 11, 12]],
+    [MOOMOO_MILK.name, [6, 7, 9, 10, 12, 13, 14]]
   ]);
 
   image = 'ingredients';
@@ -48,7 +48,8 @@ export const IngredientMagnetSPlus = new (class extends ModifiedMainskill {
   getBonusAmount(params: AmountParams): number {
     const { skillLevel, ingredient } = params;
     if (!ingredient) return 0;
-    const amounts = this.bonusIngredientAmounts.get(ingredient);
+
+    const amounts = this.bonusIngredientAmounts.get(ingredient.name);
     return amounts?.at(skillLevel - 1) ?? 0;
   }
 })(true);
