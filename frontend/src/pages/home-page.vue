@@ -21,6 +21,7 @@
               rounded="lg"
               aria-label="Get started"
               :to="'/calculator'"
+              color="primary"
               >Get started</v-btn
             >
           </v-col>
@@ -63,6 +64,7 @@
             rounded="lg"
             aria-label="get started"
             :to="'/calculator'"
+            color="primary"
             >Get started</v-btn
           >
         </v-col>
@@ -155,7 +157,7 @@ export default defineComponent({
   justify-content: center;
 
   .beta {
-    color: $primary;
+    color: rgb(var(--v-theme-primary));
     font-style: italic;
     font-size: 36px;
     margin: -20px 0 0 5px;
@@ -170,8 +172,6 @@ export default defineComponent({
 
 .fx01 {
   position: relative;
-  color: white;
-  background-color: $primary;
   overflow: hidden;
 }
 
@@ -209,6 +209,6 @@ export default defineComponent({
 }
 
 .fx01:hover {
-  background-color: $accent;
+  background-color: rgb(var(--v-theme-accent)) !important;
 }
 </style>
