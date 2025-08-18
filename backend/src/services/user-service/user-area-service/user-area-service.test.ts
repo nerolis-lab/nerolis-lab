@@ -2,15 +2,10 @@ import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { getAreaBonuses, upsertAreaBonus } from '@src/services/user-service/user-area-service/user-area-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { MockService } from '@src/utils/test-utils/mock-service.js';
 import { Roles, uuid } from 'sleepapi-common';
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
-
-afterEach(() => {
-  MockService.restore();
-});
 
 describe('getAreaBonuses', () => {
   it('should return an empty object if no area bonuses exist for the user', async () => {
