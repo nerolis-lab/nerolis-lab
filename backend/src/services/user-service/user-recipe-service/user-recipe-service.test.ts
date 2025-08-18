@@ -5,15 +5,10 @@ import {
   upsertRecipeLevel
 } from '@src/services/user-service/user-recipe-service/user-recipe-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { MockService } from '@src/utils/test-utils/mock-service.js';
 import { Roles, uuid } from 'sleepapi-common';
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
-
-afterEach(() => {
-  MockService.restore();
-});
 
 describe('getRecipeLevels', () => {
   it('should return an empty object if the user has no recipe levels', async () => {

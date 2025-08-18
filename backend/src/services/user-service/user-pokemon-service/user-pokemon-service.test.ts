@@ -6,16 +6,11 @@ import {
   upsertPokemon
 } from '@src/services/user-service/user-pokemon-service/user-pokemon.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { PokemonInstanceWithMeta } from 'sleepapi-common';
 import { Roles, uuid } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
-
-afterEach(() => {
-  MockService.restore();
-});
 
 describe('getSavedPokemon', () => {
   it("shall return a user's saved pokemon", async () => {

@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NewsDAO } from '@src/database/dao/notification/news-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
-import { MockService } from '@src/utils/test-utils/mock-service.js';
-import { afterEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
-
-afterEach(() => {
-  MockService.restore();
-});
 
 describe('NewsDAO insert', () => {
   it('shall insert new news entity', async () => {

@@ -1,7 +1,6 @@
 import { DatabaseService } from '@src/database/database-service.js';
 import DatabaseMigration from '@src/database/migration/database-migration.js';
 import { DatabaseConnectionError } from '@src/domain/error/database/database-error.js';
-import { MockService } from '@src/utils/test-utils/mock-service.js';
 import type { Knex } from 'knex';
 import knex from 'knex';
 import 'sleepapi-common';
@@ -53,8 +52,6 @@ export const DaoFixture = {
     }
 
     async function setup() {
-      MockService.init({ DatabaseService });
-
       pokemonsleepDB = knex({
         client: 'sqlite3',
         useNullAsDefault: true,
@@ -94,8 +91,6 @@ export const DaoFixture = {
           await truncateAllTables(params, pokemonsleepDB);
         }
       }
-
-      MockService.restore();
     });
 
     afterAll(async () => {
