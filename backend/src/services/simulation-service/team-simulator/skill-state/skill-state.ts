@@ -197,7 +197,10 @@ export class SkillState {
   }
 
   public skillAmount(activation: MainskillActivation) {
-    return activation.amount(this.skillLevel);
+    return activation.amount({
+      skillLevel: this.skillLevel,
+      ingredient: this.memberState.member.pokemonWithIngredients.ingredientList.at(0)?.ingredient
+    });
   }
 
   private activateSkill(skill: Mainskill): SkillActivation {

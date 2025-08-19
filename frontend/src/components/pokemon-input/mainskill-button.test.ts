@@ -3,7 +3,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { GENGAR, Mainskill, type PokemonInstanceExt } from 'sleepapi-common'
+import { GENGAR, Mainskill, PLUSLE, type AmountParams, type PokemonInstanceExt } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 describe('MainskillButton', () => {
@@ -58,7 +58,7 @@ describe('MainskillButton', () => {
     const skillWithLowMaxLevel: Mainskill = new (class extends Mainskill {
       name = 'Test skill'
       amount = (skillLevel: number) => skillLevel
-      description = (_skillLevel: number) => `Test.`
+      description = (params: AmountParams) => `Test. ${params.skillLevel}`
       RP = [880, 1251, 1726, 2383]
       image = 'strength'
       activations = {}
@@ -72,5 +72,24 @@ describe('MainskillButton', () => {
       pokemonInstance: changedPokemon
     })
     expect(wrapper.vm.defaultValues).toEqual({ 1: '1', 2: '2', 3: '3', 4: '4' })
+  })
+
+  it('passes ingredient to skill description for skills that require it', async () => {
+    const pluslePokemon = mocks.createMockPokemon({
+      pokemon: PLUSLE,
+      skillLevel: 1
+    })
+    wrapper = mount(MainskillButton, {
+      props: {
+        pokemonInstance: pluslePokemon
+      }
+    })
+
+    const textElements = wrapper.findAll('.text-x-small')
+    const descriptionText = textElements[1].text()
+
+    expect(descriptionText).toContain('Gets you 5 ingredients chosen at random')
+    expect(descriptionText).toContain('additional 6 Coffees')
+    expect(descriptionText).not.toContain('undefined')
   })
 })

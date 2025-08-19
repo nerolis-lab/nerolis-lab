@@ -20,7 +20,7 @@ export function getMainskill(name: string) {
  * @returns Converted activations with unit and amounts array
  */
 export function convertActivationsToApiFormat(
-  activations: Record<string, { amount: (level: number) => number; unit: string }>,
+  activations: Record<string, { amount: (params: { skillLevel: number }) => number; unit: string }>,
   maxLevel: number
 ): Record<string, { unit: string; amounts: number[] }> {
   const apiActivations: Record<string, { unit: string; amounts: number[] }> = {};
@@ -28,7 +28,7 @@ export function convertActivationsToApiFormat(
   for (const [key, activation] of Object.entries(activations)) {
     const amounts: number[] = [];
     for (let level = 1; level <= maxLevel; level++) {
-      amounts.push(activation.amount(level));
+      amounts.push(activation.amount({ skillLevel: level }));
     }
 
     apiActivations[key] = {

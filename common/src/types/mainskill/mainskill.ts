@@ -1,10 +1,12 @@
+import type { Ingredient } from '../ingredient';
 import type { MainskillUnit } from './mainskill-unit';
 
-export type AmountFunction = (skillLevel: number, extra?: number) => number;
+export type AmountParams = { skillLevel: number; extra?: number; ingredient?: Ingredient };
+export type AmountFunction = (params: AmountParams) => number;
 
-export const ZeroAmount: AmountFunction = (_skillLevel: number, _extra?: number) => 0;
+export const ZeroAmount: AmountFunction = () => 0;
 
-export type DescriptionFunction = (skillLevel: number, extra?: number) => string;
+export type DescriptionFunction = (params: AmountParams) => string;
 
 export type MainskillActivation = {
   // I can't figure out a way to make this be MainskillUnit only
@@ -56,8 +58,8 @@ export abstract class Mainskill {
    * Automatically clamps skillLevel to the valid range (1 to maxLevel)
    */
   public leveledAmount(amounts: number[]): AmountFunction {
-    return (skillLevel: number) => {
-      const clampedLevel = Math.min(this.maxLevel, Math.max(1, skillLevel));
+    return (params: AmountParams) => {
+      const clampedLevel = Math.min(this.maxLevel, Math.max(1, params.skillLevel));
       return amounts[clampedLevel - 1];
     };
   }
@@ -84,12 +86,12 @@ export abstract class Mainskill {
    * Returns the amount from the first activation
    * @deprecated use activations instead
    */
-  amount(skillLevel: number, extra?: number): number {
+  amount(skillLevel: number, extra?: number, ingredient?: Ingredient): number {
     const firstActivationKey = Object.keys(this.activations)[0];
     if (!firstActivationKey) {
       return 0;
     }
-    return this.activations[firstActivationKey].amount(skillLevel, extra);
+    return this.activations[firstActivationKey].amount({ skillLevel, extra, ingredient });
   }
 
   /**

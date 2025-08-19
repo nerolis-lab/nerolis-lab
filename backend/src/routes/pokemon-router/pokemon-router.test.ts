@@ -28,11 +28,11 @@ describe('GET /pokemon', function () {
           critChance: {
             unit: 'crit chance',
             amounts: Array.from({ length: SNEASEL.skill.maxLevel }, (_, i) =>
-              SNEASEL.skill.activations.critChance.amount(i + 1)
+              SNEASEL.skill.activations.critChance.amount({ skillLevel: i + 1 })
             )
           }
         },
-        description: SNEASEL.skill.description(1)
+        description: SNEASEL.skill.description({ skillLevel: 1 })
       }
     };
     await request(app)

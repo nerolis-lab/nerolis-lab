@@ -6,7 +6,7 @@ import { SkillCopy } from './skill-copy';
 describe('SkillCopy', () => {
   it('should have correct basic properties', () => {
     expect(SkillCopy.name).toBe('Skill Copy');
-    expect(SkillCopy.description(1)).toBe(
+    expect(SkillCopy.description({ skillLevel: 1 })).toBe(
       'Copies and performs the main skill of one randomly selected Pokémon on the team.'
     );
     expect(SkillCopy.RP).toEqual([600, 853, 1177, 1625, 2243, 3099, 3984]);

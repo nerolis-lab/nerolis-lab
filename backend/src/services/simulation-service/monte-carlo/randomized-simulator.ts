@@ -103,7 +103,7 @@ export function randomizedSimulation(params: {
     const skillActivated = RandomUtils.roll(skillPercentage);
     if (skillActivated) {
       if (pokemon.skill.hasUnit('energy')) {
-        let energyAmount = pokemon.skill.activations.energy.amount(skillLevel) * nature.energy;
+        let energyAmount = pokemon.skill.activations.energy.amount({ skillLevel }) * nature.energy;
         if (pokemon.skill.is(EnergizingCheerS)) {
           // 20% chance it affects this Pokémon
           if (!RandomUtils.roll(0.2)) {
@@ -112,7 +112,7 @@ export function randomizedSimulation(params: {
         } else if (pokemon.skill.is(ChargeEnergySMoonlight)) {
           if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance)) {
             skillCrits += 1;
-            energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount(skillLevel);
+            energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount({ skillLevel });
           }
         }
         currentEnergy = Math.min(currentEnergy + energyAmount, 150);
@@ -160,7 +160,7 @@ export function randomizedSimulation(params: {
       if (RandomUtils.roll(skillPercentage)) {
         skillProcsDay += 1;
         if (pokemon.skill.hasUnit('energy')) {
-          let energyAmount = pokemon.skill.activations.energy.amount(skillLevel) * nature.energy;
+          let energyAmount = pokemon.skill.activations.energy.amount({ skillLevel }) * nature.energy;
           if (pokemon.skill.is(EnergizingCheerS)) {
             // 20% chance it affects this Pokémon
             if (!RandomUtils.roll(0.2)) {
@@ -169,7 +169,7 @@ export function randomizedSimulation(params: {
           } else if (pokemon.skill.is(ChargeEnergySMoonlight)) {
             if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance)) {
               skillCrits += 1;
-              energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount(skillLevel);
+              energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount({ skillLevel });
             }
           }
           currentEnergy = Math.min(currentEnergy + energyAmount, 150);

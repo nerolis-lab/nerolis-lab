@@ -114,7 +114,12 @@
 
           <v-row v-for="(member, index) in memberPercentages" :key="index" no-gutters>
             <v-col cols="auto">
-              <v-img :src="`${member.image}`" contain :width="isMobile ? '40' : '72'" />
+              <div class="pokemon-image-card-box">
+                <v-card height="20px" elevation="0" class="bg-transparent text-center text-truncate pokemon-image-card">
+                  {{ member.pokeName }}
+                </v-card>
+                <v-img height="60px" width="60px" class="pokemon-image-img" :src="member.image" cover></v-img>
+              </div>
             </v-col>
             <v-col class="flex-center">
               <StackedBar
@@ -332,7 +337,8 @@ export default defineComponent({
           skillStrength,
           berryValue: compactNumber(berryStrength),
           skillValue: compactNumber(skillStrength),
-          image: pokemonImage({ pokemonName: member.pokemon.name, shiny: member.shiny })
+          image: pokemonImage({ pokemonName: member.pokemon.name, shiny: member.shiny }),
+          name: member.name
         })
       }
 
@@ -347,7 +353,8 @@ export default defineComponent({
         skillPercentage: MathUtils.round((member.skillStrength / highestTotal) * 100, 1),
         berryValue: member.berryValue,
         skillValue: member.skillValue,
-        image: member.image
+        image: member.image,
+        pokeName: member.name
       }))
     },
     stockpiledIngredientAmount() {
@@ -362,4 +369,19 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.pokemon-image-card-box {
+  overflow: hidden;
+  width: 100px;
+  height: 60px;
+}
+
+.pokemon-image-card {
+  transform: translateY(40px);
+  white-space: nowrap;
+}
+
+.pokemon-image-img {
+  transform: translate(20px, -25px);
+}
+</style>

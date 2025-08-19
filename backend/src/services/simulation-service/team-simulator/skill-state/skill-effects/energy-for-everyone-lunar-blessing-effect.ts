@@ -16,14 +16,14 @@ export class EnergyForEveryoneLunarBlessingEffect implements SkillEffect {
           });
 
     const energyAmount = skillState.skillAmount(skill.activations.energy);
-    const selfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount(
-      skillState.skillLevel,
-      unique
-    );
-    const teamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount(
-      skillState.skillLevel,
-      unique
-    );
+    const selfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
+      skillLevel: skillState.skillLevel,
+      extra: unique
+    });
+    const teamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
+      skillLevel: skillState.skillLevel,
+      extra: unique
+    });
 
     const berries = memberState.otherMembers.map((member) => ({
       berry: member.berry,

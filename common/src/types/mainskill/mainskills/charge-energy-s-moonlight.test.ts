@@ -24,8 +24,8 @@ describe('ChargeEnergySMoonlight', () => {
 
   it('should calculate crit amounts correctly', () => {
     const activation = ChargeEnergySMoonlight.activations.energy;
-    const level1CritAmount = activation.critAmount!(1);
-    const level6CritAmount = activation.critAmount!(6);
+    const level1CritAmount = activation.critAmount!({ skillLevel: 1 });
+    const level6CritAmount = activation.critAmount!({ skillLevel: 6 });
 
     expect(level1CritAmount).toBe(6.3);
     expect(level6CritAmount).toBe(22.8);
@@ -33,7 +33,11 @@ describe('ChargeEnergySMoonlight', () => {
 
   it('should have same base activation amounts as base skill', () => {
     // The base activation amounts should match the base skill
-    expect(ChargeEnergySMoonlight.activations.energy.amount(1)).toBe(ChargeEnergyS.activations.energy.amount(1));
-    expect(ChargeEnergySMoonlight.activations.energy.amount(6)).toBe(ChargeEnergyS.activations.energy.amount(6));
+    expect(ChargeEnergySMoonlight.activations.energy.amount({ skillLevel: 1 })).toBe(
+      ChargeEnergyS.activations.energy.amount({ skillLevel: 1 })
+    );
+    expect(ChargeEnergySMoonlight.activations.energy.amount({ skillLevel: 6 })).toBe(
+      ChargeEnergyS.activations.energy.amount({ skillLevel: 6 })
+    );
   });
 });

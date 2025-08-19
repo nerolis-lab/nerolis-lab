@@ -4,7 +4,7 @@ import { BerryBurst } from './berry-burst';
 describe('BerryBurst', () => {
   it('should have correct basic properties', () => {
     expect(BerryBurst.name).toBe('Berry Burst');
-    expect(BerryBurst.description(1)).toBe(
+    expect(BerryBurst.description({ skillLevel: 1 })).toBe(
       'Gets 11 Berries plus 1 of each of the Berries other Pokémon on your team collect.'
     );
     expect(BerryBurst.RP).toEqual([1400, 1991, 2747, 3791, 5234, 7232]);
@@ -18,8 +18,8 @@ describe('BerryBurst', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    const level1Amount = BerryBurst.activations.berries.amount(1);
-    const level6Amount = BerryBurst.activations.berries.amount(6);
+    const level1Amount = BerryBurst.activations.berries.amount({ skillLevel: 1 });
+    const level6Amount = BerryBurst.activations.berries.amount({ skillLevel: 6 });
 
     expect(level1Amount).toBe(11);
     expect(level6Amount).toBe(30);

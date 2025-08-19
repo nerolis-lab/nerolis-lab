@@ -1,3 +1,4 @@
+import type { AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const HelperBoost = new (class extends Mainskill {
@@ -14,15 +15,17 @@ export const HelperBoost = new (class extends Mainskill {
     5: [4, 4, 5, 5, 6, 6] // unique: 5
   };
 
-  description = (skillLevel: number, extra?: number) =>
-    extra === undefined
+  description = (params: AmountParams) => {
+    const { skillLevel, extra } = params;
+    return extra === undefined
       ? `Instantly gets you ×${this.baseAmounts[skillLevel - 1]} the usual help from all Pokémon on your team. Meet certain conditions to boost effect.`
       : `Instantly gets you ×${this.getHelps(skillLevel, extra)} the usual help from all Pokémon on your team.`;
+  };
 
   activations = {
     helps: {
       unit: 'helps',
-      amount: (skillLevel: number, unique?: number) => this.getHelps(skillLevel, unique ?? 1)
+      amount: (params: AmountParams) => this.getHelps(params.skillLevel, params.extra ?? 1)
     }
   };
 

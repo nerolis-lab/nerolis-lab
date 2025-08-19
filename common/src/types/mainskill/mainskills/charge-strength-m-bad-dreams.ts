@@ -1,3 +1,4 @@
+import type { AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { ChargeStrengthM } from './charge-strength-m';
 
@@ -8,8 +9,8 @@ export const ChargeStrengthMBadDreams = new (class extends ModifiedMainskill {
   strengthAmounts = [2640, 3753, 5178, 7149, 9870, 13638];
   energyReduction = 12;
   image = 'strength';
-  description = (skillLevel: number) =>
-    `Increases Snorlax's Strength by ${this.strengthAmounts[skillLevel - 1]}, but at the same time, reduces the Energy of helper Pokémon on your team that aren't Dark type by ${this.energyReduction}.`;
+  description = (params: AmountParams) =>
+    `Increases Snorlax's Strength by ${this.strengthAmounts[params.skillLevel - 1]}, but at the same time, reduces the Energy of helper Pokémon on your team that aren't Dark type by ${this.energyReduction}.`;
 
   activations = {
     strength: {

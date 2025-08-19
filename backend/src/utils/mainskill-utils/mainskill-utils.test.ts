@@ -61,7 +61,7 @@ describe('convertActivationsToApiFormat', () => {
   it('should convert single activation to API format', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       testActivation: {
-        amount: (level: number) => level * 10,
+        amount: (params: { skillLevel: number }) => params.skillLevel * 10,
         unit: 'energy'
       }
     };
@@ -79,11 +79,11 @@ describe('convertActivationsToApiFormat', () => {
   it('should convert multiple activations to API format', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       energy: {
-        amount: (level: number) => level * 5,
+        amount: (params: { skillLevel: number }) => params.skillLevel * 5,
         unit: 'energy'
       },
       berries: {
-        amount: (level: number) => level + 2,
+        amount: (params: { skillLevel: number }) => params.skillLevel + 2,
         unit: 'berry'
       }
     };
@@ -110,7 +110,7 @@ describe('convertActivationsToApiFormat', () => {
   it('should handle maxLevel of 1', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       singleLevel: {
-        amount: (level: number) => 100 + (level - level), // Always returns 100
+        amount: (params: { skillLevel: number }) => 100 + (params.skillLevel - params.skillLevel), // Always returns 100
         unit: 'points'
       }
     };
@@ -128,7 +128,7 @@ describe('convertActivationsToApiFormat', () => {
   it('should handle complex activation formulas', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       complex: {
-        amount: (level: number) => Math.floor(level * 1.5) + (level % 2),
+        amount: (params: { skillLevel: number }) => Math.floor(params.skillLevel * 1.5) + (params.skillLevel % 2),
         unit: 'items'
       }
     };
@@ -146,15 +146,15 @@ describe('convertActivationsToApiFormat', () => {
   it('should preserve original activation units', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       berryActivation: {
-        amount: (level: number) => level,
+        amount: (params: { skillLevel: number }) => params.skillLevel,
         unit: 'berry'
       },
       energyActivation: {
-        amount: (level: number) => level,
+        amount: (params: { skillLevel: number }) => params.skillLevel,
         unit: 'energy'
       },
       ingredientActivation: {
-        amount: (level: number) => level,
+        amount: (params: { skillLevel: number }) => params.skillLevel,
         unit: 'ingredient'
       }
     };
@@ -169,7 +169,7 @@ describe('convertActivationsToApiFormat', () => {
   it('should generate correct amounts array length based on maxLevel', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       test: {
-        amount: (level: number) => level,
+        amount: (params: { skillLevel: number }) => params.skillLevel,
         unit: 'test'
       }
     };

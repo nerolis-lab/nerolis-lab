@@ -20,9 +20,8 @@
               size="large"
               rounded="lg"
               :aria-label="t('homepage.getStarted')"
-              :to="'/calculator'"
-              >{{ t('homepage.getStarted') }}</v-btn
-            >
+              :to="'/calculator'">
+                </v-btn　color="primary">{{ t('homepage.getStarted') }}</v-btn>
           </v-col>
         </v-row>
       </v-col>
@@ -65,8 +64,8 @@
             rounded="lg"
             :aria-label="t('homepage.getStarted')"
             :to="'/calculator'"
-            >{{ t('homepage.getStarted') }}</v-btn
-          >
+            color="primary"
+            >{{ t('homepage.getStarted') }}</v-btn>
         </v-col>
         <v-col cols="auto">
           <SneaselHomeIcon />
@@ -162,7 +161,7 @@ export default defineComponent({
   justify-content: center;
 
   .beta {
-    color: $primary;
+    color: rgb(var(--v-theme-primary));
     font-style: italic;
     font-size: 36px;
     margin: -20px 0 0 5px;
@@ -177,8 +176,6 @@ export default defineComponent({
 
 .fx01 {
   position: relative;
-  color: white;
-  background-color: $primary;
   overflow: hidden;
 }
 
@@ -216,6 +213,6 @@ export default defineComponent({
 }
 
 .fx01:hover {
-  background-color: $accent;
+  background-color: rgb(var(--v-theme-accent)) !important;
 }
 </style>

@@ -240,7 +240,9 @@ describe('TeamSimulator', () => {
     expect(skillAmount).toMatchInlineSnapshot(`726.5`);
     expect(wasteAmount).toMatchInlineSnapshot(`4070`);
     expect(
-      5 * result.members[0].skillProcs * EnergyForEveryone.activations.energy.amount(EnergyForEveryone.maxLevel)
+      5 *
+        result.members[0].skillProcs *
+        EnergyForEveryone.activations.energy.amount({ skillLevel: EnergyForEveryone.maxLevel })
     ).toEqual(skillAmount + wasteAmount);
   });
 
@@ -318,7 +320,7 @@ describe('TeamSimulator', () => {
     expect(result.members).toHaveLength(1);
     expect(result.members[0].skillProcs).toBe(2);
     expect(result.members[0].produceFromSkill.berries).toHaveLength(1);
-    const amountPerProc = BerryBurstDisguise.activations.berries.amount(6);
+    const amountPerProc = BerryBurstDisguise.activations.berries.amount({ skillLevel: 6 });
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(amountPerProc * 3 + amountPerProc);
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(84);
 

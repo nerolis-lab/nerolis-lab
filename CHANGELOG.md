@@ -1,3 +1,29 @@
+# [2.26.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.25.0...v2.26.0) (2025-08-13)
+
+
+### Bug Fixes
+
+* **toxtricity:** adds missing Sleep API Toxel images ([f2331fa](https://github.com/nerolis-lab/nerolis-lab/commit/f2331fa806f47e465209093dbe6279b0a525a595))
+* **toxtricity:** ingredient magnet plus now uses bonus ingredient to determine bonus amount ([04e305a](https://github.com/nerolis-lab/nerolis-lab/commit/04e305a48d910f85602f987f2c86267c18539f7a))
+
+
+### Features
+
+* show name under Pokémon image in calculator overview ([b2631af](https://github.com/nerolis-lab/nerolis-lab/commit/b2631afb37f6c52889661badc3af656475b0681f))
+
+# [2.25.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.24.0...v2.25.0) (2025-08-11)
+
+
+### Bug Fixes
+
+* **toxel:** tomatoes -> apples ([18e0252](https://github.com/nerolis-lab/nerolis-lab/commit/18e0252898ed8996d809608eabc47f21fb1fd076))
+
+
+### Features
+
+* **pokemon:** add toxel and its evolutions ([292c6a1](https://github.com/nerolis-lab/nerolis-lab/commit/292c6a19e7120f0b5fed585ef5d11b915c5902e3))
+* **toxel:** adds toxel line assets ([c07b97d](https://github.com/nerolis-lab/nerolis-lab/commit/c07b97d9f511321e6ee32740c091d0f06d893c35))
+
 # [2.24.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.23.3...v2.24.0) (2025-08-07)
 
 

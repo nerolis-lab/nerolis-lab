@@ -270,15 +270,15 @@ class WebsiteConverterServiceImpl {
     }
     if (filters.e4eProcs > 0) {
       teamInput.push(
-        `E4E: ${filters.e4eProcs} x ${EnergyForEveryone.activations.energy.amount(filters.e4eLevel)} energy`
+        `E4E: ${filters.e4eProcs} x ${EnergyForEveryone.activations.energy.amount({ skillLevel: filters.e4eLevel })} energy`
       );
     }
     if (filters.helperBoostProcs > 0) {
       teamInput.push(
-        `Helper boost: ${filters.helperBoostProcs} x ${HelperBoost.activations.helps.amount(
-          filters.helperBoostLevel,
-          filters.helperBoostUnique
-        )} helps`
+        `Helper boost: ${filters.helperBoostProcs} x ${HelperBoost.activations.helps.amount({
+          skillLevel: filters.helperBoostLevel,
+          extra: filters.helperBoostUnique
+        })} helps`
       );
     }
     if (filters.helpingBonus > 0) {

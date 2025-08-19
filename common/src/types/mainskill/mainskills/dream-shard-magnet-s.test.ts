@@ -4,7 +4,7 @@ import { DreamShardMagnetS } from './dream-shard-magnet-s';
 describe('DreamShardMagnetS', () => {
   it('should have correct basic properties', () => {
     expect(DreamShardMagnetS.name).toBe('Dream Shard Magnet S');
-    expect(DreamShardMagnetS.description(1)).toBe('Obtain 240 Dream Shards.');
+    expect(DreamShardMagnetS.description({ skillLevel: 1 })).toBe('Obtain 240 Dream Shards.');
     expect(DreamShardMagnetS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843, 7303]);
     expect(DreamShardMagnetS.maxLevel).toBe(8);
   });
@@ -16,8 +16,8 @@ describe('DreamShardMagnetS', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    const level1Amount = DreamShardMagnetS.activations.dreamShards.amount(1);
-    const level6Amount = DreamShardMagnetS.activations.dreamShards.amount(6);
+    const level1Amount = DreamShardMagnetS.activations.dreamShards.amount({ skillLevel: 1 });
+    const level6Amount = DreamShardMagnetS.activations.dreamShards.amount({ skillLevel: 6 });
 
     expect(level1Amount).toBe(240);
     expect(level6Amount).toBe(1260);

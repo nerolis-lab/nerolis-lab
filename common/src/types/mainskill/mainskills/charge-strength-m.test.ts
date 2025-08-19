@@ -4,7 +4,7 @@ import { ChargeStrengthM } from './charge-strength-m';
 describe('ChargeStrengthM', () => {
   it('should have correct basic properties', () => {
     expect(ChargeStrengthM.name).toBe('Charge Strength M');
-    expect(ChargeStrengthM.description(1)).toBe("Increases Snorlax's Strength by 880.");
+    expect(ChargeStrengthM.description({ skillLevel: 1 })).toBe("Increases Snorlax's Strength by 880.");
     expect(ChargeStrengthM.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(ChargeStrengthM.maxLevel).toBe(7);
   });
@@ -16,13 +16,13 @@ describe('ChargeStrengthM', () => {
   });
 
   it('should calculate correct activation amounts', () => {
-    expect(ChargeStrengthM.activations.strength.amount(1)).toBe(880);
-    expect(ChargeStrengthM.activations.strength.amount(2)).toBe(1251);
-    expect(ChargeStrengthM.activations.strength.amount(3)).toBe(1726);
-    expect(ChargeStrengthM.activations.strength.amount(4)).toBe(2383);
-    expect(ChargeStrengthM.activations.strength.amount(5)).toBe(3290);
-    expect(ChargeStrengthM.activations.strength.amount(6)).toBe(4546);
-    expect(ChargeStrengthM.activations.strength.amount(7)).toBe(6409);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 1 })).toBe(880);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 2 })).toBe(1251);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 3 })).toBe(1726);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 4 })).toBe(2383);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 5 })).toBe(3290);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 6 })).toBe(4546);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 7 })).toBe(6409);
   });
 
   it('should have strength unit only', () => {

@@ -1,3 +1,4 @@
+import type { AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { CookingPowerUpS } from './cooking-power-up-s';
 
@@ -8,10 +9,10 @@ export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
   potSizeAmounts = [5, 7, 9, 12, 16, 20, 24];
   energyAmounts = [8, 10, 13, 17, 23, 30, 35];
   image = 'pot';
-  description = (skillLevel: number) =>
-    `Gives your cooking pot room for ${this.potSizeAmounts[skillLevel - 1]} more ingredients next time you cook. Meet certain conditions to also restore ${this.energyAmounts[skillLevel - 1]} Energy to one random Pokémon on your team.`;
-  fullDescription = (skillLevel: number) =>
-    `Gives your cooking pot room for ${this.potSizeAmounts[skillLevel - 1]} more ingredients next time you cook. If there's one or more other Pokémon on the team with the Plus or Minus main skills, also restores ${this.energyAmounts[skillLevel - 1]} Energy to one random Pokémon on your team.`;
+  description = (params: AmountParams) =>
+    `Gives your cooking pot room for ${this.potSizeAmounts[params.skillLevel - 1]} more ingredients next time you cook. Meet certain conditions to also restore ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team.`;
+  fullDescription = (params: AmountParams) =>
+    `Gives your cooking pot room for ${this.potSizeAmounts[params.skillLevel - 1]} more ingredients next time you cook. If there's one or more other Pokémon on the team with the Plus or Minus main skills, also restores ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team.`;
 
   activations = {
     solo: {

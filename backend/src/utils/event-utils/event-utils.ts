@@ -30,7 +30,7 @@ export function getExtraHelpfulEvents(
   for (let i = 0; i < extraHelpfulPeriods.length; i++) {
     const time = extraHelpfulPeriods[i].start;
     const adjustedAmount =
-      (extraHelpfulFractions[i] * ExtraHelpfulS.activations.helps.amount(ExtraHelpfulS.maxLevel)) / 5;
+      (extraHelpfulFractions[i] * ExtraHelpfulS.activations.helps.amount({ skillLevel: ExtraHelpfulS.maxLevel })) / 5;
 
     const event: SkillEvent = new SkillEvent({
       time,
@@ -68,7 +68,7 @@ export function getHelperBoostEvents(
   const helpfulEvents: SkillEvent[] = [];
   const { berries: averageBerries, ingredients: averageIngredients } = averageProduce.produce;
 
-  const nrOfHelps = HelperBoost.activations.helps.amount(helperBoostLevel, helperBoostUnique);
+  const nrOfHelps = HelperBoost.activations.helps.amount({ skillLevel: helperBoostLevel, extra: helperBoostUnique });
 
   const helperBoostPeriods: TimePeriod[] = TimeUtils.divideTimePeriod(period, helperBoostProcs);
   const helperBoostFractions: number[] = splitNumber(helperBoostProcs);
@@ -132,7 +132,7 @@ export function scheduleTeamEnergyEvents(
     const event: EnergyEvent = new EnergyEvent({
       time: e4ePeriods[i].start,
       description: 'E4E',
-      delta: e4eDeltas[i] * EnergyForEveryone.activations.energy.amount(e4eLevel) * nature.energy
+      delta: e4eDeltas[i] * EnergyForEveryone.activations.energy.amount({ skillLevel: e4eLevel }) * nature.energy
     });
     recoveryEvents.push(event);
   }
@@ -144,7 +144,9 @@ export function scheduleTeamEnergyEvents(
       time: cheerPeriods[i].start,
       description: 'Energizing Cheer',
       delta:
-        (cheerDeltas[i] * (EnergizingCheerS.activations.energy.amount(EnergyForEveryone.maxLevel) * nature.energy)) / 5
+        (cheerDeltas[i] *
+          (EnergizingCheerS.activations.energy.amount({ skillLevel: EnergyForEveryone.maxLevel }) * nature.energy)) /
+        5
     });
     recoveryEvents.push(event);
   }
