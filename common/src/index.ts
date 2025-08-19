@@ -1,3 +1,4 @@
+export * from './locales';
 export * from './prototype';
 export * from './types';
 export * from './utils';

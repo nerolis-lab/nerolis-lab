@@ -14,6 +14,8 @@ import router from '@/router/router'
 
 import { registerChartJS } from '@/components/custom-components/charts/register-charts'
 import { migrateSite } from '@/stores/store-service'
+import { locales, type Translation } from 'sleepapi-common'
+import { createI18n } from 'vue-i18n'
 
 async function initializeApp() {
   const pinia = createPinia()
@@ -37,7 +39,16 @@ async function initializeApp() {
   }
   registerChartJS()
 
+  const i18n = createI18n<[Translation], 'en'>({
+    legacy: false,
+    locale: 'en',
+    fallbackLocale: 'en',
+    messages: locales,
+    globalInjection: true
+  })
+
   app.use(vuetify)
+  app.use(i18n)
   app.use(router)
 
   app.mount('#app')
