@@ -41,7 +41,8 @@ const mockPokemonInstanceWithMeta: PokemonInstanceWithMeta = {
     { level: 0, name: 'Apple', amount: 2 },
     { level: 30, name: 'Apple', amount: 5 },
     { level: 60, name: 'Apple', amount: 7 }
-  ]
+  ],
+  sneakySnacking: false
 }
 
 describe('toPokemonInstanceExt', () => {
@@ -133,7 +134,8 @@ describe('toPokemonInstanceIdentity', () => {
       level: mockPokemonInstanceExt.level,
       ribbon: mockPokemonInstanceExt.ribbon,
       skillLevel: mockPokemonInstanceExt.skillLevel,
-      externalId: mockPokemonInstanceExt.externalId
+      externalId: mockPokemonInstanceExt.externalId,
+      sneakySnacking: false
     })
   })
 })

@@ -47,7 +47,8 @@ const mockMembers: TeamMemberExt[] = [
       nature: nature.BASHFUL,
       skillLevel: 6,
       subskills: new Set(),
-      externalId: 'some id'
+      externalId: 'some id',
+      sneakySnacking: false
     }
   }
 ];
@@ -102,7 +103,8 @@ describe('TeamSimulator', () => {
           nature: nature.MILD,
           skillLevel: 6,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
-          externalId: 'some id'
+          externalId: 'some id',
+          sneakySnacking: false
         }
       }
     ];
@@ -127,7 +129,8 @@ describe('TeamSimulator', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -171,7 +174,8 @@ describe('TeamSimulator', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const mockMemberSupport: TeamMemberExt = {
@@ -186,7 +190,8 @@ describe('TeamSimulator', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -217,7 +222,8 @@ describe('TeamSimulator', () => {
         nature: nature.ADAMANT,
         skillLevel: EnergyForEveryone.maxLevel,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -261,7 +267,8 @@ describe('TeamSimulator', () => {
           nature: nature.BASHFUL,
           skillLevel: 6,
           subskills: new Set(),
-          externalId: 'some id'
+          externalId: 'some id',
+          sneakySnacking: false
         }
       }
     ];
@@ -307,7 +314,8 @@ describe('TeamSimulator', () => {
           nature: nature.BASHFUL,
           skillLevel: 6,
           subskills: new Set(),
-          externalId: 'some id'
+          externalId: 'some id',
+          sneakySnacking: false
         }
       }
     ];
