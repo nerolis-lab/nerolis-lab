@@ -1,5 +1,5 @@
 import { bedtime, wakeup } from '@src/vitest/mocks/time/mock-time.js';
-import { commonMocks, type TeamSettingsExt } from 'sleepapi-common';
+import { commonMocks, GREENGRASS, type TeamSettingsExt } from 'sleepapi-common';
 export function teamSettingsExt(attrs?: Partial<TeamSettingsExt>): TeamSettingsExt {
   return {
     bedtime: bedtime(),
@@ -8,6 +8,7 @@ export function teamSettingsExt(attrs?: Partial<TeamSettingsExt>): TeamSettingsE
     includeCooking: false,
     stockpiledIngredients: commonMocks.mockIngredientSetFloatIndexed(),
     potSize: 15,
+    island: GREENGRASS,
     ...attrs
   };
 }

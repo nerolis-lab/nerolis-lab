@@ -68,6 +68,7 @@ export default class SolveController {
     if (sleepDuration.hour < 1 || dayDuration.hour < 1) {
       throw new BadRequestError('Minimum 1 hour of sleep and daytime required');
     }
+    const island = settings.island;
 
     return {
       camp,
@@ -76,7 +77,8 @@ export default class SolveController {
       wakeup,
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
-      potSize: MAX_POT_SIZE // doesn't matter since we're solving a specific recipe
+      potSize: MAX_POT_SIZE, // doesn't matter since we're solving a specific recipe
+      island
     };
   }
 

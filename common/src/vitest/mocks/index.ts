@@ -1,5 +1,7 @@
 export * from './berry';
+export * from './events';
 export * from './ingredient';
+export * from './island';
 export * from './login';
 export * from './pokemon';
 export * from './recipe';

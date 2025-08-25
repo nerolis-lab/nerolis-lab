@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import type { AuthenticatedRequest, MaybeAuthenticatedRequest } from '@src/middleware/authorization-middleware.js';
 import {
   validateAdmin,

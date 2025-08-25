@@ -78,12 +78,33 @@ export interface MemberProductionBase {
 
 export type MemberSkillValue = Record<MainskillUnit, { amountToSelf: number; amountToTeam: number }>;
 
+export interface MemberStrength {
+  berries: {
+    total: number;
+    breakdown: {
+      base: number;
+      favored: number;
+      islandBonus: number;
+      event?: number;
+    };
+  };
+  skill: {
+    total: number;
+    breakdown: {
+      base: number;
+      islandBonus: number;
+      event?: number;
+    };
+  };
+}
+
 export interface MemberProduction extends MemberProductionBase {
   produceFromSkill: Produce;
   produceWithoutSkill: Produce;
   skillAmount: number;
   skillValue: MemberSkillValue;
   advanced: MemberProductionAdvanced;
+  strength: MemberStrength;
 }
 
 export interface CookedRecipeResult {
@@ -115,6 +136,7 @@ export interface CookingResult {
   mealTimes: MealTimes;
 }
 
+// TODO: refactor to split by production, strength etc instead of members
 export interface CalculateTeamResponse {
   members: MemberProduction[];
   cooking?: CookingResult;

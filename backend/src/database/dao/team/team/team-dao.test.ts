@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamDAO } from '@src/database/dao/team/team-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import { TeamDAO } from '@src/database/dao/team/team/team-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { getPokemon, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';

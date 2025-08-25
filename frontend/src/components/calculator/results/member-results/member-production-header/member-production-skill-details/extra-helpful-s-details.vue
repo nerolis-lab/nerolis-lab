@@ -49,7 +49,7 @@
 <script lang="ts">
 import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
+import { getIsland } from 'sleepapi-common'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'

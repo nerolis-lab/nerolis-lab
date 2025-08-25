@@ -1,7 +1,7 @@
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamDAO } from '@src/database/dao/team/team-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import { TeamDAO } from '@src/database/dao/team/team/team-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { IngredientError } from '@src/domain/error/ingredient/ingredient-error.js';
 import {
   deleteMember,

@@ -3,10 +3,16 @@ import { DatabaseConnectionError } from '@src/domain/error/database/database-err
 import type { Knex } from 'knex';
 import knex from 'knex';
 
+export type TransactionContext = Knex.Transaction;
+
 class DatabaseServiceImpl {
   #knex: Knex | undefined;
 
-  async getKnex() {
+  async getKnex(trx?: TransactionContext) {
+    if (trx) {
+      return trx;
+    }
+
     if (!this.#knex) {
       const host = config.DB_HOST;
       const port = config.DB_PORT;
@@ -32,7 +38,20 @@ class DatabaseServiceImpl {
       });
     }
 
-    return this.#knex;
+    return trx || this.#knex;
+  }
+
+  async transaction<T>(
+    callback: (trx: TransactionContext) => Promise<T>,
+    isolationLevel?: Knex.IsolationLevels
+  ): Promise<T> {
+    const knex = await this.getKnex();
+    return knex.transaction(callback, { isolationLevel });
+  }
+
+  async transactionProvider(): Promise<Knex.TransactionProvider> {
+    const knex = await this.getKnex();
+    return knex.transactionProvider();
   }
 }
 

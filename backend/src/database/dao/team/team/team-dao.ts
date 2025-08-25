@@ -3,9 +3,14 @@ import { Type } from '@sinclair/typebox';
 import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract-dao.js';
 import type { DBPokemon } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
+import { TeamAreaDAO } from '@src/database/dao/team/team-area/team-area-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
+import type { IslandInstance } from 'sleepapi-common';
 import {
   CarrySizeUtils,
+  getBerry,
+  getIsland,
   getPokemon,
   type BerrySetSimple,
   type GetTeamResponse,
@@ -18,13 +23,13 @@ const DBTeamSchema = Type.Composite([
   DBWithVersionedIdSchema,
   Type.Object({
     fk_user_id: Type.Number(),
+    fk_team_area_id: Type.Number(),
     team_index: Type.Number(),
     name: Type.String(),
     camp: Type.Boolean(),
     bedtime: Type.String(),
     wakeup: Type.String(),
     recipe_type: Type.Union([Type.Literal('curry'), Type.Literal('salad'), Type.Literal('dessert')]),
-    favored_berries: Type.Optional(Type.String()),
     stockpiled_ingredients: Type.Optional(Type.String()),
     stockpiled_berries: Type.Optional(Type.String())
   })
@@ -82,6 +87,16 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         });
       }
 
+      const teamArea = await TeamAreaDAO.get({ id: team.fk_team_area_id });
+      const userArea = await UserAreaDAO.get({ id: teamArea.fk_user_area_id });
+      const baseIsland = getIsland(teamArea.island);
+      const island: IslandInstance = {
+        ...baseIsland,
+        expertModifier: teamArea.expert_modifier,
+        areaBonus: userArea.bonus,
+        berries: teamArea.favored_berries?.split(',').map((berry) => getBerry(berry)) ?? baseIsland.berries
+      };
+
       teamsWithMembers.push({
         index: team.team_index,
         name: team.name,
@@ -89,7 +104,7 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         bedtime: team.bedtime,
         wakeup: team.wakeup,
         recipeType: team.recipe_type,
-        favoredBerries: team.favored_berries?.split(','),
+        island,
         stockpiledBerries: this.stringToStockpile(team.stockpiled_berries, true),
         stockpiledIngredients: this.stringToStockpile(team.stockpiled_ingredients, false),
         version: team.version,

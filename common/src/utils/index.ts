@@ -4,6 +4,7 @@ export * from './carry-size-utils';
 export * from './changelog-utils';
 export * from './flat-utils';
 export * from './ingredient-utils';
+export * from './island-utils';
 export * from './math-utils';
 export * from './nature-utils';
 export * from './number-utils';

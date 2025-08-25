@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
