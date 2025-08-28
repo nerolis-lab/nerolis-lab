@@ -1,3 +1,16 @@
+# [2.27.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.26.0...v2.27.0) (2025-08-28)
+
+
+### Bug Fixes
+
+* improve home page styling and enhance test coverage ([028dd37](https://github.com/nerolis-lab/nerolis-lab/commit/028dd37ab61e82c9070cdb0571f8eaf15a9ec956))
+* **Plus skill:** description shows amount and ingredient ([1253b58](https://github.com/nerolis-lab/nerolis-lab/commit/1253b5817e78cb6b1a82422a052bdd50e947b460))
+
+
+### Features
+
+* add hoenn starters to production calculator ([a24da9d](https://github.com/nerolis-lab/nerolis-lab/commit/a24da9d49e158cd5e66095c434de2571b3f985c9))
+
 # [2.26.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.25.0...v2.26.0) (2025-08-13)
 
 
