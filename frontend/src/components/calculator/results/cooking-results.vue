@@ -274,8 +274,6 @@ import { defineComponent } from 'vue'
 
 import Divider from '@/components/custom-components/divider/divider.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
-import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -283,6 +281,7 @@ import {
   MathUtils,
   capitalize,
   combineSameIngredientsInDrop,
+  getIsland,
   ingredient,
   type CookedRecipeResult,
   type RecipeTypeResult,
@@ -440,7 +439,7 @@ export default defineComponent({
       if (!time) {
         return `You slept through ${mealName}!`
       }
-      return `${capitalize(mealName)}: ${TimeUtils.prettifyTime(time).slice(0, 5)}`
+      return `${capitalize(mealName)}: ${prettifyTime(time).slice(0, 5)}`
     },
     hasBeenSkipped(recipe: CookedRecipeResultDetails) {
       return recipe.potLimited.count > 0 || recipe.ingredientLimited.some((ing) => ing.count > 0)

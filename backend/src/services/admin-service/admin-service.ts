@@ -1,4 +1,4 @@
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 
 export async function getUsers() {
   const users = await UserDAO.findMultiple();

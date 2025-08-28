@@ -1,6 +1,6 @@
 import { FriendDAO } from '@src/database/dao/friend/friend-dao.js';
 import { NotificationDAO } from '@src/database/dao/notification/notification-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { BadRequestError, ForbiddenError } from '@src/domain/error/api/api-error.js';
 import { DatabaseInsertError } from '@src/domain/error/database/database-error.js';
 import { FriendService } from '@src/services/friend-service/friend-service.js';

@@ -1,7 +1,6 @@
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { MealTimes } from 'sleepapi-common';
 import {
@@ -9,7 +8,8 @@ import {
   emptyIngredientInventoryFloat,
   ingredient,
   ingredientSetToFloatFlat,
-  MAX_POT_SIZE
+  MAX_POT_SIZE,
+  parseTime
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
@@ -22,9 +22,9 @@ describe('CookingState', () => {
     );
 
     const mealTimes: MealTimes = {
-      breakfast: TimeUtils.parseTime('08:00'),
-      lunch: TimeUtils.parseTime('14:00'),
-      dinner: TimeUtils.parseTime('20:00')
+      breakfast: parseTime('08:00'),
+      lunch: parseTime('14:00'),
+      dinner: parseTime('20:00')
     };
 
     cookingState.setMealTimes(mealTimes);

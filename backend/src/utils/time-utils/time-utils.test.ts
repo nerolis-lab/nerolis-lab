@@ -1,7 +1,7 @@
 import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { Time, TimePeriod } from 'sleepapi-common';
-import { describe, expect, it, test } from 'vitest';
+import { parseTime, type Time, type TimePeriod } from 'sleepapi-common';
+import { describe, expect, it } from 'vitest';
 
 describe('toMinutes', () => {
   it('shall convert Time to minutes', () => {
@@ -267,7 +267,7 @@ describe('timeWithinPeriod', () => {
 });
 
 describe('time period overlap', () => {
-  const time = (str: string): Time => TimeUtils.parseTime(str);
+  const time = (str: string): Time => parseTime(str);
 
   const period = (start: string, end: string): TimePeriod => ({
     start: time(start),
@@ -535,48 +535,16 @@ describe('TimeUtils.divideTimePeriod', () => {
   });
 });
 
-describe('TimeUtils.prettifyTime', () => {
-  test('formats midday time correctly', () => {
-    const time = { hour: 12, minute: 30, second: 45 };
-    const prettyTime = TimeUtils.prettifyTime(time);
-    expect(prettyTime).toBe('12:30:45');
-  });
-
-  test('formats early morning time with leading zeros', () => {
-    const time = { hour: 7, minute: 5, second: 9 };
-    const prettyTime = TimeUtils.prettifyTime(time);
-    expect(prettyTime).toBe('07:05:09');
-  });
-
-  test('formats late night time correctly', () => {
-    const time = { hour: 23, minute: 59, second: 59 };
-    const prettyTime = TimeUtils.prettifyTime(time);
-    expect(prettyTime).toBe('23:59:59');
-  });
-
-  test('handles rounding of seconds correctly', () => {
-    const time = { hour: 14, minute: 49, second: 59.99 };
-    const prettyTime = TimeUtils.prettifyTime(time);
-    expect(prettyTime).toBe('14:49:60');
-  });
-
-  test('handles zero hour correctly', () => {
-    const time = { hour: 0, minute: 0, second: 0 };
-    const prettyTime = TimeUtils.prettifyTime(time);
-    expect(prettyTime).toBe('00:00:00');
-  });
-});
-
 describe('TimeUtils.isAfterOrEqual', () => {
   it('shall return true if one hour later', () => {
-    const time1: Time = TimeUtils.parseTime('07:00');
-    const time2: Time = TimeUtils.parseTime('06:00');
+    const time1: Time = parseTime('07:00');
+    const time2: Time = parseTime('06:00');
     expect(TimeUtils.isAfterOrEqual(time1, time2)).toBeTruthy();
   });
 
   it('shall return true if same hour, but minutes later', () => {
-    const time1: Time = TimeUtils.parseTime('06:00');
-    const time2: Time = TimeUtils.parseTime('06:01');
+    const time1: Time = parseTime('06:00');
+    const time2: Time = parseTime('06:01');
     expect(TimeUtils.isAfterOrEqual(time1, time2)).toBeTruthy();
   });
 
@@ -597,14 +565,14 @@ describe('TimeUtils.isAfterOrEqual', () => {
 
 describe('TimeUtils.isBefore', () => {
   it('shall return true if one hour before', () => {
-    const time1: Time = TimeUtils.parseTime('06:00');
-    const time2: Time = TimeUtils.parseTime('07:00');
+    const time1: Time = parseTime('06:00');
+    const time2: Time = parseTime('07:00');
     expect(TimeUtils.isBefore(time1, time2)).toBeTruthy();
   });
 
   it('shall return true if same hour, but minutes before', () => {
-    const time1: Time = TimeUtils.parseTime('06:00');
-    const time2: Time = TimeUtils.parseTime('06:01');
+    const time1: Time = parseTime('06:00');
+    const time2: Time = parseTime('06:01');
     expect(TimeUtils.isBefore(time1, time2)).toBeTruthy();
   });
 
@@ -641,11 +609,11 @@ describe('getMySQLNow', () => {
 
 describe('timeToMinutesSinceStart', () => {
   it('shall calculate correct minutes for default day', () => {
-    expect(TimeUtils.timeToMinutesSinceStart(TimeUtils.parseTime('21:30'), TimeUtils.parseTime('06:00'))).toBe(930);
+    expect(TimeUtils.timeToMinutesSinceStart(parseTime('21:30'), parseTime('06:00'))).toBe(930);
   });
 
   it('shall calculate correct minutes for default day', () => {
-    expect(TimeUtils.timeToMinutesSinceStart(TimeUtils.parseTime('00:30'), TimeUtils.parseTime('06:00'))).toBe(1110);
+    expect(TimeUtils.timeToMinutesSinceStart(parseTime('00:30'), parseTime('06:00'))).toBe(1110);
   });
 });
 

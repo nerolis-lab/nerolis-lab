@@ -20,6 +20,7 @@ import type {
   IngredientSet,
   MemberProduction,
   MemberProductionBase,
+  MemberStrength,
   PokemonWithIngredientsIndexed,
   Produce,
   SimpleTeamResult,
@@ -615,7 +616,27 @@ export class MemberState {
       ingredientDistributions[ingredientName] = calculateDistribution(dailyValues);
     }
 
+    // TODO: implement strength calculation
+    const strength: MemberStrength = {
+      berries: {
+        total: 0,
+        breakdown: {
+          base: 0,
+          favored: 0,
+          islandBonus: 0
+        }
+      },
+      skill: {
+        total: 0,
+        breakdown: {
+          base: 0,
+          islandBonus: 0
+        }
+      }
+    };
+
     return {
+      strength,
       produceTotal,
       produceWithoutSkill: totalHelpProduce,
       produceFromSkill: totalSkillProduce,

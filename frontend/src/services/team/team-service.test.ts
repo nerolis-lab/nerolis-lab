@@ -8,6 +8,7 @@ import MockAdapter from 'axios-mock-adapter'
 import {
   BULBASAUR,
   CarrySizeUtils,
+  GREENGRASS,
   ingredient,
   MAX_TEAM_SIZE,
   nature,
@@ -42,7 +43,8 @@ describe('createOrUpdateTeam', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipeType: 'curry'
+      recipeType: 'curry',
+      island: GREENGRASS
     }
 
     mockedServerAxios.onPut('/team/meta/0').replyOnce(200, 'successful response')
@@ -109,6 +111,7 @@ describe('getTeams', () => {
         recipeType: 'curry',
         stockpiledBerries: [],
         stockpiledIngredients: [],
+        island: GREENGRASS,
         version: 1,
         members: [
           {
@@ -151,6 +154,7 @@ describe('getTeams', () => {
       favoredBerries: [],
       stockpiledBerries: [],
       stockpiledIngredients: [],
+      island: GREENGRASS,
       version: 1,
       members: [existingTeams[0].members[0].externalId, undefined, undefined, undefined, undefined],
       memberIvs: {}
@@ -349,12 +353,7 @@ describe('deleteTeam', () => {
 describe('calculateProduction', () => {
   it('should call server to calculate team production', async () => {
     const members: PokemonInstanceExt[] = [mocks.createMockPokemon()]
-    const settings: TeamSettings = {
-      camp: false,
-      bedtime: '21:00',
-      wakeup: '07:00',
-      stockpiledIngredients: []
-    }
+    const settings: TeamSettings = mocks.teamSettings()
 
     mockedServerAxios.onPost('/calculator/team').replyOnce(200, {
       members: [

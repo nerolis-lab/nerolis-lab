@@ -15,6 +15,7 @@ import {
   ChargeEnergyS,
   ChargeStrengthSStockpile,
   commonMocks,
+  GREENGRASS,
   HelperBoost,
   ISLANDS,
   type Pokemon
@@ -93,13 +94,13 @@ describe('avatarImage', () => {
 describe('islandImage', () => {
   ISLANDS.forEach((island) => {
     it(`returns the correct image path for ${island.name} island`, () => {
-      const imagePath = islandImage({ favoredBerries: island.berries, background: true })
+      const imagePath = islandImage({ island, background: true })
       expect(imagePath).toBe(`/images/island/background-${island.shortName.toLowerCase()}.png`)
     })
   })
 
   it('returns greengrass image path if no match is found', () => {
-    const imagePath = islandImage({ favoredBerries: [], background: false })
+    const imagePath = islandImage({ island: GREENGRASS, background: false })
     expect(imagePath).toBe('/images/island/greengrass.png')
   })
 })

@@ -1,7 +1,7 @@
-import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
-import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user/user-settings/user-settings-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { FriendService } from '@src/services/friend-service/friend-service.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';

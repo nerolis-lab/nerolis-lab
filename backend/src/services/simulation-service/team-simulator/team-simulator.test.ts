@@ -1,6 +1,5 @@
 import type { TeamActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
@@ -13,6 +12,7 @@ import {
   commonMocks,
   ingredient,
   nature,
+  parseTime,
   subskill
 } from 'sleepapi-common';
 import { vimic } from 'vimic';
@@ -82,7 +82,7 @@ describe('TeamSimulator', () => {
   it('shall calculate production with uneven sleep times', () => {
     const settings: TeamSettingsExt = mocks.teamSettingsExt({
       includeCooking: true,
-      wakeup: TimeUtils.parseTime('06:01')
+      wakeup: parseTime('06:01')
     });
 
     const members: TeamMemberExt[] = [

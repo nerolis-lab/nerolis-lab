@@ -34,6 +34,7 @@ import {
   emptyIngredientInventoryFloat,
   getAllIngredientLists,
   getPokemon,
+  GREENGRASS,
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
   ingredientSetToIntFlat,
@@ -132,7 +133,8 @@ class CookingTierlistImpl {
       wakeup: this.wakeup,
       includeCooking: true,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
-      potSize: MAX_POT_SIZE
+      potSize: MAX_POT_SIZE,
+      island: GREENGRASS
     };
     let counter = 0;
     // eslint-disable-next-line SleepAPILogger/no-console

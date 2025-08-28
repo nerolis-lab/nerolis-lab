@@ -5,11 +5,10 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
 import { type TeamCombinedProduction, type TeamInstance, type TeamProductionExt } from '@/types/member/instanced'
 import {
+  GREENGRASS,
   MAX_TEAM_SIZE,
   Optimal,
-  berry,
   uuid,
-  type Berry,
   type BerrySet,
   type CalculateIvResponse,
   type CalculateTeamResponse,
@@ -57,7 +56,7 @@ class TeamServiceImpl {
           bedtime: '21:30',
           wakeup: '06:00',
           recipeType: 'curry',
-          favoredBerries: [],
+          island: GREENGRASS,
           stockpiledBerries: [],
           stockpiledIngredients: [],
           version: 0,
@@ -80,19 +79,6 @@ class TeamServiceImpl {
           }
         }
 
-        const favoredBerries: Berry[] = []
-        if (serverTeam.favoredBerries?.length === 1 && serverTeam.favoredBerries[0] === 'all') {
-          favoredBerries.push(...berry.BERRIES)
-        } else {
-          for (const berryName of serverTeam.favoredBerries ?? []) {
-            const favoredBerry = berry.BERRIES.find((berry) => berry.name === berryName)
-            if (!favoredBerry) {
-              logger.error(`Couldn't find favored berry with name: ${berryName}, contact developer`)
-              continue
-            }
-            favoredBerries.push(favoredBerry)
-          }
-        }
         const instancedTeam: TeamInstance = {
           index: serverTeam.index,
           memberIndex: teamStore.teams[serverTeam.index]?.memberIndex ?? 0,
@@ -101,7 +87,7 @@ class TeamServiceImpl {
           bedtime: serverTeam.bedtime,
           wakeup: serverTeam.wakeup,
           recipeType: serverTeam.recipeType,
-          favoredBerries,
+          island: serverTeam.island,
           stockpiledBerries: serverTeam.stockpiledBerries ?? [],
           stockpiledIngredients: serverTeam.stockpiledIngredients ?? [],
           version: serverTeam.version,
@@ -180,7 +166,8 @@ class TeamServiceImpl {
       camp: currentTeam.camp,
       bedtime: currentTeam.bedtime,
       wakeup: currentTeam.wakeup,
-      stockpiledIngredients: currentTeam.stockpiledIngredients
+      stockpiledIngredients: currentTeam.stockpiledIngredients,
+      island: currentTeam.island
     }
 
     const berrySetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({

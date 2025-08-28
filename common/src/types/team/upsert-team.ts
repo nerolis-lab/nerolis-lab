@@ -1,5 +1,6 @@
 import type { BerrySetSimple } from '../berry';
 import type { IngredientSetSimple } from '../ingredient';
+import type { IslandInstance } from '../island';
 import type { RecipeType } from '../recipe/recipe';
 
 export interface UpsertTeamMetaRequest {
@@ -8,11 +9,12 @@ export interface UpsertTeamMetaRequest {
   bedtime: string;
   wakeup: string;
   recipeType: RecipeType;
-  favoredBerries?: string[];
+  island: IslandInstance;
   stockpiledIngredients?: IngredientSetSimple[];
   stockpiledBerries?: BerrySetSimple[];
 }
 
+// TODO: update
 export interface UpsertTeamMetaResponse {
   index: number;
   name: string;
@@ -21,7 +23,7 @@ export interface UpsertTeamMetaResponse {
   wakeup: string;
   version: number;
   recipeType: RecipeType;
-  favoredBerries?: string[];
+  island: IslandInstance;
   stockpiledIngredients?: IngredientSetSimple[];
   stockpiledBerries?: BerrySetSimple[];
 }

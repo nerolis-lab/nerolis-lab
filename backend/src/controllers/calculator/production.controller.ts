@@ -1,6 +1,6 @@
-import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
-import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import { UserRecipeDAO } from '@src/database/dao/user/user-recipe/user-recipe-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user/user-settings/user-settings-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import { PokemonError } from '@src/domain/error/pokemon/pokemon-error.js';
@@ -46,6 +46,7 @@ import {
   limitSubSkillsToLevel,
   MAX_POT_SIZE,
   Metronome,
+  parseTime,
   salad,
   SkillCopy
 } from 'sleepapi-common';
@@ -140,9 +141,12 @@ export default class ProductionController {
     maybeUser?: DBUser;
   }): Promise<TeamSettingsExt> {
     const { settings, includeCooking, maybeUser } = params;
+
     const camp = queryAsBoolean(settings.camp);
-    const bedtime = TimeUtils.parseTime(settings.bedtime);
-    const wakeup = TimeUtils.parseTime(settings.wakeup);
+    const island = settings.island;
+
+    const bedtime = parseTime(settings.bedtime);
+    const wakeup = parseTime(settings.wakeup);
     const sleepDuration = TimeUtils.calculateDuration({
       start: bedtime,
       end: wakeup
@@ -176,7 +180,8 @@ export default class ProductionController {
       wakeup,
       includeCooking,
       stockpiledIngredients,
-      potSize
+      potSize,
+      island
     };
   }
 
@@ -207,7 +212,7 @@ export default class ProductionController {
             camp
           }),
           nature: getNature(member.nature),
-          skillLevel: member.skillLevel,
+          skillLevel: Math.min(member.skillLevel, pokemon.skill.maxLevel),
           subskills,
           externalId: member.externalId
         }
@@ -234,8 +239,8 @@ export default class ProductionController {
   #parseSingleProductionInput(pkmn: Pokemon, input: SingleProductionRequest): ProductionStats {
     const level = queryAsNumber(input.level) ?? 60;
 
-    const mainBedtime = TimeUtils.parseTime(input.mainBedtime);
-    const mainWakeup = TimeUtils.parseTime(input.mainWakeup);
+    const mainBedtime = parseTime(input.mainBedtime);
+    const mainWakeup = parseTime(input.mainWakeup);
     const duration = TimeUtils.calculateDuration({
       start: mainBedtime,
       end: mainWakeup
@@ -278,5 +283,21 @@ export default class ProductionController {
       mainWakeup
     };
     return parsedInput;
+  }
+
+  /**
+   * Provides access to private methods for unit testing.
+   * This method allows unit tests to call and verify the behavior of private methods.
+   */
+  public _testAccess() {
+    return {
+      parseIvInput: this.#parseIvInput.bind(this),
+      parseTeamInput: this.#parseTeamInput.bind(this),
+      parseUserRecipes: this.#parseUserRecipes.bind(this),
+      parseSettings: this.#parseSettings.bind(this),
+      parseTeamMembers: this.#parseTeamMembers.bind(this),
+      getIngredientSet: this.#getIngredientSet.bind(this),
+      parseSingleProductionInput: this.#parseSingleProductionInput.bind(this)
+    };
   }
 }

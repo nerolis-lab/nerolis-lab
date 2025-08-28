@@ -1,12 +1,11 @@
 import { InventoryEvent } from '@src/domain/event/events/inventory-event/inventory-event.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { berry, ingredient } from 'sleepapi-common';
+import { berry, ingredient, parseTime } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('InventoryEvent', () => {
   it('inventory event shall format correctly', () => {
     const event = new InventoryEvent({
-      time: TimeUtils.parseTime('06:00'),
+      time: parseTime('06:00'),
       description: 'test',
       before: 1,
       delta: 1,

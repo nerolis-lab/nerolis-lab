@@ -1,8 +1,7 @@
 import type { EventType } from '@src/domain/event/event.js';
 import { ScheduledEvent } from '@src/domain/event/event.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Produce, Time } from 'sleepapi-common';
-import { MathUtils, prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
+import { MathUtils, prettifyBerries, prettifyIngredientDrop, prettifyTime } from 'sleepapi-common';
 
 export class InventoryEvent extends ScheduledEvent {
   time: Time;
@@ -49,7 +48,7 @@ export class InventoryEvent extends ScheduledEvent {
     }`;
 
     let str =
-      `[${TimeUtils.prettifyTime(this.time)}][Inventory] (${this.description}): ` +
+      `[${prettifyTime(this.time)}][Inventory] (${this.description}): ` +
       `${this.before} -> ${this.after} (${deltaSigned})`;
 
     if (this.max) {

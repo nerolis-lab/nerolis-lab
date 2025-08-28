@@ -7,4 +7,3 @@ export * from './mock-skill-state.js';
 export * from './mock-team-member-ext.js';
 export * from './mock-team-member-settings-ext.js';
 export * from './mock-team-result.js';
-export * from './mock-team-settings.js';

@@ -27,7 +27,8 @@ describe('solve.controller', () => {
         wakeup: mocks.wakeup(),
         includeCooking: false,
         stockpiledIngredients: common.emptyIngredientInventoryFloat(),
-        potSize: common.MAX_POT_SIZE
+        potSize: common.MAX_POT_SIZE,
+        island: common.GREENGRASS
       });
     });
 
