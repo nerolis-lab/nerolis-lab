@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite --host",
     "clean": "rimraf dist",
@@ -11,7 +13,7 @@
     "build": "run-p type-check build-only",
     "build-only": "vite build",
     "preview": "vite preview",
-    "test": "vitest --run --coverage",
+    "test": "cross-env TZ=UTC vitest --run --coverage",
     "test-watch": "vitest --watch",
     "type-check": "vue-tsc --build --force",
     "type-watch": "vue-tsc --noEmit --watch",
@@ -27,6 +29,7 @@
     "pinia-plugin-persistedstate": "^4.4.0",
     "vue": "^3.5.19",
     "vue-chartjs": "^5.3.1",
+    "vue-i18n": "^10.0.8",
     "vue-router": "4.5.1"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "@vuetify/mcp": "^0.1.1",
+    "cross-env": "^10.0.0",
     "fs-extra": "^11.3.0",
     "html2canvas": "^1.4.1",
     "jsdom": "^26.1.0",
@@ -62,5 +66,7 @@
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.9.5"
   },
-  "bundleDependencies": ["sleepapi-common"]
+  "bundleDependencies": [
+    "sleepapi-common"
+  ]
 }

@@ -3,7 +3,9 @@ import router from '@/router/router'
 import { config } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import ResizeObserver from 'resize-observer-polyfill'
+import { locales, type Translation } from 'sleepapi-common'
 import { beforeEach } from 'vitest'
+import { createI18n } from 'vue-i18n'
 import 'vitest-canvas-mock'
 import { defineComponent, h } from 'vue'
 import { createVuetify } from 'vuetify'
@@ -22,7 +24,15 @@ const vuetify = createVuetify({
   directives
 })
 
-config.global.plugins.push(vuetify, router)
+const i18n = createI18n<[Translation], 'en'>({
+  legacy: false,
+  locale: 'en',
+  fallbackLocale: 'en',
+  messages: locales,
+  globalInjection: true
+})
+
+config.global.plugins.push(vuetify, router, i18n)
 
 // Stub VImg component to avoid "window is not defined" error
 const VImgStub = defineComponent({

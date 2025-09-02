@@ -8,14 +8,14 @@
           :class="{ 'supporter-card': userStore.isSupporter, 'admin-card': userStore.isAdmin }"
         >
           <v-row class="pt-4">
-            <v-col cols="12" class="flex-center text-h4"> Profile </v-col>
+            <v-col cols="12" class="flex-center text-h4"> {{ t('profilepage.profile') }} </v-col>
           </v-row>
 
           <v-row>
             <v-col class="flex-center">
               <v-divider />
             </v-col>
-            <v-col cols="auto" class="flex-center text-h5 text-no-wrap"> About Me </v-col>
+            <v-col cols="auto" class="flex-center text-h5 text-no-wrap"> {{ t('profilepage.aboutMe') }} </v-col>
             <v-col class="flex-center">
               <v-divider />
             </v-col>
@@ -34,7 +34,7 @@
             <v-col class="flex-center">
               <v-divider />
             </v-col>
-            <v-col class="flex-center text-h5" style="text-wrap: nowrap"> Details </v-col>
+            <v-col class="flex-center text-h5" style="text-wrap: nowrap"> {{ t('profilepage.details') }} </v-col>
             <v-col class="flex-center">
               <v-divider />
             </v-col>
@@ -42,7 +42,7 @@
 
           <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
-              <span class="text-center font-weight-bold">User ID: </span>
+              <span class="text-center font-weight-bold"> {{ t('profilepage.userID') }}: </span>
             </v-col>
             <v-col cols="auto" class="flex-center">
               <span class="text-center">{{ userStore.externalId }}</span>
@@ -51,7 +51,7 @@
 
           <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
-              <span class="text-center font-weight-bold">Supporter status: </span>
+              <span class="text-center font-weight-bold"> {{ t('profilepage.supportersStatus') }}: </span>
             </v-col>
             <v-col cols="auto" class="flex-center">
               <span :class="['text-center', userStore.supporterSince ? 'text-supporter' : 'text-grey']">{{
@@ -90,6 +90,7 @@ import { UserService } from '@/services/user/user-service'
 import { TimeUtils } from '@/services/utils/time-utils'
 import { useUserStore } from '@/stores/user-store'
 import { computed, defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'ProfilePage',
@@ -100,8 +101,9 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const userAvatar = computed(() => userStore.avatar)
+    const { t } = useI18n()
 
-    return { userStore, userAvatar }
+    return { userStore, userAvatar, t }
   },
   methods: {
     async updateName(newName: string) {
