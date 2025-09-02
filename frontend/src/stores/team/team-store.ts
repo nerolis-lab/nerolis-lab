@@ -16,15 +16,15 @@ import {
   EnergizingCheerS,
   EnergyForEveryone,
   ExtraHelpfulS,
+  GREENGRASS,
   HelperBoost,
   MAX_TEAM_SIZE,
   Metronome,
-  berry,
   subskill,
   uuid,
-  type Berry,
   type BerrySetSimple,
   type IngredientSetSimple,
+  type Island,
   type PokemonInstanceExt,
   type RecipeType,
   type TeamSettings
@@ -58,7 +58,7 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
       bedtime: '21:30',
       wakeup: '06:00',
       recipeType: 'curry',
-      favoredBerries: [],
+      island: GREENGRASS,
       stockpiledBerries: [],
       stockpiledIngredients: [],
       version: 0,
@@ -252,23 +252,8 @@ export const useTeamStore = defineStore('team', {
       const userStore = useUserStore()
       if (userStore.loggedIn) {
         try {
-          const {
-            favoredBerries: teamBerries,
-            name,
-            camp,
-            bedtime,
-            wakeup,
-            recipeType,
-            stockpiledBerries,
-            stockpiledIngredients
-          } = this.getCurrentTeam
-
-          const anyFavoredBerries = teamBerries?.length > 0
-          const favoredBerries = anyFavoredBerries
-            ? teamBerries.length === berry.BERRIES.length
-              ? ['all']
-              : teamBerries.map((b) => b.name)
-            : undefined
+          const { island, name, camp, bedtime, wakeup, recipeType, stockpiledBerries, stockpiledIngredients } =
+            this.getCurrentTeam
 
           const { version } = await TeamService.createOrUpdateTeam(this.currentIndex, {
             name,
@@ -276,7 +261,7 @@ export const useTeamStore = defineStore('team', {
             bedtime,
             wakeup,
             recipeType,
-            favoredBerries,
+            island,
             stockpiledBerries,
             stockpiledIngredients
           })
@@ -300,7 +285,7 @@ export const useTeamStore = defineStore('team', {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        favoredBerries: [],
+        island: GREENGRASS,
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 0,
@@ -370,7 +355,8 @@ export const useTeamStore = defineStore('team', {
         camp: this.teams[teamIndex].camp,
         bedtime: this.teams[teamIndex].bedtime,
         wakeup: this.teams[teamIndex].wakeup,
-        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients
+        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients,
+        island: this.teams[teamIndex].island
       }
       this.teams[teamIndex].production = await TeamService.calculateProduction({
         members,
@@ -463,8 +449,8 @@ export const useTeamStore = defineStore('team', {
 
       this.updateTeam()
     },
-    async updateFavoredBerries(berries: Berry[]) {
-      this.getCurrentTeam.favoredBerries = berries
+    async updateIsland(island: Island) {
+      this.getCurrentTeam.island = island
 
       this.updateTeam()
     },

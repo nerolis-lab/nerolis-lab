@@ -166,7 +166,6 @@ import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { pokemonImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -195,21 +194,21 @@ export default defineComponent({
     cookingStrength() {
       return (
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-        this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+        this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
     },
     berryStrength() {
       const members = this.teamStore.getCurrentTeam.production?.members || []
-      const favoredBerries = this.teamStore.getCurrentTeam.favoredBerries
+      const island = this.teamStore.getCurrentTeam.island
 
       return members.reduce((sum, member) => {
         const { berries } = member.produceWithoutSkill
 
         const berryStrength = StrengthService.berryStrength({
-          favoredBerries: favoredBerries,
           berries,
+          island,
           timeWindow: 'WEEK',
-          areaBonus: this.userStore.islandBonus(getIsland(favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(island.shortName)
         })
 
         return sum + berryStrength
@@ -220,6 +219,7 @@ export default defineComponent({
 
       return members.reduce((sum, memberProduction) => {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
+        const island = this.teamStore.getCurrentTeam.island
 
         const skillActivation = member?.pokemon.skill.getFirstActivation()
         const memberSkillStrength = skillActivation
@@ -227,9 +227,9 @@ export default defineComponent({
               skillActivation,
               skillValues: memberProduction.skillValue,
               berries: memberProduction.produceFromSkill.berries,
-              favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
+              island,
               timeWindow: 'WEEK',
-              areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+              areaBonus: this.userStore.islandBonus(island.shortName)
             })
           : 0
 
@@ -237,17 +237,17 @@ export default defineComponent({
       }, 0)
     },
     stockpiledBerryStrength() {
-      const favoredBerries = this.teamStore.getCurrentTeam.favoredBerries
+      const island = this.teamStore.getCurrentTeam.island
 
       return this.teamStore.getCurrentTeam.stockpiledBerries.reduce((sum, stockpiledBerry) => {
         const { amount, level, name } = stockpiledBerry
         const berry = getBerry(name)
 
         const berryStrength = StrengthService.berryStrength({
-          favoredBerries: favoredBerries,
           berries: [{ berry, amount, level }],
+          island,
           timeWindow: '24H', // week multiplies it by 7, but this is already for a week
-          areaBonus: this.userStore.islandBonus(getIsland(favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(island.shortName)
         })
 
         return sum + berryStrength
@@ -312,12 +312,12 @@ export default defineComponent({
       for (const memberProduction of this.teamStore.getCurrentTeam.production?.members ?? []) {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
         if (!member) continue
-
+        const island = this.teamStore.getCurrentTeam.island
         const berryStrength = StrengthService.berryStrength({
           berries: memberProduction.produceWithoutSkill.berries,
-          favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
+          island,
           timeWindow: 'WEEK',
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(island.shortName)
         })
 
         const skillActivation = member.pokemon.skill.getFirstActivation()
@@ -326,9 +326,9 @@ export default defineComponent({
               skillActivation,
               skillValues: memberProduction.skillValue,
               berries: memberProduction.produceFromSkill.berries,
-              favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
+              island,
               timeWindow: 'WEEK',
-              areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+              areaBonus: this.userStore.islandBonus(island.shortName)
             })
           : 0
 

@@ -73,7 +73,6 @@
 <script lang="ts">
 import { StrengthService } from '@/services/strength/strength-service'
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
@@ -109,7 +108,7 @@ export default defineComponent({
         skillActivation: IngredientDrawSSuperLuck.activations.dreamShards,
         amount: this.memberWithProduction.production.skillValue['dream shards'].amountToSelf,
         timeWindow: this.teamStore.timeWindow,
-        areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+        areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       })
       return compactNumber(amount)
     },

@@ -7,6 +7,7 @@ import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
+  GREENGRASS,
   MAX_RECIPE_LEVEL,
   berryPowerForLevel,
   getMaxIngredientBonus,
@@ -86,7 +87,7 @@ describe('CompareStrength', () => {
       skillActivation: member.pokemon.skill.getFirstActivation()!,
       skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      favoredBerries: [],
+      island: comparisonStore.currentTeam?.island ?? GREENGRASS,
       timeWindow: '24H',
       areaBonus: 1
     })
@@ -150,7 +151,7 @@ describe('CompareStrength', () => {
       skillActivation: member.pokemon.skill.getFirstActivation()!,
       skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      favoredBerries: comparisonStore.currentTeam?.favoredBerries ?? [],
+      island: comparisonStore.currentTeam?.island ?? GREENGRASS,
       timeWindow: '8H',
       areaBonus: 1
     })

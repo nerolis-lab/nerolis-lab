@@ -30,7 +30,6 @@
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
@@ -55,10 +54,10 @@ export default defineComponent({
     currentBerryStrength() {
       return compactNumber(
         StrengthService.berryStrength({
-          favoredBerries: this.teamStore.getCurrentTeam.favoredBerries,
+          island: this.teamStore.getCurrentTeam.island,
           berries: this.memberWithProduction.production.produceWithoutSkill.berries,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },

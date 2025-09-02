@@ -1,8 +1,7 @@
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import type { EventType } from '@src/domain/event/event.js';
 import { ScheduledEvent } from '@src/domain/event/event.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { Pokemon, Time } from 'sleepapi-common';
+import { prettifyTime, type Pokemon, type Time } from 'sleepapi-common';
 
 export abstract class InputEvent extends ScheduledEvent {
   type: EventType = 'info';
@@ -31,7 +30,7 @@ export class PokemonInputEvent extends InputEvent {
     const { level, nature, subskills, skillLevel } = this.input;
 
     const input =
-      `[${TimeUtils.prettifyTime(this.time)}][Input] (${this.pokemon.name}): ` +
+      `[${prettifyTime(this.time)}][Input] (${this.pokemon.name}): ` +
       `Level: ${level}, Nature: ${nature?.prettyName ?? 'neutral'}, Main skill level: ${skillLevel}, ` +
       `Sub-skills: [${[...(subskills ?? [])].join(', ') ?? 'none'}]`;
 
@@ -57,7 +56,7 @@ export class TeamInputEvent extends InputEvent {
 
   format(): string {
     const { e4eProcs, helpingBonus, erb } = this.input;
-    const timeFormatted = TimeUtils.prettifyTime(this.time);
+    const timeFormatted = prettifyTime(this.time);
 
     const input =
       `[${timeFormatted}][Input] (Team): ` + `E4E: ${e4eProcs}, Helping bonus: ${helpingBonus}, ` + `ERB: ${erb}`;
@@ -86,7 +85,7 @@ export class PlayerInputEvent extends InputEvent {
     const { camp: goodCamp, incense: recoveryIncense } = this.input;
     const campStatus = goodCamp ? 'yes' : 'no';
     const incenseStatus = recoveryIncense ? 'yes' : 'no';
-    const timeFormatted = TimeUtils.prettifyTime(this.time);
+    const timeFormatted = prettifyTime(this.time);
 
     const input = `[${timeFormatted}][Input] (Player): ` + `Camp: ${campStatus}, Recovery incense: ${incenseStatus}`;
 

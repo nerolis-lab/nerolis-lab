@@ -5,6 +5,7 @@ import type { TeamInstance } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
+import { GREENGRASS } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 describe('CompareSettings', () => {
@@ -40,7 +41,7 @@ describe('CompareSettings', () => {
       memberIndex: 0,
       name: 'Test Team',
       members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
-      favoredBerries: [],
+      island: GREENGRASS,
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
@@ -97,7 +98,7 @@ describe('CompareSettings', () => {
       memberIndex: 0,
       name: 'Test Team',
       members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
-      favoredBerries: [],
+      island: GREENGRASS,
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',

@@ -1,5 +1,5 @@
 import type { ScheduledEvent } from '@src/domain/event/event.js';
-import { MathUtils, type Time, type TimePeriod } from 'sleepapi-common';
+import { type Time, type TimePeriod } from 'sleepapi-common';
 // TODO: can probably remove a lot in Sleep API 2.0import { MathUtils } from 'sleepapi-common';
 
 class TimeUtilsImpl {
@@ -286,23 +286,6 @@ class TimeUtilsImpl {
     }
 
     return periods;
-  }
-
-  public parseTime(time: string): Time {
-    const [hour, minute] = time.split(':').map((t) => +t);
-    return {
-      hour,
-      minute,
-      second: 0
-    };
-  }
-
-  public prettifyTime(time: Time) {
-    const hourString = String(time.hour).padStart(2, '0');
-    const minuteString = String(time.minute).padStart(2, '0');
-    const secondString = String(MathUtils.round(time.second, 0)).padStart(2, '0');
-
-    return `${hourString}:${minuteString}:${secondString}`;
   }
 
   public getMySQLNow() {

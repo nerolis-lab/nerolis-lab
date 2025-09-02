@@ -2,7 +2,7 @@ import { berrySet } from '@src/vitest/mocks/berry/mock-berry-set.js';
 import { pokemonWithIngredientsIndexed } from '@src/vitest/mocks/pokemon/mock-pokemon-with-ingredients.js';
 import { produce } from '@src/vitest/mocks/produce/mock-produce.js';
 import type { MemberSkillValue } from 'sleepapi-common';
-import { mainskillUnits, type MemberProduction, type MemberProductionAdvanced } from 'sleepapi-common';
+import { commonMocks, mainskillUnits, type MemberProduction, type MemberProductionAdvanced } from 'sleepapi-common';
 
 export function memberProduction(attrs?: Partial<MemberProduction>): MemberProduction {
   return {
@@ -17,6 +17,7 @@ export function memberProduction(attrs?: Partial<MemberProduction>): MemberProdu
     skillValue: Object.fromEntries(
       mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])
     ) as MemberSkillValue,
+    strength: commonMocks.memberStrength(),
     ...attrs
   };
 }

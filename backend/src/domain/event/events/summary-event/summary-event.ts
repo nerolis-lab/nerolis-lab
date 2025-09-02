@@ -1,8 +1,7 @@
 import type { EventType } from '@src/domain/event/event.js';
 import { ScheduledEvent } from '@src/domain/event/event.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Summary, Time } from 'sleepapi-common';
-import { MathUtils, prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
+import { MathUtils, prettifyBerries, prettifyIngredientDrop, prettifyTime } from 'sleepapi-common';
 
 export class SummaryEvent extends ScheduledEvent {
   time: Time;
@@ -70,7 +69,7 @@ export class SummaryEvent extends ScheduledEvent {
 
     return (
       `-----\n` +
-      `[${TimeUtils.prettifyTime(this.time)}][${this.description}]\n` +
+      `[${prettifyTime(this.time)}][${this.description}]\n` +
       `Total produce: ${prettifiedProduce}\n` +
       `Ingredient percentage: ${MathUtils.round(ingredientPercentage * 100, 1)}%\n` +
       `Skill percentage: ${MathUtils.round(skillPercentage * 100, 1)}%\n` +
@@ -98,7 +97,7 @@ export class SummaryEvent extends ScheduledEvent {
       `Helps before sneaky snacking: ${helpsBeforeSS}\n` +
       `Helps spent sneaky snacking: ${helpsAfterSS}\n` +
       `Average time before full inventory: ${
-        collectFrequency ? `${TimeUtils.prettifyTime(collectFrequency)} (hh:mm:ss)` : 'never'
+        collectFrequency ? `${prettifyTime(collectFrequency)} (hh:mm:ss)` : 'never'
       }\n` +
       `Average energy: ${MathUtils.round(averageEnergy, 1)}%\n` +
       `Average frequency: ${Math.floor(averageFrequency)}\n` +

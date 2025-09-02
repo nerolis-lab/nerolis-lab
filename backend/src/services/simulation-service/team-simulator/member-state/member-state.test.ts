@@ -4,7 +4,6 @@ import { defaultUserRecipes } from '@src/services/simulation-service/team-simula
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
@@ -13,10 +12,12 @@ import {
   ChargeStrengthS,
   commonMocks,
   emptyIngredientInventoryFloat,
+  GREENGRASS,
   ingredient,
   MAX_POT_SIZE,
   Metronome,
   nature,
+  parseTime,
   subskill
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
@@ -67,12 +68,13 @@ const member: TeamMemberExt = {
 };
 
 const settings: TeamSettingsExt = {
-  bedtime: TimeUtils.parseTime('21:30'),
-  wakeup: TimeUtils.parseTime('06:00'),
+  bedtime: parseTime('21:30'),
+  wakeup: parseTime('06:00'),
   camp: false,
   includeCooking: true,
   stockpiledIngredients: emptyIngredientInventoryFloat(),
-  potSize: MAX_POT_SIZE
+  potSize: MAX_POT_SIZE,
+  island: GREENGRASS
 };
 
 const cookingState: CookingState = new CookingState(settings, defaultUserRecipes(), createPreGeneratedRandom());
@@ -237,7 +239,7 @@ describe('startDay', () => {
       }
     };
 
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: parseTime('23:30') });
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
@@ -352,125 +354,7 @@ describe('addHelps', () => {
     memberState.addHelps({ regular: 1, crit: 1 }, memberState);
     memberState.collectInventory();
 
-    expect(memberState.results(1)).toMatchInlineSnapshot(`
-      {
-        "advanced": {
-          "averageHelps": 2,
-          "berryProductionDistribution": {
-            "2": 100,
-          },
-          "carrySize": 10,
-          "dayHelps": 2,
-          "dayPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "frequencySplit": {
-            "eighty": 0,
-            "forty": 0,
-            "one": 0,
-            "sixty": 0,
-            "zero": 0,
-          },
-          "ingredientDistributions": {
-            "Tail": {
-              "0": 100,
-            },
-          },
-          "ingredientPercentage": 0.2,
-          "maxFrequency": 1428.75,
-          "morningProcs": 0,
-          "nightHelps": 0,
-          "nightHelpsAfterSS": 0,
-          "nightHelpsBeforeSS": 0,
-          "nightPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "skillCritValue": 0,
-          "skillCrits": 0,
-          "skillPercentage": 0.02,
-          "skillProcDistribution": {},
-          "skillRegularValue": 0,
-          "sneakySnack": {
-            "amount": 0,
-            "berry": {
-              "name": "BELUE",
-              "type": "steel",
-              "value": 33,
-            },
-            "level": 60,
-          },
-          "teamSupport": {
-            "energy": 0,
-            "helps": 0,
-          },
-          "totalHelps": 2,
-          "totalRecovery": 0,
-          "wastedEnergy": 0,
-        },
-        "externalId": "some id",
-        "pokemonWithIngredients": {
-          "ingredients": Int16Array [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-          ],
-          "pokemon": "MOCKEMON",
-        },
-        "produceFromSkill": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceTotal": {
-          "berries": [
-            {
-              "amount": 2,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "produceWithoutSkill": {
-          "berries": [
-            {
-              "amount": 2,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "skillAmount": 0,
-        "skillProcs": 0,
-        "skillValue": {},
-      }
-    `);
+    expect(memberState.results(1)).toMatchSnapshot();
   });
 
   it('shall not add produce if adding 0 helps', () => {
@@ -478,115 +362,7 @@ describe('addHelps', () => {
     memberState.addHelps({ regular: 0, crit: 0 }, memberState);
     memberState.collectInventory();
 
-    expect(memberState.results(1)).toMatchInlineSnapshot(`
-      {
-        "advanced": {
-          "averageHelps": 0,
-          "berryProductionDistribution": {
-            "0": 100,
-          },
-          "carrySize": 10,
-          "dayHelps": 0,
-          "dayPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "frequencySplit": {
-            "eighty": NaN,
-            "forty": NaN,
-            "one": NaN,
-            "sixty": NaN,
-            "zero": NaN,
-          },
-          "ingredientDistributions": {
-            "Tail": {
-              "0": 100,
-            },
-          },
-          "ingredientPercentage": 0.2,
-          "maxFrequency": 1428.75,
-          "morningProcs": 0,
-          "nightHelps": 0,
-          "nightHelpsAfterSS": 0,
-          "nightHelpsBeforeSS": 0,
-          "nightPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "skillCritValue": 0,
-          "skillCrits": 0,
-          "skillPercentage": 0.02,
-          "skillProcDistribution": {},
-          "skillRegularValue": 0,
-          "sneakySnack": {
-            "amount": 0,
-            "berry": {
-              "name": "BELUE",
-              "type": "steel",
-              "value": 33,
-            },
-            "level": 60,
-          },
-          "teamSupport": {
-            "energy": 0,
-            "helps": 0,
-          },
-          "totalHelps": 0,
-          "totalRecovery": 0,
-          "wastedEnergy": 0,
-        },
-        "externalId": "some id",
-        "pokemonWithIngredients": {
-          "ingredients": Int16Array [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-          ],
-          "pokemon": "MOCKEMON",
-        },
-        "produceFromSkill": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceTotal": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceWithoutSkill": {
-          "berries": [
-            {
-              "amount": 0,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "skillAmount": 0,
-        "skillProcs": 0,
-        "skillValue": {},
-      }
-    `);
+    expect(memberState.results(1)).toMatchSnapshot();
   });
 });
 
@@ -610,7 +386,7 @@ describe('recoverMeal', () => {
 
 describe('attemptDayHelp', () => {
   it('shall perform a help if time surpasses scheduled help time', () => {
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: parseTime('23:30') });
 
     const member: TeamMemberExt = {
       pokemonWithIngredients: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 0 } },
@@ -631,129 +407,11 @@ describe('attemptDayHelp', () => {
     memberState.attemptDayHelp(0);
     memberState.collectInventory();
 
-    expect(memberState.results(1)).toMatchInlineSnapshot(`
-      {
-        "advanced": {
-          "averageHelps": 1,
-          "berryProductionDistribution": {
-            "1": 100,
-          },
-          "carrySize": 10,
-          "dayHelps": 1,
-          "dayPeriod": {
-            "averageEnergy": 0.3641456582633053,
-            "averageFrequency": 7.8619047619047615,
-            "spilledIngredients": [],
-          },
-          "frequencySplit": {
-            "eighty": 0,
-            "forty": 0,
-            "one": 0,
-            "sixty": 1,
-            "zero": 0,
-          },
-          "ingredientDistributions": {
-            "Tail": {
-              "0": 100,
-            },
-          },
-          "ingredientPercentage": 0.2,
-          "maxFrequency": 1428.75,
-          "morningProcs": 0,
-          "nightHelps": 0,
-          "nightHelpsAfterSS": 0,
-          "nightHelpsBeforeSS": 0,
-          "nightPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "skillCritValue": 0,
-          "skillCrits": 0,
-          "skillPercentage": 0,
-          "skillProcDistribution": {},
-          "skillRegularValue": 0,
-          "sneakySnack": {
-            "amount": 0,
-            "berry": {
-              "name": "BELUE",
-              "type": "steel",
-              "value": 33,
-            },
-            "level": 60,
-          },
-          "teamSupport": {
-            "energy": 0,
-            "helps": 0,
-          },
-          "totalHelps": 1,
-          "totalRecovery": 0,
-          "wastedEnergy": 0,
-        },
-        "externalId": "some id",
-        "pokemonWithIngredients": {
-          "ingredients": Int16Array [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-          ],
-          "pokemon": "MOCKEMON",
-        },
-        "produceFromSkill": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceTotal": {
-          "berries": [
-            {
-              "amount": 1,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "produceWithoutSkill": {
-          "berries": [
-            {
-              "amount": 1,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "skillAmount": 0,
-        "skillProcs": 0,
-        "skillValue": {},
-      }
-    `);
+    expect(memberState.results(1)).toMatchSnapshot();
   });
 
   it('shall not perform a help if time has not passed scheduled help time', () => {
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: parseTime('23:30') });
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     memberState.wakeUp();
@@ -761,115 +419,7 @@ describe('attemptDayHelp', () => {
     memberState.attemptDayHelp(-1);
     memberState.collectInventory();
 
-    expect(memberState.results(1)).toMatchInlineSnapshot(`
-      {
-        "advanced": {
-          "averageHelps": 0,
-          "berryProductionDistribution": {
-            "0": 100,
-          },
-          "carrySize": 10,
-          "dayHelps": 0,
-          "dayPeriod": {
-            "averageEnergy": 0.3641456582633053,
-            "averageFrequency": 7.8619047619047615,
-            "spilledIngredients": [],
-          },
-          "frequencySplit": {
-            "eighty": NaN,
-            "forty": NaN,
-            "one": NaN,
-            "sixty": Infinity,
-            "zero": NaN,
-          },
-          "ingredientDistributions": {
-            "Tail": {
-              "0": 100,
-            },
-          },
-          "ingredientPercentage": 0.2,
-          "maxFrequency": 1428.75,
-          "morningProcs": 0,
-          "nightHelps": 0,
-          "nightHelpsAfterSS": 0,
-          "nightHelpsBeforeSS": 0,
-          "nightPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "skillCritValue": 0,
-          "skillCrits": 0,
-          "skillPercentage": 0.02,
-          "skillProcDistribution": {},
-          "skillRegularValue": 0,
-          "sneakySnack": {
-            "amount": 0,
-            "berry": {
-              "name": "BELUE",
-              "type": "steel",
-              "value": 33,
-            },
-            "level": 60,
-          },
-          "teamSupport": {
-            "energy": 0,
-            "helps": 0,
-          },
-          "totalHelps": 0,
-          "totalRecovery": 0,
-          "wastedEnergy": 0,
-        },
-        "externalId": "some id",
-        "pokemonWithIngredients": {
-          "ingredients": Int16Array [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-          ],
-          "pokemon": "MOCKEMON",
-        },
-        "produceFromSkill": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceTotal": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceWithoutSkill": {
-          "berries": [
-            {
-              "amount": 0,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "skillAmount": 0,
-        "skillProcs": 0,
-        "skillValue": {},
-      }
-    `);
+    expect(memberState.results(1)).toMatchSnapshot();
   });
 
   it('shall schedule the next help', () => {
@@ -993,130 +543,7 @@ describe('attemptNightHelp', () => {
     memberState.attemptNightHelp(0);
     memberState.collectInventory();
 
-    expect(memberState.results(1)).toMatchInlineSnapshot(`
-      {
-        "advanced": {
-          "averageHelps": 1,
-          "berryProductionDistribution": {
-            "1": 100,
-          },
-          "carrySize": 10,
-          "dayHelps": 0,
-          "dayPeriod": {
-            "averageEnergy": 0,
-            "averageFrequency": 0,
-            "spilledIngredients": [],
-          },
-          "frequencySplit": {
-            "eighty": 1,
-            "forty": 0,
-            "one": 0,
-            "sixty": 0,
-            "zero": 0,
-          },
-          "ingredientDistributions": {
-            "Tail": {
-              "0": 100,
-            },
-          },
-          "ingredientPercentage": 0.2,
-          "maxFrequency": 1428.75,
-          "morningProcs": 1,
-          "nightHelps": 1,
-          "nightHelpsAfterSS": 0,
-          "nightHelpsBeforeSS": 1,
-          "nightPeriod": {
-            "averageEnergy": 0.9803921568627451,
-            "averageFrequency": 14.007352941176471,
-            "spilledIngredients": [],
-          },
-          "skillCritValue": 0,
-          "skillCrits": 0,
-          "skillPercentage": 1,
-          "skillProcDistribution": {},
-          "skillRegularValue": 2066,
-          "sneakySnack": {
-            "amount": 0,
-            "berry": {
-              "name": "BELUE",
-              "type": "steel",
-              "value": 33,
-            },
-            "level": 60,
-          },
-          "teamSupport": {
-            "energy": 0,
-            "helps": 0,
-          },
-          "totalHelps": 1,
-          "totalRecovery": 0,
-          "wastedEnergy": 0,
-        },
-        "externalId": "some id",
-        "pokemonWithIngredients": {
-          "ingredients": Int16Array [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-          ],
-          "pokemon": "MOCKEMON",
-        },
-        "produceFromSkill": {
-          "berries": [],
-          "ingredients": [],
-        },
-        "produceTotal": {
-          "berries": [
-            {
-              "amount": 1,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "produceWithoutSkill": {
-          "berries": [
-            {
-              "amount": 1,
-              "berry": {
-                "name": "BELUE",
-                "type": "steel",
-                "value": 33,
-              },
-              "level": 60,
-            },
-          ],
-          "ingredients": [],
-        },
-        "skillAmount": 2066,
-        "skillProcs": 1,
-        "skillValue": {
-          "strength": {
-            "amountToSelf": 2066,
-            "amountToTeam": 0,
-          },
-        },
-      }
-    `);
+    expect(memberState.results(1)).toMatchSnapshot();
   });
 });
 

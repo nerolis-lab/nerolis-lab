@@ -1,5 +1,5 @@
-import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import type { GetAreaBonusesResponse, IslandShortName } from 'sleepapi-common';
 
 export async function getAreaBonuses(user: DBUser): Promise<GetAreaBonusesResponse> {

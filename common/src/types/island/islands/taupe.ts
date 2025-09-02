@@ -4,5 +4,6 @@ import type { Island } from '../island';
 export const TAUPE: Island = {
   name: 'Taupe Hollow',
   shortName: 'taupe',
-  berries: [FIGY, LEPPA, SITRUS]
+  berries: [FIGY, LEPPA, SITRUS],
+  expert: false
 };

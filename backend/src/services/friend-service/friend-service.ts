@@ -1,8 +1,8 @@
 import type { Static } from '@sinclair/typebox';
 import { FriendDAO } from '@src/database/dao/friend/friend-dao.js';
 import { NotificationDAO } from '@src/database/dao/notification/notification-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { BadRequestError, ForbiddenError } from '@src/domain/error/api/api-error.js';
 import { DatabaseInsertError } from '@src/domain/error/database/database-error.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';

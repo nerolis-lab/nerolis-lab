@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EventBuilder > should have proper type safety for modifiers 1`] = `
+{
+  "description": "A test event",
+  "endDate": undefined,
+  "modifiers": [
+    {
+      "leftValue": "pokemon.frequency",
+      "operation": "*",
+      "rightValue": 0.9,
+      "type": "PokemonInstance",
+    },
+    {
+      "leftValue": "pokemon.frequency",
+      "operation": "*",
+      "rightValue": 0.9,
+      "type": "PokemonInstance",
+    },
+    {
+      "leftValue": "pokemon.frequency",
+      "operation": "*",
+      "rightValue": "0.9",
+      "type": "PokemonInstance",
+    },
+    {
+      "leftValue": "pokemon.slkfjklsd",
+      "operation": "*",
+      "rightValue": 0.9,
+      "type": "PokemonInstance",
+    },
+    {
+      "conditions": [
+        {
+          "leftValue": "pokemon.berry.name",
+          "operation": "=",
+          "rightValue": "MAGO",
+        },
+      ],
+      "leftValue": "pokemon.frequency",
+      "operation": "*",
+      "rightValue": 0.9,
+      "type": "PokemonInstance",
+    },
+    {
+      "conditions": [
+        {
+          "leftValue": "pokemon.berry.name",
+          "operation": "=",
+          "rightValue": "INVALID",
+        },
+      ],
+      "leftValue": "pokemon.frequency",
+      "operation": "*",
+      "rightValue": 0.9,
+      "type": "PokemonInstance",
+    },
+  ],
+  "name": "Test Event",
+  "startDate": undefined,
+}
+`;

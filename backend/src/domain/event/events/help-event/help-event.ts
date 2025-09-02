@@ -1,7 +1,5 @@
 import { ScheduledEvent, type EventType } from '@src/domain/event/event.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { Produce, Time } from 'sleepapi-common';
-import { prettifyBerries, prettifyIngredientDrop } from 'sleepapi-common';
+import { prettifyBerries, prettifyIngredientDrop, prettifyTime, type Produce, type Time } from 'sleepapi-common';
 
 export class HelpEvent extends ScheduledEvent {
   time: Time;
@@ -32,10 +30,10 @@ export class HelpEvent extends ScheduledEvent {
       ings.length > 0 ? `+ ${prettifyIngredientDrop(ings)}` : ''
     }`;
     return (
-      `[${TimeUtils.prettifyTime(this.time)}][${this.description}] ` +
+      `[${prettifyTime(this.time)}][${this.description}] ` +
       `Frequency: ${Math.floor(this.frequency)}, ` +
       `produce: ${prettifiedProduce}, ` +
-      `next help: ${TimeUtils.prettifyTime(this.nextHelp)}`
+      `next help: ${prettifyTime(this.nextHelp)}`
     );
   }
 }

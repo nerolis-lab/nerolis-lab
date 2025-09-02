@@ -132,11 +132,11 @@ describe('TeamSettings', () => {
     expect(teamStore.getCurrentTeam.recipeType).toEqual('dessert')
   })
 
-  it('shall update favoredBerries on emit', async () => {
+  it('shall update island on emit', async () => {
     const teamStore = useTeamStore()
-    wrapper.vm.updateFavoredBerries(CYAN.berries)
+    wrapper.vm.updateIsland(CYAN)
     await nextTick()
 
-    expect(teamStore.getCurrentTeam.favoredBerries).toEqual(CYAN.berries)
+    expect(teamStore.getCurrentTeam.island).toEqual(CYAN)
   })
 })

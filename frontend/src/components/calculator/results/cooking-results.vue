@@ -274,8 +274,6 @@ import { defineComponent } from 'vue'
 
 import Divider from '@/components/custom-components/divider/divider.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
-import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
@@ -284,6 +282,7 @@ import {
   capitalize,
   combineSameIngredientsInDrop,
   ingredient,
+  prettifyTime,
   type CookedRecipeResult,
   type RecipeTypeResult,
   type Time
@@ -330,7 +329,7 @@ export default defineComponent({
     cookingStrength() {
       const strength = Math.floor(
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
@@ -340,7 +339,7 @@ export default defineComponent({
     sundayStrength() {
       const strength = Math.floor(
         (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
@@ -350,11 +349,11 @@ export default defineComponent({
     weekdayStrength() {
       const weeklyStrength = Math.floor(
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
       const sundayStrength = Math.floor(
         (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
 
       const strength = Math.floor(weeklyStrength - sundayStrength)
@@ -440,7 +439,7 @@ export default defineComponent({
       if (!time) {
         return `You slept through ${mealName}!`
       }
-      return `${capitalize(mealName)}: ${TimeUtils.prettifyTime(time).slice(0, 5)}`
+      return `${capitalize(mealName)}: ${prettifyTime(time).slice(0, 5)}`
     },
     hasBeenSkipped(recipe: CookedRecipeResultDetails) {
       return recipe.potLimited.count > 0 || recipe.ingredientLimited.some((ing) => ing.count > 0)

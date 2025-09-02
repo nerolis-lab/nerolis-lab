@@ -32,7 +32,7 @@
           no-gutters
           class="flex-nowrap bg-surface"
           :style="{
-            backgroundImage: `url(${islandImage({ favoredBerries: teamStore.getCurrentTeam.favoredBerries, background: true })})`,
+            backgroundImage: `url(${islandImage({ island: teamStore.getCurrentTeam.island, background: true })})`,
             backgroundSize: 'cover',
             backgroundPosition: 'bottom'
           }"
