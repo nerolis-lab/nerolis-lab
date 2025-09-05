@@ -8,7 +8,7 @@ const DBTeamAreaSchema = Type.Composite([
   DBWithVersionedIdSchema,
   Type.Object({
     fk_user_area_id: Type.Number(),
-    favored_berries: Type.Optional(Type.String()),
+    favored_berries: Type.String(),
     expert_modifier: Type.Optional(ExpertRandomBonusType)
   })
 ]);

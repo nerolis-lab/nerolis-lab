@@ -33,7 +33,7 @@ beforeEach(async () => {
   userAreaId = userArea.id;
 
   // Create team area
-  const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userAreaId });
+  const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userAreaId, favored_berries: '' });
   teamAreaId = teamArea.id;
 });
 

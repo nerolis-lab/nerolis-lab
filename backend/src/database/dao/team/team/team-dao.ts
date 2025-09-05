@@ -96,7 +96,10 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         ...baseIsland,
         expertModifier: teamArea.expert_modifier,
         areaBonus: userArea.bonus,
-        berries: teamArea.favored_berries?.split(',').map((berry) => getBerry(berry)) ?? baseIsland.berries
+        berries: teamArea.favored_berries
+          .split(',')
+          .filter(Boolean)
+          .map((berry) => getBerry(berry))
       };
 
       teamsWithMembers.push({

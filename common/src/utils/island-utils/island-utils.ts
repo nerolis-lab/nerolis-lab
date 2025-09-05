@@ -1,6 +1,8 @@
 import type { IslandShortName } from '../../types';
 import { GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
 
+export const DEFAULT_ISLAND = { ...GREENGRASS, areaBonus: 0 };
+
 export function getIsland(name: IslandShortName): Island;
 export function getIsland(favoredBerries: Berry[]): Island;
 export function getIsland(nameOrBerries: IslandShortName | Berry[]): Island {

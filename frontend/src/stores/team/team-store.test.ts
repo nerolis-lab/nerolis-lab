@@ -9,7 +9,6 @@ import { createMockTeamData } from '@/vitest/mocks/team-data'
 import {
   berry,
   commonMocks,
-  GREENGRASS,
   LEAFEON,
   Logger,
   subskill,
@@ -195,7 +194,7 @@ describe('Team Store', () => {
         members: [],
         version: 1,
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         memberIvs: {},
@@ -211,7 +210,7 @@ describe('Team Store', () => {
         members: [],
         version: 1,
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         memberIvs: {},
@@ -237,7 +236,7 @@ describe('Team Store', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [],
@@ -253,7 +252,7 @@ describe('Team Store', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [],
@@ -283,7 +282,7 @@ describe('Team Store', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [undefined, member.name, null!, member.name, ''],
@@ -308,7 +307,7 @@ describe('Team Store', () => {
       bedtime: '21:10',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS,
+      island: commonMocks.islandInstance(),
       stockpiledBerries: [],
       stockpiledIngredients: [],
       members: [undefined, 'member1', undefined, 'member2', undefined],
@@ -324,7 +323,7 @@ describe('Team Store', () => {
       bedtime: '21:20',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS,
+      island: commonMocks.islandInstance(),
       stockpiledBerries: [],
       stockpiledIngredients: [],
       members: [undefined, 'member3', undefined, 'member4', undefined],
@@ -382,7 +381,7 @@ describe('Team Store', () => {
       bedtime: '21:10',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS,
+      island: commonMocks.islandInstance(),
       stockpiledBerries: [],
       stockpiledIngredients: [],
       members: [undefined, 'member1', undefined, 'member2', undefined],
@@ -418,7 +417,7 @@ describe('duplicateMember', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [undefined, mockPokemon.externalId, undefined, undefined, undefined],
@@ -453,7 +452,7 @@ describe('duplicateMember', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [member, member, member, member, member],
@@ -482,7 +481,7 @@ describe('duplicateMember', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [undefined, undefined, undefined, undefined, undefined],
@@ -519,7 +518,7 @@ describe('removeMember', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: commonMocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [undefined, member2, undefined, member4, undefined],
@@ -672,8 +671,8 @@ describe('updateIsland', () => {
 
     teamStore.updateTeam = vi.fn()
 
-    await teamStore.updateIsland(mocks.island({ berries: [berry.BELUE] }))
-    expect(teamStore.getCurrentTeam.island).toEqual(mocks.island({ berries: [berry.BELUE] }))
+    await teamStore.updateIsland(mocks.islandInstance({ berries: [berry.BELUE] }))
+    expect(teamStore.getCurrentTeam.island).toEqual(mocks.islandInstance({ berries: [berry.BELUE] }))
     expect(teamStore.updateTeam).toHaveBeenCalled()
   })
 })
@@ -1018,7 +1017,7 @@ describe('setCurrentTeam', () => {
       bedtime: '22:00',
       wakeup: '07:00',
       recipeType: 'dessert',
-      island: mocks.island(),
+      island: mocks.islandInstance(),
       stockpiledBerries: [{ name: 'BELUE', amount: 5, level: 30 }],
       stockpiledIngredients: [{ name: 'Honey', amount: 10 }],
       members: [mockPokemon1, mockPokemon2]
@@ -1036,7 +1035,7 @@ describe('setCurrentTeam', () => {
     expect(teamStore.getCurrentTeam.bedtime).toBe('22:00')
     expect(teamStore.getCurrentTeam.wakeup).toBe('07:00')
     expect(teamStore.getCurrentTeam.recipeType).toBe('dessert')
-    expect(teamStore.getCurrentTeam.island).toEqual(mocks.island())
+    expect(teamStore.getCurrentTeam.island).toEqual(mocks.islandInstance())
     expect(teamStore.getCurrentTeam.stockpiledBerries).toEqual([{ name: 'BELUE', amount: 5, level: 30 }])
     expect(teamStore.getCurrentTeam.stockpiledIngredients).toEqual([{ name: 'Honey', amount: 10 }])
     expect(teamStore.getCurrentTeam.members).toEqual(['member1', 'member2'])
@@ -1108,7 +1107,7 @@ describe('setCurrentTeam', () => {
       bedtime: '23:00',
       wakeup: '08:00',
       recipeType: 'dessert',
-      island: GREENGRASS,
+      island: commonMocks.islandInstance(),
       version: 5,
       members: ['old-member', undefined, undefined, undefined, undefined],
       memberIvs: { 'old-member': { berry: 10, ingredient: 20, skill: 15 } }

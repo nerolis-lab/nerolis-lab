@@ -1,4 +1,4 @@
-import type { Island } from '../../../types';
+import type { Island, IslandInstance } from '../../../types';
 
 export function island(attrs?: Partial<Island>): Island {
   return {
@@ -6,6 +6,14 @@ export function island(attrs?: Partial<Island>): Island {
     berries: [],
     shortName: 'greengrass',
     expert: false,
+    ...attrs
+  };
+}
+
+export function islandInstance(attrs?: Partial<IslandInstance>): IslandInstance {
+  return {
+    ...island(),
+    areaBonus: 0,
     ...attrs
   };
 }

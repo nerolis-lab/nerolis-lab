@@ -25,7 +25,7 @@ let user: DBUser;
 
 async function createTeamAreaSetup(userId: number) {
   const userArea = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: userId });
-  const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id });
+  const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id, favored_berries: '' });
   return teamArea.id;
 }
 
@@ -49,7 +49,7 @@ describe('upsertTeam', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: mocks.island()
+        island: mocks.islandInstance()
       },
       user
     });
@@ -63,7 +63,7 @@ describe('upsertTeam', () => {
     expect(teamArea[0].fk_user_area_id).toEqual(userArea[0].id);
     expect(teamArea[0].favored_berries).toEqual(
       mocks
-        .island()
+        .islandInstance()
         .berries.map((b) => b.name)
         .join(',')
     );
@@ -87,7 +87,8 @@ describe('upsertTeam', () => {
   it('should update team if team index exists', async () => {
     const userArea = await UserAreaDAO.insert({ area: 'GGEX', bonus: 15, fk_user_id: user.id });
     const teamArea = await TeamAreaDAO.insert({
-      fk_user_area_id: userArea.id
+      fk_user_area_id: userArea.id,
+      favored_berries: ''
     });
     await TeamDAO.insert({
       name: 'old name',
@@ -106,7 +107,7 @@ describe('upsertTeam', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:00',
-        island: mocks.island({ shortName: 'greengrass' }), // team changed area, new user area will be created
+        island: mocks.islandInstance({ shortName: 'greengrass' }), // team changed area, new user area will be created
         recipeType: 'curry'
       },
       user,
@@ -142,7 +143,7 @@ describe('upsertTeam', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: mocks.island()
+        island: mocks.islandInstance()
       },
       user
     });
@@ -170,7 +171,7 @@ describe('upsertTeam', () => {
 
     // Create required team_area relationship
     const userArea = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user.id });
-    const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id });
+    const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id, favored_berries: '' });
 
     await TeamDAO.insert({
       name: 'name',
@@ -189,7 +190,7 @@ describe('upsertTeam', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: mocks.island()
+        island: mocks.islandInstance()
       },
       user,
       index: 1
@@ -249,7 +250,8 @@ describe('getTeams', () => {
     // Create required team_area relationships
     const userArea = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user.id });
     const teamArea = await TeamAreaDAO.insert({
-      fk_user_area_id: userArea.id
+      fk_user_area_id: userArea.id,
+      favored_berries: ''
     });
 
     await TeamDAO.insert({
@@ -318,10 +320,10 @@ describe('getTeams', () => {
 
     // Create team areas for both users
     const userArea1 = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user1.id });
-    const teamArea1 = await TeamAreaDAO.insert({ fk_user_area_id: userArea1.id });
+    const teamArea1 = await TeamAreaDAO.insert({ fk_user_area_id: userArea1.id, favored_berries: '' });
 
     const userArea2 = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user2.id });
-    const teamArea2 = await TeamAreaDAO.insert({ fk_user_area_id: userArea2.id });
+    const teamArea2 = await TeamAreaDAO.insert({ fk_user_area_id: userArea2.id, favored_berries: '' });
 
     await TeamDAO.insert({
       fk_user_id: user1.id,

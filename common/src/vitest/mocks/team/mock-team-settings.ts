@@ -1,6 +1,6 @@
-import { GREENGRASS } from '../../../types';
 import type { TeamSettings, TeamSettingsExt } from '../../../types/team/team';
 import { mockIngredientSetFloatIndexed } from '../ingredient/mock-ingredient-set';
+import { islandInstance } from '../island/mock-island';
 import { bedtime, wakeup } from '../time';
 
 export function teamSettings(attrs?: Partial<TeamSettings>): TeamSettings {
@@ -9,7 +9,7 @@ export function teamSettings(attrs?: Partial<TeamSettings>): TeamSettings {
     bedtime: '21:30',
     wakeup: '06:00',
     stockpiledIngredients: [],
-    island: GREENGRASS,
+    island: islandInstance(),
     ...attrs
   };
 }
@@ -22,7 +22,7 @@ export function teamSettingsExt(attrs?: Partial<TeamSettingsExt>): TeamSettingsE
     includeCooking: false,
     stockpiledIngredients: mockIngredientSetFloatIndexed(),
     potSize: 15,
-    island: GREENGRASS,
+    island: islandInstance(),
     ...attrs
   };
 }

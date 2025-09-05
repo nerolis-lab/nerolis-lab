@@ -73,7 +73,7 @@ describe('calculateTeam', () => {
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
       potSize: MIN_POT_SIZE,
-      island: mocks.island()
+      island: mocks.islandInstance()
     };
 
     const members: TeamMemberExt[] = [
@@ -139,7 +139,7 @@ describe('calculateIv', () => {
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
       potSize: MIN_POT_SIZE,
-      island: mocks.island()
+      island: mocks.islandInstance()
     };
 
     const members: TeamMemberExt[] = [

@@ -31,10 +31,10 @@ import type {
 } from 'sleepapi-common';
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
+  DEFAULT_ISLAND,
   emptyIngredientInventoryFloat,
   getAllIngredientLists,
   getPokemon,
-  GREENGRASS,
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
   ingredientSetToIntFlat,
@@ -134,7 +134,7 @@ class CookingTierlistImpl {
       includeCooking: true,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
       potSize: MAX_POT_SIZE,
-      island: GREENGRASS
+      island: DEFAULT_ISLAND
     };
     let counter = 0;
     // eslint-disable-next-line SleepAPILogger/no-console

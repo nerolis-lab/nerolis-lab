@@ -58,6 +58,9 @@ export async function getUserSettings(user: DBUser): Promise<UserSettingsRespons
 export async function upsertUserSettings(user: DBUser, settings: UserSettingsRequest) {
   const existingSettings = await UserSettingsDAO.find({ fk_user_id: user.id });
 
+  logger.error(JSON.stringify(existingSettings, null, 2));
+  logger.error(JSON.stringify(settings, null, 2));
+
   const dbSettings: Omit<DBUserSettings, 'id' | 'version'> = {
     fk_user_id: user.id,
     pot_size: settings.potSize ?? existingSettings?.pot_size ?? MAX_POT_SIZE,

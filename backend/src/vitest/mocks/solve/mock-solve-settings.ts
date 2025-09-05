@@ -1,4 +1,4 @@
-import { commonMocks, GREENGRASS, type SolveSettings, type SolveSettingsExt } from 'sleepapi-common';
+import { commonMocks, type SolveSettings, type SolveSettingsExt } from 'sleepapi-common';
 
 export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
   return {
@@ -7,7 +7,7 @@ export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
     wakeup: commonMocks.WAKEUP,
     level: 0,
     stockpiledIngredients: [commonMocks.mockIngredientSetSimple()],
-    island: GREENGRASS,
+    island: commonMocks.islandInstance(),
     ...attrs
   };
 }
@@ -21,7 +21,7 @@ export function solveSettingsExt(attrs?: Partial<SolveSettingsExt>): SolveSettin
     includeCooking: false,
     stockpiledIngredients: commonMocks.mockIngredientSetFloatIndexed(),
     potSize: 15,
-    island: GREENGRASS,
+    island: commonMocks.islandInstance(),
     ...attrs
   };
 }

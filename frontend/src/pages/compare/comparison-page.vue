@@ -75,7 +75,7 @@ import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
-import { GREENGRASS, uuid, type PokemonInstanceExt, type TeamSettings } from 'sleepapi-common'
+import { DEFAULT_ISLAND, uuid, type PokemonInstanceExt, type TeamSettings } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -167,7 +167,7 @@ export default defineComponent({
         bedtime: maybeTeam?.bedtime ?? '21:30',
         wakeup: maybeTeam?.wakeup ?? '06:00',
         stockpiledIngredients: maybeTeam?.stockpiledIngredients ?? [],
-        island: maybeTeam?.island ?? GREENGRASS
+        island: maybeTeam?.island ?? DEFAULT_ISLAND
       }
 
       const result = await TeamService.calculateProduction({ members, settings })

@@ -7,10 +7,12 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { defineStore } from 'pinia'
 import {
   AuthProvider,
+  EXPERT_ISLANDS,
   ISLANDS,
   MAX_POT_SIZE,
   Roles,
   type AuthProviders,
+  type IslandInstance,
   type IslandShortName,
   type LoginResponse,
   type UserSettingsResponse
@@ -23,7 +25,8 @@ export interface UserState {
   friendCode: string | null
   auth: AuthProviders | null
   role: Roles // TODO: make Role[]
-  areaBonus: Record<IslandShortName, number>
+  // TODO: this means we probably need a migration
+  islands: IslandInstance[]
   potSize: number
   supporterSince: string | null
   randomizeNicknames: boolean
@@ -37,7 +40,7 @@ export const useUserStore = defineStore('user', {
       externalId: null,
       friendCode: null,
       role: Roles.Default,
-      areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>,
+      islands: [...ISLANDS, ...EXPERT_ISLANDS].map((island) => ({ ...island, areaBonus: 0 })),
       potSize: MAX_POT_SIZE,
       auth: null,
       supporterSince: null,
@@ -46,7 +49,8 @@ export const useUserStore = defineStore('user', {
   },
   getters: {
     loggedIn: (state) => state.auth != null,
-    islandBonus: (state) => (shortName: IslandShortName) => 1 + state.areaBonus[shortName] / 100,
+    islandBonus: (state) => (shortName: IslandShortName) =>
+      1 + state.islands.find((island) => island.shortName === shortName)?.areaBonus / 100,
     isAdmin: (state) => state.role === Roles.Admin,
     isSupporter: (state) => state.role === Roles.Supporter,
     isAdminOrSupporter: (state) => state.role === Roles.Admin || state.role === Roles.Supporter,

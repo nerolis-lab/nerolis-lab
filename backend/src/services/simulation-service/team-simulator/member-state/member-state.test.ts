@@ -12,7 +12,6 @@ import {
   ChargeStrengthS,
   commonMocks,
   emptyIngredientInventoryFloat,
-  GREENGRASS,
   ingredient,
   MAX_POT_SIZE,
   Metronome,
@@ -74,7 +73,7 @@ const settings: TeamSettingsExt = {
   includeCooking: true,
   stockpiledIngredients: emptyIngredientInventoryFloat(),
   potSize: MAX_POT_SIZE,
-  island: GREENGRASS
+  island: mocks.islandInstance()
 };
 
 const cookingState: CookingState = new CookingState(settings, defaultUserRecipes(), createPreGeneratedRandom());

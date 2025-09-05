@@ -8,7 +8,6 @@ import MockAdapter from 'axios-mock-adapter'
 import {
   BULBASAUR,
   CarrySizeUtils,
-  GREENGRASS,
   ingredient,
   MAX_TEAM_SIZE,
   nature,
@@ -44,7 +43,7 @@ describe('createOrUpdateTeam', () => {
       bedtime: '21:30',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS
+      island: mocks.islandInstance()
     }
 
     mockedServerAxios.onPut('/team/meta/0').replyOnce(200, 'successful response')
@@ -90,7 +89,7 @@ describe('getTeams', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: mocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 0,
@@ -111,7 +110,7 @@ describe('getTeams', () => {
         recipeType: 'curry',
         stockpiledBerries: [],
         stockpiledIngredients: [],
-        island: GREENGRASS,
+        island: mocks.islandInstance(),
         version: 1,
         members: [
           {
@@ -153,7 +152,7 @@ describe('getTeams', () => {
       recipeType: 'curry',
       stockpiledBerries: [],
       stockpiledIngredients: [],
-      island: GREENGRASS,
+      island: mocks.islandInstance(),
       version: 1,
       members: [existingTeams[0].members[0].externalId, undefined, undefined, undefined, undefined],
       memberIvs: {}
@@ -170,7 +169,7 @@ describe('getTeams', () => {
       bedtime: '21:30',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS,
+      island: mocks.islandInstance(),
       stockpiledBerries: [],
       stockpiledIngredients: [],
       members: Array.from({ length: MAX_TEAM_SIZE }, (__, memberIndex) => ({
@@ -207,7 +206,7 @@ describe('getTeams', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: mocks.islandInstance(),
         stockpiledBerries: [],
         stockpiledIngredients: [],
         members: [
@@ -522,7 +521,7 @@ describe('calculateIv', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:00',
-        island: GREENGRASS,
+        island: mocks.islandInstance(),
         stockpiledIngredients: []
       }
     })

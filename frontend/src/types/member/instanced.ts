@@ -4,7 +4,7 @@ import type {
   CookingResult,
   IngredientSet,
   IngredientSetSimple,
-  Island,
+  IslandInstance,
   MemberProduction,
   PokemonInstanceExt,
   RecipeType
@@ -42,7 +42,7 @@ export interface TeamInstance {
   stockpiledIngredients: IngredientSetSimple[]
   stockpiledBerries: BerrySetSimple[]
   recipeType: RecipeType
-  island: Island
+  island: IslandInstance
   version: number
   members: (string | undefined)[]
   memberIvs: Record<string, PerformanceDetails | undefined>

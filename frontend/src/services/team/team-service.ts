@@ -5,7 +5,7 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
 import { type TeamCombinedProduction, type TeamInstance, type TeamProductionExt } from '@/types/member/instanced'
 import {
-  GREENGRASS,
+  DEFAULT_ISLAND,
   MAX_TEAM_SIZE,
   Optimal,
   uuid,
@@ -24,6 +24,7 @@ import {
 
 class TeamServiceImpl {
   public async createOrUpdateTeam(index: number, teamInfo: UpsertTeamMetaRequest) {
+    logger.debug(JSON.stringify(teamInfo, null, 2))
     const response = await serverAxios.put<UpsertTeamMetaResponse>(`team/meta/${index}`, teamInfo)
 
     return response.data
@@ -56,7 +57,7 @@ class TeamServiceImpl {
           bedtime: '21:30',
           wakeup: '06:00',
           recipeType: 'curry',
-          island: GREENGRASS,
+          island: DEFAULT_ISLAND,
           stockpiledBerries: [],
           stockpiledIngredients: [],
           version: 0,

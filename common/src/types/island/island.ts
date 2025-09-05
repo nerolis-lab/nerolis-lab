@@ -10,6 +10,6 @@ export interface Island {
 }
 
 export interface IslandInstance extends Island {
-  areaBonus?: number;
+  areaBonus: number;
   expertModifier?: ExpertRandomBonusType;
 }

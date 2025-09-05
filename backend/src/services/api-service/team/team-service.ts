@@ -23,6 +23,8 @@ export async function upsertTeamMeta(params: {
 }): Promise<UpsertTeamMetaResponse> {
   const { index, request, user } = params;
 
+  logger.debug(JSON.stringify(request, null, 2));
+
   return DatabaseService.transaction(async (trx) => {
     // Run parallel queries where possible to reduce sequential DB calls
     const [userArea, existingTeam] = await Promise.all([

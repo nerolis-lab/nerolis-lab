@@ -12,11 +12,11 @@ import type { TeamData } from '@/types/team/team-data'
 import type { TimeWindowDay } from '@/types/time/time-window'
 import { defineStore } from 'pinia'
 import {
+  DEFAULT_ISLAND,
   DOMAIN_VERSION,
   EnergizingCheerS,
   EnergyForEveryone,
   ExtraHelpfulS,
-  GREENGRASS,
   HelperBoost,
   MAX_TEAM_SIZE,
   Metronome,
@@ -24,7 +24,7 @@ import {
   uuid,
   type BerrySetSimple,
   type IngredientSetSimple,
-  type Island,
+  type IslandInstance,
   type PokemonInstanceExt,
   type RecipeType,
   type TeamSettings
@@ -58,7 +58,8 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
       bedtime: '21:30',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS,
+      // TODO: this means we probably need a migration
+      island: DEFAULT_ISLAND,
       stockpiledBerries: [],
       stockpiledIngredients: [],
       version: 0,
@@ -285,7 +286,7 @@ export const useTeamStore = defineStore('team', {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        island: GREENGRASS,
+        island: DEFAULT_ISLAND,
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 0,
@@ -449,7 +450,7 @@ export const useTeamStore = defineStore('team', {
 
       this.updateTeam()
     },
-    async updateIsland(island: Island) {
+    async updateIsland(island: IslandInstance) {
       this.getCurrentTeam.island = island
 
       this.updateTeam()

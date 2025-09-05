@@ -23,7 +23,7 @@ export async function up(knex) {
         .references('id')
         .inTable(Tables.UserArea)
         .onDelete('CASCADE');
-      table.string('favored_berries').nullable();
+      table.string('favored_berries').notNullable().defaultTo('');
       table.string('expert_modifier').nullable();
     });
   }

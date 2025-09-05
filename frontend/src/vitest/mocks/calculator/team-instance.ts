@@ -2,7 +2,7 @@ import type { TeamInstance } from '@/types/member/instanced'
 import { createMockTeamProduction } from '@/vitest/mocks/calculator/team-production'
 import { createMockMemberIv } from '@/vitest/mocks/member-iv'
 import { createMockPokemon } from '@/vitest/mocks/pokemon-instance'
-import { GREENGRASS } from 'sleepapi-common'
+import { commonMocks } from 'sleepapi-common'
 
 export function createMockTeams(nrOfTeams = 1, attrs?: Partial<TeamInstance>) {
   const teams: TeamInstance[] = []
@@ -16,7 +16,7 @@ export function createMockTeams(nrOfTeams = 1, attrs?: Partial<TeamInstance>) {
       bedtime: '21:30',
       wakeup: '06:00',
       recipeType: 'curry',
-      island: GREENGRASS,
+      island: commonMocks.islandInstance(),
       stockpiledBerries: [],
       stockpiledIngredients: [],
       version: 0,
