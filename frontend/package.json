@@ -42,7 +42,7 @@
     "fs-extra": "^11.3.0",
     "html2canvas": "^1.4.1",
     "jsdom": "^26.1.0",
-    "npm-run-all2": "^7.0.1",
+    "npm-run-all2": "^8.0.4",
     "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^6.0.1",
     "sass": "^1.89.2",
