@@ -1,7 +1,7 @@
 import { MealError } from '@src/domain/error/meal/meal-error.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { MealTimes, Recipe, Time, TimePeriod } from 'sleepapi-common';
-import { RECIPES } from 'sleepapi-common';
+import { parseTime, RECIPES } from 'sleepapi-common';
 
 export function getMeal(name: string) {
   const meal: Recipe | undefined = RECIPES.find((meal) => meal.name === name.toUpperCase());
@@ -34,16 +34,16 @@ export function getMealsForFilter(params: {
 
 export function getDefaultMealTimes(dayPeriod: TimePeriod): { meals: MealTimes; sorted: Time[] } {
   const breakfastWindow: TimePeriod = {
-    start: TimeUtils.parseTime('04:00'),
-    end: TimeUtils.parseTime('12:00')
+    start: parseTime('04:00'),
+    end: parseTime('12:00')
   };
   const lunchWindow: TimePeriod = {
-    start: TimeUtils.parseTime('12:00'),
-    end: TimeUtils.parseTime('18:00')
+    start: parseTime('12:00'),
+    end: parseTime('18:00')
   };
   const dinnerWindow: TimePeriod = {
-    start: TimeUtils.parseTime('18:00'),
-    end: TimeUtils.parseTime('04:00')
+    start: parseTime('18:00'),
+    end: parseTime('04:00')
   };
 
   const mealTimes: Time[] = [];

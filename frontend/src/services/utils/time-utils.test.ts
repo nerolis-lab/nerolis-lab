@@ -1,5 +1,4 @@
 import { TimeUtils } from '@/services/utils/time-utils'
-import type { Time } from 'sleepapi-common'
 import { afterEach, describe, expect, it } from 'vitest'
 
 describe('formatTime', () => {
@@ -17,33 +16,6 @@ describe('formatTime', () => {
 
   it('shall format correctly if 0', () => {
     expect(TimeUtils.formatTime(0)).toBe('00:00:00')
-  })
-})
-
-describe('prettifyTime', () => {
-  it('shall format Time to hh:mm:ss', () => {
-    const time: Time = { hour: 1, minute: 1, second: 1 }
-    expect(TimeUtils.prettifyTime(time)).toBe('01:01:01')
-  })
-
-  it('shall format correctly if hours 0', () => {
-    const time: Time = { hour: 0, minute: 1, second: 1 }
-    expect(TimeUtils.prettifyTime(time)).toBe('00:01:01')
-  })
-
-  it('shall format correctly if minutes 0', () => {
-    const time: Time = { hour: 0, minute: 0, second: 1 }
-    expect(TimeUtils.prettifyTime(time)).toBe('00:00:01')
-  })
-
-  it('shall format correctly if only minutes 0', () => {
-    const time: Time = { hour: 1, minute: 0, second: 1 }
-    expect(TimeUtils.prettifyTime(time)).toBe('01:00:01')
-  })
-
-  it('shall format correctly if 0', () => {
-    const time: Time = { hour: 0, minute: 0, second: 0 }
-    expect(TimeUtils.prettifyTime(time)).toBe('00:00:00')
   })
 })
 

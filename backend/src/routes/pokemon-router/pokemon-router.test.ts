@@ -1,10 +1,21 @@
-import { app } from '@src/app.js';
+import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
+import type { Application } from 'express';
 import type { Logger } from 'sleepapi-common';
 import { SNEASEL } from 'sleepapi-common';
 import request from 'supertest';
-import { vi } from 'vitest';
+import { beforeAll, vi } from 'vitest';
+
+DaoFixture.init();
+
+let app: Application;
 
 describe('GET /pokemon', function () {
+  beforeAll(async () => {
+    // Import app after DaoFixture.init() has set up the test database
+    const { app: testApp } = await import('@src/app.js');
+    app = testApp;
+  });
+
   beforeEach(() => {
     global.logger = {
       debug: vi.fn() as unknown,

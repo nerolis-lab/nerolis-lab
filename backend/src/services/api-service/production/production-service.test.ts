@@ -5,7 +5,6 @@ import {
 } from '@src/services/api-service/production/production-service.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BULBASAUR,
@@ -14,6 +13,7 @@ import {
   ingredient,
   MIN_POT_SIZE,
   nature,
+  parseTime,
   PINSIR,
   subskill
 } from 'sleepapi-common';
@@ -66,8 +66,8 @@ describe('calculatePokemonProduction', () => {
 describe('calculateTeam', () => {
   it('shall calculate production with uneven sleep times', () => {
     const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('21:30'),
-      wakeup: TimeUtils.parseTime('06:01'),
+      bedtime: parseTime('21:30'),
+      wakeup: parseTime('06:01'),
       camp: false,
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
@@ -131,8 +131,8 @@ describe('calculateTeam', () => {
 describe('calculateIv', () => {
   it('should calculate IVs for a given team and variants', () => {
     const settings: TeamSettingsExt = {
-      bedtime: TimeUtils.parseTime('22:00'),
-      wakeup: TimeUtils.parseTime('06:00'),
+      bedtime: parseTime('22:00'),
+      wakeup: parseTime('06:00'),
       camp: true,
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),

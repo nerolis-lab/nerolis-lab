@@ -46,6 +46,7 @@ import {
   limitSubSkillsToLevel,
   MAX_POT_SIZE,
   Metronome,
+  parseTime,
   salad,
   SkillCopy
 } from 'sleepapi-common';
@@ -140,9 +141,11 @@ export default class ProductionController {
     maybeUser?: DBUser;
   }): Promise<TeamSettingsExt> {
     const { settings, includeCooking, maybeUser } = params;
+
     const camp = queryAsBoolean(settings.camp);
-    const bedtime = TimeUtils.parseTime(settings.bedtime);
-    const wakeup = TimeUtils.parseTime(settings.wakeup);
+
+    const bedtime = parseTime(settings.bedtime);
+    const wakeup = parseTime(settings.wakeup);
     const sleepDuration = TimeUtils.calculateDuration({
       start: bedtime,
       end: wakeup
@@ -234,8 +237,8 @@ export default class ProductionController {
   #parseSingleProductionInput(pkmn: Pokemon, input: SingleProductionRequest): ProductionStats {
     const level = queryAsNumber(input.level) ?? 60;
 
-    const mainBedtime = TimeUtils.parseTime(input.mainBedtime);
-    const mainWakeup = TimeUtils.parseTime(input.mainWakeup);
+    const mainBedtime = parseTime(input.mainBedtime);
+    const mainWakeup = parseTime(input.mainWakeup);
     const duration = TimeUtils.calculateDuration({
       start: mainBedtime,
       end: mainWakeup

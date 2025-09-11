@@ -26,7 +26,8 @@ import {
   getPokemon,
   ingredientSetToIntFlat,
   MAX_POT_SIZE,
-  MAX_TEAM_SIZE
+  MAX_TEAM_SIZE,
+  parseTime
 } from 'sleepapi-common';
 
 export default class SolveController {
@@ -61,8 +62,8 @@ export default class SolveController {
 
   private enrichSolveSettings(settings: SolveSettings): SolveSettingsExt {
     const { camp, level } = settings;
-    const bedtime = TimeUtils.parseTime(settings.bedtime);
-    const wakeup = TimeUtils.parseTime(settings.wakeup);
+    const bedtime = parseTime(settings.bedtime);
+    const wakeup = parseTime(settings.wakeup);
     const sleepDuration = TimeUtils.calculateDuration({ start: bedtime, end: wakeup });
     const dayDuration = TimeUtils.calculateDuration({ start: wakeup, end: bedtime });
     if (sleepDuration.hour < 1 || dayDuration.hour < 1) {

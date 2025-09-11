@@ -64,7 +64,7 @@ jobs:
         npm install -g bun
         cd backend
         bun install
-        bun compile
+        bun _compile
 
   frontend:
     name: Frontend

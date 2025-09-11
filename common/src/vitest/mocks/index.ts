@@ -4,4 +4,5 @@ export * from './login';
 export * from './pokemon';
 export * from './recipe';
 export * from './tierlist';
+export * from './time';
 export * from './user';

@@ -4,7 +4,6 @@ import { defaultUserRecipes } from '@src/services/simulation-service/team-simula
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
@@ -17,6 +16,7 @@ import {
   MAX_POT_SIZE,
   Metronome,
   nature,
+  parseTime,
   subskill
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
@@ -67,8 +67,8 @@ const member: TeamMemberExt = {
 };
 
 const settings: TeamSettingsExt = {
-  bedtime: TimeUtils.parseTime('21:30'),
-  wakeup: TimeUtils.parseTime('06:00'),
+  bedtime: parseTime('21:30'),
+  wakeup: parseTime('06:00'),
   camp: false,
   includeCooking: true,
   stockpiledIngredients: emptyIngredientInventoryFloat(),
@@ -237,7 +237,7 @@ describe('startDay', () => {
       }
     };
 
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: parseTime('23:30') });
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
@@ -610,7 +610,7 @@ describe('recoverMeal', () => {
 
 describe('attemptDayHelp', () => {
   it('shall perform a help if time surpasses scheduled help time', () => {
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: parseTime('23:30') });
 
     const member: TeamMemberExt = {
       pokemonWithIngredients: { ...mockPokemonSet, pokemon: { ...mockPokemonSet.pokemon, skillPercentage: 0 } },
@@ -753,7 +753,7 @@ describe('attemptDayHelp', () => {
   });
 
   it('shall not perform a help if time has not passed scheduled help time', () => {
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: TimeUtils.parseTime('23:30') });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({ bedtime: parseTime('23:30') });
 
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     memberState.wakeUp();

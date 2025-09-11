@@ -1,12 +1,12 @@
 import { SleepEvent } from '@src/domain/event/events/sleep-event/sleep-event.js';
 import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import { parseTime } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('SleepEvent', () => {
   it('sleep event end type shall format correctly', () => {
     const event = new SleepEvent({
-      time: TimeUtils.parseTime('06:00'),
+      time: parseTime('06:00'),
       description: 'test',
       period: MOCKED_MAIN_SLEEP,
       sleepState: 'end'
@@ -16,7 +16,7 @@ describe('SleepEvent', () => {
 
   it('sleep event start type shall format correctly', () => {
     const event = new SleepEvent({
-      time: TimeUtils.parseTime('06:00'),
+      time: parseTime('06:00'),
       description: 'test',
       period: MOCKED_MAIN_SLEEP,
       sleepState: 'start'

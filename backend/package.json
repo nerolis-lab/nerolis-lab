@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "tsc --project tsconfig.build.json && tsc-alias && tsoa spec",
+    "build": "tsc --project tsconfig.build.json && tsc-alias && tsoa spec && npm run _compile",
     "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* dist/ && cp ../CHANGELOG.md dist/",
     "test": "vitest --run --coverage",
     "test-watch": "vitest --changed",
     "benchmark-set": "vitest run benchmark --mode benchmarking --update",
     "benchmark-test": "vitest run benchmark --mode benchmarking",
-    "compile": "bun x tsc --noEmit",
+    "_compile": "bun x tsc --noEmit",
     "start": "npm run build && node ./dist/app.js",
     "dev": "bun i && bun --watch src/app.ts",
     "type-watch": "bun x tsc --noEmit --watch"
@@ -35,7 +35,7 @@
     "supertest": "^7.1.4",
     "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.0",
     "vimic": "^1.2.4",
     "vitest": "^3.2.3"
   },
