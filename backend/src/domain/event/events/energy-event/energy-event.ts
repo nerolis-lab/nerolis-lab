@@ -1,9 +1,7 @@
 import type { EventType } from '@src/domain/event/event.js';
 import { ScheduledEvent } from '@src/domain/event/event.js';
 import { energyFactorFromEnergy } from '@src/services/calculator/energy/energy-calculator.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { Time } from 'sleepapi-common';
-import { MathUtils } from 'sleepapi-common';
+import { MathUtils, prettifyTime, type Time } from 'sleepapi-common';
 
 export class EnergyEvent extends ScheduledEvent {
   time: Time;
@@ -31,11 +29,11 @@ export class EnergyEvent extends ScheduledEvent {
 
     if (this.before !== undefined && this.after !== undefined) {
       return (
-        `[${TimeUtils.prettifyTime(this.time)}][Energy] (${this.description}): Recovery: ${deltaSigned}, ` +
+        `[${prettifyTime(this.time)}][Energy] (${this.description}): Recovery: ${deltaSigned}, ` +
         `Energy: ${this.before}% -> ${this.after}%, Energy coefficient: ${energyFactorFromEnergy(this.after)}`
       );
     } else {
-      return `[${TimeUtils.prettifyTime(this.time)}][Energy] (${this.description}): ${deltaSigned}`;
+      return `[${prettifyTime(this.time)}][Energy] (${this.description}): ${deltaSigned}`;
     }
   }
 }

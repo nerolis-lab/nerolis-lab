@@ -17,7 +17,6 @@ import {
   triggerTeamHelpsEvent
 } from '@src/utils/event-utils/event-utils.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import {
   ABOMASNOW,
   CarrySizeUtils,
@@ -26,7 +25,8 @@ import {
   MathUtils,
   berry,
   ingredient,
-  nature
+  nature,
+  parseTime
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
@@ -749,7 +749,7 @@ describe('triggerTeamHelpsEvent', () => {
     const helpfulEvents: SkillEvent[] = [
       new SkillEvent({
         description: '1',
-        time: TimeUtils.parseTime('06:00'),
+        time: parseTime('06:00'),
         skillActivation: {
           skill: ExtraHelpfulS,
           adjustedAmount: 1,
@@ -760,7 +760,7 @@ describe('triggerTeamHelpsEvent', () => {
       }),
       new SkillEvent({
         description: '1',
-        time: TimeUtils.parseTime('13:00'),
+        time: parseTime('13:00'),
         skillActivation: {
           skill: ExtraHelpfulS,
           adjustedAmount: 2,
@@ -787,7 +787,7 @@ describe('triggerTeamHelpsEvent', () => {
 
     const result = triggerTeamHelpsEvent({
       helpEvents: helpfulEvents,
-      currentTime: TimeUtils.parseTime('13:00'),
+      currentTime: parseTime('13:00'),
       emptyProduce: CarrySizeUtils.getEmptyInventory(),
       eventLog,
       helpIndex: 1,

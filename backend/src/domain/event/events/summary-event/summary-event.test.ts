@@ -1,8 +1,7 @@
 import { SummaryEvent } from '@src/domain/event/events/summary-event/summary-event.js';
 import { MOCKED_PRODUCE } from '@src/utils/test-utils/defaults.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { Summary } from 'sleepapi-common';
-import { ChargeStrengthS } from 'sleepapi-common';
+import { ChargeStrengthS, parseTime } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('SummaryEvent', () => {
@@ -29,11 +28,11 @@ describe('SummaryEvent', () => {
       spilledIngredients: MOCKED_PRODUCE.ingredients,
       totalProduce: MOCKED_PRODUCE,
       totalRecovery: 6,
-      collectFrequency: TimeUtils.parseTime('00:10'),
+      collectFrequency: parseTime('00:10'),
       skillBerriesOtherValue: 10
     };
     const event = new SummaryEvent({
-      time: TimeUtils.parseTime('06:00'),
+      time: parseTime('06:00'),
       description: 'pokemon',
       summary
     });

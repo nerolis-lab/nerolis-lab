@@ -1,8 +1,7 @@
 import type { EventType } from '@src/domain/event/event.js';
 import { ScheduledEvent } from '@src/domain/event/event.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { SkillActivation, Time } from 'sleepapi-common';
-import { MathUtils } from 'sleepapi-common';
+import { MathUtils, prettifyTime } from 'sleepapi-common';
 
 export class SkillEvent extends ScheduledEvent {
   time: Time;
@@ -22,7 +21,7 @@ export class SkillEvent extends ScheduledEvent {
   }
 
   format(): string {
-    return `[${TimeUtils.prettifyTime(this.time)}][Skill] (${this.description}): ${MathUtils.round(
+    return `[${prettifyTime(this.time)}][Skill] (${this.description}): ${MathUtils.round(
       this.skillActivation.adjustedAmount,
       2
     )} (${MathUtils.round(this.skillActivation.fractionOfProc * 100, 1)}% strength)`;

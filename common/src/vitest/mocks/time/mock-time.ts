@@ -1,5 +1,5 @@
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import type { Time } from 'sleepapi-common';
+import type { Time } from '../../../types';
+import { parseTime } from '../../../utils';
 
 export function time(attrs?: Partial<Time>): Time {
   return {
@@ -13,14 +13,14 @@ export function time(attrs?: Partial<Time>): Time {
 export const BEDTIME = '21:30';
 export function bedtime(attrs?: Partial<Time>): Time {
   return {
-    ...TimeUtils.parseTime(BEDTIME),
+    ...parseTime(BEDTIME),
     ...attrs
   };
 }
 export const WAKEUP = '06:00';
 export function wakeup(attrs?: Partial<Time>): Time {
   return {
-    ...TimeUtils.parseTime(WAKEUP),
+    ...parseTime(WAKEUP),
     ...attrs
   };
 }

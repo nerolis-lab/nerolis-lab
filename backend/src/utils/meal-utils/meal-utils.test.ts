@@ -6,8 +6,7 @@ import {
   getMealsForFilter
 } from '@src/utils/meal-utils/meal-utils.js';
 import { MOCKED_MAIN_SLEEP } from '@src/utils/test-utils/defaults.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
-import { RECIPES, curry, dessert, salad } from 'sleepapi-common';
+import { RECIPES, curry, dessert, parseTime, salad } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('getMeal', () => {
@@ -174,41 +173,41 @@ describe('getDefaultMealTimes', () => {
     const mealTimes = getDefaultMealTimes(MOCKED_MAIN_SLEEP);
     expect(mealTimes).toEqual({
       meals: {
-        breakfast: TimeUtils.parseTime('11:59'),
-        lunch: TimeUtils.parseTime('17:59'),
-        dinner: TimeUtils.parseTime('21:29')
+        breakfast: parseTime('11:59'),
+        lunch: parseTime('17:59'),
+        dinner: parseTime('21:29')
       },
-      sorted: [TimeUtils.parseTime('11:59'), TimeUtils.parseTime('17:59'), TimeUtils.parseTime('21:29')]
+      sorted: [parseTime('11:59'), parseTime('17:59'), parseTime('21:29')]
     });
   });
 
   it('shall skip dinner if we go to sleep at dinner time', () => {
     const mealTimes = getDefaultMealTimes({
-      start: TimeUtils.parseTime('06:00'),
-      end: TimeUtils.parseTime('18:00')
+      start: parseTime('06:00'),
+      end: parseTime('18:00')
     });
 
     expect(mealTimes).toEqual({
       meals: {
-        breakfast: TimeUtils.parseTime('11:59'),
-        lunch: TimeUtils.parseTime('17:59')
+        breakfast: parseTime('11:59'),
+        lunch: parseTime('17:59')
       },
-      sorted: [TimeUtils.parseTime('11:59'), TimeUtils.parseTime('17:59')]
+      sorted: [parseTime('11:59'), parseTime('17:59')]
     });
   });
 
   it('shall work with night schedule', () => {
     const mealTimes = getDefaultMealTimes({
-      start: TimeUtils.parseTime('17:00'),
-      end: TimeUtils.parseTime('05:00')
+      start: parseTime('17:00'),
+      end: parseTime('05:00')
     });
     expect(mealTimes).toEqual({
       meals: {
-        breakfast: TimeUtils.parseTime('04:59'),
-        lunch: TimeUtils.parseTime('17:59'),
-        dinner: TimeUtils.parseTime('03:59')
+        breakfast: parseTime('04:59'),
+        lunch: parseTime('17:59'),
+        dinner: parseTime('03:59')
       },
-      sorted: [TimeUtils.parseTime('17:59'), TimeUtils.parseTime('03:59'), TimeUtils.parseTime('04:59')]
+      sorted: [parseTime('17:59'), parseTime('03:59'), parseTime('04:59')]
     });
   });
 });

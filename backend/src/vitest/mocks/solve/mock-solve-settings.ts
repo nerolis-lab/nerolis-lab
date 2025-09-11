@@ -1,13 +1,13 @@
-import { bedtime, BEDTIME, wakeup, WAKEUP } from '@src/vitest/mocks/time/mock-time.js';
-import { commonMocks, type SolveSettings, type SolveSettingsExt } from 'sleepapi-common';
+import { mocks } from '@src/vitest/index.js';
+import { type SolveSettings, type SolveSettingsExt } from 'sleepapi-common';
 
 export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
   return {
     camp: false,
-    bedtime: BEDTIME,
-    wakeup: WAKEUP,
+    bedtime: mocks.BEDTIME,
+    wakeup: mocks.WAKEUP,
     level: 0,
-    stockpiledIngredients: [commonMocks.mockIngredientSetSimple()],
+    stockpiledIngredients: [mocks.mockIngredientSetSimple()],
     ...attrs
   };
 }
@@ -15,11 +15,11 @@ export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
 export function solveSettingsExt(attrs?: Partial<SolveSettingsExt>): SolveSettingsExt {
   return {
     camp: false,
-    bedtime: bedtime(),
-    wakeup: wakeup(),
+    bedtime: mocks.bedtime(),
+    wakeup: mocks.wakeup(),
     level: 0,
     includeCooking: false,
-    stockpiledIngredients: commonMocks.mockIngredientSetFloatIndexed(),
+    stockpiledIngredients: mocks.mockIngredientSetFloatIndexed(),
     potSize: 15,
     ...attrs
   };

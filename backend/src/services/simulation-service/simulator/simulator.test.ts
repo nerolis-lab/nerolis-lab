@@ -4,7 +4,6 @@ import { SkillEvent } from '@src/domain/event/events/skill-event/skill-event.js'
 import type { SummaryEvent } from '@src/domain/event/events/summary-event/summary-event.js';
 import { simulation } from '@src/services/simulation-service/simulator/simulator.js';
 import { MOCKED_MAIN_SLEEP, MOCKED_OPTIMAL_PRODUCTION_STATS, MOCKED_POKEMON } from '@src/utils/test-utils/defaults.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import {
   berry,
   CarrySizeUtils,
@@ -13,7 +12,8 @@ import {
   ExtraHelpfulS,
   HelperBoost,
   ingredient,
-  nature
+  nature,
+  parseTime
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
@@ -27,11 +27,11 @@ describe('simulator', () => {
       input: MOCKED_OPTIMAL_PRODUCTION_STATS,
       pokemonWithAverageProduce,
       inventoryLimit: CarrySizeUtils.baseCarrySize(pokemonWithAverageProduce.pokemon),
-      recoveryEvents: [new EnergyEvent({ delta: 10, description: 'some-desc', time: TimeUtils.parseTime('08:00') })],
+      recoveryEvents: [new EnergyEvent({ delta: 10, description: 'some-desc', time: parseTime('08:00') })],
       extraHelpfulEvents: [
         new SkillEvent({
           description: 'Extra helpful',
-          time: TimeUtils.parseTime('08:00'),
+          time: parseTime('08:00'),
           skillActivation: {
             skill: ExtraHelpfulS,
             adjustedAmount: 1,
@@ -44,7 +44,7 @@ describe('simulator', () => {
       helperBoostEvents: [
         new SkillEvent({
           description: 'Helper boost',
-          time: TimeUtils.parseTime('08:00'),
+          time: parseTime('08:00'),
           skillActivation: {
             skill: HelperBoost,
             adjustedAmount: 1,
