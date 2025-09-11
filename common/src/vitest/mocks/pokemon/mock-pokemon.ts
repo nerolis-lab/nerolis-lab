@@ -10,7 +10,7 @@ export const mockMainskill = new (class extends Mainskill {
   description = (params: AmountParams) => `mock skill with level ${params.skillLevel}`;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   amount = (skillLevel: number) => 0;
-  RP = [0];
+  RP = [880, 1251, 1726, 2383, 3936, 5843];
   unit = 'mock unit';
   activations = {};
   image = 'mock';
