@@ -18,12 +18,29 @@ jobs:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
         continue-on-error: true
 
+      - name: Debug metadata output
+        run: |
+          echo "=== Debug Information ==="
+          echo "Metadata outcome: ${{ steps.metadata.outcome }}"
+          echo "Update type: ${{ steps.metadata.outputs.update-type }}"
+          echo "Dependency name: ${{ steps.metadata.outputs.dependency-names }}"
+          echo "Previous version: ${{ steps.metadata.outputs.previous-version }}"
+          echo "New version: ${{ steps.metadata.outputs.new-version }}"
+          echo "Directory: ${{ steps.metadata.outputs.directory }}"
+          echo "Package ecosystem: ${{ steps.metadata.outputs.package-ecosystem }}"
+          echo "Target branch: ${{ steps.metadata.outputs.target-branch }}"
+          echo "PR URL: ${{ github.event.pull_request.html_url }}"
+          echo "PR state: ${{ github.event.pull_request.state }}"
+          echo "PR merged: ${{ github.event.pull_request.merged }}"
+          echo "=== Condition Evaluation ==="
+          echo "Will auto-merge: ${{ steps.metadata.outcome == 'success' && (steps.metadata.outputs['update-type'] == 'version-update:semver-patch' || steps.metadata.outputs['update-type'] == 'version-update:semver-minor') }}"
+
       - name: Enable auto-merge for Dependabot PRs
         if: |
           steps.metadata.outcome == 'success' && (
             steps.metadata.outputs['update-type'] == 'version-update:semver-patch' ||
             steps.metadata.outputs['update-type'] == 'version-update:semver-minor'
-          ) || steps.metadata.outcome == 'failure'
+          )
         run: gh pr merge --auto --rebase "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
@@ -42,7 +59,7 @@ jobs:
       - name: Comment when metadata unavailable
         if: steps.metadata.outcome == 'failure'
         run: |
-          gh pr comment "$PR_URL" --body "ℹ️ Auto-merge enabled for this Dependabot PR. Unable to determine update type due to mixed commits."
+          gh pr comment "$PR_URL" --body "⚠️ Unable to determine update type for this Dependabot PR. Manual review required."
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
