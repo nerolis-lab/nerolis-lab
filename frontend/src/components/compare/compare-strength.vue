@@ -186,7 +186,6 @@ import { defineComponent } from 'vue'
 import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage, pokemonImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useUserStore } from '@/stores/user-store'
@@ -200,6 +199,7 @@ import {
   SkillCopy,
   compactNumber,
   defaultZero,
+  getIsland,
   getMaxIngredientBonus,
   getPokemon,
   recipeLevelBonus,

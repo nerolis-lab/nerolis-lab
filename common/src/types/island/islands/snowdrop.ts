@@ -4,5 +4,6 @@ import type { Island } from '../island';
 export const SNOWDROP: Island = {
   name: 'Snowdrop Tundra',
   shortName: 'snowdrop',
-  berries: [PERSIM, RAWST, WIKI]
+  berries: [PERSIM, RAWST, WIKI],
+  expert: false
 };

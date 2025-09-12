@@ -53,12 +53,11 @@
 <script lang="ts">
 import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { compactNumber, HelperBoost, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
+import { compactNumber, getIsland, HelperBoost, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({

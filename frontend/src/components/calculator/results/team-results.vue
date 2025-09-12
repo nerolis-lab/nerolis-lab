@@ -166,11 +166,10 @@ import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { StrengthService } from '@/services/strength/strength-service'
 import { pokemonImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { MathUtils, compactNumber, getBerry, type RecipeTypeResult } from 'sleepapi-common'
+import { MathUtils, compactNumber, getBerry, getIsland, type RecipeTypeResult } from 'sleepapi-common'
 export default defineComponent({
   name: 'TeamResults',
   components: { StackedBar },
