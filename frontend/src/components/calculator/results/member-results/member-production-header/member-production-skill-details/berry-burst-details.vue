@@ -66,11 +66,10 @@
 <script lang="ts">
 import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
-import { getIsland } from '@/services/utils/island/island-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { BerryBurst, MathUtils, compactNumber } from 'sleepapi-common'
+import { BerryBurst, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
