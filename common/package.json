@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "tslib": "^2.6.2",
-    "uuid": "~11.1.0"
+    "uuid": "~13.0.0"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.50.1"
