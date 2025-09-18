@@ -31,11 +31,6 @@ on:
         type: boolean
         default: false
         description: 'Skip running tests'
-      install-bun:
-        required: false
-        type: boolean
-        default: false
-        description: 'Whether to install bun'
 
 jobs:
   check-for-artifact:
@@ -72,17 +67,6 @@ jobs:
         if: ${{ inputs.working-directory == 'backend' }}
         uses: oven-sh/setup-bun@v2
 
-      - name: Debug bun installation
-        if: ${{ inputs.working-directory == 'backend' }}
-        run: |
-          echo "Debug bun installation"
-          which bun
-          bun --version
-
-      - name: Install bun
-        if: ${{ inputs.install-bun }}
-        uses: oven-sh/setup-bun@v2
-
       - name: Restore common build
         if: ${{ inputs.needs-common-build }}
         uses: actions/cache/restore@v4
@@ -116,9 +100,6 @@ jobs:
           VITE_DISCORD_CLIENT_ID: ${{ vars.VITE_DISCORD_CLIENT_ID }}
           VITE_PATREON_CLIENT_ID: ${{ vars.VITE_PATREON_CLIENT_ID }}
         run: |
-          echo "Debug bun before build"
-          which bun
-          bun --version
           cd ${{ inputs.working-directory }}
           npm run build || (echo "Build failed! Clearing node_modules and forcing cache refresh..." && rm -rf node_modules package-lock.json && exit 1)
 
