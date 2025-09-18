@@ -1134,7 +1134,7 @@ export const BRAVIARY: Pokemon = {
   pokedexNumber: 628,
   frequency: toSeconds(0, 40, 0),
   ingredientPercentage: 12.1,
-  skillPercentage: 3.2,
+  skillPercentage: 3.5,
   carrySize: 18
 };
 
@@ -1184,7 +1184,7 @@ export const MIMIKYU: Pokemon = {
   specialty: 'skill',
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 15.3,
-  skillPercentage: 3.3,
+  skillPercentage: 3.5,
   berry: BLUK,
   genders: BALANCED_GENDER,
   carrySize: 19,
