@@ -31,6 +31,11 @@ on:
         type: boolean
         default: false
         description: 'Skip running tests'
+      install-bun:
+        required: false
+        type: boolean
+        default: false
+        description: 'Whether to install bun'
 
 jobs:
   check-for-artifact:
@@ -62,6 +67,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
+
+      - name: Install bun
+        if: ${{ inputs.install-bun }}
+        uses: oven-sh/setup-bun@v2
 
       - name: Restore common build
         if: ${{ inputs.needs-common-build }}
