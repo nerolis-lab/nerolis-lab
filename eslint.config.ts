@@ -37,9 +37,7 @@ export default typescriptEslint.config(
         ...globals.node
       }
     },
-    rules: {
-      'SleepAPILogger/no-console': 'off'
-    }
+    rules: {}
   },
 
   // frontend-specific rules
@@ -87,38 +85,8 @@ export default typescriptEslint.config(
   // final overwrite custom rules
   {
     plugins: {
-      SleepAPILogger: {
+      sleepapiTransactions: {
         rules: {
-          'no-console': {
-            meta: {
-              type: 'problem',
-              docs: {
-                description: 'Disallow `console` usage and enforce `logger` usage',
-                recommended: true
-              },
-              fixable: 'code',
-              schema: []
-            },
-            create(context: any): any {
-              return {
-                CallExpression(node: any) {
-                  if (
-                    node.callee.type === 'MemberExpression' &&
-                    node.callee.object.type === 'Identifier' &&
-                    node.callee.object.name === 'console' &&
-                    node.callee.property.type === 'Identifier'
-                  ) {
-                    const method = node.callee.property.name;
-                    context.report({
-                      node,
-                      message: `Use 'logger.${method}' instead of 'console.${method}'.`,
-                      fix: (fixer: any) => fixer.replaceText(node.callee, `logger.${method}`)
-                    });
-                  }
-                }
-              };
-            }
-          },
           'require-transaction-option': {
             meta: {
               type: 'problem',
@@ -149,7 +117,6 @@ export default typescriptEslint.config(
 
               return {
                 CallExpression(node: any) {
-                  // Check if entering transaction block
                   if (
                     node.callee.type === 'MemberExpression' &&
                     node.callee.object.type === 'Identifier' &&
@@ -160,7 +127,6 @@ export default typescriptEslint.config(
                     transactionDepth++;
                   }
 
-                  // Check DAO method calls within transaction
                   if (
                     transactionDepth > 0 &&
                     node.callee.type === 'MemberExpression' &&
@@ -172,13 +138,11 @@ export default typescriptEslint.config(
                     const methodName = node.callee.property.name;
                     const args = node.arguments;
 
-                    // Check if last argument contains trx (either { trx } or options: { trx })
                     let hasTransactionOption = false;
 
                     if (args.length > 0) {
                       const lastArg = args[args.length - 1];
                       if (lastArg.type === 'ObjectExpression') {
-                        // Check for direct { trx } format
                         const hasTrxDirect = lastArg.properties.some((prop: any) => {
                           if (prop.type === 'Property' && prop.key.type === 'Identifier') {
                             return prop.key.name === 'trx';
@@ -186,7 +150,6 @@ export default typescriptEslint.config(
                           return false;
                         });
 
-                        // Check for options: { trx } format
                         const optionsProperty = lastArg.properties.find((prop: any) => {
                           if (prop.type === 'Property' && prop.key.type === 'Identifier') {
                             return prop.key.name === 'options';
@@ -240,6 +203,7 @@ export default typescriptEslint.config(
       }
     },
     rules: {
+      'sleepapiTransactions/require-transaction-option': 'error',
       // turning this on means we can't do: someBoolean && someFunction()
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/consistent-type-imports': [
@@ -254,9 +218,7 @@ export default typescriptEslint.config(
           argsIgnorePattern: '^_',
           reportUsedIgnorePattern: true
         }
-      ],
-      'SleepAPILogger/no-console': 'error',
-      'SleepAPILogger/require-transaction-option': 'warn' // Warn for now, can change to 'error' later
+      ]
     }
   },
 

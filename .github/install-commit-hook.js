@@ -1,5 +1,4 @@
 /* eslint-env node */
-/* eslint-disable SleepAPILogger/no-console */
 import fs from 'fs';
 import path from 'path';
 

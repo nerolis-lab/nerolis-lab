@@ -35,7 +35,7 @@ npx vitest --run -- testname.test.ts # Direct vitest execution
 # Code quality (REQUIRED after changes)
 npx eslint .                     # Lint current directory
 npm run type-check               # Frontend type checking (in frontend/)
-npm run compile                  # Backend type checking (in backend/)
+npm run _compile                  # Backend type checking (in backend/)
 ```
 
 ## Architecture Quick Reference
@@ -60,7 +60,7 @@ npm run compile                  # Backend type checking (in backend/)
 1. **Write/update tests** for any functionality changes
 2. **Run tests** to verify: `npx vitest --run -- testname.test.ts`
 3. **Lint changed files**: `npx eslint .`
-4. **Type check**: `npm run type-check` (frontend) or `npm run compile` (backend)
+4. **Type check**: `npm run type-check` (frontend) or `npm run _compile` (backend)
 5. **Build common** if shared types changed: `cd common && npm run build`
 
 ### Testing Patterns

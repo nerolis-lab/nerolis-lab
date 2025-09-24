@@ -1,4 +1,3 @@
-/* eslint-disable SleepAPILogger/no-console */
 import vue from '@vitejs/plugin-vue'
 import fs from 'fs-extra'
 import { fileURLToPath, URL } from 'node:url'
