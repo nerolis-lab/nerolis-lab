@@ -1,4 +1,3 @@
-/* eslint-disable SleepAPILogger/no-console */
 import { REST, Routes } from 'discord.js';
 import { commands } from './commands';
 import { config } from './config';

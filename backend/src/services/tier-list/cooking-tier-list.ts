@@ -135,7 +135,6 @@ class CookingTierlistImpl {
       potSize: MAX_POT_SIZE
     };
     let counter = 0;
-    // eslint-disable-next-line SleepAPILogger/no-console
     console.time('Tierlist default production');
 
     const { productionMap: defaultProductionMap, setCoverSetups } = this.calculateProductionAll({
@@ -146,7 +145,6 @@ class CookingTierlistImpl {
     const producersByIngredientIndex = groupProducersByIngredient(setCoverSetups);
     const defaultSetCover = new SetCover(setCoverSetups, producersByIngredientIndex, defaultCache);
 
-    // eslint-disable-next-line SleepAPILogger/no-console
     console.timeEnd('Tierlist default production');
     const result: PokemonWithRecipeContributionsRaw[] = [];
 
@@ -168,7 +166,6 @@ class CookingTierlistImpl {
         const currentMemoryUsageGigabytes = currentMemoryUsage / 1024 ** 3;
         ++counter;
         logger.info('Current memory usage: ' + MathUtils.round(currentMemoryUsageGigabytes, 3) + ' GB');
-        // eslint-disable-next-line SleepAPILogger/no-console
         console.time(
           `[${counter}/${OPTIMAL_POKEDEX.length * pokemonIngredientLists.length}] ${pokemonWithIngredients.pokemonSet.pokemon}`
         );
@@ -195,7 +192,6 @@ class CookingTierlistImpl {
           recipeContribution && contributions.push(recipeContribution);
         }
 
-        // eslint-disable-next-line SleepAPILogger/no-console
         console.timeEnd(
           // FIXME: this doesn't work because some mons only have 4 ing lists
           `[${counter}/${OPTIMAL_POKEDEX.length * pokemonIngredientLists.length}] ${pokemonWithIngredients.pokemonSet.pokemon}`

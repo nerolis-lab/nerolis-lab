@@ -1,4 +1,3 @@
-/* eslint-disable SleepAPILogger/no-console */
 import { Client, Events, GatewayIntentBits } from 'discord.js';
 import type { Application, Request, Response } from 'express';
 import express from 'express';

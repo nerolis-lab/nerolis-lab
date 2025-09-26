@@ -96,7 +96,6 @@ export const command = {
         await interaction.reply({ embeds: [recipeEmbed] });
       }
     } catch (error) {
-      // eslint-disable-next-line SleepAPILogger/no-console
       console.error('Recipe command error:', error as Error);
       // Try to reply to the interaction if it hasn't been replied to yet
       if (!interaction.replied && !interaction.deferred) {
