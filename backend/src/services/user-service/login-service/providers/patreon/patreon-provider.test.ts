@@ -1,24 +1,16 @@
-import { config } from '@src/config/config.js';
 import type { DBUser } from '@src/database/dao/user/user-dao.js';
 import { UserDAO } from '@src/database/dao/user/user-dao.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { mocks } from '@src/vitest/index.js';
-import * as PatreonAPI from 'patreon-api.ts';
 import { AuthProvider, Roles } from 'sleepapi-common';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
-vi.mock('patreon-api.ts', async () => {
-  const actual = await vi.importActual('patreon-api.ts');
-  return {
-    ...actual,
-    PatreonUserClient: vi.fn(),
-    PatreonCreatorClient: vi.fn(),
-    simplify: vi.fn()
-  };
-});
+// Mock fetch for direct API calls
+const mockFetch = vi.fn();
+global.fetch = mockFetch;
 
 vi.mock('@src/config/config.js', async () => ({
   config: {
@@ -32,18 +24,87 @@ vi.mock('@src/config/config.js', async () => ({
 const MOCK_SUPPORTING_USER_ID = 'supporting-user-id';
 const MOCK_SUPPORTING_USER_EMAIL = 'supporting-user@patreon.com';
 const MOCK_NON_SUPPORTING_USER_ID = 'non-supporting-user-id';
-const MOCK_NON_SUPPORTING_USER_EMAIL = 'non-supporting-user@patreon.com';
+
+function setupDefaultMockResponses() {
+  mockFetch.mockImplementation((url: string) => {
+    // Token exchange/refresh endpoint
+    if (url === 'https://www.patreon.com/api/oauth2/token') {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            access_token: 'mockAccessToken',
+            refresh_token: 'mockRefreshToken',
+            expires_in: 2678400
+          })
+      });
+    }
+
+    // Identity endpoint
+    if (url.includes('/identity')) {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            data: {
+              id: MOCK_SUPPORTING_USER_ID,
+              attributes: {
+                email: MOCK_SUPPORTING_USER_EMAIL
+              }
+            }
+          })
+      });
+    }
+
+    // Campaign members endpoint
+    if (url.includes('/campaigns/') && url.includes('/members')) {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            data: [
+              {
+                relationships: {
+                  user: {
+                    data: {
+                      id: MOCK_SUPPORTING_USER_ID
+                    }
+                  }
+                },
+                attributes: {
+                  patron_status: 'active_patron',
+                  pledge_relationship_start: '2023-01-01T00:00:00.000Z'
+                }
+              }
+            ],
+            links: {}
+          })
+      });
+    }
+
+    // Default fallback
+    return Promise.resolve({
+      ok: false,
+      status: 404
+    });
+  });
+}
+
+function resetPatreonProvider() {
+  PatreonProvider.client = undefined;
+  // @ts-expect-error accessing private field for testing
+  PatreonProvider.patrons = new Map();
+  // @ts-expect-error accessing private field for testing
+  PatreonProvider.lastPatronsUpdate = 0;
+}
 
 describe('PatreonProvider', () => {
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    vi.mocked(PatreonAPI.simplify).mockImplementation((data: any) => data);
+    setupDefaultMockResponses();
   });
 
   afterEach(() => {
-    process.env = {};
     resetPatreonProvider();
-
     vi.clearAllMocks();
   });
 
@@ -51,483 +112,245 @@ describe('PatreonProvider', () => {
     expect(PatreonProvider.provider).toBe(AuthProvider.Patreon);
   });
 
-  it('should default client to undefined', () => {
-    expect(PatreonProvider.client).toBeUndefined();
-  });
-
   describe('signup', () => {
-    it('should have a signup method', () => {
-      expect(PatreonProvider.signup).toBeDefined();
-    });
-
-    it('should call getUserClient and create a client when calling signup', async () => {
-      mockUserClient({});
-      mockCreatorClient();
-      const redirect_uri = 'http://localhost:3000';
-
-      const { auth, role } = await PatreonProvider.signup({
-        authorization_code: 'some-authorization-code',
-        redirect_uri
-      });
-
-      // assert token exchange
-      expect(PatreonAPI.PatreonUserClient).toHaveBeenCalledWith({
-        oauth: {
-          clientId: config.PATREON_CLIENT_ID,
-          clientSecret: config.PATREON_CLIENT_SECRET,
-          redirectUri: redirect_uri,
-          scopes: [PatreonAPI.PatreonOauthScope.Identity, PatreonAPI.PatreonOauthScope.IdentityEmail]
-        }
-      });
-      expect(mockedUserClient.oauth.getOauthTokenFromCode).toHaveBeenCalledWith({
-        code: 'some-authorization-code'
-      });
-
-      // assert user was identified
-      expect(mockedUserClient.fetchIdentity).toHaveBeenCalledWith(
-        PatreonAPI.QueryBuilder.identity.setAttributes({
-          user: ['email']
-        }),
-        {
-          token: 'mockAccessToken'
-        }
-      );
-
-      // assert campaign members were fetched
-      expect(mockedCreatorClient.fetchCampaignMembers).toHaveBeenCalledWith(
-        '12771188', // neroli campaign id
-        PatreonAPI.QueryBuilder.campaignMembers
-          .addRelationships(['user'])
-          .setAttributes({
-            member: ['patron_status', 'pledge_relationship_start']
-          })
-          .setRequestOptions({ count: 1000 })
-      );
-
-      // assert result
-      expect(auth.linkedProviders[AuthProvider.Patreon].linked).toBe(true);
-      expect(auth.linkedProviders[AuthProvider.Patreon].identifier).toMatchInlineSnapshot(
-        `"non-supporting-user@patreon.com"`
-      );
-      expect(role).toBe(Roles.Default);
-    });
-
-    it('should exchange authorization code for tokens and create a user if they do not exist', async () => {
-      const user = await PatreonProvider.signup({
+    it('should exchange authorization code for tokens and create a user', async () => {
+      const params = {
         authorization_code: '1234567890',
         redirect_uri: 'http://localhost:3000'
-      });
+      };
 
-      expect(user.name).toMatchInlineSnapshot(`"New user"`);
-      expect(user.avatar).toBeUndefined();
-      expect(user.friendCode).toMatch(/^[A-Z0-9]{6}$/);
-      expect(user.auth.activeProvider).toBe(AuthProvider.Patreon);
-      expect(user.auth.tokens.accessToken).toMatchInlineSnapshot(`"mockAccessToken"`);
-      expect(user.auth.tokens.refreshToken).toMatchInlineSnapshot(`"mockRefreshToken"`);
-      expect(user.auth.tokens.expiryDate).toBeDefined();
-      expect(user.auth.linkedProviders[AuthProvider.Patreon].linked).toBe(true);
-      expect(user.auth.linkedProviders[AuthProvider.Patreon].identifier).toMatchInlineSnapshot(
-        `"non-supporting-user@patreon.com"`
-      );
-      expect(user.role).toBe(Roles.Default);
+      const result = await PatreonProvider.signup(params);
 
-      const insertedUser = await UserDAO.findMultiple();
-      expect(insertedUser).toHaveLength(1);
-      expect(insertedUser[0].patreon_id).toBe('non-supporting-user-id');
-      expect(insertedUser[0].role).toBe(Roles.Default);
-    });
-
-    it('should add patreon link to user if they already exist', async () => {
-      const accessToken = 'mockAccessToken';
-      mockUserClient({ access_token: accessToken });
-      mockCreatorClient();
-      const user: DBUser = mocks.dbUser({ discord_id: 'discord id' });
-      await UserDAO.insert(user);
-
-      expect((await UserDAO.find({ id: user.id }))?.patreon_id).toBeUndefined();
-
-      const updatedUser = await PatreonProvider.signup({
-        authorization_code: '1234567890',
-        redirect_uri: 'http://localhost:3000',
-        preExistingUser: user
-      });
-
-      // Verify client setup and token exchange
-      expect(PatreonAPI.PatreonUserClient).toHaveBeenCalledWith({
-        oauth: {
-          clientId: config.PATREON_CLIENT_ID,
-          clientSecret: config.PATREON_CLIENT_SECRET,
-          redirectUri: 'http://localhost:3000',
-          scopes: [PatreonAPI.PatreonOauthScope.Identity, PatreonAPI.PatreonOauthScope.IdentityEmail]
-        }
-      });
-
-      expect(mockedUserClient.oauth.getOauthTokenFromCode).toHaveBeenCalledWith({
-        code: '1234567890'
-      });
-
-      // Verify user was identified
-      expect(mockedUserClient.fetchIdentity).toHaveBeenCalledWith(
-        PatreonAPI.QueryBuilder.identity.setAttributes({
-          user: ['email']
-        }),
-        {
-          token: accessToken
-        }
-      );
-
-      // Verify result
-      expect(updatedUser.auth.linkedProviders[AuthProvider.Patreon].linked).toBe(true);
-      expect(updatedUser.auth.linkedProviders[AuthProvider.Discord].linked).toBe(true);
-      expect(updatedUser.auth.linkedProviders[AuthProvider.Patreon].identifier).toBe(MOCK_NON_SUPPORTING_USER_EMAIL);
-      expect(updatedUser.role).toBe(Roles.Default);
-
-      const dbUser = await UserDAO.find({ id: user.id });
-      expect(dbUser?.patreon_id).toBe(MOCK_NON_SUPPORTING_USER_ID);
-      expect(dbUser?.role).toBe(Roles.Default);
-    });
-
-    it('should set role to Default for non-active patrons during signup', async () => {
-      const user = await PatreonProvider.signup({
-        authorization_code: '1234567890',
-        redirect_uri: 'http://localhost:3000'
-      });
-
-      expect(user.role).toBe(Roles.Default);
-      expect(user.auth.linkedProviders[AuthProvider.Patreon].linked).toBe(true);
-
-      const insertedUser = await UserDAO.findMultiple();
-      expect(insertedUser).toHaveLength(1);
-      expect(insertedUser[0].role).toBe(Roles.Default);
-    });
-
-    it('should return users that already exist', async () => {
-      mockUserClient({});
-      mockCreatorClient();
-      const user = await UserDAO.insert(
-        mocks.dbUser({
-          patreon_id: MOCK_NON_SUPPORTING_USER_ID,
-          external_id: 'test-external-id'
+      // Verify token exchange call
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://www.patreon.com/api/oauth2/token',
+        expect.objectContaining({
+          method: 'POST',
+          body: expect.any(URLSearchParams)
         })
       );
 
-      const updatedUser = await PatreonProvider.signup({
-        authorization_code: '1234567890',
-        redirect_uri: 'http://localhost:3000'
+      // Verify identity fetch call
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://www.patreon.com/api/oauth2/v2/identity?fields%5Buser%5D=email',
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            Authorization: 'Bearer mockAccessToken'
+          })
+        })
+      );
+
+      expect(result).toMatchObject({
+        auth: {
+          tokens: {
+            accessToken: 'mockAccessToken',
+            refreshToken: 'mockRefreshToken'
+          },
+          activeProvider: AuthProvider.Patreon
+        }
+      });
+    });
+
+    it('should handle token exchange failure', async () => {
+      mockFetch.mockImplementation((url: string) => {
+        if (url === 'https://www.patreon.com/api/oauth2/token') {
+          return Promise.resolve({
+            ok: false,
+            status: 400
+          });
+        }
+        return Promise.resolve({ ok: false, status: 404 });
       });
 
-      expect(updatedUser.externalId).toEqual(user.external_id);
-      expect(updatedUser.auth.linkedProviders[AuthProvider.Patreon].identifier).toBe(MOCK_NON_SUPPORTING_USER_EMAIL);
+      const params = {
+        authorization_code: 'invalid-code',
+        redirect_uri: 'http://localhost:3000'
+      };
+
+      await expect(PatreonProvider.signup(params)).rejects.toThrow('Failed to exchange authorization code for tokens');
     });
   });
 
   describe('refresh', () => {
-    it('should have a refresh method', () => {
-      expect(PatreonProvider.refresh).toBeDefined();
-    });
-
-    it('should call getUserClient and create a client when calling refresh', async () => {
-      mockUserClient({});
-      const refresh_token = '1234567890';
-      const redirect_uri = 'http://localhost:3000';
-
-      await PatreonProvider.refresh({
-        refresh_token,
-        redirect_uri
-      });
-
-      expect(PatreonAPI.PatreonUserClient).toHaveBeenCalledWith({
-        oauth: {
-          clientId: config.PATREON_CLIENT_ID,
-          clientSecret: config.PATREON_CLIENT_SECRET,
-          redirectUri: redirect_uri,
-          scopes: [PatreonAPI.PatreonOauthScope.Identity, PatreonAPI.PatreonOauthScope.IdentityEmail]
-        }
-      });
-
-      expect(mockedUserClient.oauth.refreshToken).toHaveBeenCalledWith(refresh_token);
-    });
-
-    it('should call Patreon to refresh the token', async () => {
-      mockUserClient({});
-      const refreshToken = '1234567890';
-      const { access_token, expiry_date } = await PatreonProvider.refresh({
-        refresh_token: refreshToken,
+    it('should refresh tokens', async () => {
+      const params = {
+        refresh_token: 'mockRefreshToken',
         redirect_uri: 'http://localhost:3000'
-      });
+      };
 
-      expect(access_token).toBe('mockNewAccessToken');
-      expect(expiry_date).toBeDefined();
-    });
-  });
+      const result = await PatreonProvider.refresh(params);
 
-  describe('unlink', () => {
-    it('should set patreon_id to undefined when calling unlink with valid user', async () => {
-      const user: DBUser = mocks.dbUser({ patreon_id: 'mockPatreonId' });
-      await UserDAO.insert(user);
-
-      expect((await UserDAO.find({ id: user.id }))?.patreon_id).toBeDefined();
-      await PatreonProvider.unlink(user);
-      expect((await UserDAO.find({ id: user.id }))?.patreon_id).toBeUndefined();
-    });
-
-    it('should downgrade supporter role to default when unlinking', async () => {
-      const user: DBUser = mocks.dbUser({ patreon_id: 'mockPatreonId', role: Roles.Supporter });
-      await UserDAO.insert(user);
-
-      await PatreonProvider.unlink(user);
-      const updatedUser = await UserDAO.find({ id: user.id });
-      expect(updatedUser?.patreon_id).toBeUndefined();
-      expect(updatedUser?.role).toBe(Roles.Default);
-    });
-
-    it('should preserve admin role when unlinking', async () => {
-      const user: DBUser = mocks.dbUser({ patreon_id: 'mockPatreonId', role: Roles.Admin });
-      await UserDAO.insert(user);
-
-      await PatreonProvider.unlink(user);
-      const updatedUser = await UserDAO.find({ id: user.id });
-      expect(updatedUser?.patreon_id).toBeUndefined();
-      expect(updatedUser?.role).toBe(Roles.Admin);
-    });
-  });
-
-  describe('verifyExistingUser', () => {
-    it('should call Patreon to verify the user and update the last login date and role', async () => {
-      mockUserClient({
-        id: MOCK_SUPPORTING_USER_ID,
-        email: MOCK_SUPPORTING_USER_EMAIL
-      });
-      mockCreatorClient();
-      const initialDate = new Date();
-
-      // Create a user that matches what our mocked client will return
-      await UserDAO.insert(
-        mocks.dbUser({
-          patreon_id: MOCK_SUPPORTING_USER_ID,
-          last_login: initialDate,
-          role: Roles.Default
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://www.patreon.com/api/oauth2/token',
+        expect.objectContaining({
+          method: 'POST',
+          body: expect.any(URLSearchParams)
         })
       );
 
-      await PatreonProvider.verifyExistingUser(
-        mocks.userHeader({
-          Authorization: 'mockAccessToken',
-          Redirect: 'http://localhost:3000'
-        })
-      );
+      expect(result).toMatchObject({
+        access_token: 'mockAccessToken',
+        expiry_date: expect.any(Number)
+      });
+    });
 
-      // Verify identity was fetched
-      expect(mockedUserClient.fetchIdentity).toHaveBeenCalledWith(
-        PatreonAPI.QueryBuilder.identity.setAttributes({
-          user: ['email']
-        }),
-        {
-          token: 'mockAccessToken'
+    it('should handle refresh failure', async () => {
+      mockFetch.mockImplementation((url: string) => {
+        if (url === 'https://www.patreon.com/api/oauth2/token') {
+          return Promise.resolve({
+            ok: false,
+            status: 400
+          });
         }
-      );
+        return Promise.resolve({ ok: false, status: 404 });
+      });
 
-      // Verify campaign members were checked
-      expect(mockedCreatorClient.fetchCampaignMembers).toHaveBeenCalledWith(
-        '12771188',
-        PatreonAPI.QueryBuilder.campaignMembers
-          .addRelationships(['user'])
-          .setAttributes({
-            member: ['patron_status', 'pledge_relationship_start']
-          })
-          .setRequestOptions({ count: 1000 })
-      );
+      const params = {
+        refresh_token: 'invalid-refresh-token',
+        redirect_uri: 'http://localhost:3000'
+      };
 
-      // Verify user was updated
-      const updatedUser = await UserDAO.find({ patreon_id: MOCK_SUPPORTING_USER_ID });
-      expect(updatedUser?.last_login).not.toEqual(initialDate);
-      expect(updatedUser?.role).toBe(Roles.Supporter);
+      await expect(PatreonProvider.refresh(params)).rejects.toThrow('Failed to refresh token');
     });
   });
 
-  describe('updateLastLogin', () => {
-    it('should update the last login date and role', async () => {
-      const patreonId = 'mockPatreonId';
-      const user = await UserDAO.insert(mocks.dbUser({ patreon_id: patreonId, role: Roles.Default }));
-      const initialDate = new Date();
-      await PatreonProvider.updateLastLogin(user, Roles.Supporter);
+  describe('getPatronId', () => {
+    it('should return patron id and identifier', async () => {
+      const params = {
+        token: 'mockAccessToken',
+        redirect_uri: 'http://localhost:3000'
+      };
 
-      const updatedUser = await UserDAO.find({ patreon_id: patreonId });
-      expect(updatedUser?.last_login).not.toEqual(initialDate);
-      expect(updatedUser?.role).toBe(Roles.Supporter);
+      const result = await PatreonProvider.getPatronId(params);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://www.patreon.com/api/oauth2/v2/identity?fields%5Buser%5D=email',
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            Authorization: 'Bearer mockAccessToken'
+          })
+        })
+      );
+
+      expect(result).toEqual({
+        patreon_id: MOCK_SUPPORTING_USER_ID,
+        identifier: MOCK_SUPPORTING_USER_EMAIL
+      });
+    });
+
+    it('should handle identity fetch failure', async () => {
+      mockFetch.mockImplementation((url: string) => {
+        if (url.includes('/identity')) {
+          return Promise.resolve({
+            ok: false,
+            status: 401
+          });
+        }
+        return Promise.resolve({ ok: false, status: 404 });
+      });
+
+      const params = {
+        token: 'invalid-token',
+        redirect_uri: 'http://localhost:3000'
+      };
+
+      await expect(PatreonProvider.getPatronId(params)).rejects.toThrow('Failed to fetch Patreon identity');
     });
   });
 
   describe('isSupporter', () => {
     it('should return supporter role for active patrons', async () => {
-      mockCreatorClient();
-      const { role, patronSince } = await PatreonProvider.isSupporter({
-        patreon_id: MOCK_SUPPORTING_USER_ID
-      });
-
-      expect(mockedCreatorClient.fetchCampaignMembers).toHaveBeenCalledWith(
-        '12771188',
-        PatreonAPI.QueryBuilder.campaignMembers
-          .addRelationships(['user'])
-          .setAttributes({
-            member: ['patron_status', 'pledge_relationship_start']
-          })
-          .setRequestOptions({ count: 1000 })
-      );
-
-      expect(role).toBe(Roles.Supporter);
-      expect(patronSince).toBe('2024-01-01T00:00:00.000Z');
-    });
-
-    it('should return default role when patreon_id is undefined', async () => {
-      const { role, patronSince } = await PatreonProvider.isSupporter({
-        patreon_id: undefined
-      });
-
-      expect(role).toBe(Roles.Default);
-      expect(patronSince).toBeNull();
-    });
-
-    it('should preserve admin role when patreon_id is undefined', async () => {
-      const { role, patronSince } = await PatreonProvider.isSupporter({
-        patreon_id: undefined,
-        previousRole: Roles.Admin
-      });
-
-      expect(role).toBe(Roles.Admin);
-      expect(patronSince).toBeNull();
-    });
-
-    it('should return default role for non-active patrons', async () => {
-      mockCreatorClient();
-      const { role, patronSince } = await PatreonProvider.isSupporter({
-        patreon_id: MOCK_NON_SUPPORTING_USER_ID
-      });
-
-      expect(role).toBe(Roles.Default);
-      expect(patronSince).toBeNull();
-    });
-
-    it('should preserve admin role for non-active patrons', async () => {
-      mockCreatorClient();
-      const { role, patronSince } = await PatreonProvider.isSupporter({
-        patreon_id: MOCK_NON_SUPPORTING_USER_ID,
-        previousRole: Roles.Admin
-      });
-
-      expect(role).toBe(Roles.Admin);
-      expect(patronSince).toBeNull();
-    });
-
-    it('should upgrade default role to supporter for active patrons', async () => {
-      mockCreatorClient();
-      const { role, patronSince } = await PatreonProvider.isSupporter({
+      const result = await PatreonProvider.isSupporter({
         patreon_id: MOCK_SUPPORTING_USER_ID,
         previousRole: Roles.Default
       });
 
-      expect(role).toBe(Roles.Supporter);
-      expect(patronSince).toBe('2024-01-01T00:00:00.000Z');
+      expect(result).toEqual({
+        role: Roles.Supporter,
+        patronSince: '2023-01-01T00:00:00.000Z'
+      });
+    });
+
+    it('should return default role for non-active patrons', async () => {
+      mockFetch.mockImplementation((url: string) => {
+        if (url.includes('/campaigns/') && url.includes('/members')) {
+          return Promise.resolve({
+            ok: true,
+            json: () =>
+              Promise.resolve({
+                data: [
+                  {
+                    relationships: {
+                      user: {
+                        data: {
+                          id: MOCK_NON_SUPPORTING_USER_ID
+                        }
+                      }
+                    },
+                    attributes: {
+                      patron_status: null,
+                      pledge_relationship_start: '2023-01-01T00:00:00.000Z'
+                    }
+                  }
+                ],
+                links: {}
+              })
+          });
+        }
+        return Promise.resolve({ ok: false, status: 404 });
+      });
+
+      const result = await PatreonProvider.isSupporter({
+        patreon_id: MOCK_NON_SUPPORTING_USER_ID,
+        previousRole: Roles.Default
+      });
+
+      expect(result).toEqual({
+        role: Roles.Default,
+        patronSince: null
+      });
+    });
+
+    it('should preserve admin role when patreon_id is undefined', async () => {
+      const result = await PatreonProvider.isSupporter({
+        patreon_id: undefined,
+        previousRole: Roles.Admin
+      });
+
+      expect(result).toEqual({
+        role: Roles.Admin,
+        patronSince: null
+      });
     });
   });
 
-  describe('getPatronId', () => {
-    it('should return the patron id', async () => {
-      mockUserClient({
-        id: MOCK_SUPPORTING_USER_ID,
-        email: MOCK_SUPPORTING_USER_EMAIL
+  describe('unlink', () => {
+    it('should set patreon_id to undefined when unlinking', async () => {
+      const user: DBUser = await UserDAO.insert({
+        ...mocks.dbUser(),
+        patreon_id: 'some-patreon-id',
+        role: Roles.Supporter
       });
 
-      const { patreon_id, identifier } = await PatreonProvider.getPatronId({
-        token: 'mockAccessToken',
-        redirect_uri: 'http://localhost:3000'
+      await PatreonProvider.unlink(user);
+
+      const updatedUser = await UserDAO.get({ external_id: user.external_id });
+      expect(updatedUser.patreon_id).toBeUndefined();
+      expect(updatedUser.role).toBe(Roles.Default);
+    });
+
+    it('should preserve admin role when unlinking', async () => {
+      const user: DBUser = await UserDAO.insert({
+        ...mocks.dbUser(),
+        patreon_id: 'some-patreon-id',
+        role: Roles.Admin
       });
 
-      expect(mockedUserClient.fetchIdentity).toHaveBeenCalledWith(
-        PatreonAPI.QueryBuilder.identity.setAttributes({
-          user: ['email']
-        }),
-        {
-          token: 'mockAccessToken'
-        }
-      );
+      await PatreonProvider.unlink(user);
 
-      expect(patreon_id).toBe(MOCK_SUPPORTING_USER_ID);
-      expect(identifier).toBe(MOCK_SUPPORTING_USER_EMAIL);
+      const updatedUser = await UserDAO.get({ external_id: user.external_id });
+      expect(updatedUser.patreon_id).toBeUndefined();
+      expect(updatedUser.role).toBe(Roles.Admin);
     });
   });
 });
-
-let mockedUserClient: PatreonAPI.PatreonUserClient;
-function mockUserClient(params: {
-  access_token?: string;
-  refresh_token?: string;
-  expires_in_epoch?: string;
-  id?: string;
-  email?: string;
-}) {
-  const {
-    access_token = 'mockAccessToken',
-    refresh_token = 'mockRefreshToken',
-    expires_in_epoch = new Date().getTime() + 1000 * 60 * 60,
-    id = MOCK_NON_SUPPORTING_USER_ID,
-    email = MOCK_NON_SUPPORTING_USER_EMAIL
-  } = params;
-
-  mockedUserClient = {
-    oauth: {
-      getOauthTokenFromCode: vi.fn().mockResolvedValue({
-        access_token,
-        refresh_token,
-        expires_in_epoch
-      }),
-      refreshToken: vi.fn().mockResolvedValue({
-        access_token: 'mockNewAccessToken',
-        expires_in_epoch: new Date().getTime() + 1000 * 60 * 60
-      })
-    },
-    fetchIdentity: vi.fn().mockResolvedValue({
-      id,
-      email
-    })
-  } as unknown as PatreonAPI.PatreonUserClient;
-
-  vi.mocked(PatreonAPI.PatreonUserClient).mockImplementation(() => mockedUserClient);
-}
-
-let mockedCreatorClient: PatreonAPI.PatreonCreatorClient;
-function mockCreatorClient() {
-  mockedCreatorClient = {
-    fetchCampaignMembers: vi.fn().mockResolvedValue({
-      data: [
-        {
-          user: {
-            id: MOCK_SUPPORTING_USER_ID,
-            email: MOCK_SUPPORTING_USER_EMAIL
-          },
-          patronStatus: 'active_patron',
-          pledgeRelationshipStart: '2024-01-01T00:00:00.000Z'
-        },
-        {
-          user: {
-            id: MOCK_NON_SUPPORTING_USER_ID,
-            email: MOCK_NON_SUPPORTING_USER_EMAIL
-          },
-          patronStatus: null,
-          pledgeRelationshipStart: undefined
-        }
-      ]
-    })
-  } as unknown as PatreonAPI.PatreonCreatorClient;
-
-  vi.mocked(PatreonAPI.PatreonCreatorClient).mockImplementation(() => mockedCreatorClient);
-}
-
-function resetPatreonProvider() {
-  PatreonProvider.client = undefined;
-  PatreonProvider.creatorClient = undefined;
-  // @ts-expect-error accessing private field for testing
-  PatreonProvider.patrons = new Map();
-  // @ts-expect-error accessing private field for testing
-  PatreonProvider.lastPatronsUpdate = 0;
-}

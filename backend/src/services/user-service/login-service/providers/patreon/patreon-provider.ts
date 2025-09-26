@@ -3,32 +3,45 @@ import { UserDAO, type DBUser } from '@src/database/dao/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import { generateFriendCode } from '@src/services/user-service/login-service/login-utils.js';
 import { AbstractProvider } from '@src/services/user-service/login-service/providers/abstract-provider.js';
-import type { Patron } from '@src/services/user-service/login-service/providers/patreon/patreon-types.js';
-import { PatreonCreatorClient, PatreonOauthScope, PatreonUserClient, QueryBuilder, simplify } from 'patreon-api.ts';
+
+type PatreonMember = {
+  relationships?: {
+    user?: {
+      data?: {
+        id?: string;
+      } | null;
+    } | null;
+  } | null;
+  attributes: {
+    patron_status: PatronStatus | null;
+    pledge_relationship_start: string | null;
+  };
+};
+
+type PatreonMembersResponse = {
+  data: PatreonMember[];
+  links?: {
+    next?: string;
+  };
+};
+import type { Patron, PatronStatus } from '@src/services/user-service/login-service/providers/patreon/patreon-types.js';
 import type { LoginResponse, RefreshResponse, UserHeader } from 'sleepapi-common';
 import { AuthProvider, Roles, uuid } from 'sleepapi-common';
 
-export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
+export class PatreonProviderImpl extends AbstractProvider {
   provider = AuthProvider.Patreon;
-  client: PatreonUserClient | undefined;
-  creatorClient: PatreonCreatorClient | undefined;
+  client = undefined;
+
+  private tokenUrl = 'https://www.patreon.com/api/oauth2/token';
+  private identityUrl = 'https://www.patreon.com/api/oauth2/v2/identity?fields%5Buser%5D=email';
+  private patronMembersUrl =
+    // 12771188 is the campaign id for the Neroli's Lab campaign
+    'https://www.patreon.com/api/oauth2/v2/campaigns/12771188/members?' +
+    'include=user&fields%5Bmember%5D=patron_status,pledge_relationship_start&page%5Bcount%5D=1000';
 
   private patrons: Map<string, Patron> = new Map();
   private lastPatronsUpdate: number = 0;
   private readonly PATRONS_CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes in milliseconds
-  private readonly NEROLI_CAMPAIGN_ID = '12771188';
-
-  private identityQuery = QueryBuilder.identity.setAttributes({
-    user: ['email']
-  });
-
-  // can add currently_entitled_tiers to addRelationships to find which tier the user is in
-  private memberQuery = QueryBuilder.campaignMembers
-    .addRelationships(['user']) // needed so we can grab id to compare with patreon_id
-    .setAttributes({
-      member: ['patron_status', 'pledge_relationship_start']
-    })
-    .setRequestOptions({ count: 1000 });
 
   async signup(params: {
     authorization_code: string;
@@ -36,13 +49,26 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     preExistingUser?: DBUser;
   }): Promise<LoginResponse> {
     const { authorization_code, redirect_uri, preExistingUser } = params;
-    const token = await this.getUserClient(redirect_uri).oauth.getOauthTokenFromCode({ code: authorization_code });
 
-    if (!token) {
-      throw new AuthorizationError('Failed to get Patreon tokens from authorization code');
+    const tokenResponse = await fetch('https://www.patreon.com/api/oauth2/token', {
+      method: 'POST',
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: authorization_code,
+        redirect_uri: redirect_uri,
+        client_id: config.PATREON_CLIENT_ID,
+        client_secret: config.PATREON_CLIENT_SECRET
+      })
+    });
+
+    if (!tokenResponse.ok) {
+      throw new AuthorizationError(`Failed to exchange authorization code for tokens: ${tokenResponse.status}`);
     }
 
-    const { access_token, refresh_token, expires_in_epoch } = token;
+    const tokenData = await tokenResponse.json();
+    const access_token = tokenData.access_token;
+    const refresh_token = tokenData.refresh_token;
+    const expires_in_epoch = String(Date.now() + tokenData.expires_in * 1000);
 
     const { patreon_id, identifier } = await this.getPatronId({
       token: access_token,
@@ -100,13 +126,27 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }
 
   async refresh(params: { refresh_token: string; redirect_uri: string }): Promise<RefreshResponse> {
-    const { refresh_token, redirect_uri } = params;
+    const { refresh_token } = params;
 
-    const token = await this.getUserClient(redirect_uri).oauth.refreshToken(refresh_token);
+    const tokenResponse = await fetch(this.tokenUrl, {
+      method: 'POST',
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refresh_token,
+        client_id: config.PATREON_CLIENT_ID,
+        client_secret: config.PATREON_CLIENT_SECRET
+      })
+    });
+
+    if (!tokenResponse.ok) {
+      throw new AuthorizationError(`Failed to refresh token: ${tokenResponse.status}`);
+    }
+
+    const tokenData = await tokenResponse.json();
 
     return {
-      access_token: token.access_token,
-      expiry_date: Number(token.expires_in_epoch)
+      access_token: tokenData.access_token,
+      expiry_date: Date.now() + tokenData.expires_in * 1000
     };
   }
 
@@ -135,16 +175,24 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     token: string;
     redirect_uri: string;
   }): Promise<{ patreon_id: string; identifier: string }> {
-    const { token, redirect_uri } = params;
-    const userData = simplify(
-      await this.getUserClient(redirect_uri).fetchIdentity(this.identityQuery, {
-        token
-      })
-    );
+    const { token } = params;
+
+    const identityResponse = await fetch(this.identityUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!identityResponse.ok) {
+      throw new AuthorizationError(`Failed to fetch Patreon identity: ${identityResponse.status}`);
+    }
+
+    const identityData = await identityResponse.json();
 
     return {
-      patreon_id: userData.id,
-      identifier: userData.email
+      patreon_id: identityData.data.id,
+      identifier: identityData.data.attributes.email
     };
   }
 
@@ -161,6 +209,7 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
     // update patrons cache and check if they are a supporter
     await this.getPatrons();
     const patron = this.patrons.get(patreon_id);
+
     if (!patron || patron.patronStatus !== 'active_patron') {
       return { role, patronSince: null };
     }
@@ -180,48 +229,124 @@ export class PatreonProviderImpl extends AbstractProvider<PatreonUserClient> {
   }
 
   private async updatePatrons(): Promise<Map<string, Patron>> {
-    const memberData = simplify(
-      await this.getCreatorClient().fetchCampaignMembers(this.NEROLI_CAMPAIGN_ID, this.memberQuery)
-    ).data;
+    let creatorAccessToken = config.PATREON_CREATOR_ACCESS_TOKEN;
+    const refreshToken = config.PATREON_CREATOR_REFRESH_TOKEN;
 
-    for (const member of memberData) {
-      this.patrons.set(member.user.id, {
-        id: member.user.id,
-        patronStatus: member.patronStatus,
-        pledgeRelationshipStart: member.pledgeRelationshipStart
-      });
+    let response = await this.fetchPatronMembers(creatorAccessToken);
+
+    if (!response) {
+      // Some network error happened, return the current patrons
+      return this.patrons;
     }
+
+    // If unauthorized and we have a refresh token, try to refresh
+    if (response.status === 401 && refreshToken) {
+      const newAccessToken = await this.refreshCreatorToken(refreshToken);
+      if (newAccessToken) {
+        creatorAccessToken = newAccessToken;
+        response = await this.fetchPatronMembers(creatorAccessToken);
+        if (!response) {
+          return this.patrons;
+        }
+      }
+    }
+
+    if (!response.ok) {
+      console.error('Failed to fetch patron members:', response.status);
+      return this.patrons;
+    }
+
+    // Process initial page
+    const data = await response.json();
+    this.processMembers(data.data);
+
+    // Handle pagination
+    await this.processPaginatedMembers(data.links?.next, creatorAccessToken);
+
     return this.patrons;
   }
 
-  private getUserClient(redirect_uri: string) {
-    if (!this.client) {
-      this.client = new PatreonUserClient({
-        oauth: {
-          clientId: config.PATREON_CLIENT_ID,
-          clientSecret: config.PATREON_CLIENT_SECRET,
-          redirectUri: redirect_uri,
-          scopes: [PatreonOauthScope.Identity, PatreonOauthScope.IdentityEmail]
+  private async fetchPatronMembers(accessToken: string): Promise<Response | null> {
+    try {
+      return await fetch(this.patronMembersUrl, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
         }
       });
+    } catch (error) {
+      console.error('Network error fetching patron members:', error);
+      return null;
     }
-    return this.client;
   }
 
-  private getCreatorClient(): PatreonCreatorClient {
-    if (!this.creatorClient) {
-      this.creatorClient = new PatreonCreatorClient({
-        oauth: {
-          clientId: config.PATREON_CLIENT_ID,
-          clientSecret: config.PATREON_CLIENT_SECRET,
-          token: {
-            access_token: config.PATREON_CREATOR_ACCESS_TOKEN,
-            refresh_token: config.PATREON_CREATOR_REFRESH_TOKEN
-          }
-        }
+  private async refreshCreatorToken(refreshToken: string): Promise<string | null> {
+    try {
+      const tokenResponse = await fetch(this.tokenUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken,
+          client_id: config.PATREON_CLIENT_ID,
+          client_secret: config.PATREON_CLIENT_SECRET
+        })
       });
+
+      if (!tokenResponse.ok) {
+        console.error('Failed to refresh creator token:', tokenResponse.status);
+        return null;
+      }
+
+      const newToken = await tokenResponse.json();
+
+      console.log('Creator access token was refreshed. Update stored credentials securely.');
+
+      return newToken.access_token;
+    } catch (error) {
+      console.error('Network error refreshing creator token:', error);
+      return null;
     }
-    return this.creatorClient;
+  }
+
+  private processMembers(members: PatreonMember[]): void {
+    for (const member of members) {
+      const userId = member.relationships?.user?.data?.id;
+      if (userId) {
+        this.patrons.set(userId, {
+          id: userId,
+          patronStatus: member.attributes.patron_status,
+          pledgeRelationshipStart: member.attributes.pledge_relationship_start
+        });
+      }
+    }
+  }
+
+  private async processPaginatedMembers(nextUrl: string | undefined, accessToken: string): Promise<void> {
+    while (nextUrl) {
+      try {
+        const response = await fetch(nextUrl, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          console.error('Failed to fetch paginated members:', response.status);
+          break;
+        }
+
+        const data: PatreonMembersResponse = await response.json();
+        this.processMembers(data.data);
+        nextUrl = data.links?.next;
+      } catch (error) {
+        console.error('Network error fetching paginated members:', error);
+        break;
+      }
+    }
   }
 }
 

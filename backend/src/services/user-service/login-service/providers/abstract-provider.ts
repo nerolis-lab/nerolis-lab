@@ -3,7 +3,7 @@ import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import type { AuthProvider } from 'sleepapi-common';
 import { Roles, type LoginResponse, type RefreshResponse, type UserHeader } from 'sleepapi-common';
 
-export abstract class AbstractProvider<TClient> {
+export abstract class AbstractProvider<TClient = undefined> {
   public abstract provider: AuthProvider;
   abstract client: TClient | undefined;
 
