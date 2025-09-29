@@ -1,3 +1,17 @@
+# [2.28.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.27.0...v2.28.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* replace patreon-api.ts with custom implementation ([fc87e68](https://github.com/nerolis-lab/nerolis-lab/commit/fc87e68bd31013d2448bdcb0bd97b84dee8388a8))
+
+
+### Features
+
+* add event builder ([597e664](https://github.com/nerolis-lab/nerolis-lab/commit/597e664c10dad348b00de180f536a37b5a39a310))
+* adds natu and xatu ([2468cbe](https://github.com/nerolis-lab/nerolis-lab/commit/2468cbe83a51ed7f46642c6b258e382c6c811c0a))
+* **pokemon:** Update skill percentage for Braviary and Mimikyu ([248f11a](https://github.com/nerolis-lab/nerolis-lab/commit/248f11af40dc2cfc649244a44cb99308808db363))
+
 # [2.27.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.26.0...v2.27.0) (2025-08-28)
 
 
