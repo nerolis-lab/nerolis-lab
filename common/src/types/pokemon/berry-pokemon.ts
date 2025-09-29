@@ -656,6 +656,43 @@ export const FERALIGATR: Pokemon = {
   carrySize: 19
 };
 
+export const NATU: Pokemon = {
+  name: 'NATU',
+  displayName: 'Natu',
+  pokedexNumber: 177,
+  specialty: 'berry',
+  frequency: toSeconds(1, 15, 0),
+  ingredientPercentage: 18.5,
+  skillPercentage: 1.6,
+  berry: MAGO,
+  genders: BALANCED_GENDER,
+  carrySize: 11,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: [{ amount: 1, ingredient: FANCY_EGG }],
+  ingredient30: [
+    { amount: 2, ingredient: FANCY_EGG },
+    { amount: 2, ingredient: SOOTHING_CACAO }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: FANCY_EGG },
+    { amount: 3, ingredient: SOOTHING_CACAO },
+    { amount: 5, ingredient: FANCY_APPLE }
+  ],
+  skill: IngredientMagnetS
+};
+
+export const XATU: Pokemon = {
+  ...evolvesFrom(NATU),
+  name: 'XATU',
+  displayName: 'Xatu',
+  pokedexNumber: 178,
+  frequency: toSeconds(0, 41, 40),
+  ingredientPercentage: 19.1,
+  skillPercentage: 2.5,
+  carrySize: 19
+};
+
 export const PICHU: Pokemon = {
   ...evolvesInto(PIKACHU),
   name: 'PICHU',
@@ -1088,6 +1125,7 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   MEGANIUM,
   TYPHLOSION,
   FERALIGATR,
+  XATU,
   STEELIX,
   HOUNDOOM,
   BLAZIKEN,
@@ -1122,6 +1160,7 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   CROCONAW,
   PICHU,
   CLEFFA,
+  NATU,
   SNEASEL,
   HOUNDOUR,
   TORCHIC,
