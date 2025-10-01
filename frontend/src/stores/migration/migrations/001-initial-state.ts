@@ -1,9 +1,8 @@
 import type { Migration, StoreMap } from '@/stores/migration/migration-type'
 import type { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import type { useTeamStore } from '@/stores/team/team-store'
-import type { useUserStore } from '@/stores/user-store'
 import { MAX_TEAMS } from '@/types/member/instanced'
-import { ISLANDS, MAX_POT_SIZE, Roles, RP, type IslandShortName } from 'sleepapi-common'
+import { ISLANDS, MAX_POT_SIZE, RP } from 'sleepapi-common'
 
 export default {
   version: 1,
@@ -44,15 +43,15 @@ function migrateTeamStore(stores: StoreMap) {
 }
 
 function migrateUserStore(stores: StoreMap) {
-  const userStore = stores.user as ReturnType<typeof useUserStore>
+  const userStore = stores.user as unknown as UserStateV1
 
   if (!userStore.role) {
-    userStore.role = Roles.Default
+    userStore.role = RolesV1.Default
   }
 
   if (!userStore.areaBonus) {
     userStore.areaBonus = Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<
-      IslandShortName,
+      IslandShortNameV1,
       number
     >
   }
@@ -71,4 +70,26 @@ function migratePokemonStore(stores: StoreMap) {
       pkmn.rp = rpUtil.calc()
     }
   }
+}
+
+export enum RolesV1 {
+  Admin = 'admin',
+  Default = 'default'
+}
+export type IslandShortNameV1 = 'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant'
+
+export interface UserStateV1 {
+  name: string
+  avatar: string | null
+  email: string | null
+  tokens: {
+    expiryDate: number
+    accessToken: string
+    refreshToken: string
+  } | null
+  externalId: string | null
+  friendCode?: string
+  role: RolesV1
+  areaBonus: Record<IslandShortNameV1, number>
+  potSize: number
 }

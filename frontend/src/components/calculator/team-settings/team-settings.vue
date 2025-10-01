@@ -6,10 +6,7 @@
       </v-btn>
     </v-col>
     <v-col cols="12/5" class="flex-center">
-      <IslandSelect
-        :previous-berries="teamStore.getCurrentTeam.favoredBerries"
-        @favored-berries="updateFavoredBerries"
-      />
+      <IslandSelect :previous-island="teamStore.getCurrentTeam.island" @update-island="updateIsland" />
     </v-col>
 
     <v-col cols="12/5" class="flex-center">
@@ -199,7 +196,7 @@ import AdvancedSettings from '@/components/calculator/team-settings/advanced-set
 import IslandSelect from '@/components/map/island-select.vue'
 import { TimeUtils } from '@/services/utils/time-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { Berry, BerrySetSimple, IngredientSetSimple } from 'sleepapi-common'
+import type { BerrySetSimple, IngredientSetSimple, IslandInstance } from 'sleepapi-common'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -293,8 +290,8 @@ export default defineComponent({
       const bedtimeHour = +this.bedtime.split(':')[0]
       return Math.abs(hour - bedtimeHour) > 1
     },
-    updateFavoredBerries(berries: Berry[]) {
-      this.teamStore.updateFavoredBerries(berries)
+    updateIsland(island: IslandInstance) {
+      this.teamStore.updateIsland(island)
     }
   }
 })

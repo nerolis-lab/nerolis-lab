@@ -1,6 +1,7 @@
 import type { Migration } from '@/stores/migration/migration-type'
 
 import type { StoreMap } from '@/stores/migration/migration-type'
+import type { UserStateV1 } from '@/stores/migration/migrations/001-initial-state'
 import type { useUserStore } from '@/stores/user-store'
 import { AuthProvider } from 'sleepapi-common'
 
@@ -53,26 +54,4 @@ function migrateUserStore(stores: StoreMap) {
       delete (state as any).identifier
     })
   }
-}
-
-enum RolesV1 {
-  Admin = 'admin',
-  Default = 'default'
-}
-type IslandShortNameV1 = 'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant'
-
-interface UserStateV1 {
-  name: string
-  avatar: string | null
-  email: string | null
-  tokens: {
-    expiryDate: number
-    accessToken: string
-    refreshToken: string
-  } | null
-  externalId: string | null
-  friendCode?: string
-  role: RolesV1
-  areaBonus: Record<IslandShortNameV1, number>
-  potSize: number
 }

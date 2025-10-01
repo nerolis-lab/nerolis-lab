@@ -19,7 +19,7 @@
             <NumberInput
               class="area-bonus-input"
               density="default"
-              v-model="userStore.areaBonus[islandData.shortName]"
+              v-model="userStore.islands[islandData.shortName].areaBonus"
               :disabled="!isLoggedIn"
               :rules="[rules.minBonusRule, rules.maxBonusRule]"
               :min="0"
@@ -123,7 +123,7 @@ let debounceTimer: ReturnType<typeof setTimeout> | undefined
 
 async function updateAreaBonus(shortName: IslandShortName) {
   loadingStates[shortName] = true
-  await UserService.upsertAreaBonus(shortName, userStore.areaBonus[shortName])
+  await UserService.upsertAreaBonus(shortName, userStore.islands[shortName].areaBonus)
   loadingStates[shortName] = false
 }
 

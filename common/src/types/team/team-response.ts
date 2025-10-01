@@ -11,6 +11,7 @@ export interface GetTeamResponse {
   wakeup: string;
   recipeType: RecipeType;
   favoredBerries?: string[];
+  // island: IslandInstance; // TODO: bring back when backend responds with island
   stockpiledBerries?: BerrySetSimple[];
   stockpiledIngredients?: IngredientSetSimple[];
   version: number;

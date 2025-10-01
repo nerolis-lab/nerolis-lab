@@ -109,6 +109,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
         helps: 0
       }
     },
+    // strength: commonMocks.memberStrength(), // TODO: bring back when backend responds with island
     ...attrs
   }
 }

@@ -1,10 +1,10 @@
 import type {
-  Berry,
   BerrySet,
   BerrySetSimple,
   CookingResult,
   IngredientSet,
   IngredientSetSimple,
+  IslandInstance,
   MemberProduction,
   PokemonInstanceExt,
   RecipeType
@@ -42,7 +42,7 @@ export interface TeamInstance {
   stockpiledIngredients: IngredientSetSimple[]
   stockpiledBerries: BerrySetSimple[]
   recipeType: RecipeType
-  favoredBerries: Berry[]
+  island: IslandInstance
   version: number
   members: (string | undefined)[]
   memberIvs: Record<string, PerformanceDetails | undefined>

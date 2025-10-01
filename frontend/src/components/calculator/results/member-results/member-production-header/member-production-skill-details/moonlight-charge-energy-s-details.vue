@@ -99,7 +99,7 @@ export default defineComponent({
             this.memberWithProduction.production.skillAmount -
             this.memberWithProduction.production.advanced.skillCritValue,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },
@@ -110,7 +110,7 @@ export default defineComponent({
           skillActivation,
           amount: this.memberWithProduction.production.advanced.skillCritValue,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },

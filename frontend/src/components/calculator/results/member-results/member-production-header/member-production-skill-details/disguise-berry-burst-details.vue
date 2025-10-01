@@ -108,7 +108,7 @@ export default defineComponent({
           skillActivation,
           amount,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },
@@ -131,7 +131,7 @@ export default defineComponent({
           skillActivation,
           amount,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },

@@ -167,6 +167,7 @@ export default defineComponent({
         bedtime: maybeTeam?.bedtime ?? '21:30',
         wakeup: maybeTeam?.wakeup ?? '06:00',
         stockpiledIngredients: maybeTeam?.stockpiledIngredients ?? []
+        // island: maybeTeam?.island ?? DEFAULT_ISLAND // TODO: bring back when backend responds with island
       }
 
       const result = await TeamService.calculateProduction({ members, settings })

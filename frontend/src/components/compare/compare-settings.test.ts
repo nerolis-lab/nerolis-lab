@@ -40,7 +40,7 @@ describe('CompareSettings', () => {
       memberIndex: 0,
       name: 'Test Team',
       members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
-      favoredBerries: [],
+      island: mocks.islandInstance(),
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
@@ -92,12 +92,12 @@ describe('CompareSettings', () => {
     const teamStore = useTeamStore()
 
     // Create a mock team with camp disabled
-    const mockTeam = {
+    const mockTeam: TeamInstance = {
       index: 0,
       memberIndex: 0,
       name: 'Test Team',
       members: [mockPokemon.externalId, undefined, undefined, undefined, undefined],
-      favoredBerries: [],
+      island: mocks.islandInstance(),
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',

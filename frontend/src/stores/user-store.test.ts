@@ -11,18 +11,141 @@ describe('User Store', () => {
     const userStore = useUserStore()
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
         "auth": null,
         "avatar": null,
         "externalId": null,
         "friendCode": null,
+        "islands": {
+          "GGEX": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": true,
+            "name": "Greengrass Isle (Expert Mode)",
+            "shortName": "GGEX",
+          },
+          "cyan": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "ORAN",
+                "type": "water",
+                "value": 31,
+              },
+              {
+                "name": "PAMTRE",
+                "type": "flying",
+                "value": 24,
+              },
+              {
+                "name": "PECHA",
+                "type": "fairy",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Cyan Beach",
+            "shortName": "cyan",
+          },
+          "greengrass": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": false,
+            "name": "Greengrass Isle",
+            "shortName": "greengrass",
+          },
+          "lapis": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHERI",
+                "type": "fighting",
+                "value": 27,
+              },
+              {
+                "name": "DURIN",
+                "type": "grass",
+                "value": 30,
+              },
+              {
+                "name": "MAGO",
+                "type": "psychic",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Lapis Lakeside",
+            "shortName": "lapis",
+          },
+          "powerplant": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              {
+                "name": "BLUK",
+                "type": "ghost",
+                "value": 26,
+              },
+              {
+                "name": "GREPA",
+                "type": "electric",
+                "value": 25,
+              },
+            ],
+            "expert": false,
+            "name": "Old Gold Power Plant",
+            "shortName": "powerplant",
+          },
+          "snowdrop": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "PERSIM",
+                "type": "normal",
+                "value": 28,
+              },
+              {
+                "name": "RAWST",
+                "type": "ice",
+                "value": 32,
+              },
+              {
+                "name": "WIKI",
+                "type": "dark",
+                "value": 31,
+              },
+            ],
+            "expert": false,
+            "name": "Snowdrop Tundra",
+            "shortName": "snowdrop",
+          },
+          "taupe": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "FIGY",
+                "type": "ground",
+                "value": 29,
+              },
+              {
+                "name": "LEPPA",
+                "type": "fire",
+                "value": 27,
+              },
+              {
+                "name": "SITRUS",
+                "type": "rock",
+                "value": 30,
+              },
+            ],
+            "expert": false,
+            "name": "Taupe Hollow",
+            "shortName": "taupe",
+          },
+        },
         "name": "Guest",
         "potSize": 69,
         "randomizeNicknames": true,
@@ -140,6 +263,28 @@ describe('User Store', () => {
       expect(userStore.isProviderLinked(AuthProvider.Discord)).toBe(false)
       expect(userStore.isProviderLinked(AuthProvider.Patreon)).toBe(true)
     })
+
+    it('should return only non-expert islands from baseIslands', () => {
+      const userStore = useUserStore()
+
+      const baseIslands = userStore.baseIslands
+      const expected = Object.values(userStore.islands).filter((island) => !island.expert)
+
+      expect(baseIslands).toHaveLength(expected.length)
+      expect(baseIslands.every((island) => !island.expert)).toBe(true)
+      expect(baseIslands.map((island) => island.shortName)).toEqual(expected.map((island) => island.shortName))
+    })
+
+    it('should return only expert islands from expertIslands', () => {
+      const userStore = useUserStore()
+
+      const expertIslands = userStore.expertIslands
+      const expected = Object.values(userStore.islands).filter((island) => island.expert)
+
+      expect(expertIslands).toHaveLength(expected.length)
+      expect(expertIslands.every((island) => island.expert)).toBe(true)
+      expect(expertIslands.map((island) => island.shortName)).toEqual(expected.map((island) => island.shortName))
+    })
   })
 
   it('setInitialLoginData should update the name and avatar', () => {
@@ -173,14 +318,6 @@ describe('User Store', () => {
     })
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
         "auth": {
           "activeProvider": "google",
           "linkedProviders": {
@@ -204,6 +341,137 @@ describe('User Store', () => {
         "avatar": "some avatar",
         "externalId": "some id",
         "friendCode": "some friend code",
+        "islands": {
+          "GGEX": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": true,
+            "name": "Greengrass Isle (Expert Mode)",
+            "shortName": "GGEX",
+          },
+          "cyan": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "ORAN",
+                "type": "water",
+                "value": 31,
+              },
+              {
+                "name": "PAMTRE",
+                "type": "flying",
+                "value": 24,
+              },
+              {
+                "name": "PECHA",
+                "type": "fairy",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Cyan Beach",
+            "shortName": "cyan",
+          },
+          "greengrass": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": false,
+            "name": "Greengrass Isle",
+            "shortName": "greengrass",
+          },
+          "lapis": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHERI",
+                "type": "fighting",
+                "value": 27,
+              },
+              {
+                "name": "DURIN",
+                "type": "grass",
+                "value": 30,
+              },
+              {
+                "name": "MAGO",
+                "type": "psychic",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Lapis Lakeside",
+            "shortName": "lapis",
+          },
+          "powerplant": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              {
+                "name": "BLUK",
+                "type": "ghost",
+                "value": 26,
+              },
+              {
+                "name": "GREPA",
+                "type": "electric",
+                "value": 25,
+              },
+            ],
+            "expert": false,
+            "name": "Old Gold Power Plant",
+            "shortName": "powerplant",
+          },
+          "snowdrop": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "PERSIM",
+                "type": "normal",
+                "value": 28,
+              },
+              {
+                "name": "RAWST",
+                "type": "ice",
+                "value": 32,
+              },
+              {
+                "name": "WIKI",
+                "type": "dark",
+                "value": 31,
+              },
+            ],
+            "expert": false,
+            "name": "Snowdrop Tundra",
+            "shortName": "snowdrop",
+          },
+          "taupe": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "FIGY",
+                "type": "ground",
+                "value": 29,
+              },
+              {
+                "name": "LEPPA",
+                "type": "fire",
+                "value": 27,
+              },
+              {
+                "name": "SITRUS",
+                "type": "rock",
+                "value": 30,
+              },
+            ],
+            "expert": false,
+            "name": "Taupe Hollow",
+            "shortName": "taupe",
+          },
+        },
         "name": "some name",
         "potSize": 69,
         "randomizeNicknames": true,
@@ -234,18 +502,141 @@ describe('User Store', () => {
 
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
-        "areaBonus": {
-          "cyan": 10,
-          "greengrass": 20,
-          "lapis": 30,
-          "powerplant": 40,
-          "snowdrop": 50,
-          "taupe": 60,
-        },
         "auth": null,
         "avatar": "new avatar",
         "externalId": null,
         "friendCode": null,
+        "islands": {
+          "GGEX": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": true,
+            "name": "Greengrass Isle (Expert Mode)",
+            "shortName": "GGEX",
+          },
+          "cyan": {
+            "areaBonus": 10,
+            "berries": [
+              {
+                "name": "ORAN",
+                "type": "water",
+                "value": 31,
+              },
+              {
+                "name": "PAMTRE",
+                "type": "flying",
+                "value": 24,
+              },
+              {
+                "name": "PECHA",
+                "type": "fairy",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Cyan Beach",
+            "shortName": "cyan",
+          },
+          "greengrass": {
+            "areaBonus": 20,
+            "berries": [],
+            "expert": false,
+            "name": "Greengrass Isle",
+            "shortName": "greengrass",
+          },
+          "lapis": {
+            "areaBonus": 30,
+            "berries": [
+              {
+                "name": "CHERI",
+                "type": "fighting",
+                "value": 27,
+              },
+              {
+                "name": "DURIN",
+                "type": "grass",
+                "value": 30,
+              },
+              {
+                "name": "MAGO",
+                "type": "psychic",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Lapis Lakeside",
+            "shortName": "lapis",
+          },
+          "powerplant": {
+            "areaBonus": 40,
+            "berries": [
+              {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              {
+                "name": "BLUK",
+                "type": "ghost",
+                "value": 26,
+              },
+              {
+                "name": "GREPA",
+                "type": "electric",
+                "value": 25,
+              },
+            ],
+            "expert": false,
+            "name": "Old Gold Power Plant",
+            "shortName": "powerplant",
+          },
+          "snowdrop": {
+            "areaBonus": 50,
+            "berries": [
+              {
+                "name": "PERSIM",
+                "type": "normal",
+                "value": 28,
+              },
+              {
+                "name": "RAWST",
+                "type": "ice",
+                "value": 32,
+              },
+              {
+                "name": "WIKI",
+                "type": "dark",
+                "value": 31,
+              },
+            ],
+            "expert": false,
+            "name": "Snowdrop Tundra",
+            "shortName": "snowdrop",
+          },
+          "taupe": {
+            "areaBonus": 60,
+            "berries": [
+              {
+                "name": "FIGY",
+                "type": "ground",
+                "value": 29,
+              },
+              {
+                "name": "LEPPA",
+                "type": "fire",
+                "value": 27,
+              },
+              {
+                "name": "SITRUS",
+                "type": "rock",
+                "value": 30,
+              },
+            ],
+            "expert": false,
+            "name": "Taupe Hollow",
+            "shortName": "taupe",
+          },
+        },
         "name": "new name",
         "potSize": 25,
         "randomizeNicknames": false,
@@ -285,18 +676,141 @@ describe('User Store', () => {
     userStore.$reset()
     expect(userStore.$state).toMatchInlineSnapshot(`
       {
-        "areaBonus": {
-          "cyan": 0,
-          "greengrass": 0,
-          "lapis": 0,
-          "powerplant": 0,
-          "snowdrop": 0,
-          "taupe": 0,
-        },
         "auth": null,
         "avatar": null,
         "externalId": null,
         "friendCode": null,
+        "islands": {
+          "GGEX": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": true,
+            "name": "Greengrass Isle (Expert Mode)",
+            "shortName": "GGEX",
+          },
+          "cyan": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "ORAN",
+                "type": "water",
+                "value": 31,
+              },
+              {
+                "name": "PAMTRE",
+                "type": "flying",
+                "value": 24,
+              },
+              {
+                "name": "PECHA",
+                "type": "fairy",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Cyan Beach",
+            "shortName": "cyan",
+          },
+          "greengrass": {
+            "areaBonus": 0,
+            "berries": [],
+            "expert": false,
+            "name": "Greengrass Isle",
+            "shortName": "greengrass",
+          },
+          "lapis": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHERI",
+                "type": "fighting",
+                "value": 27,
+              },
+              {
+                "name": "DURIN",
+                "type": "grass",
+                "value": 30,
+              },
+              {
+                "name": "MAGO",
+                "type": "psychic",
+                "value": 26,
+              },
+            ],
+            "expert": false,
+            "name": "Lapis Lakeside",
+            "shortName": "lapis",
+          },
+          "powerplant": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "BELUE",
+                "type": "steel",
+                "value": 33,
+              },
+              {
+                "name": "BLUK",
+                "type": "ghost",
+                "value": 26,
+              },
+              {
+                "name": "GREPA",
+                "type": "electric",
+                "value": 25,
+              },
+            ],
+            "expert": false,
+            "name": "Old Gold Power Plant",
+            "shortName": "powerplant",
+          },
+          "snowdrop": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "PERSIM",
+                "type": "normal",
+                "value": 28,
+              },
+              {
+                "name": "RAWST",
+                "type": "ice",
+                "value": 32,
+              },
+              {
+                "name": "WIKI",
+                "type": "dark",
+                "value": 31,
+              },
+            ],
+            "expert": false,
+            "name": "Snowdrop Tundra",
+            "shortName": "snowdrop",
+          },
+          "taupe": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "FIGY",
+                "type": "ground",
+                "value": 29,
+              },
+              {
+                "name": "LEPPA",
+                "type": "fire",
+                "value": 27,
+              },
+              {
+                "name": "SITRUS",
+                "type": "rock",
+                "value": 30,
+              },
+            ],
+            "expert": false,
+            "name": "Taupe Hollow",
+            "shortName": "taupe",
+          },
+        },
         "name": "Guest",
         "potSize": 69,
         "randomizeNicknames": true,

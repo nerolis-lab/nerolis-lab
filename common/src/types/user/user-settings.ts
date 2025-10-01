@@ -10,6 +10,7 @@ export interface UserSettingsResponse {
   name: string;
   avatar: string;
   role: Roles;
+  // islands: GetAreasResponse; // TODO: bring back when backend
   areaBonuses: GetAreaBonusesResponse;
   potSize: number;
   supporterSince: string | null;

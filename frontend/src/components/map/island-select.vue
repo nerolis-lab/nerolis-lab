@@ -2,7 +2,7 @@
   <v-dialog v-model="menu" max-width="500px" class="flex-center">
     <template #activator="{ props }">
       <v-btn icon color="transparent" elevation="0" v-bind="props">
-        <v-img height="48" width="48" :src="islandImage({ favoredBerries, background: false })" alt="island icon" />
+        <v-img height="48" width="48" :src="islandImage({ island, background: false })" alt="island icon" />
       </v-btn>
     </template>
 
@@ -12,12 +12,18 @@
 
         <v-row>
           <v-col
-            v-for="i in islands"
+            v-for="i in userStore.baseIslands"
             :key="i.shortName"
-            :cols="12 / Math.min(3, islands.length)"
+            :cols="12 / Math.min(3, ISLANDS.length)"
             class="flex-center flex-column text-center"
           >
-            <v-btn icon color="transparent" size="64" :aria-label="`${i.shortName}`" @click="selectIsland(i)">
+            <v-btn
+              icon
+              size="64"
+              :aria-label="`${i.shortName}`"
+              :class="island.shortName === i.shortName ? 'selected-island' : ''"
+              @click="selectIsland(i)"
+            >
               <v-avatar size="64">
                 <v-img :src="`/images/island/${i.shortName}.png`" :alt="`${i.shortName} icon`" />
               </v-avatar>
@@ -34,7 +40,7 @@
         <v-row dense>
           <v-col cols="12">
             <v-sheet color="secondary" rounded style="overflow-y: auto">
-              <v-chip-group v-model="favoredBerries" column multiple selected-class="bg-primary">
+              <v-chip-group v-model="island.berries" column multiple selected-class="bg-primary">
                 <v-chip
                   v-for="berry in berries"
                   :key="berry.name"
@@ -67,71 +73,84 @@
   </v-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { islandImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
-import { berry, ISLANDS, type Berry, type Island } from 'sleepapi-common'
-import { defineComponent } from 'vue'
+import { berry, ISLANDS, type Berry, type IslandInstance } from 'sleepapi-common'
+import { computed, ref, watch } from 'vue'
 
-export default defineComponent({
-  name: 'IslandSelect',
-  props: {
-    previousBerries: {
-      type: Array<Berry>,
-      default: []
-    }
-  },
-  emits: ['favored-berries'],
-  setup() {
-    const userStore = useUserStore()
-    return { islandImage, userStore, islands: ISLANDS }
-  },
-  data: () => ({
-    menu: false,
-    favoredBerries: [] as Berry[]
-  }),
-  computed: {
-    berries() {
-      return berry.BERRIES.sort((a, b) => a.name.localeCompare(b.name))
-    }
-  },
-  watch: {
-    previousBerries: {
-      handler(newBerries: Berry[]) {
-        this.favoredBerries = newBerries
-      },
-      immediate: true
-    }
-  },
-  methods: {
-    areaBonus(island: Island): number {
-      return this.userStore.areaBonus[island.shortName]
-    },
-    saveBerries() {
-      this.menu = false
-      this.updateBerries()
-    },
-    toggleBerry(berry: Berry) {
-      const index = this.favoredBerries.findIndex((item) => item.name === berry.name)
+const props = defineProps<{
+  previousIsland: IslandInstance
+}>()
 
-      if (index === -1) {
-        this.favoredBerries = this.favoredBerries.concat(berry)
-      } else {
-        this.favoredBerries = this.favoredBerries.filter((b) => b.name !== berry.name)
-      }
-    },
-    clear() {
-      this.favoredBerries = []
-    },
-    selectAll() {
-      this.favoredBerries = this.berries
-    },
-    selectIsland(island: Island) {
-      this.favoredBerries = island.berries
-    },
-    updateBerries() {
-      this.$emit('favored-berries', this.favoredBerries)
-    }
+const emit = defineEmits<{
+  'update-island': [island: IslandInstance]
+}>()
+
+const userStore = useUserStore()
+
+const menu = ref(false)
+const island = ref<IslandInstance>(props.previousIsland)
+
+const berries = computed(() => berry.BERRIES.sort((a, b) => a.name.localeCompare(b.name)))
+
+watch(
+  () => props.previousIsland,
+  (newIsland) => {
+    island.value = newIsland
   }
+)
+
+const areaBonus = (island: IslandInstance): number => Math.round((userStore.islandBonus(island.shortName) - 1) * 100)
+
+const saveBerries = () => {
+  menu.value = false
+  updateBerries()
+}
+
+const toggleBerry = (berry: Berry) => {
+  const index = island.value.berries.findIndex((item) => item.name === berry.name)
+
+  if (index === -1) {
+    island.value.berries = island.value.berries.concat(berry)
+  } else {
+    island.value.berries = island.value.berries.filter((b) => b.name !== berry.name)
+  }
+}
+
+const clear = () => {
+  island.value.berries = []
+}
+
+const selectAll = () => {
+  island.value.berries = berries.value
+}
+
+const selectIsland = (newIsland: IslandInstance) => {
+  island.value = newIsland
+}
+
+const updateBerries = () => {
+  emit('update-island', island.value)
+}
+
+// Expose methods and data for testing
+defineExpose({
+  menu,
+  island,
+  berries,
+  areaBonus,
+  saveBerries,
+  toggleBerry,
+  clear,
+  selectAll,
+  selectIsland
 })
 </script>
+
+<style scoped>
+.selected-island {
+  box-shadow: 0 0 0 3px rgb(var(--v-theme-primary));
+  transform: scale(1.1);
+}
+</style>
