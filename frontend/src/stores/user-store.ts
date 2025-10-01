@@ -7,10 +7,13 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { defineStore } from 'pinia'
 import {
   AuthProvider,
+  EXPERT_ISLANDS,
   ISLANDS,
   MAX_POT_SIZE,
   Roles,
+  type AreaInstances,
   type AuthProviders,
+  type IslandInstance,
   type IslandShortName,
   type LoginResponse,
   type UserSettingsResponse
@@ -23,7 +26,7 @@ export interface UserState {
   friendCode: string | null
   auth: AuthProviders | null
   role: Roles // TODO: make Role[]
-  areaBonus: Record<IslandShortName, number>
+  islands: AreaInstances
   potSize: number
   supporterSince: string | null
   randomizeNicknames: boolean
@@ -31,13 +34,18 @@ export interface UserState {
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => {
+    const allIslands = [...ISLANDS, ...EXPERT_ISLANDS]
+    const islandsRecord = Object.fromEntries(
+      allIslands.map((island) => [island.shortName, { ...island, areaBonus: 0 }])
+    ) as Record<IslandShortName, IslandInstance>
+
     return {
       name: 'Guest',
       avatar: null,
       externalId: null,
       friendCode: null,
       role: Roles.Default,
-      areaBonus: Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<IslandShortName, number>,
+      islands: islandsRecord,
       potSize: MAX_POT_SIZE,
       auth: null,
       supporterSince: null,
@@ -45,8 +53,8 @@ export const useUserStore = defineStore('user', {
     }
   },
   getters: {
+    // auth
     loggedIn: (state) => state.auth != null,
-    islandBonus: (state) => (shortName: IslandShortName) => 1 + state.areaBonus[shortName] / 100,
     isAdmin: (state) => state.role === Roles.Admin,
     isSupporter: (state) => state.role === Roles.Supporter,
     isAdminOrSupporter: (state) => state.role === Roles.Admin || state.role === Roles.Supporter,
@@ -64,7 +72,12 @@ export const useUserStore = defineStore('user', {
     },
     isProviderLinked: (state) => (provider: AuthProvider) => {
       return state.auth?.linkedProviders?.[provider]?.linked === true
-    }
+    },
+
+    // areas
+    islandBonus: (state) => (shortName: IslandShortName) => 1 + state.islands[shortName].areaBonus / 100,
+    baseIslands: (state) => Object.values(state.islands).filter((island) => !island.expert),
+    expertIslands: (state) => Object.values(state.islands).filter((island) => island.expert)
   },
   actions: {
     setInitialLoginData(serverData: LoginResponse) {
@@ -91,7 +104,7 @@ export const useUserStore = defineStore('user', {
       this.randomizeNicknames = userSettings.randomizeNicknames
 
       for (const [area, bonus] of Object.entries(userSettings.areaBonuses)) {
-        this.areaBonus[area as IslandShortName] = bonus
+        this.islands[area as IslandShortName].areaBonus = bonus
       }
 
       this.supporterSince = userSettings.supporterSince

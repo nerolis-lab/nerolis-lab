@@ -1,8 +1,8 @@
 import TeamSettings from '@/components/calculator/team-settings/team-settings.vue'
 import { useTeamStore } from '@/stores/team/team-store'
+import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { CYAN } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -132,11 +132,11 @@ describe('TeamSettings', () => {
     expect(teamStore.getCurrentTeam.recipeType).toEqual('dessert')
   })
 
-  it('shall update favoredBerries on emit', async () => {
+  it('shall update island on emit', async () => {
     const teamStore = useTeamStore()
-    wrapper.vm.updateFavoredBerries(CYAN.berries)
+    wrapper.vm.updateIsland(mocks.islandInstance({ shortName: 'cyan' }))
     await nextTick()
 
-    expect(teamStore.getCurrentTeam.favoredBerries).toEqual(CYAN.berries)
+    expect(teamStore.getCurrentTeam.island).toEqual(mocks.islandInstance({ shortName: 'cyan' }))
   })
 })

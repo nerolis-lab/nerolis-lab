@@ -78,6 +78,7 @@ export interface MemberProductionBase {
 
 export type MemberSkillValue = Record<MainskillUnit, { amountToSelf: number; amountToTeam: number }>;
 
+// TODO: bring back when backend responds with island
 export interface MemberStrength {
   berries: {
     total: number;
@@ -104,6 +105,7 @@ export interface MemberProduction extends MemberProductionBase {
   skillAmount: number;
   skillValue: MemberSkillValue;
   advanced: MemberProductionAdvanced;
+  // strength: MemberStrength; // TODO: bring back when backend responds with island
 }
 
 export interface CookedRecipeResult {

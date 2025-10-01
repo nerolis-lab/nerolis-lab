@@ -241,6 +241,7 @@ import { useTeamStore } from '@/stores/team/team-store'
 import type { TeamData } from '@/types/team/team-data'
 import {
   CarrySizeUtils,
+  DEFAULT_ISLAND,
   flatToIngredientSet,
   getIngredient,
   getNature,
@@ -459,7 +460,7 @@ const simulateRecipe = async (contribution: RecipeContribution) => {
       version: 0,
       memberIvs: {},
       production: undefined,
-      favoredBerries: [],
+      island: DEFAULT_ISLAND,
       wakeup: '06:00',
       bedtime: '21:30',
       stockpiledIngredients: [],

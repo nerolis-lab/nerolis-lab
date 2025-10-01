@@ -8,11 +8,13 @@ export interface UpsertTeamMetaRequest {
   bedtime: string;
   wakeup: string;
   recipeType: RecipeType;
+  // island: IslandInstance; // TODO: bring back when backend responds with island
   favoredBerries?: string[];
   stockpiledIngredients?: IngredientSetSimple[];
   stockpiledBerries?: BerrySetSimple[];
 }
 
+// TODO: update
 export interface UpsertTeamMetaResponse {
   index: number;
   name: string;
@@ -21,6 +23,7 @@ export interface UpsertTeamMetaResponse {
   wakeup: string;
   version: number;
   recipeType: RecipeType;
+  // island: IslandInstance; // TODO: bring back when backend responds with island
   favoredBerries?: string[];
   stockpiledIngredients?: IngredientSetSimple[];
   stockpiledBerries?: BerrySetSimple[];

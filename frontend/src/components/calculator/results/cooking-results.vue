@@ -330,7 +330,7 @@ export default defineComponent({
     cookingStrength() {
       const strength = Math.floor(
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
@@ -340,7 +340,7 @@ export default defineComponent({
     sundayStrength() {
       const strength = Math.floor(
         (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
@@ -350,11 +350,11 @@ export default defineComponent({
     weekdayStrength() {
       const weeklyStrength = Math.floor(
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
       const sundayStrength = Math.floor(
         (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
-          this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
 
       const strength = Math.floor(weeklyStrength - sundayStrength)

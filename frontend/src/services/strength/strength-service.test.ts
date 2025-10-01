@@ -1,5 +1,6 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import type { TimeWindowWeek } from '@/types/time/time-window'
+import { mocks } from '@/vitest'
 import {
   berry,
   BerryBurstDisguise,
@@ -27,7 +28,7 @@ describe('StrengthService', () => {
     it('should calculate strength correctly with favored berry multiplier', () => {
       const strength = StrengthService.berryStrength({
         berries: mockBerrySet,
-        favoredBerries: favoredBerries,
+        island: mocks.island({ berries: favoredBerries }),
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })
@@ -43,7 +44,7 @@ describe('StrengthService', () => {
     it('should calculate strength without favored berry multiplier', () => {
       const strength = StrengthService.berryStrength({
         berries: mockBerrySet,
-        favoredBerries: [],
+        island: mocks.island({ berries: [] }),
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })
@@ -62,7 +63,7 @@ describe('StrengthService', () => {
         skillActivation: ChargeStrengthM.activations.strength,
         skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
         berries: mockBerrySet,
-        favoredBerries: favoredBerries,
+        island: mocks.island({ berries: favoredBerries }),
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })
@@ -77,7 +78,7 @@ describe('StrengthService', () => {
         skillActivation: BerryBurstDisguise.activations.berries,
         skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
         berries: mockBerrySet,
-        favoredBerries: favoredBerries,
+        island: mocks.island({ berries: favoredBerries }),
         timeWindow: mockTimeWindow,
         areaBonus: 1
       })

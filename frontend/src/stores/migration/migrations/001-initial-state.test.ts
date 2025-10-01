@@ -76,14 +76,14 @@ describe('001-initial-state', () => {
   describe('user store migration', () => {
     it('should set default values for user store', () => {
       userStore.role = undefined as any
-      userStore.areaBonus = undefined as any
+      ;(userStore as any).areaBonus = undefined
       userStore.potSize = undefined as any
 
       migration.up(stores)
 
       expect(userStore.role).toBe(Roles.Default)
       expect(userStore.potSize).toBe(MAX_POT_SIZE)
-      const areaBonus = userStore.areaBonus as Record<IslandShortName, number>
+      const areaBonus = (userStore as any).areaBonus as Record<IslandShortName, number>
       expect(Object.keys(areaBonus).length).toBe(ISLANDS.length)
       ISLANDS.forEach((island) => {
         expect(areaBonus[island.shortName as IslandShortName]).toBe(0)
@@ -97,14 +97,14 @@ describe('001-initial-state', () => {
       >
 
       userStore.role = Roles.Admin
-      userStore.areaBonus = existingAreaBonus
+      ;(userStore as any).areaBonus = existingAreaBonus
       userStore.potSize = 10
 
       migration.up(stores)
 
       expect(userStore.role).toBe(Roles.Admin)
       expect(userStore.potSize).toBe(10)
-      expect(userStore.areaBonus).toEqual(existingAreaBonus)
+      expect((userStore as any).areaBonus).toEqual(existingAreaBonus)
     })
   })
 

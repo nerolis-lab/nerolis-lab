@@ -22,7 +22,7 @@ describe('migration-utils', () => {
     it('should return migrations sorted by version', () => {
       const migrations = getMigrations()
 
-      expect(migrations).toHaveLength(2)
+      expect(migrations).toHaveLength(3)
       expect(migrations).toMatchSnapshot()
     })
   })

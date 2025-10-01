@@ -12,6 +12,8 @@ import type { TeamData } from '@/types/team/team-data'
 import type { TimeWindowDay } from '@/types/time/time-window'
 import { defineStore } from 'pinia'
 import {
+  berry,
+  DEFAULT_ISLAND,
   DOMAIN_VERSION,
   EnergizingCheerS,
   EnergyForEveryone,
@@ -19,12 +21,11 @@ import {
   HelperBoost,
   MAX_TEAM_SIZE,
   Metronome,
-  berry,
   subskill,
   uuid,
-  type Berry,
   type BerrySetSimple,
   type IngredientSetSimple,
+  type IslandInstance,
   type PokemonInstanceExt,
   type RecipeType,
   type TeamSettings
@@ -58,7 +59,7 @@ const defaultState = (attrs?: Partial<TeamState>): TeamState => ({
       bedtime: '21:30',
       wakeup: '06:00',
       recipeType: 'curry',
-      favoredBerries: [],
+      island: { ...DEFAULT_ISLAND },
       stockpiledBerries: [],
       stockpiledIngredients: [],
       version: 0,
@@ -252,22 +253,15 @@ export const useTeamStore = defineStore('team', {
       const userStore = useUserStore()
       if (userStore.loggedIn) {
         try {
-          const {
-            favoredBerries: teamBerries,
-            name,
-            camp,
-            bedtime,
-            wakeup,
-            recipeType,
-            stockpiledBerries,
-            stockpiledIngredients
-          } = this.getCurrentTeam
+          const { island, name, camp, bedtime, wakeup, recipeType, stockpiledBerries, stockpiledIngredients } =
+            this.getCurrentTeam
 
-          const anyFavoredBerries = teamBerries?.length > 0
+          // TODO: remove when backend responds with island
+          const anyFavoredBerries = island.berries.length > 0
           const favoredBerries = anyFavoredBerries
-            ? teamBerries.length === berry.BERRIES.length
+            ? island.berries.length === berry.BERRIES.length
               ? ['all']
-              : teamBerries.map((b) => b.name)
+              : island.berries.map((b) => b.name)
             : undefined
 
           const { version } = await TeamService.createOrUpdateTeam(this.currentIndex, {
@@ -300,7 +294,7 @@ export const useTeamStore = defineStore('team', {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
-        favoredBerries: [],
+        island: { ...DEFAULT_ISLAND },
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 0,
@@ -371,6 +365,7 @@ export const useTeamStore = defineStore('team', {
         bedtime: this.teams[teamIndex].bedtime,
         wakeup: this.teams[teamIndex].wakeup,
         stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients
+        // island: this.teams[teamIndex].island // TODO: bring back when backend responds with island
       }
       this.teams[teamIndex].production = await TeamService.calculateProduction({
         members,
@@ -463,8 +458,8 @@ export const useTeamStore = defineStore('team', {
 
       this.updateTeam()
     },
-    async updateFavoredBerries(berries: Berry[]) {
-      this.getCurrentTeam.favoredBerries = berries
+    async updateIsland(island: IslandInstance) {
+      this.getCurrentTeam.island = island
 
       this.updateTeam()
     },

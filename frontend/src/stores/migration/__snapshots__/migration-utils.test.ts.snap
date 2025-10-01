@@ -12,5 +12,10 @@ exports[`migration-utils > getMigrations > should return migrations sorted by ve
     "up": [Function],
     "version": 2,
   },
+  {
+    "description": "Migrates areaBonus Record to islands structure with IslandInstance objects.",
+    "up": [Function],
+    "version": 3,
+  },
 ]
 `;

@@ -7,6 +7,7 @@ export interface TeamSettings {
   camp: boolean;
   bedtime: string;
   wakeup: string;
+  // island: IslandInstance; // TODO: bring back when backend responds with island
   stockpiledIngredients?: IngredientSetSimple[];
 }
 export interface TeamSettingsExt {
@@ -16,6 +17,7 @@ export interface TeamSettingsExt {
   includeCooking: boolean;
   stockpiledIngredients: IngredientIndexToFloatAmount;
   potSize: number;
+  // island: IslandInstance; // TODO: bring back when backend responds with island
 }
 
 export interface TeamSolution {

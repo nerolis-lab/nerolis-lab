@@ -19,7 +19,7 @@
               v-if="showIsland"
               width="36"
               height="36"
-              :src="islandImage({ favoredBerries: selectedTeam.favoredBerries, background: false })"
+              :src="islandImage({ island: selectedTeam.island, background: false })"
             />
             <v-img
               v-if="showCamp"

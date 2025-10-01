@@ -2,12 +2,15 @@ import serverAxios from '@/router/server-axios'
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
+import { useUserStore } from '@/stores/user-store'
 import { UnexpectedError } from '@/types/errors/unexpected-error'
 import { type TeamCombinedProduction, type TeamInstance, type TeamProductionExt } from '@/types/member/instanced'
 import {
+  berry,
+  DEFAULT_ISLAND,
+  getIsland,
   MAX_TEAM_SIZE,
   Optimal,
-  berry,
   uuid,
   type Berry,
   type BerrySet,
@@ -15,6 +18,7 @@ import {
   type CalculateTeamResponse,
   type GetTeamsResponse,
   type IngredientSet,
+  type IslandInstance,
   type PokemonInstanceExt,
   type PokemonInstanceIdentity,
   type TeamSettings,
@@ -57,7 +61,7 @@ class TeamServiceImpl {
           bedtime: '21:30',
           wakeup: '06:00',
           recipeType: 'curry',
-          favoredBerries: [],
+          island: { ...DEFAULT_ISLAND },
           stockpiledBerries: [],
           stockpiledIngredients: [],
           version: 0,
@@ -93,6 +97,14 @@ class TeamServiceImpl {
             favoredBerries.push(favoredBerry)
           }
         }
+        const userStore = useUserStore()
+        const island = getIsland(favoredBerries)
+        const islandInstance: IslandInstance = {
+          ...island,
+          berries: favoredBerries,
+          areaBonus: userStore.islands[island.shortName]?.areaBonus ?? 0
+        }
+
         const instancedTeam: TeamInstance = {
           index: serverTeam.index,
           memberIndex: teamStore.teams[serverTeam.index]?.memberIndex ?? 0,
@@ -101,7 +113,7 @@ class TeamServiceImpl {
           bedtime: serverTeam.bedtime,
           wakeup: serverTeam.wakeup,
           recipeType: serverTeam.recipeType,
-          favoredBerries,
+          island: islandInstance,
           stockpiledBerries: serverTeam.stockpiledBerries ?? [],
           stockpiledIngredients: serverTeam.stockpiledIngredients ?? [],
           version: serverTeam.version,
@@ -181,6 +193,7 @@ class TeamServiceImpl {
       bedtime: currentTeam.bedtime,
       wakeup: currentTeam.wakeup,
       stockpiledIngredients: currentTeam.stockpiledIngredients
+      // island: currentTeam.island // TODO: bring back when backend responds with island
     }
 
     const berrySetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({

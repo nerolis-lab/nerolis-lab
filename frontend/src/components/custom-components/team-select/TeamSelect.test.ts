@@ -2,6 +2,7 @@ import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import * as imageUtils from '@/services/utils/image-utils'
 import { TimeUtils } from '@/services/utils/time-utils'
 import type { TeamInstance } from '@/types/member/instanced'
+import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import { createMockPokemon } from '@/vitest/mocks/pokemon-instance'
 import type { VueWrapper } from '@vue/test-utils'
@@ -47,7 +48,7 @@ describe('TeamSelect.vue', () => {
         camp: true,
         bedtime: '22:00',
         wakeup: '07:00',
-        favoredBerries: [berry.BELUE],
+        island: mocks.islandInstance({ berries: [berry.BELUE] }),
         members: [mockPokemon1.externalId, mockPokemon2.externalId, undefined, undefined, undefined]
       },
       {
@@ -57,7 +58,7 @@ describe('TeamSelect.vue', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:30',
-        favoredBerries: [berry.CHESTO],
+        island: mocks.islandInstance({ berries: [berry.CHESTO] }),
         members: [mockPokemon3.externalId, undefined, undefined, undefined, undefined]
       },
       {
@@ -67,7 +68,7 @@ describe('TeamSelect.vue', () => {
         camp: false,
         bedtime: '21:00',
         wakeup: '06:00',
-        favoredBerries: [],
+        island: mocks.islandInstance({ berries: [] }),
         members: [undefined, undefined, undefined, undefined, undefined]
       }
     ]
@@ -200,7 +201,7 @@ describe('TeamSelect.vue', () => {
       })
 
       expect(imageUtils.islandImage).toHaveBeenCalledWith({
-        favoredBerries: mockTeams[0].favoredBerries,
+        island: mockTeams[0].island,
         background: false
       })
     })

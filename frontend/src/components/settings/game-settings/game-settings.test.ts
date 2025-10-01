@@ -3,15 +3,7 @@ import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import {
-  commonMocks,
-  delay,
-  ISLANDS,
-  MAX_ISLAND_BONUS,
-  MAX_POT_SIZE,
-  MIN_POT_SIZE,
-  type IslandShortName
-} from 'sleepapi-common'
+import { commonMocks, delay, ISLANDS, MAX_ISLAND_BONUS, MAX_POT_SIZE, MIN_POT_SIZE } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -27,10 +19,6 @@ describe('GameSettings', () => {
 
   beforeEach(() => {
     userStore = useUserStore()
-    userStore.areaBonus = Object.fromEntries(ISLANDS.map((island) => [island.shortName, 0])) as Record<
-      IslandShortName,
-      number
-    >
     userStore.setInitialLoginData(commonMocks.loginResponse())
 
     wrapper = mount(GameSettings)
@@ -109,7 +97,7 @@ describe('GameSettings', () => {
     await firstInput.setValue(10)
     await firstInput.vm.$emit('update-number')
 
-    expect(UserService.upsertAreaBonus).toHaveBeenCalledWith(firstIsland, userStore.areaBonus[firstIsland])
+    expect(UserService.upsertAreaBonus).toHaveBeenCalledWith(firstIsland, userStore.islands[firstIsland].areaBonus)
   })
 
   describe('pot size controls', () => {

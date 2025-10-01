@@ -99,7 +99,7 @@ export default defineComponent({
           skillActivation: CookingPowerUpSMinus.activations.solo,
           amount: this.memberWithProduction.production.skillValue['pot size'].amountToSelf,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },
@@ -117,7 +117,7 @@ export default defineComponent({
           skillActivation: CookingPowerUpSMinus.activations.paired,
           amount: energyAmount,
           timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(getIsland(this.teamStore.getCurrentTeam.favoredBerries).shortName)
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
         })
       )
     },

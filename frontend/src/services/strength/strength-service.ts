@@ -1,6 +1,6 @@
 import type { TimeWindowWeek } from '@/types/time/time-window'
-import type { MainskillActivation, MemberSkillValue } from 'sleepapi-common'
-import { MathUtils, berryPowerForLevel, type Berry, type BerrySet } from 'sleepapi-common'
+import type { Island, MainskillActivation, MemberSkillValue } from 'sleepapi-common'
+import { MathUtils, berryPowerForLevel, type BerrySet } from 'sleepapi-common'
 
 class StrengthServiceImpl {
   /**
@@ -10,7 +10,7 @@ class StrengthServiceImpl {
     skillActivation: MainskillActivation
     skillValues: MemberSkillValue
     berries: BerrySet[]
-    favoredBerries: Berry[]
+    island: Island
     timeWindow: TimeWindowWeek
     areaBonus: number
   }) {
@@ -28,19 +28,14 @@ class StrengthServiceImpl {
     return berrySkillStrength + skillStrength
   }
 
-  public berryStrength(params: {
-    berries: BerrySet[]
-    favoredBerries: Berry[]
-    timeWindow: TimeWindowWeek
-    areaBonus: number
-  }) {
-    const { berries, favoredBerries, timeWindow, areaBonus } = params
+  public berryStrength(params: { berries: BerrySet[]; island: Island; timeWindow: TimeWindowWeek; areaBonus: number }) {
+    const { berries, island, timeWindow, areaBonus } = params
 
     const timeWindowFactor = this.timeWindowFactor(timeWindow)
 
     let strength = 0
     for (const producedBerry of berries) {
-      const favoredBerryMultiplier = favoredBerries.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
+      const favoredBerryMultiplier = island.berries.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
 
       strength +=
         producedBerry.amount *
