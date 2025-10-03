@@ -1,3 +1,5 @@
+## [2.28.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.28.0...v2.28.1) (2025-10-03)
+
 # [2.28.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.27.0...v2.28.0) (2025-09-29)
 
 
