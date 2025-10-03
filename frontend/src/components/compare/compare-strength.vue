@@ -365,26 +365,23 @@ export default defineComponent({
       return `${MathUtils.round(amountWithoutCrit, 1)} ${e4eSuffix}${critAmount > 0 ? `+${MathUtils.round(critAmount, 1)}` : ''}`
     },
     lowestIngredientPower(memberProduction: MemberProduction) {
+      const islandBonus = this.userStore.islandBonus(
+        this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island.shortName : undefined
+      )
       const amount = memberProduction.produceTotal.ingredients.reduce(
-        (sum, cur) =>
-          sum +
-          cur.amount *
-            cur.ingredient.value *
-            AVERAGE_WEEKLY_CRIT_MULTIPLIER *
-            this.userStore.islandBonus(
-              this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island.shortName : undefined
-            ),
+        (sum, cur) => sum + cur.amount * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER * islandBonus,
         0
       )
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))
     },
     highestIngredientPower(memberProduction: MemberProduction) {
       const maxLevelRecipeMultiplier = recipeLevelBonus[MAX_RECIPE_LEVEL]
+      const islandBonus = this.userStore.islandBonus(
+        this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island.shortName : undefined
+      )
       const amount =
         maxLevelRecipeMultiplier *
-        this.userStore.islandBonus(
-          this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island.shortName : undefined
-        ) *
+        islandBonus *
         memberProduction.produceTotal.ingredients.reduce((sum, cur) => {
           const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
           return sum + cur.amount * ingredientBonus * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER

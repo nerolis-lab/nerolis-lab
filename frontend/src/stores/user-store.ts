@@ -76,7 +76,7 @@ export const useUserStore = defineStore('user', {
 
     // areas
     islandBonus: (state) => (shortName?: IslandShortName) => {
-      const bonus = shortName ? state.islands[shortName].areaBonus : 0
+      const bonus = shortName ? (state.islands[shortName].areaBonus ?? 0) : 0
       return 1 + bonus / 100
     },
     baseIslands: (state) => Object.values(state.islands).filter((island) => !island.expert),
