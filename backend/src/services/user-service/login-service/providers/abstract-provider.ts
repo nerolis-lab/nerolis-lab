@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import type { AuthProvider } from 'sleepapi-common';
 import { Roles, type LoginResponse, type RefreshResponse, type UserHeader } from 'sleepapi-common';

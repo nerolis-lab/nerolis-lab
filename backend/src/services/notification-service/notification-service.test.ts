@@ -1,6 +1,6 @@
 import { NewsDAO } from '@src/database/dao/notification/news-dao.js';
 import { NotificationDAO } from '@src/database/dao/notification/notification-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { NotificationService } from '@src/services/notification-service/notification-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import type { NewsNotificationRequest } from 'sleepapi-common';

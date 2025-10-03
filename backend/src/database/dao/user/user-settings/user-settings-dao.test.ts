@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user/user-settings/user-settings-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { MIN_POT_SIZE } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';

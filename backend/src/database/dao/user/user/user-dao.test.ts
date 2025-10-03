@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { generateFriendCode } from '@src/services/user-service/login-service/login-utils.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { Roles, uuid } from 'sleepapi-common';

@@ -1,5 +1,5 @@
-import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import { UserRecipeDAO } from '@src/database/dao/user/user-recipe/user-recipe-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import type { GetRecipeLevelsResponse } from 'sleepapi-common';
 
 export async function getRecipeLevels(user: DBUser): Promise<GetRecipeLevelsResponse> {

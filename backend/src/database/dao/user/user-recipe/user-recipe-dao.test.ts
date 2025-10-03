@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
+import { UserRecipeDAO } from '@src/database/dao/user/user-recipe/user-recipe-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { describe, expect, it } from 'vitest';
 

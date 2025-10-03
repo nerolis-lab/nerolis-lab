@@ -9,7 +9,7 @@
     "build": "tsc --project tsconfig.build.json && tsc-alias && tsoa spec && npm run _compile",
     "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* dist/ && cp ../CHANGELOG.md dist/",
     "test": "vitest --run --coverage",
-    "test-watch": "vitest --changed",
+    "test-watch": "vitest --watch",
     "benchmark-set": "vitest run benchmark --mode benchmarking --update",
     "benchmark-test": "vitest run benchmark --mode benchmarking",
     "_compile": "bun x tsc --noEmit",

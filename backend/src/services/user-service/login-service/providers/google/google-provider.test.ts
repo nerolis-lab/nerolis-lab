@@ -1,5 +1,5 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { GoogleProvider } from '@src/services/user-service/login-service/providers/google/google-provider.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { mocks } from '@src/vitest/index.js';

@@ -1,6 +1,6 @@
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { CarrySizeUtils, getPokemon, type PokemonInstanceWithMeta } from 'sleepapi-common';
 
 export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWithMeta[]> {

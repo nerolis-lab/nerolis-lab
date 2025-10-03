@@ -1,7 +1,7 @@
-import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
-import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user/user-settings/user-settings-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { FriendService } from '@src/services/friend-service/friend-service.js';
 import { PatreonProvider } from '@src/services/user-service/login-service/providers/patreon/patreon-provider.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
@@ -124,8 +124,8 @@ describe('getUserSettings', () => {
     });
 
     const areaBonuses: Array<{ fk_user_id: number; area: IslandShortName; bonus: number }> = [
-      { fk_user_id: user.id, area: 'AREA1' as IslandShortName, bonus: 10 },
-      { fk_user_id: user.id, area: 'AREA2' as IslandShortName, bonus: 20 }
+      { fk_user_id: user.id, area: 'cyan' as IslandShortName, bonus: 10 },
+      { fk_user_id: user.id, area: 'lapis' as IslandShortName, bonus: 20 }
     ];
 
     for (const areaBonus of areaBonuses) {
@@ -139,8 +139,12 @@ describe('getUserSettings', () => {
       avatar: 'test-avatar',
       role: Roles.Default,
       areaBonuses: {
-        AREA1: 10,
-        AREA2: 20
+        cyan: 10,
+        greengrass: 0,
+        lapis: 20,
+        powerplant: 0,
+        snowdrop: 0,
+        taupe: 0
       },
       potSize: MAX_POT_SIZE,
       supporterSince: null,
@@ -176,7 +180,14 @@ describe('getUserSettings', () => {
       name: 'Test User',
       avatar: 'test-avatar',
       role: Roles.Supporter,
-      areaBonuses: {},
+      areaBonuses: {
+        cyan: 0,
+        greengrass: 0,
+        lapis: 0,
+        powerplant: 0,
+        snowdrop: 0,
+        taupe: 0
+      },
       potSize: MAX_POT_SIZE,
       supporterSince: '2024-01-01',
       randomizeNicknames: true
@@ -209,7 +220,14 @@ describe('getUserSettings', () => {
       name: 'Test User',
       avatar: 'test-avatar',
       role: Roles.Default,
-      areaBonuses: {},
+      areaBonuses: {
+        cyan: 0,
+        greengrass: 0,
+        lapis: 0,
+        powerplant: 0,
+        snowdrop: 0,
+        taupe: 0
+      },
       potSize: MAX_POT_SIZE,
       supporterSince: null,
       randomizeNicknames: true
@@ -270,7 +288,14 @@ describe('getUserSettings', () => {
       name: 'Test User',
       avatar: 'test-avatar',
       role: Roles.Default,
-      areaBonuses: {},
+      areaBonuses: {
+        cyan: 0,
+        greengrass: 0,
+        lapis: 0,
+        powerplant: 0,
+        snowdrop: 0,
+        taupe: 0
+      },
       potSize: 150,
       supporterSince: null,
       randomizeNicknames: true
