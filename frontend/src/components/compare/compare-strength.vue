@@ -193,14 +193,12 @@ import type { DataTableHeader } from '@/types/vuetify/table/table-header'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   EnergyForEveryone,
-  GREENGRASS,
   MAX_RECIPE_LEVEL,
   MathUtils,
   Metronome,
   SkillCopy,
   compactNumber,
   defaultZero,
-  getIsland,
   getMaxIngredientBonus,
   getPokemon,
   recipeLevelBonus,
@@ -262,8 +260,8 @@ export default defineComponent({
     },
     members() {
       const production = []
-      const island = this.comparisonStore.currentTeam?.island ?? GREENGRASS
-      const areaBonus = this.userStore.islandBonus(island.shortName)
+      const island = this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island : undefined
+      const areaBonus = this.userStore.islandBonus(island?.shortName)
       const timeWindow = this.comparisonStore.timeWindow
 
       for (const memberProduction of this.comparisonStore.members) {
@@ -373,9 +371,9 @@ export default defineComponent({
           cur.amount *
             cur.ingredient.value *
             AVERAGE_WEEKLY_CRIT_MULTIPLIER *
-            (this.comparisonStore.currentTeam
-              ? this.userStore.islandBonus(this.comparisonStore.currentTeam.island.shortName)
-              : 1),
+            this.userStore.islandBonus(
+              this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island.shortName : undefined
+            ),
         0
       )
       return Math.floor(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow))
@@ -384,9 +382,9 @@ export default defineComponent({
       const maxLevelRecipeMultiplier = recipeLevelBonus[MAX_RECIPE_LEVEL]
       const amount =
         maxLevelRecipeMultiplier *
-        (this.comparisonStore.currentTeam
-          ? this.userStore.islandBonus(this.comparisonStore.currentTeam.island.shortName)
-          : 1) *
+        this.userStore.islandBonus(
+          this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island.shortName : undefined
+        ) *
         memberProduction.produceTotal.ingredients.reduce((sum, cur) => {
           const ingredientBonus = 1 + getMaxIngredientBonus(cur.ingredient.name) / 100
           return sum + cur.amount * ingredientBonus * cur.ingredient.value * AVERAGE_WEEKLY_CRIT_MULTIPLIER
