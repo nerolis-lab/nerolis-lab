@@ -68,7 +68,10 @@ export const DaoFixture = {
         await pokemonsleepDB.raw('PRAGMA foreign_keys = ON');
       }
 
-      DatabaseService.getKnex = () => {
+      DatabaseService.getKnex = (trx?: Knex.Transaction) => {
+        if (trx) {
+          return Promise.resolve(trx);
+        }
         if (!pokemonsleepDB) {
           throw new DatabaseConnectionError('Fixture DB is not initialized.');
         }

@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import { ProviderFactory } from '@src/services/user-service/login-service/providers/provider-factory.js';
 import type { NextFunction, Request, Response } from 'express';

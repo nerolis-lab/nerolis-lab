@@ -1,6 +1,6 @@
-import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
-import { UserSettingsDAO } from '@src/database/dao/user-settings/user-settings-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import { UserRecipeDAO } from '@src/database/dao/user/user-recipe/user-recipe-dao.js';
+import { UserSettingsDAO } from '@src/database/dao/user/user-settings/user-settings-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import type { ProductionStats } from '@src/domain/computed/production.js';
 import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import { PokemonError } from '@src/domain/error/pokemon/pokemon-error.js';
@@ -210,7 +210,7 @@ export default class ProductionController {
             camp
           }),
           nature: getNature(member.nature),
-          skillLevel: member.skillLevel,
+          skillLevel: Math.min(member.skillLevel, pokemon.skill.maxLevel),
           subskills,
           externalId: member.externalId
         }
@@ -281,5 +281,21 @@ export default class ProductionController {
       mainWakeup
     };
     return parsedInput;
+  }
+
+  /**
+   * Provides access to private methods for unit testing.
+   * This method allows unit tests to call and verify the behavior of private methods.
+   */
+  public _testAccess() {
+    return {
+      parseIvInput: this.#parseIvInput.bind(this),
+      parseTeamInput: this.#parseTeamInput.bind(this),
+      parseUserRecipes: this.#parseUserRecipes.bind(this),
+      parseSettings: this.#parseSettings.bind(this),
+      parseTeamMembers: this.#parseTeamMembers.bind(this),
+      getIngredientSet: this.#getIngredientSet.bind(this),
+      parseSingleProductionInput: this.#parseSingleProductionInput.bind(this)
+    };
   }
 }

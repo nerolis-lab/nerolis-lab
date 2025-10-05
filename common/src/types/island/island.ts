@@ -13,3 +13,9 @@ export interface IslandInstance extends Island {
   areaBonus: number;
   expertModifier?: ExpertRandomBonusType;
 }
+
+export interface TeamAreaDTO {
+  islandName: IslandShortName;
+  favoredBerries: string;
+  expertModifier?: ExpertRandomBonusType;
+}

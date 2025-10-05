@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { ProviderFactory } from '@src/services/user-service/login-service/providers/provider-factory.js';
 import type { AuthProvider } from 'sleepapi-common';
 

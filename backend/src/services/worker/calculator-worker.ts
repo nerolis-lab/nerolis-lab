@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import workerpool from 'workerpool';
 import ProductionController from '../../controllers/calculator/production.controller.js';
 import { WebsiteConverterService } from '../../services/website-converter/website-converter-service.js';
