@@ -1,5 +1,5 @@
 import { config } from '@src/config/config.js';
-import { UserDAO, type DBUser } from '@src/database/dao/user/user-dao.js';
+import { UserDAO, type DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { AuthorizationError } from '@src/domain/error/api/api-error.js';
 import { generateFriendCode } from '@src/services/user-service/login-service/login-utils.js';
 import { AbstractProvider } from '@src/services/user-service/login-service/providers/abstract-provider.js';

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserAreaDAO } from '@src/database/dao/user-area/user-area-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { describe, expect, it } from 'vitest';
 

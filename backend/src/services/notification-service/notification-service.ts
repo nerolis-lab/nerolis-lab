@@ -1,7 +1,7 @@
 import { NewsDAO } from '@src/database/dao/notification/news-dao.js';
 import type { DBNotification } from '@src/database/dao/notification/notification-dao.js';
 import { NotificationDAO } from '@src/database/dao/notification/notification-dao.js';
-import { UserDAO, type DBUser } from '@src/database/dao/user/user-dao.js';
+import { UserDAO, type DBUser } from '@src/database/dao/user/user/user-dao.js';
 import type { NewsNotification, NewsNotificationRequest, UserNotification } from 'sleepapi-common';
 import { NotificationType, uuid, type BaseUser, type NotificationResponse } from 'sleepapi-common';
 

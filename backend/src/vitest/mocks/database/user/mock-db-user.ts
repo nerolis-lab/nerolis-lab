@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { Roles } from 'sleepapi-common';
 export function dbUser(attrs?: Partial<DBUser>): DBUser {
   return {

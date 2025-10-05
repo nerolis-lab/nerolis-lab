@@ -6,7 +6,11 @@ import knex from 'knex';
 class DatabaseServiceImpl {
   #knex: Knex | undefined;
 
-  async getKnex() {
+  async getKnex(trx?: Knex.Transaction) {
+    if (trx) {
+      return trx;
+    }
+
     if (!this.#knex) {
       const host = config.DB_HOST;
       const port = config.DB_PORT;
@@ -32,7 +36,15 @@ class DatabaseServiceImpl {
       });
     }
 
-    return this.#knex;
+    return trx || this.#knex;
+  }
+
+  async transaction<T>(
+    callback: (trx: Knex.Transaction) => Promise<T>,
+    isolationLevel?: Knex.IsolationLevels
+  ): Promise<T> {
+    const knex = await this.getKnex();
+    return knex.transaction(callback, { isolationLevel });
   }
 }
 

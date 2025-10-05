@@ -1,0 +1,182 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`findTeamsWithMembers > shall get team with members 1`] = `
+[
+  {
+    "bedtime": "21:30",
+    "camp": false,
+    "favoredBerries": [],
+    "index": 0,
+    "members": [
+      {
+        "carrySize": 22,
+        "externalId": "111111111111111111111111111111111111",
+        "gender": undefined,
+        "ingredients": [
+          {
+            "amount": 0,
+            "level": 0,
+            "name": "Berry",
+          },
+          {
+            "amount": 0,
+            "level": 30,
+            "name": "Potion",
+          },
+          {
+            "amount": 0,
+            "level": 60,
+            "name": "Elixir",
+          },
+        ],
+        "level": 25,
+        "memberIndex": 0,
+        "name": "Sparky",
+        "nature": "Brave",
+        "pokemon": "Pikachu",
+        "ribbon": 0,
+        "saved": true,
+        "shiny": false,
+        "skillLevel": 5,
+        "subskills": [
+          {
+            "level": 10,
+            "subskill": "Thunderbolt",
+          },
+          {
+            "level": 25,
+            "subskill": "Quick Attack",
+          },
+          {
+            "level": 50,
+            "subskill": "Iron Tail",
+          },
+          {
+            "level": 75,
+            "subskill": "Electro Ball",
+          },
+          {
+            "level": 100,
+            "subskill": "Thunder",
+          },
+        ],
+        "version": 1,
+      },
+      {
+        "carrySize": 22,
+        "externalId": "111111111111111111111111111111111111",
+        "gender": undefined,
+        "ingredients": [
+          {
+            "amount": 0,
+            "level": 0,
+            "name": "Berry",
+          },
+          {
+            "amount": 0,
+            "level": 30,
+            "name": "Potion",
+          },
+          {
+            "amount": 0,
+            "level": 60,
+            "name": "Elixir",
+          },
+        ],
+        "level": 25,
+        "memberIndex": 1,
+        "name": "Sparky",
+        "nature": "Brave",
+        "pokemon": "Pikachu",
+        "ribbon": 0,
+        "saved": true,
+        "shiny": false,
+        "skillLevel": 5,
+        "subskills": [
+          {
+            "level": 10,
+            "subskill": "Thunderbolt",
+          },
+          {
+            "level": 25,
+            "subskill": "Quick Attack",
+          },
+          {
+            "level": 50,
+            "subskill": "Iron Tail",
+          },
+          {
+            "level": 75,
+            "subskill": "Electro Ball",
+          },
+          {
+            "level": 100,
+            "subskill": "Thunder",
+          },
+        ],
+        "version": 1,
+      },
+      {
+        "carrySize": 11,
+        "externalId": "222222222222222222222222222222222222",
+        "gender": undefined,
+        "ingredients": [
+          {
+            "amount": 0,
+            "level": 0,
+            "name": "Berry",
+          },
+          {
+            "amount": 0,
+            "level": 30,
+            "name": "Potion",
+          },
+          {
+            "amount": 0,
+            "level": 60,
+            "name": "Elixir",
+          },
+        ],
+        "level": 25,
+        "memberIndex": 2,
+        "name": "Bubble",
+        "nature": "Brave",
+        "pokemon": "Bulbasaur",
+        "ribbon": 0,
+        "saved": true,
+        "shiny": false,
+        "skillLevel": 5,
+        "subskills": [
+          {
+            "level": 10,
+            "subskill": "Thunderbolt",
+          },
+          {
+            "level": 25,
+            "subskill": "Quick Attack",
+          },
+          {
+            "level": 50,
+            "subskill": "Iron Tail",
+          },
+          {
+            "level": 75,
+            "subskill": "Electro Ball",
+          },
+          {
+            "level": 100,
+            "subskill": "Thunder",
+          },
+        ],
+        "version": 1,
+      },
+    ],
+    "name": "Team A",
+    "recipeType": "curry",
+    "stockpiledBerries": undefined,
+    "stockpiledIngredients": undefined,
+    "version": 1,
+    "wakeup": "06:00",
+  },
+]
+`;

@@ -193,7 +193,10 @@ export class SkillState {
   }
 
   get skillLevel() {
-    return this.memberState.member.settings.skillLevel;
+    return Math.min(
+      this.memberState.member.settings.skillLevel,
+      this.memberState.member.pokemonWithIngredients.pokemon.skill.maxLevel
+    );
   }
 
   public skillAmount(activation: MainskillActivation) {

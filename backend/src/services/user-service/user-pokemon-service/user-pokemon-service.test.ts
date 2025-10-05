@@ -1,5 +1,5 @@
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import {
   deletePokemon,
   getSavedPokemon,

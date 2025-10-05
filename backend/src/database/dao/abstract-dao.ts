@@ -28,9 +28,9 @@ export abstract class AbstractDAO<
 
   async find(
     filter: Filter<DBEntityType>,
-    options?: { sort?: SortKey<DBEntityType> | Array<SortKey<DBEntityType>> }
+    options?: { sort?: SortKey<DBEntityType> | Array<SortKey<DBEntityType>>; trx?: Knex.Transaction }
   ): Promise<DBEntityType | undefined> {
-    const knex = await DatabaseService.getKnex();
+    const knex = await DatabaseService.getKnex(options?.trx);
     const queryToExecute = this.#createQuery(knex.select(), filter, options).first();
     const result: DBEntityType | undefined = await queryToExecute;
     return result ? this.postProcess(result) : undefined;
@@ -38,7 +38,7 @@ export abstract class AbstractDAO<
 
   async get(
     filter: Filter<DBEntityType>,
-    options?: { sort?: SortKey<DBEntityType> | Array<SortKey<DBEntityType>> }
+    options?: { sort?: SortKey<DBEntityType> | Array<SortKey<DBEntityType>>; trx?: Knex.Transaction }
   ): Promise<DBEntityType> {
     const result = await this.find(filter, options);
     if (!result) {
@@ -55,9 +55,10 @@ export abstract class AbstractDAO<
       sort?: SortKey<DBEntityType> | Array<SortKey<DBEntityType>>;
       limit?: number;
       offset?: number;
+      trx?: Knex.Transaction;
     }
   ): Promise<Array<DBEntityType>> {
-    const knex = await DatabaseService.getKnex();
+    const knex = await DatabaseService.getKnex(options?.trx);
     let query = this.#createQuery(knex.select(), filter, options);
     query = options?.limit !== undefined ? query.limit(options.limit) : query;
     query = options?.offset !== undefined ? query.offset(options.offset) : query;
@@ -66,8 +67,11 @@ export abstract class AbstractDAO<
     return result.map((row) => this.postProcess(row));
   }
 
-  async insert(entity: Omit<DBEntityType, 'id' | 'version'>): Promise<DBEntityType> {
-    const knex = await DatabaseService.getKnex();
+  async insert(
+    entity: Omit<DBEntityType, 'id' | 'version'>,
+    options?: { trx?: Knex.Transaction }
+  ): Promise<DBEntityType> {
+    const knex = await DatabaseService.getKnex(options?.trx);
 
     const result = await knex
       .insert(
@@ -83,12 +87,11 @@ export abstract class AbstractDAO<
       throw new DatabaseInsertError(`Insert expected one element but was ${result.length}`);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return this.get({ id: result[0] } as any);
+    return this.get({ id: result[0] } as Filter<DBEntityType>, options);
   }
 
-  async update(entity: DBEntityType): Promise<DBEntityType> {
-    const knex = await DatabaseService.getKnex();
+  async update(entity: DBEntityType, options?: { trx?: Knex.Transaction }): Promise<DBEntityType> {
+    const knex = await DatabaseService.getKnex(options?.trx);
 
     await knex
       .update(
@@ -101,35 +104,57 @@ export abstract class AbstractDAO<
       .into(this.tableName)
       .where({ id: entity.id });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return this.get({ id: entity.id } as any);
+    return this.get({ id: entity.id } as Filter<DBEntityType>, options);
   }
 
-  async delete(filter: Filter<DBEntityType> = {}): Promise<number> {
-    const knex = await DatabaseService.getKnex();
+  async delete(filter: Filter<DBEntityType> = {}, options?: { trx?: Knex.Transaction }): Promise<number> {
+    const knex = await DatabaseService.getKnex(options?.trx);
 
     const queryToExecute = this.#createQuery(knex.delete(), filter, {});
     return await queryToExecute;
   }
 
-  async upsert(params: { updated: Omit<DBEntityType, 'id' | 'version'>; filter: Filter<DBEntityType> }) {
-    const { updated, filter } = params;
-    const prev = await this.find(filter);
+  // TODO: could probably use insert on conflict merge instead
+  async upsert(params: {
+    updated: Omit<DBEntityType, 'id' | 'version'>;
+    filter: Filter<DBEntityType>;
+    options?: { trx?: Knex.Transaction };
+  }) {
+    const { updated, filter, options } = params;
+    const prev = await this.find(filter, options);
 
     if (prev) {
       const entityToUpdate = { ...updated, id: prev.id, version: prev.version } as DBEntityType;
-      return await this.update(entityToUpdate);
+      return await this.update(entityToUpdate, options);
     } else {
-      return await this.insert(updated);
+      return await this.insert(updated, options);
     }
   }
 
-  async batchInsert(
-    entities: Array<Omit<DBEntityType, 'id'>>,
-    chunkSize = 1000,
-    enableLogging?: boolean
-  ): Promise<void> {
-    const knex = await DatabaseService.getKnex();
+  // TODO: could probably use insert on conflict ignore instead
+  async findOrInsert(params: {
+    filter: Filter<DBEntityType>;
+    entityToInsert: Omit<DBEntityType, 'id' | 'version'>;
+    options?: { trx?: Knex.Transaction };
+  }): Promise<DBEntityType> {
+    const { filter, entityToInsert, options } = params;
+    const existing = await this.find(filter, options);
+
+    if (existing) {
+      return existing;
+    } else {
+      return await this.insert(entityToInsert, options);
+    }
+  }
+
+  async batchInsert(params: {
+    entities: Array<Omit<DBEntityType, 'id'>>;
+    chunkSize?: number;
+    enableLogging?: boolean;
+    options?: { trx?: Knex.Transaction };
+  }) {
+    const { entities, chunkSize = 1000, enableLogging = false, options } = params;
+    const knex = await DatabaseService.getKnex(options?.trx);
 
     let amountInserted = 0;
 
@@ -195,8 +220,8 @@ export abstract class AbstractDAO<
     return query;
   }
 
-  public async count(filter: Filter<DBEntityType> = {}) {
-    const knex = await DatabaseService.getKnex();
+  public async count(filter: Filter<DBEntityType> = {}, options?: { trx?: Knex.Transaction }) {
+    const knex = await DatabaseService.getKnex(options?.trx);
     const [{ count }] = await this.#createQuery(knex.count('*', { as: 'count' }), filter);
     return Number(count);
   }
