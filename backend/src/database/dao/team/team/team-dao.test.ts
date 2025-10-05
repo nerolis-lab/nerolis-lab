@@ -1,23 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamDAO } from '@src/database/dao/team/team-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
+import { TeamAreaDAO } from '@src/database/dao/team/team-area/team-area-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import { TeamDAO } from '@src/database/dao/team/team/team-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
+import { mocks } from '@src/vitest/index.js';
 import { getPokemon, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
+DaoFixture.init({ recreateDatabasesBeforeEachTest: true, enforceForeignKeyConstraints: true });
 
-beforeEach(() => {
+let teamAreaId: number;
+let userAreaId: number;
+
+beforeEach(async () => {
   let innerCounter = 0;
   vimic(uuid, 'v4', () => `${++innerCounter}`.padEnd(36, `${innerCounter}`));
+
+  // Create test users
+  await UserDAO.insert(mocks.dbUser({ friend_code: 'AAAAAA', external_id: '1' }));
+  await UserDAO.insert(mocks.dbUser({ friend_code: 'BBBBBB', external_id: '2' }));
+
+  // Create user area
+  const userArea = await UserAreaDAO.insert({
+    fk_user_id: 1,
+    area: 'greengrass',
+    bonus: 1.5
+  });
+  userAreaId = userArea.id;
+
+  // Create team area
+  const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userAreaId, favored_berries: '' });
+  teamAreaId = teamArea.id;
 });
 
 describe('TeamDAO insert', () => {
   it('shall insert new entity', async () => {
     const team = await TeamDAO.insert({
       fk_user_id: 1,
+      fk_team_area_id: teamAreaId,
       team_index: 0,
       name: 'Team A',
       camp: false,
@@ -29,28 +53,29 @@ describe('TeamDAO insert', () => {
 
     const data = await TeamDAO.findMultiple();
     expect(data).toMatchInlineSnapshot(`
-[
-  {
-    "bedtime": "21:30",
-    "camp": false,
-    "favored_berries": undefined,
-    "fk_user_id": 1,
-    "id": 1,
-    "name": "Team A",
-    "recipe_type": "curry",
-    "stockpiled_berries": undefined,
-    "stockpiled_ingredients": undefined,
-    "team_index": 0,
-    "version": 1,
-    "wakeup": "06:00",
-  },
-]
-`);
+      [
+        {
+          "bedtime": "21:30",
+          "camp": false,
+          "fk_team_area_id": 1,
+          "fk_user_id": 1,
+          "id": 1,
+          "name": "Team A",
+          "recipe_type": "curry",
+          "stockpiled_berries": undefined,
+          "stockpiled_ingredients": undefined,
+          "team_index": 0,
+          "version": 1,
+          "wakeup": "06:00",
+        },
+      ]
+    `);
   });
 
   it('shall fail to insert entity without fk_user_id', async () => {
     await expect(
       TeamDAO.insert({
+        fk_team_area_id: teamAreaId,
         fk_user_id: undefined as any,
         team_index: 0,
         name: 'Team A',
@@ -65,6 +90,7 @@ describe('TeamDAO insert', () => {
   it('shall fail to insert entity without team_index', async () => {
     await expect(
       TeamDAO.insert({
+        fk_team_area_id: teamAreaId,
         fk_user_id: 1,
         team_index: undefined as any,
         name: 'Team A',
@@ -79,6 +105,7 @@ describe('TeamDAO insert', () => {
   it('shall fail to insert entity without name', async () => {
     await expect(
       TeamDAO.insert({
+        fk_team_area_id: teamAreaId,
         fk_user_id: 1,
         team_index: 0,
         name: undefined as any,
@@ -92,6 +119,7 @@ describe('TeamDAO insert', () => {
 
   it('shall fail to insert entity with duplicate fk_user_id and team_index', async () => {
     await TeamDAO.insert({
+      fk_team_area_id: teamAreaId,
       fk_user_id: 1,
       team_index: 0,
       name: 'Team A',
@@ -100,8 +128,10 @@ describe('TeamDAO insert', () => {
       wakeup: '06:00',
       recipe_type: 'curry'
     });
+    const secondTeamArea = await TeamAreaDAO.insert({ fk_user_area_id: userAreaId, favored_berries: '' });
     await expect(
       TeamDAO.insert({
+        fk_team_area_id: secondTeamArea.id,
         fk_user_id: 1,
         team_index: 0,
         name: 'Team B',
@@ -117,6 +147,7 @@ describe('TeamDAO insert', () => {
 describe('TeamDAO update', () => {
   it('shall update entity', async () => {
     const team = await TeamDAO.insert({
+      fk_team_area_id: teamAreaId,
       fk_user_id: 1,
       team_index: 0,
       name: 'Team A',
@@ -135,7 +166,7 @@ describe('TeamDAO update', () => {
         {
           "bedtime": "21:30",
           "camp": false,
-          "favored_berries": undefined,
+          "fk_team_area_id": 1,
           "fk_user_id": 1,
           "id": 1,
           "name": "Updated Team A",
@@ -152,6 +183,7 @@ describe('TeamDAO update', () => {
 
   it('shall fail to update entity with duplicate fk_user_id and team_index', async () => {
     await TeamDAO.insert({
+      fk_team_area_id: teamAreaId,
       fk_user_id: 1,
       team_index: 0,
       name: 'Team A',
@@ -160,7 +192,9 @@ describe('TeamDAO update', () => {
       wakeup: '06:00',
       recipe_type: 'curry'
     });
+    const secondTeamArea = await TeamAreaDAO.insert({ fk_user_area_id: userAreaId, favored_berries: '' });
     const teamB = await TeamDAO.insert({
+      fk_team_area_id: secondTeamArea.id,
       fk_user_id: 1,
       team_index: 1,
       name: 'Team B',
@@ -179,6 +213,7 @@ describe('TeamDAO update', () => {
 describe('TeamDAO delete', () => {
   it('shall delete entity', async () => {
     const team = await TeamDAO.insert({
+      fk_team_area_id: teamAreaId,
       fk_user_id: 1,
       team_index: 0,
       name: 'Team A',
@@ -198,6 +233,7 @@ describe('TeamDAO delete', () => {
 describe('findTeamsWithMembers', () => {
   it('shall get team with members', async () => {
     await TeamDAO.insert({
+      fk_team_area_id: teamAreaId,
       fk_user_id: 1,
       team_index: 0,
       name: 'Team A',
@@ -207,7 +243,14 @@ describe('findTeamsWithMembers', () => {
       recipe_type: 'curry'
     });
     // should not be found
+    const secondUserArea = await UserAreaDAO.insert({
+      fk_user_id: 2,
+      area: 'cyan',
+      bonus: 0
+    });
+    const secondTeamArea = await TeamAreaDAO.insert({ fk_user_area_id: secondUserArea.id, favored_berries: '' });
     await TeamDAO.insert({
+      fk_team_area_id: secondTeamArea.id,
       fk_user_id: 2,
       team_index: 0,
       name: 'Team B',

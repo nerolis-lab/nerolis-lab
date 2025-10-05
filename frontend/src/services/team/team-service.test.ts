@@ -43,7 +43,11 @@ describe('createOrUpdateTeam', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipeType: 'curry'
+      recipeType: 'curry',
+      island: {
+        islandName: 'GGEX',
+        favoredBerries: 'favoredBerries'
+      }
     }
 
     mockedServerAxios.onPut('/team/meta/0').replyOnce(200, 'successful response')

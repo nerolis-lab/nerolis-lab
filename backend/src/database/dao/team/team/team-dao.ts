@@ -3,7 +3,8 @@ import { Type } from '@sinclair/typebox';
 import { AbstractDAO, DBWithVersionedIdSchema } from '@src/database/dao/abstract-dao.js';
 import type { DBPokemon } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
+import { TeamAreaDAO } from '@src/database/dao/team/team-area/team-area-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
 import {
   CarrySizeUtils,
   getPokemon,
@@ -18,13 +19,13 @@ const DBTeamSchema = Type.Composite([
   DBWithVersionedIdSchema,
   Type.Object({
     fk_user_id: Type.Number(),
+    fk_team_area_id: Type.Number(),
     team_index: Type.Number(),
     name: Type.String(),
     camp: Type.Boolean(),
     bedtime: Type.String(),
     wakeup: Type.String(),
     recipe_type: Type.Union([Type.Literal('curry'), Type.Literal('salad'), Type.Literal('dessert')]),
-    favored_berries: Type.Optional(Type.String()),
     stockpiled_ingredients: Type.Optional(Type.String()),
     stockpiled_berries: Type.Optional(Type.String())
   })
@@ -36,7 +37,8 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
   public tableName = 'team';
   public schema = DBTeamSchema;
 
-  public async findTeamsWithMembers(userId: number) {
+  public async findTeamsWithMembers(userId: number): Promise<GetTeamResponse[]> {
+    // TODO: change to join instead of doing 2 additional gets for each team
     const teams = await this.findMultiple({ fk_user_id: userId });
 
     const teamsWithMembers: GetTeamResponse[] = [];
@@ -82,6 +84,9 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         });
       }
 
+      const teamArea = await TeamAreaDAO.get({ id: team.fk_team_area_id });
+      const favoredBerries = teamArea.favored_berries.split(',').filter(Boolean);
+
       teamsWithMembers.push({
         index: team.team_index,
         name: team.name,
@@ -89,7 +94,7 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         bedtime: team.bedtime,
         wakeup: team.wakeup,
         recipeType: team.recipe_type,
-        favoredBerries: team.favored_berries?.split(','),
+        favoredBerries,
         stockpiledBerries: this.stringToStockpile(team.stockpiled_berries, true),
         stockpiledIngredients: this.stringToStockpile(team.stockpiled_ingredients, false),
         version: team.version,

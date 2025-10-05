@@ -1,5 +1,4 @@
-import { TeamDAO, type DBTeamWithoutVersion } from '@src/database/dao/team/team-dao.js';
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import {
   deleteMember,
   deleteTeam,
@@ -11,19 +10,7 @@ import type { UpsertTeamMemberRequest, UpsertTeamMetaRequest } from 'sleepapi-co
 
 export default class TeamController {
   public async upsertMeta(index: number, request: UpsertTeamMetaRequest, user: DBUser) {
-    const team: DBTeamWithoutVersion = {
-      fk_user_id: user.id,
-      team_index: index,
-      name: request.name,
-      camp: request.camp,
-      bedtime: request.bedtime,
-      wakeup: request.wakeup,
-      recipe_type: request.recipeType,
-      favored_berries: request.favoredBerries?.join(','),
-      stockpiled_ingredients: TeamDAO.stockpileToString(request.stockpiledIngredients),
-      stockpiled_berries: TeamDAO.stockpileToString(request.stockpiledBerries)
-    };
-    return upsertTeamMeta(team);
+    return upsertTeamMeta({ index, request, user });
   }
 
   public async deleteTeam(index: number, user: DBUser) {

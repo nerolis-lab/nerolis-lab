@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { FriendService } from '@src/services/friend-service/friend-service.js';
 
 export default class FriendController {

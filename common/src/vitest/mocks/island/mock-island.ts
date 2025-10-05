@@ -1,4 +1,4 @@
-import type { Island, IslandInstance } from '../../../types';
+import type { Island, IslandInstance, TeamAreaDTO } from '../../../types';
 
 export function island(attrs?: Partial<Island>): Island {
   return {
@@ -14,6 +14,14 @@ export function islandInstance(attrs?: Partial<IslandInstance>): IslandInstance 
   return {
     ...island(),
     areaBonus: 0,
+    ...attrs
+  };
+}
+
+export function islandDTO(attrs?: Partial<TeamAreaDTO>): TeamAreaDTO {
+  return {
+    islandName: 'greengrass',
+    favoredBerries: '',
     ...attrs
   };
 }

@@ -1,4 +1,4 @@
-import type { DBUser } from '@src/database/dao/user/user-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
 import { NotificationService } from '@src/services/notification-service/notification-service.js';
 import type { NewsNotificationRequest } from 'sleepapi-common';
 

@@ -1,4 +1,4 @@
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { getUsers } from '@src/services/admin-service/admin-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { Roles, uuid } from 'sleepapi-common';

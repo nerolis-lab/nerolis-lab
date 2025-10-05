@@ -1,5 +1,5 @@
-import { UserRecipeDAO } from '@src/database/dao/user-recipe/user-recipe-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { UserRecipeDAO } from '@src/database/dao/user/user-recipe/user-recipe-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import {
   getRecipeLevels,
   upsertRecipeLevel

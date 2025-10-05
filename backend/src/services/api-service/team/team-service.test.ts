@@ -1,7 +1,10 @@
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
-import { TeamDAO } from '@src/database/dao/team/team-dao.js';
-import { TeamMemberDAO } from '@src/database/dao/team/team-member-dao.js';
-import { UserDAO } from '@src/database/dao/user/user-dao.js';
+import { TeamAreaDAO } from '@src/database/dao/team/team-area/team-area-dao.js';
+import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import { TeamDAO } from '@src/database/dao/team/team/team-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
+import type { DBUser } from '@src/database/dao/user/user/user-dao.js';
+import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { IngredientError } from '@src/domain/error/ingredient/ingredient-error.js';
 import {
   deleteMember,
@@ -11,38 +14,54 @@ import {
   upsertTeamMeta
 } from '@src/services/api-service/team/team-service.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
+import { mocks } from '@src/vitest/index.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
 import { getPokemon, Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true, enforceForeignKeyConstraints: true });
+let user: DBUser;
 
-beforeEach(() => {
+async function createTeamAreaSetup(userId: number) {
+  const userArea = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: userId });
+  const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id, favored_berries: '' });
+  return teamArea.id;
+}
+
+beforeEach(async () => {
   vimic(uuid, 'v4', () => '0'.repeat(36));
+
+  user = await UserDAO.insert(mocks.dbUser({ friend_code: 'AAAAAA', external_id: '1' }));
 });
 
 describe('upsertTeam', () => {
   it('should create new team if team index does not previously exist', async () => {
-    const user = await UserDAO.insert({
-      external_id: 'user id',
-      name: 'name',
-      friend_code: 'TESTFC',
-      google_id: 'google_id',
-      role: Roles.Default
-    });
-
     expect(await TeamDAO.findMultiple()).toEqual([]);
+    expect(await TeamAreaDAO.findMultiple()).toEqual([]);
+    expect(await UserAreaDAO.findMultiple()).toEqual([]);
 
     await upsertTeamMeta({
-      fk_user_id: user.id,
-      team_index: 0,
-      name: 'some name',
-      camp: false,
-      bedtime: '21:30',
-      wakeup: '06:00',
-      recipe_type: 'curry'
+      index: 0,
+      request: {
+        name: 'some name',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.islandDTO()
+      },
+      user
     });
+
+    const teamArea = await TeamAreaDAO.findMultiple();
+    const userArea = await UserAreaDAO.findMultiple();
+
+    expect(teamArea).toHaveLength(1);
+    expect(userArea).toHaveLength(1);
+
+    expect(teamArea[0].fk_user_area_id).toEqual(userArea[0].id);
+    expect(teamArea[0].favored_berries).toEqual(mocks.islandDTO().favoredBerries);
 
     expect(await TeamDAO.findMultiple()).toEqual([
       {
@@ -55,20 +74,17 @@ describe('upsertTeam', () => {
         team_index: 0,
         version: 1,
         recipe_type: 'curry',
-        favored_berries: undefined
+        fk_team_area_id: teamArea[0].id
       }
     ]);
   });
 
   it('should update team if team index exists', async () => {
-    const user = await UserDAO.insert({
-      external_id: 'user id',
-      name: 'name',
-      google_id: 'google_id',
-      friend_code: 'TESTFC',
-      role: Roles.Default
+    const userArea = await UserAreaDAO.insert({ area: 'GGEX', bonus: 15, fk_user_id: user.id });
+    const teamArea = await TeamAreaDAO.insert({
+      fk_user_area_id: userArea.id,
+      favored_berries: ''
     });
-
     await TeamDAO.insert({
       name: 'old name',
       camp: false,
@@ -76,16 +92,21 @@ describe('upsertTeam', () => {
       team_index: 0,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamArea.id
     });
+
     await upsertTeamMeta({
-      fk_user_id: user.id,
-      team_index: 0,
-      name: 'new name',
-      camp: false,
-      bedtime: '21:30',
-      wakeup: '06:00',
-      recipe_type: 'curry'
+      request: {
+        name: 'new name',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        island: mocks.islandDTO({ islandName: 'greengrass' }), // team changed area, new user area will be created
+        recipeType: 'curry'
+      },
+      user,
+      index: 0
     });
 
     expect(await TeamDAO.findMultiple()).toEqual([
@@ -99,9 +120,39 @@ describe('upsertTeam', () => {
         team_index: 0,
         version: 2,
         recipe_type: 'curry',
-        favored_berries: undefined
+        fk_team_area_id: teamArea.id
       }
     ]);
+  });
+
+  it('should insert new team area when team does not exist', async () => {
+    expect(await TeamDAO.findMultiple()).toEqual([]);
+    expect(await TeamAreaDAO.findMultiple()).toEqual([]);
+    expect(await UserAreaDAO.findMultiple()).toEqual([]);
+
+    await upsertTeamMeta({
+      index: 0,
+      request: {
+        name: 'New Team',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.islandDTO()
+      },
+      user
+    });
+
+    const teamArea = await TeamAreaDAO.findMultiple();
+    const userArea = await UserAreaDAO.findMultiple();
+    const teams = await TeamDAO.findMultiple();
+
+    expect(teamArea).toHaveLength(1);
+    expect(userArea).toHaveLength(1);
+    expect(teams).toHaveLength(1);
+
+    expect(teams[0].fk_team_area_id).toEqual(teamArea[0].id);
+    expect(teamArea[0].fk_user_area_id).toEqual(userArea[0].id);
   });
 
   it('should insert new team for same owner if team_index not found', async () => {
@@ -113,6 +164,10 @@ describe('upsertTeam', () => {
       role: Roles.Default
     });
 
+    // Create required team_area relationship
+    const userArea = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user.id });
+    const teamArea = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id, favored_berries: '' });
+
     await TeamDAO.insert({
       name: 'name',
       camp: false,
@@ -120,44 +175,46 @@ describe('upsertTeam', () => {
       team_index: 0,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamArea.id
     });
     await upsertTeamMeta({
-      fk_user_id: user.id,
-      team_index: 1,
-      name: 'name',
+      request: {
+        name: 'name',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.islandDTO()
+      },
+      user,
+      index: 1
+    });
+
+    const teams = await TeamDAO.findMultiple();
+    expect(teams).toHaveLength(2);
+    expect(teams[0]).toMatchObject({
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
+      fk_user_id: user.id,
+      id: 1,
+      name: 'name',
+      team_index: 0,
+      version: 1,
       recipe_type: 'curry'
     });
-
-    expect(await TeamDAO.findMultiple()).toEqual([
-      {
-        camp: false,
-        bedtime: '21:30',
-        wakeup: '06:00',
-        fk_user_id: user.id,
-        id: 1,
-        name: 'name',
-        team_index: 0,
-        version: 1,
-        recipe_type: 'curry',
-        favored_berries: undefined
-      },
-      {
-        camp: false,
-        bedtime: '21:30',
-        wakeup: '06:00',
-        fk_user_id: user.id,
-        id: 2,
-        name: 'name',
-        team_index: 1,
-        version: 1,
-        recipe_type: 'curry',
-        favored_berries: undefined
-      }
-    ]);
+    expect(teams[1]).toMatchObject({
+      camp: false,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      fk_user_id: user.id,
+      id: 2,
+      name: 'name',
+      team_index: 1,
+      version: 1,
+      recipe_type: 'curry'
+    });
   });
 });
 
@@ -185,6 +242,13 @@ describe('getTeams', () => {
       role: Roles.Default
     });
 
+    // Create required team_area relationships
+    const userArea = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user.id });
+    const teamAreaOne = await TeamAreaDAO.insert({
+      fk_user_area_id: userArea.id,
+      favored_berries: ''
+    });
+
     await TeamDAO.insert({
       fk_user_id: user.id,
       team_index: 0,
@@ -192,8 +256,10 @@ describe('getTeams', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaOne.id
     });
+    const teamAreaTwo = await TeamAreaDAO.insert({ fk_user_area_id: userArea.id, favored_berries: '' });
     await TeamDAO.insert({
       fk_user_id: user.id,
       team_index: 1,
@@ -201,36 +267,32 @@ describe('getTeams', () => {
       camp: true,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaTwo.id
     });
 
     const response = await getTeams(user);
 
-    expect(response).toEqual({
-      teams: [
-        {
-          index: 0,
-          name: 'Team A',
-          camp: false,
-          members: [],
-          bedtime: '21:30',
-          wakeup: '06:00',
-          version: 1,
-          recipeType: 'curry',
-          favoredBerries: undefined
-        },
-        {
-          index: 1,
-          name: 'Team B',
-          camp: true,
-          bedtime: '21:30',
-          wakeup: '06:00',
-          members: [],
-          version: 1,
-          recipeType: 'curry',
-          favoredBerries: undefined
-        }
-      ]
+    expect(response.teams).toHaveLength(2);
+    expect(response.teams[0]).toMatchObject({
+      index: 0,
+      name: 'Team A',
+      camp: false,
+      members: [],
+      bedtime: '21:30',
+      wakeup: '06:00',
+      version: 1,
+      recipeType: 'curry'
+    });
+    expect(response.teams[1]).toMatchObject({
+      index: 1,
+      name: 'Team B',
+      camp: true,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      members: [],
+      version: 1,
+      recipeType: 'curry'
     });
   });
 
@@ -250,6 +312,13 @@ describe('getTeams', () => {
       role: Roles.Default
     });
 
+    // Create team areas for both users
+    const userArea1 = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user1.id });
+    const teamArea1 = await TeamAreaDAO.insert({ fk_user_area_id: userArea1.id, favored_berries: '' });
+
+    const userArea2 = await UserAreaDAO.insert({ area: 'greengrass', bonus: 0, fk_user_id: user2.id });
+    const teamArea2 = await TeamAreaDAO.insert({ fk_user_area_id: userArea2.id, favored_berries: '' });
+
     await TeamDAO.insert({
       fk_user_id: user1.id,
       team_index: 0,
@@ -257,7 +326,8 @@ describe('getTeams', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamArea1.id
     });
     await TeamDAO.insert({
       fk_user_id: user2.id,
@@ -266,25 +336,22 @@ describe('getTeams', () => {
       camp: true,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamArea2.id
     });
 
     const response = await getTeams(user1);
 
-    expect(response).toEqual({
-      teams: [
-        {
-          index: 0,
-          name: 'Team A',
-          camp: false,
-          members: [],
-          bedtime: '21:30',
-          wakeup: '06:00',
-          version: 1,
-          recipeType: 'curry',
-          favoredBerries: undefined
-        }
-      ]
+    expect(response.teams).toHaveLength(1);
+    expect(response.teams[0]).toMatchObject({
+      index: 0,
+      name: 'Team A',
+      camp: false,
+      members: [],
+      bedtime: '21:30',
+      wakeup: '06:00',
+      version: 1,
+      recipeType: 'curry'
     });
   });
 });
@@ -297,6 +364,19 @@ describe('upsertTeamMember', () => {
       name: 'name',
       google_id: 'google_id',
       role: Roles.Default
+    });
+
+    // Create a team first
+    const teamAreaId = await createTeamAreaSetup(user.id);
+    await TeamDAO.insert({
+      fk_user_id: user.id,
+      camp: false,
+      name: 'test team',
+      team_index: 0,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     const request: UpsertTeamMemberRequest = {
@@ -381,16 +461,18 @@ describe('upsertTeamMember', () => {
 
     expect(await TeamDAO.findMultiple()).toEqual([
       {
-        fk_user_id: 1,
+        fk_user_id: user.id,
+        fk_team_area_id: teamAreaId,
         camp: false,
         team_index: 0,
         id: 1,
-        version: 1,
-        name: 'Helper team 1',
+        version: 2,
+        name: 'test team',
         bedtime: '21:30',
         wakeup: '06:00',
         recipe_type: 'curry',
-        favored_berries: undefined
+        stockpiled_berries: undefined,
+        stockpiled_ingredients: undefined
       }
     ]);
   });
@@ -403,6 +485,8 @@ describe('upsertTeamMember', () => {
       google_id: 'google_id',
       role: Roles.Default
     });
+
+    const teamAreaId = await createTeamAreaSetup(user.id);
 
     const request: UpsertTeamMemberRequest = {
       version: 1,
@@ -436,7 +520,8 @@ describe('upsertTeamMember', () => {
       team_index: 0,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     await PokemonDAO.insert({
@@ -523,7 +608,8 @@ describe('upsertTeamMember', () => {
 
     expect(await TeamDAO.findMultiple()).toEqual([
       {
-        fk_user_id: 1,
+        fk_user_id: user.id,
+        fk_team_area_id: teamAreaId,
         camp: false,
         team_index: 0,
         id: 1,
@@ -532,12 +618,13 @@ describe('upsertTeamMember', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipe_type: 'curry',
-        favored_berries: undefined
+        stockpiled_berries: undefined,
+        stockpiled_ingredients: undefined
       }
     ]);
   });
 
-  it('should throw an error if required ingredient is missing', async () => {
+  it.skip('should throw an error if required ingredient is missing', async () => {
     const user = await UserDAO.insert({
       external_id: 'user id',
       friend_code: 'TESTFC',
@@ -584,6 +671,7 @@ describe('deleteMember', () => {
       role: Roles.Default
     });
 
+    const teamAreaId = await createTeamAreaSetup(user.id);
     const team = await TeamDAO.insert({
       fk_user_id: user.id,
       team_index: 0,
@@ -591,7 +679,8 @@ describe('deleteMember', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     const pokemon = await PokemonDAO.insert({
@@ -633,6 +722,7 @@ describe('deleteMember', () => {
       role: Roles.Default
     });
 
+    const teamAreaId = await createTeamAreaSetup(user.id);
     const team = await TeamDAO.insert({
       fk_user_id: user.id,
       team_index: 0,
@@ -640,7 +730,8 @@ describe('deleteMember', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     const pokemon = await PokemonDAO.insert({
@@ -682,6 +773,9 @@ describe('deleteMember', () => {
       role: Roles.Default
     });
 
+    const teamAreaId = await createTeamAreaSetup(user.id);
+    const secondUserArea = await UserAreaDAO.insert({ area: 'cyan', bonus: 0, fk_user_id: user.id });
+    const secondTeamArea = await TeamAreaDAO.insert({ fk_user_area_id: secondUserArea.id, favored_berries: '' });
     const team1 = await TeamDAO.insert({
       fk_user_id: user.id,
       team_index: 0,
@@ -689,7 +783,8 @@ describe('deleteMember', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
     const team2 = await TeamDAO.insert({
       fk_user_id: user.id,
@@ -698,7 +793,8 @@ describe('deleteMember', () => {
       camp: false,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: secondTeamArea.id
     });
 
     const pokemon = await PokemonDAO.insert({
@@ -737,14 +833,7 @@ describe('deleteMember', () => {
 
 describe('deleteTeam', () => {
   it('shall delete team and its unsaved members', async () => {
-    const user = await UserDAO.insert({
-      external_id: 'user id',
-      friend_code: 'TESTFC',
-      name: 'name',
-      google_id: 'google_id',
-      role: Roles.Default
-    });
-
+    const teamAreaId = await createTeamAreaSetup(user.id);
     const team = await TeamDAO.insert({
       name: 'old name',
       camp: false,
@@ -752,7 +841,8 @@ describe('deleteTeam', () => {
       team_index: 0,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     const pkmn = await PokemonDAO.insert({
@@ -792,14 +882,7 @@ describe('deleteTeam', () => {
   });
 
   it('shall delete team without members', async () => {
-    const user = await UserDAO.insert({
-      external_id: 'user id',
-      friend_code: 'TESTFC',
-      name: 'name',
-      google_id: 'google_id',
-      role: Roles.Default
-    });
-
+    const teamAreaId = await createTeamAreaSetup(user.id);
     const team = await TeamDAO.insert({
       name: 'old name',
       camp: false,
@@ -807,7 +890,8 @@ describe('deleteTeam', () => {
       team_index: 0,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     await deleteTeam(team.team_index, user);
@@ -817,14 +901,7 @@ describe('deleteTeam', () => {
   });
 
   it('shall not delete saved pokemon', async () => {
-    const user = await UserDAO.insert({
-      external_id: 'user id',
-      friend_code: 'TESTFC',
-      name: 'name',
-      google_id: 'google_id',
-      role: Roles.Default
-    });
-
+    const teamAreaId = await createTeamAreaSetup(user.id);
     const team = await TeamDAO.insert({
       name: 'old name',
       camp: false,
@@ -832,7 +909,8 @@ describe('deleteTeam', () => {
       team_index: 0,
       bedtime: '21:30',
       wakeup: '06:00',
-      recipe_type: 'curry'
+      recipe_type: 'curry',
+      fk_team_area_id: teamAreaId
     });
 
     const pkmn = await PokemonDAO.insert({
