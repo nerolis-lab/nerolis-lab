@@ -101,6 +101,18 @@ describe('Migration 012_team_area', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipe_type: 'curry'
+      },
+      {
+        id: 4,
+        fk_user_id: user,
+        name: 'Team Null Berries',
+        favored_berries: null,
+        version: 1,
+        camp: false,
+        team_index: 3,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipe_type: 'curry'
       }
     ];
 
@@ -128,13 +140,13 @@ describe('Migration 012_team_area', () => {
 
     // Verify team_area entries were created
     const teamAreas = await knex('team_area').select('*');
-    expect(teamAreas).toHaveLength(3); // One for each team
+    expect(teamAreas).toHaveLength(4); // One for each team
 
     // Verify each team_area has the correct favored_berries
     const teamAreaBerries = teamAreas.map((ta) => ta.favored_berries).sort();
+    expect(teamAreaBerries.filter((value) => value === '')).toHaveLength(2); // Empty string and null mapped
     expect(teamAreaBerries).toContain('ORAN,PAMTRE,PECHA');
     expect(teamAreaBerries).toContain('FIGY,LEPPA,SITRUS');
-    expect(teamAreaBerries).toContain(''); // Greengrass team
 
     // Verify teams are linked to team_areas
     const teams = await knex('team').select('*');

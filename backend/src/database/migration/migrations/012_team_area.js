@@ -64,9 +64,11 @@ export async function up(knex) {
         });
         userArea = await knex(Tables.UserArea).where('id', userAreaId).first();
       }
+      const favoredBerriesValue = team.favored_berries ?? '';
+
       const [teamAreaId] = await knex(Tables.TeamArea).insert({
         fk_user_area_id: userArea.id,
-        favored_berries: team.favored_berries
+        favored_berries: favoredBerriesValue
       });
       await knex(Tables.Team).where('id', team.id).update({
         fk_team_area_id: teamAreaId
