@@ -284,7 +284,7 @@ export const VULPIX: Pokemon = {
   specialty: 'berry',
   frequency: toSeconds(1, 18, 20),
   ingredientPercentage: 16.8,
-  skillPercentage: 2.7,
+  skillPercentage: 3.2,
   berry: LEPPA,
   genders: THREE_FOURTHS_FEMALE,
   carrySize: 13,
@@ -336,7 +336,7 @@ export const NINETALES: Pokemon = {
   pokedexNumber: 38,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 16.4,
-  skillPercentage: 2.5,
+  skillPercentage: 2.9,
   carrySize: 23
 };
 
