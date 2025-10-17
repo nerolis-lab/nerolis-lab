@@ -40,10 +40,10 @@ describe('ChargeStrengthSStockpile', () => {
 
   it('should get correct spit up strength values', () => {
     const level1SpitUp = ChargeStrengthSStockpile.getSpitUpStrength(1);
-    expect(level1SpitUp).toEqual([600, 1020, 1500, 2040, 2640, 3300, 4020, 4920, 6180, 7980, 10980]);
+    expect(level1SpitUp).toEqual([600, 1020, 1500, 2040, 2640, 3300, 4020, 4920, 6480, 8880, 12120]);
 
     const level7SpitUp = ChargeStrengthSStockpile.getSpitUpStrength(7);
-    expect(level7SpitUp).toEqual([4502, 7653, 11255, 15307, 19809, 24761, 30163, 36916, 46370, 59876, 82386]);
+    expect(level7SpitUp).toEqual([4502, 7653, 11255, 15307, 19809, 24761, 30163, 36916, 48621, 66629, 90940]);
   });
 
   it('should have specific RP values', () => {

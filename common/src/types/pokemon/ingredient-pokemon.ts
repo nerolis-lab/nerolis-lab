@@ -1070,7 +1070,7 @@ export const COMFEY: Pokemon = {
   specialty: 'ingredient',
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 16.7,
-  skillPercentage: 3,
+  skillPercentage: 3.5,
   berry: PECHA,
   genders: THREE_FOURTHS_FEMALE,
   carrySize: 20,
