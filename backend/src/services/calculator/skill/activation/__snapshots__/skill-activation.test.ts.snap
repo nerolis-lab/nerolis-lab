@@ -332,9 +332,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           3300,
           4020,
           4920,
-          6180,
-          7980,
-          10980,
+          6480,
+          8880,
+          12120,
         ],
         "2": [
           853,
@@ -345,9 +345,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           4691,
           5715,
           6995,
-          8786,
-          11345,
-          15610,
+          9213,
+          12625,
+          17231,
         ],
         "3": [
           1177,
@@ -358,9 +358,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           6474,
           7886,
           9652,
-          12124,
-          15655,
-          21540,
+          12712,
+          17420,
+          23776,
         ],
         "4": [
           1625,
@@ -371,9 +371,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           8939,
           10889,
           13327,
-          16740,
-          21615,
-          29740,
+          17552,
+          24052,
+          32827,
         ],
         "5": [
           2243,
@@ -384,9 +384,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           12336,
           15028,
           18393,
-          23103,
-          29832,
-          41047,
+          24225,
+          33197,
+          45309,
         ],
         "6": [
           3099,
@@ -397,9 +397,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           17044,
           20763,
           25412,
-          31920,
-          41217,
-          56712,
+          33469,
+          45865,
+          62600,
         ],
         "7": [
           4502,
@@ -410,9 +410,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           24761,
           30163,
           36916,
-          46370,
-          59876,
-          82386,
+          48621,
+          66629,
+          90940,
         ],
       },
     },
@@ -602,17 +602,17 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.32384,
+    "adjustedAmount": 0.2816,
     "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
-        880,
-        1251,
-        1726,
-        2383,
-        3290,
-        4546,
+        766,
+        1089,
+        1502,
+        2074,
+        2863,
+        3956,
       ],
       "activations": {
         "energy": {
@@ -623,12 +623,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       },
       "description": [Function],
       "energyAmounts": [
-        14,
-        17.1,
-        22.5,
-        28.8,
-        38.2,
-        50.6,
+        12,
+        15,
+        20,
+        25,
+        33,
+        44,
       ],
       "image": "energy",
       "name": "Energizing Cheer S",
@@ -1629,6 +1629,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             6441,
             8864,
             11878,
+            13140,
           ],
           "activations": {
             "strength": {
@@ -1677,6 +1678,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             7149,
             9870,
             13638,
+            17304,
           ],
         },
         {
@@ -1795,6 +1797,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               6441,
               8864,
               11878,
+              13140,
             ],
             "activations": {
               "strength": {
@@ -1843,6 +1846,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               7149,
               9870,
               13638,
+              17304,
             ],
           },
           {
@@ -1934,6 +1938,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             6441,
             8864,
             11878,
+            13140,
           ],
           "activations": {
             "strength": {
@@ -1982,6 +1987,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             7149,
             9870,
             13638,
+            17304,
           ],
         },
         {
@@ -2100,6 +2106,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               6441,
               8864,
               11878,
+              13140,
             ],
             "activations": {
               "strength": {
@@ -2148,6 +2155,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               7149,
               9870,
               13638,
+              17304,
             ],
           },
           {
@@ -2239,6 +2247,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             6441,
             8864,
             11878,
+            13140,
           ],
           "activations": {
             "strength": {
@@ -2287,6 +2296,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             7149,
             9870,
             13638,
+            17304,
           ],
         },
         {

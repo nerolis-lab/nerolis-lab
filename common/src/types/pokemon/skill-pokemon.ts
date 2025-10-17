@@ -251,7 +251,7 @@ export const SLOWPOKE: Pokemon = {
   specialty: 'skill',
   frequency: toSeconds(1, 35, 0),
   ingredientPercentage: 15.1,
-  skillPercentage: 6.7,
+  skillPercentage: 7.8,
   berry: ORAN,
   genders: BALANCED_GENDER,
   carrySize: 9,
@@ -277,7 +277,7 @@ export const SLOWBRO: Pokemon = {
   pokedexNumber: 80,
   frequency: toSeconds(1, 3, 20),
   ingredientPercentage: 19.7,
-  skillPercentage: 6.8,
+  skillPercentage: 8,
   carrySize: 16
 };
 
@@ -562,7 +562,7 @@ export const SLOWKING: Pokemon = {
   pokedexNumber: 199,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 16.6,
-  skillPercentage: 7.4,
+  skillPercentage: 8.7,
   carrySize: 17
 };
 
@@ -573,7 +573,7 @@ export const WOBBUFFET: Pokemon = {
   specialty: 'skill',
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 21.1,
-  skillPercentage: 7,
+  skillPercentage: 8.2,
   berry: MAGO,
   genders: BALANCED_GENDER,
   carrySize: 16,
@@ -914,7 +914,7 @@ export const WYNAUT: Pokemon = {
   pokedexNumber: 360,
   frequency: toSeconds(1, 36, 40),
   ingredientPercentage: 21.3,
-  skillPercentage: 5.9,
+  skillPercentage: 6.9,
   carrySize: 7
 };
 
@@ -936,7 +936,7 @@ export const DRIFLOON: Pokemon = {
   specialty: 'skill',
   frequency: toSeconds(1, 20, 0),
   ingredientPercentage: 13.7,
-  skillPercentage: 6.9,
+  skillPercentage: 7.1,
   berry: BLUK,
   genders: BALANCED_GENDER,
   carrySize: 9,
@@ -961,7 +961,7 @@ export const DRIFBLIM: Pokemon = {
   pokedexNumber: 426,
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 12.8,
-  skillPercentage: 6.1,
+  skillPercentage: 6.3,
   carrySize: 17
 };
 
@@ -1042,7 +1042,7 @@ export const LEAFEON: Pokemon = {
   pokedexNumber: 470,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 20.5,
-  skillPercentage: 5.9,
+  skillPercentage: 6.9,
   berry: DURIN,
   carrySize: 13,
   skill: EnergizingCheerS
