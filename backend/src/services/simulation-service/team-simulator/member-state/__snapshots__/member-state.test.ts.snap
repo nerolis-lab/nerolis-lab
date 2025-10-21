@@ -78,6 +78,7 @@ exports[`addHelps > shall add 1 average produce help 1`] = `
       0,
       0,
       0,
+      0,
       3,
     ],
     "pokemon": "MOCKEMON",
@@ -182,6 +183,7 @@ exports[`addHelps > shall not add produce if adding 0 helps 1`] = `
   "externalId": "some id",
   "pokemonWithIngredients": {
     "ingredients": Int16Array [
+      0,
       0,
       0,
       0,
@@ -308,6 +310,7 @@ exports[`attemptDayHelp > shall not perform a help if time has not passed schedu
       0,
       0,
       0,
+      0,
       3,
     ],
     "pokemon": "MOCKEMON",
@@ -402,6 +405,7 @@ exports[`attemptDayHelp > shall perform a help if time surpasses scheduled help 
   "externalId": "some id",
   "pokemonWithIngredients": {
     "ingredients": Int16Array [
+      0,
       0,
       0,
       0,
@@ -522,6 +526,7 @@ exports[`attemptNightHelp > shall roll skill proc on helps before inventory full
   "externalId": "some id",
   "pokemonWithIngredients": {
     "ingredients": Int16Array [
+      0,
       0,
       0,
       0,

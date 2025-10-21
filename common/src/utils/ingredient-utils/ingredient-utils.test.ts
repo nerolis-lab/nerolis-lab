@@ -71,6 +71,7 @@ describe('getIngredientNames', () => {
         "Coffee",
         "Mushroom",
         "Leek",
+        "Pumpkin",
         "Tail",
         "Locked",
       ]
@@ -182,13 +183,13 @@ describe('prettifyIngredientDrop', () => {
     ];
     INGREDIENTS.map((ingredient) => rawCombination.push({ amount: 0.83761, ingredient }));
     expect(prettifyIngredientDrop(rawCombination)).toMatchInlineSnapshot(
-      `"2 Honey, 5 Apple, 7 Honey and 0.84 of all 15 other ingredients"`
+      `"2 Honey, 5 Apple, 7 Honey and 0.84 of all 16 other ingredients"`
     );
   });
 
   it('shall prettify an isolated ingredient magnet proc', () => {
     const ings = INGREDIENTS.map((ingredient) => ({ amount: 0.83761, ingredient }));
-    expect(prettifyIngredientDrop(ings)).toMatchInlineSnapshot(`"0.84 of all 17 ingredients"`);
+    expect(prettifyIngredientDrop(ings)).toMatchInlineSnapshot(`"0.84 of all 18 ingredients"`);
   });
 
   it('shall support custom separator', () => {
@@ -207,7 +208,7 @@ describe('prettifyIngredientDrop', () => {
 
   it('shall prettify an ingredient drop + ingredient magnet proc from Float32Array', () => {
     const floatArray = new Float32Array(INGREDIENTS.length).fill(0.83761);
-    expect(prettifyIngredientDrop(floatArray)).toMatchInlineSnapshot(`"0.84 of all 17 ingredients"`);
+    expect(prettifyIngredientDrop(floatArray)).toMatchInlineSnapshot(`"0.84 of all 18 ingredients"`);
   });
 
   it('shall support custom separator with Float32Array', () => {
@@ -222,7 +223,7 @@ describe('prettifyIngredientDrop', () => {
 
   it('shall prettify an ingredient drop + ingredient magnet proc from Int16Array', () => {
     const intArray = new Int16Array(INGREDIENTS.length).fill(1);
-    expect(prettifyIngredientDrop(intArray)).toMatchInlineSnapshot(`"1 of all 17 ingredients"`);
+    expect(prettifyIngredientDrop(intArray)).toMatchInlineSnapshot(`"1 of all 18 ingredients"`);
   });
 
   it('shall support custom separator with Int16Array', () => {
@@ -482,26 +483,27 @@ describe('calculateAveragePokemonIngredientSet', () => {
     };
     const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 100);
     expect(averagedResult).toMatchInlineSnapshot(`
-Float32Array [
-  1,
-  1,
-  0,
-  0,
-  0,
-  0,
-  0,
-  1,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-]
-`);
+      Float32Array [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
+    `);
   });
 
   it('shall average an ingredient set for level 60', () => {
@@ -524,26 +526,27 @@ Float32Array [
     };
     const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 60);
     expect(averagedResult).toMatchInlineSnapshot(`
-Float32Array [
-  1,
-  1,
-  0,
-  0,
-  0,
-  0,
-  0,
-  1,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-]
-`);
+      Float32Array [
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
+    `);
   });
 
   it('shall average an ingredient set for level 30', () => {
@@ -563,26 +566,27 @@ Float32Array [
 
     const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 30);
     expect(averagedResult).toMatchInlineSnapshot(`
-Float32Array [
-  2,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  2,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-]
-`);
+      Float32Array [
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
+    `);
   });
 
   it('shall average an ingredient set for Darkrai', () => {
@@ -597,26 +601,27 @@ Float32Array [
 
     const averagedResult = calculateAveragePokemonIngredientSet(pokemonSet.ingredientList, 60);
     expect(averagedResult).toMatchInlineSnapshot(`
-Float32Array [
-  0,
-  0,
-  0,
-  0,
-  2,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-]
-`);
+      Float32Array [
+        0,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
+    `);
   });
 });
 
@@ -627,26 +632,27 @@ describe('ingredientSetToFloatFlat', () => {
       { amount: 5, ingredient: FANCY_EGG }
     ];
     expect(ingredientSetToFloatFlat(ingredientSet)).toMatchInlineSnapshot(`
-Float32Array [
-  0,
-  0,
-  0,
-  2,
-  0,
-  0,
-  0,
-  5,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-]
-`);
+      Float32Array [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
+    `);
   });
 });
 
@@ -657,26 +663,27 @@ describe('ingredientSetToIntFlat', () => {
       { amount: 5, ingredient: FANCY_EGG }
     ];
     expect(ingredientSetToIntFlat(ingredientSet)).toMatchInlineSnapshot(`
-Int16Array [
-  0,
-  0,
-  0,
-  2,
-  0,
-  0,
-  0,
-  5,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-  0,
-]
-`);
+      Int16Array [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ]
+    `);
   });
 });
 

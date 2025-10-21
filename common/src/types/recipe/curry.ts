@@ -9,6 +9,7 @@ import {
   HONEY,
   LARGE_LEEK,
   MOOMOO_MILK,
+  PLUMP_PUMPKIN,
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
@@ -243,6 +244,18 @@ export const CUT_SUKIYAKI_CURRY = createCurry({
   bonus: 61
 });
 
+export const ROLE_PLAY_PUMPKABOO_STEW = createCurry({
+  name: 'ROLE_PLAY_PUMPKABOO_STEW',
+  displayName: '"Role Play" Pumpkaboo Stew',
+  ingredients: [
+    { amount: 10, ingredient: PLUMP_PUMPKIN },
+    { amount: 16, ingredient: BEAN_SAUSAGE },
+    { amount: 18, ingredient: SOFT_POTATO },
+    { amount: 25, ingredient: TASTY_MUSHROOM }
+  ],
+  bonus: 48
+});
+
 export const CURRIES: Recipe[] = [
   FANCY_APPLE_CURRY,
   SIMPLE_CHOWDER,
@@ -264,7 +277,8 @@ export const CURRIES: Recipe[] = [
   DREAM_EATER_BUTTER_CURRY,
   INFERNO_CORN_KEEMA_CURRY,
   HIDDEN_POWER_PERK_UP_STEW,
-  CUT_SUKIYAKI_CURRY
+  CUT_SUKIYAKI_CURRY,
+  ROLE_PLAY_PUMPKABOO_STEW
 ];
 
 export const MIXED_CURRY_FLAT: RecipeFlat = recipesToFlat(MIXED_CURRY);
