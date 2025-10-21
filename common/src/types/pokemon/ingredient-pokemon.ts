@@ -31,6 +31,7 @@ import {
   HONEY,
   LARGE_LEEK,
   MOOMOO_MILK,
+  PLUMP_PUMPKIN,
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
@@ -978,6 +979,100 @@ export const ABOMASNOW: Pokemon = {
   carrySize: 21
 };
 
+export const PUMPKABOO_SMALL: Pokemon = {
+  name: 'PUMPKABOO_SMALL',
+  displayName: 'Pumpkaboo (Small Variety)',
+  pokedexNumber: 710,
+  specialty: 'ingredient',
+  frequency: toSeconds(1, 28, 20),
+  ingredientPercentage: 12.0,
+  skillPercentage: 4.9,
+  berry: BLUK,
+  genders: BALANCED_GENDER,
+  carrySize: 7,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredient0: [{ amount: 2, ingredient: PLUMP_PUMPKIN }],
+  ingredient30: [
+    { amount: 5, ingredient: PLUMP_PUMPKIN },
+    { amount: 11, ingredient: GREENGRASS_SOYBEANS }
+  ],
+  ingredient60: [
+    { amount: 7, ingredient: PLUMP_PUMPKIN },
+    { amount: 18, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 15, ingredient: SOFT_POTATO }
+  ],
+  skill: ChargeStrengthS
+};
+
+export const PUMPKABOO_MEDIUM: Pokemon = {
+  ...PUMPKABOO_SMALL,
+  name: 'PUMPKABOO_MEDIUM',
+  displayName: 'Pumpkaboo (Medium Variety)',
+  frequency: toSeconds(1, 30, 0),
+  carrySize: 11
+};
+
+export const PUMPKABOO_LARGE: Pokemon = {
+  ...PUMPKABOO_SMALL,
+  name: 'PUMPKABOO_LARGE',
+  displayName: 'Pumpkaboo (Large Variety)',
+  frequency: toSeconds(1, 31, 40),
+  carrySize: 15
+};
+
+export const PUMPKABOO_JUMBO: Pokemon = {
+  ...PUMPKABOO_SMALL,
+  name: 'PUMPKABOO_JUMBO',
+  displayName: 'Pumpkaboo (Jumbo Variety)',
+  frequency: toSeconds(1, 33, 20),
+  carrySize: 21
+};
+
+export const GOURGEIST_SMALL: Pokemon = {
+  ...evolvesFrom(PUMPKABOO_SMALL),
+  name: 'GOURGEIST_SMALL',
+  displayName: 'Gourgeist (Small Variety)',
+  pokedexNumber: 711,
+  frequency: toSeconds(0, 51, 40),
+  ingredientPercentage: 13.0,
+  skillPercentage: 4.9,
+  carrySize: 10
+};
+
+export const GOURGEIST_MEDIUM: Pokemon = {
+  ...evolvesFrom(PUMPKABOO_MEDIUM),
+  name: 'GOURGEIST_MEDIUM',
+  displayName: 'Gourgeist (Medium Variety)',
+  pokedexNumber: 711,
+  frequency: toSeconds(0, 53, 20),
+  ingredientPercentage: 13.0,
+  skillPercentage: 4.9,
+  carrySize: 14
+};
+
+export const GOURGEIST_LARGE: Pokemon = {
+  ...evolvesFrom(PUMPKABOO_LARGE),
+  name: 'GOURGEIST_LARGE',
+  displayName: 'Gourgeist (Large Variety)',
+  pokedexNumber: 711,
+  frequency: toSeconds(0, 55, 0),
+  ingredientPercentage: 13.0,
+  skillPercentage: 4.9,
+  carrySize: 19
+};
+
+export const GOURGEIST_JUMBO: Pokemon = {
+  ...evolvesFrom(PUMPKABOO_JUMBO),
+  name: 'GOURGEIST_JUMBO',
+  displayName: 'Gourgeist (Jumbo Variety)',
+  pokedexNumber: 711,
+  frequency: toSeconds(0, 56, 40),
+  ingredientPercentage: 13.0,
+  skillPercentage: 4.9,
+  carrySize: 25
+};
+
 export const GRUBBIN: Pokemon = {
   name: 'GRUBBIN',
   displayName: 'Grubbin',
@@ -1298,6 +1393,10 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   LUXRAY,
   TOXICROAK,
   ABOMASNOW,
+  GOURGEIST_SMALL,
+  GOURGEIST_MEDIUM,
+  GOURGEIST_LARGE,
+  GOURGEIST_JUMBO,
   VIKAVOLT,
   BEWEAR,
   COMFEY,
@@ -1339,6 +1438,10 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   HAPPINY,
   CROAGUNK,
   SNOVER,
+  PUMPKABOO_SMALL,
+  PUMPKABOO_MEDIUM,
+  PUMPKABOO_LARGE,
+  PUMPKABOO_JUMBO,
   GRUBBIN,
   CHARJABUG,
   STUFFUL,
