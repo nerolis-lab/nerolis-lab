@@ -7,7 +7,7 @@ import {
   ifUnsolvableNode,
   subtractAndCount
 } from '@src/services/solve/utils/set-cover-utils.js';
-import { ingredient } from 'sleepapi-common';
+import { ING_ID_LOOKUP, ingredient } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('set-cover-utils', () => {
@@ -22,7 +22,7 @@ describe('set-cover-utils', () => {
       defaultIngredientArray.set([1, 2, 3], 0);
       const depth = 5;
       const result = addSpotsLeftToRecipe(defaultIngredientArray, depth);
-      expect(result).toEqual(new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]));
+      expect(result).toEqual(new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]));
     });
 
     it('should handle empty recipe', () => {
@@ -41,13 +41,18 @@ describe('set-cover-utils', () => {
 
   describe('findSortedRecipeIngredientIndices', () => {
     it('should return sorted ingredient indices based on value', () => {
-      defaultIngredientArray[0] = 3; // 3 apples * 90 value = 270
-      defaultIngredientArray[1] = 2; // 2 milk * 98 value = 200
-      defaultIngredientArray[2] = 0; // 0 soybean * 100 value = 0
-      defaultIngredientArray[3] = 4; // 4 honey * 101 value = 404
-      defaultIngredientArray[16] = 1; // 1 tail * 342 value = 342
+      const appleId = ING_ID_LOOKUP[ingredient.FANCY_APPLE.name];
+      const milkId = ING_ID_LOOKUP[ingredient.MOOMOO_MILK.name];
+      const soybeanId = ING_ID_LOOKUP[ingredient.GREENGRASS_SOYBEANS.name];
+      const honeyId = ING_ID_LOOKUP[ingredient.HONEY.name];
+      const tailId = ING_ID_LOOKUP[ingredient.SLOWPOKE_TAIL.name];
+      defaultIngredientArray[appleId] = 3; // 3 apples * 90 value = 270
+      defaultIngredientArray[milkId] = 2; // 2 milk * 98 value = 200
+      defaultIngredientArray[soybeanId] = 0; // 0 soybean * 100 value = 0
+      defaultIngredientArray[honeyId] = 4; // 4 honey * 101 value = 404
+      defaultIngredientArray[tailId] = 1; // 1 tail * 342 value = 342
       const result = findSortedRecipeIngredientIndices(defaultIngredientArray);
-      expect(result).toEqual([3, 16, 0, 1]);
+      expect(result).toEqual([honeyId, tailId, appleId, milkId]);
     });
 
     it('should handle recipe with all zero values', () => {
@@ -73,7 +78,7 @@ describe('set-cover-utils', () => {
     it('should create a consistent memo key for a given array', () => {
       defaultIngredientArray.set([1, 2, 3, 4, 5], 0);
       const result = createMemoKey(defaultIngredientArray);
-      expect(result).toBe(864398780);
+      expect(result).toMatchInlineSnapshot(`3614473972`);
     });
 
     it('should create different memo keys for different arrays', () => {
@@ -103,8 +108,8 @@ describe('set-cover-utils', () => {
   describe('subtractAndCount', () => {
     it('should subtract produced ingredients, count remaining ingredients and update key index array', () => {
       const depth = 0;
-      const recipeWithSpotsLeft = new Int16Array([0, 0, 0, 5, 0, 0, 2, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, depth]);
-      const producedIngredients = new Int16Array([0, 0, 0, 5, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0]);
+      const recipeWithSpotsLeft = new Int16Array([0, 0, 0, 5, 0, 0, 2, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, depth]);
+      const producedIngredients = new Int16Array([0, 0, 0, 5, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0]);
 
       expect(recipeWithSpotsLeft).toHaveLength(ingredient.INGREDIENTS.length + 1);
       expect(producedIngredients).toHaveLength(ingredient.INGREDIENTS.length);
@@ -115,7 +120,7 @@ describe('set-cover-utils', () => {
       expect(remainingRecipeWithSpotsLeft).toHaveLength(ingredient.INGREDIENTS.length + 1);
       expect(remainingRecipeWithSpotsLeft).toEqual(
         // verify on -1 is fine since in practice we will never call this function with 0 spots, dont want to add additional computational logic for the clamp
-        new Int16Array([0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, -1])
+        new Int16Array([0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, -1])
       );
       expect(sumRemainingRecipeIngredients).toBe(6);
       expect(remainingIngredientIndices).toEqual([9, 6]);

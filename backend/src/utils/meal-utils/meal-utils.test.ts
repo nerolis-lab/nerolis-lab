@@ -76,6 +76,7 @@ describe('getMealsForFilter', () => {
         "INFERNO_CORN_KEEMA_CURRY",
         "HIDDEN_POWER_PERK_UP_STEW",
         "CUT_SUKIYAKI_CURRY",
+        "ROLE_PLAY_PUMPKABOO_STEW",
         "CALM_MIND_FRUIT_SALAD",
         "CROSS_CHOP_SALAD",
         "GREENGRASS_SALAD",
@@ -92,6 +93,7 @@ describe('getMealsForFilter', () => {
         "FLOWER_GIFT_MACARONS",
         "ZING_ZAP_SPICED_COLA",
         "CLODSIRE_ECLAIR",
+        "SCARY_FACE_PANCAKES",
       ]
     `);
   });

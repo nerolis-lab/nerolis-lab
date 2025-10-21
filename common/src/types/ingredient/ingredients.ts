@@ -105,6 +105,12 @@ export const LARGE_LEEK: Ingredient = createIngredient({
   longName: 'Large Leek'
 });
 
+export const PLUMP_PUMPKIN: Ingredient = createIngredient({
+  name: 'Pumpkin',
+  value: 250,
+  longName: 'Plump Pumpkin'
+});
+
 export const SLOWPOKE_TAIL: Ingredient = createIngredient({
   name: 'Tail',
   value: SLOWPOKE_TAIL_VALUE,
@@ -128,6 +134,7 @@ export const INGREDIENTS: Ingredient[] = [
   ROUSING_COFFEE,
   TASTY_MUSHROOM,
   LARGE_LEEK,
+  PLUMP_PUMPKIN,
   SLOWPOKE_TAIL
 ];
 export const INGREDIENTS_WITH_LOCKED = [...INGREDIENTS, LOCKED_INGREDIENT];
