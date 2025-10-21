@@ -7,6 +7,7 @@ import {
   HONEY,
   LARGE_LEEK,
   MOOMOO_MILK,
+  PLUMP_PUMPKIN,
   PURE_OIL,
   ROUSING_COFFEE,
   SNOOZY_TOMATO,
@@ -276,6 +277,18 @@ export const CLODSIRE_ECLAIR = createDessert({
   bonus: 61
 });
 
+export const SCARY_FACE_PANCAKES = createDessert({
+  name: 'SCARY_FACE_PANCAKES',
+  displayName: '"Scary Face" Pancakes',
+  ingredients: [
+    { amount: 18, ingredient: PLUMP_PUMPKIN },
+    { amount: 24, ingredient: FANCY_EGG },
+    { amount: 32, ingredient: HONEY },
+    { amount: 29, ingredient: SNOOZY_TOMATO }
+  ],
+  bonus: 78
+});
+
 export const DESSERTS: Recipe[] = [
   WARM_MOOMOO_MILK,
   FANCY_APPLE_JUICE,
@@ -300,7 +313,8 @@ export const DESSERTS: Recipe[] = [
   TEATIME_CORN_SCONES,
   FLOWER_GIFT_MACARONS,
   ZING_ZAP_SPICED_COLA,
-  CLODSIRE_ECLAIR
+  CLODSIRE_ECLAIR,
+  SCARY_FACE_PANCAKES
 ];
 
 export const MIXED_JUICE_FLAT: RecipeFlat = recipesToFlat(MIXED_JUICE);
