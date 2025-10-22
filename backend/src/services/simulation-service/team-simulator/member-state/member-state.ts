@@ -75,6 +75,7 @@ export class MemberState {
   private totalBerryProduction = 0;
   private totalIngredientProduction: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
   private voidIngredients: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
+  private voidIngredientsDay: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
 
   private berryProductionPerDay: Int16Array;
   private ingredientProductionPerDay: IngredientIndexToIntAmount[];
@@ -385,7 +386,7 @@ export class MemberState {
 
     // Perform rolls for each help
     for (let i = 0; i < totalHelps; i++) {
-      this.addBerriesAndIngredientsForHelp('day');
+      this.addBerriesAndIngredientsForHelp('day', false);
     }
   }
 
@@ -447,7 +448,7 @@ export class MemberState {
     }
   }
 
-  public addBerriesAndIngredientsForHelp(period: HelpPeriod) {
+  public addBerriesAndIngredientsForHelp(period: HelpPeriod, useInventoryLimit: boolean = true) {
     this.totalAverageHelps += 1;
     if (period === 'day') {
       this.totalDayHelps += 1;
@@ -455,22 +456,28 @@ export class MemberState {
       this.totalNightHelps += 1;
     }
 
-    const { berryAmount, ingredient0Amount, ingredient30Amount, ingredient60Amount } = this.rollBerriesAndIngredients();
+    const { berryAmount, ingredient0Amount, ingredient30Amount, ingredient60Amount, ingredientId } =
+      this.rollBerriesAndIngredients();
+    const totalDropAmount = berryAmount + ingredient0Amount + ingredient30Amount + ingredient60Amount;
 
-    this.totalBerryProduction += berryAmount;
-    this.berryProductionPerDay[this.currentDay] += berryAmount;
+    if (ingredientId === undefined) {
+      this.totalBerryProduction += totalDropAmount;
+      this.berryProductionPerDay[this.currentDay] += totalDropAmount;
+    } else {
+      let dropAmount = totalDropAmount;
+      if (useInventoryLimit) {
+        dropAmount = Math.min(totalDropAmount, this.inventoryLimit);
+        if (period === 'day') {
+          this.voidIngredientsDay[ingredientId!] += totalDropAmount - dropAmount;
+        } else {
+          this.voidIngredients[ingredientId!] += totalDropAmount - dropAmount;
+        }
+      }
 
-    this.totalIngredientProduction[this.level0IngredientId] += ingredient0Amount;
-    this.ingredientProductionPerDay[this.currentDay][this.level0IngredientId] += ingredient0Amount;
-    this.ingredientsSinceLastCook[this.level0IngredientId] += ingredient0Amount;
-
-    this.totalIngredientProduction[this.level30IngredientId!] += ingredient30Amount;
-    this.ingredientProductionPerDay[this.currentDay][this.level30IngredientId!] += ingredient30Amount;
-    this.ingredientsSinceLastCook[this.level30IngredientId!] += ingredient30Amount;
-
-    this.totalIngredientProduction[this.level60IngredientId!] += ingredient60Amount;
-    this.ingredientProductionPerDay[this.currentDay][this.level60IngredientId!] += ingredient60Amount;
-    this.ingredientsSinceLastCook[this.level60IngredientId!] += ingredient60Amount;
+      this.totalIngredientProduction[ingredientId] += dropAmount;
+      this.ingredientProductionPerDay[this.currentDay][ingredientId] += dropAmount;
+      this.ingredientsSinceLastCook[ingredientId] += dropAmount;
+    }
   }
 
   public attemptDayHelp(currentMinutesSincePeriodStart: number): SkillActivation[] {
