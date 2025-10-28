@@ -319,7 +319,12 @@ export const useTeamStore = defineStore('team', {
 
       if (userStore.loggedIn) {
         try {
-          TeamService.createOrUpdateMember({
+          // TODO: there's probably a better solution to this, but this ensures the server has the team created before we add members
+          if (this.getCurrentTeam.version === 0) {
+            await this.updateTeam()
+          }
+
+          await TeamService.createOrUpdateMember({
             teamIndex: this.currentIndex,
             memberIndex,
             member: updatedMember
