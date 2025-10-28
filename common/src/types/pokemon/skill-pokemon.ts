@@ -37,6 +37,7 @@ import {
   HONEY,
   LARGE_LEEK,
   MOOMOO_MILK,
+  PLUMP_PUMPKIN,
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
@@ -339,6 +340,32 @@ export const EEVEE: Pokemon = {
     { amount: 4, ingredient: MOOMOO_MILK },
     { amount: 2, ingredient: SOOTHING_CACAO },
     { amount: 3, ingredient: BEAN_SAUSAGE }
+  ],
+  skill: IngredientMagnetS
+};
+
+export const EEVEE_HALLOWEEN: Pokemon = {
+  name: 'EEVEE_HALLOWEEN',
+  displayName: 'Eevee (Halloween)',
+  pokedexNumber: 133,
+  specialty: 'skill',
+  frequency: toSeconds(0, 53, 20),
+  ingredientPercentage: 12.0,
+  skillPercentage: 4.6,
+  berry: PERSIM,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 18,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredient0: [{ amount: 1, ingredient: PLUMP_PUMPKIN }],
+  ingredient30: [
+    { amount: 2, ingredient: PLUMP_PUMPKIN },
+    { amount: 4, ingredient: SOOTHING_CACAO }
+  ],
+  ingredient60: [
+    { amount: 4, ingredient: PLUMP_PUMPKIN },
+    { amount: 6, ingredient: SOOTHING_CACAO },
+    { amount: 9, ingredient: MOOMOO_MILK }
   ],
   skill: IngredientMagnetS
 };
@@ -1307,6 +1334,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   GOLDUCK,
   ARCANINE,
   SLOWBRO,
+  EEVEE_HALLOWEEN,
   VAPOREON,
   JOLTEON,
   FLAREON,
