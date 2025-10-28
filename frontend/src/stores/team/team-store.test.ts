@@ -623,6 +623,47 @@ describe('updateTeamMember', () => {
     expect(teamStore.resetCurrentTeamIvs).toHaveBeenCalled()
     expect(teamStore.calculateProduction).toHaveBeenCalled()
   })
+
+  it('shall create team metadata before updating members when not yet persisted', async () => {
+    const teamStore = useTeamStore()
+    const userStore = useUserStore()
+    userStore.setInitialLoginData(commonMocks.loginResponse())
+
+    teamStore.teams = [
+      {
+        index: 0,
+        memberIndex: 0,
+        name: 'Team 1',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: commonMocks.islandInstance(),
+        stockpiledBerries: [],
+        stockpiledIngredients: [],
+        members: [undefined, undefined, undefined, undefined, undefined],
+        version: 0,
+        memberIvs: {},
+        production: undefined
+      }
+    ]
+
+    const updateTeamSpy = vi.spyOn(teamStore, 'updateTeam').mockImplementation(async () => {
+      teamStore.teams[teamStore.currentIndex].version = 1
+    })
+    TeamService.createOrUpdateMember = vi.fn().mockResolvedValue({ memberIndex: 0 })
+
+    await teamStore.updateTeamMember(mocks.createMockPokemon(), 0)
+
+    expect(updateTeamSpy).toHaveBeenCalled()
+    expect(TeamService.createOrUpdateMember).toHaveBeenCalledWith({
+      teamIndex: 0,
+      memberIndex: 0,
+      member: expect.objectContaining({ externalId: 'external-id' })
+    })
+
+    updateTeamSpy.mockRestore()
+  })
 })
 
 describe('toggleCamp', () => {
