@@ -891,7 +891,7 @@ export const MINUN: Pokemon = {
   ],
   ingredient60: [
     { amount: 4, ingredient: HONEY },
-    { amount: 4, ingredient: FANCY_EGG },
+    { amount: 3, ingredient: FANCY_EGG },
     { amount: 4, ingredient: MOOMOO_MILK }
   ],
   skill: CookingPowerUpSMinus
