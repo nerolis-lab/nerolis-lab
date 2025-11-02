@@ -36,4 +36,20 @@ describe('COMPLETE_POKEDEX', () => {
       expect(pokemon).toMatchSnapshot();
     });
   });
+
+  it('shall include matching evolution references', () => {
+    COMPLETE_POKEDEX.forEach((baseMon: Pokemon) => {
+      if (baseMon.evolvesFrom === undefined) {
+        return;
+      }
+      const previousForm = COMPLETE_POKEDEX.find((mon: Pokemon) => mon.name === baseMon.evolvesFrom);
+      expect(previousForm.evolvesInto).toContain(baseMon.name);
+    });
+    COMPLETE_POKEDEX.forEach((baseMon: Pokemon) => {
+      baseMon.evolvesInto.forEach((evolvedFormName: string) => {
+        const evolvedForm = COMPLETE_POKEDEX.find((mon: Pokemon) => mon.name === evolvedFormName);
+        expect(evolvedForm.evolvesFrom).toBe(baseMon.name);
+      });
+    });
+  });
 });
