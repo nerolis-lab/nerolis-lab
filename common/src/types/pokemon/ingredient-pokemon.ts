@@ -812,16 +812,12 @@ export const ABOMASNOW: Pokemon = evolvedPokemon(SNOVER, {
   carrySize: 21
 });
 
-export const PUMPKABOO_SMALL: Pokemon = createIngredientSpecialist({
-  name: 'PUMPKABOO_SMALL',
-  displayName: 'Pumpkaboo (Small Variety)',
+const pumpkabooSharedStats = {
   pokedexNumber: 710,
-  frequency: toSeconds(1, 28, 20),
   ingredientPercentage: 12.0,
   skillPercentage: 4.9,
   berry: BLUK,
   genders: BALANCED_GENDER,
-  carrySize: 7,
   previousEvolutions: 0,
   remainingEvolutions: 1,
   ingredients: {
@@ -830,69 +826,75 @@ export const PUMPKABOO_SMALL: Pokemon = createIngredientSpecialist({
     c: SOFT_POTATO
   },
   skill: ChargeStrengthS
+};
+
+export const PUMPKABOO_SMALL: Pokemon = createIngredientSpecialist({
+  ...pumpkabooSharedStats,
+  name: 'PUMPKABOO_SMALL',
+  displayName: 'Pumpkaboo (Small Variety)',
+  frequency: toSeconds(1, 28, 20),
+  carrySize: 7
 });
 
-export const PUMPKABOO_MEDIUM: Pokemon = {
-  ...PUMPKABOO_SMALL,
+export const PUMPKABOO_MEDIUM: Pokemon = createIngredientSpecialist({
+  ...pumpkabooSharedStats,
   name: 'PUMPKABOO_MEDIUM',
   displayName: 'Pumpkaboo (Medium Variety)',
   frequency: toSeconds(1, 30, 0),
   carrySize: 11
-};
+});
 
-export const PUMPKABOO_LARGE: Pokemon = {
-  ...PUMPKABOO_SMALL,
+export const PUMPKABOO_LARGE: Pokemon = createIngredientSpecialist({
+  ...pumpkabooSharedStats,
   name: 'PUMPKABOO_LARGE',
   displayName: 'Pumpkaboo (Large Variety)',
   frequency: toSeconds(1, 31, 40),
   carrySize: 15
-};
+});
 
-export const PUMPKABOO_JUMBO: Pokemon = {
-  ...PUMPKABOO_SMALL,
+export const PUMPKABOO_JUMBO: Pokemon = createIngredientSpecialist({
+  ...pumpkabooSharedStats,
   name: 'PUMPKABOO_JUMBO',
   displayName: 'Pumpkaboo (Jumbo Variety)',
   frequency: toSeconds(1, 33, 20),
   carrySize: 21
+});
+
+const gourgeistSharedStats = {
+  pokedexNumber: 711,
+  ingredientPercentage: 13.0,
+  skillPercentage: 4.9
 };
 
 export const GOURGEIST_SMALL: Pokemon = evolvedPokemon(PUMPKABOO_SMALL, {
+  ...gourgeistSharedStats,
   name: 'GOURGEIST_SMALL',
   displayName: 'Gourgeist (Small Variety)',
-  pokedexNumber: 711,
   frequency: toSeconds(0, 51, 40),
-  ingredientPercentage: 13.0,
-  skillPercentage: 4.9,
   carrySize: 10
 });
 
 export const GOURGEIST_MEDIUM: Pokemon = evolvedPokemon(PUMPKABOO_MEDIUM, {
+  ...gourgeistSharedStats,
   name: 'GOURGEIST_MEDIUM',
   displayName: 'Gourgeist (Medium Variety)',
-  pokedexNumber: 711,
   frequency: toSeconds(0, 53, 20),
-  ingredientPercentage: 13.0,
-  skillPercentage: 4.9,
   carrySize: 14
 });
 
 export const GOURGEIST_LARGE: Pokemon = evolvedPokemon(PUMPKABOO_LARGE, {
+  ...gourgeistSharedStats,
   name: 'GOURGEIST_LARGE',
   displayName: 'Gourgeist (Large Variety)',
-  pokedexNumber: 711,
   frequency: toSeconds(0, 55, 0),
-  ingredientPercentage: 13.0,
-  skillPercentage: 4.9,
   carrySize: 19
 });
 
 export const GOURGEIST_JUMBO: Pokemon = evolvedPokemon(PUMPKABOO_JUMBO, {
+  ...gourgeistSharedStats,
   name: 'GOURGEIST_JUMBO',
   displayName: 'Gourgeist (Jumbo Variety)',
-  pokedexNumber: 711,
   frequency: toSeconds(0, 56, 40),
-  ingredientPercentage: 13.0,
-  skillPercentage: 4.9,
   carrySize: 25
 });
 

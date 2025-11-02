@@ -46,11 +46,14 @@ describe('GET /pokemon', function () {
         description: SNEASEL.skill.description({ skillLevel: 1 })
       }
     };
+    // Because `evolvesFrom` is `undefined` in SNEASEL, it won't be in the API response.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { evolvesFrom, ...expectedResponse } = apiSafeSneasel;
     await request(app)
       .get('/api/pokemon/sneasel')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, apiSafeSneasel);
+      .expect(200, expectedResponse);
   });
 
   it('should respond with 500 when pokemon is not found', async function () {

@@ -29,6 +29,8 @@ export interface Pokemon {
   carrySize: number;
   previousEvolutions: number;
   remainingEvolutions: number;
+  evolvesFrom?: string;
+  evolvesInto: string[];
   ingredient0: IngredientSet[];
   ingredient30: IngredientSet[];
   ingredient60: IngredientSet[];

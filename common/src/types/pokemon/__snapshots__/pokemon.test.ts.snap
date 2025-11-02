@@ -9,6 +9,8 @@ exports[`COMPLETE_POKEDEX > shall not change ABOMASNOW unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Abomasnow",
+  "evolvesFrom": "SNOVER",
+  "evolvesInto": [],
   "frequency": 3000,
   "genders": {
     "female": 0.5,
@@ -122,6 +124,8 @@ exports[`COMPLETE_POKEDEX > shall not change ABSOL unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Absol",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2950,
   "genders": {
     "female": 0.5,
@@ -235,6 +239,8 @@ exports[`COMPLETE_POKEDEX > shall not change AGGRON unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Aggron",
+  "evolvesFrom": "LAIRON",
+  "evolvesInto": [],
   "frequency": 3000,
   "genders": {
     "female": 0.5,
@@ -346,6 +352,8 @@ exports[`COMPLETE_POKEDEX > shall not change ALTARIA unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Altaria",
+  "evolvesFrom": "SWABLU",
+  "evolvesInto": [],
   "frequency": 3500,
   "genders": {
     "female": 0.5,
@@ -457,6 +465,8 @@ exports[`COMPLETE_POKEDEX > shall not change AMPHAROS unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Ampharos",
+  "evolvesFrom": "FLAAFFY",
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -561,6 +571,8 @@ exports[`COMPLETE_POKEDEX > shall not change ARBOK unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Arbok",
+  "evolvesFrom": "EKANS",
+  "evolvesInto": [],
   "frequency": 3400,
   "genders": {
     "female": 0.5,
@@ -672,6 +684,8 @@ exports[`COMPLETE_POKEDEX > shall not change ARCANINE unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Arcanine",
+  "evolvesFrom": "GROWLITHE",
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.25,
@@ -785,6 +799,10 @@ exports[`COMPLETE_POKEDEX > shall not change ARON unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Aron",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "LAIRON",
+  ],
   "frequency": 5700,
   "genders": {
     "female": 0.5,
@@ -896,6 +914,8 @@ exports[`COMPLETE_POKEDEX > shall not change BANETTE unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Banette",
+  "evolvesFrom": "SHUPPET",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.5,
@@ -1009,6 +1029,10 @@ exports[`COMPLETE_POKEDEX > shall not change BAYLEEF unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Bayleef",
+  "evolvesFrom": "CHIKORITA",
+  "evolvesInto": [
+    "MEGANIUM",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.125,
@@ -1122,6 +1146,10 @@ exports[`COMPLETE_POKEDEX > shall not change BELLSPROUT unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Bellsprout",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "WEEPINBELL",
+  ],
   "frequency": 5200,
   "genders": {
     "female": 0.5,
@@ -1233,6 +1261,8 @@ exports[`COMPLETE_POKEDEX > shall not change BEWEAR unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Bewear",
+  "evolvesFrom": "STUFFUL",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -1346,6 +1376,8 @@ exports[`COMPLETE_POKEDEX > shall not change BLASTOISE unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Blastoise",
+  "evolvesFrom": "WARTORTLE",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.125,
@@ -1459,6 +1491,8 @@ exports[`COMPLETE_POKEDEX > shall not change BLAZIKEN unexpectedly 1`] = `
   },
   "carrySize": 22,
   "displayName": "Blaziken",
+  "evolvesFrom": "COMBUSKEN",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.125,
@@ -1570,6 +1604,8 @@ exports[`COMPLETE_POKEDEX > shall not change BLISSEY unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Blissey",
+  "evolvesFrom": "CHANSEY",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 1,
@@ -1681,6 +1717,10 @@ exports[`COMPLETE_POKEDEX > shall not change BONSLY unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Bonsly",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "SUDOWOODO",
+  ],
   "frequency": 6300,
   "genders": {
     "female": 0.5,
@@ -1794,6 +1834,8 @@ exports[`COMPLETE_POKEDEX > shall not change BRAVIARY unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Braviary",
+  "evolvesFrom": "RUFFLET",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0,
@@ -1914,6 +1956,10 @@ exports[`COMPLETE_POKEDEX > shall not change BULBASAUR unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Bulbasaur",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "IVYSAUR",
+  ],
   "frequency": 4400,
   "genders": {
     "female": 0.125,
@@ -2027,6 +2073,8 @@ exports[`COMPLETE_POKEDEX > shall not change BUTTERFREE unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Butterfree",
+  "evolvesFrom": "METAPOD",
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -2140,6 +2188,10 @@ exports[`COMPLETE_POKEDEX > shall not change CATERPIE unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Caterpie",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "METAPOD",
+  ],
   "frequency": 4400,
   "genders": {
     "female": 0.5,
@@ -2253,6 +2305,10 @@ exports[`COMPLETE_POKEDEX > shall not change CHANSEY unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Chansey",
+  "evolvesFrom": "HAPPINY",
+  "evolvesInto": [
+    "BLISSEY",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 1,
@@ -2364,6 +2420,8 @@ exports[`COMPLETE_POKEDEX > shall not change CHARIZARD unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Charizard",
+  "evolvesFrom": "CHARMELEON",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.125,
@@ -2477,6 +2535,10 @@ exports[`COMPLETE_POKEDEX > shall not change CHARJABUG unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Charjabug",
+  "evolvesFrom": "GRUBBIN",
+  "evolvesInto": [
+    "VIKAVOLT",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.5,
@@ -2590,6 +2652,10 @@ exports[`COMPLETE_POKEDEX > shall not change CHARMANDER unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Charmander",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CHARMELEON",
+  ],
   "frequency": 3500,
   "genders": {
     "female": 0.125,
@@ -2703,6 +2769,10 @@ exports[`COMPLETE_POKEDEX > shall not change CHARMELEON unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Charmeleon",
+  "evolvesFrom": "CHARMANDER",
+  "evolvesInto": [
+    "CHARIZARD",
+  ],
   "frequency": 3000,
   "genders": {
     "female": 0.125,
@@ -2816,6 +2886,10 @@ exports[`COMPLETE_POKEDEX > shall not change CHIKORITA unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Chikorita",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "BAYLEEF",
+  ],
   "frequency": 4400,
   "genders": {
     "female": 0.125,
@@ -2929,6 +3003,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
   },
   "carrySize": 24,
   "displayName": "Clefable",
+  "evolvesFrom": "CLEFAIRY",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.75,
@@ -3165,6 +3241,10 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Clefairy",
+  "evolvesFrom": "CLEFFA",
+  "evolvesInto": [
+    "CLEFABLE",
+  ],
   "frequency": 4000,
   "genders": {
     "female": 0.75,
@@ -3401,6 +3481,10 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Cleffa",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CLEFAIRY",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.75,
@@ -3637,6 +3721,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLODSIRE unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Clodsire",
+  "evolvesFrom": "WOOPER_PALDEAN",
+  "evolvesInto": [],
   "frequency": 3500,
   "genders": {
     "female": 0.5,
@@ -3748,6 +3834,10 @@ exports[`COMPLETE_POKEDEX > shall not change COMBUSKEN unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Combusken",
+  "evolvesFrom": "TORCHIC",
+  "evolvesInto": [
+    "BLAZIKEN",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.125,
@@ -3859,6 +3949,8 @@ exports[`COMPLETE_POKEDEX > shall not change COMFEY unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Comfey",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.75,
@@ -3971,6 +4063,8 @@ exports[`COMPLETE_POKEDEX > shall not change CRAMORANT unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Cramorant",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2700,
   "genders": {
     "female": 0.5,
@@ -4082,6 +4176,8 @@ exports[`COMPLETE_POKEDEX > shall not change CRESSELIA unexpectedly 1`] = `
   },
   "carrySize": 22,
   "displayName": "Cresselia",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2300,
   "genders": {
     "female": 1,
@@ -4312,6 +4408,10 @@ exports[`COMPLETE_POKEDEX > shall not change CROAGUNK unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Croagunk",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "TOXICROAK",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.5,
@@ -4416,6 +4516,10 @@ exports[`COMPLETE_POKEDEX > shall not change CROCALOR unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Crocalor",
+  "evolvesFrom": "FUECOCO",
+  "evolvesInto": [
+    "SKELEDIRGE",
+  ],
   "frequency": 3100,
   "genders": {
     "female": 0.125,
@@ -4527,6 +4631,10 @@ exports[`COMPLETE_POKEDEX > shall not change CROCONAW unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Croconaw",
+  "evolvesFrom": "TOTODILE",
+  "evolvesInto": [
+    "FERALIGATR",
+  ],
   "frequency": 3400,
   "genders": {
     "female": 0.125,
@@ -4631,6 +4739,10 @@ exports[`COMPLETE_POKEDEX > shall not change CUBONE unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Cubone",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MAROWAK",
+  ],
   "frequency": 4800,
   "genders": {
     "female": 0.5,
@@ -4733,6 +4845,10 @@ exports[`COMPLETE_POKEDEX > shall not change CYNDAQUIL unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Cyndaquil",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "QUILAVA",
+  ],
   "frequency": 3500,
   "genders": {
     "female": 0.125,
@@ -4846,6 +4962,8 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
   },
   "carrySize": 28,
   "displayName": "Darkrai",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2900,
   "genders": {
     "female": 0,
@@ -5170,6 +5288,8 @@ exports[`COMPLETE_POKEDEX > shall not change DEDENNE unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Dedenne",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -5281,6 +5401,8 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Delibird",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -5394,6 +5516,10 @@ exports[`COMPLETE_POKEDEX > shall not change DIGLETT unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Diglett",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "DUGTRIO",
+  ],
   "frequency": 4300,
   "genders": {
     "female": 0.5,
@@ -5507,6 +5633,8 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Ditto",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 3500,
   "genders": {
     "female": 0,
@@ -5895,6 +6023,8 @@ exports[`COMPLETE_POKEDEX > shall not change DODRIO unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Dodrio",
+  "evolvesFrom": "DODUO",
+  "evolvesInto": [],
   "frequency": 2300,
   "genders": {
     "female": 0.5,
@@ -6006,6 +6136,10 @@ exports[`COMPLETE_POKEDEX > shall not change DODUO unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Doduo",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "DODRIO",
+  ],
   "frequency": 3800,
   "genders": {
     "female": 0.5,
@@ -6117,6 +6251,10 @@ exports[`COMPLETE_POKEDEX > shall not change DRAGONAIR unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Dragonair",
+  "evolvesFrom": "DRATINI",
+  "evolvesInto": [
+    "DRAGONITE",
+  ],
   "frequency": 3800,
   "genders": {
     "female": 0.5,
@@ -6228,6 +6366,8 @@ exports[`COMPLETE_POKEDEX > shall not change DRAGONITE unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Dragonite",
+  "evolvesFrom": "DRAGONAIR",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.5,
@@ -6339,6 +6479,10 @@ exports[`COMPLETE_POKEDEX > shall not change DRATINI unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Dratini",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "DRAGONAIR",
+  ],
   "frequency": 5000,
   "genders": {
     "female": 0.5,
@@ -6450,6 +6594,8 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Drifblim",
+  "evolvesFrom": "DRIFLOON",
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -6686,6 +6832,10 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Drifloon",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "DRIFBLIM",
+  ],
   "frequency": 4800,
   "genders": {
     "female": 0.5,
@@ -6922,6 +7072,8 @@ exports[`COMPLETE_POKEDEX > shall not change DUGTRIO unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Dugtrio",
+  "evolvesFrom": "DIGLETT",
+  "evolvesInto": [],
   "frequency": 2650,
   "genders": {
     "female": 0.5,
@@ -7035,6 +7187,17 @@ exports[`COMPLETE_POKEDEX > shall not change EEVEE unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Eevee",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "VAPOREON",
+    "JOLTEON",
+    "FLAREON",
+    "ESPEON",
+    "UMBREON",
+    "LEAFEON",
+    "GLACEON",
+    "SYLVEON",
+  ],
   "frequency": 3700,
   "genders": {
     "female": 0.125,
@@ -7148,6 +7311,8 @@ exports[`COMPLETE_POKEDEX > shall not change EEVEE_HALLOWEEN unexpectedly 1`] = 
   },
   "carrySize": 18,
   "displayName": "Eevee (Halloween)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 3200,
   "genders": {
     "female": 0.125,
@@ -7261,6 +7426,8 @@ exports[`COMPLETE_POKEDEX > shall not change EEVEE_HOLIDAY unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Eevee (Holiday)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0.125,
@@ -7376,6 +7543,10 @@ exports[`COMPLETE_POKEDEX > shall not change EKANS unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Ekans",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "ARBOK",
+  ],
   "frequency": 5000,
   "genders": {
     "female": 0.5,
@@ -7487,6 +7658,8 @@ exports[`COMPLETE_POKEDEX > shall not change ENTEI unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Entei",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0,
@@ -7640,6 +7813,8 @@ exports[`COMPLETE_POKEDEX > shall not change ESPEON unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Espeon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.125,
@@ -7753,6 +7928,8 @@ exports[`COMPLETE_POKEDEX > shall not change FARFETCHD unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Farfetch'd",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 3000,
   "genders": {
     "female": 0.5,
@@ -7866,6 +8043,8 @@ exports[`COMPLETE_POKEDEX > shall not change FERALIGATR unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Feraligatr",
+  "evolvesFrom": "CROCONAW",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.125,
@@ -7970,6 +8149,10 @@ exports[`COMPLETE_POKEDEX > shall not change FLAAFFY unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Flaaffy",
+  "evolvesFrom": "MAREEP",
+  "evolvesInto": [
+    "AMPHAROS",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.5,
@@ -8074,6 +8257,8 @@ exports[`COMPLETE_POKEDEX > shall not change FLAREON unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Flareon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 2700,
   "genders": {
     "female": 0.125,
@@ -8187,6 +8372,10 @@ exports[`COMPLETE_POKEDEX > shall not change FLORAGATO unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Floragato",
+  "evolvesFrom": "SPRIGATITO",
+  "evolvesInto": [
+    "MEOWSCARADA",
+  ],
   "frequency": 3500,
   "genders": {
     "female": 0.125,
@@ -8300,6 +8489,10 @@ exports[`COMPLETE_POKEDEX > shall not change FUECOCO unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Fuecoco",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CROCALOR",
+  ],
   "frequency": 4200,
   "genders": {
     "female": 0.125,
@@ -8411,6 +8604,8 @@ exports[`COMPLETE_POKEDEX > shall not change GALLADE unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Gallade",
+  "evolvesFrom": "KIRLIA",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0,
@@ -8524,6 +8719,8 @@ exports[`COMPLETE_POKEDEX > shall not change GARDEVOIR unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Gardevoir",
+  "evolvesFrom": "KIRLIA",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.5,
@@ -8635,6 +8832,10 @@ exports[`COMPLETE_POKEDEX > shall not change GASTLY unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Gastly",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "HAUNTER",
+  ],
   "frequency": 3800,
   "genders": {
     "female": 0.5,
@@ -8748,6 +8949,8 @@ exports[`COMPLETE_POKEDEX > shall not change GENGAR unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Gengar",
+  "evolvesFrom": "HAUNTER",
+  "evolvesInto": [],
   "frequency": 2200,
   "genders": {
     "female": 0.5,
@@ -8861,6 +9064,10 @@ exports[`COMPLETE_POKEDEX > shall not change GEODUDE unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Geodude",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GRAVELER",
+  ],
   "frequency": 5700,
   "genders": {
     "female": 0.5,
@@ -8974,6 +9181,8 @@ exports[`COMPLETE_POKEDEX > shall not change GLACEON unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Glaceon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 3200,
   "genders": {
     "female": 0.125,
@@ -9087,6 +9296,8 @@ exports[`COMPLETE_POKEDEX > shall not change GOLDUCK unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Golduck",
+  "evolvesFrom": "PSYDUCK",
+  "evolvesInto": [],
   "frequency": 3400,
   "genders": {
     "female": 0.5,
@@ -9200,6 +9411,8 @@ exports[`COMPLETE_POKEDEX > shall not change GOLEM unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Golem",
+  "evolvesFrom": "GRAVELER",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0.5,
@@ -9313,6 +9526,8 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_JUMBO unexpectedly 1`] = 
   },
   "carrySize": 25,
   "displayName": "Gourgeist (Jumbo Variety)",
+  "evolvesFrom": "PUMPKABOO_JUMBO",
+  "evolvesInto": [],
   "frequency": 3400,
   "genders": {
     "female": 0.5,
@@ -9426,6 +9641,8 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_LARGE unexpectedly 1`] = 
   },
   "carrySize": 19,
   "displayName": "Gourgeist (Large Variety)",
+  "evolvesFrom": "PUMPKABOO_LARGE",
+  "evolvesInto": [],
   "frequency": 3300,
   "genders": {
     "female": 0.5,
@@ -9539,6 +9756,8 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_MEDIUM unexpectedly 1`] =
   },
   "carrySize": 14,
   "displayName": "Gourgeist (Medium Variety)",
+  "evolvesFrom": "PUMPKABOO_MEDIUM",
+  "evolvesInto": [],
   "frequency": 3200,
   "genders": {
     "female": 0.5,
@@ -9652,6 +9871,8 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_SMALL unexpectedly 1`] = 
   },
   "carrySize": 10,
   "displayName": "Gourgeist (Small Variety)",
+  "evolvesFrom": "PUMPKABOO_SMALL",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0.5,
@@ -9765,6 +9986,10 @@ exports[`COMPLETE_POKEDEX > shall not change GRAVELER unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Graveler",
+  "evolvesFrom": "GEODUDE",
+  "evolvesInto": [
+    "GOLEM",
+  ],
   "frequency": 4000,
   "genders": {
     "female": 0.5,
@@ -9878,6 +10103,10 @@ exports[`COMPLETE_POKEDEX > shall not change GROVYLE unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Grovyle",
+  "evolvesFrom": "TREECKO",
+  "evolvesInto": [
+    "SCEPTILE",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.125,
@@ -9998,6 +10227,10 @@ exports[`COMPLETE_POKEDEX > shall not change GROWLITHE unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Growlithe",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "ARCANINE",
+  ],
   "frequency": 4300,
   "genders": {
     "female": 0.25,
@@ -10111,6 +10344,10 @@ exports[`COMPLETE_POKEDEX > shall not change GRUBBIN unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Grubbin",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CHARJABUG",
+  ],
   "frequency": 4600,
   "genders": {
     "female": 0.5,
@@ -10224,6 +10461,10 @@ exports[`COMPLETE_POKEDEX > shall not change GULPIN unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Gulpin",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "SWALOT",
+  ],
   "frequency": 5900,
   "genders": {
     "female": 0.5,
@@ -10339,6 +10580,10 @@ exports[`COMPLETE_POKEDEX > shall not change HAPPINY unexpectedly 1`] = `
   },
   "carrySize": 7,
   "displayName": "Happiny",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CHANSEY",
+  ],
   "frequency": 5400,
   "genders": {
     "female": 1,
@@ -10450,6 +10695,10 @@ exports[`COMPLETE_POKEDEX > shall not change HAUNTER unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Haunter",
+  "evolvesFrom": "GASTLY",
+  "evolvesInto": [
+    "GENGAR",
+  ],
   "frequency": 3000,
   "genders": {
     "female": 0.5,
@@ -10563,6 +10812,8 @@ exports[`COMPLETE_POKEDEX > shall not change HERACROSS unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Heracross",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2300,
   "genders": {
     "female": 0.5,
@@ -10676,6 +10927,8 @@ exports[`COMPLETE_POKEDEX > shall not change HONCHKROW unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Honchkrow",
+  "evolvesFrom": "MURKROW",
+  "evolvesInto": [],
   "frequency": 3200,
   "genders": {
     "female": 0.5,
@@ -10907,6 +11160,8 @@ exports[`COMPLETE_POKEDEX > shall not change HOUNDOOM unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Houndoom",
+  "evolvesFrom": "HOUNDOUR",
+  "evolvesInto": [],
   "frequency": 3300,
   "genders": {
     "female": 0.5,
@@ -11020,6 +11275,10 @@ exports[`COMPLETE_POKEDEX > shall not change HOUNDOUR unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Houndour",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "HOUNDOOM",
+  ],
   "frequency": 4900,
   "genders": {
     "female": 0.5,
@@ -11133,6 +11392,10 @@ exports[`COMPLETE_POKEDEX > shall not change IGGLYBUFF unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Igglybuff",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "JIGGLYPUFF",
+  ],
   "frequency": 5200,
   "genders": {
     "female": 0.75,
@@ -11244,6 +11507,10 @@ exports[`COMPLETE_POKEDEX > shall not change IVYSAUR unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Ivysaur",
+  "evolvesFrom": "BULBASAUR",
+  "evolvesInto": [
+    "VENUSAUR",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.125,
@@ -11357,6 +11624,10 @@ exports[`COMPLETE_POKEDEX > shall not change JIGGLYPUFF unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Jigglypuff",
+  "evolvesFrom": "IGGLYBUFF",
+  "evolvesInto": [
+    "WIGGLYTUFF",
+  ],
   "frequency": 3900,
   "genders": {
     "female": 0.75,
@@ -11468,6 +11739,8 @@ exports[`COMPLETE_POKEDEX > shall not change JOLTEON unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Jolteon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 2200,
   "genders": {
     "female": 0.125,
@@ -11581,6 +11854,8 @@ exports[`COMPLETE_POKEDEX > shall not change KANGASKHAN unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Kangaskhan",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2650,
   "genders": {
     "female": 1,
@@ -11694,6 +11969,11 @@ exports[`COMPLETE_POKEDEX > shall not change KIRLIA unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Kirlia",
+  "evolvesFrom": "RALTS",
+  "evolvesInto": [
+    "GARDEVOIR",
+    "GALLADE",
+  ],
   "frequency": 3500,
   "genders": {
     "female": 0.5,
@@ -11805,6 +12085,10 @@ exports[`COMPLETE_POKEDEX > shall not change LAIRON unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Lairon",
+  "evolvesFrom": "ARON",
+  "evolvesInto": [
+    "AGGRON",
+  ],
   "frequency": 4200,
   "genders": {
     "female": 0.5,
@@ -11916,6 +12200,10 @@ exports[`COMPLETE_POKEDEX > shall not change LARVITAR unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Larvitar",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "PUPITAR",
+  ],
   "frequency": 4800,
   "genders": {
     "female": 0.5,
@@ -12027,6 +12315,8 @@ exports[`COMPLETE_POKEDEX > shall not change LEAFEON unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Leafeon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 3000,
   "genders": {
     "female": 0.125,
@@ -12139,6 +12429,8 @@ exports[`COMPLETE_POKEDEX > shall not change LUCARIO unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Lucario",
+  "evolvesFrom": "RIOLU",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.125,
@@ -12254,6 +12546,10 @@ exports[`COMPLETE_POKEDEX > shall not change LUXIO unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Luxio",
+  "evolvesFrom": "SHINX",
+  "evolvesInto": [
+    "LUXRAY",
+  ],
   "frequency": 3200,
   "genders": {
     "female": 0.5,
@@ -12367,6 +12663,8 @@ exports[`COMPLETE_POKEDEX > shall not change LUXRAY unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Luxray",
+  "evolvesFrom": "LUXIO",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.5,
@@ -12480,6 +12778,10 @@ exports[`COMPLETE_POKEDEX > shall not change MAGNEMITE unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Magnemite",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MAGNETON",
+  ],
   "frequency": 5800,
   "genders": {
     "female": 0,
@@ -12584,6 +12886,10 @@ exports[`COMPLETE_POKEDEX > shall not change MAGNETON unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Magneton",
+  "evolvesFrom": "MAGNEMITE",
+  "evolvesInto": [
+    "MAGNEZONE",
+  ],
   "frequency": 4000,
   "genders": {
     "female": 0,
@@ -12688,6 +12994,8 @@ exports[`COMPLETE_POKEDEX > shall not change MAGNEZONE unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Magnezone",
+  "evolvesFrom": "MAGNETON",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0,
@@ -12792,6 +13100,10 @@ exports[`COMPLETE_POKEDEX > shall not change MANKEY unexpectedly 1`] = `
   },
   "carrySize": 7,
   "displayName": "Mankey",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "PRIMEAPE",
+  ],
   "frequency": 4200,
   "genders": {
     "female": 0.5,
@@ -12905,6 +13217,10 @@ exports[`COMPLETE_POKEDEX > shall not change MAREEP unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Mareep",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "FLAAFFY",
+  ],
   "frequency": 4600,
   "genders": {
     "female": 0.5,
@@ -13009,6 +13325,8 @@ exports[`COMPLETE_POKEDEX > shall not change MAROWAK unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Marowak",
+  "evolvesFrom": "CUBONE",
+  "evolvesInto": [],
   "frequency": 3300,
   "genders": {
     "female": 0.5,
@@ -13111,6 +13429,10 @@ exports[`COMPLETE_POKEDEX > shall not change MARSHTOMP unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Marshtomp",
+  "evolvesFrom": "MUDKIP",
+  "evolvesInto": [
+    "SWAMPERT",
+  ],
   "frequency": 3500,
   "genders": {
     "female": 0.125,
@@ -13222,6 +13544,8 @@ exports[`COMPLETE_POKEDEX > shall not change MAWILE unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Mawile",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 3200,
   "genders": {
     "female": 0.5,
@@ -13466,6 +13790,8 @@ exports[`COMPLETE_POKEDEX > shall not change MEGANIUM unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Meganium",
+  "evolvesFrom": "BAYLEEF",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.125,
@@ -13579,6 +13905,8 @@ exports[`COMPLETE_POKEDEX > shall not change MEOWSCARADA unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Meowscarada",
+  "evolvesFrom": "FLORAGATO",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.125,
@@ -13692,6 +14020,10 @@ exports[`COMPLETE_POKEDEX > shall not change MEOWTH unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Meowth",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "PERSIAN",
+  ],
   "frequency": 4400,
   "genders": {
     "female": 0.5,
@@ -13798,6 +14130,10 @@ exports[`COMPLETE_POKEDEX > shall not change METAPOD unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Metapod",
+  "evolvesFrom": "CATERPIE",
+  "evolvesInto": [
+    "BUTTERFREE",
+  ],
   "frequency": 4200,
   "genders": {
     "female": 0.5,
@@ -13911,6 +14247,10 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
   },
   "carrySize": 7,
   "displayName": "Mime Jr.",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MR_MIME",
+  ],
   "frequency": 4300,
   "genders": {
     "female": 0.5,
@@ -14299,6 +14639,8 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Mimikyu",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -14457,6 +14799,8 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Minun",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.5,
@@ -14614,6 +14958,8 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Mr. Mime",
+  "evolvesFrom": "MIME_JR",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -15002,6 +15348,10 @@ exports[`COMPLETE_POKEDEX > shall not change MUDKIP unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Mudkip",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MARSHTOMP",
+  ],
   "frequency": 4700,
   "genders": {
     "female": 0.125,
@@ -15113,6 +15463,10 @@ exports[`COMPLETE_POKEDEX > shall not change MUNNA unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Munna",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MUSHARNA",
+  ],
   "frequency": 5700,
   "genders": {
     "female": 0.5,
@@ -15228,6 +15582,10 @@ exports[`COMPLETE_POKEDEX > shall not change MURKROW unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Murkrow",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "HONCHKROW",
+  ],
   "frequency": 3600,
   "genders": {
     "female": 0.5,
@@ -15459,6 +15817,8 @@ exports[`COMPLETE_POKEDEX > shall not change MUSHARNA unexpectedly 1`] = `
   },
   "carrySize": 24,
   "displayName": "Musharna",
+  "evolvesFrom": "MUNNA",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -15574,6 +15934,10 @@ exports[`COMPLETE_POKEDEX > shall not change NATU unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Natu",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "XATU",
+  ],
   "frequency": 4500,
   "genders": {
     "female": 0.5,
@@ -15687,6 +16051,8 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES unexpectedly 1`] = `
   },
   "carrySize": 23,
   "displayName": "Ninetales",
+  "evolvesFrom": "VULPIX",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.75,
@@ -15799,6 +16165,8 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES_ALOLAN unexpectedly 1`] =
   },
   "carrySize": 20,
   "displayName": "Ninetales (Alolan Form)",
+  "evolvesFrom": "VULPIX_ALOLAN",
+  "evolvesInto": [],
   "frequency": 2900,
   "genders": {
     "female": 0.75,
@@ -15912,6 +16280,10 @@ exports[`COMPLETE_POKEDEX > shall not change ONIX unexpectedly 1`] = `
   },
   "carrySize": 22,
   "displayName": "Onix",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "STEELIX",
+  ],
   "frequency": 3100,
   "genders": {
     "female": 0.5,
@@ -16025,6 +16397,10 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMI unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Pawmi",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "PAWMO",
+  ],
   "frequency": 4600,
   "genders": {
     "female": 0.5,
@@ -16136,6 +16512,10 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMO unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Pawmo",
+  "evolvesFrom": "PAWMI",
+  "evolvesInto": [
+    "PAWMOT",
+  ],
   "frequency": 3300,
   "genders": {
     "female": 0.5,
@@ -16247,6 +16627,8 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMOT unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Pawmot",
+  "evolvesFrom": "PAWMO",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.5,
@@ -16358,6 +16740,8 @@ exports[`COMPLETE_POKEDEX > shall not change PERSIAN unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Persian",
+  "evolvesFrom": "MEOWTH",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -16464,6 +16848,10 @@ exports[`COMPLETE_POKEDEX > shall not change PICHU unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Pichu",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "PIKACHU",
+  ],
   "frequency": 4300,
   "genders": {
     "female": 0.5,
@@ -16577,6 +16965,10 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Pikachu",
+  "evolvesFrom": "PICHU",
+  "evolvesInto": [
+    "RAICHU",
+  ],
   "frequency": 2700,
   "genders": {
     "female": 0.5,
@@ -16690,6 +17082,8 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HALLOWEEN unexpectedly 1`] 
   },
   "carrySize": 18,
   "displayName": "Pikachu (Halloween)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -16803,6 +17197,8 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HOLIDAY unexpectedly 1`] = 
   },
   "carrySize": 16,
   "displayName": "Pikachu (Holiday)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,
@@ -16918,6 +17314,8 @@ exports[`COMPLETE_POKEDEX > shall not change PINSIR unexpectedly 1`] = `
   },
   "carrySize": 24,
   "displayName": "Pinsir",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.5,
@@ -17031,6 +17429,8 @@ exports[`COMPLETE_POKEDEX > shall not change PLUSLE unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Plusle",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.5,
@@ -17198,6 +17598,8 @@ exports[`COMPLETE_POKEDEX > shall not change PRIMEAPE unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Primeape",
+  "evolvesFrom": "MANKEY",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -17311,6 +17713,10 @@ exports[`COMPLETE_POKEDEX > shall not change PSYDUCK unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Psyduck",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GOLDUCK",
+  ],
   "frequency": 5400,
   "genders": {
     "female": 0.5,
@@ -17424,6 +17830,10 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_JUMBO unexpectedly 1`] = 
   },
   "carrySize": 21,
   "displayName": "Pumpkaboo (Jumbo Variety)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GOURGEIST_JUMBO",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.5,
@@ -17537,6 +17947,10 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_LARGE unexpectedly 1`] = 
   },
   "carrySize": 15,
   "displayName": "Pumpkaboo (Large Variety)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GOURGEIST_LARGE",
+  ],
   "frequency": 5500,
   "genders": {
     "female": 0.5,
@@ -17650,6 +18064,10 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_MEDIUM unexpectedly 1`] =
   },
   "carrySize": 11,
   "displayName": "Pumpkaboo (Medium Variety)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GOURGEIST_MEDIUM",
+  ],
   "frequency": 5400,
   "genders": {
     "female": 0.5,
@@ -17763,6 +18181,10 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_SMALL unexpectedly 1`] = 
   },
   "carrySize": 7,
   "displayName": "Pumpkaboo (Small Variety)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GOURGEIST_SMALL",
+  ],
   "frequency": 5300,
   "genders": {
     "female": 0.5,
@@ -17876,6 +18298,10 @@ exports[`COMPLETE_POKEDEX > shall not change PUPITAR unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Pupitar",
+  "evolvesFrom": "LARVITAR",
+  "evolvesInto": [
+    "TYRANITAR",
+  ],
   "frequency": 3600,
   "genders": {
     "female": 0.5,
@@ -17987,6 +18413,8 @@ exports[`COMPLETE_POKEDEX > shall not change QUAGSIRE unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Quagsire",
+  "evolvesFrom": "WOOPER",
+  "evolvesInto": [],
   "frequency": 3400,
   "genders": {
     "female": 0.5,
@@ -18098,6 +18526,8 @@ exports[`COMPLETE_POKEDEX > shall not change QUAQUAVAL unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Quaquaval",
+  "evolvesFrom": "QUAXWELL",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.125,
@@ -18211,6 +18641,10 @@ exports[`COMPLETE_POKEDEX > shall not change QUAXLY unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Quaxly",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "QUAXWELL",
+  ],
   "frequency": 4800,
   "genders": {
     "female": 0.125,
@@ -18324,6 +18758,10 @@ exports[`COMPLETE_POKEDEX > shall not change QUAXWELL unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Quaxwell",
+  "evolvesFrom": "QUAXLY",
+  "evolvesInto": [
+    "QUAQUAVAL",
+  ],
   "frequency": 3600,
   "genders": {
     "female": 0.125,
@@ -18437,6 +18875,10 @@ exports[`COMPLETE_POKEDEX > shall not change QUILAVA unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Quilava",
+  "evolvesFrom": "CYNDAQUIL",
+  "evolvesInto": [
+    "TYPHLOSION",
+  ],
   "frequency": 3000,
   "genders": {
     "female": 0.125,
@@ -18550,6 +18992,8 @@ exports[`COMPLETE_POKEDEX > shall not change RAICHU unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Raichu",
+  "evolvesFrom": "PIKACHU",
+  "evolvesInto": [],
   "frequency": 2200,
   "genders": {
     "female": 0.5,
@@ -18663,6 +19107,8 @@ exports[`COMPLETE_POKEDEX > shall not change RAIKOU unexpectedly 1`] = `
   },
   "carrySize": 22,
   "displayName": "Raikou",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2100,
   "genders": {
     "female": 0,
@@ -18816,6 +19262,10 @@ exports[`COMPLETE_POKEDEX > shall not change RALTS unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Ralts",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "KIRLIA",
+  ],
   "frequency": 4800,
   "genders": {
     "female": 0.5,
@@ -18927,6 +19377,8 @@ exports[`COMPLETE_POKEDEX > shall not change RATICATE unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Raticate",
+  "evolvesFrom": "RATTATA",
+  "evolvesInto": [],
   "frequency": 2950,
   "genders": {
     "female": 0.5,
@@ -19038,6 +19490,10 @@ exports[`COMPLETE_POKEDEX > shall not change RATTATA unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Rattata",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "RATICATE",
+  ],
   "frequency": 4900,
   "genders": {
     "female": 0.5,
@@ -19149,6 +19605,10 @@ exports[`COMPLETE_POKEDEX > shall not change RIOLU unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Riolu",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "LUCARIO",
+  ],
   "frequency": 4200,
   "genders": {
     "female": 0.125,
@@ -19264,6 +19724,10 @@ exports[`COMPLETE_POKEDEX > shall not change RUFFLET unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Rufflet",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "BRAVIARY",
+  ],
   "frequency": 3800,
   "genders": {
     "female": 0,
@@ -19384,6 +19848,8 @@ exports[`COMPLETE_POKEDEX > shall not change SABLEYE unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Sableye",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 3600,
   "genders": {
     "female": 0.5,
@@ -19499,6 +19965,8 @@ exports[`COMPLETE_POKEDEX > shall not change SCEPTILE unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Sceptile",
+  "evolvesFrom": "GROVYLE",
+  "evolvesInto": [],
   "frequency": 2300,
   "genders": {
     "female": 0.125,
@@ -19619,6 +20087,10 @@ exports[`COMPLETE_POKEDEX > shall not change SEALEO unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Sealeo",
+  "evolvesFrom": "SPHEAL",
+  "evolvesInto": [
+    "WALREIN",
+  ],
   "frequency": 4000,
   "genders": {
     "female": 0.5,
@@ -19732,6 +20204,10 @@ exports[`COMPLETE_POKEDEX > shall not change SHINX unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Shinx",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "LUXIO",
+  ],
   "frequency": 4400,
   "genders": {
     "female": 0.5,
@@ -19845,6 +20321,10 @@ exports[`COMPLETE_POKEDEX > shall not change SHUPPET unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Shuppet",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "BANETTE",
+  ],
   "frequency": 3900,
   "genders": {
     "female": 0.5,
@@ -19958,6 +20438,8 @@ exports[`COMPLETE_POKEDEX > shall not change SKELEDIRGE unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Skeledirge",
+  "evolvesFrom": "CROCALOR",
+  "evolvesInto": [],
   "frequency": 2700,
   "genders": {
     "female": 0.125,
@@ -20069,6 +20551,8 @@ exports[`COMPLETE_POKEDEX > shall not change SLAKING unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Slaking",
+  "evolvesFrom": "VIGOROTH",
+  "evolvesInto": [],
   "frequency": 3600,
   "genders": {
     "female": 0.5,
@@ -20182,6 +20666,10 @@ exports[`COMPLETE_POKEDEX > shall not change SLAKOTH unexpectedly 1`] = `
   },
   "carrySize": 7,
   "displayName": "Slakoth",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "VIGOROTH",
+  ],
   "frequency": 4900,
   "genders": {
     "female": 0.5,
@@ -20295,6 +20783,8 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWBRO unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Slowbro",
+  "evolvesFrom": "SLOWPOKE",
+  "evolvesInto": [],
   "frequency": 3800,
   "genders": {
     "female": 0.5,
@@ -20407,6 +20897,8 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWKING unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Slowking",
+  "evolvesFrom": "SLOWPOKE",
+  "evolvesInto": [],
   "frequency": 3400,
   "genders": {
     "female": 0.5,
@@ -20519,6 +21011,11 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWPOKE unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Slowpoke",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "SLOWBRO",
+    "SLOWKING",
+  ],
   "frequency": 5700,
   "genders": {
     "female": 0.5,
@@ -20631,6 +21128,10 @@ exports[`COMPLETE_POKEDEX > shall not change SNEASEL unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Sneasel",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "WEAVILE",
+  ],
   "frequency": 3200,
   "genders": {
     "female": 0.5,
@@ -20742,6 +21243,10 @@ exports[`COMPLETE_POKEDEX > shall not change SNOVER unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Snover",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "ABOMASNOW",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.5,
@@ -20855,6 +21360,10 @@ exports[`COMPLETE_POKEDEX > shall not change SPHEAL unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Spheal",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "SEALEO",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.5,
@@ -20968,6 +21477,10 @@ exports[`COMPLETE_POKEDEX > shall not change SPRIGATITO unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Sprigatito",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "FLORAGATO",
+  ],
   "frequency": 4600,
   "genders": {
     "female": 0.125,
@@ -21081,6 +21594,10 @@ exports[`COMPLETE_POKEDEX > shall not change SQUIRTLE unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Squirtle",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "WARTORTLE",
+  ],
   "frequency": 4500,
   "genders": {
     "female": 0.125,
@@ -21194,6 +21711,8 @@ exports[`COMPLETE_POKEDEX > shall not change STEELIX unexpectedly 1`] = `
   },
   "carrySize": 25,
   "displayName": "Steelix",
+  "evolvesFrom": "ONIX",
+  "evolvesInto": [],
   "frequency": 3000,
   "genders": {
     "female": 0.5,
@@ -21307,6 +21826,10 @@ exports[`COMPLETE_POKEDEX > shall not change STUFFUL unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Stufful",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "BEWEAR",
+  ],
   "frequency": 4100,
   "genders": {
     "female": 0.5,
@@ -21420,6 +21943,8 @@ exports[`COMPLETE_POKEDEX > shall not change SUDOWOODO unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Sudowoodo",
+  "evolvesFrom": "BONSLY",
+  "evolvesInto": [],
   "frequency": 4000,
   "genders": {
     "female": 0.5,
@@ -21533,6 +22058,8 @@ exports[`COMPLETE_POKEDEX > shall not change SUICUNE unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Suicune",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
   "frequency": 2700,
   "genders": {
     "female": 0,
@@ -21686,6 +22213,10 @@ exports[`COMPLETE_POKEDEX > shall not change SWABLU unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Swablu",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "ALTARIA",
+  ],
   "frequency": 4200,
   "genders": {
     "female": 0.5,
@@ -21797,6 +22328,8 @@ exports[`COMPLETE_POKEDEX > shall not change SWALOT unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Swalot",
+  "evolvesFrom": "GULPIN",
+  "evolvesInto": [],
   "frequency": 3500,
   "genders": {
     "female": 0.5,
@@ -21912,6 +22445,8 @@ exports[`COMPLETE_POKEDEX > shall not change SWAMPERT unexpectedly 1`] = `
   },
   "carrySize": 20,
   "displayName": "Swampert",
+  "evolvesFrom": "MARSHTOMP",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.125,
@@ -22023,6 +22558,8 @@ exports[`COMPLETE_POKEDEX > shall not change SYLVEON unexpectedly 1`] = `
   },
   "carrySize": 15,
   "displayName": "Sylveon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.125,
@@ -22134,6 +22671,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Togekiss",
+  "evolvesFrom": "TOGETIC",
+  "evolvesInto": [],
   "frequency": 2600,
   "genders": {
     "female": 0.125,
@@ -22370,6 +22909,10 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Togepi",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "TOGETIC",
+  ],
   "frequency": 4800,
   "genders": {
     "female": 0.125,
@@ -22606,6 +23149,10 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Togetic",
+  "evolvesFrom": "TOGEPI",
+  "evolvesInto": [
+    "TOGEKISS",
+  ],
   "frequency": 3800,
   "genders": {
     "female": 0.125,
@@ -22842,6 +23389,10 @@ exports[`COMPLETE_POKEDEX > shall not change TORCHIC unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Torchic",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "COMBUSKEN",
+  ],
   "frequency": 4300,
   "genders": {
     "female": 0.125,
@@ -22953,6 +23504,10 @@ exports[`COMPLETE_POKEDEX > shall not change TOTODILE unexpectedly 1`] = `
   },
   "carrySize": 11,
   "displayName": "Totodile",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CROCONAW",
+  ],
   "frequency": 4500,
   "genders": {
     "female": 0.125,
@@ -23057,6 +23612,11 @@ exports[`COMPLETE_POKEDEX > shall not change TOXEL unexpectedly 1`] = `
   },
   "carrySize": 6,
   "displayName": "Toxel",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "TOXTRICITY_AMPED",
+    "TOXTRICITY_LOW_KEY",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.5,
@@ -23170,6 +23730,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOXICROAK unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Toxicroak",
+  "evolvesFrom": "CROAGUNK",
+  "evolvesInto": [],
   "frequency": 3400,
   "genders": {
     "female": 0.5,
@@ -23274,6 +23836,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_AMPED unexpectedly 1`] =
   },
   "carrySize": 18,
   "displayName": "Toxtricity (Amped Form)",
+  "evolvesFrom": "TOXEL",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0.5,
@@ -23441,6 +24005,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_LOW_KEY unexpectedly 1`]
   },
   "carrySize": 18,
   "displayName": "Toxtricity (Low Key Form)",
+  "evolvesFrom": "TOXEL",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0.5,
@@ -23598,6 +24164,10 @@ exports[`COMPLETE_POKEDEX > shall not change TREECKO unexpectedly 1`] = `
   },
   "carrySize": 8,
   "displayName": "Treecko",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GROVYLE",
+  ],
   "frequency": 4500,
   "genders": {
     "female": 0.125,
@@ -23718,6 +24288,8 @@ exports[`COMPLETE_POKEDEX > shall not change TYPHLOSION unexpectedly 1`] = `
   },
   "carrySize": 23,
   "displayName": "Typhlosion",
+  "evolvesFrom": "QUILAVA",
+  "evolvesInto": [],
   "frequency": 2400,
   "genders": {
     "female": 0.125,
@@ -23831,6 +24403,8 @@ exports[`COMPLETE_POKEDEX > shall not change TYRANITAR unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Tyranitar",
+  "evolvesFrom": "PUPITAR",
+  "evolvesInto": [],
   "frequency": 2700,
   "genders": {
     "female": 0.5,
@@ -23942,6 +24516,8 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Umbreon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 3200,
   "genders": {
     "female": 0.125,
@@ -24090,6 +24666,8 @@ exports[`COMPLETE_POKEDEX > shall not change VAPOREON unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Vaporeon",
+  "evolvesFrom": "EEVEE",
+  "evolvesInto": [],
   "frequency": 3100,
   "genders": {
     "female": 0.125,
@@ -24203,6 +24781,8 @@ exports[`COMPLETE_POKEDEX > shall not change VENUSAUR unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Venusaur",
+  "evolvesFrom": "IVYSAUR",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.125,
@@ -24316,6 +24896,8 @@ exports[`COMPLETE_POKEDEX > shall not change VICTREEBEL unexpectedly 1`] = `
   },
   "carrySize": 17,
   "displayName": "Victreebel",
+  "evolvesFrom": "WEEPINBELL",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -24427,6 +25009,10 @@ exports[`COMPLETE_POKEDEX > shall not change VIGOROTH unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Vigoroth",
+  "evolvesFrom": "SLAKOTH",
+  "evolvesInto": [
+    "SLAKING",
+  ],
   "frequency": 3200,
   "genders": {
     "female": 0.5,
@@ -24540,6 +25126,8 @@ exports[`COMPLETE_POKEDEX > shall not change VIKAVOLT unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Vikavolt",
+  "evolvesFrom": "CHARJABUG",
+  "evolvesInto": [],
   "frequency": 2800,
   "genders": {
     "female": 0.5,
@@ -24653,6 +25241,10 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Vulpix",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "NINETALES",
+  ],
   "frequency": 4700,
   "genders": {
     "female": 0.75,
@@ -24765,6 +25357,10 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX_ALOLAN unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Vulpix (Alolan Form)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "NINETALES_ALOLAN",
+  ],
   "frequency": 5600,
   "genders": {
     "female": 0.75,
@@ -24878,6 +25474,8 @@ exports[`COMPLETE_POKEDEX > shall not change WALREIN unexpectedly 1`] = `
   },
   "carrySize": 18,
   "displayName": "Walrein",
+  "evolvesFrom": "SEALEO",
+  "evolvesInto": [],
   "frequency": 3000,
   "genders": {
     "female": 0.5,
@@ -24991,6 +25589,10 @@ exports[`COMPLETE_POKEDEX > shall not change WARTORTLE unexpectedly 1`] = `
   },
   "carrySize": 14,
   "displayName": "Wartortle",
+  "evolvesFrom": "SQUIRTLE",
+  "evolvesInto": [
+    "BLASTOISE",
+  ],
   "frequency": 3400,
   "genders": {
     "female": 0.125,
@@ -25104,6 +25706,8 @@ exports[`COMPLETE_POKEDEX > shall not change WEAVILE unexpectedly 1`] = `
   },
   "carrySize": 21,
   "displayName": "Weavile",
+  "evolvesFrom": "SNEASEL",
+  "evolvesInto": [],
   "frequency": 2700,
   "genders": {
     "female": 0.5,
@@ -25215,6 +25819,10 @@ exports[`COMPLETE_POKEDEX > shall not change WEEPINBELL unexpectedly 1`] = `
   },
   "carrySize": 12,
   "displayName": "Weepinbell",
+  "evolvesFrom": "BELLSPROUT",
+  "evolvesInto": [
+    "VICTREEBEL",
+  ],
   "frequency": 3800,
   "genders": {
     "female": 0.5,
@@ -25326,6 +25934,8 @@ exports[`COMPLETE_POKEDEX > shall not change WIGGLYTUFF unexpectedly 1`] = `
   },
   "carrySize": 13,
   "displayName": "Wigglytuff",
+  "evolvesFrom": "JIGGLYPUFF",
+  "evolvesInto": [],
   "frequency": 2900,
   "genders": {
     "female": 0.75,
@@ -25437,6 +26047,8 @@ exports[`COMPLETE_POKEDEX > shall not change WOBBUFFET unexpectedly 1`] = `
   },
   "carrySize": 16,
   "displayName": "Wobbuffet",
+  "evolvesFrom": "WYNAUT",
+  "evolvesInto": [],
   "frequency": 3500,
   "genders": {
     "female": 0.5,
@@ -25549,6 +26161,10 @@ exports[`COMPLETE_POKEDEX > shall not change WOOPER unexpectedly 1`] = `
   },
   "carrySize": 10,
   "displayName": "Wooper",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "QUAGSIRE",
+  ],
   "frequency": 5900,
   "genders": {
     "female": 0.5,
@@ -25660,6 +26276,10 @@ exports[`COMPLETE_POKEDEX > shall not change WOOPER_PALDEAN unexpectedly 1`] = `
   },
   "carrySize": 9,
   "displayName": "Wooper (Paldean Form)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CLODSIRE",
+  ],
   "frequency": 6400,
   "genders": {
     "female": 0.5,
@@ -25771,6 +26391,10 @@ exports[`COMPLETE_POKEDEX > shall not change WYNAUT unexpectedly 1`] = `
   },
   "carrySize": 7,
   "displayName": "Wynaut",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "WOBBUFFET",
+  ],
   "frequency": 5800,
   "genders": {
     "female": 0.5,
@@ -25883,6 +26507,8 @@ exports[`COMPLETE_POKEDEX > shall not change XATU unexpectedly 1`] = `
   },
   "carrySize": 19,
   "displayName": "Xatu",
+  "evolvesFrom": "NATU",
+  "evolvesInto": [],
   "frequency": 2500,
   "genders": {
     "female": 0.5,

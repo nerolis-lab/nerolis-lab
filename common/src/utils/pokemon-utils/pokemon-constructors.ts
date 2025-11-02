@@ -40,6 +40,9 @@ function createPokemon(params: {
   const { ingredient0, ingredient30, ingredient60 } = getIngredientSets(ingredients, specialty);
   return {
     ...otherParams,
+    // evolution fields get populated when constructing other mons in the evolution line
+    evolvesFrom: undefined,
+    evolvesInto: [],
     ingredient0,
     ingredient30,
     ingredient60
@@ -131,7 +134,7 @@ export function createSkillSpecialist(params: {
 }
 
 export function evolvedPokemon(
-  baseMon: Pokemon,
+  previousForm: Pokemon,
   params: Partial<Pokemon> & {
     name: string;
     displayName: string;
@@ -142,14 +145,18 @@ export function evolvedPokemon(
     carrySize: number;
   }
 ): Pokemon {
-  return {
-    ...evolvesFrom(baseMon),
-    ...params
+  const evolvedMon: Pokemon = {
+    ...evolvesFrom(previousForm),
+    ...params,
+    evolvesFrom: previousForm.name,
+    evolvesInto: []
   };
+  previousForm.evolvesInto.push(evolvedMon.name);
+  return evolvedMon;
 }
 
 export function preEvolvedPokemon(
-  baseMon: Pokemon,
+  nextForm: Pokemon,
   params: Partial<Pokemon> & {
     name: string;
     displayName: string;
@@ -160,10 +167,14 @@ export function preEvolvedPokemon(
     carrySize: number;
   }
 ): Pokemon {
-  return {
-    ...evolvesInto(baseMon),
-    ...params
+  const preEvolvedMon: Pokemon = {
+    ...evolvesInto(nextForm),
+    ...params,
+    evolvesFrom: undefined,
+    evolvesInto: [nextForm.name]
   };
+  nextForm.evolvesFrom = preEvolvedMon.name;
+  return preEvolvedMon;
 }
 
 export function getIngredientSet(

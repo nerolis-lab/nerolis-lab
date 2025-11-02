@@ -626,6 +626,15 @@
 											},
 											"type": "array"
 										},
+										"evolvesInto": {
+											"items": {
+												"type": "string"
+											},
+											"type": "array"
+										},
+										"evolvesFrom": {
+											"type": "string"
+										},
 										"remainingEvolutions": {
 											"type": "number",
 											"format": "double"
@@ -705,6 +714,7 @@
 										"ingredient60",
 										"ingredient30",
 										"ingredient0",
+										"evolvesInto",
 										"remainingEvolutions",
 										"previousEvolutions",
 										"carrySize",
