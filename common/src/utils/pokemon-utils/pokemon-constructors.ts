@@ -3,6 +3,7 @@ import type { GenderRatio } from '../../types/gender';
 import type { Ingredient, IngredientSet } from '../../types/ingredient';
 import type { Mainskill } from '../../types/mainskill';
 import type { Pokemon, PokemonSpecialty } from '../../types/pokemon';
+import { evolvesFrom, evolvesInto } from './evolution-utils';
 
 export type IngredientDefinition = {
   a: Ingredient;
@@ -127,6 +128,42 @@ export function createSkillSpecialist(params: {
     ...params,
     specialty: 'skill'
   });
+}
+
+export function evolvedPokemon(
+  baseMon: Pokemon,
+  params: Partial<Pokemon> & {
+    name: string;
+    displayName: string;
+    pokedexNumber: number;
+    frequency: number;
+    ingredientPercentage: number;
+    skillPercentage: number;
+    carrySize: number;
+  }
+): Pokemon {
+  return {
+    ...evolvesFrom(baseMon),
+    ...params
+  };
+}
+
+export function preEvolvedPokemon(
+  baseMon: Pokemon,
+  params: Partial<Pokemon> & {
+    name: string;
+    displayName: string;
+    pokedexNumber: number;
+    frequency: number;
+    ingredientPercentage: number;
+    skillPercentage: number;
+    carrySize: number;
+  }
+): Pokemon {
+  return {
+    ...evolvesInto(baseMon),
+    ...params
+  };
 }
 
 export function getIngredientSet(
