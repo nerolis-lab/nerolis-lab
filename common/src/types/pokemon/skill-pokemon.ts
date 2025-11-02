@@ -1,5 +1,8 @@
-import { createSkillSpecialist } from '../../utils/pokemon-utils/pokemon-constructors';
-import { evolvesFrom, evolvesInto } from '../../utils/pokemon-utils/evolution-utils';
+import {
+  createSkillSpecialist,
+  evolvedPokemon,
+  preEvolvedPokemon
+} from '../../utils/pokemon-utils/pokemon-constructors';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
 import {
   BELUE,
@@ -113,8 +116,7 @@ export const JIGGLYPUFF: Pokemon = createSkillSpecialist({
   skill: EnergyForEveryone
 });
 
-export const WIGGLYTUFF: Pokemon = {
-  ...evolvesFrom(JIGGLYPUFF),
+export const WIGGLYTUFF: Pokemon = evolvedPokemon(JIGGLYPUFF, {
   name: 'WIGGLYTUFF',
   displayName: 'Wigglytuff',
   pokedexNumber: 40,
@@ -122,7 +124,7 @@ export const WIGGLYTUFF: Pokemon = {
   ingredientPercentage: 17.4,
   skillPercentage: 4.0,
   carrySize: 13
-};
+});
 
 export const MEOWTH: Pokemon = createSkillSpecialist({
   name: 'MEOWTH',
@@ -143,8 +145,7 @@ export const MEOWTH: Pokemon = createSkillSpecialist({
   skill: DreamShardMagnetS
 });
 
-export const PERSIAN: Pokemon = {
-  ...evolvesFrom(MEOWTH),
+export const PERSIAN: Pokemon = evolvedPokemon(MEOWTH, {
   name: 'PERSIAN',
   displayName: 'Persian',
   pokedexNumber: 53,
@@ -152,7 +153,7 @@ export const PERSIAN: Pokemon = {
   ingredientPercentage: 16.9,
   skillPercentage: 4.4,
   carrySize: 12
-};
+});
 
 export const PSYDUCK: Pokemon = createSkillSpecialist({
   name: 'PSYDUCK',
@@ -174,8 +175,7 @@ export const PSYDUCK: Pokemon = createSkillSpecialist({
   skill: ChargeStrengthSRange
 });
 
-export const GOLDUCK: Pokemon = {
-  ...evolvesFrom(PSYDUCK),
+export const GOLDUCK: Pokemon = evolvedPokemon(PSYDUCK, {
   name: 'GOLDUCK',
   displayName: 'Golduck',
   pokedexNumber: 55,
@@ -183,7 +183,7 @@ export const GOLDUCK: Pokemon = {
   ingredientPercentage: 16.2,
   skillPercentage: 12.5,
   carrySize: 14
-};
+});
 
 export const GROWLITHE: Pokemon = createSkillSpecialist({
   name: 'GROWLITHE',
@@ -205,8 +205,7 @@ export const GROWLITHE: Pokemon = createSkillSpecialist({
   skill: ExtraHelpfulS
 });
 
-export const ARCANINE: Pokemon = {
-  ...evolvesFrom(GROWLITHE),
+export const ARCANINE: Pokemon = evolvedPokemon(GROWLITHE, {
   name: 'ARCANINE',
   displayName: 'Arcanine',
   pokedexNumber: 59,
@@ -214,7 +213,7 @@ export const ARCANINE: Pokemon = {
   ingredientPercentage: 13.6,
   skillPercentage: 4.9,
   carrySize: 16
-};
+});
 
 export const SLOWPOKE: Pokemon = createSkillSpecialist({
   name: 'SLOWPOKE',
@@ -236,8 +235,7 @@ export const SLOWPOKE: Pokemon = createSkillSpecialist({
   skill: EnergizingCheerS
 });
 
-export const SLOWBRO: Pokemon = {
-  ...evolvesFrom(SLOWPOKE),
+export const SLOWBRO: Pokemon = evolvedPokemon(SLOWPOKE, {
   name: 'SLOWBRO',
   displayName: 'Slowbro',
   pokedexNumber: 80,
@@ -245,7 +243,7 @@ export const SLOWBRO: Pokemon = {
   ingredientPercentage: 19.7,
   skillPercentage: 8,
   carrySize: 16
-};
+});
 
 export const MAGNEMITE: Pokemon = createSkillSpecialist({
   name: 'MAGNEMITE',
@@ -266,8 +264,7 @@ export const MAGNEMITE: Pokemon = createSkillSpecialist({
   skill: CookingPowerUpS
 });
 
-export const MAGNETON: Pokemon = {
-  ...evolvesFrom(MAGNEMITE),
+export const MAGNETON: Pokemon = evolvedPokemon(MAGNEMITE, {
   name: 'MAGNETON',
   displayName: 'Magneton',
   pokedexNumber: 82,
@@ -275,7 +272,7 @@ export const MAGNETON: Pokemon = {
   ingredientPercentage: 18.2,
   skillPercentage: 6.3,
   carrySize: 11
-};
+});
 
 export const EEVEE: Pokemon = createSkillSpecialist({
   name: 'EEVEE',
@@ -317,8 +314,7 @@ export const EEVEE_HALLOWEEN: Pokemon = createSkillSpecialist({
   skill: IngredientMagnetS
 });
 
-export const VAPOREON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const VAPOREON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'VAPOREON',
   displayName: 'Vaporeon',
   pokedexNumber: 134,
@@ -328,10 +324,9 @@ export const VAPOREON: Pokemon = {
   berry: ORAN,
   carrySize: 13,
   skill: IngredientMagnetS
-};
+});
 
-export const JOLTEON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const JOLTEON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'JOLTEON',
   displayName: 'Jolteon',
   pokedexNumber: 135,
@@ -341,10 +336,9 @@ export const JOLTEON: Pokemon = {
   berry: GREPA,
   carrySize: 17,
   skill: ExtraHelpfulS
-};
+});
 
-export const FLAREON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const FLAREON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'FLAREON',
   displayName: 'Flareon',
   pokedexNumber: 136,
@@ -354,10 +348,9 @@ export const FLAREON: Pokemon = {
   berry: LEPPA,
   carrySize: 14,
   skill: CookingPowerUpS
-};
+});
 
-export const IGGLYBUFF: Pokemon = {
-  ...evolvesInto(JIGGLYPUFF),
+export const IGGLYBUFF: Pokemon = preEvolvedPokemon(JIGGLYPUFF, {
   name: 'IGGLYBUFF',
   displayName: 'Igglybuff',
   pokedexNumber: 174,
@@ -365,7 +358,7 @@ export const IGGLYBUFF: Pokemon = {
   ingredientPercentage: 17.0,
   skillPercentage: 3.8,
   carrySize: 8
-};
+});
 
 export const TOGEPI: Pokemon = createSkillSpecialist({
   name: 'TOGEPI',
@@ -387,8 +380,7 @@ export const TOGEPI: Pokemon = createSkillSpecialist({
   skill: Metronome
 });
 
-export const TOGETIC: Pokemon = {
-  ...evolvesFrom(TOGEPI),
+export const TOGETIC: Pokemon = evolvedPokemon(TOGEPI, {
   name: 'TOGETIC',
   displayName: 'Togetic',
   pokedexNumber: 176,
@@ -396,7 +388,7 @@ export const TOGETIC: Pokemon = {
   ingredientPercentage: 16.3,
   skillPercentage: 5.6,
   carrySize: 10
-};
+});
 
 export const MAREEP: Pokemon = createSkillSpecialist({
   name: 'MAREEP',
@@ -417,8 +409,7 @@ export const MAREEP: Pokemon = createSkillSpecialist({
   skill: ChargeStrengthM
 });
 
-export const FLAAFFY: Pokemon = {
-  ...evolvesFrom(MAREEP),
+export const FLAAFFY: Pokemon = evolvedPokemon(MAREEP, {
   name: 'FLAAFFY',
   displayName: 'Flaaffy',
   pokedexNumber: 180,
@@ -426,10 +417,9 @@ export const FLAAFFY: Pokemon = {
   ingredientPercentage: 12.7,
   skillPercentage: 4.6,
   carrySize: 11
-};
+});
 
-export const AMPHAROS: Pokemon = {
-  ...evolvesFrom(FLAAFFY),
+export const AMPHAROS: Pokemon = evolvedPokemon(FLAAFFY, {
   name: 'AMPHAROS',
   displayName: 'Ampharos',
   pokedexNumber: 181,
@@ -437,7 +427,7 @@ export const AMPHAROS: Pokemon = {
   ingredientPercentage: 13.0,
   skillPercentage: 4.7,
   carrySize: 15
-};
+});
 
 export const SUDOWOODO: Pokemon = createSkillSpecialist({
   name: 'SUDOWOODO',
@@ -459,8 +449,7 @@ export const SUDOWOODO: Pokemon = createSkillSpecialist({
   skill: ChargeStrengthM
 });
 
-export const ESPEON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const ESPEON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'ESPEON',
   displayName: 'Espeon',
   pokedexNumber: 196,
@@ -470,10 +459,9 @@ export const ESPEON: Pokemon = {
   berry: MAGO,
   carrySize: 16,
   skill: ChargeStrengthM
-};
+});
 
-export const UMBREON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const UMBREON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'UMBREON',
   displayName: 'Umbreon',
   pokedexNumber: 197,
@@ -483,7 +471,7 @@ export const UMBREON: Pokemon = {
   berry: WIKI,
   carrySize: 14,
   skill: ChargeEnergySMoonlight
-};
+});
 
 export const MURKROW: Pokemon = createSkillSpecialist({
   name: 'MURKROW',
@@ -505,8 +493,7 @@ export const MURKROW: Pokemon = createSkillSpecialist({
   skill: IngredientDrawSSuperLuck
 });
 
-export const SLOWKING: Pokemon = {
-  ...evolvesFrom(SLOWPOKE),
+export const SLOWKING: Pokemon = evolvedPokemon(SLOWPOKE, {
   name: 'SLOWKING',
   displayName: 'Slowking',
   pokedexNumber: 199,
@@ -514,7 +501,7 @@ export const SLOWKING: Pokemon = {
   ingredientPercentage: 16.6,
   skillPercentage: 8.7,
   carrySize: 17
-};
+});
 
 export const WOBBUFFET: Pokemon = createSkillSpecialist({
   name: 'WOBBUFFET',
@@ -636,8 +623,7 @@ export const TREECKO: Pokemon = createSkillSpecialist({
   skill: BerryBurst
 });
 
-export const GROVYLE: Pokemon = {
-  ...evolvesFrom(TREECKO),
+export const GROVYLE: Pokemon = evolvedPokemon(TREECKO, {
   name: 'GROVYLE',
   displayName: 'Grovyle',
   pokedexNumber: 253,
@@ -645,10 +631,9 @@ export const GROVYLE: Pokemon = {
   ingredientPercentage: 15,
   skillPercentage: 3.5,
   carrySize: 11
-};
+});
 
-export const SCEPTILE: Pokemon = {
-  ...evolvesFrom(GROVYLE),
+export const SCEPTILE: Pokemon = evolvedPokemon(GROVYLE, {
   name: 'SCEPTILE',
   displayName: 'Sceptile',
   pokedexNumber: 254,
@@ -656,7 +641,7 @@ export const SCEPTILE: Pokemon = {
   ingredientPercentage: 10.7,
   skillPercentage: 3,
   carrySize: 17
-};
+});
 
 export const RALTS: Pokemon = createSkillSpecialist({
   name: 'RALTS',
@@ -678,8 +663,7 @@ export const RALTS: Pokemon = createSkillSpecialist({
   skill: EnergyForEveryone
 });
 
-export const KIRLIA: Pokemon = {
-  ...evolvesFrom(RALTS),
+export const KIRLIA: Pokemon = evolvedPokemon(RALTS, {
   name: 'KIRLIA',
   displayName: 'Kirlia',
   pokedexNumber: 281,
@@ -687,10 +671,9 @@ export const KIRLIA: Pokemon = {
   ingredientPercentage: 14.6,
   skillPercentage: 4.3,
   carrySize: 13
-};
+});
 
-export const GARDEVOIR: Pokemon = {
-  ...evolvesFrom(KIRLIA),
+export const GARDEVOIR: Pokemon = evolvedPokemon(KIRLIA, {
   name: 'GARDEVOIR',
   displayName: 'Gardevoir',
   pokedexNumber: 282,
@@ -698,7 +681,7 @@ export const GARDEVOIR: Pokemon = {
   ingredientPercentage: 14.4,
   skillPercentage: 4.2,
   carrySize: 18
-};
+});
 
 export const SABLEYE: Pokemon = createSkillSpecialist({
   name: 'SABLEYE',
@@ -780,8 +763,7 @@ export const GULPIN: Pokemon = createSkillSpecialist({
   skill: DreamShardMagnetSRange
 });
 
-export const SWALOT: Pokemon = {
-  ...evolvesFrom(GULPIN),
+export const SWALOT: Pokemon = evolvedPokemon(GULPIN, {
   name: 'SWALOT',
   displayName: 'Swalot',
   pokedexNumber: 317,
@@ -789,10 +771,9 @@ export const SWALOT: Pokemon = {
   ingredientPercentage: 21,
   skillPercentage: 7,
   carrySize: 19
-};
+});
 
-export const WYNAUT: Pokemon = {
-  ...evolvesInto(WOBBUFFET),
+export const WYNAUT: Pokemon = preEvolvedPokemon(WOBBUFFET, {
   name: 'WYNAUT',
   displayName: 'Wynaut',
   pokedexNumber: 360,
@@ -800,10 +781,9 @@ export const WYNAUT: Pokemon = {
   ingredientPercentage: 21.3,
   skillPercentage: 6.9,
   carrySize: 7
-};
+});
 
-export const BONSLY: Pokemon = {
-  ...evolvesInto(SUDOWOODO),
+export const BONSLY: Pokemon = preEvolvedPokemon(SUDOWOODO, {
   name: 'BONSLY',
   displayName: 'Bonsly',
   pokedexNumber: 438,
@@ -811,7 +791,7 @@ export const BONSLY: Pokemon = {
   ingredientPercentage: 18.9,
   skillPercentage: 6.1,
   carrySize: 8
-};
+});
 
 export const DRIFLOON: Pokemon = createSkillSpecialist({
   name: 'DRIFLOON',
@@ -833,8 +813,7 @@ export const DRIFLOON: Pokemon = createSkillSpecialist({
   skill: ChargeStrengthSStockpile
 });
 
-export const DRIFBLIM: Pokemon = {
-  ...evolvesFrom(DRIFLOON),
+export const DRIFBLIM: Pokemon = evolvedPokemon(DRIFLOON, {
   name: 'DRIFBLIM',
   displayName: 'Drifblim',
   pokedexNumber: 426,
@@ -842,10 +821,9 @@ export const DRIFBLIM: Pokemon = {
   ingredientPercentage: 12.8,
   skillPercentage: 6.3,
   carrySize: 17
-};
+});
 
-export const HONCHKROW: Pokemon = {
-  ...evolvesFrom(MURKROW),
+export const HONCHKROW: Pokemon = evolvedPokemon(MURKROW, {
   name: 'HONCHKROW',
   displayName: 'Honchkrow',
   pokedexNumber: 430,
@@ -853,7 +831,7 @@ export const HONCHKROW: Pokemon = {
   ingredientPercentage: 14.3,
   skillPercentage: 6.7,
   carrySize: 18
-};
+});
 
 export const RIOLU: Pokemon = createSkillSpecialist({
   name: 'RIOLU',
@@ -875,8 +853,7 @@ export const RIOLU: Pokemon = createSkillSpecialist({
   skill: DreamShardMagnetS
 });
 
-export const LUCARIO: Pokemon = {
-  ...evolvesFrom(RIOLU),
+export const LUCARIO: Pokemon = evolvedPokemon(RIOLU, {
   name: 'LUCARIO',
   displayName: 'Lucario',
   pokedexNumber: 448,
@@ -884,10 +861,9 @@ export const LUCARIO: Pokemon = {
   ingredientPercentage: 15.0,
   skillPercentage: 5.1,
   carrySize: 14
-};
+});
 
-export const MAGNEZONE: Pokemon = {
-  ...evolvesFrom(MAGNETON),
+export const MAGNEZONE: Pokemon = evolvedPokemon(MAGNETON, {
   name: 'MAGNEZONE',
   displayName: 'Magnezone',
   pokedexNumber: 462,
@@ -895,10 +871,9 @@ export const MAGNEZONE: Pokemon = {
   ingredientPercentage: 17.9,
   skillPercentage: 6.2,
   carrySize: 13
-};
+});
 
-export const TOGEKISS: Pokemon = {
-  ...evolvesFrom(TOGETIC),
+export const TOGEKISS: Pokemon = evolvedPokemon(TOGETIC, {
   name: 'TOGEKISS',
   displayName: 'Togekiss',
   pokedexNumber: 468,
@@ -906,10 +881,9 @@ export const TOGEKISS: Pokemon = {
   ingredientPercentage: 15.8,
   skillPercentage: 5.3,
   carrySize: 16
-};
+});
 
-export const LEAFEON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const LEAFEON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'LEAFEON',
   displayName: 'Leafeon',
   pokedexNumber: 470,
@@ -919,10 +893,9 @@ export const LEAFEON: Pokemon = {
   berry: DURIN,
   carrySize: 13,
   skill: EnergizingCheerS
-};
+});
 
-export const GLACEON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const GLACEON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'GLACEON',
   displayName: 'Glaceon',
   pokedexNumber: 471,
@@ -932,10 +905,9 @@ export const GLACEON: Pokemon = {
   berry: RAWST,
   carrySize: 12,
   skill: CookingPowerUpS
-};
+});
 
-export const GALLADE: Pokemon = {
-  ...evolvesFrom(KIRLIA),
+export const GALLADE: Pokemon = evolvedPokemon(KIRLIA, {
   name: 'GALLADE',
   displayName: 'Gallade',
   pokedexNumber: 475,
@@ -946,7 +918,7 @@ export const GALLADE: Pokemon = {
   berry: CHERI,
   genders: MALE_ONLY,
   skill: ExtraHelpfulS
-};
+});
 
 export const CRESSELIA: Pokemon = createSkillSpecialist({
   name: 'CRESSELIA',
@@ -988,8 +960,7 @@ export const RUFFLET: Pokemon = createSkillSpecialist({
   skill: BerryBurst
 });
 
-export const BRAVIARY: Pokemon = {
-  ...evolvesFrom(RUFFLET),
+export const BRAVIARY: Pokemon = evolvedPokemon(RUFFLET, {
   name: 'BRAVIARY',
   displayName: 'Braviary',
   pokedexNumber: 628,
@@ -997,10 +968,9 @@ export const BRAVIARY: Pokemon = {
   ingredientPercentage: 12.1,
   skillPercentage: 3.5,
   carrySize: 18
-};
+});
 
-export const SYLVEON: Pokemon = {
-  ...evolvesFrom(EEVEE),
+export const SYLVEON: Pokemon = evolvedPokemon(EEVEE, {
   name: 'SYLVEON',
   displayName: 'Sylveon',
   pokedexNumber: 700,
@@ -1010,7 +980,7 @@ export const SYLVEON: Pokemon = {
   berry: PECHA,
   carrySize: 15,
   skill: EnergyForEveryone
-};
+});
 
 export const DEDENNE: Pokemon = createSkillSpecialist({
   name: 'DEDENNE',
@@ -1072,8 +1042,7 @@ export const TOXEL: Pokemon = createSkillSpecialist({
   skill: IngredientMagnetS
 });
 
-export const TOXTRICITY_AMPED: Pokemon = {
-  ...evolvesFrom(TOXEL),
+export const TOXTRICITY_AMPED: Pokemon = evolvedPokemon(TOXEL, {
   name: 'TOXTRICITY_AMPED',
   displayName: 'Toxtricity (Amped Form)',
   pokedexNumber: 849,
@@ -1082,10 +1051,9 @@ export const TOXTRICITY_AMPED: Pokemon = {
   skillPercentage: 6.4,
   carrySize: 18,
   skill: IngredientMagnetSPlus
-};
+});
 
-export const TOXTRICITY_LOW_KEY: Pokemon = {
-  ...evolvesFrom(TOXEL),
+export const TOXTRICITY_LOW_KEY: Pokemon = evolvedPokemon(TOXEL, {
   name: 'TOXTRICITY_LOW_KEY',
   displayName: 'Toxtricity (Low Key Form)',
   pokedexNumber: 849,
@@ -1094,7 +1062,7 @@ export const TOXTRICITY_LOW_KEY: Pokemon = {
   skillPercentage: 6.4,
   carrySize: 18,
   skill: CookingPowerUpSMinus
-};
+});
 
 export const PAWMI: Pokemon = createSkillSpecialist({
   name: 'PAWMI',
@@ -1116,8 +1084,7 @@ export const PAWMI: Pokemon = createSkillSpecialist({
   skill: EnergyForEveryone
 });
 
-export const PAWMO: Pokemon = {
-  ...evolvesFrom(PAWMI),
+export const PAWMO: Pokemon = evolvedPokemon(PAWMI, {
   name: 'PAWMO',
   displayName: 'Pawmo',
   pokedexNumber: 922,
@@ -1125,10 +1092,9 @@ export const PAWMO: Pokemon = {
   ingredientPercentage: 10.9,
   skillPercentage: 3.6,
   carrySize: 12
-};
+});
 
-export const PAWMOT: Pokemon = {
-  ...evolvesFrom(PAWMO),
+export const PAWMOT: Pokemon = evolvedPokemon(PAWMO, {
   name: 'PAWMOT',
   displayName: 'Pawmot',
   pokedexNumber: 923,
@@ -1136,7 +1102,7 @@ export const PAWMOT: Pokemon = {
   ingredientPercentage: 14.1,
   skillPercentage: 3.9,
   carrySize: 18
-};
+});
 
 export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   WIGGLYTUFF,
