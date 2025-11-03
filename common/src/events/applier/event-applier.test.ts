@@ -88,7 +88,7 @@ describe('EventApplier', () => {
 
     it('should not apply modifier when condition is not met', () => {
       const pokemon = pokemonInstanceExt({
-        pokemon: mockPokemon({ frequency: 2400, specialty: 'skill', name: 'MOCKEMON' })
+        pokemon: mockPokemon({ frequency: 2400, specialty: 'skill' })
       });
       const event: Event = {
         name: 'Test Event',
@@ -342,7 +342,7 @@ describe('EventApplier', () => {
       expect(result.pokemon.frequency).toBe(500);
     });
 
-    it('should not apply modifiers that dont match target type', () => {
+    it("should not apply modifiers that don't match target type", () => {
       const pokemon = pokemonInstanceExt({
         pokemon: mockPokemon({ frequency: 2400 })
       });
