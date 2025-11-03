@@ -179,7 +179,7 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
 
   const INGREDIENT_SUPPORT_MAINSKILLS_SET = new Set(INGREDIENT_SUPPORT_MAINSKILLS.map((ms) => ms.name));
   // TODO: there needs to be a better way to do this
-  // TODO: also missleading variable name since we really only filter here to figure out which skill mons we should give skill setup vs keeping ingredient setup
+  // TODO: also misleading variable name since we really only filter here to figure out which skill mons we should give skill setup vs keeping ingredient setup
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(TastyChanceS.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientMagnetS.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingPowerUpS.name);
