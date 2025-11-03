@@ -1,3 +1,24 @@
+# [2.29.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.28.1...v2.29.0) (2025-11-03)
+
+
+### Bug Fixes
+
+* create empty teams before adding members ([bf4ba4b](https://github.com/nerolis-lab/nerolis-lab/commit/bf4ba4b779c9e399646e89abd504edc0fb5fbb17))
+* **images:** rename pumpkaboo/gourgeist images ([e9affaa](https://github.com/nerolis-lab/nerolis-lab/commit/e9affaa456dbb56085885d0779c904e9b5c469c2))
+* migration 0_12 now supports NULL favored_berries ([1c55792](https://github.com/nerolis-lab/nerolis-lab/commit/1c557923a3d3d31d184d13c3860d65d9bc5bdd4f))
+
+
+### Features
+
+* add Halloween Eevee ([375fab1](https://github.com/nerolis-lab/nerolis-lab/commit/375fab1897d807a7c8e4ba33c92b4e5b8662b1af))
+* add Pumpkaboo and Gourgeist ([6f36627](https://github.com/nerolis-lab/nerolis-lab/commit/6f366273d0ecf231f0adaa0a3861025c24000b81))
+* add pumpkin ([0ce4daf](https://github.com/nerolis-lab/nerolis-lab/commit/0ce4daf37a75c1fcdec2f036d9367bbebf41e3c0))
+* add pumpkin and pumpkaboo assets ([335c51a](https://github.com/nerolis-lab/nerolis-lab/commit/335c51a1b7ae3f42cb72bd386b98ed927a492f87))
+* cheer/stockpile buff, bad dreams Lv7 ([d142832](https://github.com/nerolis-lab/nerolis-lab/commit/d1428322abe392fb7ac7cb915673f85fc0bfefc1))
+* move stamps up slightly to avoid overlap with text ([2c14913](https://github.com/nerolis-lab/nerolis-lab/commit/2c149138732abb37061e78150d8b6ff05eab940c))
+* stamp images with sizes for pumpkaboo line ([57627cd](https://github.com/nerolis-lab/nerolis-lab/commit/57627cd8b4ce9144c2a328788c397215c8e7369e))
+* stamp pumpkaboo portraits ([3394c70](https://github.com/nerolis-lab/nerolis-lab/commit/3394c703e2ed40876bd8903f07649529743debfc))
+
 ## [2.28.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.28.0...v2.28.1) (2025-10-03)
 
 # [2.28.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.27.0...v2.28.0) (2025-09-29)
