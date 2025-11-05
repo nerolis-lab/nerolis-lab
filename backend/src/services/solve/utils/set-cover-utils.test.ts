@@ -22,7 +22,7 @@ describe('set-cover-utils', () => {
       defaultIngredientArray.set([1, 2, 3], 0);
       const depth = 5;
       const result = addSpotsLeftToRecipe(defaultIngredientArray, depth);
-      expect(result).toEqual(new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]));
+      expect(result).toEqual(new Int16Array([1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5]));
     });
 
     it('should handle empty recipe', () => {
@@ -78,7 +78,7 @@ describe('set-cover-utils', () => {
     it('should create a consistent memo key for a given array', () => {
       defaultIngredientArray.set([1, 2, 3, 4, 5], 0);
       const result = createMemoKey(defaultIngredientArray);
-      expect(result).toMatchInlineSnapshot(`3614473972`);
+      expect(result).toMatchInlineSnapshot(`437770780`);
     });
 
     it('should create different memo keys for different arrays', () => {
@@ -108,8 +108,8 @@ describe('set-cover-utils', () => {
   describe('subtractAndCount', () => {
     it('should subtract produced ingredients, count remaining ingredients and update key index array', () => {
       const depth = 0;
-      const recipeWithSpotsLeft = new Int16Array([0, 0, 0, 5, 0, 0, 2, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, depth]);
-      const producedIngredients = new Int16Array([0, 0, 0, 5, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0]);
+      const recipeWithSpotsLeft = new Int16Array([0, 0, 0, 5, 0, 0, 2, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, depth]);
+      const producedIngredients = new Int16Array([0, 0, 0, 5, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
       expect(recipeWithSpotsLeft).toHaveLength(ingredient.INGREDIENTS.length + 1);
       expect(producedIngredients).toHaveLength(ingredient.INGREDIENTS.length);
@@ -120,7 +120,7 @@ describe('set-cover-utils', () => {
       expect(remainingRecipeWithSpotsLeft).toHaveLength(ingredient.INGREDIENTS.length + 1);
       expect(remainingRecipeWithSpotsLeft).toEqual(
         // verify on -1 is fine since in practice we will never call this function with 0 spots, dont want to add additional computational logic for the clamp
-        new Int16Array([0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, -1])
+        new Int16Array([0, 0, 0, 0, 0, 0, 1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1])
       );
       expect(sumRemainingRecipeIngredients).toBe(6);
       expect(remainingIngredientIndices).toEqual([9, 6]);

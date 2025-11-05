@@ -77,6 +77,7 @@ describe('getMealsForFilter', () => {
         "HIDDEN_POWER_PERK_UP_STEW",
         "CUT_SUKIYAKI_CURRY",
         "ROLE_PLAY_PUMPKABOO_STEW",
+        "OVERGROW_AVOCADO_GRATIN",
         "CALM_MIND_FRUIT_SALAD",
         "CROSS_CHOP_SALAD",
         "GREENGRASS_SALAD",
@@ -84,6 +85,8 @@ describe('getMealsForFilter', () => {
         "PETAL_BLIZZARD_LAYERED_SALAD",
         "APPLE_ACID_YOGURT_DRESSED_SALAD",
         "DEFIANT_COFFEE_DRESSED_SALAD",
+        "LUSCIOUS_AVOCADO_SALAD",
+        "BULLDOZE_GUACAMOLE_AND_CHIPS",
         "HUGE_POWER_SOY_DONUTS",
         "EXPLOSION_POPCORN",
         "EARLY_BIRD_COFFEE_JELLY",
@@ -94,6 +97,7 @@ describe('getMealsForFilter', () => {
         "ZING_ZAP_SPICED_COLA",
         "CLODSIRE_ECLAIR",
         "SCARY_FACE_PANCAKES",
+        "LEAF_TORNADO_SMOOTHIE",
       ]
     `);
   });
@@ -145,6 +149,7 @@ describe('getMealsForFilter', () => {
         "SLOWPOKE_TAIL_PEPPER_SALAD",
         "CROSS_CHOP_SALAD",
         "NINJA_SALAD",
+        "LUSCIOUS_AVOCADO_SALAD",
         "WARM_MOOMOO_MILK",
         "FANCY_APPLE_JUICE",
         "CRAFT_SODA_POP",
@@ -165,6 +170,7 @@ describe('getMealsForFilter', () => {
         "EARLY_BIRD_COFFEE_JELLY",
         "MOLD_BREAKER_CORN_TIRAMISU",
         "JIGGLYPUFFS_FRUITY_FLAN",
+        "LEAF_TORNADO_SMOOTHIE",
       ]
     `);
   });

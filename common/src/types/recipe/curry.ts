@@ -4,6 +4,7 @@ import {
   FANCY_APPLE,
   FANCY_EGG,
   FIERY_HERB,
+  GLOSSY_AVOCADO,
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
@@ -256,6 +257,18 @@ export const ROLE_PLAY_PUMPKABOO_STEW = createCurry({
   bonus: 48
 });
 
+export const OVERGROW_AVOCADO_GRATIN = createCurry({
+  name: 'OVERGROW_AVOCADO_GRATIN',
+  displayName: '"Overgrow" Avocado Gratin',
+  ingredients: [
+    { amount: 22, ingredient: GLOSSY_AVOCADO },
+    { amount: 20, ingredient: SOFT_POTATO },
+    { amount: 41, ingredient: MOOMOO_MILK },
+    { amount: 32, ingredient: PURE_OIL }
+  ],
+  bonus: 78
+});
+
 export const CURRIES: Recipe[] = [
   FANCY_APPLE_CURRY,
   SIMPLE_CHOWDER,
@@ -278,7 +291,8 @@ export const CURRIES: Recipe[] = [
   INFERNO_CORN_KEEMA_CURRY,
   HIDDEN_POWER_PERK_UP_STEW,
   CUT_SUKIYAKI_CURRY,
-  ROLE_PLAY_PUMPKABOO_STEW
+  ROLE_PLAY_PUMPKABOO_STEW,
+  OVERGROW_AVOCADO_GRATIN
 ];
 
 export const MIXED_CURRY_FLAT: RecipeFlat = recipesToFlat(MIXED_CURRY);
