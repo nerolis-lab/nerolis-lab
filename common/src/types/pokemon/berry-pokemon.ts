@@ -61,7 +61,6 @@ import type { Pokemon } from './pokemon';
 
 export const CATERPIE: Pokemon = createBerrySpecialist({
   name: 'CATERPIE',
-  displayName: 'Caterpie',
   pokedexNumber: 10,
   frequency: toSeconds(1, 13, 20),
   ingredientPercentage: 17.9,
@@ -81,7 +80,6 @@ export const CATERPIE: Pokemon = createBerrySpecialist({
 
 export const METAPOD: Pokemon = evolvedPokemon(CATERPIE, {
   name: 'METAPOD',
-  displayName: 'Metapod',
   pokedexNumber: 11,
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 20.8,
@@ -91,7 +89,6 @@ export const METAPOD: Pokemon = evolvedPokemon(CATERPIE, {
 
 export const BUTTERFREE: Pokemon = evolvedPokemon(METAPOD, {
   name: 'BUTTERFREE',
-  displayName: 'Butterfree',
   pokedexNumber: 12,
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 19.7,
@@ -101,7 +98,6 @@ export const BUTTERFREE: Pokemon = evolvedPokemon(METAPOD, {
 
 export const RATTATA: Pokemon = createBerrySpecialist({
   name: 'RATTATA',
-  displayName: 'Rattata',
   pokedexNumber: 19,
   frequency: toSeconds(1, 21, 40),
   ingredientPercentage: 23.7,
@@ -121,7 +117,6 @@ export const RATTATA: Pokemon = createBerrySpecialist({
 
 export const RATICATE: Pokemon = evolvedPokemon(RATTATA, {
   name: 'RATICATE',
-  displayName: 'Raticate',
   pokedexNumber: 20,
   frequency: toSeconds(0, 49, 10),
   ingredientPercentage: 23.7,
@@ -131,7 +126,6 @@ export const RATICATE: Pokemon = evolvedPokemon(RATTATA, {
 
 export const EKANS: Pokemon = createBerrySpecialist({
   name: 'EKANS',
-  displayName: 'Ekans',
   pokedexNumber: 23,
   frequency: toSeconds(1, 23, 20),
   ingredientPercentage: 23.5,
@@ -151,7 +145,6 @@ export const EKANS: Pokemon = createBerrySpecialist({
 
 export const ARBOK: Pokemon = evolvedPokemon(EKANS, {
   name: 'ARBOK',
-  displayName: 'Arbok',
   pokedexNumber: 24,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 26.4,
@@ -161,7 +154,6 @@ export const ARBOK: Pokemon = evolvedPokemon(EKANS, {
 
 export const PIKACHU: Pokemon = createBerrySpecialist({
   name: 'PIKACHU',
-  displayName: 'Pikachu',
   pokedexNumber: 25,
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 20.7,
@@ -181,7 +173,6 @@ export const PIKACHU: Pokemon = createBerrySpecialist({
 
 export const PIKACHU_HALLOWEEN: Pokemon = createBerrySpecialist({
   name: 'PIKACHU_HALLOWEEN',
-  displayName: 'Pikachu (Halloween)',
   pokedexNumber: 25,
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 21.8,
@@ -201,7 +192,6 @@ export const PIKACHU_HALLOWEEN: Pokemon = createBerrySpecialist({
 
 export const RAICHU: Pokemon = evolvedPokemon(PIKACHU, {
   name: 'RAICHU',
-  displayName: 'Raichu',
   pokedexNumber: 26,
   frequency: toSeconds(0, 36, 40),
   ingredientPercentage: 22.4,
@@ -211,7 +201,6 @@ export const RAICHU: Pokemon = evolvedPokemon(PIKACHU, {
 
 export const CLEFAIRY: Pokemon = createBerrySpecialist({
   name: 'CLEFAIRY',
-  displayName: 'Clefairy',
   pokedexNumber: 35,
   frequency: toSeconds(1, 6, 40),
   ingredientPercentage: 16.8,
@@ -231,7 +220,6 @@ export const CLEFAIRY: Pokemon = createBerrySpecialist({
 
 export const CLEFABLE: Pokemon = evolvedPokemon(CLEFAIRY, {
   name: 'CLEFABLE',
-  displayName: 'Clefable',
   pokedexNumber: 36,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 16.8,
@@ -241,7 +229,6 @@ export const CLEFABLE: Pokemon = evolvedPokemon(CLEFAIRY, {
 
 export const VULPIX: Pokemon = createBerrySpecialist({
   name: 'VULPIX',
-  displayName: 'Vulpix',
   pokedexNumber: 37,
   frequency: toSeconds(1, 18, 20),
   ingredientPercentage: 16.8,
@@ -261,7 +248,6 @@ export const VULPIX: Pokemon = createBerrySpecialist({
 
 export const VULPIX_ALOLAN: Pokemon = createBerrySpecialist({
   name: 'VULPIX_ALOLAN',
-  displayName: 'Vulpix (Alolan Form)',
   pokedexNumber: 37,
   frequency: toSeconds(1, 33, 20),
   ingredientPercentage: 23,
@@ -281,7 +267,6 @@ export const VULPIX_ALOLAN: Pokemon = createBerrySpecialist({
 
 export const NINETALES: Pokemon = evolvedPokemon(VULPIX, {
   name: 'NINETALES',
-  displayName: 'Ninetales',
   pokedexNumber: 38,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 16.4,
@@ -291,7 +276,6 @@ export const NINETALES: Pokemon = evolvedPokemon(VULPIX, {
 
 export const NINETALES_ALOLAN: Pokemon = evolvedPokemon(VULPIX_ALOLAN, {
   name: 'NINETALES_ALOLAN',
-  displayName: 'Ninetales (Alolan Form)',
   pokedexNumber: 38,
   frequency: toSeconds(0, 48, 20),
   ingredientPercentage: 23.1,
@@ -301,7 +285,6 @@ export const NINETALES_ALOLAN: Pokemon = evolvedPokemon(VULPIX_ALOLAN, {
 
 export const MANKEY: Pokemon = createBerrySpecialist({
   name: 'MANKEY',
-  displayName: 'Mankey',
   pokedexNumber: 56,
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 19.7,
@@ -321,7 +304,6 @@ export const MANKEY: Pokemon = createBerrySpecialist({
 
 export const PRIMEAPE: Pokemon = evolvedPokemon(MANKEY, {
   name: 'PRIMEAPE',
-  displayName: 'Primeape',
   pokedexNumber: 57,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 20.0,
@@ -331,7 +313,6 @@ export const PRIMEAPE: Pokemon = evolvedPokemon(MANKEY, {
 
 export const DODUO: Pokemon = createBerrySpecialist({
   name: 'DODUO',
-  displayName: 'Doduo',
   pokedexNumber: 84,
   frequency: toSeconds(1, 3, 20),
   ingredientPercentage: 18.4,
@@ -351,7 +332,6 @@ export const DODUO: Pokemon = createBerrySpecialist({
 
 export const DODRIO: Pokemon = evolvedPokemon(DODUO, {
   name: 'DODRIO',
-  displayName: 'Dodrio',
   pokedexNumber: 85,
   frequency: toSeconds(0, 38, 20),
   ingredientPercentage: 18.4,
@@ -361,7 +341,6 @@ export const DODRIO: Pokemon = evolvedPokemon(DODUO, {
 
 export const ONIX: Pokemon = createBerrySpecialist({
   name: 'ONIX',
-  displayName: 'Onix',
   pokedexNumber: 95,
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 13.2,
@@ -381,7 +360,6 @@ export const ONIX: Pokemon = createBerrySpecialist({
 
 export const CUBONE: Pokemon = createBerrySpecialist({
   name: 'CUBONE',
-  displayName: 'Cubone',
   pokedexNumber: 104,
   frequency: toSeconds(1, 20, 0),
   ingredientPercentage: 22.3,
@@ -400,7 +378,6 @@ export const CUBONE: Pokemon = createBerrySpecialist({
 
 export const MAROWAK: Pokemon = evolvedPokemon(CUBONE, {
   name: 'MAROWAK',
-  displayName: 'Marowak',
   pokedexNumber: 105,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 22.5,
@@ -410,7 +387,6 @@ export const MAROWAK: Pokemon = evolvedPokemon(CUBONE, {
 
 export const EEVEE_HOLIDAY: Pokemon = createBerrySpecialist({
   name: 'EEVEE_HOLIDAY',
-  displayName: 'Eevee (Holiday)',
   pokedexNumber: 133,
   frequency: toSeconds(0, 51, 40),
   ingredientPercentage: 15.6,
@@ -430,7 +406,6 @@ export const EEVEE_HOLIDAY: Pokemon = createBerrySpecialist({
 
 export const CHIKORITA: Pokemon = createBerrySpecialist({
   name: 'CHIKORITA',
-  displayName: 'Chikorita',
   pokedexNumber: 152,
   frequency: toSeconds(1, 13, 20),
   ingredientPercentage: 16.9,
@@ -450,7 +425,6 @@ export const CHIKORITA: Pokemon = createBerrySpecialist({
 
 export const BAYLEEF: Pokemon = evolvedPokemon(CHIKORITA, {
   name: 'BAYLEEF',
-  displayName: 'Bayleef',
   pokedexNumber: 153,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 16.8,
@@ -460,7 +434,6 @@ export const BAYLEEF: Pokemon = evolvedPokemon(CHIKORITA, {
 
 export const MEGANIUM: Pokemon = evolvedPokemon(BAYLEEF, {
   name: 'MEGANIUM',
-  displayName: 'Meganium',
   pokedexNumber: 154,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 17.5,
@@ -470,7 +443,6 @@ export const MEGANIUM: Pokemon = evolvedPokemon(BAYLEEF, {
 
 export const CYNDAQUIL: Pokemon = createBerrySpecialist({
   name: 'CYNDAQUIL',
-  displayName: 'Cyndaquil',
   pokedexNumber: 155,
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 18.6,
@@ -490,7 +462,6 @@ export const CYNDAQUIL: Pokemon = createBerrySpecialist({
 
 export const QUILAVA: Pokemon = evolvedPokemon(CYNDAQUIL, {
   name: 'QUILAVA',
-  displayName: 'Quilava',
   pokedexNumber: 156,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 21.1,
@@ -500,7 +471,6 @@ export const QUILAVA: Pokemon = evolvedPokemon(CYNDAQUIL, {
 
 export const TYPHLOSION: Pokemon = evolvedPokemon(QUILAVA, {
   name: 'TYPHLOSION',
-  displayName: 'Typhlosion',
   pokedexNumber: 157,
   frequency: toSeconds(0, 40, 0),
   ingredientPercentage: 20.8,
@@ -510,7 +480,6 @@ export const TYPHLOSION: Pokemon = evolvedPokemon(QUILAVA, {
 
 export const TOTODILE: Pokemon = createBerrySpecialist({
   name: 'TOTODILE',
-  displayName: 'Totodile',
   pokedexNumber: 158,
   frequency: toSeconds(1, 15, 0),
   ingredientPercentage: 25.3,
@@ -529,7 +498,6 @@ export const TOTODILE: Pokemon = createBerrySpecialist({
 
 export const CROCONAW: Pokemon = evolvedPokemon(TOTODILE, {
   name: 'CROCONAW',
-  displayName: 'Croconaw',
   pokedexNumber: 159,
   frequency: toSeconds(0, 56, 40),
   ingredientPercentage: 25.3,
@@ -539,7 +507,6 @@ export const CROCONAW: Pokemon = evolvedPokemon(TOTODILE, {
 
 export const FERALIGATR: Pokemon = evolvedPokemon(CROCONAW, {
   name: 'FERALIGATR',
-  displayName: 'Feraligatr',
   pokedexNumber: 160,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 25.7,
@@ -549,7 +516,6 @@ export const FERALIGATR: Pokemon = evolvedPokemon(CROCONAW, {
 
 export const NATU: Pokemon = createBerrySpecialist({
   name: 'NATU',
-  displayName: 'Natu',
   pokedexNumber: 177,
   frequency: toSeconds(1, 15, 0),
   ingredientPercentage: 18.5,
@@ -569,7 +535,6 @@ export const NATU: Pokemon = createBerrySpecialist({
 
 export const XATU: Pokemon = evolvedPokemon(NATU, {
   name: 'XATU',
-  displayName: 'Xatu',
   pokedexNumber: 178,
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 19.1,
@@ -579,7 +544,6 @@ export const XATU: Pokemon = evolvedPokemon(NATU, {
 
 export const PICHU: Pokemon = preEvolvedPokemon(PIKACHU, {
   name: 'PICHU',
-  displayName: 'Pichu',
   pokedexNumber: 172,
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 21.0,
@@ -589,7 +553,6 @@ export const PICHU: Pokemon = preEvolvedPokemon(PIKACHU, {
 
 export const CLEFFA: Pokemon = preEvolvedPokemon(CLEFAIRY, {
   name: 'CLEFFA',
-  displayName: 'Cleffa',
   pokedexNumber: 173,
   frequency: toSeconds(1, 33, 20),
   ingredientPercentage: 16.4,
@@ -599,7 +562,6 @@ export const CLEFFA: Pokemon = preEvolvedPokemon(CLEFAIRY, {
 
 export const STEELIX: Pokemon = evolvedPokemon(ONIX, {
   name: 'STEELIX',
-  displayName: 'Steelix',
   pokedexNumber: 208,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 15.4,
@@ -610,7 +572,6 @@ export const STEELIX: Pokemon = evolvedPokemon(ONIX, {
 
 export const SNEASEL: Pokemon = createBerrySpecialist({
   name: 'SNEASEL',
-  displayName: 'Sneasel',
   pokedexNumber: 215,
   frequency: toSeconds(0, 53, 20),
   ingredientPercentage: 25.5,
@@ -630,7 +591,6 @@ export const SNEASEL: Pokemon = createBerrySpecialist({
 
 export const HOUNDOUR: Pokemon = createBerrySpecialist({
   name: 'HOUNDOUR',
-  displayName: 'Houndour',
   pokedexNumber: 228,
   frequency: toSeconds(1, 21, 40),
   ingredientPercentage: 20.1,
@@ -650,7 +610,6 @@ export const HOUNDOUR: Pokemon = createBerrySpecialist({
 
 export const HOUNDOOM: Pokemon = evolvedPokemon(HOUNDOUR, {
   name: 'HOUNDOOM',
-  displayName: 'Houndoom',
   pokedexNumber: 229,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 20.3,
@@ -660,7 +619,6 @@ export const HOUNDOOM: Pokemon = evolvedPokemon(HOUNDOUR, {
 
 export const TORCHIC: Pokemon = createBerrySpecialist({
   name: 'TORCHIC',
-  displayName: 'Torchic',
   pokedexNumber: 255,
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 16,
@@ -680,7 +638,6 @@ export const TORCHIC: Pokemon = createBerrySpecialist({
 
 export const COMBUSKEN: Pokemon = evolvedPokemon(TORCHIC, {
   name: 'COMBUSKEN',
-  displayName: 'Combusken',
   pokedexNumber: 256,
   frequency: toSeconds(0, 55, 0),
   ingredientPercentage: 17,
@@ -691,7 +648,6 @@ export const COMBUSKEN: Pokemon = evolvedPokemon(TORCHIC, {
 
 export const BLAZIKEN: Pokemon = evolvedPokemon(COMBUSKEN, {
   name: 'BLAZIKEN',
-  displayName: 'Blaziken',
   pokedexNumber: 257,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 15.3,
@@ -702,7 +658,6 @@ export const BLAZIKEN: Pokemon = evolvedPokemon(COMBUSKEN, {
 
 export const MUDKIP: Pokemon = createBerrySpecialist({
   name: 'MUDKIP',
-  displayName: 'Mudkip',
   pokedexNumber: 258,
   frequency: toSeconds(1, 18, 20),
   ingredientPercentage: 19.2,
@@ -722,7 +677,6 @@ export const MUDKIP: Pokemon = createBerrySpecialist({
 
 export const MARSHTOMP: Pokemon = evolvedPokemon(MUDKIP, {
   name: 'MARSHTOMP',
-  displayName: 'Marshtomp',
   pokedexNumber: 259,
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 16.8,
@@ -733,7 +687,6 @@ export const MARSHTOMP: Pokemon = evolvedPokemon(MUDKIP, {
 
 export const SWAMPERT: Pokemon = evolvedPokemon(MARSHTOMP, {
   name: 'SWAMPERT',
-  displayName: 'Swampert',
   pokedexNumber: 260,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 14.6,
@@ -744,7 +697,6 @@ export const SWAMPERT: Pokemon = evolvedPokemon(MARSHTOMP, {
 
 export const SLAKOTH: Pokemon = createBerrySpecialist({
   name: 'SLAKOTH',
-  displayName: 'Slakoth',
   pokedexNumber: 287,
   frequency: toSeconds(1, 21, 40),
   ingredientPercentage: 21.6,
@@ -764,7 +716,6 @@ export const SLAKOTH: Pokemon = createBerrySpecialist({
 
 export const VIGOROTH: Pokemon = evolvedPokemon(SLAKOTH, {
   name: 'VIGOROTH',
-  displayName: 'Vigoroth',
   pokedexNumber: 288,
   frequency: toSeconds(0, 53, 20),
   ingredientPercentage: 20.4,
@@ -774,7 +725,6 @@ export const VIGOROTH: Pokemon = evolvedPokemon(SLAKOTH, {
 
 export const SLAKING: Pokemon = evolvedPokemon(VIGOROTH, {
   name: 'SLAKING',
-  displayName: 'Slaking',
   pokedexNumber: 289,
   frequency: toSeconds(1, 0, 0),
   ingredientPercentage: 33.9,
@@ -784,7 +734,6 @@ export const SLAKING: Pokemon = evolvedPokemon(VIGOROTH, {
 
 export const SWABLU: Pokemon = createBerrySpecialist({
   name: 'SWABLU',
-  displayName: 'Swablu',
   pokedexNumber: 333,
   frequency: toSeconds(1, 10, 0),
   ingredientPercentage: 17.7,
@@ -804,7 +753,6 @@ export const SWABLU: Pokemon = createBerrySpecialist({
 
 export const ALTARIA: Pokemon = evolvedPokemon(SWABLU, {
   name: 'ALTARIA',
-  displayName: 'Altaria',
   pokedexNumber: 334,
   frequency: toSeconds(0, 58, 20),
   ingredientPercentage: 25.8,
@@ -815,7 +763,6 @@ export const ALTARIA: Pokemon = evolvedPokemon(SWABLU, {
 
 export const SHUPPET: Pokemon = createBerrySpecialist({
   name: 'SHUPPET',
-  displayName: 'Shuppet',
   pokedexNumber: 353,
   frequency: toSeconds(1, 5, 0),
   ingredientPercentage: 17.1,
@@ -835,7 +782,6 @@ export const SHUPPET: Pokemon = createBerrySpecialist({
 
 export const BANETTE: Pokemon = evolvedPokemon(SHUPPET, {
   name: 'BANETTE',
-  displayName: 'Banette',
   pokedexNumber: 354,
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 17.9,
@@ -845,7 +791,6 @@ export const BANETTE: Pokemon = evolvedPokemon(SHUPPET, {
 
 export const SPHEAL: Pokemon = createBerrySpecialist({
   name: 'SPHEAL',
-  displayName: 'Spheal',
   pokedexNumber: 363,
   frequency: toSeconds(1, 33, 20),
   ingredientPercentage: 22.4,
@@ -865,7 +810,6 @@ export const SPHEAL: Pokemon = createBerrySpecialist({
 
 export const SEALEO: Pokemon = evolvedPokemon(SPHEAL, {
   name: 'SEALEO',
-  displayName: 'Sealeo',
   pokedexNumber: 364,
   frequency: toSeconds(1, 6, 40),
   ingredientPercentage: 22.1,
@@ -875,7 +819,6 @@ export const SEALEO: Pokemon = evolvedPokemon(SPHEAL, {
 
 export const WALREIN: Pokemon = evolvedPokemon(SEALEO, {
   name: 'WALREIN',
-  displayName: 'Walrein',
   pokedexNumber: 365,
   frequency: toSeconds(0, 50, 0),
   ingredientPercentage: 22.3,
@@ -885,7 +828,6 @@ export const WALREIN: Pokemon = evolvedPokemon(SEALEO, {
 
 export const WEAVILE: Pokemon = evolvedPokemon(SNEASEL, {
   name: 'WEAVILE',
-  displayName: 'Weavile',
   pokedexNumber: 461,
   frequency: toSeconds(0, 45, 0),
   ingredientPercentage: 25.2,
@@ -895,7 +837,6 @@ export const WEAVILE: Pokemon = evolvedPokemon(SNEASEL, {
 
 export const MUNNA: Pokemon = createBerrySpecialist({
   name: 'MUNNA',
-  displayName: 'Munna',
   pokedexNumber: 517,
   frequency: toSeconds(1, 35, 0),
   ingredientPercentage: 19.7,
@@ -915,7 +856,6 @@ export const MUNNA: Pokemon = createBerrySpecialist({
 
 export const MUSHARNA: Pokemon = evolvedPokemon(MUNNA, {
   name: 'MUSHARNA',
-  displayName: 'Musharna',
   pokedexNumber: 518,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 18.8,

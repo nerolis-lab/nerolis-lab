@@ -18,7 +18,6 @@ import type { Pokemon } from './pokemon';
 
 export const DARKRAI: Pokemon = createAllSpecialist({
   name: 'DARKRAI',
-  displayName: 'Darkrai',
   pokedexNumber: 491,
   frequency: toSeconds(0, 48, 20),
   ingredientPercentage: 19.2,

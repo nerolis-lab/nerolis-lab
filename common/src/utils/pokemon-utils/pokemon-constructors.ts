@@ -1,3 +1,4 @@
+import pokemonNames from '../../locales/en/pokemonNames';
 import type { Berry } from '../../types/berry';
 import type { GenderRatio } from '../../types/gender';
 import type { Ingredient, IngredientSet } from '../../types/ingredient';
@@ -20,8 +21,7 @@ export type IngredientSetDefinition = {
 export type IngredientSpecification = IngredientDefinition | IngredientSetDefinition;
 
 function createPokemon(params: {
-  name: string;
-  displayName: string;
+  name: keyof typeof pokemonNames;
   pokedexNumber: number;
   specialty: PokemonSpecialty;
   frequency: number;
@@ -36,10 +36,11 @@ function createPokemon(params: {
   skill: Mainskill;
 }): Pokemon {
   const { ingredients, ...otherParams } = params;
-  const { specialty } = otherParams;
+  const { name, specialty } = otherParams;
   const { ingredient0, ingredient30, ingredient60 } = getIngredientSets(ingredients, specialty);
   return {
     ...otherParams,
+    displayName: pokemonNames[name],
     // evolution fields get populated when constructing other mons in the evolution line
     evolvesFrom: undefined,
     evolvesInto: [],
@@ -50,8 +51,7 @@ function createPokemon(params: {
 }
 
 export function createAllSpecialist(params: {
-  name: string;
-  displayName: string;
+  name: keyof typeof pokemonNames;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -71,8 +71,7 @@ export function createAllSpecialist(params: {
 }
 
 export function createBerrySpecialist(params: {
-  name: string;
-  displayName: string;
+  name: keyof typeof pokemonNames;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -92,8 +91,7 @@ export function createBerrySpecialist(params: {
 }
 
 export function createIngredientSpecialist(params: {
-  name: string;
-  displayName: string;
+  name: keyof typeof pokemonNames;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -113,8 +111,7 @@ export function createIngredientSpecialist(params: {
 }
 
 export function createSkillSpecialist(params: {
-  name: string;
-  displayName: string;
+  name: keyof typeof pokemonNames;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -136,8 +133,7 @@ export function createSkillSpecialist(params: {
 export function evolvedPokemon(
   previousForm: Pokemon,
   params: Partial<Pokemon> & {
-    name: string;
-    displayName: string;
+    name: keyof typeof pokemonNames;
     pokedexNumber: number;
     frequency: number;
     ingredientPercentage: number;
@@ -148,6 +144,7 @@ export function evolvedPokemon(
   const evolvedMon: Pokemon = {
     ...evolvesFrom(previousForm),
     ...params,
+    displayName: pokemonNames[params.name],
     evolvesFrom: previousForm.name,
     evolvesInto: []
   };
@@ -158,8 +155,7 @@ export function evolvedPokemon(
 export function preEvolvedPokemon(
   nextForm: Pokemon,
   params: Partial<Pokemon> & {
-    name: string;
-    displayName: string;
+    name: keyof typeof pokemonNames;
     pokedexNumber: number;
     frequency: number;
     ingredientPercentage: number;
@@ -170,6 +166,7 @@ export function preEvolvedPokemon(
   const preEvolvedMon: Pokemon = {
     ...evolvesInto(nextForm),
     ...params,
+    displayName: pokemonNames[params.name],
     evolvesFrom: undefined,
     evolvesInto: [nextForm.name]
   };

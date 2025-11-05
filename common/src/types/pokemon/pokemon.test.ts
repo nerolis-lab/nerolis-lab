@@ -52,4 +52,10 @@ describe('COMPLETE_POKEDEX', () => {
       });
     });
   });
+
+  COMPLETE_POKEDEX.forEach((pokemon: Pokemon) => {
+    it(`shall define a display name for ${pokemon.name}`, () => {
+      expect(pokemon.displayName).toBeDefined();
+    });
+  });
 });

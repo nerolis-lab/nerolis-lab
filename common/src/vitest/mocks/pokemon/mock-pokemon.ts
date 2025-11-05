@@ -19,8 +19,7 @@ export const mockMainskill = new (class extends Mainskill {
 
 export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   const base: Pokemon = createBerrySpecialist({
-    name: 'MOCKEMON',
-    displayName: 'Mockemon',
+    name: 'SNEASEL',
     pokedexNumber: 0,
     frequency: 0,
     ingredientPercentage: 0,
@@ -39,6 +38,8 @@ export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   });
   return {
     ...base,
+    name: 'MOCKEMON',
+    displayName: 'Mockemon',
     ...attrs
   };
 }
