@@ -172,6 +172,7 @@ describe('SetCover', () => {
           0,
           0,
           0,
+          0,
         ]
       `);
     });
@@ -575,7 +576,7 @@ describe('SetCover', () => {
       expect(result.exhaustive).toBe(true);
       expect(result.teams).toHaveLength(2);
       expect(result.teams[0].producedIngredients).toEqual(
-        new Int16Array([2, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0])
+        new Int16Array([2, 4, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0])
       );
       expect(result.teams[0].members).toHaveLength(2);
       expect(result.teams[0].members[0].pokemonSet.pokemon).toEqual('1stTeam1stMember');
