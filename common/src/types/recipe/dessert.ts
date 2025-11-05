@@ -2,6 +2,7 @@ import { createDessert, recipesToFlat } from '../../utils/recipe-utils/recipe-ut
 import {
   FANCY_APPLE,
   FANCY_EGG,
+  GLOSSY_AVOCADO,
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
@@ -289,6 +290,17 @@ export const SCARY_FACE_PANCAKES = createDessert({
   bonus: 78
 });
 
+export const LEAF_TORNADO_SMOOTHIE = createDessert({
+  name: 'LEAF_TORNADO_SMOOTHIE',
+  displayName: '"Leaf Tornado" Smoothie',
+  ingredients: [
+    { amount: 18, ingredient: GLOSSY_AVOCADO },
+    { amount: 16, ingredient: SNOOZY_TOMATO },
+    { amount: 14, ingredient: MOOMOO_MILK }
+  ],
+  bonus: 35
+});
+
 export const DESSERTS: Recipe[] = [
   WARM_MOOMOO_MILK,
   FANCY_APPLE_JUICE,
@@ -314,7 +326,8 @@ export const DESSERTS: Recipe[] = [
   FLOWER_GIFT_MACARONS,
   ZING_ZAP_SPICED_COLA,
   CLODSIRE_ECLAIR,
-  SCARY_FACE_PANCAKES
+  SCARY_FACE_PANCAKES,
+  LEAF_TORNADO_SMOOTHIE
 ];
 
 export const MIXED_JUICE_FLAT: RecipeFlat = recipesToFlat(MIXED_JUICE);

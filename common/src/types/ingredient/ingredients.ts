@@ -93,6 +93,12 @@ export const ROUSING_COFFEE: Ingredient = createIngredient({
   longName: 'Rousing Coffee'
 });
 
+export const GLOSSY_AVOCADO: Ingredient = createIngredient({
+  name: 'Avocado',
+  value: 162,
+  longName: 'Glossy Avocado'
+});
+
 export const TASTY_MUSHROOM: Ingredient = createIngredient({
   name: 'Mushroom',
   value: 167,
@@ -132,6 +138,7 @@ export const INGREDIENTS: Ingredient[] = [
   GREENGRASS_CORN,
   SOOTHING_CACAO,
   ROUSING_COFFEE,
+  GLOSSY_AVOCADO,
   TASTY_MUSHROOM,
   LARGE_LEEK,
   PLUMP_PUMPKIN,

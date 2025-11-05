@@ -4,6 +4,7 @@ import {
   FANCY_APPLE,
   FANCY_EGG,
   FIERY_HERB,
+  GLOSSY_AVOCADO,
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
@@ -270,6 +271,29 @@ export const DEFIANT_COFFEE_DRESSED_SALAD = createSalad({
   bonus: 61
 });
 
+export const LUSCIOUS_AVOCADO_SALAD = createSalad({
+  name: 'LUSCIOUS_AVOCADO_SALAD',
+  displayName: 'Luscious Avocado Salad',
+  ingredients: [
+    { amount: 14, ingredient: GLOSSY_AVOCADO },
+    { amount: 18, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 10, ingredient: PURE_OIL }
+  ],
+  bonus: 35
+});
+
+export const BULLDOZE_GUACAMOLE_AND_CHIPS = createSalad({
+  name: 'BULLDOZE_GUACAMOLE_AND_CHIPS',
+  displayName: '"Bulldoze" Guacamole and Chips',
+  ingredients: [
+    { amount: 28, ingredient: GLOSSY_AVOCADO },
+    { amount: 25, ingredient: GREENGRASS_CORN },
+    { amount: 30, ingredient: FIERY_HERB },
+    { amount: 22, ingredient: GREENGRASS_SOYBEANS }
+  ],
+  bonus: 78
+});
+
 export const SALADS: Recipe[] = [
   FANCY_APPLE_SALAD,
   BEAN_HAM_SALAD,
@@ -293,7 +317,9 @@ export const SALADS: Recipe[] = [
   NINJA_SALAD,
   PETAL_BLIZZARD_LAYERED_SALAD,
   APPLE_ACID_YOGURT_DRESSED_SALAD,
-  DEFIANT_COFFEE_DRESSED_SALAD
+  DEFIANT_COFFEE_DRESSED_SALAD,
+  LUSCIOUS_AVOCADO_SALAD,
+  BULLDOZE_GUACAMOLE_AND_CHIPS
 ];
 
 export const MIXED_SALAD_FLAT: RecipeFlat = recipesToFlat(MIXED_SALAD);
