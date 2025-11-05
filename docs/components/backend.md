@@ -25,24 +25,23 @@ If you need to recreate the database at some point you can bring it down with `d
 
 You can inspect the database with mysql shell: `docker exec -it backend-db-1 mysql -padmin`
 
-If you also want to use the frontend website's login functionality you'll need to set up some additional variables in both .env files (frontend and backend)—please refer to our [frontend documentation](./frontend.md) for how to set up that .env.
-
-For the backend we currently support Google, Discord and Patreon. They all require a client id and client secret. Pick any one (or multiple) you would like.
+## Authentication
+For the backend we currently support Google, Discord, and Patreon. They each require a client ID and client secret, as well as a redirect URI to be set up with the provider. You can configure any you would like available locally, but these are not required.
 
 - GOOGLE_CLIENT_ID='\<your google client id\>'
-- GOOGLE_CLIENT_SECRET='\<your google client id\>'
+- GOOGLE_CLIENT_SECRET='\<your google client secret\>'
 - DISCORD_CLIENT_ID='\<your discord client id\>'
-- DISCORD_CLIENT_SECRET='\<your discord client id\>'
+- DISCORD_CLIENT_SECRET='\<your discord client secret\>'
 - PATREON_CLIENT_ID='\<your patreon client id\>'
-- PATREON_CLIENT_SECRET='\<your patreon client id\>'
+- PATREON_CLIENT_SECRET='\<your patreon client secret\>'
 
-I won't provide the values for these as they are personal, but you can generate a pair at the related provider.
+We won't provide the values for these as they are personal, but you can generate them and configure the redirect URI at the related providers. Please follow these documentation links for instructions. The rest is managed by us already:
 
-Please follow any of these documentations, for any of these you only need to follow the instruction to get a client id, client secret and configure redirect uri. The rest is managed by us already:
+- [Google documentation](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid): with redirect URI `http://localhost:8001/google`
+- [Discord documentation](https://discord.com/developers/docs/topics/oauth2): with redirect URI `http://localhost:8001/discord`
+- [Patreon documentation](https://docs.patreon.com/#clients-and-api-keys): with redirect URI `http://localhost:8001/patreon`
 
-- [Google documentation](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid): with redirect uri `http://localhost:8001/google`
-- [Discord documentation](https://discord.com/developers/docs/topics/oauth2): with redirect uri `http://localhost:8001/discord`
-- [Patreon documentation](https://docs.patreon.com/#clients-and-api-keys): with redirect uri `http://localhost:8001/patreon`
+If you also want to use the frontend website's login functionality you'll need to set up some additional variables in both .env files (frontend and backend)—please refer to our [frontend documentation](./frontend.md) for how to set up that .env.
 
 ## Running backend in development mode
 
