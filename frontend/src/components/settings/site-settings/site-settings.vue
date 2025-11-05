@@ -12,7 +12,12 @@
 
     <SettingsCard title="Pokémon Name Generation" icon="mdi-dice-multiple">
       <p class="mb-2">Control how Pokémon names are generated when they are first acquired.</p>
-      <v-switch v-model="useRandomPokemonNames" label="Use Random Pokémon Names" color="primary" inset></v-switch>
+      <v-switch
+        v-model="useRandomPokemonNames"
+        label="Use Random Pokémon Names"
+        color="primary"
+        hide-details="auto"
+      ></v-switch>
       <p class="fine-print">
         If enabled, newly acquired Pokémon will be given a random nickname. If disabled, they will use their default
         species name.
@@ -38,7 +43,7 @@ import { useVersionStore } from '@/stores/version-store/version-store'
 import { computed } from 'vue'
 import SettingsCard from '../settings-card.vue'
 
-import { success, error } from '@/components/snackbar/snackbar.vue'
+import { error, success } from '@/components/snackbar/snackbar.vue'
 const versionStore = useVersionStore()
 const userStore = useUserStore()
 

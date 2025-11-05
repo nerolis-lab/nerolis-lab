@@ -1,5 +1,5 @@
 import type { IslandShortName } from '../../types';
-import { GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
+import { BASE_TO_EXPERT_MAP, GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
 
 export const DEFAULT_ISLAND = { ...GREENGRASS, areaBonus: 0 };
 
@@ -28,4 +28,17 @@ export function getIsland(nameOrBerries: IslandShortName | Berry[]): Island {
   }
 
   return GREENGRASS;
+}
+
+export function getExpertIslandName(baseIslandName: IslandShortName): IslandShortName | null {
+  return BASE_TO_EXPERT_MAP[baseIslandName] ?? null;
+}
+
+export function getBaseIslandName(expertIslandName: IslandShortName): IslandShortName {
+  for (const [baseName, expertName] of Object.entries(BASE_TO_EXPERT_MAP)) {
+    if (expertName === expertIslandName) {
+      return baseName as IslandShortName;
+    }
+  }
+  throw new Error(`No base version found for expert island: ${expertIslandName}`);
 }

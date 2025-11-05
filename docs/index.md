@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: ./getting-started/contributing
+      link: /getting-started/contributing
     - theme: alt
       text: API Documentation
       link: https://api.sleepapi.net/docs
@@ -23,12 +23,11 @@ features:
   - icon: 💻
     title: Development Setup
     details: Complete guides for setting up your local development environment, running components, and understanding our build processes.
-  - icon: 🤝
-    title: Guidelines & Contributing
-    details: Code conventions, commit standards, testing practices, and contribution workflows to maintain code quality and consistency.
+    link: /getting-started/contributing
   - icon: 🏗️
     title: Architecture & Components
     details: Learn about our monorepo structure, backend API, frontend application, shared common library, and this documentation implementation.
+    link: /components
 ---
 
 ## What is Neroli's Lab?
