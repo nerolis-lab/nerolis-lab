@@ -10,13 +10,14 @@ import {
   type Ingredient
 } from 'sleepapi-common';
 
-// TODO: this skill doesn't actually exist, but it will likely work similar to this
 export class IngredientDrawSEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = IngredientDrawS;
     const nrOfIngredients = skillState.skillAmount(skill.activations.ingredients);
 
-    const rolledIngredient: Ingredient = skillState.rng.randomElement(skill.ingredientDrawIngredients);
+    const rolledIngredient: Ingredient = skillState.rng.randomElement(
+      skillState.memberState.member.pokemonWithIngredients.pokemon.ingredient60.map((ingSet) => ingSet.ingredient)
+    );
 
     const ingredientDrawIngredients = emptyIngredientInventoryFloat();
     ingredientDrawIngredients[ING_ID_LOOKUP[rolledIngredient.name]] = nrOfIngredients;

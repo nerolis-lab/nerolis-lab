@@ -30,6 +30,7 @@ import {
   FANCY_APPLE,
   FANCY_EGG,
   FIERY_HERB,
+  GLOSSY_AVOCADO,
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
@@ -632,6 +633,43 @@ export const AGGRON: Pokemon = evolvedPokemon(LAIRON, {
   carrySize: 18
 });
 
+export const TRAPINCH: Pokemon = createIngredientSpecialist({
+  name: 'TRAPINCH',
+  pokedexNumber: 328,
+  frequency: toSeconds(1, 23, 20),
+  ingredientPercentage: 15.2,
+  skillPercentage: 3.1,
+  berry: FIGY,
+  genders: BALANCED_GENDER,
+  carrySize: 8,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredients: {
+    a: GLOSSY_AVOCADO,
+    b: FIERY_HERB,
+    c: GREENGRASS_SOYBEANS
+  },
+  skill: ChargeEnergyS
+});
+
+export const VIBRAVA: Pokemon = evolvedPokemon(TRAPINCH, {
+  name: 'VIBRAVA',
+  pokedexNumber: 329,
+  frequency: toSeconds(1, 1, 40),
+  ingredientPercentage: 15.5,
+  skillPercentage: 3.4,
+  carrySize: 12
+});
+
+export const FLYGON: Pokemon = evolvedPokemon(VIBRAVA, {
+  name: 'FLYGON',
+  pokedexNumber: 330,
+  frequency: toSeconds(0, 45, 0),
+  ingredientPercentage: 17.2,
+  skillPercentage: 3.9,
+  carrySize: 17
+});
+
 export const ABSOL: Pokemon = createIngredientSpecialist({
   name: 'ABSOL',
   pokedexNumber: 359,
@@ -1086,6 +1124,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   TYRANITAR,
   MAWILE,
   AGGRON,
+  FLYGON,
   ABSOL,
   LUXRAY,
   TOXICROAK,
@@ -1129,6 +1168,8 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   LARVITAR,
   ARON,
   LAIRON,
+  TRAPINCH,
+  VIBRAVA,
   SHINX,
   LUXIO,
   MIME_JR,

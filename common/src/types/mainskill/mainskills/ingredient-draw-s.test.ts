@@ -5,7 +5,7 @@ describe('IngredientDrawS', () => {
   it('should have correct basic properties', () => {
     expect(IngredientDrawS.name).toBe('Ingredient Draw S');
     expect(IngredientDrawS.description({ skillLevel: 1 })).toBe(
-      'Gets 6 of one type of ingredient chosen randomly from a specific selection of ingredients.'
+      'Gets 5 of one type of ingredient chosen randomly from a specific selection of ingredients.'
     );
     expect(IngredientDrawS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4846, 5843]);
     expect(IngredientDrawS.maxLevel).toBe(7);
@@ -21,8 +21,8 @@ describe('IngredientDrawS', () => {
     const level1Amount = IngredientDrawS.activations.ingredients.amount({ skillLevel: 1 });
     const level6Amount = IngredientDrawS.activations.ingredients.amount({ skillLevel: 6 });
 
-    expect(level1Amount).toBe(6);
-    expect(level6Amount).toBe(21);
+    expect(level1Amount).toBe(5);
+    expect(level6Amount).toBe(16);
   });
 
   it('should have ingredients unit only', () => {
