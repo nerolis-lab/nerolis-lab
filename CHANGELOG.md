@@ -1,3 +1,10 @@
+# [2.31.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.30.0...v2.31.0) (2025-11-06)
+
+
+### Features
+
+* tierlist including pumpkin and avocado ([819812c](https://github.com/nerolis-lab/nerolis-lab/commit/819812c7c88f78cd2e13bd334bd881223571cbe1))
+
 # [2.30.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.29.0...v2.30.0) (2025-11-06)
 
 
