@@ -20850,7 +20850,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHELGON unexpectedly 1`] = `
       },
     },
   ],
-  "ingredientPercentage": 20.4,
+  "ingredientPercentage": 20.6,
   "name": "SHELGON",
   "pokedexNumber": 329,
   "previousEvolutions": 1,
