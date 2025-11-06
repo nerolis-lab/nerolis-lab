@@ -1,5 +1,38 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`getPokemonNames > shall return all amber pokemon 1`] = `
+[
+  "BUTTERFREE",
+  "ARBOK",
+  "ALTARIA",
+  "SALAMENCE",
+  "CATERPIE",
+  "METAPOD",
+  "EKANS",
+  "BAGON",
+  "SHELGON",
+  "PINSIR",
+  "DRAGONITE",
+  "TOXICROAK",
+  "VIKAVOLT",
+  "CLODSIRE",
+  "DRATINI",
+  "DRAGONAIR",
+  "WOOPER_PALDEAN",
+  "CROAGUNK",
+  "GRUBBIN",
+  "CHARJABUG",
+  "HERACROSS",
+  "SWALOT",
+  "CRUSTLE",
+  "TOXTRICITY_AMPED",
+  "TOXTRICITY_LOW_KEY",
+  "GULPIN",
+  "DWEBBLE",
+  "TOXEL",
+]
+`;
+
 exports[`getPokemonNames > shall return all cyan pokemon 1`] = `
 [
   "CLEFABLE",

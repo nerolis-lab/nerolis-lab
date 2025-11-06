@@ -1,5 +1,5 @@
 import { getBerriesForFilter, getBerriesForIsland } from '@src/utils/berry-utils/berry-utils.js';
-import { berry, CYAN, LAPIS, POWER_PLANT, SNOWDROP, TAUPE } from 'sleepapi-common';
+import { AMBER, berry, CYAN, LAPIS, POWER_PLANT, SNOWDROP, TAUPE } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('getBerriesForFilter', () => {
@@ -9,7 +9,8 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual(berry.BERRIES);
   });
@@ -20,7 +21,8 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual(CYAN.berries);
   });
@@ -31,7 +33,8 @@ describe('getBerriesForFilter', () => {
       taupe: true,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual(TAUPE.berries);
   });
@@ -42,7 +45,8 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: true,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual(SNOWDROP.berries);
   });
@@ -53,7 +57,8 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: true,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual(LAPIS.berries);
   });
@@ -64,7 +69,8 @@ describe('getBerriesForFilter', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: true
+      powerplant: true,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual(POWER_PLANT.berries);
   });
@@ -75,9 +81,22 @@ describe('getBerriesForFilter', () => {
       taupe: true,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getBerriesForFilter(islands)).toEqual([...CYAN.berries, ...TAUPE.berries]);
+  });
+
+  it('shall return amber berries for amber filter', () => {
+    const islands = {
+      cyan: false,
+      taupe: false,
+      snowdrop: false,
+      lapis: false,
+      powerplant: false,
+      amber: true
+    };
+    expect(getBerriesForFilter(islands)).toEqual(AMBER.berries);
   });
 });
 
@@ -104,5 +123,9 @@ describe('getBerriesForIsland', () => {
 
   it('shall return power plant berries for power plant filter', () => {
     expect(getBerriesForIsland(POWER_PLANT)).toEqual(POWER_PLANT.berries);
+  });
+
+  it('shall return amber berries for amber filter', () => {
+    expect(getBerriesForIsland(AMBER)).toEqual(AMBER.berries);
   });
 });

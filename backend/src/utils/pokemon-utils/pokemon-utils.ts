@@ -7,6 +7,7 @@ export function getPokemonNames(islands: {
   snowdrop: boolean;
   lapis: boolean;
   powerplant: boolean;
+  amber: boolean;
 }) {
   const allowedBerries = getBerriesForFilter(islands);
   return COMPLETE_POKEDEX.filter((pokemon) => allowedBerries.includes(pokemon.berry)).map((pokemon) => pokemon.name);

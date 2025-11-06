@@ -9,6 +9,7 @@ export interface GetPokemonQueryParams {
   snowdrop?: boolean;
   lapis?: boolean;
   powerplant?: boolean;
+  amber?: boolean;
 }
 
 export interface MealsForPokemonRequestQueryParams {
