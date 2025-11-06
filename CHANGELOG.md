@@ -1,3 +1,23 @@
+# [2.30.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.29.0...v2.30.0) (2025-11-06)
+
+
+### Bug Fixes
+
+* **Minun:** egg count at 60: 4->3 ([1763541](https://github.com/nerolis-lab/nerolis-lab/commit/176354186b37b7c038da28d400850d83c48b299e))
+* recipe page slider uses max recipe size as max ([d22fcf6](https://github.com/nerolis-lab/nerolis-lab/commit/d22fcf67e0e76048ae39f31b6d497463c4ac392b))
+* spill ingredients during day if help is huge ([e605caf](https://github.com/nerolis-lab/nerolis-lab/commit/e605caf5878649cd0156cd5663dc663c65cdf4e0))
+* **typos:** dont->don't, missleading->misleading ([c3661ef](https://github.com/nerolis-lab/nerolis-lab/commit/c3661efb945517f7df1bf92784a3a2cdc69515e9))
+
+
+### Features
+
+* add avocado and recipes ([9db60a7](https://github.com/nerolis-lab/nerolis-lab/commit/9db60a7c95bb593c63d7515627f79daf72c943f0))
+* add bagon/trapinch/dwebble lines assets ([8fb8532](https://github.com/nerolis-lab/nerolis-lab/commit/8fb8532c70cc209212bc35bb43731b13ca58a051))
+* **amber:** add new mons ([18bb479](https://github.com/nerolis-lab/nerolis-lab/commit/18bb47945b9da0a510c56d3e0c78bb50b953b159))
+* bump max area bonus to 85 ([e9f2a0b](https://github.com/nerolis-lab/nerolis-lab/commit/e9f2a0be141dfbc161dedbd6ec95f2d69106de07))
+* **l10n:** extract Pokemon display names ([cd87063](https://github.com/nerolis-lab/nerolis-lab/commit/cd87063edf993ded8ec6cb580245d20f42d6374f))
+* **pokedex:** add references to evolution line ([cba32cd](https://github.com/nerolis-lab/nerolis-lab/commit/cba32cd360f435c1ae7f27931dc94e532c2fd5d4))
+
 # [2.29.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.28.1...v2.29.0) (2025-11-03)
 
 
