@@ -14,7 +14,7 @@ export const MAX_STOCKPILED_BERRIES = 999;
 
 // cooking
 export const MIN_POT_SIZE = 15;
-export const MAX_POT_SIZE = 69;
+export const MAX_POT_SIZE = 81;
 export const MEALS_IN_DAY = 3;
 export const WEEKDAY_CRIT_CHANCE = 0.1;
 export const WEEKDAY_CRIT_MULTIPLIER = 2;

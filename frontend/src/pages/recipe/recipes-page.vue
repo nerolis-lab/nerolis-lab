@@ -55,7 +55,7 @@
           <v-col class="pa-0">
             <v-range-slider
               v-model="potSizeRange"
-              :max="Math.ceil(MAX_POT_SIZE * 1.5)"
+              :max="maxIngredients"
               :min="7"
               :step="3"
               thumb-label
