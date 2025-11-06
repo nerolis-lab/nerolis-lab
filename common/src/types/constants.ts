@@ -23,7 +23,7 @@ export const SUNDAY_CRIT_MULTIPLIER = 3;
 export const AVERAGE_WEEKLY_CRIT_MULTIPLIER = 1.171428571;
 
 // island
-export const MAX_ISLAND_BONUS = 75;
+export const MAX_ISLAND_BONUS = 85;
 
 // misc
 export const MAX_TEAM_SIZE = 5;
