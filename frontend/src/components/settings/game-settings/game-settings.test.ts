@@ -72,7 +72,7 @@ describe('GameSettings', () => {
 
     numberInputs.forEach((input) => {
       expect(input.props('min')).toBe(0)
-      expect(input.props('max')).toBe(75)
+      expect(input.props('max')).toBe(MAX_ISLAND_BONUS)
     })
   })
 
