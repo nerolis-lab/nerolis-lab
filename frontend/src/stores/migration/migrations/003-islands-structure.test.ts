@@ -1,6 +1,6 @@
 import { useUserStore } from '@/stores/user-store'
 import { createPinia, setActivePinia } from 'pinia'
-import { EXPERT_ISLANDS, ISLANDS } from 'sleepapi-common'
+import { CYAN, GREENGRASS, GREENGRASS_EXPERT, LAPIS, POWER_PLANT, SNOWDROP, TAUPE } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 import migration, { type UserStateV2 } from './003-islands-structure'
 
@@ -27,7 +27,7 @@ describe('003-islands-structure migration', () => {
     migration.up({ user: userStore })
 
     // Check that islands structure is created correctly
-    const allIslands = [...ISLANDS, ...EXPERT_ISLANDS]
+    const allIslands = [GREENGRASS, CYAN, TAUPE, SNOWDROP, LAPIS, POWER_PLANT, GREENGRASS_EXPERT]
     expect(userStore.islands).toBeDefined()
 
     // Check each island has the correct structure and area bonus

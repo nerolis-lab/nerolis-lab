@@ -1,12 +1,14 @@
-import { CYAN, GREENGRASS, LAPIS, POWER_PLANT, SNOWDROP, TAUPE } from '.';
+import { AMBER, CYAN, GREENGRASS, LAPIS, POWER_PLANT, SNOWDROP, TAUPE } from '.';
 import {
   BELUE,
   BLUK,
   CHERI,
+  CHESTO,
   DURIN,
   FIGY,
   GREPA,
   LEPPA,
+  LUM,
   MAGO,
   ORAN,
   PAMTRE,
@@ -14,7 +16,8 @@ import {
   PERSIM,
   RAWST,
   SITRUS,
-  WIKI
+  WIKI,
+  YACHE
 } from '../../berry/berries';
 import { ISLANDS } from './islands';
 
@@ -44,13 +47,19 @@ describe('ISLANDS', () => {
     expect(POWER_PLANT.berries).toEqual([BELUE, BLUK, GREPA]);
   });
 
+  it('AMBER island shall have the correct properties', () => {
+    expect(AMBER.name).toBe('Amber Canyon');
+    expect(AMBER.berries).toEqual([CHESTO, LUM, YACHE]);
+  });
+
   it('ISLANDS array shall contain all islands', () => {
-    expect(ISLANDS).toHaveLength(6);
+    expect(ISLANDS).toHaveLength(7);
     expect(ISLANDS).toContain(GREENGRASS);
     expect(ISLANDS).toContain(CYAN);
     expect(ISLANDS).toContain(TAUPE);
     expect(ISLANDS).toContain(SNOWDROP);
     expect(ISLANDS).toContain(LAPIS);
     expect(ISLANDS).toContain(POWER_PLANT);
+    expect(ISLANDS).toContain(AMBER);
   });
 });
