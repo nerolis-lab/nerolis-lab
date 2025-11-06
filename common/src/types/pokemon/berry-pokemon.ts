@@ -850,8 +850,8 @@ export const SHELGON: Pokemon = evolvedPokemon(BAGON, {
   name: 'SHELGON',
   pokedexNumber: 329,
   frequency: toSeconds(1, 3, 20),
-  ingredientPercentage: 20.4, // unsettled
-  skillPercentage: 2.7, // unsettled
+  ingredientPercentage: 20.6,
+  skillPercentage: 2.7,
   carrySize: 14
 });
 
