@@ -48,6 +48,7 @@ import {
   ChargeStrengthM,
   ChargeStrengthS,
   ChargeStrengthSRange,
+  CookingPowerUpS,
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
@@ -826,6 +827,43 @@ export const WALREIN: Pokemon = evolvedPokemon(SEALEO, {
   carrySize: 18
 });
 
+export const BAGON: Pokemon = createBerrySpecialist({
+  name: 'BAGON',
+  pokedexNumber: 328,
+  frequency: toSeconds(1, 28, 20),
+  ingredientPercentage: 20.9,
+  skillPercentage: 2.7,
+  berry: YACHE,
+  genders: BALANCED_GENDER,
+  carrySize: 9,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredients: {
+    a: SOFT_POTATO,
+    b: WARMING_GINGER,
+    c: BEAN_SAUSAGE
+  },
+  skill: CookingPowerUpS
+});
+
+export const SHELGON: Pokemon = evolvedPokemon(BAGON, {
+  name: 'SHELGON',
+  pokedexNumber: 329,
+  frequency: toSeconds(1, 3, 20),
+  ingredientPercentage: 20.4, // unsettled
+  skillPercentage: 2.7, // unsettled
+  carrySize: 14
+});
+
+export const SALAMENCE: Pokemon = evolvedPokemon(SHELGON, {
+  name: 'SALAMENCE',
+  pokedexNumber: 330,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 21.7,
+  skillPercentage: 3.4,
+  carrySize: 22
+});
+
 export const WEAVILE: Pokemon = evolvedPokemon(SNEASEL, {
   name: 'WEAVILE',
   pokedexNumber: 461,
@@ -889,6 +927,7 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   ALTARIA,
   BANETTE,
   WALREIN,
+  SALAMENCE,
   WEAVILE,
   MUSHARNA
 ];
@@ -926,6 +965,8 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   SHUPPET,
   SPHEAL,
   SEALEO,
+  BAGON,
+  SHELGON,
   MUNNA
 ];
 

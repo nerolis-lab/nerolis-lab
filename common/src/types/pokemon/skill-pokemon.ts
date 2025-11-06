@@ -36,6 +36,7 @@ import {
   FANCY_APPLE,
   FANCY_EGG,
   FIERY_HERB,
+  GLOSSY_AVOCADO,
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
@@ -67,6 +68,7 @@ import {
   EnergyForEveryoneLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
+  IngredientDrawS,
   IngredientMagnetS,
   IngredientMagnetSPlus,
   Metronome,
@@ -882,6 +884,34 @@ export const CRESSELIA: Pokemon = createSkillSpecialist({
   skill: EnergyForEveryoneLunarBlessing
 });
 
+export const DWEBBLE: Pokemon = createSkillSpecialist({
+  name: 'DWEBBLE',
+  pokedexNumber: 557,
+  frequency: toSeconds(1, 11, 40),
+  ingredientPercentage: 17.5,
+  skillPercentage: 5.4,
+  berry: LUM,
+  genders: BALANCED_GENDER,
+  carrySize: 8,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: GLOSSY_AVOCADO,
+    b: SOFT_POTATO,
+    c: PURE_OIL
+  },
+  skill: IngredientDrawS
+});
+
+export const CRUSTLE: Pokemon = evolvedPokemon(DWEBBLE, {
+  name: 'CRUSTLE',
+  pokedexNumber: 558,
+  frequency: toSeconds(0, 53, 20),
+  ingredientPercentage: 23.9,
+  skillPercentage: 6.4,
+  carrySize: 17
+});
+
 export const RUFFLET: Pokemon = createSkillSpecialist({
   name: 'RUFFLET',
   pokedexNumber: 627,
@@ -1070,6 +1100,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   GLACEON,
   GALLADE,
   CRESSELIA,
+  CRUSTLE,
   BRAVIARY,
   SYLVEON,
   DEDENNE,
@@ -1104,6 +1135,7 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   BONSLY,
   DRIFLOON,
   RIOLU,
+  DWEBBLE,
   RUFFLET,
   TOXEL,
   PAWMI,
