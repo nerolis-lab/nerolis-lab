@@ -1,177 +1,212 @@
-import type { Event } from '../../types/events/event-types';
-import type { Modifier } from '../../types/modifier/modifier';
-import type { ModifierTargetType } from '../../types/modifier/target-types';
+import type { MemberStrength, PokemonInstanceExt, TeamMemberExt } from '../../types';
+import type { PathValue } from '../../types/type/path-value';
+import type { PathKeys } from '../../types/type/type-paths';
 
-/**
- * Function that creates a modifier with access to input
- */
-type ModifierFactory<TInput> = (input: TInput) => Modifier<ModifierTargetType>;
-
-class EventBuilderImpl<TInput> {
-  private event: Partial<Event> = {
-    modifiers: []
-  };
-  public modifierFactories: ModifierFactory<TInput>[] = [];
-
-  /**
-   * Sets the name of the event
-   */
-  name(name: string): this {
-    this.event.name = name;
-    return this;
-  }
-
-  /**
-   * Sets the description of the event
-   */
-  description(description: string): this {
-    this.event.description = description;
-    return this;
-  }
-
-  /**
-   * Sets the start date of the event
-   */
-  startDate(date: Date): this {
-    this.event.startDate = date;
-    return this;
-  }
-
-  /**
-   * Sets the end date of the event
-   */
-  endDate(date: Date): this {
-    this.event.endDate = date;
-    return this;
-  }
-
-  /**
-   * Adds a modifier to the event
-   * For static events (TInput = void), only accepts Modifier objects
-   * For parameterized events, accepts both Modifier objects and ModifierFactory functions
-   */
-  addModifier(
-    modifier: TInput extends void
-      ? Modifier<ModifierTargetType>
-      : Modifier<ModifierTargetType> | ModifierFactory<TInput>
-  ): this {
-    if (typeof modifier === 'function') {
-      this.modifierFactories.push(modifier as ModifierFactory<TInput>);
-    } else {
-      if (!this.event.modifiers) {
-        this.event.modifiers = [];
-      }
-      this.event.modifiers.push(modifier);
-    }
-    return this;
-  }
-
-  /**
-   * Builds the event (static events - no input required)
-   * If the builder has modifier factories, returns a function (input: TInput) => Event
-   * If the builder has no modifier factories, returns Event directly
-   */
-  build(): TInput extends void ? Event : (input: TInput) => Event;
-
-  /**
-   * Builds the event with input for modifier factories (parameterized events)
-   */
-  build(input: TInput): Event;
-
-  /**
-   * Implementation of build method
-   */
-  build(input?: TInput): Event | ((input: TInput) => Event) {
-    if (!this.event.name) {
-      throw new Error('Event name is required');
-    }
-
-    if (!this.event.description) {
-      throw new Error('Event description is required');
-    }
-
-    // If we have modifier factories but no input, return a function
-    if (this.modifierFactories.length > 0 && input === undefined) {
-      return (factoryInput: TInput) => {
-        const dynamicModifiers = this.modifierFactories.map((factory) => factory(factoryInput));
-        return {
-          name: this.event.name!,
-          description: this.event.description!,
-          modifiers: [...(this.event.modifiers || []), ...dynamicModifiers],
-          startDate: this.event.startDate,
-          endDate: this.event.endDate
-        };
-      };
-    }
-
-    // Build dynamic modifiers from factories if we have them and input
-    const dynamicModifiers =
-      this.modifierFactories.length > 0 && input !== undefined
-        ? this.modifierFactories.map((factory) => factory(input))
-        : [];
-
-    return {
-      name: this.event.name,
-      description: this.event.description,
-      modifiers: [...(this.event.modifiers || []), ...dynamicModifiers],
-      startDate: this.event.startDate,
-      endDate: this.event.endDate
-    };
-  }
+export interface FunctionalEvent {
+  name: string;
+  description: string;
+  applyToPokemon: (target: PokemonInstanceExt) => PokemonInstanceExt;
+  applyToTeam: (target: TeamMemberExt) => TeamMemberExt;
+  applyToStrength: (target: MemberStrength) => MemberStrength;
 }
 
 /**
- * Creates an EventBuilder for building static events (no input parameters)
- *
- * // Static event
- * EventBuilder()
- *   .name('test')
- *   .description('test')
- *   .build()
+ * Modifier function that transforms a value
  */
-export function EventBuilder(): EventBuilderImpl<void>;
+type ModifierFn<T, P extends PathKeys<T>> = (currentValue: PathValue<T, P>, target: T) => PathValue<T, P>;
 
 /**
- * Creates an EventBuilder for building parameterized events with typed input
- *
- * @example
- * // Parameterized event
- * const myEventBuilder = EventBuilder<MyInput>()
- *   .name('test')
- *   .description('test')
- *   .addModifier(input => ({
- *     type: 'Pokemon',
- *     path: 'frequency',
- *     operation: '*',
- *     value: input.multiplier
- *   }));
- *
- * // Use: myEventBuilder.build({ multiplier: 0.9 })
+ * Path as the key and either a function or a direct value as the value
  */
-export function EventBuilder<TInput>(): EventBuilderImpl<TInput>;
+type ModifierMap<T> = {
+  [P in PathKeys<T>]?: ModifierFn<T, P> | PathValue<T, P>;
+};
 
-/**
- * Implementation of EventBuilder factory
- * @example
- * // Static event
- * EventBuilder()
- *   .name('test')
- *   .description('test')
- *   .build()
- *
- * // Parameterized event
- * const myEventBuilder = EventBuilder<MyInput>()
- *   .name('test')
- *   .description('test')
- *   .addModifier(input => ({
- *     type: 'Pokemon',
- *     path: 'frequency',
- *     operation: '*',
- *     value: input.multiplier
- *   }));
- *
- * // Use: myEventBuilder.build({ multiplier: 0.9 })
- */
-export function EventBuilder<TInput = void>(): EventBuilderImpl<TInput> {
-  return new EventBuilderImpl<TInput>();
+export class EventBuilder<TInput = void> {
+  private eventName?: string;
+  private eventDescription?: string;
+
+  private pokemonModifiers: Array<(input: TInput, target: PokemonInstanceExt) => Record<string, unknown>> = [];
+  private teamModifiers: Array<(input: TInput, target: TeamMemberExt) => Record<string, unknown>> = [];
+  private strengthModifiers: Array<(input: TInput, target: MemberStrength) => Record<string, unknown>> = [];
+
+  /**
+   * Create a new EventBuilder instance
+   *
+   * @example
+   * const event = EventBuilder.create<MyInput>()
+   *   .name('My Event')
+   *   .description('Description')
+   *   .forTeam((input, member) => ({ ... }))
+   *   .build();
+   */
+  static create<TInput = void>(): EventBuilder<TInput> {
+    return new EventBuilder<TInput>();
+  }
+
+  name(name: string): this {
+    this.eventName = name;
+    return this;
+  }
+
+  description(description: string): this {
+    this.eventDescription = description;
+    return this;
+  }
+
+  /**
+   * Add Pokemon modifiers
+   *
+   * @example
+   * .forPokemon((input, pokemon) => ({
+   *   'pokemon.frequency': (freq) => freq * 0.9,
+   *   'skillLevel': (level) => level + 1
+   * }))
+   */
+  forPokemon(factory: (input: TInput, target: PokemonInstanceExt) => ModifierMap<PokemonInstanceExt>): this {
+    this.pokemonModifiers.push((input, target) => factory(input, target));
+    return this;
+  }
+
+  /**
+   * Add Team modifiers
+   *
+   * @example
+   * .forTeam((input, member) => ({
+   *   'settings.skillLevel': (level) => level + 1,
+   *   'pokemonWithIngredients.pokemon.frequency': (freq) => freq * 0.9,
+   * }))
+   */
+  forTeam(factory: (input: TInput, target: TeamMemberExt) => ModifierMap<TeamMemberExt>): this {
+    this.teamModifiers.push((input, target) => factory(input, target));
+    return this;
+  }
+
+  /**
+   * Add Strength modifiers
+   *
+   * @example
+   * .forStrength((input, strength) => ({
+   *   'berries.breakdown.favored': (value) => value * 2.4
+   * }))
+   */
+  forStrength(factory: (input: TInput, target: MemberStrength) => ModifierMap<MemberStrength>): this {
+    this.strengthModifiers.push((input, target) => factory(input, target));
+    return this;
+  }
+
+  /**
+   * Compile the event
+   */
+  build(): TInput extends void ? FunctionalEvent : (input: TInput) => FunctionalEvent {
+    if (!this.eventName) {
+      throw new Error('Event name is required');
+    }
+    if (!this.eventDescription) {
+      throw new Error('Event description is required');
+    }
+
+    // TODO: we would like to make modifiers more generic, and thus also not needing to check for modifiers here
+    const hasModifiers =
+      this.pokemonModifiers.length > 0 || this.teamModifiers.length > 0 || this.strengthModifiers.length > 0;
+
+    if (!hasModifiers) {
+      const noOpEvent: FunctionalEvent = {
+        name: this.eventName,
+        description: this.eventDescription,
+        applyToPokemon: (p: PokemonInstanceExt) => p,
+        applyToTeam: (t: TeamMemberExt) => t,
+        applyToStrength: (s: MemberStrength) => s
+      };
+      return noOpEvent as TInput extends void ? FunctionalEvent : (input: TInput) => FunctionalEvent;
+    }
+
+    const eventFactory = (input: TInput): FunctionalEvent => {
+      return {
+        name: this.eventName!,
+        description: this.eventDescription!,
+
+        applyToPokemon: (target: PokemonInstanceExt): PokemonInstanceExt => {
+          let result = target;
+          for (const factory of this.pokemonModifiers) {
+            result = this.applyModifierMap(result, factory(input, result));
+          }
+          return result;
+        },
+
+        applyToTeam: (target: TeamMemberExt): TeamMemberExt => {
+          let result = target;
+          for (const factory of this.teamModifiers) {
+            result = this.applyModifierMap(result, factory(input, result));
+          }
+          return result;
+        },
+
+        applyToStrength: (target: MemberStrength): MemberStrength => {
+          let result = target;
+          for (const factory of this.strengthModifiers) {
+            result = this.applyModifierMap(result, factory(input, result));
+          }
+          return result;
+        }
+      };
+    };
+
+    return eventFactory as TInput extends void ? FunctionalEvent : (input: TInput) => FunctionalEvent;
+  }
+
+  private applyModifierMap<T>(target: T, modifierMap: Record<string, unknown>): T {
+    let result = { ...target };
+
+    for (const [path, spec] of Object.entries(modifierMap)) {
+      if (spec === undefined) continue;
+
+      const currentValue = this.getValueAtPath(target, path);
+      if (currentValue === undefined) continue;
+
+      let newValue: unknown;
+
+      if (typeof spec === 'function') {
+        newValue = spec(currentValue, target);
+      } else {
+        newValue = spec;
+      }
+
+      result = this.setValueAtPath(result, path, newValue);
+    }
+
+    return result;
+  }
+
+  private getValueAtPath(obj: unknown, path: string): unknown {
+    const parts = path.split('.');
+    let current: unknown = obj;
+
+    for (const part of parts) {
+      if (current === null || current === undefined) {
+        return undefined;
+      }
+      const currentObj = current as Record<string, unknown>;
+      current = currentObj[part];
+    }
+
+    return current;
+  }
+
+  private setValueAtPath<T>(obj: T, path: string, value: unknown): T {
+    const parts = path.split('.');
+
+    if (parts.length === 1) {
+      return { ...obj, [parts[0]]: value };
+    }
+
+    const [firstPart, ...restPath] = parts;
+    const restPathStr = restPath.join('.');
+
+    const objAsRecord = obj as Record<string, unknown>;
+    return {
+      ...obj,
+      [firstPart]: this.setValueAtPath(objAsRecord[firstPart], restPathStr, value)
+    };
+  }
 }

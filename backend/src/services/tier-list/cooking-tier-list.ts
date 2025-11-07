@@ -31,6 +31,7 @@ import type {
 } from 'sleepapi-common';
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
+  DEFAULT_ISLAND,
   emptyIngredientInventoryFloat,
   getAllIngredientLists,
   getPokemon,
@@ -132,7 +133,8 @@ class CookingTierlistImpl {
       wakeup: this.wakeup,
       includeCooking: true,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
-      potSize: MAX_POT_SIZE
+      potSize: MAX_POT_SIZE,
+      island: { ...DEFAULT_ISLAND } // TODO: maybe we want to do x2 or x2.4 for comparing berry strength later
     };
     let counter = 0;
     console.time('Tierlist default production');
