@@ -404,5 +404,32 @@ describe('PathKeys', () => {
       expect(pathExamples).toContain('nature.modifiers.frequency');
       expect(pathExamples).toContain('subskills.*.value');
     });
+
+    it('PathKeys correctly rejects nested paths without full prefix', () => {
+      interface TestNested {
+        outer: {
+          inner: {
+            value: number;
+          };
+        };
+      }
+
+      type TestPaths = PathKeys<TestNested>;
+
+      const valid1: TestPaths = 'outer';
+      const valid2: TestPaths = 'outer.inner';
+      const valid3: TestPaths = 'outer.inner.value';
+
+      // @ts-expect-error - 'inner.value' is not a valid path
+      const invalid1: TestPaths = 'inner.value';
+      // @ts-expect-error - 'value' is not a valid path
+      const invalid2: TestPaths = 'value';
+
+      expect(valid1).toBe('outer');
+      expect(valid2).toBe('outer.inner');
+      expect(valid3).toBe('outer.inner.value');
+      expect(invalid1).toBe('inner.value');
+      expect(invalid2).toBe('value');
+    });
   });
 });
