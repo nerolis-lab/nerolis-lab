@@ -1,3 +1,10 @@
+# [2.32.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.31.0...v2.32.0) (2025-11-07)
+
+
+### Features
+
+* adds Amber Canyon ([87d6705](https://github.com/nerolis-lab/nerolis-lab/commit/87d6705f32229c69aa579430921ceb60c9a83753))
+
 # [2.31.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.30.0...v2.31.0) (2025-11-06)
 
 
