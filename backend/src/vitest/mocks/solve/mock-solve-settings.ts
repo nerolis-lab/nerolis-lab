@@ -8,6 +8,7 @@ export function solveSettings(attrs?: Partial<SolveSettings>): SolveSettings {
     wakeup: mocks.WAKEUP,
     level: 0,
     stockpiledIngredients: [mocks.mockIngredientSetSimple()],
+    island: mocks.islandInstance(),
     ...attrs
   };
 }
@@ -21,6 +22,7 @@ export function solveSettingsExt(attrs?: Partial<SolveSettingsExt>): SolveSettin
     includeCooking: false,
     stockpiledIngredients: mocks.mockIngredientSetFloatIndexed(),
     potSize: 15,
+    island: mocks.islandInstance(),
     ...attrs
   };
 }

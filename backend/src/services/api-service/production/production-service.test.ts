@@ -9,6 +9,7 @@ import type { TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BULBASAUR,
   CHARMANDER,
+  DEFAULT_ISLAND,
   emptyIngredientInventoryFloat,
   ingredient,
   MIN_POT_SIZE,
@@ -71,7 +72,8 @@ describe('calculateTeam', () => {
       camp: false,
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
-      potSize: MIN_POT_SIZE
+      potSize: MIN_POT_SIZE,
+      island: { ...DEFAULT_ISLAND }
     };
 
     const members: TeamMemberExt[] = [
@@ -136,7 +138,8 @@ describe('calculateIv', () => {
       camp: true,
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
-      potSize: MIN_POT_SIZE
+      potSize: MIN_POT_SIZE,
+      island: { ...DEFAULT_ISLAND }
     };
 
     const members: TeamMemberExt[] = [

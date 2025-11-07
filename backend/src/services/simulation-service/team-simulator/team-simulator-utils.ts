@@ -1,5 +1,8 @@
 import { calculateHelpSpeedBeforeEnergy } from '@src/services/calculator/help/help-calculator.js';
-import type { ProduceFlat, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
+import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
+import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
+import type { FunctionalEvent, ProduceFlat, TeamMemberExt, TeamSettingsExt, TimePeriod } from 'sleepapi-common';
 import {
   berrySetToFlat,
   calculateAveragePokemonIngredientSet,
@@ -9,6 +12,41 @@ import {
 } from 'sleepapi-common';
 
 class TeamSimulatorUtilsImpl {
+  public setupSimulationTimes(params: { settings: TeamSettingsExt; cookingState?: CookingState }): {
+    nightStartMinutes: number;
+    mealTimeMinutesSinceStart: number[];
+  } {
+    const { settings, cookingState } = params;
+
+    const dayPeriod: TimePeriod = {
+      start: settings.wakeup,
+      end: settings.bedtime
+    };
+
+    const nightStartMinutes = TimeUtils.timeToMinutesSinceStart(settings.bedtime, settings.wakeup);
+
+    const mealTimes = getDefaultMealTimes(dayPeriod);
+    cookingState?.setMealTimes(mealTimes.meals);
+    const mealTimeMinutesSinceStart = mealTimes.sorted.map((time) =>
+      TimeUtils.timeToMinutesSinceStart(time, dayPeriod.start)
+    );
+
+    return {
+      nightStartMinutes,
+      mealTimeMinutesSinceStart
+    };
+  }
+
+  public prepareMembers(params: { members: TeamMemberExt[]; event?: FunctionalEvent }): TeamMemberExt[] {
+    const { members, event } = params;
+
+    if (!event) {
+      return members;
+    }
+
+    return members.map((member) => event.applyToTeam(member));
+  }
+
   public calculateSkillPercentage(member: TeamMemberExt) {
     return calculateSkillPercentage(
       member.pokemonWithIngredients.pokemon.skillPercentage,

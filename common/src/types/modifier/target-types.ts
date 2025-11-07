@@ -1,8 +1,8 @@
 import type { PokemonInstanceExt } from '../instance';
-import type { MemberStrength } from '../team';
+import type { MemberStrength, TeamMemberExt } from '../team';
 
-export type ModifierTargetTypeDTO = 'PokemonInstance' | 'MemberStrength';
-export type ModifierTargetType = PokemonInstanceExt | MemberStrength;
+export type ModifierTargetTypeDTO = 'PokemonInstance' | 'MemberStrength' | 'TeamMember';
+export type ModifierTargetType = PokemonInstanceExt | MemberStrength | TeamMemberExt;
 
 /**
  * Used for mapping API strings to actual types
@@ -20,4 +20,5 @@ export type ModifierTargetType = PokemonInstanceExt | MemberStrength;
 export type TargetTypeMap = {
   PokemonInstance: PokemonInstanceExt;
   MemberStrength: MemberStrength;
+  TeamMember: TeamMemberExt;
 };

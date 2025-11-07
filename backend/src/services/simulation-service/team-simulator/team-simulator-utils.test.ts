@@ -1,7 +1,7 @@
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamMemberSettingsExt } from 'sleepapi-common';
-import { berry, commonMocks, ingredient, nature, Optimal } from 'sleepapi-common';
+import { berry, commonMocks, event as expertModeGreengrassEvent, ingredient, nature, Optimal } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculateSkillPercentage', () => {
@@ -170,6 +170,46 @@ describe('calculateAverageProduce', () => {
       expect(averageProduce60.ingredients[5]).toEqual(2.2939839363098145);
       expect(averageProduce60.berries[13]).toEqual(0.5084319710731506);
     });
+  });
+});
+
+describe('prepareMembers', () => {
+  const createMember = () =>
+    mocks.teamMemberExt({
+      pokemonWithIngredients: mocks.pokemonWithIngredients({
+        pokemon: commonMocks.mockPokemon({
+          berry: berry.ORAN,
+          frequency: 1800,
+          skillPercentage: 0.2
+        })
+      }),
+      settings: mocks.teamMemberSettingsExt({ skillLevel: 3 })
+    });
+
+  it('returns members untouched when no event present', () => {
+    const original = createMember();
+    const [prepared] = TeamSimulatorUtils.prepareMembers({ members: [original] });
+
+    expect(prepared).toBe(original);
+  });
+
+  it('applies modifiers when provided', () => {
+    const original = createMember();
+    const event = expertModeGreengrassEvent({
+      mainFavoriteBerry: berry.ORAN,
+      subFavoriteBerries: [berry.MAGO],
+      randomBonus: 'skill'
+    });
+
+    const [prepared] = TeamSimulatorUtils.prepareMembers({
+      members: [original],
+      event
+    });
+
+    expect(prepared.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620); // 1800 * 0.9
+    expect(prepared.settings.skillLevel).toBe(4);
+    expect(original.pokemonWithIngredients.pokemon.frequency).toBe(1800);
+    expect(original.settings.skillLevel).toBe(3);
   });
 });
 

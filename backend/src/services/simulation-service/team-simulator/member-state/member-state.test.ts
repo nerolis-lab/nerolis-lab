@@ -11,6 +11,7 @@ import {
   ChargeStrengthM,
   ChargeStrengthS,
   commonMocks,
+  DEFAULT_ISLAND,
   emptyIngredientInventoryFloat,
   ingredient,
   MAX_POT_SIZE,
@@ -72,7 +73,8 @@ const settings: TeamSettingsExt = {
   camp: false,
   includeCooking: true,
   stockpiledIngredients: emptyIngredientInventoryFloat(),
-  potSize: MAX_POT_SIZE
+  potSize: MAX_POT_SIZE,
+  island: { ...DEFAULT_ISLAND }
 };
 
 const cookingState: CookingState = new CookingState(settings, defaultUserRecipes(), createPreGeneratedRandom());
