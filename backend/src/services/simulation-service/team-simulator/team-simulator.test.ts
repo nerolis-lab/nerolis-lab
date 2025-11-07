@@ -8,6 +8,7 @@ import {
   EnergyForEveryone,
   PINSIR,
   RandomUtils,
+  berry,
   calculatePityProcThreshold,
   commonMocks,
   ingredient,
@@ -325,6 +326,53 @@ describe('TeamSimulator', () => {
     expect(result.members[0].produceFromSkill.berries[0].amount).toBe(84);
 
     spy.mockRestore();
+  });
+
+  it('applies expert mode event modifiers when provided in settings', () => {
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({
+      includeCooking: false,
+      island: commonMocks.islandInstance({
+        expert: true,
+        berries: [berry.ORAN, berry.MAGO],
+        expertMode: {
+          mainFavoriteBerry: berry.ORAN,
+          subFavoriteBerries: [berry.MAGO],
+          randomBonus: 'skill'
+        }
+      })
+    });
+
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: {
+        pokemon: commonMocks.mockPokemon({
+          berry: berry.ORAN,
+          frequency: 1800,
+          skillPercentage: 0.2,
+          skill: ChargeStrengthS
+        }),
+        ingredientList: [commonMocks.mockIngredientSet()]
+      },
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
+        skillLevel: 3,
+        subskills: new Set(),
+        externalId: 'event-test'
+      }
+    };
+
+    const simulator = new TeamSimulator({ settings, members: [member], iterations: 1 });
+
+    simulator.simulate();
+
+    const [result] = simulator.simpleResults();
+
+    expect(result.member.settings.skillLevel).toBe(4);
+    expect(result.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620);
+    expect(member.settings.skillLevel).toBe(3);
+    expect(member.pokemonWithIngredients.pokemon.frequency).toBe(1800);
   });
 });
 

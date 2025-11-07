@@ -1,5 +1,5 @@
 import type { Berry } from '../berry/berry';
-import type { ExpertRandomBonusType } from '../expert-mode';
+import type { ExpertModeSettings, ExpertRandomBonusType } from '../expert-mode';
 
 export type IslandShortName = 'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant' | 'GGEX' | 'amber';
 export interface Island {
@@ -11,7 +11,7 @@ export interface Island {
 
 export interface IslandInstance extends Island {
   areaBonus: number;
-  expertModifier?: ExpertRandomBonusType;
+  expertMode?: ExpertModeSettings;
 }
 
 export interface TeamAreaDTO {

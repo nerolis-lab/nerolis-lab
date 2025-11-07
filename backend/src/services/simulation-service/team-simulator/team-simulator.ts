@@ -20,19 +20,17 @@ import type {
   SkillActivation,
   TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
-import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
+import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import {
   commonMocks,
+  event as expertModeGreengrassEvent,
   type CalculateTeamResponse,
   type MemberProductionBase,
   type SimpleTeamResult,
   type TeamMemberExt,
-  type TeamSettingsExt,
-  type Time,
-  type TimePeriod
+  type TeamSettingsExt
 } from 'sleepapi-common';
 
 export class TeamSimulator {
@@ -43,9 +41,6 @@ export class TeamSimulator {
   private memberStatesWithoutFillers: MemberState[] = [];
   private cookingState?: CookingState = undefined;
 
-  private timeIntervals: Time[] = [];
-  private dayPeriod: TimePeriod;
-  private nightPeriod: TimePeriod;
   private nightStartMinutes: number;
   private mealTimeMinutesSinceStart: number[];
   private cookedMealsCounter = 0;
@@ -66,40 +61,24 @@ export class TeamSimulator {
 
     this.cookingState = cookingState;
 
-    const dayPeriod = {
-      start: settings.wakeup,
-      end: settings.bedtime
-    };
-    this.dayPeriod = dayPeriod;
-    const nightPeriod = {
-      start: settings.bedtime,
-      end: settings.wakeup
-    };
-    this.nightPeriod = nightPeriod;
+    const { nightStartMinutes, mealTimeMinutesSinceStart } = TeamSimulatorUtils.setupSimulationTimes({
+      settings,
+      cookingState: this.cookingState
+    });
+    this.nightStartMinutes = nightStartMinutes;
+    this.mealTimeMinutesSinceStart = mealTimeMinutesSinceStart;
 
-    let next5Minutes = settings.wakeup;
-    while (TimeUtils.timeWithinPeriod(next5Minutes, this.dayPeriod)) {
-      this.timeIntervals.push(next5Minutes);
-      next5Minutes = TimeUtils.addTime(next5Minutes, { hour: 0, minute: 5, second: 0 });
-    }
-    next5Minutes = settings.bedtime;
-    while (TimeUtils.timeWithinPeriod(next5Minutes, this.nightPeriod)) {
-      this.timeIntervals.push(next5Minutes);
-      next5Minutes = TimeUtils.addTime(next5Minutes, { hour: 0, minute: 5, second: 0 });
-    }
+    const expertModeSettings = settings.island?.expertMode;
+    const expertModeEvent = expertModeSettings ? expertModeGreengrassEvent(expertModeSettings) : undefined;
+    const preparedMembers = TeamSimulatorUtils.prepareMembers({
+      members,
+      event: expertModeEvent
+    });
 
-    this.nightStartMinutes = TimeUtils.timeToMinutesSinceStart(this.nightPeriod.start, this.dayPeriod.start);
-
-    const mealTimes = getDefaultMealTimes(dayPeriod);
-    this.cookingState?.setMealTimes(mealTimes.meals);
-    this.mealTimeMinutesSinceStart = mealTimes.sorted.map((time) =>
-      TimeUtils.timeToMinutesSinceStart(time, this.dayPeriod.start)
-    );
-
-    for (const member of members) {
+    for (const member of preparedMembers) {
       const memberState = new MemberState({
         member,
-        team: members,
+        team: preparedMembers,
         settings,
         cookingState: this.cookingState,
         iterations,

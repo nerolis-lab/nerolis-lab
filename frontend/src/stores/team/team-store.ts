@@ -259,7 +259,7 @@ export const useTeamStore = defineStore('team', {
           const islandDTO: TeamAreaDTO = {
             islandName: island.shortName,
             favoredBerries: island.berries.map((b) => b.name).join(','),
-            expertModifier: island.expertModifier
+            expertModifier: island.expertMode?.randomBonus
           }
 
           const { version } = await TeamService.createOrUpdateTeam(this.currentIndex, {
@@ -367,8 +367,8 @@ export const useTeamStore = defineStore('team', {
         camp: this.teams[teamIndex].camp,
         bedtime: this.teams[teamIndex].bedtime,
         wakeup: this.teams[teamIndex].wakeup,
-        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients
-        // island: this.teams[teamIndex].island // TODO: bring back when backend responds with island
+        stockpiledIngredients: this.teams[teamIndex].stockpiledIngredients,
+        island: this.teams[teamIndex].island
       }
       this.teams[teamIndex].production = await TeamService.calculateProduction({
         members,
