@@ -23,7 +23,7 @@
     "morgan": "^1.10.1"
   },
   "devDependencies": {
-    "@types/express": "^5.0.2",
+    "@types/express": "^5.0.5",
     "@types/morgan": "^1.9.10",
     "@vitest/coverage-v8": "^3.2.4",
     "concurrently": "^9.2.1",
