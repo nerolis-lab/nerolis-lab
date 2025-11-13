@@ -34,6 +34,7 @@ const CalculatorPage = () => import('@/pages/calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
 const TierlistPage = () => import('@/pages/tierlist/tierlist-page.vue')
+const DishInfographicPage = () => import('@/pages/dish-infographic/dish-infographic-page.vue')
 
 // User
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
@@ -76,6 +77,11 @@ const router = createRouter({
       path: '/recipes',
       name: RouteName.Recipes,
       component: RecipesPage
+    },
+    {
+      path: '/dish-infographic',
+      name: 'DishInfographic',
+      component: DishInfographicPage
     },
     {
       path: '/tierlist',
