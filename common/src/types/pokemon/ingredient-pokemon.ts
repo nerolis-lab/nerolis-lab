@@ -649,7 +649,7 @@ export const TRAPINCH: Pokemon = createIngredientSpecialist({
     b: FIERY_HERB,
     c: GREENGRASS_SOYBEANS
   },
-  skill: ChargeEnergyS
+  skill: ChargeStrengthS
 });
 
 export const VIBRAVA: Pokemon = evolvedPokemon(TRAPINCH, {
