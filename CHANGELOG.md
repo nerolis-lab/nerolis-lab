@@ -1,3 +1,11 @@
+## [2.32.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.32.0...v2.32.1) (2025-11-14)
+
+
+### Bug Fixes
+
+* **common:** correct Trapinch line skill ([8c4d2fa](https://github.com/nerolis-lab/nerolis-lab/commit/8c4d2fa73409b7f11cb2d4d82d7c1c66e9fd89b8))
+* **Shelgon:** use settled stats ([63b0a17](https://github.com/nerolis-lab/nerolis-lab/commit/63b0a17e2e92fc9e5d4be03c695e5896be8a0f25))
+
 # [2.32.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.31.0...v2.32.0) (2025-11-07)
 
 
