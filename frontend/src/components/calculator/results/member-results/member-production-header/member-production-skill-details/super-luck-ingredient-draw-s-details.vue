@@ -74,9 +74,8 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { IngredientDrawSSuperLuck, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -89,8 +88,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { userStore, teamStore, MathUtils, mainskillImage }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -104,13 +102,12 @@ export default defineComponent({
       }))
     },
     totalDreamShardValue() {
-      const amount = StrengthService.skillValue({
-        skillActivation: IngredientDrawSSuperLuck.activations.dreamShards,
-        amount: this.memberWithProduction.production.skillValue['dream shards'].amountToSelf,
-        timeWindow: this.teamStore.timeWindow,
-        areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-      })
-      return compactNumber(amount)
+      return compactNumber(
+        MathUtils.round(
+          this.memberWithProduction.production.skillValue['dream shards'].amountToSelf * this.timeWindowFactor,
+          0
+        )
+      )
     },
     timeWindowFactor() {
       return StrengthService.timeWindowFactor(this.teamStore.timeWindow)

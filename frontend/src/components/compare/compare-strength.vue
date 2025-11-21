@@ -202,7 +202,6 @@ import {
   getMaxIngredientBonus,
   getPokemon,
   recipeLevelBonus,
-  type MainskillUnit,
   type MemberProduction
 } from 'sleepapi-common'
 
@@ -260,23 +259,15 @@ export default defineComponent({
     },
     members() {
       const production = []
-      const island = this.comparisonStore.currentTeam ? this.comparisonStore.currentTeam.island : undefined
-      const areaBonus = this.userStore.islandBonus(island?.shortName)
       const timeWindow = this.comparisonStore.timeWindow
+      const timeWindowFactor = StrengthService.timeWindowFactor(timeWindow)
 
       for (const memberProduction of this.comparisonStore.members) {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
         if (!member) continue
         const memberPokemon = member.pokemon
 
-        const berryPower = this.showBerries
-          ? StrengthService.berryStrength({
-              island,
-              berries: memberProduction.produceWithoutSkill.berries,
-              timeWindow,
-              areaBonus
-            })
-          : 0
+        const berryPower = this.showBerries ? Math.floor(memberProduction.strength.berries.total * timeWindowFactor) : 0
 
         const ingredientPower = this.showIngredientMax
           ? this.highestIngredientPower(memberProduction)
@@ -284,32 +275,18 @@ export default defineComponent({
             ? this.lowestIngredientPower(memberProduction)
             : 0
 
-        // TODO: currently this will only work for the first activation of the skill, skills with multiple units are not yet supported
-        const skillActivation = memberPokemon.skill.getFirstActivation()
-        const skillStrength =
-          this.showSkills && skillActivation
-            ? StrengthService.skillStrength({
-                skillActivation,
-                skillValues: memberProduction.skillValue,
-                berries: memberProduction.produceFromSkill.berries,
-                island,
-                timeWindow,
-                areaBonus
-              })
-            : 0
+        const skillStrength = this.showSkills ? Math.floor(memberProduction.strength.skill.total * timeWindowFactor) : 0
 
+        const skillActivation = memberPokemon.skill.getFirstActivation()
         const skillValue =
           this.showSkills && skillActivation
-            ? StrengthService.skillValue({
-                skillActivation,
-                amount: (() => {
-                  const value = memberProduction.skillValue[skillActivation.unit as MainskillUnit]
-                  return value.amountToSelf + value.amountToTeam
-                })(),
-                timeWindow,
-                areaBonus
-              })
+            ? MathUtils.round(
+                memberProduction.strength.skill.total * timeWindowFactor -
+                  memberProduction.strength.skill.breakdown.base * timeWindowFactor,
+                1
+              )
             : 0
+
         const total = Math.floor(berryPower + ingredientPower + skillStrength)
 
         production.push({
@@ -319,8 +296,7 @@ export default defineComponent({
           berries: berryPower,
           berryCompact: compactNumber(berryPower),
           ingredients:
-            memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) *
-            StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
+            memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) * timeWindowFactor,
           ingredientPower,
           ingredientCompact: compactNumber(ingredientPower),
           skill: memberPokemon.skill,

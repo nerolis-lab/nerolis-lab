@@ -1,57 +1,7 @@
 import type { TimeWindowWeek } from '@/types/time/time-window'
-import type { Island, MainskillActivation, MemberSkillValue } from 'sleepapi-common'
-import { MathUtils, berryPowerForLevel, type BerrySet } from 'sleepapi-common'
+import { MathUtils, type MainskillActivation } from 'sleepapi-common'
 
 class StrengthServiceImpl {
-  /**
-   * @returns the combined strength of the berry skill and strength skill values
-   */
-  public skillStrength(params: {
-    skillActivation: MainskillActivation
-    skillValues: MemberSkillValue
-    berries: BerrySet[]
-    island?: Island
-    timeWindow: TimeWindowWeek
-    areaBonus: number
-  }) {
-    const { skillActivation, skillValues, timeWindow, areaBonus } = params
-
-    const strengthSkillValue = skillValues['strength'] ?? { amountToSelf: 0, amountToTeam: 0 }
-
-    const berrySkillStrength = this.berryStrength(params)
-    const skillStrength = this.skillValue({
-      skillActivation,
-      amount: strengthSkillValue.amountToSelf + strengthSkillValue.amountToTeam,
-      timeWindow,
-      areaBonus
-    })
-    return berrySkillStrength + skillStrength
-  }
-
-  public berryStrength(params: {
-    berries: BerrySet[]
-    island?: Island
-    timeWindow: TimeWindowWeek
-    areaBonus: number
-  }) {
-    const { berries, island, timeWindow, areaBonus } = params
-
-    const timeWindowFactor = this.timeWindowFactor(timeWindow)
-
-    let strength = 0
-    for (const producedBerry of berries) {
-      const favoredBerryMultiplier = island?.berries.some((berry) => berry.name === producedBerry.berry.name) ? 2 : 1
-
-      strength +=
-        producedBerry.amount *
-        timeWindowFactor *
-        berryPowerForLevel(producedBerry.berry, producedBerry.level) *
-        areaBonus *
-        favoredBerryMultiplier
-    }
-    return Math.floor(strength)
-  }
-
   public skillValue(params: {
     skillActivation: MainskillActivation
     amount: number
@@ -62,15 +12,11 @@ class StrengthServiceImpl {
 
     const isStrengthUnit = skillActivation.unit === 'strength'
     const isShardsUnit = skillActivation.unit === 'dream shards'
-
     const rounding = isStrengthUnit || isShardsUnit ? 0 : 1
 
-    return MathUtils.round(
-      isStrengthUnit
-        ? amount * areaBonus * this.timeWindowFactor(timeWindow)
-        : amount * this.timeWindowFactor(timeWindow),
-      rounding
-    )
+    const adjustedAmount = isStrengthUnit ? amount * areaBonus : amount
+
+    return MathUtils.round(adjustedAmount * this.timeWindowFactor(timeWindow), rounding)
   }
 
   public timeWindowFactor(timeWindow: TimeWindowWeek) {

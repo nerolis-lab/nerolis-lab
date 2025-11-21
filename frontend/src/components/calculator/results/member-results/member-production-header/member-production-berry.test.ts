@@ -5,16 +5,28 @@ import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { GENGAR, MathUtils, berry } from 'sleepapi-common'
+import { GENGAR, MathUtils, berry, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
+const baseProduction = mocks.createMockMemberProductionExt().production
 const mockMember = mocks.createMockMemberProductionExt({
   member: mocks.createMockPokemon({ pokemon: GENGAR }),
   production: {
-    ...mocks.createMockMemberProductionExt().production,
+    ...baseProduction,
     produceWithoutSkill: {
       berries: [{ amount: 20, berry: berry.BLUK, level: 1 }],
       ingredients: []
+    },
+    strength: {
+      ...baseProduction.strength,
+      berries: {
+        total: 250,
+        breakdown: {
+          base: 200,
+          favored: 30,
+          islandBonus: 20
+        }
+      }
     }
   }
 })
@@ -56,12 +68,9 @@ describe('MemberProductionBerry', () => {
   it('displays the correct berry strength', () => {
     const strengthSpan = wrapper.findAll('span.font-weight-medium').at(1)
     const teamStore = useTeamStore()
-    const currentBerryStrength = StrengthService.berryStrength({
-      island: teamStore.getCurrentTeam.island,
-      berries: mockMember.production.produceWithoutSkill.berries,
-      timeWindow: teamStore.timeWindow,
-      areaBonus: 1
-    })
+    const currentBerryStrength = compactNumber(
+      mockMember.production.strength.berries.total * StrengthService.timeWindowFactor(teamStore.timeWindow)
+    )
     expect(strengthSpan?.text()).toBe(`${currentBerryStrength}`)
   })
 })

@@ -71,9 +71,8 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { EnergyForEveryoneLunarBlessing, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -85,8 +84,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { teamStore, MathUtils, mainskillImage, berryImage, userStore }
+    return { teamStore, MathUtils, mainskillImage, berryImage }
   },
   computed: {
     berryName() {
@@ -96,14 +94,7 @@ export default defineComponent({
       return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
     },
     totalEnergyValue() {
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
-          amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(MathUtils.round(this.memberWithProduction.production.skillAmount * this.timeWindowFactor, 1))
     },
     skillValueSelf() {
       const amount =
@@ -112,14 +103,7 @@ export default defineComponent({
             b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
             b.level === this.memberWithProduction.member.level
         )?.amount ?? 0
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(MathUtils.round(amount * this.timeWindowFactor, 1))
     },
     skillValueTeam() {
       const amount = this.memberWithProduction.production.produceFromSkill.berries.reduce(
@@ -131,14 +115,7 @@ export default defineComponent({
             : 0),
         0
       )
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(MathUtils.round(amount * this.timeWindowFactor, 1))
     },
 
     timeWindowFactor() {

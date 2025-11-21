@@ -1,91 +1,11 @@
 import { StrengthService } from '@/services/strength/strength-service'
 import type { TimeWindowWeek } from '@/types/time/time-window'
-import { mocks } from '@/vitest'
-import {
-  berry,
-  BerryBurstDisguise,
-  berryPowerForLevel,
-  ChargeStrengthM,
-  DreamShardMagnetS,
-  EnergizingCheerS,
-  MathUtils,
-  type BerrySet,
-  type MemberSkillValue
-} from 'sleepapi-common'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { ChargeStrengthM, DreamShardMagnetS, EnergizingCheerS, MathUtils } from 'sleepapi-common'
+import { describe, expect, it } from 'vitest'
+
+const mockTimeWindow: TimeWindowWeek = 'WEEK'
 
 describe('StrengthService', () => {
-  const mockBerrySet: BerrySet[] = [
-    { berry: berry.BELUE, amount: 10, level: 5 },
-    { berry: berry.SITRUS, amount: 20, level: 3 }
-  ]
-  const favoredBerries = [berry.BELUE]
-  const mockTimeWindow: TimeWindowWeek = 'WEEK'
-
-  beforeEach(() => {})
-
-  describe('berryStrength', () => {
-    it('should calculate strength correctly with favored berry multiplier', () => {
-      const strength = StrengthService.berryStrength({
-        berries: mockBerrySet,
-        island: mocks.island({ berries: favoredBerries }),
-        timeWindow: mockTimeWindow,
-        areaBonus: 1
-      })
-
-      const berries =
-        mockBerrySet[0].amount * 2 * berryPowerForLevel(berry.BELUE, 5) +
-        mockBerrySet[1].amount * 1 * berryPowerForLevel(berry.SITRUS, 3)
-      const expected = Math.floor(berries * 7)
-
-      expect(strength).toBe(expected)
-    })
-
-    it('should calculate strength without favored berry multiplier', () => {
-      const strength = StrengthService.berryStrength({
-        berries: mockBerrySet,
-        island: mocks.island({ berries: [] }),
-        timeWindow: mockTimeWindow,
-        areaBonus: 1
-      })
-      const berries =
-        mockBerrySet[0].amount * 1 * berryPowerForLevel(berry.BELUE, 5) +
-        mockBerrySet[1].amount * 1 * berryPowerForLevel(berry.SITRUS, 3)
-      const expected = Math.floor(berries * 7)
-      expect(strength).toBe(expected)
-    })
-  })
-
-  describe('skillStrength', () => {
-    it('should return correct strength for Strength skill type', () => {
-      const skillValueSpy = vi.spyOn(StrengthService, 'skillValue')
-      StrengthService.skillStrength({
-        skillActivation: ChargeStrengthM.activations.strength,
-        skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
-        berries: mockBerrySet,
-        island: mocks.island({ berries: favoredBerries }),
-        timeWindow: mockTimeWindow,
-        areaBonus: 1
-      })
-
-      expect(skillValueSpy).toHaveBeenCalled()
-    })
-
-    it('should return correct strength for Berries skill type', () => {
-      const berryStrengthSpy = vi.spyOn(StrengthService, 'berryStrength')
-
-      StrengthService.skillStrength({
-        skillActivation: BerryBurstDisguise.activations.berries,
-        skillValues: { strength: { amountToSelf: 10, amountToTeam: 0 } } as MemberSkillValue,
-        berries: mockBerrySet,
-        island: mocks.island({ berries: favoredBerries }),
-        timeWindow: mockTimeWindow,
-        areaBonus: 1
-      })
-      expect(berryStrengthSpy).toHaveBeenCalled()
-    })
-  })
-
   describe('skillValue', () => {
     it('should calculate value for Strength skill type', () => {
       const amount = 10.7816238
