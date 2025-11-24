@@ -6,141 +6,140 @@
       </v-btn>
     </template>
 
-    <v-card>
-      <v-container>
-        <v-card-title class="card-title">
-          Island Settings
-          <v-switch v-model="expertMode" label="Expert Mode" color="primary" hide-details="auto"></v-switch>
-        </v-card-title>
+    <v-sheet class="island-select-sheet">
+      <div class="island-select-title text-h5">
+        <h3 class="text-h5">Island Settings</h3>
+        <v-switch v-model="expertMode" label="Expert Mode" color="primary" hide-details="auto"></v-switch>
+      </div>
 
-        <v-row>
-          <v-col
-            v-for="i in availableIslands"
-            :key="i.shortName"
-            :cols="12 / Math.min(3, availableIslands.length)"
-            class="flex-center flex-column text-center"
-          >
+      <section class="islands">
+        <v-btn
+          v-for="i in availableIslands"
+          :key="i.shortName"
+          class="island selection-button"
+          :active="island.shortName === i.shortName"
+          :aria-label="`Select ${i.shortName} island`"
+          color="secondary"
+          height="80"
+          width="220"
+          @click="selectIsland(i)"
+        >
+          <div class="island-text">
+            <div class="island-name">{{ filterIslandName(i.name) }}</div>
+            <small>{{ areaBonus(i) }}% area bonus</small>
+          </div>
+          <v-img height="72" width="72" :src="`/images/island/${i.shortName}.png`" :alt="`${i.shortName} icon`"></v-img>
+        </v-btn>
+      </section>
+
+      <section class="area-bonus">
+        <span>Set your area bonuses: </span>
+        <a class="btn-link" href="/settings">Settings</a>
+      </section>
+
+      <!-- Expert mode settings -->
+      <template v-if="expertMode">
+        <!-- Main favorite berry (1 berry) -->
+        <section class="main-favorite-berry favorite-berries">
+          <div>Main Favorite Berry (1)</div>
+          <v-sheet color="secondary" rounded style="overflow-y: auto">
+            <v-chip-group v-model="mainFavoriteBerry" column selected-class="bg-primary">
+              <v-chip v-for="berry in berries" :key="berry.name" :value="berry" class="ma-1">
+                <v-avatar size="24">
+                  <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
+                </v-avatar>
+              </v-chip>
+            </v-chip-group>
+          </v-sheet>
+        </section>
+        <!-- Sub-favorite berries (2 berries) -->
+        <section class="sub-favorite-berries favorite-berries">
+          <div>Sub-Favorite Berries (2)</div>
+          <v-sheet color="secondary" rounded style="overflow-y: auto">
+            <v-chip-group v-model="subFavoriteBerries" column multiple selected-class="bg-primary">
+              <v-chip
+                v-for="berry in berries"
+                :key="berry.name"
+                :value="berry"
+                :disabled="
+                  !!(mainFavoriteBerry && berry.name === mainFavoriteBerry.name) ||
+                  (subFavoriteBerries.length >= 2 && !subFavoriteBerries.find((b) => b.name === berry.name))
+                "
+                class="ma-1"
+              >
+                <v-avatar size="24">
+                  <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
+                </v-avatar>
+              </v-chip>
+            </v-chip-group>
+          </v-sheet>
+        </section>
+        <!-- Bonus selection -->
+        <section class="random-bonus">
+          <div>Expert Modifier</div>
+          <div class="expert-modifier-options">
             <v-btn
-              icon
-              size="64"
-              :aria-label="`${i.shortName}`"
-              :class="island.shortName === i.shortName ? 'selected-island' : ''"
-              @click="selectIsland(i)"
+              stacked
+              width="150"
+              height="100"
+              color="secondary"
+              class="expert-modifier-option selection-button"
+              :class="expertModifier === 'skill' ? 'selected' : ''"
+              @click="setExpertModifier('skill')"
             >
-              <v-avatar size="64">
-                <v-img :src="`/images/island/${i.shortName}.png`" :alt="`${i.shortName} icon`" />
-              </v-avatar>
+              <div class="modifier-name text-skill">Skill</div>
+              <small>1.25x main skill chance</small>
             </v-btn>
-            <span class="text-body-1 text-no-wrap mt-1">{{ areaBonus(i) }}%</span>
-          </v-col>
-        </v-row>
+            <v-btn
+              stacked
+              width="150"
+              height="100"
+              color="secondary"
+              class="expert-modifier-option selection-button"
+              :class="expertModifier === 'ingredient' ? 'selected' : ''"
+              @click="setExpertModifier('ingredient')"
+            >
+              <div class="modifier-name text-ingredient">Ingredient</div>
+              <small>+1 ingredient, sometimes +2</small>
+            </v-btn>
+            <v-btn
+              stacked
+              width="150"
+              height="100"
+              color="secondary"
+              class="expert-modifier-option selection-button"
+              :class="expertModifier === 'berry' ? 'selected' : ''"
+              @click="setExpertModifier('berry')"
+            >
+              <div class="modifier-name text-berry">Berry</div>
+              <small>2.4x favorite berry power</small>
+            </v-btn>
+          </div>
+        </section>
+      </template>
 
-        <v-row dense class="pa-2">
-          <span>Set your area bonus: </span>
-          <a class="btn-link" href="/settings">Settings</a>
-        </v-row>
+      <!-- Regular mode settings -->
+      <template v-else>
+        <section class="favorite-berries">
+          <div>Favorite Berries</div>
+          <v-sheet color="secondary" rounded style="overflow-y: auto">
+            <v-chip-group v-model="island.berries" column multiple selected-class="bg-primary">
+              <v-chip v-for="berry in berries" :key="berry.name" :value="berry" class="ma-1">
+                <v-avatar size="24">
+                  <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
+                </v-avatar>
+              </v-chip>
+            </v-chip-group>
+          </v-sheet>
+        </section>
 
-        <!-- Expert mode settings -->
-        <template v-if="expertMode">
-          <!-- Main favorite berry (1 berry) -->
-          <v-row dense>
-            <v-col cols="12">
-              <span class="text-body-2">Main Favorite Berry (1)</span>
-            </v-col>
-            <v-col cols="12">
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group v-model="mainFavoriteBerry" column selected-class="bg-primary">
-                  <v-chip v-for="berry in berries" :key="berry.name" :value="berry" class="ma-1">
-                    <v-avatar size="24">
-                      <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
-                    </v-avatar>
-                  </v-chip>
-                </v-chip-group>
-              </v-sheet>
-            </v-col>
-          </v-row>
-
-          <!-- Sub-favorite berries (2 berries) -->
-          <v-row dense>
-            <v-col cols="12">
-              <span class="text-body-2">Sub-Favorite Berries (2)</span>
-            </v-col>
-            <v-col cols="12">
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group v-model="subFavoriteBerries" column multiple selected-class="bg-primary">
-                  <v-chip
-                    v-for="berry in berries"
-                    :key="berry.name"
-                    :value="berry"
-                    :disabled="
-                      !!(mainFavoriteBerry && berry.name === mainFavoriteBerry.name) ||
-                      (subFavoriteBerries.length >= 2 && !subFavoriteBerries.find((b) => b.name === berry.name))
-                    "
-                    class="ma-1"
-                  >
-                    <v-avatar size="24">
-                      <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
-                    </v-avatar>
-                  </v-chip>
-                </v-chip-group>
-              </v-sheet>
-            </v-col>
-          </v-row>
-
-          <!-- Bonus selection -->
-          <v-row dense>
-            <v-col cols="12">
-              <span class="text-body-2">Random Bonus</span>
-            </v-col>
-            <v-col cols="12">
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group v-model="expertModifier" column mandatory selected-class="bg-primary">
-                  <v-chip value="skill" class="ma-1" @click="expertModifier = 'skill'"> Skill </v-chip>
-                  <v-chip value="ingredient" class="ma-1" @click="expertModifier = 'ingredient'"> Ingredient </v-chip>
-                  <v-chip value="berry" class="ma-1" @click="expertModifier = 'berry'"> Berry </v-chip>
-                </v-chip-group>
-              </v-sheet>
-            </v-col>
-          </v-row>
-        </template>
-
-        <!-- Regular mode settings -->
-        <template v-else>
-          <v-row dense>
-            <v-col cols="12">
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group v-model="island.berries" column multiple selected-class="bg-primary">
-                  <v-chip v-for="berry in berries" :key="berry.name" :value="berry" class="ma-1">
-                    <v-avatar size="24">
-                      <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
-                    </v-avatar>
-                  </v-chip>
-                </v-chip-group>
-              </v-sheet>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col cols="4" class="flex-left">
-              <v-btn color="surface" aria-label="clear button" @click="clear()">Clear</v-btn>
-            </v-col>
-            <v-col cols="4" class="flex-center">
-              <v-btn color="surface" aria-label="select all button" @click="selectAll()">All</v-btn>
-            </v-col>
-            <v-col cols="4" class="flex-right">
-              <v-btn color="secondary" aria-label="save button" @click="saveBerries()">Save</v-btn>
-            </v-col>
-          </v-row>
-        </template>
-
-        <!-- Save button for expert mode -->
-        <v-row v-if="expertMode">
-          <v-col cols="12" class="flex-right">
-            <v-btn color="secondary" aria-label="save button" @click="saveBerries()">Save</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-card>
+        <section class="buttons">
+          <v-btn color="surface" aria-label="clear button" @click="clear()">Clear</v-btn>
+          <v-btn color="surface" aria-label="select all button" @click="selectAll()">All</v-btn>
+          <v-btn color="secondary" aria-label="save button" @click="saveBerries()">Save</v-btn>
+        </section>
+      </template>
+    </v-sheet>
   </v-dialog>
 </template>
 
@@ -233,6 +232,11 @@ watch(expertMode, (newExpertMode) => {
 })
 
 const areaBonus = (island: IslandInstance): number => Math.round((userStore.islandBonus(island.shortName) - 1) * 100)
+
+// Filter island name to remove "(Expert Mode)" if present
+const filterIslandName = (name: string): string => {
+  return name.replace(/\s*\(Expert Mode\)\s*/gi, '').trim()
+}
 
 const saveBerries = () => {
   if (expertMode.value) {
@@ -327,6 +331,10 @@ const selectIsland = (newIsland: IslandInstance) => {
   island.value = newIsland
 }
 
+const setExpertModifier = (modifier: ExpertRandomBonusType) => {
+  expertModifier.value = modifier
+}
+
 const updateBerries = () => {
   emit('update-island', island.value)
 }
@@ -349,15 +357,136 @@ defineExpose({
 })
 </script>
 
-<style scoped>
-.card-title {
+<style lang="scss">
+.island-select-sheet {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
 
-.selected-island {
-  box-shadow: 0 0 0 3px rgb(var(--v-theme-primary));
-  transform: scale(1.1);
+  .v-btn.selection-button {
+    letter-spacing: 0.03em;
+    text-indent: 0;
+
+    &:not(.v-btn--stacked) {
+      grid-template-columns: 0 1fr 0;
+    }
+
+    &.v-btn--stacked {
+      grid-template-rows: 0 1fr 0;
+      padding: 8px 16px;
+    }
+
+    &.v-btn--active {
+      --v-activated-opacity: 0;
+      background-color: $secondary-dark !important;
+      border: 1px solid $secondary !important;
+    }
+
+    .v-btn__content {
+      height: 100%;
+      width: 100%;
+      gap: 8px;
+    }
+
+    small {
+      font-size: 14px;
+      color: rgba(#fff, 0.5);
+    }
+  }
+
+  .island-select-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  section {
+    display: flex;
+  }
+
+  .islands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+
+    .island {
+      padding: 0 4px 0 16px;
+      justify-content: stretch;
+
+      .v-btn__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .island-text {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
+          padding: 8px 0;
+
+          .island-name {
+            word-wrap: break-word;
+            white-space: normal;
+            text-align: left;
+          }
+        }
+
+        .v-img {
+          flex-grow: 0;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
+  .favorite-berries {
+    flex-direction: column;
+  }
+
+  .random-bonus {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+
+    .expert-modifier-options {
+      display: flex;
+      justify-content: space-between;
+
+      .v-btn__content {
+        gap: 8px;
+        justify-content: space-between;
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
+
+    //   .expert-modifier-option {
+    //     flex-basis: 33%;
+    //     display: flex;
+    //     flex-direction: column;
+    //     align-items: flex-start;
+    //     padding: 16px;
+    //     text-decoration: none;
+    //     border-radius: 24px;
+    //     transition: all 0.2s ease-in-out;
+    //     background-color: $secondary;
+
+    //     &:hover {
+    //       background-color: $secondary-medium-dark;
+    //     }
+
+    //     &.selected {
+    //       background-color: $secondary-dark;
+    //     }
+    //   }
+  }
+
+  .buttons {
+    justify-content: space-between;
+  }
 }
 </style>
