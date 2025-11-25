@@ -9,7 +9,7 @@ import {
   type TeamInstance
 } from '@/types/member/instanced'
 import type { TeamData } from '@/types/team/team-data'
-import type { TimeWindowDay } from '@/types/time/time-window'
+import { timeWindowFactor, type TimeWindowDay } from '@/types/time/time-window'
 import { defineStore } from 'pinia'
 import {
   DEFAULT_ISLAND,
@@ -123,7 +123,8 @@ export const useTeamStore = defineStore('team', {
         })
       }
       return result
-    }
+    },
+    timeWindowFactor: (state: TeamState) => timeWindowFactor(state.timeWindow)
   },
   actions: {
     migrate() {

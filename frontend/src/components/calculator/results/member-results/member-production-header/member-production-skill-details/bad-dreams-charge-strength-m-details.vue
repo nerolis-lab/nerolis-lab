@@ -56,12 +56,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { ChargeStrengthMBadDreams, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -73,8 +71,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { teamStore, MathUtils, mainskillImage, userStore }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -82,19 +79,14 @@ export default defineComponent({
     },
     totalSkillValue() {
       return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: ChargeStrengthMBadDreams.activations.strength,
-          amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
+        Math.floor(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor)
       )
     },
     totalEnergyDegraded() {
       return MathUtils.round(this.memberWithProduction.production.skillValue?.energy?.amountToTeam ?? 0, 1)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

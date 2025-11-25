@@ -64,12 +64,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { BerryBurstDisguise, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { BerryBurstDisguise, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -81,9 +79,8 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
     const critModifier = BerryBurstDisguise.activations.berries.critMultiplier
-    return { teamStore, MathUtils, mainskillImage, critModifier, berryImage, userStore }
+    return { teamStore, MathUtils, mainskillImage, critModifier, berryImage }
   },
   computed: {
     berryName() {
@@ -99,18 +96,7 @@ export default defineComponent({
             b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
             b.level === this.memberWithProduction.member.level
         )?.amount ?? 0
-      const skillActivation = this.memberWithProduction.member.pokemon.skill.getFirstActivation()
-      if (!skillActivation) {
-        return 0
-      }
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
     skillValueTeam() {
       const amount = this.memberWithProduction.production.produceFromSkill.berries.reduce(
@@ -122,22 +108,11 @@ export default defineComponent({
             : 0),
         0
       )
-      const skillActivation = this.memberWithProduction.member.pokemon.skill.getFirstActivation()
-      if (!skillActivation) {
-        return 0
-      }
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
 
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })
