@@ -1,0 +1,138 @@
+<template>
+  <v-row no-gutters class="flex-center pb-1">
+    <v-col cols="auto" class="flex-center flex-nowrap mx-4">
+      <v-badge
+        id="skillLevelBadge"
+        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        location="bottom center"
+        color="subskillWhite"
+        rounded="pill"
+      >
+        <v-img
+          :src="mainskillImage(memberWithProduction.member.pokemon)"
+          height="40px"
+          width="40px"
+          :alt="`Present (Ingredient Magnet S) level ${memberWithProduction.member.skillLevel}`"
+          title="Present (Ingredient Magnet S)"
+        ></v-img>
+      </v-badge>
+      <div class="ml-2">
+        <div class="flex-center">
+          <span class="font-weight-medium text-center">{{
+            MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
+          }}</span>
+          <v-img
+            src="/images/misc/skillproc.png"
+            height="24"
+            width="24"
+            alt="skill activations"
+            title="skill activations"
+          ></v-img>
+        </div>
+        <div class="flex-left">
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+            >x{{ skillValuePerProc }}</span
+          >
+          <v-img
+            src="/images/ingredient/ingredients.png"
+            height="20"
+            width="20"
+            alt="ingredients"
+            title="ingredients"
+          ></v-img>
+        </div>
+        <div class="flex-left">
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+            >x{{ candyPerProc }}</span
+          >
+          <v-img src="/images/misc/candy.png" height="40" width="40" alt="candy" title="candy"></v-img>
+        </div>
+      </div>
+    </v-col>
+
+    <v-col cols="auto" class="flex-center flex-column">
+      <div class="flex-center">
+        <v-img
+          src="/images/ingredient/ingredients.png"
+          height="20"
+          width="20"
+          alt="ingredients"
+          title="ingredients"
+        ></v-img>
+        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ totalSkillValue }} total</span>
+      </div>
+      <span class="font-weight-light font-italic text-x-small text-center">
+        {{ amountOfEachIngredient }} of each ing</span
+      >
+      <div class="flex-center mt-1">
+        <v-img src="/images/misc/candy.png" height="40" width="40" alt="candy" title="candy"></v-img>
+        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ totalCandy }} total</span>
+      </div>
+    </v-col>
+  </v-row>
+</template>
+
+<script lang="ts">
+import { StrengthService } from '@/services/strength/strength-service'
+import { mainskillImage } from '@/services/utils/image-utils'
+import { useTeamStore } from '@/stores/team/team-store'
+import { useUserStore } from '@/stores/user-store'
+import type { MemberProductionExt } from '@/types/member/instanced'
+import { MathUtils, PresentIngredientMagnetS, compactNumber, ingredient } from 'sleepapi-common'
+import { defineComponent, type PropType } from 'vue'
+
+export default defineComponent({
+  name: 'PresentIngredientMagnetSDetails',
+  props: {
+    memberWithProduction: {
+      type: Object as PropType<MemberProductionExt>,
+      required: true
+    }
+  },
+  setup() {
+    const teamStore = useTeamStore()
+    const userStore = useUserStore()
+    return { userStore, teamStore, MathUtils, mainskillImage }
+  },
+  computed: {
+    skillValuePerProc() {
+      return this.memberWithProduction.member.pokemon.skill.activations.ingredients.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
+    },
+    candyPerProc() {
+      return PresentIngredientMagnetS.candyAmount
+    },
+    totalSkillValue() {
+      return compactNumber(
+        StrengthService.skillValue({
+          skillActivation: PresentIngredientMagnetS.activations.ingredients,
+          amount: this.memberWithProduction.production.skillAmount,
+          timeWindow: this.teamStore.timeWindow,
+          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
+        })
+      )
+    },
+    totalCandy() {
+      const candyAmount = MathUtils.round(this.memberWithProduction.production.skillValue.candy?.amountToTeam ?? 0, 2)
+      return compactNumber(candyAmount)
+    },
+    amountOfEachIngredient() {
+      return compactNumber(
+        MathUtils.round(
+          StrengthService.skillValue({
+            skillActivation: PresentIngredientMagnetS.activations.ingredients,
+            amount: this.memberWithProduction.production.skillAmount,
+            timeWindow: this.teamStore.timeWindow,
+            areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
+          }) / ingredient.TOTAL_NUMBER_OF_INGREDIENTS,
+          2
+        )
+      )
+    },
+    timeWindowFactor() {
+      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+    }
+  }
+})
+</script>

@@ -20,6 +20,7 @@ export * from './ingredient-draw-s-super-luck';
 export * from './ingredient-magnet-s';
 export * from './ingredient-magnet-s-plus';
 export * from './metronome';
+export * from './present-ingredient-magnet-s';
 export * from './skill-copy';
 export * from './skill-copy_mimic';
 export * from './skill-copy_transform';

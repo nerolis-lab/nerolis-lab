@@ -35,6 +35,7 @@ describe('getMainskillNames', () => {
         "Ingredient Magnet S",
         "Plus (Ingredient Magnet S)",
         "Metronome",
+        "Present (Ingredient Magnet S)",
         "Skill Copy",
         "Mimic (Skill Copy)",
         "Transform (Skill Copy)",
