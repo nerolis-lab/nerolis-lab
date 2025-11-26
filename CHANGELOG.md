@@ -1,3 +1,11 @@
+# [2.33.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.32.1...v2.33.0) (2025-11-26)
+
+
+### Features
+
+* adds EventBuilder and API event support ([d42493c](https://github.com/nerolis-lab/nerolis-lab/commit/d42493c7a7b98bd208bd2a8a7b734a46fcb9442b))
+* change Delibird's skill to present ([4bb530b](https://github.com/nerolis-lab/nerolis-lab/commit/4bb530bb99750a24a8e31a1bbd9fbd880f8cf0fd))
+
 ## [2.32.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.32.0...v2.32.1) (2025-11-14)
 
 
