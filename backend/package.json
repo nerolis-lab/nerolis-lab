@@ -55,7 +55,7 @@
     "sleepapi-common": "file:../common",
     "swagger-ui-express": "^5.0.0",
     "tsoa": "^6.6.0",
-    "workerpool": "^9.3.3"
+    "workerpool": "^10.0.1"
   },
   "bundleDependencies": ["sleepapi-common"]
 }
