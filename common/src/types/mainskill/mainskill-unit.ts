@@ -6,7 +6,8 @@ export const mainskillUnits = [
   'dream shards',
   'strength',
   'pot size',
-  'crit chance'
+  'crit chance',
+  'candy'
 ] as const;
 
 export type MainskillUnit = (typeof mainskillUnits)[number];

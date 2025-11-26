@@ -25,6 +25,7 @@ import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-servi
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
 import { IngredientMagnetSPlusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-plus-effect.js';
+import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-present-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-effect.js';
 import { SkillCopyMimicEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-mimic-effect.js';
@@ -64,6 +65,7 @@ import {
   IngredientMagnetSPlus,
   mainskillUnits,
   Metronome,
+  PresentIngredientMagnetS,
   SkillCopy,
   SkillCopyMimic,
   SkillCopyTransform,
@@ -117,6 +119,7 @@ export class SkillState {
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
       [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
+      [PresentIngredientMagnetS, new IngredientMagnetSPresentEffect()],
       [IngredientDrawS, new IngredientDrawSEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],

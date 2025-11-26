@@ -56,6 +56,7 @@ import {
   EnergyForEveryone,
   IngredientDrawSHyperCutter,
   IngredientMagnetS,
+  PresentIngredientMagnetS,
   SkillCopyMimic,
   SkillCopyTransform,
   TastyChanceS
@@ -516,7 +517,7 @@ export const DELIBIRD: Pokemon = createIngredientSpecialist({
   pokedexNumber: 225,
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 18.8,
-  skillPercentage: 1.5,
+  skillPercentage: 3,
   berry: PAMTRE,
   genders: BALANCED_GENDER,
   carrySize: 20,
@@ -527,7 +528,7 @@ export const DELIBIRD: Pokemon = createIngredientSpecialist({
     b: FANCY_APPLE,
     c: SOOTHING_CACAO
   },
-  skill: IngredientMagnetS
+  skill: PresentIngredientMagnetS
 });
 
 export const BLISSEY: Pokemon = evolvedPokemon(CHANSEY, {
