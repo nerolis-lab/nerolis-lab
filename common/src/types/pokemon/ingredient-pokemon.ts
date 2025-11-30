@@ -733,7 +733,7 @@ export const MIME_JR: Pokemon = preEvolvedPokemon(MR_MIME, {
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 20.1,
   skillPercentage: 3.2,
-  carrySize: 7
+  carrySize: 10
 });
 
 export const HAPPINY: Pokemon = preEvolvedPokemon(CHANSEY, {
