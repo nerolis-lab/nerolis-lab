@@ -14744,7 +14744,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
     "type": "psychic",
     "value": 26,
   },
-  "carrySize": 7,
+  "carrySize": 10,
   "displayName": "Mime Jr.",
   "evolvesFrom": undefined,
   "evolvesInto": [
