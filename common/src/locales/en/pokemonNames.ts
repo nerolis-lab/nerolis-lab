@@ -171,6 +171,7 @@ export default {
   SNEASEL: 'Sneasel',
   SNOVER: 'Snover',
   SPHEAL: 'Spheal',
+  SPIRITOMB: 'Spiritomb',
   SPRIGATITO: 'Sprigatito',
   SQUIRTLE: 'Squirtle',
   STEELIX: 'Steelix',
