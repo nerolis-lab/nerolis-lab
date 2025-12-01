@@ -54,6 +54,7 @@ import {
   CookingPowerUpS,
   EnergizingCheerS,
   EnergyForEveryone,
+  ExtraHelpfulS,
   IngredientDrawSHyperCutter,
   IngredientMagnetS,
   PresentIngredientMagnetS,
@@ -745,6 +746,21 @@ export const HAPPINY: Pokemon = preEvolvedPokemon(CHANSEY, {
   carrySize: 7
 });
 
+export const SPIRITOMB: Pokemon = createIngredientSpecialist({
+  name: 'SPIRITOMB',
+  pokedexNumber: 442,
+  frequency: toSeconds(0, 58, 20),
+  ingredientPercentage: 19.8,
+  skillPercentage: 3.6,
+  berry: WIKI,
+  genders: BALANCED_GENDER,
+  carrySize: 27,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: { a: TASTY_MUSHROOM, b: PLUMP_PUMPKIN, c: LARGE_LEEK },
+  skill: ExtraHelpfulS
+});
+
 export const CROAGUNK: Pokemon = createIngredientSpecialist({
   name: 'CROAGUNK',
   pokedexNumber: 453,
@@ -1175,6 +1191,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   LUXIO,
   MIME_JR,
   HAPPINY,
+  SPIRITOMB,
   CROAGUNK,
   SNOVER,
   PUMPKABOO_SMALL,

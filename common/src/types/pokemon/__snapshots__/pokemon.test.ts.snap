@@ -22199,6 +22199,121 @@ exports[`COMPLETE_POKEDEX > shall not change SPHEAL unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change SPIRITOMB unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "WIKI",
+    "type": "dark",
+    "value": 31,
+  },
+  "carrySize": 27,
+  "displayName": "Spiritomb",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 3500,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.8,
+  "name": "SPIRITOMB",
+  "pokedexNumber": 442,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "helps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+    },
+    "description": [Function],
+    "helpAmounts": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ],
+    "image": "helps",
+    "name": "Extra Helpful S",
+  },
+  "skillPercentage": 3.6,
+  "specialty": "ingredient",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change SPRIGATITO unexpectedly 1`] = `
 {
   "berry": {
