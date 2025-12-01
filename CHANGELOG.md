@@ -1,3 +1,15 @@
+# [2.34.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.33.0...v2.34.0) (2025-12-01)
+
+
+### Bug Fixes
+
+* **Mime Jr.:** carry size 7 -> 10 ([c22118a](https://github.com/nerolis-lab/nerolis-lab/commit/c22118a9938bc2eaa9faf4e05cb957cb8074b6cb))
+
+
+### Features
+
+* add Spiritomb ([4b5552a](https://github.com/nerolis-lab/nerolis-lab/commit/4b5552a6d93cbd0ac44ad2a2030465bc5bb1ed9d))
+
 # [2.33.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.32.1...v2.33.0) (2025-11-26)
 
 
