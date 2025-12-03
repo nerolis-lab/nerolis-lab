@@ -7,7 +7,8 @@ const DBTeamMemberSchema = Type.Composite([
   Type.Object({
     fk_team_id: Type.Number(),
     fk_pokemon_id: Type.Number(),
-    member_index: Type.Number()
+    member_index: Type.Number(),
+    sneaky_snacking: Type.Boolean()
   })
 ]);
 export type DBTeamMember = Static<typeof DBTeamMemberSchema>;

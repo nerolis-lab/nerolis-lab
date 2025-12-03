@@ -12,6 +12,7 @@ export function pokemonInstance(attrs?: Partial<PokemonInstance>): PokemonInstan
     nature: 'normal',
     subskills: [],
     ingredients: [],
+    sneakySnacking: false,
     ...attrs
   };
 }
