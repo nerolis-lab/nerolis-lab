@@ -18,9 +18,9 @@ import {
   pokemonProductionToRecipeSolutions,
   settingsToArraySubskills
 } from '@src/services/solve/utils/solve-utils.js';
-import { splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, Pokedex, SolveSettingsExt } from 'sleepapi-common';
+import { splitArrayByCondition } from 'sleepapi-common';
 import {
   CookingPowerUpS,
   ENTEI,
