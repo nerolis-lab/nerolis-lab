@@ -52,6 +52,7 @@ describe('upsertPokemon', () => {
     gender: 'female',
     skillLevel: 0,
     subskills: [],
+    sneakySnacking: false,
     version: 0
   };
   it('shall insert pokemon if not exists and saved is true', async () => {
