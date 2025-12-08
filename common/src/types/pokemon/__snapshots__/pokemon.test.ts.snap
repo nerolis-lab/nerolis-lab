@@ -985,7 +985,7 @@ exports[`COMPLETE_POKEDEX > shall not change BAGON unexpectedly 1`] = `
   ],
   "ingredientPercentage": 20.9,
   "name": "BAGON",
-  "pokedexNumber": 328,
+  "pokedexNumber": 371,
   "previousEvolutions": 0,
   "remainingEvolutions": 2,
   "skill": {
@@ -20533,7 +20533,7 @@ exports[`COMPLETE_POKEDEX > shall not change SALAMENCE unexpectedly 1`] = `
   ],
   "ingredientPercentage": 21.7,
   "name": "SALAMENCE",
-  "pokedexNumber": 330,
+  "pokedexNumber": 373,
   "previousEvolutions": 2,
   "remainingEvolutions": 0,
   "skill": {
@@ -20889,7 +20889,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHELGON unexpectedly 1`] = `
   ],
   "ingredientPercentage": 20.6,
   "name": "SHELGON",
-  "pokedexNumber": 329,
+  "pokedexNumber": 372,
   "previousEvolutions": 1,
   "remainingEvolutions": 1,
   "skill": {
