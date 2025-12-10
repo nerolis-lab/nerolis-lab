@@ -1,7 +1,10 @@
+import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
+import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import type { TeamActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
+import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { mocks } from '@src/vitest/index.js';
-import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import type { FunctionalEvent, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BerryBurstDisguise,
   ChargeStrengthS,
@@ -11,7 +14,9 @@ import {
   berry,
   calculatePityProcThreshold,
   commonMocks,
+  curry,
   ingredient,
+  ingredientSetToFloatFlat,
   nature,
   parseTime,
   subskill
@@ -373,6 +378,62 @@ describe('TeamSimulator', () => {
     expect(result.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620);
     expect(member.settings.skillLevel).toBe(3);
     expect(member.pokemonWithIngredients.pokemon.frequency).toBe(1800);
+  });
+
+  it('applies cooking modifiers when an event defines them', () => {
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({
+      includeCooking: true
+    });
+    const members: TeamMemberExt[] = [
+      mocks.teamMemberExt({
+        pokemonWithIngredients: mockPokemonWithIngredients,
+        settings: {
+          carrySize: 10,
+          level: 60,
+          ribbon: 0,
+          nature: nature.BASHFUL,
+          skillLevel: 1,
+          subskills: new Set(),
+          externalId: 'cooking-test'
+        }
+      })
+    ];
+
+    const runSimulator = (event?: FunctionalEvent) => {
+      const rng = createPreGeneratedRandom();
+      const cookingState = new CookingState(settings, defaultUserRecipes(), rng);
+      cookingState.addIngredients(
+        ingredientSetToFloatFlat([
+          ...curry.FANCY_APPLE_CURRY.ingredients,
+          ...curry.HEARTY_CHEESEBURGER_CURRY.ingredients
+        ])
+      );
+      const simulator = new TeamSimulator({ settings, members, cookingState, iterations: 1, rng });
+      if (event) {
+        (simulator as unknown as { expertModeEvent?: FunctionalEvent }).expertModeEvent = event;
+      }
+      simulator.simulate();
+      return simulator.results();
+    };
+
+    const baseline = runSimulator().cooking?.curry.weeklyStrength ?? 0;
+
+    const cookingEvent: FunctionalEvent = {
+      name: 'Cooking boost',
+      description: 'Doubles curry strength',
+      applyToPokemon: (p) => p,
+      applyToTeam: (t) => t,
+      applyToStrength: (s) => s,
+      applyToCooking: (cooking) => ({
+        ...cooking,
+        curry: { ...cooking.curry, weeklyStrength: cooking.curry.weeklyStrength * 2 }
+      })
+    };
+
+    const boosted = runSimulator(cookingEvent).cooking?.curry.weeklyStrength ?? 0;
+
+    expect(boosted).toBeGreaterThan(0);
+    expect(boosted).toBeCloseTo(baseline * 2);
   });
 });
 

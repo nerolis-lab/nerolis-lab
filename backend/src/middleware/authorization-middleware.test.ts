@@ -10,6 +10,7 @@ import type { AbstractProvider } from '@src/services/user-service/login-service/
 import { ProviderFactory } from '@src/services/user-service/login-service/providers/provider-factory.js';
 import type { NextFunction, Request, Response } from 'express';
 import { AuthProvider, Roles, type Logger } from 'sleepapi-common';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 vi.mock('@src/services/user-service/login-service/providers/provider-factory.js', () => ({
   ProviderFactory: {

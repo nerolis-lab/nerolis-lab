@@ -79,8 +79,6 @@ describe('config', () => {
     const backendConfig = new BackendConfig();
     process.env.DATABASE_MIGRATION = 'incorrect';
 
-    expect(() => backendConfig.config).toThrowErrorMatchingInlineSnapshot(
-      `[DatabaseMigrationError: DATABASE_MIGRATION is optional, but if set must be one of [UP, DOWN]]`
-    );
+    expect(() => backendConfig.config).toThrow('DATABASE_MIGRATION is optional, but if set must be one of [UP, DOWN]');
   });
 });

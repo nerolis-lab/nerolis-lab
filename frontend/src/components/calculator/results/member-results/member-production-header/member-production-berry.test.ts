@@ -1,20 +1,31 @@
 import MemberProductionBerry from '@/components/calculator/results/member-results/member-production-header/member-production-berry.vue'
-import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { GENGAR, MathUtils, berry } from 'sleepapi-common'
+import { GENGAR, MathUtils, berry, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
+const baseProduction = mocks.createMockMemberProductionExt().production
 const mockMember = mocks.createMockMemberProductionExt({
   member: mocks.createMockPokemon({ pokemon: GENGAR }),
   production: {
-    ...mocks.createMockMemberProductionExt().production,
+    ...baseProduction,
     produceWithoutSkill: {
       berries: [{ amount: 20, berry: berry.BLUK, level: 1 }],
       ingredients: []
+    },
+    strength: {
+      ...baseProduction.strength,
+      berries: {
+        total: 250,
+        breakdown: {
+          base: 200,
+          favored: 30,
+          islandBonus: 20
+        }
+      }
     }
   }
 })
@@ -47,7 +58,7 @@ describe('MemberProductionBerry', () => {
 
   it('displays the correct berry amount', () => {
     const amountSpan = wrapper.find('span.font-weight-medium')
-    const timeWindowFactor = StrengthService.timeWindowFactor(useTeamStore().timeWindow)
+    const timeWindowFactor = useTeamStore().timeWindowFactor
     expect(amountSpan.text()).toBe(
       `x${MathUtils.round(mockMember.production.produceWithoutSkill.berries[0].amount * timeWindowFactor, 1)}`
     )
@@ -56,12 +67,9 @@ describe('MemberProductionBerry', () => {
   it('displays the correct berry strength', () => {
     const strengthSpan = wrapper.findAll('span.font-weight-medium').at(1)
     const teamStore = useTeamStore()
-    const currentBerryStrength = StrengthService.berryStrength({
-      island: teamStore.getCurrentTeam.island,
-      berries: mockMember.production.produceWithoutSkill.berries,
-      timeWindow: teamStore.timeWindow,
-      areaBonus: 1
-    })
+    const currentBerryStrength = compactNumber(
+      mockMember.production.strength.berries.total * teamStore.timeWindowFactor
+    )
     expect(strengthSpan?.text()).toBe(`${currentBerryStrength}`)
   })
 })

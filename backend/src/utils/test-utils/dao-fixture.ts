@@ -5,6 +5,7 @@ import type { Knex } from 'knex';
 import knex from 'knex';
 import 'sleepapi-common';
 import { vimic } from 'vimic';
+import { afterAll, afterEach, beforeAll, beforeEach } from 'vitest';
 
 type InitParams = {
   enforceForeignKeyConstraints?: boolean;

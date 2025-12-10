@@ -1,11 +1,11 @@
-import { StrengthService } from '@/services/strength/strength-service'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { CRESSELIA, EnergyForEveryoneLunarBlessing, MathUtils, compactNumber } from 'sleepapi-common'
+import { CRESSELIA, MathUtils, compactNumber } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 import LunarBlessingEnergyForEveryoneDetails from './lunar-blessing-energy-for-everyone-details.vue'
 
@@ -47,7 +47,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
   it('displays the correct number of skill procs', () => {
     const skillProcs = wrapper.find('.font-weight-medium.text-center')
     expect(skillProcs.text()).toBe(
-      MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
+      MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
   })
 
@@ -58,12 +58,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
 
   it('displays the correct total energy value', () => {
     const totalEnergyValue = wrapper.find('.font-weight-medium.text-no-wrap.text-center.ml-1')
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
-      amount: mockMember.production.skillAmount,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const expectedValue = MathUtils.round(mockMember.production.skillAmount * timeWindowFactor('24H'), 1)
     expect(totalEnergyValue.text()).toContain(compactNumber(expectedValue))
   })
 
@@ -73,12 +68,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
       mockMember.production.produceFromSkill.berries.find(
         (b) => b.berry.name === mockMember.member.pokemon.berry.name && b.level === mockMember.member.level
       )?.amount ?? 0
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
-      amount: berryAmount,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const expectedValue = MathUtils.round(berryAmount * timeWindowFactor('24H'), 1)
     expect(selfBerryValue.text()).toContain(compactNumber(expectedValue))
   })
 
@@ -92,12 +82,7 @@ describe('LunarBlessingEnergyForEveryoneDetails', () => {
           : 0),
       0
     )
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: EnergyForEveryoneLunarBlessing.activations.energy,
-      amount: teamAmount,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const expectedValue = MathUtils.round(teamAmount * timeWindowFactor('24H'), 1)
     expect(teamBerryValue.text()).toContain(compactNumber(expectedValue))
   })
 })

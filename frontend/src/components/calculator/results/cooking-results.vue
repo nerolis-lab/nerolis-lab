@@ -276,12 +276,10 @@ import Divider from '@/components/custom-components/divider/divider.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import {
   MathUtils,
   capitalize,
   combineSameIngredientsInDrop,
-  getIsland,
   ingredient,
   prettifyTime,
   type CookedRecipeResult,
@@ -304,7 +302,6 @@ export default defineComponent({
     return {
       teamStore: useTeamStore(),
       pokemonStore: usePokemonStore(),
-      userStore: useUserStore(),
       showDetailsState: [] as boolean[]
     }
   },
@@ -328,34 +325,22 @@ export default defineComponent({
       }
     },
     cookingStrength() {
-      const strength = Math.floor(
-        (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-      )
+      const strength = Math.floor(this.currentRecipeTypeResult?.weeklyStrength ?? 0)
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
         maximumFractionDigits: 0
       }).format(strength)
     },
     sundayStrength() {
-      const strength = Math.floor(
-        (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
-          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-      )
+      const strength = Math.floor(this.currentRecipeTypeResult?.sundayStrength ?? 0)
       const userLocale = navigator.language || 'en-US'
       return new Intl.NumberFormat(userLocale, {
         maximumFractionDigits: 0
       }).format(strength)
     },
     weekdayStrength() {
-      const weeklyStrength = Math.floor(
-        (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
-          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-      )
-      const sundayStrength = Math.floor(
-        (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
-          this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-      )
+      const weeklyStrength = Math.floor(this.currentRecipeTypeResult?.weeklyStrength ?? 0)
+      const sundayStrength = Math.floor(this.currentRecipeTypeResult?.sundayStrength ?? 0)
 
       const strength = Math.floor(weeklyStrength - sundayStrength)
       const userLocale = navigator.language || 'en-US'

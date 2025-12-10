@@ -33,6 +33,7 @@ export class CookingState {
   private totalCritChance = 0;
   private totalWeekdayPotSize = 0;
   private rng: PreGeneratedRandom;
+  private areaBonusMultiplier: number;
   private userPotSize: number;
   private mealTimes: MealTimes = {};
 
@@ -65,6 +66,8 @@ export class CookingState {
     this.rng = rng;
 
     this.camp = settings.camp;
+    const areaBonus = settings.island?.areaBonus ?? 0;
+    this.areaBonusMultiplier = 1 + areaBonus / 100;
     this.userPotSize = settings.potSize;
     this.startingStockpiledIngredients = settings.stockpiledIngredients;
     this.currentCurryStockpile = settings.stockpiledIngredients.slice();
@@ -286,18 +289,27 @@ export class CookingState {
     // TODO: CookedCurries/salads etc are all same length always, we can do the entire thing in a single loop
     return {
       curry: {
-        weeklyStrength: this.cookedCurries.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks,
-        sundayStrength: this.cookedCurries.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks,
+        weeklyStrength:
+          (this.cookedCurries.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks) * this.areaBonusMultiplier,
+        sundayStrength:
+          (this.cookedCurries.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks) *
+          this.areaBonusMultiplier,
         cookedRecipes: this.groupAndCountCookedRecipes(this.cookedCurries, this.skippedCurries)
       },
       salad: {
-        weeklyStrength: this.cookedSalads.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks,
-        sundayStrength: this.cookedSalads.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks,
+        weeklyStrength:
+          (this.cookedSalads.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks) * this.areaBonusMultiplier,
+        sundayStrength:
+          (this.cookedSalads.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks) *
+          this.areaBonusMultiplier,
         cookedRecipes: this.groupAndCountCookedRecipes(this.cookedSalads, this.skippedSalads)
       },
       dessert: {
-        weeklyStrength: this.cookedDesserts.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks,
-        sundayStrength: this.cookedDesserts.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks,
+        weeklyStrength:
+          (this.cookedDesserts.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks) * this.areaBonusMultiplier,
+        sundayStrength:
+          (this.cookedDesserts.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks) *
+          this.areaBonusMultiplier,
         cookedRecipes: this.groupAndCountCookedRecipes(this.cookedDesserts, this.skippedDesserts)
       },
       critInfo: {

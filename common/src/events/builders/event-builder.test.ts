@@ -1,9 +1,21 @@
 import { describe, expect, it } from 'vitest';
-import type { AmountParams, ExpertModeSettings } from '../../types';
+import type { AmountParams, CookingResult, ExpertModeSettings } from '../../types';
 import { MAGO, ORAN, SITRUS } from '../../types/berry/berries';
 import { Mainskill } from '../../types/mainskill/mainskill';
 import { commonMocks } from '../../vitest';
 import { EventBuilder, type FunctionalEvent } from './event-builder';
+
+const cookingResult = (): CookingResult => ({
+  curry: { weeklyStrength: 100, sundayStrength: 20, cookedRecipes: [] },
+  salad: { weeklyStrength: 50, sundayStrength: 10, cookedRecipes: [] },
+  dessert: { weeklyStrength: 75, sundayStrength: 15, cookedRecipes: [] },
+  critInfo: {
+    averageCritMultiplierPerCook: 1.1,
+    averageCritChancePerCook: 0.1,
+    averageWeekdayPotSize: 20
+  },
+  mealTimes: {}
+});
 
 describe('EventBuilder', () => {
   describe('Basic Event Creation', () => {
@@ -184,6 +196,27 @@ describe('EventBuilder', () => {
       const event = (eventFactory as unknown as () => FunctionalEvent)();
       expect(event).toBeDefined();
       expect(event.name).toBe('Strength Event');
+    });
+  });
+
+  describe('Cooking Modifiers', () => {
+    it('should apply cooking modifier correctly', () => {
+      const eventFactory = EventBuilder.create()
+        .name('Cooking Event')
+        .description('Modifies cooking strength')
+        .forCooking((_, _cooking) => ({
+          'curry.weeklyStrength': (value) => value * 1.5,
+          'dessert.sundayStrength': 999
+        }))
+        .build();
+
+      const event = (eventFactory as unknown as () => FunctionalEvent)();
+      const cooking = cookingResult();
+
+      const result = event.applyToCooking(cooking);
+      expect(result.curry.weeklyStrength).toBeCloseTo(cooking.curry.weeklyStrength * 1.5);
+      expect(result.dessert.sundayStrength).toBe(999);
+      expect(result.salad.weeklyStrength).toBe(cooking.salad.weeklyStrength);
     });
   });
 

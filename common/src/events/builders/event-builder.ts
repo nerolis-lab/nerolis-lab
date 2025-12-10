@@ -1,4 +1,4 @@
-import type { MemberStrength, PokemonInstanceExt, TeamMemberExt } from '../../types';
+import type { CookingResult, MemberStrength, PokemonInstanceExt, TeamMemberExt } from '../../types';
 import type { PathValue } from '../../types/type/path-value';
 import type { PathKeys } from '../../types/type/type-paths';
 
@@ -8,6 +8,7 @@ export interface FunctionalEvent {
   applyToPokemon: (target: PokemonInstanceExt) => PokemonInstanceExt;
   applyToTeam: (target: TeamMemberExt) => TeamMemberExt;
   applyToStrength: (target: MemberStrength) => MemberStrength;
+  applyToCooking: (target: CookingResult) => CookingResult;
 }
 
 /**
@@ -29,6 +30,7 @@ export class EventBuilder<TInput = void> {
   private pokemonModifiers: Array<(input: TInput, target: PokemonInstanceExt) => Record<string, unknown>> = [];
   private teamModifiers: Array<(input: TInput, target: TeamMemberExt) => Record<string, unknown>> = [];
   private strengthModifiers: Array<(input: TInput, target: MemberStrength) => Record<string, unknown>> = [];
+  private cookingModifiers: Array<(input: TInput, target: CookingResult) => Record<string, unknown>> = [];
 
   /**
    * Create a new EventBuilder instance
@@ -96,6 +98,19 @@ export class EventBuilder<TInput = void> {
   }
 
   /**
+   * Add Cooking modifiers
+   *
+   * @example
+   * .forCooking((input, cooking) => ({
+   *   'curry.weeklyStrength': (value) => value * 1.1
+   * }))
+   */
+  forCooking(factory: (input: TInput, target: CookingResult) => ModifierMap<CookingResult>): this {
+    this.cookingModifiers.push((input, target) => factory(input, target));
+    return this;
+  }
+
+  /**
    * Compile the event
    */
   build(): TInput extends void ? FunctionalEvent : (input: TInput) => FunctionalEvent {
@@ -108,7 +123,10 @@ export class EventBuilder<TInput = void> {
 
     // TODO: we would like to make modifiers more generic, and thus also not needing to check for modifiers here
     const hasModifiers =
-      this.pokemonModifiers.length > 0 || this.teamModifiers.length > 0 || this.strengthModifiers.length > 0;
+      this.pokemonModifiers.length > 0 ||
+      this.teamModifiers.length > 0 ||
+      this.strengthModifiers.length > 0 ||
+      this.cookingModifiers.length > 0;
 
     if (!hasModifiers) {
       const noOpEvent: FunctionalEvent = {
@@ -116,7 +134,8 @@ export class EventBuilder<TInput = void> {
         description: this.eventDescription,
         applyToPokemon: (p: PokemonInstanceExt) => p,
         applyToTeam: (t: TeamMemberExt) => t,
-        applyToStrength: (s: MemberStrength) => s
+        applyToStrength: (s: MemberStrength) => s,
+        applyToCooking: (c: CookingResult) => c
       };
       return noOpEvent as TInput extends void ? FunctionalEvent : (input: TInput) => FunctionalEvent;
     }
@@ -145,6 +164,14 @@ export class EventBuilder<TInput = void> {
         applyToStrength: (target: MemberStrength): MemberStrength => {
           let result = target;
           for (const factory of this.strengthModifiers) {
+            result = this.applyModifierMap(result, factory(input, result));
+          }
+          return result;
+        },
+
+        applyToCooking: (target: CookingResult): CookingResult => {
+          let result = target;
+          for (const factory of this.cookingModifiers) {
             result = this.applyModifierMap(result, factory(input, result));
           }
           return result;

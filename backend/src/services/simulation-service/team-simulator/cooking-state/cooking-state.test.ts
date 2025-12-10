@@ -135,6 +135,26 @@ describe('CookingState', () => {
     expect(result.dessert.sundayStrength).toEqual(dessert.FLOWER_GIFT_MACARONS.valueMax * 3);
   });
 
+  it('applies island area bonus to cooking strength', () => {
+    const cookingState = new CookingState(
+      mocks.teamSettingsExt({
+        camp: true,
+        potSize: MAX_POT_SIZE,
+        island: mocks.islandInstance({ areaBonus: 10 })
+      }),
+      defaultUserRecipes(),
+      createPreGeneratedRandom()
+    );
+
+    cookingState.addIngredients(ingredientSetToFloatFlat(dessert.FLOWER_GIFT_MACARONS.ingredients));
+    cookingState.cook(true);
+
+    const result = cookingState.results(1);
+    const baseStrength = dessert.FLOWER_GIFT_MACARONS.valueMax * 3;
+    expect(result.dessert.weeklyStrength).toBeCloseTo(baseStrength * 1.1);
+    expect(result.dessert.sundayStrength).toBeCloseTo(baseStrength * 1.1);
+  });
+
   it('shall be able to cook macarons with pot skill proc', () => {
     const cookingState = new CookingState(
       mocks.teamSettingsExt({ camp: true, potSize: MAX_POT_SIZE }),
