@@ -25,6 +25,7 @@ describe('getMainskillNames', () => {
         "Dream Shard Magnet S",
         "Dream Shard Magnet S Range",
         "Energizing Cheer S",
+        "Nuzzle (Energizing Cheer S)",
         "Energy For Everyone",
         "Lunar Blessing (Energy For Everyone)",
         "Extra Helpful S",
