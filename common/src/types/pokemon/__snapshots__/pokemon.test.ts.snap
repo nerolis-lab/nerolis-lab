@@ -2413,6 +2413,234 @@ exports[`COMPLETE_POKEDEX > shall not change CATERPIE unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change CETITAN unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "RAWST",
+    "type": "ice",
+    "value": 32,
+  },
+  "carrySize": 25,
+  "displayName": "Cetitan",
+  "evolvesFrom": "CETODDLE",
+  "evolvesInto": [],
+  "frequency": 2800,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 9,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.9,
+  "name": "CETITAN",
+  "pokedexNumber": 975,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      12,
+      16.2,
+      21.2,
+      26.6,
+      33.6,
+      43.4,
+    ],
+    "image": "energy",
+    "name": "Charge Energy S",
+  },
+  "skillPercentage": 4.2,
+  "specialty": "ingredient",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change CETODDLE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "RAWST",
+    "type": "ice",
+    "value": 32,
+  },
+  "carrySize": 12,
+  "displayName": "Cetoddle",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CETITAN",
+  ],
+  "frequency": 5100,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 9,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredientPercentage": 22.3,
+  "name": "CETODDLE",
+  "pokedexNumber": 974,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      12,
+      16.2,
+      21.2,
+      26.6,
+      33.6,
+      43.4,
+    ],
+    "image": "energy",
+    "name": "Charge Energy S",
+  },
+  "skillPercentage": 4.2,
+  "specialty": "ingredient",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change CHANSEY unexpectedly 1`] = `
 {
   "berry": {
@@ -22199,6 +22427,119 @@ exports[`COMPLETE_POKEDEX > shall not change SPHEAL unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change SPHEAL_HOLIDAY unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "RAWST",
+    "type": "ice",
+    "value": 32,
+  },
+  "carrySize": 20,
+  "displayName": "Spheal (Holiday)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 3300,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredientPercentage": 21.4,
+  "name": "SPHEAL_HOLIDAY",
+  "pokedexNumber": 363,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+    ],
+    "activations": {
+      "critChance": {
+        "amount": [Function],
+        "unit": "crit chance",
+      },
+    },
+    "chanceAmounts": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+    ],
+    "description": [Function],
+    "image": "chance",
+    "name": "Tasty Chance S",
+  },
+  "skillPercentage": 5,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change SPIRITOMB unexpectedly 1`] = `
 {
   "berry": {
@@ -23504,6 +23845,160 @@ exports[`COMPLETE_POKEDEX > shall not change SYLVEON unexpectedly 1`] = `
     "name": "Energy For Everyone",
   },
   "skillPercentage": 4,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "BELUE",
+    "type": "steel",
+    "value": 33,
+  },
+  "carrySize": 18,
+  "displayName": "Togedemaru",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2700,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+  ],
+  "ingredientPercentage": 16.9,
+  "name": "TOGEDEMARU",
+  "pokedexNumber": 777,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "targetLowestChance": 0.5,
+        "unit": "energy",
+      },
+      "skillHelps": {
+        "amount": [Function],
+        "unit": "skill helps",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        766,
+        1089,
+        1502,
+        2074,
+        2863,
+        3956,
+      ],
+      "activations": {
+        "energy": {
+          "amount": [Function],
+          "targetLowestChance": 0.5,
+          "unit": "energy",
+        },
+      },
+      "description": [Function],
+      "energyAmounts": [
+        12,
+        15,
+        20,
+        25,
+        33,
+        44,
+      ],
+      "image": "energy",
+      "name": "Energizing Cheer S",
+    },
+    "description": [Function],
+    "energyAmounts": [
+      9,
+      12,
+      16,
+      20,
+      27,
+      35,
+    ],
+    "image": "energy",
+    "modifierName": "Nuzzle",
+    "skillHelpsAmounts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+    ],
+  },
+  "skillPercentage": 5.4,
   "specialty": "skill",
 }
 `;

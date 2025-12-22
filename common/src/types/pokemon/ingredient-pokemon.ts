@@ -1111,6 +1111,34 @@ export const QUAQUAVAL: Pokemon = evolvedPokemon(QUAXWELL, {
   carrySize: 19
 });
 
+export const CETODDLE: Pokemon = createIngredientSpecialist({
+  name: 'CETODDLE',
+  pokedexNumber: 974,
+  frequency: toSeconds(1, 25, 0),
+  ingredientPercentage: 22.3,
+  skillPercentage: 4.2,
+  berry: RAWST,
+  genders: BALANCED_GENDER,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: SOFT_POTATO,
+    b: BEAN_SAUSAGE,
+    c: PLUMP_PUMPKIN
+  },
+  skill: ChargeEnergyS
+});
+
+export const CETITAN: Pokemon = evolvedPokemon(CETODDLE, {
+  name: 'CETITAN',
+  pokedexNumber: 975,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 20.9,
+  skillPercentage: 4.2,
+  carrySize: 25
+});
+
 export const CLODSIRE: Pokemon = evolvedPokemon(WOOPER_PALDEAN, {
   name: 'CLODSIRE',
   pokedexNumber: 980,
@@ -1160,6 +1188,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   SKELEDIRGE,
   QUAXWELL,
   QUAQUAVAL,
+  CETITAN,
   CLODSIRE
 ];
 
@@ -1203,7 +1232,8 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   STUFFUL,
   SPRIGATITO,
   FUECOCO,
-  QUAXLY
+  QUAXLY,
+  CETODDLE
 ];
 
 export const ALL_INGREDIENT_SPECIALISTS: Pokemon[] = [

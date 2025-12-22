@@ -64,6 +64,7 @@ import {
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
+  EnergizingCheerSNuzzle,
   EnergyForEveryone,
   EnergyForEveryoneLunarBlessing,
   ExtraHelpfulS,
@@ -739,6 +740,25 @@ export const WYNAUT: Pokemon = preEvolvedPokemon(WOBBUFFET, {
   carrySize: 7
 });
 
+export const SPHEAL_HOLIDAY: Pokemon = createSkillSpecialist({
+  name: 'SPHEAL_HOLIDAY',
+  pokedexNumber: 363,
+  frequency: toSeconds(0, 55, 0),
+  ingredientPercentage: 21.4,
+  skillPercentage: 5.0,
+  berry: RAWST,
+  genders: BALANCED_GENDER,
+  carrySize: 20,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: PURE_OIL,
+    b: BEAN_SAUSAGE,
+    c: WARMING_GINGER
+  },
+  skill: TastyChanceS
+});
+
 export const BONSLY: Pokemon = preEvolvedPokemon(SUDOWOODO, {
   name: 'BONSLY',
   pokedexNumber: 438,
@@ -970,6 +990,25 @@ export const DEDENNE: Pokemon = createSkillSpecialist({
   skill: TastyChanceS
 });
 
+export const TOGEDEMARU: Pokemon = createSkillSpecialist({
+  name: 'TOGEDEMARU',
+  pokedexNumber: 777,
+  frequency: toSeconds(0, 45, 0),
+  ingredientPercentage: 16.9,
+  skillPercentage: 5.4,
+  berry: BELUE,
+  genders: BALANCED_GENDER,
+  carrySize: 18,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: MOOMOO_MILK,
+    b: GLOSSY_AVOCADO,
+    c: SOOTHING_CACAO
+  },
+  skill: EnergizingCheerSNuzzle
+});
+
 export const MIMIKYU: Pokemon = createSkillSpecialist({
   name: 'MIMIKYU',
   pokedexNumber: 778,
@@ -1091,6 +1130,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   PLUSLE,
   MINUN,
   SWALOT,
+  SPHEAL_HOLIDAY,
   DRIFBLIM,
   HONCHKROW,
   LUCARIO,
@@ -1104,6 +1144,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   BRAVIARY,
   SYLVEON,
   DEDENNE,
+  TOGEDEMARU,
   MIMIKYU,
   TOXTRICITY_AMPED,
   TOXTRICITY_LOW_KEY,
