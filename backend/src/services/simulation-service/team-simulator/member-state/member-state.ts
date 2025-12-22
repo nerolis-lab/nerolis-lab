@@ -390,6 +390,30 @@ export class MemberState {
     }
   }
 
+  /**
+   * Add skill-only helps coming from main skills like Nuzzle (Energizing Cheer S)
+   * @param helps The activation that provides the extra skill helps
+   * @param invoker The member whose main skill provided the extra skill helps
+   */
+  public addSkillHelps(helps: TeamActivationValue): SkillActivation[] {
+    const { regular, crit } = helps;
+    const totalHelps = regular + crit;
+    let successfulActivation = false;
+
+    for (let i = 0; i < totalHelps; ++i) {
+      if (this.rng() < this.skillState.skillPercentage) {
+        successfulActivation = true;
+        break;
+      }
+    }
+
+    if (successfulActivation) {
+      return [this.skillState.addBonusActivation()];
+    }
+
+    return [];
+  }
+
   public updateIngredientBag() {
     // Since we're tracking actual ingredient amounts in Float32Array, we can directly use it
     this.cookingState?.addIngredients(this.ingredientsSinceLastCook);

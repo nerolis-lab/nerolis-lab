@@ -3,6 +3,7 @@ export const mainskillUnits = [
   'berries',
   'ingredients',
   'helps',
+  'skill helps',
   'dream shards',
   'strength',
   'pot size',

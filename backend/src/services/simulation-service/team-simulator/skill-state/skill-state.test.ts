@@ -89,6 +89,20 @@ describe('SkillState', () => {
     expect(skillState['skillProcs']).toBe(1);
   });
 
+  it('should add bonus activations correctly', () => {
+    const mockPokemon = mocks.mockPokemon({ skill: BerryBurst });
+    const mockPokemonWithIngredients = mocks.pokemonWithIngredients({ pokemon: mockPokemon });
+    const mockTeamMember = mocks.teamMemberExt({ pokemonWithIngredients: mockPokemonWithIngredients });
+    mockMemberState = mocks.memberState({ member: mockTeamMember });
+    skillState = mocks.skillState(mockMemberState);
+
+    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'];
+    const activation = skillState['addBonusActivation']();
+    expect(activation).toBeDefined();
+    expect(skillState['skillProcs']).toBe(1);
+    expect(skillState['helpsSinceLastSkillProc']).toBe(skillState['pityProcThreshold']);
+  });
+
   it('should throw error for unimplemented skill effect', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const skill = { name: 'UNIMPLEMENTED_SKILL' } as any;
