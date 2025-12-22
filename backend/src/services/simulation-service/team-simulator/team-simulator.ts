@@ -204,7 +204,7 @@ export class TeamSimulator {
   }
 
   // TODO: won't change things now, but this should probably find all help/energy units rather than the first (which find does)
-  private maybeActivateTeamSkill(result: SkillActivation, invoker: MemberState) {
+  private maybeActivateTeamSkill(result: SkillActivation, invoker: MemberState, recursionDepth: number = 0) {
     const helpsActivation = result.activations.find((activation) => activation.unit === 'helps' && activation.team);
     if (helpsActivation?.team) {
       for (const mem of this.memberStatesWithoutFillers) {
@@ -213,11 +213,31 @@ export class TeamSimulator {
       }
     }
 
+    let membersHelped: MemberState[] = [];
+
     const energyActivation = result.activations.find((activation) => activation.unit === 'energy' && activation.team);
     if (energyActivation?.team) {
       const recovered = this.recoverMemberEnergy(energyActivation.team, invoker);
       invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
       invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
+      membersHelped = recovered.targetGroup;
+    }
+
+    const skillHelpsActivation = result.activations.find(
+      (activation) => activation.unit === 'skill helps' && activation.team
+    );
+    if (skillHelpsActivation?.team) {
+      for (const mem of membersHelped) {
+        const bonusActivations: SkillActivation[] = mem.addSkillHelps(skillHelpsActivation.team);
+        invoker.addSkillValue({ regular: bonusActivations.length, crit: 0 });
+        if (recursionDepth < 10) {
+          // In theory, a team of all Togedemaru could keep giving each other bonus activations.
+          // The odds are very slim, so I'm making the simulation slightly less accurate in order to avoid potential infinite recursion.
+          for (const bonusActivation of bonusActivations) {
+            this.maybeActivateTeamSkill(bonusActivation, mem, recursionDepth + 1);
+          }
+        }
+      }
     }
   }
 
@@ -227,9 +247,10 @@ export class TeamSimulator {
     let valueCrit = 0;
     let wastedRegular = 0;
     let wastedCrit = 0;
+    let targetGroup: MemberState[] = [];
 
     if (regular + crit > 0) {
-      const targetGroup =
+      targetGroup =
         chanceToTargetLowestMember !== undefined
           ? this.energyTargetMember(chanceToTargetLowestMember)
           : this.memberStates;
@@ -246,7 +267,8 @@ export class TeamSimulator {
 
     return {
       regular: { wastedEnergy: wastedRegular, skillValue: valueRegular },
-      crit: { wastedEnergy: wastedCrit, skillValue: valueCrit }
+      crit: { wastedEnergy: wastedCrit, skillValue: valueCrit },
+      targetGroup
     };
   }
 

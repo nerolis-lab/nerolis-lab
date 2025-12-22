@@ -12,8 +12,8 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Energizing Cheer S level ${memberWithProduction.member.skillLevel}`"
-          title="Energizing Cheer S"
+          :alt="`Nuzzle (Energizing Cheer S) level ${memberWithProduction.member.skillLevel}`"
+          title="Nuzzle (Energizing Cheer S)"
         ></v-img>
       </v-badge>
       <div class="ml-2">
@@ -31,7 +31,7 @@
         </div>
         <div class="flex-left">
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
-            >x{{ skillValuePerProc }}</span
+            >x{{ energyValuePerProc }}</span
           >
           <v-img src="/images/unit/energy.png" height="20" width="20" alt="energy" title="energy"></v-img>
         </div>
@@ -53,7 +53,7 @@ import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { EnergizingCheerS, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { EnergizingCheerSNuzzle, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -69,13 +69,20 @@ export default defineComponent({
     return { teamStore, MathUtils, mainskillImage, userStore }
   },
   computed: {
-    skillValuePerProc() {
-      return EnergizingCheerS.activations.energy.amount({ skillLevel: this.memberWithProduction.member.skillLevel })
+    energyValuePerProc() {
+      return EnergizingCheerSNuzzle.activations.energy.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
+    },
+    skillHelpsValuePerProc() {
+      return EnergizingCheerSNuzzle.activations.skillHelps.amount({
+        skillLevel: this.memberWithProduction.member.skillLevel
+      })
     },
     totalSkillValue() {
       return compactNumber(
         StrengthService.skillValue({
-          skillActivation: EnergizingCheerS.activations.energy,
+          skillActivation: EnergizingCheerSNuzzle.activations.energy,
           amount: this.memberWithProduction.production.skillAmount,
           timeWindow: this.teamStore.timeWindow,
           areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)

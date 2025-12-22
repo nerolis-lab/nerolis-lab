@@ -54,6 +54,7 @@ import {
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
+  EnergizingCheerSNuzzle,
   EnergyForEveryone,
   EnergyForEveryoneLunarBlessing,
   ExtraHelpfulS,
@@ -71,6 +72,7 @@ import {
   SkillCopyTransform,
   TastyChanceS
 } from 'sleepapi-common';
+import { EnergizingCheerSNuzzleEffect } from './skill-effects/energizing-cheer-s-nuzzle-effect.js';
 
 export class SkillState {
   memberState: MemberState;
@@ -113,6 +115,7 @@ export class SkillState {
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
       [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
       [EnergizingCheerS, new EnergizingCheerSEffect()],
+      [EnergizingCheerSNuzzle, new EnergizingCheerSNuzzleEffect()],
       [EnergyForEveryone, new EnergyForEveryoneEffect()],
       [EnergyForEveryoneLunarBlessing, new EnergyForEveryoneLunarBlessingEffect()],
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
@@ -144,6 +147,11 @@ export class SkillState {
     }
 
     return activations;
+  }
+
+  public addBonusActivation(): SkillActivation {
+    this.todaysSkillProcs += 1;
+    return this.activateSkill(this.skill, false);
   }
 
   public wakeup() {
@@ -209,7 +217,7 @@ export class SkillState {
     });
   }
 
-  private activateSkill(skill: Mainskill): SkillActivation {
+  private activateSkill(skill: Mainskill, resetPityProcCount: boolean = true): SkillActivation {
     const effect = this.skillEffects.get(skill);
     if (!effect) {
       throw new NotImplementedError(`No SkillEffect implemented for skill: ${skill.name}`);
@@ -219,7 +227,9 @@ export class SkillState {
 
     // update state
     this.skillProcs += 1;
-    this.helpsSinceLastSkillProc = 0;
+    if (resetPityProcCount) {
+      this.helpsSinceLastSkillProc = 0;
+    }
 
     let hadACrit = false;
     for (const activation of skillActivation.activations) {
