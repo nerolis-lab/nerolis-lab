@@ -1,3 +1,17 @@
+# [2.35.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.34.0...v2.35.0) (2025-12-24)
+
+
+### Bug Fixes
+
+* **pokedex:** dex numbers for Bagon line ([6192abe](https://github.com/nerolis-lab/nerolis-lab/commit/6192abee3f88364a3e42a2eac0e53d4ae26c5da2))
+
+
+### Features
+
+* add nuzzle main skill ([3c53b2e](https://github.com/nerolis-lab/nerolis-lab/commit/3c53b2eb82d0fc17aa7b0f670776092e37393e88))
+* adds holiday 2026 mon assets ([390296c](https://github.com/nerolis-lab/nerolis-lab/commit/390296c9616f5166ac8ac7f783ff3d1094174cee))
+* **pokedex:** add mons for Holiday 2026 ([48f54ea](https://github.com/nerolis-lab/nerolis-lab/commit/48f54ea573b043c6545f8840abf2a7f45d72e854))
+
 # [2.34.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.33.0...v2.34.0) (2025-12-01)
 
 
