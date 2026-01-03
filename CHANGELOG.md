@@ -1,3 +1,10 @@
+## [2.35.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.35.0...v2.35.1) (2026-01-03)
+
+
+### Bug Fixes
+
+* **dream shard magnet:** correct average for level 8 range ([5168af6](https://github.com/nerolis-lab/nerolis-lab/commit/5168af6f148ae988bf60858388c68dd2a388a4da))
+
 # [2.35.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.34.0...v2.35.0) (2025-12-24)
 
 
