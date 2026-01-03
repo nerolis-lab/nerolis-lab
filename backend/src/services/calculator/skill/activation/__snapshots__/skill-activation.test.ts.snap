@@ -597,7 +597,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         1150,
         1575,
         2250,
-        3125,
+        2875,
       ],
     },
   },
