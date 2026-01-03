@@ -19,7 +19,7 @@ export const DreamShardMagnetS = new (class extends Mainskill {
 export const DreamShardMagnetSRange = new (class extends Mainskill {
   name = 'Dream Shard Magnet S Range';
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303];
-  shardAmounts = [300, 425, 600, 837.5, 1150, 1575, 2250, 3125];
+  shardAmounts = [300, 425, 600, 837.5, 1150, 1575, 2250, 2875];
   image = 'shards';
   description = (params: AmountParams) => `Obtain ${this.shardAmounts[params.skillLevel - 1]} Dream Shards on average.`;
   activations = {
