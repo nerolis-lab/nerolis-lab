@@ -8,8 +8,7 @@ export const PresentIngredientMagnetS = new (class extends ModifiedMainskill {
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];
   ingredientAmounts = [4, 6, 8, 10, 12, 15, 17];
   candyAmount = 4;
-  // TODO: Fill in candy chance when known - probability that candy is given (0-1)
-  candyChance = 0.5; // Placeholder - 50% chance
+  candyChance = 1 / 3;
   image = 'ingredients';
   description = (params: AmountParams) =>
     `Gets you ${this.ingredientAmounts[params.skillLevel - 1]} ingredients chosen at random. Sometimes gets an additional ${this.candyAmount} candy for one Pokémon on your team.`;

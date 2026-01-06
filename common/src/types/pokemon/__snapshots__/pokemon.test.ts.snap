@@ -5983,7 +5983,7 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
       "name": "Ingredient Magnet S",
     },
     "candyAmount": 4,
-    "candyChance": 0.5,
+    "candyChance": 0.3333333333333333,
     "description": [Function],
     "image": "ingredients",
     "ingredientAmounts": [
