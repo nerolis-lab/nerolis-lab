@@ -1,5 +1,4 @@
 import CompareStrength from '@/components/compare/compare-strength.vue'
-import { StrengthService } from '@/services/strength/strength-service'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { mocks } from '@/vitest'
@@ -7,13 +6,12 @@ import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
-  GREENGRASS,
   MAX_RECIPE_LEVEL,
-  berryPowerForLevel,
   getMaxIngredientBonus,
   recipeLevelBonus,
   type MemberProduction,
-  type MemberSkillValue
+  type MemberSkillValue,
+  type MemberStrength
 } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
@@ -23,8 +21,26 @@ describe('CompareStrength', () => {
   let pokemonStore: ReturnType<typeof usePokemonStore>
 
   const mockPokemon = mocks.createMockPokemon({ name: 'Ash', skillLevel: 1 })
+  const strength: MemberStrength = mocks.memberStrength({
+    berries: {
+      total: 1500,
+      breakdown: {
+        base: 1400,
+        favored: 50,
+        islandBonus: 50
+      }
+    },
+    skill: {
+      total: 600,
+      breakdown: {
+        base: 500,
+        islandBonus: 100
+      }
+    }
+  })
   const mockMemberProduction: MemberProduction = mocks.createMockMemberProduction({
-    skillValue: { strength: { amountToSelf: 100, amountToTeam: 0 } } as MemberSkillValue
+    skillValue: { strength: { amountToSelf: 100, amountToTeam: 0 } } as MemberSkillValue,
+    strength
   })
 
   beforeEach(() => {
@@ -46,7 +62,6 @@ describe('CompareStrength', () => {
   it('renders member data correctly', async () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
-    const member = pokemonStore.getPokemon(mockPokemon.externalId)!
 
     await nextTick()
 
@@ -63,11 +78,7 @@ describe('CompareStrength', () => {
     expect(firstRowCells[0].text()).toContain('Ash')
 
     // Check berry power
-    const berryPower =
-      berryPowerForLevel(
-        mockMemberProduction.produceTotal.berries[0].berry,
-        mockMemberProduction.produceTotal.berries[0].level
-      ) * (mockMemberProduction.produceTotal.berries[0].amount ?? 1)
+    const berryPower = Math.floor(mockMemberProduction.strength.berries.total)
     expect(firstRowCells[1].text()).toContain(berryPower.toString())
 
     // Check ingredient power range
@@ -83,29 +94,20 @@ describe('CompareStrength', () => {
     expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
     // Check skill value
-    const skillValue = StrengthService.skillStrength({
-      skillActivation: member.pokemon.skill.getFirstActivation()!,
-      skillValues: mockMemberProduction.skillValue,
-      berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      island: comparisonStore.currentTeam?.island ?? GREENGRASS,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
-    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount))
+    const skillValue = Math.floor(mockMemberProduction.strength.skill.total)
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
     const totalPower = Math.floor(berryPower + lowestIngredientValue + skillValue)
     expect(firstRowCells[4].text()).toContain(totalPower.toString())
 
-    expect(totalPower).toEqual(3940)
+    expect(totalPower).toEqual(5520)
   })
 
   it('renders 8h time window correctly in data tab', async () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
     comparisonStore.timeWindow = '8H'
-    const member = pokemonStore.getPokemon(mockPokemon.externalId)!
 
     await nextTick()
 
@@ -123,14 +125,7 @@ describe('CompareStrength', () => {
 
     // Check berry power
     const factor = 1 / 3
-    const berryPower = Math.floor(
-      berryPowerForLevel(
-        mockMemberProduction.produceTotal.berries[0].berry,
-        mockMemberProduction.produceTotal.berries[0].level
-      ) *
-        mockMemberProduction.produceTotal.berries[0].amount *
-        factor
-    )
+    const berryPower = Math.floor(mockMemberProduction.strength.berries.total * factor)
     expect(+firstRowCells[1].text()).toEqual(berryPower)
 
     // Check ingredient power range
@@ -147,21 +142,13 @@ describe('CompareStrength', () => {
     expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
     // Check skill value
-    const skillValue = StrengthService.skillStrength({
-      skillActivation: member.pokemon.skill.getFirstActivation()!,
-      skillValues: mockMemberProduction.skillValue,
-      berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
-      island: comparisonStore.currentTeam?.island ?? GREENGRASS,
-      timeWindow: '8H',
-      areaBonus: 1
-    })
-    expect(skillValue).toEqual(Math.round(mockMemberProduction.skillAmount * factor))
+    const skillValue = Math.floor(mockMemberProduction.strength.skill.total * factor)
     expect(firstRowCells[3].text()).toContain(skillValue.toString())
 
     // Check total power
     const totalPower = Math.floor(berryPower + lowestIngredientValue + skillValue)
     expect(Math.abs(+firstRowCells[4].text())).toEqual(totalPower)
-    expect(totalPower).toEqual(1313)
+    expect(totalPower).toEqual(1840)
   })
 
   it('displays the correct number of headers', async () => {

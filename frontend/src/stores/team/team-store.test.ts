@@ -714,10 +714,12 @@ describe('updateIsland', () => {
     userStore.setInitialLoginData(commonMocks.loginResponse())
 
     teamStore.updateTeam = vi.fn()
+    teamStore.calculateProduction = vi.fn()
 
     await teamStore.updateIsland(mocks.islandInstance({ berries: [berry.BELUE] }))
     expect(teamStore.getCurrentTeam.island).toEqual(mocks.islandInstance({ berries: [berry.BELUE] }))
     expect(teamStore.updateTeam).toHaveBeenCalled()
+    expect(teamStore.calculateProduction).toHaveBeenCalled()
   })
 })
 

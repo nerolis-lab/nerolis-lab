@@ -3,6 +3,7 @@ import { createMockMemberIv } from '@/vitest/mocks/member-iv'
 import { createMockPokemon } from '@/vitest/mocks/pokemon-instance'
 import {
   berry,
+  commonMocks,
   ingredient,
   ingredientSetToIntFlat,
   mainskillUnits,
@@ -109,7 +110,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
         helps: 0
       }
     },
-    // strength: commonMocks.memberStrength(), // TODO: bring back when backend responds with island
+    strength: commonMocks.memberStrength(),
     ...attrs
   }
 }
