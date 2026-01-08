@@ -1,11 +1,12 @@
 import TeamResults from '@/components/calculator/results/team-results.vue'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
 import { mockCookingResult } from '@/vitest/mocks/calculator/mock-cooking-result'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { berry, type MemberSkillValue } from 'sleepapi-common'
+import { MathUtils, berry, compactNumber, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -56,6 +57,47 @@ describe('TeamResults', () => {
     const pokemonStore = usePokemonStore()
     pokemonStore.upsertLocalPokemon(mocks.createMockPokemon())
 
+    const baseProduction = mocks.createMockMemberProductionExt().production
+    const memberProduction = mocks.createMockMemberProductionExt({
+      production: {
+        ...baseProduction,
+        produceTotal: {
+          ingredients: [],
+
+          berries: [{ amount: 10, berry: berry.BELUE, level: 10 }]
+        },
+        produceWithoutSkill: {
+          ingredients: [],
+
+          berries: [{ amount: 10, berry: berry.BELUE, level: 10 }]
+        },
+        skillValue: {
+          strength: {
+            amountToSelf: 400,
+            amountToTeam: 0
+          }
+        } as MemberSkillValue,
+        strength: {
+          ...baseProduction.strength,
+          berries: {
+            total: 414.3,
+            breakdown: {
+              base: 350,
+              favored: 40,
+              islandBonus: 24.3
+            }
+          },
+          skill: {
+            total: 400,
+            breakdown: {
+              base: 350,
+              islandBonus: 50
+            }
+          }
+        }
+      }
+    }).production
+
     teamStore.getCurrentTeam.production = {
       team: {
         cooking: {
@@ -76,40 +118,42 @@ describe('TeamResults', () => {
         berries: [],
         ingredients: []
       },
-      members: [
-        mocks.createMockMemberProductionExt({
-          production: {
-            ...mocks.createMockMemberProductionExt().production,
-            produceTotal: {
-              ingredients: [],
-
-              berries: [{ amount: 10, berry: berry.BELUE, level: 10 }]
-            },
-            produceWithoutSkill: {
-              ingredients: [],
-
-              berries: [{ amount: 10, berry: berry.BELUE, level: 10 }]
-            },
-            skillValue: {
-              strength: {
-                amountToSelf: 400,
-                amountToTeam: 0
-              }
-            } as MemberSkillValue
-          }
-        }).production
-      ]
+      members: [memberProduction]
     }
     await nextTick()
 
     const stackedBar = wrapper.findComponent({ name: 'StackedBar' })
     expect(stackedBar.exists()).toBe(true)
 
+    const weeklyFactor = timeWindowFactor('WEEK')
+    const cookingStrength = 10000
+    const berryStrength = Math.floor(memberProduction.strength.berries.total * weeklyFactor)
+    const skillStrength = Math.floor(memberProduction.strength.skill.total * weeklyFactor)
+    const totalStrength = Math.floor(cookingStrength + berryStrength + skillStrength)
+    const berryPercentage = MathUtils.floor((berryStrength / totalStrength) * 100, 1)
+    const skillPercentage = MathUtils.floor((skillStrength / totalStrength) * 100, 1)
+    const cookingPercentage = MathUtils.floor((cookingStrength / totalStrength) * 100, 1)
+
     expect(stackedBar.props('sections')).toEqual([
-      { color: 'curry', percentage: 63.5, sectionText: '63.5%', tooltipText: '10K (63.5%)' },
-      { color: 'berry', percentage: 18.6, sectionText: '18.6%', tooltipText: '2.9K (18.6%)' },
+      {
+        color: 'curry',
+        percentage: cookingPercentage,
+        sectionText: `${cookingPercentage}%`,
+        tooltipText: `${compactNumber(cookingStrength)} (${cookingPercentage}%)`
+      },
+      {
+        color: 'berry',
+        percentage: berryPercentage,
+        sectionText: `${berryPercentage}%`,
+        tooltipText: `${compactNumber(berryStrength)} (${berryPercentage}%)`
+      },
       { color: 'berry-light', percentage: 0, sectionText: '0%', tooltipText: '0 (0%)' },
-      { color: 'skill', percentage: 17.7, sectionText: '17.7%', tooltipText: '2.8K (17.7%)' }
+      {
+        color: 'skill',
+        percentage: skillPercentage,
+        sectionText: `${skillPercentage}%`,
+        tooltipText: `${compactNumber(skillStrength)} (${skillPercentage}%)`
+      }
     ])
   })
 

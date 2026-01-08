@@ -19,7 +19,7 @@
       <div class="ml-2">
         <div class="flex-center">
           <span class="font-weight-medium text-center">{{
-            MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
+            compactNumber(memberWithProduction.production.skillProcs * timeWindowFactor)
           }}</span>
           <v-img
             src="/images/misc/skillproc.png"
@@ -64,12 +64,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { BerryBurst, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -81,8 +79,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { teamStore, MathUtils, mainskillImage, berryImage, userStore }
+    return { teamStore, mainskillImage, berryImage, compactNumber }
   },
   computed: {
     berryName() {
@@ -98,14 +95,7 @@ export default defineComponent({
             b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
             b.level === this.memberWithProduction.member.level
         )?.amount ?? 0
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: BerryBurst.activations.berries,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
     skillValueTeam() {
       const amount = this.memberWithProduction.production.produceFromSkill.berries.reduce(
@@ -117,18 +107,11 @@ export default defineComponent({
             : 0),
         0
       )
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: BerryBurst.activations.berries,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
 
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

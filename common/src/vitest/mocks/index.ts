@@ -2,6 +2,7 @@ export * from './berry';
 export * from './ingredient';
 export * from './island';
 export * from './login';
+export * from './events';
 export * from './pokemon';
 export * from './recipe';
 export * from './team';

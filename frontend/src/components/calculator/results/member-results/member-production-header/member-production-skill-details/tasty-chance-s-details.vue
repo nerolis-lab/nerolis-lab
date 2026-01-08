@@ -53,12 +53,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils, TastyChanceS, compactNumber, getIsland } from 'sleepapi-common'
+import { MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -70,25 +68,17 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { userStore, teamStore, MathUtils, mainskillImage }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
       return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
     },
     totalSkillValue() {
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: TastyChanceS.activations.critChance,
-          amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(this.memberWithProduction.production.skillAmount * this.timeWindowFactor)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

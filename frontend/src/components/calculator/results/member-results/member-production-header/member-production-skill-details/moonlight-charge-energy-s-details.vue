@@ -62,12 +62,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { ChargeEnergySMoonlight, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { ChargeEnergySMoonlight, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -79,8 +77,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { userStore, teamStore, MathUtils, mainskillImage }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -91,31 +88,17 @@ export default defineComponent({
       return critAmounts[this.memberWithProduction.member.skillLevel - 1]
     },
     selfSkillValue() {
-      const skillActivation = ChargeEnergySMoonlight.activations.energy
       return compactNumber(
-        StrengthService.skillValue({
-          skillActivation,
-          amount:
-            this.memberWithProduction.production.skillAmount -
-            this.memberWithProduction.production.advanced.skillCritValue,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
+        (this.memberWithProduction.production.skillAmount -
+          this.memberWithProduction.production.advanced.skillCritValue) *
+          this.timeWindowFactor
       )
     },
     teamSkillValue() {
-      const skillActivation = ChargeEnergySMoonlight.activations.energy
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation,
-          amount: this.memberWithProduction.production.advanced.skillCritValue,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(this.memberWithProduction.production.advanced.skillCritValue * this.timeWindowFactor)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

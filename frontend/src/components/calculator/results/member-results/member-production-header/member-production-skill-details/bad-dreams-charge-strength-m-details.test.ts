@@ -1,11 +1,11 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
-import { StrengthService } from '@/services/strength/strength-service'
+import { timeWindowFactor } from '@/types/time/time-window'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { ChargeStrengthMBadDreams, DARKRAI, MathUtils, compactNumber, type MemberSkillValue } from 'sleepapi-common'
+import { DARKRAI, MathUtils, compactNumber, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const mockMember: MemberProductionExt = mocks.createMockMemberProductionExt({
@@ -61,7 +61,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
   it('displays the correct number of skill procs', () => {
     const skillProcs = wrapper.find('.font-weight-medium.text-center')
     expect(skillProcs.text()).toBe(
-      MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
+      MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
   })
 
@@ -72,12 +72,7 @@ describe('BadDreamsChargeStrengthMDetails', () => {
 
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center.ml-1').at(0)
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: ChargeStrengthMBadDreams.activations.strength,
-      amount: mockMember.production.skillAmount,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const expectedValue = Math.floor(mockMember.production.strength.skill.total * timeWindowFactor('24H'))
     expect(totalSkillValue?.text()).toContain(compactNumber(expectedValue))
   })
 

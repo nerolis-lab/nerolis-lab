@@ -1,5 +1,5 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
-import { StrengthService } from '@/services/strength/strength-service'
+import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
@@ -54,8 +54,9 @@ describe('PresentIngredientMagnetSDetails', () => {
 
   it('displays the correct number of skill procs', () => {
     const skillProcs = wrapper.find('.font-weight-medium.text-center')
+    const teamStore = useTeamStore()
     expect(skillProcs.text()).toBe(
-      MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
+      MathUtils.round(mockMember.production.skillProcs * teamStore.timeWindowFactor, 1).toString()
     )
   })
 
@@ -80,13 +81,8 @@ describe('PresentIngredientMagnetSDetails', () => {
 
   it('displays the correct total skill value', () => {
     const totalSkillValueElements = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center')
-    const skill = mockMember.member.pokemon.skill
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: skill.activations.ingredients,
-      amount: mockMember.production.skillAmount,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const teamStore = useTeamStore()
+    const expectedValue = MathUtils.round(mockMember.production.skillAmount * teamStore.timeWindowFactor, 1)
     expect(totalSkillValueElements[0].text()).toContain(compactNumber(expectedValue))
   })
 

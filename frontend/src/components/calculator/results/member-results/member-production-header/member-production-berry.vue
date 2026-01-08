@@ -28,12 +28,10 @@
 
 <script lang="ts">
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -46,23 +44,15 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
     const { isMobile } = useBreakpoint()
-    return { teamStore, MathUtils, berryImage, isMobile, userStore }
+    return { teamStore, MathUtils, berryImage, isMobile }
   },
   computed: {
     currentBerryStrength() {
-      return compactNumber(
-        StrengthService.berryStrength({
-          island: this.teamStore.getCurrentTeam.island,
-          berries: this.memberWithProduction.production.produceWithoutSkill.berries,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(this.memberWithProduction.production.strength.berries.total * this.timeWindowFactor, 'floor')
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

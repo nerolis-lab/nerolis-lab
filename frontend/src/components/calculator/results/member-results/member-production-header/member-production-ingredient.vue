@@ -26,7 +26,6 @@
 
 <script lang="ts">
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils, type IngredientSet } from 'sleepapi-common'
@@ -53,7 +52,7 @@ export default defineComponent({
       }
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   },
   methods: {
