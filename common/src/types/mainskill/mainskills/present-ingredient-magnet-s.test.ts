@@ -43,7 +43,7 @@ describe('PresentIngredientMagnetS', () => {
   });
 
   it('should calculate correct candy activation amounts (static at all levels)', () => {
-    expect(PresentIngredientMagnetS.activations.candy.amount()).toBe(4);
+    expect(PresentIngredientMagnetS.activations.candy.amount({ skillLevel: 1 })).toBe(4);
   });
 
   it('should have ingredient amounts less than Ingredient Magnet S', () => {

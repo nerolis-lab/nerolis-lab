@@ -1,4 +1,4 @@
-import type { AmountFunction, AmountParams, Ingredient } from '../..';
+import type { ActivationsType, AmountFunction, AmountParams, Ingredient } from '../..';
 import { rollToOutput } from '../../../utils/mainskill-utils/mainskill-utils';
 import { GREENGRASS_CORN, PURE_OIL, SNOOZY_TOMATO, SOFT_POTATO } from '../../ingredient/ingredients';
 import { ModifiedMainskill, ZeroAmount } from '../mainskill';
@@ -15,7 +15,7 @@ class IngredientDrawSHyperCutterImpl extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Gets ${this.ingredientAmounts[params.skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. Sometimes gets an additional ${this.ingredientAmounts[params.skillLevel - 1]} ingredients.`;
 
-  activations = {
+  activations: ActivationsType = {
     ingredients: {
       unit: 'ingredients',
       amount: this.leveledAmount(this.ingredientAmounts),
@@ -57,22 +57,22 @@ class IngredientDrawSHyperCutterImpl extends ModifiedMainskill {
     },
     'Potato (L)': {
       amountFunc: ZeroAmount,
-      critAmountFunc: this.activations.ingredients.critAmount,
+      critAmountFunc: this.activations.ingredients.critAmount!,
       ingredient: SOFT_POTATO
     },
     'Oil (L)': {
       amountFunc: ZeroAmount,
-      critAmountFunc: this.activations.ingredients.critAmount,
+      critAmountFunc: this.activations.ingredients.critAmount!,
       ingredient: PURE_OIL
     },
     'Tomato (L)': {
       amountFunc: ZeroAmount,
-      critAmountFunc: this.activations.ingredients.critAmount,
+      critAmountFunc: this.activations.ingredients.critAmount!,
       ingredient: SNOOZY_TOMATO
     },
     'Corn (L)': {
       amountFunc: ZeroAmount,
-      critAmountFunc: this.activations.ingredients.critAmount,
+      critAmountFunc: this.activations.ingredients.critAmount!,
       ingredient: GREENGRASS_CORN
     }
   };

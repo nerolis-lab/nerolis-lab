@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { BerryBurst } from './berry-burst';
 
@@ -13,7 +13,7 @@ export const BerryBurstDisguise = new (class extends ModifiedMainskill {
     `Gets ${this.selfBerryAmounts[params.skillLevel - 1]} Berries plus ${this.teamBerryAmounts[params.skillLevel - 1]} of each of the Berries other Pokémon on your team collect. May activate Greater Success once a day.`;
   RP = [1400, 1991, 2747, 3791, 5234, 7232];
 
-  activations = {
+  activations: ActivationsType = {
     berries: {
       unit: 'berries',
       amount: this.leveledAmount(this.selfBerryAmounts),

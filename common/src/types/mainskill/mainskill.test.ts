@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { AmountParams } from './mainskill';
+import type { ActivationsType, AmountParams } from './mainskill';
 import { INGREDIENT_SUPPORT_MAINSKILLS, Mainskill, MAINSKILLS, ModifiedMainskill } from '.';
 import { mainskillUnits } from './mainskill-unit';
 import { ChargeEnergySMoonlight } from './mainskills/charge-energy-s-moonlight';
@@ -10,7 +10,7 @@ const TestMainskill = new (class extends Mainskill {
   description = (_params: AmountParams) => 'A test skill for testing purposes.';
   RP = [100, 200, 300];
   image = 'test';
-  activations = {
+  activations: ActivationsType = {
     testActivation: {
       unit: 'energy',
       amount: (params: AmountParams) => params.skillLevel * 10
@@ -24,7 +24,7 @@ const TestModifiedMainskill = new (class extends ModifiedMainskill {
   description = (_params: AmountParams) => 'A test modified skill for testing purposes.';
   RP = [150, 300, 450];
   image = 'test';
-  activations = {
+  activations: ActivationsType = {
     testActivation: {
       unit: 'energy',
       amount: (params: AmountParams) => params.skillLevel * 15,
@@ -285,7 +285,7 @@ describe('Additional validation tests', () => {
       image = 'test';
       activations = {
         testActivation: {
-          unit: 'test',
+          unit: 'energy' as const,
           amount: this.leveledAmount([10, 20, 30])
         }
       };

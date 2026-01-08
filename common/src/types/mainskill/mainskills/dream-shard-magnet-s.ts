@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const DreamShardMagnetS = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const DreamShardMagnetS = new (class extends Mainskill {
   image = 'shards';
 
   description = (params: AmountParams) => `Obtain ${this.shardAmounts[params.skillLevel - 1]} Dream Shards.`;
-  activations = {
+  activations: ActivationsType = {
     dreamShards: {
       unit: 'dream shards',
       amount: this.leveledAmount(this.shardAmounts)
@@ -22,7 +22,7 @@ export const DreamShardMagnetSRange = new (class extends Mainskill {
   shardAmounts = [300, 425, 600, 837.5, 1150, 1575, 2250, 2875];
   image = 'shards';
   description = (params: AmountParams) => `Obtain ${this.shardAmounts[params.skillLevel - 1]} Dream Shards on average.`;
-  activations = {
+  activations: ActivationsType = {
     dreamShards: {
       unit: 'dream shards',
       amount: this.leveledAmount(this.shardAmounts)

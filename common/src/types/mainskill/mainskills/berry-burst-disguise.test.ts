@@ -28,8 +28,8 @@ describe('BerryBurstDisguise', () => {
 
   it('should calculate team amounts correctly', () => {
     const activation = BerryBurstDisguise.activations.berries;
-    expect(activation.teamAmount({ skillLevel: 1 })).toBe(1);
-    expect(activation.teamAmount({ skillLevel: 6 })).toBe(5);
+    expect(activation.teamAmount!({ skillLevel: 1 })).toBe(1);
+    expect(activation.teamAmount!({ skillLevel: 6 })).toBe(5);
   });
 
   it('should calculate activation amounts correctly', () => {

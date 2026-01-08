@@ -19,7 +19,7 @@
       <div class="ml-2">
         <div class="flex-center">
           <span class="font-weight-medium text-center">{{
-            MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
+            compactNumber(memberWithProduction.production.skillProcs * timeWindowFactor)
           }}</span>
           <v-img
             src="/images/misc/skillproc.png"
@@ -48,12 +48,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { ChargeStrengthM, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -65,25 +63,17 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { teamStore, MathUtils, mainskillImage, userStore }
+    return { teamStore, mainskillImage, compactNumber }
   },
   computed: {
     skillValuePerProc() {
       return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
     },
     totalSkillValue() {
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: ChargeStrengthM.activations.strength,
-          amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor, 'floor')
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

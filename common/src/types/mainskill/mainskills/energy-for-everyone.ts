@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const EnergyForEveryone = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const EnergyForEveryone = new (class extends Mainskill {
   image = 'energy';
   description = (params: AmountParams) =>
     `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to each helper Pokémon on your team.`;
-  activations = {
+  activations: ActivationsType = {
     energy: {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts)

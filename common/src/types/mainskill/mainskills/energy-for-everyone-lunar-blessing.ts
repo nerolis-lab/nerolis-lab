@@ -1,5 +1,5 @@
 import { MAX_TEAM_SIZE } from '../../constants';
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { EnergyForEveryone } from './energy-for-everyone';
 
@@ -27,7 +27,7 @@ export const EnergyForEveryoneLunarBlessing = new (class extends ModifiedMainski
     5: [2, 3, 4, 5, 7, 9] // unique: 5
   };
 
-  activations = {
+  activations: ActivationsType = {
     energy: {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts)

@@ -1,5 +1,5 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
-import { StrengthService } from '@/services/strength/strength-service'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
@@ -47,7 +47,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct number of skill procs', () => {
     const skillProcs = wrapper.find('.font-weight-medium.text-center')
     expect(skillProcs.text()).toBe(
-      MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
+      MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
   })
 
@@ -59,18 +59,8 @@ describe('MemberProductionSkill', () => {
 
   it('displays the correct total ingredient and crit values', () => {
     const totalValues = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center.ml-2')
-    const expectedIngredientValue = StrengthService.skillValue({
-      skillActivation: CookingAssistSBulkUp.activations.ingredients,
-      amount: mockMember.production.skillValue.ingredients.amountToSelf,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
-    const expectedCritValue = StrengthService.skillValue({
-      skillActivation: CookingAssistSBulkUp.activations.critChance,
-      amount: mockMember.production.skillValue['crit chance'].amountToSelf,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const expectedIngredientValue = mockMember.production.skillValue.ingredients.amountToSelf * timeWindowFactor('24H')
+    const expectedCritValue = mockMember.production.skillValue['crit chance'].amountToSelf * timeWindowFactor('24H')
 
     expect(totalValues[0].text()).toContain(compactNumber(expectedIngredientValue))
     expect(totalValues[1].text()).toContain(`${compactNumber(expectedCritValue)}%`)

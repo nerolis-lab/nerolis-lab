@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const IngredientDrawS = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const IngredientDrawS = new (class extends Mainskill {
   image = 'ingredient_draw';
   description = (params: AmountParams) =>
     `Gets ${this.ingredientAmounts[params.skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients.`;
-  activations = {
+  activations: ActivationsType = {
     ingredients: {
       unit: 'ingredients',
       amount: this.leveledAmount(this.ingredientAmounts)
