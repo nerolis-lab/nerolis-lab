@@ -48,12 +48,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { EnergizingCheerSNuzzle, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { EnergizingCheerSNuzzle, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -65,8 +63,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { teamStore, MathUtils, mainskillImage, userStore }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     energyValuePerProc() {
@@ -80,17 +77,10 @@ export default defineComponent({
       })
     },
     totalSkillValue() {
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: EnergizingCheerSNuzzle.activations.energy,
-          amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(this.memberWithProduction.production.skillAmount * this.timeWindowFactor)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

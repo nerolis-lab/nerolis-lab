@@ -1,5 +1,6 @@
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { defineStore } from 'pinia'
 import { DOMAIN_VERSION, type MemberProduction } from 'sleepapi-common'
 
@@ -29,7 +30,8 @@ export const useComparisonStore = defineStore('comparison', {
     currentTeam: (state) => {
       const teamStore = useTeamStore()
       return state.teamIndex != null ? teamStore.teams[state.teamIndex] : undefined
-    }
+    },
+    timeWindowFactor: (state) => timeWindowFactor(state.timeWindow)
   },
   actions: {
     invalidateCache() {

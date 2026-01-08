@@ -1,9 +1,9 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
-import { StrengthService } from '@/services/strength/strength-service'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { berry, BerryBurst, BRAVIARY, compactNumber, MathUtils } from 'sleepapi-common'
+import { berry, BRAVIARY, compactNumber, MathUtils } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
@@ -57,7 +57,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct number of skill procs', () => {
     const skillProcs = wrapper.find('.font-weight-medium.text-center')
     expect(skillProcs.text()).toBe(
-      MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
+      MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
   })
 
@@ -68,27 +68,18 @@ describe('MemberProductionSkill', () => {
 
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center')
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: BerryBurst.activations.berries,
-      amount: mockMember.production.produceFromSkill.berries.reduce(
-        (sum, cur) => (sum + cur.berry.name === BRAVIARY.berry.name ? cur.amount : 0),
-        0
-      ),
-      timeWindow: '24H',
-      areaBonus: 1
-    })
-    const expectedTeam = StrengthService.skillValue({
-      skillActivation: BerryBurst.activations.berries,
-      amount: mockMember.production.produceFromSkill.berries.reduce(
-        (sum, cur) => (sum + cur.berry.name !== BRAVIARY.berry.name ? cur.amount : 0),
-        0
-      ),
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const factor = timeWindowFactor('24H')
+    const selfAmount =
+      mockMember.production.produceFromSkill.berries.find(
+        (b) => b.berry.name === BRAVIARY.berry.name && b.level === mockMember.member.level
+      )?.amount ?? 0
+    const teamAmount = mockMember.production.produceFromSkill.berries.reduce((sum, cur) => {
+      return sum + (cur.berry.name === BRAVIARY.berry.name && cur.level === mockMember.member.level ? 0 : cur.amount)
+    }, 0)
+
     expect(totalSkillValue.at(0)?.text()).toContain(
-      `${compactNumber(expectedValue)} ${BRAVIARY.berry.name.toLowerCase()}`
+      `${compactNumber(MathUtils.round(selfAmount * factor, 1))} ${BRAVIARY.berry.name.toLowerCase()}`
     )
-    expect(totalSkillValue.at(1)?.text()).toContain(`${compactNumber(expectedTeam)} other`)
+    expect(totalSkillValue.at(1)?.text()).toContain(`${compactNumber(MathUtils.round(teamAmount * factor, 1))} other`)
   })
 })

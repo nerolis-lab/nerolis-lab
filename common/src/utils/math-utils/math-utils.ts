@@ -4,6 +4,11 @@ class MathUtilsImpl {
     return Math.floor(num * factor) / factor;
   }
 
+  public ceil(num: number, decimals: number) {
+    const factor = Math.pow(10, decimals);
+    return Math.ceil(num * factor) / factor;
+  }
+
   public round(num: number, decimals: number) {
     const factor = Math.pow(10, decimals);
     return Math.round(num * factor) / factor;

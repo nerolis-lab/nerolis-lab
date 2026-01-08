@@ -18,7 +18,6 @@
 import MemberProductionBerry from '@/components/calculator/results/member-results/member-production-header/member-production-berry.vue'
 import MemberProductionIngredient from '@/components/calculator/results/member-results/member-production-header/member-production-ingredient.vue'
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
-import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -43,11 +42,6 @@ export default defineComponent({
     const pokemonStore = usePokemonStore()
     const teamStore = useTeamStore()
     return { pokemonStore, teamStore, MathUtils, mainskillImage, berryImage }
-  },
-  computed: {
-    timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
-    }
   }
 })
 </script>

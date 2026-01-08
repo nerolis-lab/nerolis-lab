@@ -8,9 +8,28 @@ describe('capitalize', () => {
 });
 
 describe('compactNumber', () => {
-  it('should return the number as a string if less than 1000', () => {
-    expect(compactNumber(500)).toEqual('500');
-    expect(compactNumber(999)).toEqual('999');
+  describe('numbers less than 1000', () => {
+    it('should round numbers less than 1000 with default rounding', () => {
+      expect(compactNumber(500.6789)).toEqual('500.7');
+      expect(compactNumber(123.456)).toEqual('123.5');
+      expect(compactNumber(50.5)).toEqual('50.5');
+      expect(compactNumber(50.0)).toEqual('50');
+    });
+
+    it('should support floor rounding for numbers less than 1000', () => {
+      expect(compactNumber(500.6789, 'floor')).toEqual('500.6');
+      expect(compactNumber(123.456, 'floor')).toEqual('123.4');
+    });
+
+    it('should support ceil rounding for numbers less than 1000', () => {
+      expect(compactNumber(500.6789, 'ceil')).toEqual('500.7');
+      expect(compactNumber(123.451, 'ceil')).toEqual('123.5');
+    });
+
+    it('should support custom decimal places for numbers less than 1000', () => {
+      expect(compactNumber(123.456, 0)).toEqual('123');
+      expect(compactNumber(123.456, 2)).toEqual('123.46');
+    });
   });
 
   it('should return the number in K format for thousands', () => {
@@ -28,6 +47,86 @@ describe('compactNumber', () => {
   it('should handle edge cases with rounding', () => {
     expect(compactNumber(1000001)).toEqual('1M');
     expect(compactNumber(1999999)).toEqual('2M');
+  });
+
+  describe('with floor rounding', () => {
+    it('should floor numbers under 1000', () => {
+      expect(compactNumber(549, 'floor')).toEqual('549');
+      expect(compactNumber(551, 'floor')).toEqual('551');
+      expect(compactNumber(599.9, 'floor')).toEqual('599.9');
+    });
+
+    it('should floor thousands', () => {
+      expect(compactNumber(1549, 'floor')).toEqual('1.5K');
+      expect(compactNumber(1551, 'floor')).toEqual('1.5K');
+      expect(compactNumber(1599, 'floor')).toEqual('1.5K');
+    });
+
+    it('should floor millions', () => {
+      expect(compactNumber(1549000, 'floor')).toEqual('1.5M');
+      expect(compactNumber(1551000, 'floor')).toEqual('1.5M');
+      expect(compactNumber(1599000, 'floor')).toEqual('1.5M');
+    });
+  });
+
+  describe('with ceil rounding', () => {
+    it('should ceil numbers under 1000', () => {
+      expect(compactNumber(549.1, 'ceil')).toEqual('549.1');
+      expect(compactNumber(551.5, 'ceil')).toEqual('551.5');
+      expect(compactNumber(599.01, 'ceil')).toEqual('599.1');
+    });
+
+    it('should ceil thousands', () => {
+      expect(compactNumber(1501, 'ceil')).toEqual('1.6K');
+      expect(compactNumber(1549, 'ceil')).toEqual('1.6K');
+      expect(compactNumber(1551, 'ceil')).toEqual('1.6K');
+    });
+
+    it('should ceil millions', () => {
+      expect(compactNumber(1501000, 'ceil')).toEqual('1.6M');
+      expect(compactNumber(1549000, 'ceil')).toEqual('1.6M');
+      expect(compactNumber(1551000, 'ceil')).toEqual('1.6M');
+    });
+  });
+
+  describe('with custom decimal places', () => {
+    it('should round numbers under 1000 to specified decimal places', () => {
+      expect(compactNumber(123.456, 0)).toEqual('123');
+      expect(compactNumber(123.456, 1)).toEqual('123.5');
+      expect(compactNumber(123.456, 2)).toEqual('123.46');
+    });
+
+    it('should round thousands to specified decimal places', () => {
+      expect(compactNumber(1234, 0)).toEqual('1K');
+      expect(compactNumber(1234, 1)).toEqual('1.2K');
+      expect(compactNumber(1234, 2)).toEqual('1.2K');
+    });
+
+    it('should round millions to specified decimal places', () => {
+      expect(compactNumber(1234567, 0)).toEqual('1M');
+      expect(compactNumber(1234567, 1)).toEqual('1.2M');
+      expect(compactNumber(1234567, 2)).toEqual('1.2M');
+    });
+  });
+
+  describe('without rounding parameter (default)', () => {
+    it('should default to 1 decimal place rounding for numbers under 1000', () => {
+      expect(compactNumber(549)).toEqual('549');
+      expect(compactNumber(549.67)).toEqual('549.7');
+      expect(compactNumber(123.45)).toEqual('123.5');
+    });
+
+    it('should default to 1 decimal place rounding for thousands', () => {
+      expect(compactNumber(1549)).toEqual('1.5K');
+      expect(compactNumber(1551)).toEqual('1.6K');
+      expect(compactNumber(1234)).toEqual('1.2K');
+    });
+
+    it('should default to 1 decimal place rounding for millions', () => {
+      expect(compactNumber(1549000)).toEqual('1.5M');
+      expect(compactNumber(1551000)).toEqual('1.6M');
+      expect(compactNumber(1234567)).toEqual('1.2M');
+    });
   });
 });
 
