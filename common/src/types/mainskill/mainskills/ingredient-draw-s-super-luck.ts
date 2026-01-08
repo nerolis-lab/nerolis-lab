@@ -1,4 +1,4 @@
-import type { AmountFunction, AmountParams, Ingredient, MainskillUnit } from '../..';
+import type { ActivationsType, AmountFunction, AmountParams, Ingredient, MainskillUnit } from '../..';
 import { rollToOutput } from '../../../utils/mainskill-utils/mainskill-utils';
 import { BEAN_SAUSAGE, GREENGRASS_SOYBEANS, ROUSING_COFFEE, TASTY_MUSHROOM } from '../../ingredient/ingredients';
 import { ModifiedMainskill, ZeroAmount } from '../mainskill';
@@ -17,7 +17,7 @@ class IngredientDrawSSuperLuckImpl extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Gets ${this.ingredientAmounts[params.skillLevel - 1]} of one type of ingredient chosen randomly from a specific selection of ingredients. On rare occasions, gets a great number of Dream Shards instead.`;
 
-  activations = {
+  activations: ActivationsType = {
     ingredients: {
       unit: 'ingredients',
       amount: this.leveledAmount(this.ingredientAmounts)
@@ -71,7 +71,7 @@ class IngredientDrawSSuperLuckImpl extends ModifiedMainskill {
     },
     'Dream Shards (L)': {
       amountFunc: ZeroAmount,
-      critAmountFunc: this.activations.dreamShards.critAmount,
+      critAmountFunc: this.activations.dreamShards.critAmount!,
       ingredient: undefined,
       unit: 'dream shards'
     }

@@ -47,6 +47,8 @@ import {
   subskill
 } from 'sleepapi-common';
 
+import { StrengthCalculator } from '../strength-calculator/strength-calculator.js';
+
 export type HelpPeriod = 'day' | 'night';
 
 export class MemberState {
@@ -55,6 +57,7 @@ export class MemberState {
   otherMembers: MemberState[] = [];
   cookingState?: CookingState;
   private skillState: SkillState;
+  private settings: TeamSettingsExt;
   private camp: boolean;
   private rng: PreGeneratedRandom;
 
@@ -159,6 +162,7 @@ export class MemberState {
     this.berryProductionPerDay = new Int16Array(iterations);
     this.ingredientProductionPerDay = Array.from({ length: iterations }, emptyIngredientInventoryInt);
 
+    this.settings = settings;
     this.camp = settings.camp;
     this.cookingState = cookingState;
 
@@ -695,6 +699,14 @@ export class MemberState {
       ingredientDistributions[ingredientName] = calculateDistribution(dailyValues);
     }
 
+    const strength = new StrengthCalculator().calculateStrength({
+      settings: this.settings,
+      produceWithoutSkill: totalHelpProduce,
+      produceFromSkill: totalSkillProduce,
+      skillValue,
+      areaBonus: this.settings.island.areaBonus ?? 0
+    });
+
     return {
       produceTotal,
       produceWithoutSkill: totalHelpProduce,
@@ -702,6 +714,7 @@ export class MemberState {
       skillAmount,
       skillValue,
       skillProcs,
+      strength,
       externalId: this.id,
       pokemonWithIngredients: this.pokemonWithIngredients,
       advanced: {

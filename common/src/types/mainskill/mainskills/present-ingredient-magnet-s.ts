@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { IngredientMagnetS } from './ingredient-magnet-s';
 
@@ -13,7 +13,7 @@ export const PresentIngredientMagnetS = new (class extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Gets you ${this.ingredientAmounts[params.skillLevel - 1]} ingredients chosen at random. Sometimes gets an additional ${this.candyAmount} candy for one Pokémon on your team.`;
 
-  activations = {
+  activations: ActivationsType = {
     ingredients: {
       unit: 'ingredients',
       amount: this.leveledAmount(this.ingredientAmounts)

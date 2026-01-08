@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const ExtraHelpfulS = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const ExtraHelpfulS = new (class extends Mainskill {
   image = 'helps';
   description = (params: AmountParams) =>
     `Instantly gets you ×${this.helpAmounts[params.skillLevel - 1]} the usual help from a helper Pokémon.`;
-  activations = {
+  activations: ActivationsType = {
     helps: {
       unit: 'helps',
       amount: this.leveledAmount(this.helpAmounts)

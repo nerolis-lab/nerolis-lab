@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const ChargeStrengthS = new (class extends Mainskill {
@@ -9,7 +9,7 @@ export const ChargeStrengthS = new (class extends Mainskill {
   description = (params: AmountParams) =>
     `Increases Snorlax's Strength by ${this.strengthAmounts[params.skillLevel - 1]}.`;
 
-  activations = {
+  activations: ActivationsType = {
     strength: {
       unit: 'strength',
       amount: this.leveledAmount(this.strengthAmounts)
@@ -24,7 +24,7 @@ export const ChargeStrengthSRange = new (class extends Mainskill {
   image = 'strength';
   description = (params: AmountParams) =>
     `Increases Snorlax's Strength on average by ${this.strengthAmounts[params.skillLevel - 1]}.`;
-  activations = {
+  activations: ActivationsType = {
     strength: {
       unit: 'strength',
       amount: this.leveledAmount(this.strengthAmounts)

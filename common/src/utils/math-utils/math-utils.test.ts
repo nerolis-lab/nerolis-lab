@@ -15,6 +15,25 @@ describe('floor', () => {
   });
 });
 
+describe('ceil', () => {
+  it('shall ceil to specific decimal precision', () => {
+    expect(MathUtils.ceil(3.56789, 4)).toBe(3.5679);
+  });
+
+  it('shall ceil to whole integer', () => {
+    expect(MathUtils.ceil(3.56789, 0)).toBe(4);
+  });
+
+  it('shall calculate and ceil to 1 decimal negative', () => {
+    expect(MathUtils.ceil(-0.26, 1)).toBe(-0.2);
+  });
+
+  it('shall ceil to two decimal places', () => {
+    expect(MathUtils.ceil(1.501, 1)).toBe(1.6);
+    expect(MathUtils.ceil(1.549, 1)).toBe(1.6);
+  });
+});
+
 describe('round', () => {
   it('shall round to one decimal', () => {
     expect(MathUtils.round(1.1111, 1)).toBe(1.1);

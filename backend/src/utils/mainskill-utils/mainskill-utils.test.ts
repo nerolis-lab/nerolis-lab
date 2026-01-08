@@ -89,7 +89,7 @@ describe('convertActivationsToApiFormat', () => {
       },
       berries: {
         amount: (params: { skillLevel: number }) => params.skillLevel + 2,
-        unit: 'berry'
+        unit: 'berries'
       }
     };
 
@@ -101,7 +101,7 @@ describe('convertActivationsToApiFormat', () => {
         amounts: [5, 10, 15, 20]
       },
       berries: {
-        unit: 'berry',
+        unit: 'berries',
         amounts: [3, 4, 5, 6]
       }
     });
@@ -116,7 +116,7 @@ describe('convertActivationsToApiFormat', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       singleLevel: {
         amount: (params: { skillLevel: number }) => 100 + (params.skillLevel - params.skillLevel), // Always returns 100
-        unit: 'points'
+        unit: 'strength'
       }
     };
 
@@ -124,7 +124,7 @@ describe('convertActivationsToApiFormat', () => {
 
     expect(result).toEqual({
       singleLevel: {
-        unit: 'points',
+        unit: 'strength',
         amounts: [100]
       }
     });
@@ -152,7 +152,7 @@ describe('convertActivationsToApiFormat', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       berryActivation: {
         amount: (params: { skillLevel: number }) => params.skillLevel,
-        unit: 'berry'
+        unit: 'berries'
       },
       energyActivation: {
         amount: (params: { skillLevel: number }) => params.skillLevel,
@@ -160,22 +160,22 @@ describe('convertActivationsToApiFormat', () => {
       },
       ingredientActivation: {
         amount: (params: { skillLevel: number }) => params.skillLevel,
-        unit: 'ingredient'
+        unit: 'ingredients'
       }
     };
 
     const result = convertActivationsToApiFormat(mockActivations, 2);
 
-    expect(result.berryActivation.unit).toBe('berry');
+    expect(result.berryActivation.unit).toBe('berries');
     expect(result.energyActivation.unit).toBe('energy');
-    expect(result.ingredientActivation.unit).toBe('ingredient');
+    expect(result.ingredientActivation.unit).toBe('ingredients');
   });
 
   it('should generate correct amounts array length based on maxLevel', () => {
     const mockActivations: Record<string, MainskillActivation> = {
       test: {
         amount: (params: { skillLevel: number }) => params.skillLevel,
-        unit: 'test'
+        unit: 'energy'
       }
     };
 

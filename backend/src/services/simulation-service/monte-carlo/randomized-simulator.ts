@@ -110,14 +110,14 @@ export function randomizedSimulation(params: {
             energyAmount = 0;
           }
         } else if (pokemon.skill.is(ChargeEnergySMoonlight)) {
-          if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance)) {
+          if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance!)) {
             skillCrits += 1;
-            energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount({ skillLevel });
+            energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel });
           }
         }
         currentEnergy = Math.min(currentEnergy + energyAmount, 150);
       } else if (!disguiseBusted && pokemon.skill.is(BerryBurstDisguise)) {
-        if (RandomUtils.roll(BerryBurstDisguise.activations.berries.critChance)) {
+        if (RandomUtils.roll(BerryBurstDisguise.activations.berries.critChance!)) {
           disguiseBusted = true;
           skillCrits += 1;
         }
@@ -167,14 +167,14 @@ export function randomizedSimulation(params: {
               energyAmount = 0;
             }
           } else if (pokemon.skill.is(ChargeEnergySMoonlight)) {
-            if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance)) {
+            if (RandomUtils.roll(ChargeEnergySMoonlight.activations.energy.critChance!)) {
               skillCrits += 1;
-              energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount({ skillLevel });
+              energyAmount += ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel });
             }
           }
           currentEnergy = Math.min(currentEnergy + energyAmount, 150);
         } else if (!disguiseBusted && pokemon.skill.is(BerryBurstDisguise)) {
-          if (RandomUtils.roll(BerryBurstDisguise.activations.berries.critChance)) {
+          if (RandomUtils.roll(BerryBurstDisguise.activations.berries.critChance!)) {
             disguiseBusted = true;
             skillCrits += 1;
           }

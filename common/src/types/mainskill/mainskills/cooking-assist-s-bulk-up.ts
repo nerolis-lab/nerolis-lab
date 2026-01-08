@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { CookingAssistS } from './cooking-assist-s';
 
@@ -12,7 +12,7 @@ export const CookingAssistSBulkUp = new (class extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Gets you ${this.ingredientAmounts[params.skillLevel - 1]} ingredients chosen at random. Also raises your Extra Tasty rate by ${this.chanceAmounts[params.skillLevel - 1]}%. The effect lasts until you cook an Extra Tasty dish or change sites.`;
 
-  activations = {
+  activations: ActivationsType = {
     ingredients: {
       unit: 'ingredients',
       amount: this.leveledAmount(this.ingredientAmounts)

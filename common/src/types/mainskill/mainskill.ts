@@ -9,9 +9,14 @@ export const ZeroAmount: AmountFunction = () => 0;
 export type DescriptionFunction = (params: AmountParams) => string;
 
 export type MainskillActivation = {
-  // I can't figure out a way to make this be MainskillUnit only
-  unit: MainskillUnit | string;
+  unit: MainskillUnit;
   amount: AmountFunction;
+  teamAmount?: AmountFunction;
+  critAmount?: AmountFunction;
+  critChance?: number;
+  critMultiplier?: number;
+  targetLowestChance?: number;
+  teamEnergyReduction?: number;
 };
 
 export interface MainskillBaseAttributes {
@@ -72,7 +77,7 @@ export abstract class Mainskill {
     return Object.values(this.activations).some((activation) => activation.unit === unit);
   }
 
-  getUnits(): string[] {
+  getUnits(): MainskillUnit[] {
     const unitSet = new Set(Object.values(this.activations).map((activation) => activation.unit));
     return Array.from(unitSet);
   }

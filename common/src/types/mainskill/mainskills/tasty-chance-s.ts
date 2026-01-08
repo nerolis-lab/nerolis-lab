@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const TastyChanceS = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const TastyChanceS = new (class extends Mainskill {
   image = 'chance';
   description = (params: AmountParams) =>
     `Raises your Extra Tasty rate by ${this.chanceAmounts[params.skillLevel - 1]}%. The effect lasts until you cook an Extra Tasty dish or change sites.`;
-  activations = {
+  activations: ActivationsType = {
     critChance: {
       unit: 'crit chance',
       amount: this.leveledAmount(this.chanceAmounts)

@@ -51,13 +51,11 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { compactNumber, getIsland, HelperBoost, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
+import { compactNumber, HelperBoost, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -70,8 +68,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const userStore = useUserStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage, userStore }
+    return { teamStore, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -84,17 +81,10 @@ export default defineComponent({
       return HelperBoost.getHelps(this.memberWithProduction.member.skillLevel, count)
     },
     totalSkillValue() {
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: HelperBoost.activations.helps,
-          amount: this.memberWithProduction.production.skillAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(this.memberWithProduction.production.skillAmount * this.timeWindowFactor)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

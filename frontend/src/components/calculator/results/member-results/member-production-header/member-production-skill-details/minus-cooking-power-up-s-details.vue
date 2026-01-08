@@ -64,13 +64,11 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { CookingPowerUpSMinus, IngredientMagnetSPlus, MathUtils, compactNumber, getIsland } from 'sleepapi-common'
+import { CookingPowerUpSMinus, IngredientMagnetSPlus, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -84,8 +82,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const userStore = useUserStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage, userStore }
+    return { teamStore, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -95,12 +92,7 @@ export default defineComponent({
     },
     totalPotValue() {
       return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: CookingPowerUpSMinus.activations.solo,
-          amount: this.memberWithProduction.production.skillValue['pot size'].amountToSelf,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
+        this.memberWithProduction.production.skillValue['pot size'].amountToSelf * this.timeWindowFactor
       )
     },
     totalEnergyValue() {
@@ -112,17 +104,10 @@ export default defineComponent({
       const energyAmountToSelf = this.memberWithProduction.production.skillValue.energy?.amountToSelf ?? 0
       const energyAmountToTeam = this.memberWithProduction.production.skillValue.energy?.amountToTeam ?? 0
       const energyAmount = isPaired ? energyAmountToSelf + energyAmountToTeam : 0
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: CookingPowerUpSMinus.activations.paired,
-          amount: energyAmount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(energyAmount * this.timeWindowFactor)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

@@ -8,16 +8,18 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
     const memberState = skillState.memberState;
     const skill = BerryBurstDisguise;
     const regularSelfAmount = skillState.skillAmount(skill.activations.berries);
-    const regularOtherAmount = BerryBurstDisguise.activations.berries.teamAmount({ skillLevel: skillState.skillLevel });
+    const regularOtherAmount = BerryBurstDisguise.activations.berries.teamAmount!({
+      skillLevel: skillState.skillLevel
+    });
     let critSelfAmount = 0;
     let critOtherAmount = 0;
 
-    if (!memberState.disguiseBusted && skillState.rng() < BerryBurstDisguise.activations.berries.critChance) {
+    if (!memberState.disguiseBusted && skillState.rng() < BerryBurstDisguise.activations.berries.critChance!) {
       memberState.disguiseBusted = true;
 
       // -1 because the crit value is the difference between 1x and 3x, so only 2x
-      critSelfAmount = regularSelfAmount * (BerryBurstDisguise.activations.berries.critMultiplier - 1);
-      critOtherAmount = regularOtherAmount * (BerryBurstDisguise.activations.berries.critMultiplier - 1);
+      critSelfAmount = regularSelfAmount * (BerryBurstDisguise.activations.berries.critMultiplier! - 1);
+      critOtherAmount = regularOtherAmount * (BerryBurstDisguise.activations.berries.critMultiplier! - 1);
     }
 
     const berries = memberState.otherMembers.map((member) => ({

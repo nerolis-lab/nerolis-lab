@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { ChargeEnergyS } from './charge-energy-s';
 
@@ -12,7 +12,7 @@ export const ChargeEnergySMoonlight = new (class extends ModifiedMainskill {
     `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to the user. Has a chance of restoring ${this.critAmounts[params.skillLevel - 1]} energy to another Pokémon.`;
   RP = [560, 797, 1099, 1516, 2094, 2892];
 
-  activations = {
+  activations: ActivationsType = {
     energy: {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts),
