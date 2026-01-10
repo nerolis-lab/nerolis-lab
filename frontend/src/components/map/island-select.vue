@@ -32,15 +32,10 @@
         </v-btn>
       </section>
 
-      <section class="area-bonus">
-        <span>Set your area bonuses: </span>
-        <a class="btn-link" href="/settings">Settings</a>
-      </section>
-
       <!-- Expert mode settings -->
       <template v-if="expertMode">
         <!-- Main favorite berry (1 berry) -->
-        <section class="main-favorite-berry favorite-berries">
+        <section class="main-favorite-berry favorite-berry-selector">
           <div>Main Favorite Berry (1)</div>
           <v-sheet color="secondary" rounded style="overflow-y: auto">
             <v-chip-group v-model="mainFavoriteBerry" column selected-class="bg-primary">
@@ -53,7 +48,7 @@
           </v-sheet>
         </section>
         <!-- Sub-favorite berries (2 berries) -->
-        <section class="sub-favorite-berries favorite-berries">
+        <section class="sub-favorite-berries favorite-berry-selector">
           <div>Sub-Favorite Berries (2)</div>
           <v-sheet color="secondary" rounded style="overflow-y: auto">
             <v-chip-group v-model="subFavoriteBerries" column multiple selected-class="bg-primary">
@@ -120,10 +115,37 @@
 
       <!-- Regular mode settings -->
       <template v-else>
+        <div class="area-bonus">Set your area bonuses: <a class="btn-link" href="/settings">Settings</a></div>
+        <v-divider color="accent" opacity="0.5" />
         <section class="favorite-berries">
-          <div>Favorite Berries</div>
+          <!-- Selection UI only for Greengrass -->
+          <div class="selected-berries-display">
+            <div>Favorite Berries:</div>
+            <div class="selected-berry" v-for="berry in island.berries" v-if="island.berries.length < 4">
+              <div class="selected-berry-name">{{ berry.type }}</div>
+              <v-img
+                :key="berry.name"
+                :src="`/images/berries/${berry.name.toLowerCase()}.png`"
+                width="24"
+                height="24"
+                class="berry-image"
+              />
+            </div>
+          </div>
           <v-sheet color="secondary" rounded style="overflow-y: auto">
             <v-chip-group v-model="island.berries" column multiple selected-class="bg-primary">
+              <v-btn class="mx-1" color="surface" rounded aria-label="clear button" @click="clear()" v-if="isGreengrass"
+                >Clear</v-btn
+              >
+              <v-btn
+                class="mx-1"
+                color="surface"
+                rounded
+                aria-label="select all button"
+                @click="selectAll()"
+                v-if="isGreengrass"
+                >All</v-btn
+              >
               <v-chip v-for="berry in berries" :key="berry.name" :value="berry" class="ma-1">
                 <v-avatar size="24">
                   <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
@@ -133,9 +155,7 @@
           </v-sheet>
         </section>
 
-        <section class="buttons">
-          <v-btn color="surface" aria-label="clear button" @click="clear()">Clear</v-btn>
-          <v-btn color="surface" aria-label="select all button" @click="selectAll()">All</v-btn>
+        <section class="modal-footer">
           <v-btn color="secondary" aria-label="save button" @click="saveBerries()">Save</v-btn>
         </section>
       </template>
@@ -181,6 +201,10 @@ const expertModifier = ref<ExpertRandomBonusType>(island.value.expertModifier ??
 
 const availableIslands = computed(() => {
   return expertMode.value ? userStore.expertIslands : userStore.baseIslands
+})
+
+const isGreengrass = computed(() => {
+  return island.value.shortName === 'greengrass'
 })
 
 watch(
@@ -444,7 +468,43 @@ defineExpose({
   }
 
   .favorite-berries {
+    display: flex;
     flex-direction: column;
+
+    .berry-selection-buttons {
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      justify-content: flex-start;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 8px;
+    }
+  }
+
+  .selected-berries-display {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    gap: 8px;
+
+    .selected-berry {
+      display: flex;
+      gap: 4px;
+
+      .selected-berry-name {
+        text-transform: capitalize;
+
+        // @media (max-width: 400px) {
+        //   display: none;
+        // }
+      }
+
+      .berry-image {
+        flex-grow: 0;
+      }
+    }
   }
 
   .random-bonus {
@@ -485,8 +545,14 @@ defineExpose({
     //   }
   }
 
-  .buttons {
+  .area-bonus {
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-footer {
     justify-content: space-between;
+    align-items: center;
   }
 }
 </style>
