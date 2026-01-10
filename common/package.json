@@ -33,7 +33,7 @@
     "rollup": "^4.53.3",
     "typescript": "^5.9.3",
     "vimic": "^1.2.4",
-    "vitest": "^3.2.3"
+    "vitest": "^4.0.15"
   },
   "dependencies": {
     "tslib": "^2.6.2",
