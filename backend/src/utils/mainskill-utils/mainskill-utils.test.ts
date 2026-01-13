@@ -27,6 +27,7 @@ describe('getMainskillNames', () => {
         "Energizing Cheer S",
         "Nuzzle (Energizing Cheer S)",
         "Energy For Everyone",
+        "Berry Juice (Energy For Everyone)",
         "Lunar Blessing (Energy For Everyone)",
         "Extra Helpful S",
         "Helper Boost",
