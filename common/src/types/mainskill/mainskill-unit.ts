@@ -8,7 +8,8 @@ export const mainskillUnits = [
   'strength',
   'pot size',
   'crit chance',
-  'candy'
+  'candy',
+  'items'
 ] as const;
 
 export type MainskillUnit = (typeof mainskillUnits)[number];

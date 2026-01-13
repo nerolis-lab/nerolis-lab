@@ -16,6 +16,8 @@ import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/tea
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
+import { EnergizingCheerSNuzzleEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-nuzzle-effect.js';
+import { EnergyForEveryoneBerryJuiceEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-berry-juice-effect.js';
 import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
 import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
@@ -56,6 +58,7 @@ import {
   EnergizingCheerS,
   EnergizingCheerSNuzzle,
   EnergyForEveryone,
+  EnergyForEveryoneBerryJuice,
   EnergyForEveryoneLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
@@ -72,7 +75,6 @@ import {
   SkillCopyTransform,
   TastyChanceS
 } from 'sleepapi-common';
-import { EnergizingCheerSNuzzleEffect } from './skill-effects/energizing-cheer-s-nuzzle-effect.js';
 
 export class SkillState {
   memberState: MemberState;
@@ -117,6 +119,7 @@ export class SkillState {
       [EnergizingCheerS, new EnergizingCheerSEffect()],
       [EnergizingCheerSNuzzle, new EnergizingCheerSNuzzleEffect()],
       [EnergyForEveryone, new EnergyForEveryoneEffect()],
+      [EnergyForEveryoneBerryJuice, new EnergyForEveryoneBerryJuiceEffect()],
       [EnergyForEveryoneLunarBlessing, new EnergyForEveryoneLunarBlessingEffect()],
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
