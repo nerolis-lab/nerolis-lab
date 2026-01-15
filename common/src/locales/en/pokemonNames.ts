@@ -163,6 +163,7 @@ export default {
   SEALEO: 'Sealeo',
   SHELGON: 'Shelgon',
   SHINX: 'Shinx',
+  SHUCKLE: 'Shuckle',
   SHUPPET: 'Shuppet',
   SKELEDIRGE: 'Skeledirge',
   SLAKING: 'Slaking',
