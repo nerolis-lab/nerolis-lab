@@ -18,7 +18,7 @@
       </v-badge>
       <div class="ml-2">
         <div class="flex-center">
-          <span class="font-weight-medium text-center">{{
+          <span class="font-weight-medium text-center num-skill-procs">{{
             MathUtils.round(memberWithProduction.production.skillProcs * timeWindowFactor, 1)
           }}</span>
           <v-img
@@ -30,13 +30,13 @@
           ></v-img>
         </div>
         <div class="flex-left">
-          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1 energy-per-proc"
             >x{{ energyValuePerProc }}</span
           >
           <v-img src="/images/unit/energy.png" height="20" width="20" alt="energy" title="energy"></v-img>
         </div>
         <div class="flex-left">
-          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1 juice-per-proc"
             >x{{ juicePerProc }}</span
           >
           <v-img
@@ -53,11 +53,11 @@
     <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img src="/images/unit/energy.png" height="20" width="20" alt="energy" title="energy"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-1"> {{ totalEnergyValue }} total</span>
+        <span class="font-weight-medium text-no-wrap text-center ml-1 energy-total"> {{ totalEnergyValue }} total</span>
       </div>
       <div class="flex-center mt-1">
         <v-img src="/images/misc/berry-juice.png" height="20" width="20" alt="berry juice" title="berry juice"></v-img>
-        <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ totalJuice }} total</span>
+        <span class="font-weight-medium text-no-wrap text-center ml-2 juice-total"> {{ totalJuice }} total</span>
       </div>
     </v-col>
   </v-row>
