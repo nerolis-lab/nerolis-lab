@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc --project tsconfig.build.json && tsc-alias && tsoa spec && npm run _compile",
-    "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* dist/ && cp ../CHANGELOG.md dist/",
+    "postbuild": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/**/*.json src/**/*.png src/assets/* src/assets/**/* ../CHANGELOG.md dist/",
     "test": "vitest --run --coverage",
     "test-watch": "vitest --watch",
     "benchmark-set": "vitest run benchmark --mode benchmarking --update",
