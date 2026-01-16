@@ -45,7 +45,7 @@
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
             >x{{ candyPerProc }}</span
           >
-          <v-img src="/images/misc/candy.png" height="40" width="40" alt="candy" title="candy"></v-img>
+          <v-img src="/images/misc/candy.png" height="20" width="20" alt="candy" title="candy"></v-img>
         </div>
       </div>
     </v-col>
@@ -65,7 +65,7 @@
         {{ amountOfEachIngredient }} of each ing</span
       >
       <div class="flex-center mt-1">
-        <v-img src="/images/misc/candy.png" height="40" width="40" alt="candy" title="candy"></v-img>
+        <v-img src="/images/misc/candy.png" height="20" width="20" alt="candy" title="candy"></v-img>
         <span class="font-weight-medium text-no-wrap text-center ml-2"> {{ totalCandy }} total</span>
       </div>
     </v-col>
