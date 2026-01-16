@@ -58,7 +58,8 @@ const baseInstance: PokemonInstanceWithoutRP = {
   version: 0,
   saved: false,
   shiny: false,
-  gender: undefined
+  gender: undefined,
+  sneakySnacking: false
 };
 
 describe('RP', () => {

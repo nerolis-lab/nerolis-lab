@@ -304,7 +304,7 @@ export default defineComponent({
                 skillActivation,
                 amount: (() => {
                   const value = memberProduction.skillValue[skillActivation.unit as MainskillUnit]
-                  return value.amountToSelf + value.amountToTeam
+                  return value ? value.amountToSelf + value.amountToTeam : 0
                 })(),
                 timeWindow,
                 areaBonus

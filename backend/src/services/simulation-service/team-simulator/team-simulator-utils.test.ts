@@ -83,7 +83,8 @@ describe('calculateAverageProduce', () => {
         nature: optimalSettings.nature,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 2)),
         level: 29,
-        externalId: 'optimal'
+        externalId: 'optimal',
+        sneakySnacking: false
       };
 
       const averageProduce60 = TeamSimulatorUtils.calculateAverageProduce({
@@ -103,7 +104,8 @@ describe('calculateAverageProduce', () => {
         nature: optimalSettings.nature,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 2)),
         level: 30,
-        externalId: 'optimal'
+        externalId: 'optimal',
+        sneakySnacking: false
       };
 
       const averageProduce60 = TeamSimulatorUtils.calculateAverageProduce({
@@ -123,7 +125,8 @@ describe('calculateAverageProduce', () => {
         nature: optimalSettings.nature,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 3)),
         level: 60,
-        externalId: 'optimal'
+        externalId: 'optimal',
+        sneakySnacking: false
       };
       // ing% = 1.54 * 1.2 * 0.266 = 0.49 = 49%
       // (2+5+7 / 3) = 4.7 ings per ing drop
@@ -143,7 +146,8 @@ describe('calculateAverageProduce', () => {
         nature: optimalSettings.nature,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 4)),
         level: 75,
-        externalId: 'optimal'
+        externalId: 'optimal',
+        sneakySnacking: false
       };
 
       const averageProduce60 = TeamSimulatorUtils.calculateAverageProduce({ ...member, settings });
@@ -160,7 +164,8 @@ describe('calculateAverageProduce', () => {
         nature: optimalSettings.nature,
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name)),
         level: 100,
-        externalId: 'optimal'
+        externalId: 'optimal',
+        sneakySnacking: false
       };
       // ing% = 1.54 * 1.2 * 0.266 = 0.49 = 49%
       // (2+5+7 / 3) = 4.7 ings per ing drop
