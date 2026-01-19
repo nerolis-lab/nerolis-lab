@@ -1,3 +1,16 @@
+# [2.36.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.35.1...v2.36.0) (2026-01-19)
+
+
+### Bug Fixes
+
+* backend run script on Windows ([64369ac](https://github.com/nerolis-lab/nerolis-lab/commit/64369ac3f9f11a068f1db6c86a33f294019d76b1))
+
+
+### Features
+
+* add Berry Juice skill ([78a34e7](https://github.com/nerolis-lab/nerolis-lab/commit/78a34e709ba82c4358833a1c54ed2fe623dc8c95))
+* adds Shuckle ([403f56d](https://github.com/nerolis-lab/nerolis-lab/commit/403f56d7061adffbc2e4a3b7c6f2b2f8580f6a6d))
+
 ## [2.35.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.35.0...v2.35.1) (2026-01-03)
 
 
