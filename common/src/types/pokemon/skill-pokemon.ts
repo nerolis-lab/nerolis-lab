@@ -66,16 +66,17 @@ import {
   EnergizingCheerS,
   EnergizingCheerSNuzzle,
   EnergyForEveryone,
+  EnergyForEveryoneBerryJuice,
   EnergyForEveryoneLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
   IngredientDrawS,
+  IngredientDrawSSuperLuck,
   IngredientMagnetS,
   IngredientMagnetSPlus,
   Metronome,
   TastyChanceS
 } from '../mainskill/mainskills';
-import { IngredientDrawSSuperLuck } from '../mainskill/mainskills/ingredient-draw-s-super-luck';
 
 import type { Pokemon } from './pokemon';
 
@@ -494,6 +495,25 @@ export const WOBBUFFET: Pokemon = createSkillSpecialist({
     c: PURE_OIL
   },
   skill: EnergizingCheerS
+});
+
+export const SHUCKLE: Pokemon = createSkillSpecialist({
+  name: 'SHUCKLE',
+  pokedexNumber: 213,
+  frequency: toSeconds(1, 0, 0),
+  ingredientPercentage: 20.5,
+  skillPercentage: 5.9,
+  berry: LUM,
+  genders: BALANCED_GENDER,
+  carrySize: 16,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: PURE_OIL,
+    b: ROUSING_COFFEE,
+    c: HONEY
+  },
+  skill: EnergyForEveryoneBerryJuice
 });
 
 export const HERACROSS: Pokemon = createSkillSpecialist({
@@ -1120,6 +1140,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   UMBREON,
   SLOWKING,
   WOBBUFFET,
+  SHUCKLE,
   HERACROSS,
   RAIKOU,
   ENTEI,

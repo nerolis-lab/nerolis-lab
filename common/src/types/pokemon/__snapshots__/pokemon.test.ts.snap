@@ -21271,6 +21271,152 @@ exports[`COMPLETE_POKEDEX > shall not change SHINX unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "LUM",
+    "type": "bug",
+    "value": 24,
+  },
+  "carrySize": 16,
+  "displayName": "Shuckle",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 3600,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.5,
+  "name": "SHUCKLE",
+  "pokedexNumber": 213,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1220,
+      1735,
+      2392,
+      3303,
+      4559,
+      6299,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+      "juice": {
+        "amount": [Function],
+        "unit": "items",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        1120,
+        1593,
+        2197,
+        3033,
+        4187,
+        5785,
+      ],
+      "activations": {
+        "energy": {
+          "amount": [Function],
+          "unit": "energy",
+        },
+      },
+      "description": [Function],
+      "energyAmounts": [
+        5,
+        7,
+        9,
+        11.4,
+        15,
+        18.1,
+      ],
+      "image": "energy",
+      "name": "Energy For Everyone",
+    },
+    "description": [Function],
+    "energyAmounts": [
+      5,
+      7,
+      9,
+      11.4,
+      15,
+      18.1,
+    ],
+    "image": "energy",
+    "juiceAmount": 1,
+    "juicePercent": 0,
+    "modifierName": "Berry Juice",
+  },
+  "skillPercentage": 5.9,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change SHUPPET unexpectedly 1`] = `
 {
   "berry": {

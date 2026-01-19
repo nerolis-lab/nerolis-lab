@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import pokemonNames from '../../locales/en/pokemonNames';
 import type { Pokemon } from './pokemon';
 import { COMPLETE_POKEDEX } from './pokemon';
 
@@ -51,6 +52,13 @@ describe('COMPLETE_POKEDEX', () => {
   COMPLETE_POKEDEX.forEach((pokemon: Pokemon) => {
     it(`shall define a display name for ${pokemon.name}`, () => {
       expect(pokemon.displayName).toBeDefined();
+    });
+  });
+
+  COMPLETE_POKEDEX.forEach((pokemon: Pokemon) => {
+    it(`shall include a localized name entry for ${pokemon.name}`, () => {
+      expect(Object.prototype.hasOwnProperty.call(pokemonNames, pokemon.name)).toBe(true);
+      expect(pokemonNames[pokemon.name as keyof typeof pokemonNames]).toBeDefined();
     });
   });
 });

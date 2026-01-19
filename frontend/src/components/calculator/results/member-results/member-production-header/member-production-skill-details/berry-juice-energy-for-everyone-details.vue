@@ -69,7 +69,7 @@ import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { EnergyForEveryoneBerryJuice, MathUtils, compactNumber, defaultZero, getIsland } from 'sleepapi-common'
+import { EnergyForEveryoneBerryJuice, MathUtils, compactNumber, defaultZero } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -107,7 +107,7 @@ export default defineComponent({
     },
     totalJuice() {
       const juiceAmount = MathUtils.round(this.memberWithProduction.production.skillValue.items?.amountToSelf ?? 0, 2)
-      return compactNumber(juiceAmount)
+      return juiceAmount > 0 ? compactNumber(juiceAmount) : 'Unknown'
     },
 
     timeWindowFactor() {
