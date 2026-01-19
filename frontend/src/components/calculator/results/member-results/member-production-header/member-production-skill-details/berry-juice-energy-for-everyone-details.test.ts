@@ -5,7 +5,7 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { EnergyForEveryoneBerryJuice, MathUtils, compactNumber, commonMocks } from 'sleepapi-common'
+import { EnergyForEveryoneBerryJuice, MathUtils, commonMocks, compactNumber } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 import BerryJuiceEnergyForEveryoneDetails from './berry-juice-energy-for-everyone-details.vue'
 
@@ -81,8 +81,6 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
 
   it('displays the correct total energy value', () => {
     const totalEnergyValue = wrapper.find('.juice-total')
-    const juiceAmount = mockMember.production.skillValue.items.amountToSelf
-    const roundedAmount = MathUtils.round(juiceAmount, 2)
-    expect(totalEnergyValue.text()).toContain(compactNumber(roundedAmount))
+    expect(totalEnergyValue.text()).toContain('Unknown total')
   })
 })

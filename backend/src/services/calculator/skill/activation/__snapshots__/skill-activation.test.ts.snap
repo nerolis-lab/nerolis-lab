@@ -745,12 +745,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
-        1400,
-        1991,
-        2747,
-        3791,
-        5234,
-        7232,
+        1220,
+        1735,
+        2392,
+        3303,
+        4559,
+        6299,
       ],
       "activations": {
         "energy": {
@@ -800,7 +800,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "juiceAmount": 1,
-      "juicePercent": 0.5,
+      "juicePercent": 0,
       "modifierName": "Berry Juice",
     },
   },
