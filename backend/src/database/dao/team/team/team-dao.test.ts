@@ -331,17 +331,20 @@ describe('findTeamsWithMembers', () => {
     await TeamMemberDAO.insert({
       member_index: 0,
       fk_team_id: 1,
-      fk_pokemon_id: 1
+      fk_pokemon_id: 1,
+      sneaky_snacking: false
     });
     await TeamMemberDAO.insert({
       member_index: 1,
       fk_team_id: 1,
-      fk_pokemon_id: 1
+      fk_pokemon_id: 1,
+      sneaky_snacking: false
     });
     await TeamMemberDAO.insert({
       member_index: 2,
       fk_team_id: 1,
-      fk_pokemon_id: 2
+      fk_pokemon_id: 2,
+      sneaky_snacking: false
     });
 
     expect(await TeamDAO.findTeamsWithMembers(1)).toMatchSnapshot();

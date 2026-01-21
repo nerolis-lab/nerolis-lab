@@ -397,7 +397,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     };
 
     const result = await upsertTeamMember({ teamIndex: 0, memberIndex: 0, request, user });
@@ -421,7 +422,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     });
 
     expect(await PokemonDAO.get({ external_id: result.externalId })).toEqual({
@@ -455,7 +457,8 @@ describe('upsertTeamMember', () => {
         fk_pokemon_id: 1,
         member_index: 0,
         id: 1,
-        version: 1
+        version: 1,
+        sneaky_snacking: false
       }
     ]);
 
@@ -509,7 +512,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     };
 
     // should get updated to version 2
@@ -570,7 +574,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 },
         { level: 60, name: 'apple', amount: 7 }
-      ]
+      ],
+      sneakySnacking: false
     });
 
     expect(await PokemonDAO.get({ external_id: result.externalId })).toEqual({
@@ -603,7 +608,8 @@ describe('upsertTeamMember', () => {
       fk_pokemon_id: 1,
       member_index: 0,
       id: 1,
-      version: 1
+      version: 1,
+      sneaky_snacking: false
     });
 
     expect(await TeamDAO.findMultiple()).toEqual([
@@ -654,7 +660,8 @@ describe('upsertTeamMember', () => {
         { level: 0, name: 'apple', amount: 2 },
         { level: 30, name: 'apple', amount: 5 }
         // Missing ingredient for level 60
-      ]
+      ],
+      sneakySnacking: false
     };
 
     await expect(upsertTeamMember({ teamIndex: 0, memberIndex: 0, request, user })).rejects.toThrow(IngredientError);
@@ -705,7 +712,12 @@ describe('deleteMember', () => {
       ingredient_60: 'pearl'
     });
 
-    await TeamMemberDAO.insert({ fk_team_id: team.id, fk_pokemon_id: pokemon.id, member_index: 0 });
+    await TeamMemberDAO.insert({
+      fk_team_id: team.id,
+      fk_pokemon_id: pokemon.id,
+      member_index: 0,
+      sneaky_snacking: false
+    });
 
     await deleteMember({ teamIndex: 0, memberIndex: 0, user });
 
@@ -756,7 +768,12 @@ describe('deleteMember', () => {
       ingredient_60: 'pearl'
     });
 
-    await TeamMemberDAO.insert({ fk_team_id: team.id, fk_pokemon_id: pokemon.id, member_index: 0 });
+    await TeamMemberDAO.insert({
+      fk_team_id: team.id,
+      fk_pokemon_id: pokemon.id,
+      member_index: 0,
+      sneaky_snacking: false
+    });
 
     await deleteMember({ teamIndex: 0, memberIndex: 0, user });
 
@@ -819,13 +836,23 @@ describe('deleteMember', () => {
       ingredient_60: 'pearl'
     });
 
-    await TeamMemberDAO.insert({ fk_team_id: team1.id, fk_pokemon_id: pokemon.id, member_index: 0 });
-    await TeamMemberDAO.insert({ fk_team_id: team2.id, fk_pokemon_id: pokemon.id, member_index: 1 });
+    await TeamMemberDAO.insert({
+      fk_team_id: team1.id,
+      fk_pokemon_id: pokemon.id,
+      member_index: 0,
+      sneaky_snacking: false
+    });
+    await TeamMemberDAO.insert({
+      fk_team_id: team2.id,
+      fk_pokemon_id: pokemon.id,
+      member_index: 1,
+      sneaky_snacking: false
+    });
 
     await deleteMember({ teamIndex: 0, memberIndex: 0, user });
 
     expect(await TeamMemberDAO.findMultiple()).toEqual([
-      { fk_team_id: team2.id, fk_pokemon_id: pokemon.id, member_index: 1, id: 2, version: 1 }
+      { fk_team_id: team2.id, fk_pokemon_id: pokemon.id, member_index: 1, id: 2, version: 1, sneaky_snacking: false }
     ]);
     expect(await PokemonDAO.findMultiple()).toEqual([pokemon]);
   });
@@ -870,7 +897,8 @@ describe('deleteTeam', () => {
     await TeamMemberDAO.insert({
       fk_pokemon_id: pkmn.id,
       fk_team_id: team.id,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
 
     await deleteTeam(team.team_index, user);
@@ -938,7 +966,8 @@ describe('deleteTeam', () => {
     await TeamMemberDAO.insert({
       fk_pokemon_id: pkmn.id,
       fk_team_id: team.id,
-      member_index: 0
+      member_index: 0,
+      sneaky_snacking: false
     });
 
     await deleteTeam(team.team_index, user);

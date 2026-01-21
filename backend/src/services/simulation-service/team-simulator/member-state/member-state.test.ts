@@ -50,7 +50,8 @@ const guaranteedSkillProcMember: TeamMemberExt = {
     nature: nature.BASHFUL,
     skillLevel: 6,
     subskills: new Set(),
-    externalId: 'some id'
+    externalId: 'some id',
+    sneakySnacking: false
   }
 };
 
@@ -63,7 +64,16 @@ const member: TeamMemberExt = {
     nature: nature.BASHFUL,
     skillLevel: 6,
     subskills: new Set(),
-    externalId: 'some id'
+    externalId: 'some id',
+    sneakySnacking: false
+  }
+};
+
+const sneakySnackingMember: TeamMemberExt = {
+  pokemonWithIngredients: guaranteedSkillProcMember.pokemonWithIngredients,
+  settings: {
+    ...guaranteedSkillProcMember.settings,
+    sneakySnacking: true
   }
 };
 
@@ -102,6 +112,22 @@ describe('results', () => {
     expect(results.skillAmount).toBe(0);
     expect(results.skillProcs).toBe(0);
   });
+
+  it('should return only berries for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const results = memberState.results(1);
+
+    expect(results.produceTotal.berries.length).toBeGreaterThan(0);
+    expect(results.produceTotal.ingredients.length).toBe(0);
+    expect(results.skillProcs).toBe(0);
+  });
 });
 
 describe('simpleResults', () => {
@@ -122,6 +148,21 @@ describe('simpleResults', () => {
 
     expect(simpleResults.skillProcs).toBe(0);
     expect(simpleResults.totalHelps).toBe(0);
+  });
+
+  it('should return zero skill procs for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
+    memberState.collectInventory();
+    const simpleResults = memberState.simpleResults(10);
+
+    expect(simpleResults.totalHelps).toBe(0.1);
+    expect(simpleResults.skillProcs).toBe(0);
   });
 });
 
@@ -214,7 +255,8 @@ describe('startDay', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -235,7 +277,8 @@ describe('startDay', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -268,7 +311,8 @@ describe('startDay', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const teammate: TeamMemberExt = {
@@ -296,7 +340,8 @@ describe('startDay', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -328,7 +373,8 @@ describe('recoverEnergy', () => {
         nature: nature.MILD,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -364,6 +410,20 @@ describe('addHelpsFromSkill', () => {
 
     expect(memberState.results(1)).toMatchSnapshot();
   });
+
+  it('shall add ingredients for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.addHelpsFromSkill({ regular: 10, crit: 0 }, memberState);
+    memberState.collectInventory();
+
+    expect(memberState.results(1).produceTotal.ingredients.length).toBeGreaterThan(0);
+    expect(memberState.results(1).produceTotal.ingredients[0].amount).toBeGreaterThan(0);
+  });
 });
 
 describe('recoverMeal', () => {
@@ -397,7 +457,8 @@ describe('attemptDayHelp', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
 
@@ -464,6 +525,20 @@ describe('attemptDayHelp', () => {
     expect(memberState.results(1).skillProcs).toBe(1);
   });
 
+  it('shall not proc skill for a sneaky snacker', () => {
+    const memberState = new MemberState({
+      member: sneakySnackingMember,
+      settings,
+      team: [sneakySnackingMember],
+      cookingState
+    });
+    memberState.wakeUp();
+    memberState.collectInventory();
+    memberState.attemptDayHelp(0);
+
+    expect(memberState.results(1).skillProcs).toBe(0);
+  });
+
   it('shall still count metronome proc as 1 proc', () => {
     const member: TeamMemberExt = {
       pokemonWithIngredients: {
@@ -477,7 +552,8 @@ describe('attemptDayHelp', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -534,7 +610,8 @@ describe('attemptNightHelp', () => {
         nature: nature.BASHFUL,
         skillLevel: 6,
         subskills: new Set(),
-        externalId: 'some id'
+        externalId: 'some id',
+        sneakySnacking: false
       }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });

@@ -316,6 +316,10 @@ export class MemberState {
     return this.member.settings.externalId;
   }
 
+  get isSneakySnacking() {
+    return this.member.settings.sneakySnacking;
+  }
+
   public wakeUp() {
     const nrOfErb = TeamSimulatorUtils.countMembersWithSubskill(this.team, subskill.ENERGY_RECOVERY_BONUS.name);
     const sleepInfo: SleepInfo = {
@@ -512,6 +516,11 @@ export class MemberState {
       return [];
     }
 
+    if (this.isSneakySnacking) {
+      this.attemptSneakySnackingHelp('day');
+      return [];
+    }
+
     this.addBerriesAndIngredientsForHelp('day');
     return this.skillState.attemptSkill();
   }
@@ -528,6 +537,13 @@ export class MemberState {
     // Berry drop
     this.totalBerryProduction += this.berryDropAmount;
     this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
+
+    // Track spilled ingredients
+    const { ingredient0Amount, ingredient30Amount, ingredient60Amount, ingredientId } =
+      this.rollBerriesAndIngredients();
+    if (ingredientId !== undefined) {
+      this.voidIngredients[ingredientId] += ingredient0Amount + ingredient30Amount + ingredient60Amount;
+    }
   }
 
   public attemptNightHelp(currentMinutesSincePeriodStart: number) {
@@ -538,51 +554,44 @@ export class MemberState {
       return;
     }
 
+    const inventorySpace = Math.max(0, this.inventoryLimit - this.carriedAmount);
+
+    // Sneaky-snacking case
+    if (inventorySpace <= 0 || this.isSneakySnacking) {
+      this.nightHelpsAfterSS += 1;
+      this.attemptSneakySnackingHelp('night');
+      this.nextHelp += frequency / 60;
+      return;
+    }
+
     // Ignoring inventory space for now, calculate what the help would be
     const { berryAmount, ingredient0Amount, ingredient30Amount, ingredient60Amount, ingredientId } =
       this.rollBerriesAndIngredients();
-    const isBerryDrop = ingredientId === undefined;
     const totalDropAmount = berryAmount + ingredient0Amount + ingredient30Amount + ingredient60Amount;
 
-    const inventorySpace = Math.max(0, this.inventoryLimit - this.carriedAmount);
+    // update stats
+    this.totalNightHelps += 1;
+    this.currentNightHelps += 1; // these run skill procs at wakeup
+    this.nightHelpsBeforeSS += 1;
 
-    // Easy case, inventory is full
-    if (inventorySpace <= 0) {
-      // Sneaky-snacking case
-      this.nightHelpsAfterSS += 1;
-      this.attemptSneakySnackingHelp('night');
+    // Calculate how much of the help fits in the bag
+    const dropAmount = Math.min(totalDropAmount, inventorySpace);
+    const helpRatio = dropAmount / totalDropAmount;
+    this.totalAverageHelps += helpRatio;
 
-      if (!isBerryDrop) {
-        // Track void ingredient drop
-        this.voidIngredients[ingredientId!] += totalDropAmount;
-      }
+    this.carriedAmount += dropAmount;
+
+    if (ingredientId === undefined) {
+      // Berry drop
+      this.totalBerryProduction += dropAmount;
+      this.berryProductionPerDay[this.currentDay] += dropAmount;
     } else {
-      // update stats
-      this.totalNightHelps += 1;
-      this.currentNightHelps += 1; // these run skill procs at wakeup
-      this.nightHelpsBeforeSS += 1;
+      // Ingredient drop
+      this.totalIngredientProduction[ingredientId] += dropAmount;
+      this.ingredientProductionPerDay[this.currentDay][ingredientId] += dropAmount;
+      this.ingredientsSinceLastCook[ingredientId] += dropAmount;
 
-      // Calculate how much of the help fits in the bag
-      const helpRatio = inventorySpace >= totalDropAmount ? 1 : inventorySpace / totalDropAmount;
-      this.totalAverageHelps += helpRatio;
-
-      // Calculate how much of the help fits in the bag
-      const dropAmount = Math.min(totalDropAmount, inventorySpace);
-
-      this.carriedAmount += dropAmount;
-
-      if (isBerryDrop) {
-        // Berry drop
-        this.totalBerryProduction += dropAmount;
-        this.berryProductionPerDay[this.currentDay] += dropAmount;
-      } else {
-        // Ingredient drop
-        this.totalIngredientProduction[ingredientId!] += dropAmount;
-        this.ingredientProductionPerDay[this.currentDay][ingredientId!] += dropAmount;
-        this.ingredientsSinceLastCook[ingredientId!] += dropAmount;
-
-        this.voidIngredients[ingredientId!] += totalDropAmount - dropAmount;
-      }
+      this.voidIngredients[ingredientId!] += totalDropAmount - dropAmount;
     }
 
     this.nextHelp += frequency / 60;

@@ -10,6 +10,7 @@ export function teamMemberSettings(attrs?: Partial<TeamMemberSettings>): TeamMem
     ribbon: 0,
     skillLevel: 0,
     subskills: [],
+    sneakySnacking: false,
     ...attrs
   };
 }
@@ -23,6 +24,7 @@ export function teamMemberSettingsExt(attrs?: Partial<TeamMemberSettingsExt>): T
     ribbon: 0,
     skillLevel: 1,
     subskills: new Set(),
+    sneakySnacking: false,
     ...attrs
   };
 }
@@ -36,6 +38,7 @@ export function teamMemberSettingsResult(attrs?: Partial<TeamMemberSettingsResul
     ribbon: 0,
     skillLevel: 0,
     subskills: [],
+    sneakySnacking: false,
     ...attrs
   };
 }

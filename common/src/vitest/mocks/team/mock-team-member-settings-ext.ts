@@ -10,6 +10,7 @@ export function teamMemberSettingsExt(attrs?: Partial<TeamMemberSettingsExt>): T
     ribbon: 0,
     skillLevel: 1,
     subskills: new Set(),
+    sneakySnacking: false,
     ...attrs
   };
 }

@@ -199,7 +199,12 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
     const optimalSettings: Optimal = isSupportSkillMon
       ? Optimal.skill(pkmn, 4, pkmn.skill.maxLevel)
       : Optimal.ingredient(pkmn, 4, pkmn.skill.maxLevel);
-    const settings = Optimal.toMemberSettings({ stats: optimalSettings, level, externalId: pkmn.name });
+    const settings = Optimal.toMemberSettings({
+      stats: optimalSettings,
+      level,
+      externalId: pkmn.name,
+      sneakySnacking: false // for cooking, sneaky snacking is always worse
+    });
 
     // TODO: this should probably be moved to member-state constructor
     settings.carrySize = CarrySizeUtils.calculateCarrySize({

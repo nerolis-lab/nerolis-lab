@@ -19,6 +19,7 @@ export function createMockPokemon(attrs?: Partial<PokemonInstanceExt>): PokemonI
     gender: undefined,
     skillLevel: 1,
     subskills: [],
+    sneakySnacking: false,
     version: 1,
     rp: 0,
     ...attrs

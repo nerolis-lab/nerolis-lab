@@ -20,7 +20,8 @@ export async function getSavedPokemon(user: DBUser): Promise<PokemonInstanceWith
     skillLevel: pkmn.skill_level,
     nature: pkmn.nature,
     subskills: PokemonDAO.filterFilledSubskills(pkmn),
-    ingredients: PokemonDAO.filterChosenIngredientList(pkmn)
+    ingredients: PokemonDAO.filterChosenIngredientList(pkmn),
+    sneakySnacking: false // default box mons to not sneaky snacking
   }));
 }
 
