@@ -19,11 +19,11 @@
     "common": "file:../common",
     "discord.js": "^14.25.1",
     "dotenv": "^17.2.3",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "morgan": "^1.10.1"
   },
   "devDependencies": {
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@vitest/coverage-v8": "^3.2.4",
     "concurrently": "^9.2.1",
