@@ -38,11 +38,11 @@ describe('getMainskillNames', () => {
         "Super Luck (Ingredient Draw S)",
         "Ingredient Magnet S",
         "Plus (Ingredient Magnet S)",
-        "Metronome",
-        "Present (Ingredient Magnet S)",
         "Skill Copy",
         "Mimic (Skill Copy)",
         "Transform (Skill Copy)",
+        "Metronome",
+        "Present (Ingredient Magnet S)",
         "Tasty Chance S",
       ]
     `);
