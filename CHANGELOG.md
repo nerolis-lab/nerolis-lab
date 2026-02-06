@@ -1,3 +1,10 @@
+# [2.37.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.36.0...v2.37.0) (2026-02-06)
+
+
+### Features
+
+* add honey gather chocolate waffles ([8fc3a11](https://github.com/nerolis-lab/nerolis-lab/commit/8fc3a1177a8b5cd22a17acdef2b412f157ffc58a))
+
 # [2.36.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.35.1...v2.36.0) (2026-01-19)
 
 
