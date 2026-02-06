@@ -3,11 +3,11 @@
 exports[`activateMetronome > shall use the correct metronomeFactor for each skill activation 1`] = `
 [
   {
-    "adjustedAmount": 1.7142857142857142,
+    "adjustedAmount": 1.92,
     "adjustedProduce": {
       "berries": [
         {
-          "amount": 1.7142857142857142,
+          "amount": 1.92,
           "berry": {
             "name": "LUM",
             "type": "bug",
@@ -18,7 +18,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "ingredients": [],
     },
-    "fractionOfProc": 0.028571428571428574,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -58,8 +58,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 1.24,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 1.3888,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -90,8 +90,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 3.5200000000000005,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 3.6688,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -159,8 +159,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 129.8857142857143,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 145.472,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -193,8 +193,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 59.02857142857143,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 66.11200000000001,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -227,8 +227,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 73.78571428571429,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 82.64,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -261,8 +261,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 88.54285714285716,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 99.168,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -418,8 +418,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.7714285714285715,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.8640000000000001,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -452,8 +452,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.5714285714285714,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.64,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -530,8 +530,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 36,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 40.32,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -566,8 +566,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 45,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 50.4,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -602,8 +602,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.25142857142857145,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.2816,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -635,8 +635,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 1,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 1.12,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -708,8 +708,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.5171428571428572,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.5792,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -740,8 +740,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.5171428571428572,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.5792,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -805,8 +805,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.31428571428571433,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.35200000000000004,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -956,11 +956,11 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.06285714285714286,
+    "adjustedAmount": 0.0704,
     "adjustedProduce": {
       "berries": [
         {
-          "amount": 0.6285714285714286,
+          "amount": 0.704,
           "berry": {
             "name": "BELUE",
             "type": "steel",
@@ -971,7 +971,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "ingredients": [
         {
-          "amount": 1.2571428571428571,
+          "amount": 1.408,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -981,7 +981,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.028571428571428574,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1014,11 +1014,11 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.14285714285714285,
+    "adjustedAmount": 0.16,
     "adjustedProduce": {
       "berries": [
         {
-          "amount": 1.4285714285714286,
+          "amount": 1.6,
           "berry": {
             "name": "BELUE",
             "type": "steel",
@@ -1029,7 +1029,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "ingredients": [
         {
-          "amount": 2.857142857142857,
+          "amount": 3.2,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -1039,7 +1039,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.028571428571428574,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1112,42 +1112,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.4571428571428572,
-    "fractionOfProc": 0.028571428571428574,
-    "nrOfHelpsToActivate": 2,
-    "skill": {
-      "RP": [
-        880,
-        1251,
-        1726,
-        2383,
-        3290,
-        4846,
-        5843,
-      ],
-      "activations": {
-        "ingredients": {
-          "amount": [Function],
-          "unit": "ingredients",
-        },
-      },
-      "description": [Function],
-      "image": "ingredient_draw",
-      "ingredientAmounts": [
-        5,
-        6,
-        8,
-        11,
-        13,
-        16,
-        18,
-      ],
-      "name": "Ingredient Draw S",
-    },
-  },
-  {
-    "adjustedAmount": 0.4571428571428572,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.512,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": IngredientDrawSHyperCutterImpl {
       "HyperCutterProbabilities": {
@@ -1311,8 +1277,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.4571428571428572,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.512,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": IngredientDrawSSuperLuckImpl {
       "RP": [
@@ -1463,12 +1429,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.6,
+    "adjustedAmount": 0.672,
     "adjustedProduce": {
       "berries": [],
       "ingredients": [
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Fancy Apple",
             "name": "Apple",
@@ -1477,7 +1443,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Moomoo Milk",
             "name": "Milk",
@@ -1486,7 +1452,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Greengrass Soybeans",
             "name": "Soybean",
@@ -1495,7 +1461,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Honey",
             "name": "Honey",
@@ -1504,7 +1470,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -1513,7 +1479,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Warming Ginger",
             "name": "Ginger",
@@ -1522,7 +1488,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Snoozy Tomato",
             "name": "Tomato",
@@ -1531,7 +1497,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Fancy Egg",
             "name": "Egg",
@@ -1540,7 +1506,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Pure Oil",
             "name": "Oil",
@@ -1549,7 +1515,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Soft Potato",
             "name": "Potato",
@@ -1558,7 +1524,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Fiery Herb",
             "name": "Herb",
@@ -1567,7 +1533,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Greengrass Corn",
             "name": "Corn",
@@ -1576,7 +1542,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Soothing Cacao",
             "name": "Cacao",
@@ -1585,7 +1551,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Rousing Coffee",
             "name": "Coffee",
@@ -1594,7 +1560,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Glossy Avocado",
             "name": "Avocado",
@@ -1603,7 +1569,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Tasty Mushroom",
             "name": "Mushroom",
@@ -1612,7 +1578,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Large Leek",
             "name": "Leek",
@@ -1621,7 +1587,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Plump Pumpkin",
             "name": "Pumpkin",
@@ -1630,7 +1596,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.031578947368421054,
+          "amount": 0.035368421052631584,
           "ingredient": {
             "longName": "Slowpoke Tail",
             "name": "Tail",
@@ -1640,7 +1606,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.028571428571428574,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1673,8 +1639,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.4571428571428572,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.512,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1761,77 +1727,8 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.42857142857142855,
-    "fractionOfProc": 0.028571428571428574,
-    "nrOfHelpsToActivate": 2,
-    "skill": {
-      "RP": [
-        880,
-        1251,
-        1726,
-        2383,
-        3290,
-        4546,
-        5843,
-      ],
-      "activations": {
-        "candy": {
-          "amount": [Function],
-          "unit": "candy",
-        },
-        "ingredients": {
-          "amount": [Function],
-          "unit": "ingredients",
-        },
-      },
-      "baseSkill": {
-        "RP": [
-          880,
-          1251,
-          1726,
-          2383,
-          3290,
-          4546,
-          5843,
-        ],
-        "activations": {
-          "ingredients": {
-            "amount": [Function],
-            "unit": "ingredients",
-          },
-        },
-        "description": [Function],
-        "image": "ingredients",
-        "ingredientAmounts": [
-          6,
-          8,
-          11,
-          14,
-          17,
-          21,
-          24,
-        ],
-        "name": "Ingredient Magnet S",
-      },
-      "candyAmount": 4,
-      "candyChance": 0.3333333333333333,
-      "description": [Function],
-      "image": "ingredients",
-      "ingredientAmounts": [
-        4,
-        6,
-        8,
-        10,
-        12,
-        15,
-        17,
-      ],
-      "modifierName": "Present",
-    },
-  },
-  {
-    "adjustedAmount": 0.17142857142857146,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.19200000000000003,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1987,626 +1884,77 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     },
   },
   {
-    "adjustedAmount": 0.17142857142857146,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.48,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
-        600,
-        853,
-        1177,
-        1625,
-        2243,
-        3099,
-        3984,
+        880,
+        1251,
+        1726,
+        2383,
+        3290,
+        4546,
+        5843,
       ],
-      "activations": {},
+      "activations": {
+        "candy": {
+          "amount": [Function],
+          "unit": "candy",
+        },
+        "ingredients": {
+          "amount": [Function],
+          "unit": "ingredients",
+        },
+      },
       "baseSkill": {
         "RP": [
-          600,
-          853,
-          1177,
-          1625,
-          2243,
-          3099,
-          3984,
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
         ],
-        "activations": {},
-        "blockedSkills": [
-          [Circular],
-          {
-            "RP": [
-              2400,
-              3313,
-              4643,
-              6441,
-              8864,
-              11878,
-              13140,
-            ],
-            "activations": {
-              "strength": {
-                "amount": [Function],
-                "teamEnergyReduction": 12,
-                "unit": "strength",
-              },
-            },
-            "baseSkill": {
-              "RP": [
-                880,
-                1251,
-                1726,
-                2383,
-                3290,
-                4546,
-                5843,
-              ],
-              "activations": {
-                "strength": {
-                  "amount": [Function],
-                  "unit": "strength",
-                },
-              },
-              "description": [Function],
-              "image": "strength",
-              "name": "Charge Strength M",
-              "strengthAmounts": [
-                880,
-                1251,
-                1726,
-                2383,
-                3290,
-                4546,
-                6409,
-              ],
-            },
-            "description": [Function],
-            "energyReduction": 12,
-            "image": "strength",
-            "modifierName": "Bad Dreams",
-            "strengthAmounts": [
-              2640,
-              3753,
-              5178,
-              7149,
-              9870,
-              13638,
-              17304,
-            ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
           },
-          {
-            "RP": [
-              1400,
-              1991,
-              2747,
-              3791,
-              5234,
-              7232,
-            ],
-            "activations": {
-              "berries": {
-                "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
-                "teamAmount": [Function],
-                "unit": "berries",
-              },
-            },
-            "baseSkill": {
-              "RP": [
-                1400,
-                1991,
-                2747,
-                3791,
-                5234,
-                7232,
-              ],
-              "activations": {
-                "berries": {
-                  "amount": [Function],
-                  "teamAmount": [Function],
-                  "unit": "berries",
-                },
-              },
-              "description": [Function],
-              "image": "berries",
-              "name": "Berry Burst",
-              "selfBerryAmounts": [
-                11,
-                14,
-                21,
-                24,
-                27,
-                30,
-              ],
-              "teamBerryAmounts": [
-                1,
-                2,
-                2,
-                3,
-                4,
-                5,
-              ],
-            },
-            "description": [Function],
-            "image": "berries",
-            "modifierName": "Disguise",
-            "selfBerryAmounts": [
-              8,
-              10,
-              15,
-              17,
-              19,
-              21,
-            ],
-            "teamBerryAmounts": [
-              1,
-              2,
-              2,
-              3,
-              4,
-              5,
-            ],
-          },
-        ],
+        },
         "description": [Function],
-        "image": "copy",
-        "name": "Skill Copy",
+        "image": "ingredients",
+        "ingredientAmounts": [
+          6,
+          8,
+          11,
+          14,
+          17,
+          21,
+          24,
+        ],
+        "name": "Ingredient Magnet S",
       },
-      "blockedSkills": [
-        [Circular],
-        {
-          "RP": [
-            2400,
-            3313,
-            4643,
-            6441,
-            8864,
-            11878,
-            13140,
-          ],
-          "activations": {
-            "strength": {
-              "amount": [Function],
-              "teamEnergyReduction": 12,
-              "unit": "strength",
-            },
-          },
-          "baseSkill": {
-            "RP": [
-              880,
-              1251,
-              1726,
-              2383,
-              3290,
-              4546,
-              5843,
-            ],
-            "activations": {
-              "strength": {
-                "amount": [Function],
-                "unit": "strength",
-              },
-            },
-            "description": [Function],
-            "image": "strength",
-            "name": "Charge Strength M",
-            "strengthAmounts": [
-              880,
-              1251,
-              1726,
-              2383,
-              3290,
-              4546,
-              6409,
-            ],
-          },
-          "description": [Function],
-          "energyReduction": 12,
-          "image": "strength",
-          "modifierName": "Bad Dreams",
-          "strengthAmounts": [
-            2640,
-            3753,
-            5178,
-            7149,
-            9870,
-            13638,
-            17304,
-          ],
-        },
-        {
-          "RP": [
-            1400,
-            1991,
-            2747,
-            3791,
-            5234,
-            7232,
-          ],
-          "activations": {
-            "berries": {
-              "amount": [Function],
-              "critChance": 0.185,
-              "critMultiplier": 3,
-              "teamAmount": [Function],
-              "unit": "berries",
-            },
-          },
-          "baseSkill": {
-            "RP": [
-              1400,
-              1991,
-              2747,
-              3791,
-              5234,
-              7232,
-            ],
-            "activations": {
-              "berries": {
-                "amount": [Function],
-                "teamAmount": [Function],
-                "unit": "berries",
-              },
-            },
-            "description": [Function],
-            "image": "berries",
-            "name": "Berry Burst",
-            "selfBerryAmounts": [
-              11,
-              14,
-              21,
-              24,
-              27,
-              30,
-            ],
-            "teamBerryAmounts": [
-              1,
-              2,
-              2,
-              3,
-              4,
-              5,
-            ],
-          },
-          "description": [Function],
-          "image": "berries",
-          "modifierName": "Disguise",
-          "selfBerryAmounts": [
-            8,
-            10,
-            15,
-            17,
-            19,
-            21,
-          ],
-          "teamBerryAmounts": [
-            1,
-            2,
-            2,
-            3,
-            4,
-            5,
-          ],
-        },
-      ],
+      "candyAmount": 4,
+      "candyChance": 0.3333333333333333,
       "description": [Function],
-      "image": "copy",
-      "modifierName": "Mimic",
+      "image": "ingredients",
+      "ingredientAmounts": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        15,
+        17,
+      ],
+      "modifierName": "Present",
     },
   },
   {
-    "adjustedAmount": 0.17142857142857146,
-    "fractionOfProc": 0.028571428571428574,
-    "nrOfHelpsToActivate": 2,
-    "skill": {
-      "RP": [
-        600,
-        853,
-        1177,
-        1625,
-        2243,
-        3099,
-        3984,
-      ],
-      "activations": {},
-      "baseSkill": {
-        "RP": [
-          600,
-          853,
-          1177,
-          1625,
-          2243,
-          3099,
-          3984,
-        ],
-        "activations": {},
-        "blockedSkills": [
-          [Circular],
-          {
-            "RP": [
-              2400,
-              3313,
-              4643,
-              6441,
-              8864,
-              11878,
-              13140,
-            ],
-            "activations": {
-              "strength": {
-                "amount": [Function],
-                "teamEnergyReduction": 12,
-                "unit": "strength",
-              },
-            },
-            "baseSkill": {
-              "RP": [
-                880,
-                1251,
-                1726,
-                2383,
-                3290,
-                4546,
-                5843,
-              ],
-              "activations": {
-                "strength": {
-                  "amount": [Function],
-                  "unit": "strength",
-                },
-              },
-              "description": [Function],
-              "image": "strength",
-              "name": "Charge Strength M",
-              "strengthAmounts": [
-                880,
-                1251,
-                1726,
-                2383,
-                3290,
-                4546,
-                6409,
-              ],
-            },
-            "description": [Function],
-            "energyReduction": 12,
-            "image": "strength",
-            "modifierName": "Bad Dreams",
-            "strengthAmounts": [
-              2640,
-              3753,
-              5178,
-              7149,
-              9870,
-              13638,
-              17304,
-            ],
-          },
-          {
-            "RP": [
-              1400,
-              1991,
-              2747,
-              3791,
-              5234,
-              7232,
-            ],
-            "activations": {
-              "berries": {
-                "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
-                "teamAmount": [Function],
-                "unit": "berries",
-              },
-            },
-            "baseSkill": {
-              "RP": [
-                1400,
-                1991,
-                2747,
-                3791,
-                5234,
-                7232,
-              ],
-              "activations": {
-                "berries": {
-                  "amount": [Function],
-                  "teamAmount": [Function],
-                  "unit": "berries",
-                },
-              },
-              "description": [Function],
-              "image": "berries",
-              "name": "Berry Burst",
-              "selfBerryAmounts": [
-                11,
-                14,
-                21,
-                24,
-                27,
-                30,
-              ],
-              "teamBerryAmounts": [
-                1,
-                2,
-                2,
-                3,
-                4,
-                5,
-              ],
-            },
-            "description": [Function],
-            "image": "berries",
-            "modifierName": "Disguise",
-            "selfBerryAmounts": [
-              8,
-              10,
-              15,
-              17,
-              19,
-              21,
-            ],
-            "teamBerryAmounts": [
-              1,
-              2,
-              2,
-              3,
-              4,
-              5,
-            ],
-          },
-        ],
-        "description": [Function],
-        "image": "copy",
-        "name": "Skill Copy",
-      },
-      "blockedSkills": [
-        [Circular],
-        {
-          "RP": [
-            2400,
-            3313,
-            4643,
-            6441,
-            8864,
-            11878,
-            13140,
-          ],
-          "activations": {
-            "strength": {
-              "amount": [Function],
-              "teamEnergyReduction": 12,
-              "unit": "strength",
-            },
-          },
-          "baseSkill": {
-            "RP": [
-              880,
-              1251,
-              1726,
-              2383,
-              3290,
-              4546,
-              5843,
-            ],
-            "activations": {
-              "strength": {
-                "amount": [Function],
-                "unit": "strength",
-              },
-            },
-            "description": [Function],
-            "image": "strength",
-            "name": "Charge Strength M",
-            "strengthAmounts": [
-              880,
-              1251,
-              1726,
-              2383,
-              3290,
-              4546,
-              6409,
-            ],
-          },
-          "description": [Function],
-          "energyReduction": 12,
-          "image": "strength",
-          "modifierName": "Bad Dreams",
-          "strengthAmounts": [
-            2640,
-            3753,
-            5178,
-            7149,
-            9870,
-            13638,
-            17304,
-          ],
-        },
-        {
-          "RP": [
-            1400,
-            1991,
-            2747,
-            3791,
-            5234,
-            7232,
-          ],
-          "activations": {
-            "berries": {
-              "amount": [Function],
-              "critChance": 0.185,
-              "critMultiplier": 3,
-              "teamAmount": [Function],
-              "unit": "berries",
-            },
-          },
-          "baseSkill": {
-            "RP": [
-              1400,
-              1991,
-              2747,
-              3791,
-              5234,
-              7232,
-            ],
-            "activations": {
-              "berries": {
-                "amount": [Function],
-                "teamAmount": [Function],
-                "unit": "berries",
-              },
-            },
-            "description": [Function],
-            "image": "berries",
-            "name": "Berry Burst",
-            "selfBerryAmounts": [
-              11,
-              14,
-              21,
-              24,
-              27,
-              30,
-            ],
-            "teamBerryAmounts": [
-              1,
-              2,
-              2,
-              3,
-              4,
-              5,
-            ],
-          },
-          "description": [Function],
-          "image": "berries",
-          "modifierName": "Disguise",
-          "selfBerryAmounts": [
-            8,
-            10,
-            15,
-            17,
-            19,
-            21,
-          ],
-          "teamBerryAmounts": [
-            1,
-            2,
-            2,
-            3,
-            4,
-            5,
-          ],
-        },
-      ],
-      "description": [Function],
-      "image": "copy",
-      "modifierName": "Transform",
-    },
-  },
-  {
-    "adjustedAmount": 0.2857142857142857,
-    "fractionOfProc": 0.028571428571428574,
+    "adjustedAmount": 0.32,
+    "fractionOfProc": 0.032,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
