@@ -829,7 +829,7 @@ export const WALREIN: Pokemon = evolvedPokemon(SEALEO, {
 
 export const BAGON: Pokemon = createBerrySpecialist({
   name: 'BAGON',
-  pokedexNumber: 328,
+  pokedexNumber: 371,
   frequency: toSeconds(1, 28, 20),
   ingredientPercentage: 20.9,
   skillPercentage: 2.7,
@@ -848,16 +848,16 @@ export const BAGON: Pokemon = createBerrySpecialist({
 
 export const SHELGON: Pokemon = evolvedPokemon(BAGON, {
   name: 'SHELGON',
-  pokedexNumber: 329,
+  pokedexNumber: 372,
   frequency: toSeconds(1, 3, 20),
-  ingredientPercentage: 20.4, // unsettled
-  skillPercentage: 2.7, // unsettled
+  ingredientPercentage: 20.6,
+  skillPercentage: 2.7,
   carrySize: 14
 });
 
 export const SALAMENCE: Pokemon = evolvedPokemon(SHELGON, {
   name: 'SALAMENCE',
-  pokedexNumber: 330,
+  pokedexNumber: 373,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 21.7,
   skillPercentage: 3.4,

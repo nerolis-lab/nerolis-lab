@@ -1,4 +1,4 @@
-import type { Ingredient } from '../ingredient';
+import type { Ingredient } from '../ingredient/ingredient';
 import type { MainskillUnit } from './mainskill-unit';
 
 export type AmountParams = { skillLevel: number; extra?: number; ingredient?: Ingredient };

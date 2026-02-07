@@ -1,8 +1,8 @@
-import { chunkArray, convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
 import { describe, expect, it } from 'vitest';
+import { chunkArray, convertFloat32ToInt16, splitArrayByCondition } from './array-utils.js';
 
 describe('chunkArray', () => {
-  it('shall chunk an array into specified sizes', () => {
+  it('should chunk an array into specified sizes', () => {
     const inputArray = [1, 2, 3, 4, 5, 6];
     const chunkSize = 2;
 
@@ -15,7 +15,7 @@ describe('chunkArray', () => {
     expect(result[2]).toEqual([5, 6]);
   });
 
-  it('shall handle arrays that do not divide evenly', () => {
+  it('should handle arrays that do not divide evenly', () => {
     const inputArray = [1, 2, 3, 4, 5];
     const chunkSize = 2;
 
@@ -28,7 +28,7 @@ describe('chunkArray', () => {
     expect(result[2]).toEqual([5]);
   });
 
-  it('shall return an empty array when the input array is empty', () => {
+  it('should return an empty array when the input array is empty', () => {
     const inputArray: string[] = [];
     const chunkSize = 2;
 

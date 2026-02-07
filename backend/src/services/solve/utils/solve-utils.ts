@@ -13,8 +13,8 @@ import type {
   SolveRecipeResultWithSettings,
   SolveRecipeSolutionWithSettings
 } from '@src/services/solve/types/solution-types.js';
-import { convertFloat32ToInt16, splitArrayByCondition } from '@src/utils/database-utils/array-utils.js';
 import { mocks } from '@src/vitest/index.js';
+import { convertFloat32ToInt16, splitArrayByCondition } from 'sleepapi-common';
 import type {
   IngredientIndexToFloatAmount,
   IngredientSet,

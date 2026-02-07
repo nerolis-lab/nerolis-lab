@@ -358,7 +358,8 @@ describe('calculateProduction', () => {
       camp: false,
       bedtime: '21:00',
       wakeup: '07:00',
-      stockpiledIngredients: []
+      stockpiledIngredients: [],
+      island: { ...DEFAULT_ISLAND }
     }
 
     mockedServerAxios.onPost('/calculator/team').replyOnce(200, {
@@ -523,7 +524,8 @@ describe('calculateIv', () => {
         camp: false,
         bedtime: '21:30',
         wakeup: '06:00',
-        stockpiledIngredients: []
+        stockpiledIngredients: [],
+        island: mocks.islandInstance()
       }
     })
 

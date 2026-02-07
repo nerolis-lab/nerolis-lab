@@ -1,3 +1,4 @@
+export * from './array-utils';
 export * from './async-utils';
 export * from './berry-utils';
 export * from './carry-size-utils';

@@ -70,7 +70,7 @@ export default defineComponent({
   },
   computed: {
     skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
+      return EnergizingCheerS.activations.energy.amount({ skillLevel: this.memberWithProduction.member.skillLevel })
     },
     totalSkillValue() {
       return compactNumber(

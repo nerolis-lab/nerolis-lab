@@ -1,4 +1,3 @@
-// TODO: move out of dbutils
 export function chunkArray<T>(array: Array<T>, chunkSize: number): Iterable<Array<T>> {
   const shallowCopy = [...array];
 

@@ -23,6 +23,29 @@ describe('User Store', () => {
             "name": "Greengrass Isle (Expert Mode)",
             "shortName": "GGEX",
           },
+          "amber": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHESTO",
+                "type": "poison",
+                "value": 32,
+              },
+              {
+                "name": "LUM",
+                "type": "bug",
+                "value": 24,
+              },
+              {
+                "name": "YACHE",
+                "type": "dragon",
+                "value": 35,
+              },
+            ],
+            "expert": false,
+            "name": "Amber Canyon",
+            "shortName": "amber",
+          },
           "cyan": {
             "areaBonus": 0,
             "berries": [
@@ -349,6 +372,29 @@ describe('User Store', () => {
             "name": "Greengrass Isle (Expert Mode)",
             "shortName": "GGEX",
           },
+          "amber": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHESTO",
+                "type": "poison",
+                "value": 32,
+              },
+              {
+                "name": "LUM",
+                "type": "bug",
+                "value": 24,
+              },
+              {
+                "name": "YACHE",
+                "type": "dragon",
+                "value": 35,
+              },
+            ],
+            "expert": false,
+            "name": "Amber Canyon",
+            "shortName": "amber",
+          },
           "cyan": {
             "areaBonus": 0,
             "berries": [
@@ -513,6 +559,29 @@ describe('User Store', () => {
             "expert": true,
             "name": "Greengrass Isle (Expert Mode)",
             "shortName": "GGEX",
+          },
+          "amber": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHESTO",
+                "type": "poison",
+                "value": 32,
+              },
+              {
+                "name": "LUM",
+                "type": "bug",
+                "value": 24,
+              },
+              {
+                "name": "YACHE",
+                "type": "dragon",
+                "value": 35,
+              },
+            ],
+            "expert": false,
+            "name": "Amber Canyon",
+            "shortName": "amber",
           },
           "cyan": {
             "areaBonus": 10,
@@ -687,6 +756,29 @@ describe('User Store', () => {
             "expert": true,
             "name": "Greengrass Isle (Expert Mode)",
             "shortName": "GGEX",
+          },
+          "amber": {
+            "areaBonus": 0,
+            "berries": [
+              {
+                "name": "CHESTO",
+                "type": "poison",
+                "value": 32,
+              },
+              {
+                "name": "LUM",
+                "type": "bug",
+                "value": 24,
+              },
+              {
+                "name": "YACHE",
+                "type": "dragon",
+                "value": 35,
+              },
+            ],
+            "expert": false,
+            "name": "Amber Canyon",
+            "shortName": "amber",
           },
           "cyan": {
             "areaBonus": 0,

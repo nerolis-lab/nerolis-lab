@@ -1,75 +1,50 @@
-import { PathReference, type ExpertModeSettings } from '../../types';
-import { EventBuilder } from '../builders';
+import type { ExpertModeSettings } from '../../types';
+import { EventBuilder } from '../builders/event-builder';
 
 function favoredBerries(input: ExpertModeSettings) {
   return [input.mainFavoriteBerry, ...input.subFavoriteBerries].map((b) => b.name);
 }
 
-export const event = EventBuilder<ExpertModeSettings>()
+export const event = EventBuilder.create<ExpertModeSettings>()
   .name('Expert Mode Event')
   .description('Dynamic event based on input parameters')
 
-  // Main berry gets frequency buff - using modifier factory
-  .addModifier((input) => ({
-    type: 'PokemonInstance',
-    leftValue: 'pokemon.frequency',
-    operation: '*',
-    rightValue: 0.9,
-    conditions: [
-      {
-        leftValue: 'pokemon.berry.name',
-        operation: '=',
-        rightValue: input.mainFavoriteBerry.name
+  .forTeam((input, member) => ({
+    // Main berry gets frequency buff
+    'pokemonWithIngredients.pokemon.frequency': (freq) => {
+      if (member.pokemonWithIngredients.pokemon.berry.name === input.mainFavoriteBerry.name) {
+        return freq * 0.9;
       }
-    ]
-  }))
-  .addModifier((input) => ({
-    type: 'PokemonInstance',
-    leftValue: 'skillLevel',
-    operation: '+',
-    rightValue: {
-      rightValue: 1,
-      max: PathReference.to('pokemon.skill.maxLevel')
+      return freq;
     },
-    conditions: [
-      {
-        leftValue: 'pokemon.berry.name',
-        operation: '=',
-        rightValue: input.mainFavoriteBerry.name
+
+    // Skill level boost with max constraint
+    'settings.skillLevel': (level) => {
+      if (member.pokemonWithIngredients.pokemon.berry.name === input.mainFavoriteBerry.name) {
+        const maxLevel = member.pokemonWithIngredients.pokemon.skill.maxLevel;
+        return Math.min(level + 1, maxLevel);
       }
-    ]
+      return level;
+    },
+
+    // Skill percentage boost based on random bonus
+    'pokemonWithIngredients.pokemon.skillPercentage': (percentage) => {
+      const isFavoredBerry = favoredBerries(input).includes(member.pokemonWithIngredients.pokemon.berry.name);
+
+      if (isFavoredBerry && input.randomBonus === 'skill') {
+        return percentage * 1.25;
+      }
+      return percentage;
+    }
   }))
-  // random site effect - only apply if randomBonus is 'skill'
-  .addModifier((input) => ({
-    type: 'PokemonInstance',
-    leftValue: 'pokemon.skillPercentage',
-    operation: '*',
-    rightValue: 1.25,
-    conditions: [
-      {
-        leftValue: 'pokemon.berry.name',
-        operation: 'in',
-        rightValue: favoredBerries(input)
-      },
-      {
-        leftValue: input.randomBonus,
-        operation: '=',
-        rightValue: 'skill'
+
+  .forStrength((input) => ({
+    'berries.breakdown.favored': (value) => {
+      if (input.randomBonus === 'berry') {
+        return value * 2.4;
       }
-    ]
-  }))
-  .addModifier((input) => ({
-    type: 'MemberStrength',
-    leftValue: 'berries.breakdown.favored',
-    operation: '*',
-    rightValue: 2.4,
-    conditions: [
-      {
-        leftValue: input.randomBonus,
-        operation: '=',
-        rightValue: 'berries'
-      }
-    ]
+      return value;
+    }
   }))
 
   .build();

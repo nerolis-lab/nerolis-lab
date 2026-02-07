@@ -17,5 +17,10 @@ exports[`migration-utils > getMigrations > should return migrations sorted by ve
     "up": [Function],
     "version": 3,
   },
+  {
+    "description": "Adds amber island to existing users islands state.",
+    "up": [Function],
+    "version": 4,
+  },
 ]
 `;

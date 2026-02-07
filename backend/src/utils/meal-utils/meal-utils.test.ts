@@ -96,6 +96,7 @@ describe('getMealsForFilter', () => {
         "FLOWER_GIFT_MACARONS",
         "ZING_ZAP_SPICED_COLA",
         "CLODSIRE_ECLAIR",
+        "HONEY_GATHER_CHOCOLATE_WAFFLES",
         "SCARY_FACE_PANCAKES",
         "LEAF_TORNADO_SMOOTHIE",
       ]

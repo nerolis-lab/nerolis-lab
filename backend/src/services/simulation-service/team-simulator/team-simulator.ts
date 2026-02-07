@@ -20,19 +20,17 @@ import type {
   SkillActivation,
   TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
-import { getDefaultMealTimes } from '@src/utils/meal-utils/meal-utils.js';
+import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import {
   commonMocks,
+  event as expertModeGreengrassEvent,
   type CalculateTeamResponse,
   type MemberProductionBase,
   type SimpleTeamResult,
   type TeamMemberExt,
-  type TeamSettingsExt,
-  type Time,
-  type TimePeriod
+  type TeamSettingsExt
 } from 'sleepapi-common';
 
 export class TeamSimulator {
@@ -43,9 +41,6 @@ export class TeamSimulator {
   private memberStatesWithoutFillers: MemberState[] = [];
   private cookingState?: CookingState = undefined;
 
-  private timeIntervals: Time[] = [];
-  private dayPeriod: TimePeriod;
-  private nightPeriod: TimePeriod;
   private nightStartMinutes: number;
   private mealTimeMinutesSinceStart: number[];
   private cookedMealsCounter = 0;
@@ -66,40 +61,24 @@ export class TeamSimulator {
 
     this.cookingState = cookingState;
 
-    const dayPeriod = {
-      start: settings.wakeup,
-      end: settings.bedtime
-    };
-    this.dayPeriod = dayPeriod;
-    const nightPeriod = {
-      start: settings.bedtime,
-      end: settings.wakeup
-    };
-    this.nightPeriod = nightPeriod;
+    const { nightStartMinutes, mealTimeMinutesSinceStart } = TeamSimulatorUtils.setupSimulationTimes({
+      settings,
+      cookingState: this.cookingState
+    });
+    this.nightStartMinutes = nightStartMinutes;
+    this.mealTimeMinutesSinceStart = mealTimeMinutesSinceStart;
 
-    let next5Minutes = settings.wakeup;
-    while (TimeUtils.timeWithinPeriod(next5Minutes, this.dayPeriod)) {
-      this.timeIntervals.push(next5Minutes);
-      next5Minutes = TimeUtils.addTime(next5Minutes, { hour: 0, minute: 5, second: 0 });
-    }
-    next5Minutes = settings.bedtime;
-    while (TimeUtils.timeWithinPeriod(next5Minutes, this.nightPeriod)) {
-      this.timeIntervals.push(next5Minutes);
-      next5Minutes = TimeUtils.addTime(next5Minutes, { hour: 0, minute: 5, second: 0 });
-    }
+    const expertModeSettings = settings.island?.expertMode;
+    const expertModeEvent = expertModeSettings ? expertModeGreengrassEvent(expertModeSettings) : undefined;
+    const preparedMembers = TeamSimulatorUtils.prepareMembers({
+      members,
+      event: expertModeEvent
+    });
 
-    this.nightStartMinutes = TimeUtils.timeToMinutesSinceStart(this.nightPeriod.start, this.dayPeriod.start);
-
-    const mealTimes = getDefaultMealTimes(dayPeriod);
-    this.cookingState?.setMealTimes(mealTimes.meals);
-    this.mealTimeMinutesSinceStart = mealTimes.sorted.map((time) =>
-      TimeUtils.timeToMinutesSinceStart(time, this.dayPeriod.start)
-    );
-
-    for (const member of members) {
+    for (const member of preparedMembers) {
       const memberState = new MemberState({
         member,
-        team: members,
+        team: preparedMembers,
         settings,
         cookingState: this.cookingState,
         iterations,
@@ -225,7 +204,7 @@ export class TeamSimulator {
   }
 
   // TODO: won't change things now, but this should probably find all help/energy units rather than the first (which find does)
-  private maybeActivateTeamSkill(result: SkillActivation, invoker: MemberState) {
+  private maybeActivateTeamSkill(result: SkillActivation, invoker: MemberState, recursionDepth: number = 0) {
     const helpsActivation = result.activations.find((activation) => activation.unit === 'helps' && activation.team);
     if (helpsActivation?.team) {
       for (const mem of this.memberStatesWithoutFillers) {
@@ -234,11 +213,31 @@ export class TeamSimulator {
       }
     }
 
+    let membersHelped: MemberState[] = [];
+
     const energyActivation = result.activations.find((activation) => activation.unit === 'energy' && activation.team);
     if (energyActivation?.team) {
       const recovered = this.recoverMemberEnergy(energyActivation.team, invoker);
       invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
       invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
+      membersHelped = recovered.targetGroup;
+    }
+
+    const skillHelpsActivation = result.activations.find(
+      (activation) => activation.unit === 'skill helps' && activation.team
+    );
+    if (skillHelpsActivation?.team) {
+      for (const mem of membersHelped) {
+        const bonusActivations: SkillActivation[] = mem.addSkillHelps(skillHelpsActivation.team);
+        invoker.addSkillValue({ regular: bonusActivations.length, crit: 0 });
+        if (recursionDepth < 10) {
+          // In theory, a team of all Togedemaru could keep giving each other bonus activations.
+          // The odds are very slim, so I'm making the simulation slightly less accurate in order to avoid potential infinite recursion.
+          for (const bonusActivation of bonusActivations) {
+            this.maybeActivateTeamSkill(bonusActivation, mem, recursionDepth + 1);
+          }
+        }
+      }
     }
   }
 
@@ -248,9 +247,10 @@ export class TeamSimulator {
     let valueCrit = 0;
     let wastedRegular = 0;
     let wastedCrit = 0;
+    let targetGroup: MemberState[] = [];
 
     if (regular + crit > 0) {
-      const targetGroup =
+      targetGroup =
         chanceToTargetLowestMember !== undefined
           ? this.energyTargetMember(chanceToTargetLowestMember)
           : this.memberStates;
@@ -267,7 +267,8 @@ export class TeamSimulator {
 
     return {
       regular: { wastedEnergy: wastedRegular, skillValue: valueRegular },
-      crit: { wastedEnergy: wastedCrit, skillValue: valueCrit }
+      crit: { wastedEnergy: wastedCrit, skillValue: valueCrit },
+      targetGroup
     };
   }
 

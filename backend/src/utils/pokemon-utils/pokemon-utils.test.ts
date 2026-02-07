@@ -8,7 +8,8 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -19,7 +20,8 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -30,7 +32,8 @@ describe('getPokemonNames', () => {
       taupe: true,
       snowdrop: false,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -41,7 +44,8 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: true,
       lapis: false,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -52,7 +56,8 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: true,
-      powerplant: false
+      powerplant: false,
+      amber: false
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -63,7 +68,20 @@ describe('getPokemonNames', () => {
       taupe: false,
       snowdrop: false,
       lapis: false,
-      powerplant: true
+      powerplant: true,
+      amber: false
+    };
+    expect(getPokemonNames(params)).toMatchSnapshot();
+  });
+
+  it('shall return all amber pokemon', () => {
+    const params = {
+      cyan: false,
+      taupe: false,
+      snowdrop: false,
+      lapis: false,
+      powerplant: false,
+      amber: true
     };
     expect(getPokemonNames(params)).toMatchSnapshot();
   });
@@ -74,7 +92,8 @@ describe('getPokemonNames', () => {
       taupe: true,
       snowdrop: true,
       lapis: true,
-      powerplant: true
+      powerplant: true,
+      amber: false
     };
 
     expect(getPokemonNames(allIslands)).toMatchSnapshot();

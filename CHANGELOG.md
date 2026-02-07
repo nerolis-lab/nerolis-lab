@@ -1,3 +1,72 @@
+# [2.36.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.35.1...v2.36.0) (2026-01-19)
+
+
+### Bug Fixes
+
+* backend run script on Windows ([64369ac](https://github.com/nerolis-lab/nerolis-lab/commit/64369ac3f9f11a068f1db6c86a33f294019d76b1))
+
+
+### Features
+
+* add Berry Juice skill ([78a34e7](https://github.com/nerolis-lab/nerolis-lab/commit/78a34e709ba82c4358833a1c54ed2fe623dc8c95))
+* adds Shuckle ([403f56d](https://github.com/nerolis-lab/nerolis-lab/commit/403f56d7061adffbc2e4a3b7c6f2b2f8580f6a6d))
+
+## [2.35.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.35.0...v2.35.1) (2026-01-03)
+
+
+### Bug Fixes
+
+* **dream shard magnet:** correct average for level 8 range ([5168af6](https://github.com/nerolis-lab/nerolis-lab/commit/5168af6f148ae988bf60858388c68dd2a388a4da))
+
+# [2.35.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.34.0...v2.35.0) (2025-12-24)
+
+
+### Bug Fixes
+
+* **pokedex:** dex numbers for Bagon line ([6192abe](https://github.com/nerolis-lab/nerolis-lab/commit/6192abee3f88364a3e42a2eac0e53d4ae26c5da2))
+
+
+### Features
+
+* add nuzzle main skill ([3c53b2e](https://github.com/nerolis-lab/nerolis-lab/commit/3c53b2eb82d0fc17aa7b0f670776092e37393e88))
+* adds holiday 2026 mon assets ([390296c](https://github.com/nerolis-lab/nerolis-lab/commit/390296c9616f5166ac8ac7f783ff3d1094174cee))
+* **pokedex:** add mons for Holiday 2026 ([48f54ea](https://github.com/nerolis-lab/nerolis-lab/commit/48f54ea573b043c6545f8840abf2a7f45d72e854))
+
+# [2.34.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.33.0...v2.34.0) (2025-12-01)
+
+
+### Bug Fixes
+
+* **Mime Jr.:** carry size 7 -> 10 ([c22118a](https://github.com/nerolis-lab/nerolis-lab/commit/c22118a9938bc2eaa9faf4e05cb957cb8074b6cb))
+
+
+### Features
+
+* add Spiritomb ([4b5552a](https://github.com/nerolis-lab/nerolis-lab/commit/4b5552a6d93cbd0ac44ad2a2030465bc5bb1ed9d))
+
+# [2.33.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.32.1...v2.33.0) (2025-11-26)
+
+
+### Features
+
+* adds EventBuilder and API event support ([d42493c](https://github.com/nerolis-lab/nerolis-lab/commit/d42493c7a7b98bd208bd2a8a7b734a46fcb9442b))
+* change Delibird's skill to present ([4bb530b](https://github.com/nerolis-lab/nerolis-lab/commit/4bb530bb99750a24a8e31a1bbd9fbd880f8cf0fd))
+
+## [2.32.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.32.0...v2.32.1) (2025-11-14)
+
+
+### Bug Fixes
+
+* **common:** correct Trapinch line skill ([8c4d2fa](https://github.com/nerolis-lab/nerolis-lab/commit/8c4d2fa73409b7f11cb2d4d82d7c1c66e9fd89b8))
+* **Shelgon:** use settled stats ([63b0a17](https://github.com/nerolis-lab/nerolis-lab/commit/63b0a17e2e92fc9e5d4be03c695e5896be8a0f25))
+
+# [2.32.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.31.0...v2.32.0) (2025-11-07)
+
+
+### Features
+
+* adds Amber Canyon ([87d6705](https://github.com/nerolis-lab/nerolis-lab/commit/87d6705f32229c69aa579430921ceb60c9a83753))
+
 # [2.31.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.30.0...v2.31.0) (2025-11-06)
 
 

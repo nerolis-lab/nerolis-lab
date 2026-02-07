@@ -1,8 +1,8 @@
 import type { Static, TSchema } from '@sinclair/typebox';
 import { Kind, Type } from '@sinclair/typebox';
 import type { Knex } from 'knex';
+import { chunkArray } from 'sleepapi-common';
 import { DatabaseInsertError, DatabaseNotFoundError } from '../../domain/error/database/database-error.js';
-import { chunkArray } from '../../utils/database-utils/array-utils.js';
 import type { Filter } from '../../utils/database-utils/find-filter.js';
 import { AbstractFilterOperator } from '../../utils/database-utils/find-filter.js';
 import { DatabaseService } from '../database-service.js';

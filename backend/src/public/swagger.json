@@ -272,6 +272,9 @@
 					},
 					"powerplant": {
 						"type": "boolean"
+					},
+					"amber": {
+						"type": "boolean"
 					}
 				},
 				"type": "object",
@@ -809,6 +812,14 @@
 					{
 						"in": "query",
 						"name": "powerplant",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					},
+					{
+						"in": "query",
+						"name": "amber",
 						"required": false,
 						"schema": {
 							"type": "boolean"

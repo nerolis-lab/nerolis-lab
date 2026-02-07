@@ -27,8 +27,28 @@ describe('solve.controller', () => {
         wakeup: mocks.wakeup(),
         includeCooking: false,
         stockpiledIngredients: common.emptyIngredientInventoryFloat(),
-        potSize: common.MAX_POT_SIZE
+        potSize: common.MAX_POT_SIZE,
+        island: settings.island
       });
+    });
+
+    it('should map expert mode settings when provided', () => {
+      const settings = mocks.solveSettings({
+        island: mocks.islandInstance({
+          expert: true,
+          berries: [common.berry.ORAN, common.berry.MAGO],
+          expertMode: {
+            mainFavoriteBerry: common.berry.ORAN,
+            subFavoriteBerries: [common.berry.MAGO],
+            randomBonus: 'skill'
+          }
+        })
+      });
+
+      const enrichSolveSettings = controller._testAccess().enrichSolveSettings;
+      const result = enrichSolveSettings(settings);
+
+      expect(result.island).toBe(settings.island);
     });
 
     it('should throw BadRequestError for invalid sleep duration', () => {

@@ -54,8 +54,10 @@ import {
   CookingPowerUpS,
   EnergizingCheerS,
   EnergyForEveryone,
+  ExtraHelpfulS,
   IngredientDrawSHyperCutter,
   IngredientMagnetS,
+  PresentIngredientMagnetS,
   SkillCopyMimic,
   SkillCopyTransform,
   TastyChanceS
@@ -516,7 +518,7 @@ export const DELIBIRD: Pokemon = createIngredientSpecialist({
   pokedexNumber: 225,
   frequency: toSeconds(0, 41, 40),
   ingredientPercentage: 18.8,
-  skillPercentage: 1.5,
+  skillPercentage: 3,
   berry: PAMTRE,
   genders: BALANCED_GENDER,
   carrySize: 20,
@@ -527,7 +529,7 @@ export const DELIBIRD: Pokemon = createIngredientSpecialist({
     b: FANCY_APPLE,
     c: SOOTHING_CACAO
   },
-  skill: IngredientMagnetS
+  skill: PresentIngredientMagnetS
 });
 
 export const BLISSEY: Pokemon = evolvedPokemon(CHANSEY, {
@@ -649,7 +651,7 @@ export const TRAPINCH: Pokemon = createIngredientSpecialist({
     b: FIERY_HERB,
     c: GREENGRASS_SOYBEANS
   },
-  skill: ChargeEnergyS
+  skill: ChargeStrengthS
 });
 
 export const VIBRAVA: Pokemon = evolvedPokemon(TRAPINCH, {
@@ -732,7 +734,7 @@ export const MIME_JR: Pokemon = preEvolvedPokemon(MR_MIME, {
   frequency: toSeconds(1, 11, 40),
   ingredientPercentage: 20.1,
   skillPercentage: 3.2,
-  carrySize: 7
+  carrySize: 10
 });
 
 export const HAPPINY: Pokemon = preEvolvedPokemon(CHANSEY, {
@@ -742,6 +744,21 @@ export const HAPPINY: Pokemon = preEvolvedPokemon(CHANSEY, {
   ingredientPercentage: 21,
   skillPercentage: 1.3,
   carrySize: 7
+});
+
+export const SPIRITOMB: Pokemon = createIngredientSpecialist({
+  name: 'SPIRITOMB',
+  pokedexNumber: 442,
+  frequency: toSeconds(0, 58, 20),
+  ingredientPercentage: 19.8,
+  skillPercentage: 3.6,
+  berry: WIKI,
+  genders: BALANCED_GENDER,
+  carrySize: 27,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: { a: TASTY_MUSHROOM, b: PLUMP_PUMPKIN, c: LARGE_LEEK },
+  skill: ExtraHelpfulS
 });
 
 export const CROAGUNK: Pokemon = createIngredientSpecialist({
@@ -1094,6 +1111,34 @@ export const QUAQUAVAL: Pokemon = evolvedPokemon(QUAXWELL, {
   carrySize: 19
 });
 
+export const CETODDLE: Pokemon = createIngredientSpecialist({
+  name: 'CETODDLE',
+  pokedexNumber: 974,
+  frequency: toSeconds(1, 25, 0),
+  ingredientPercentage: 22.3,
+  skillPercentage: 4.2,
+  berry: RAWST,
+  genders: BALANCED_GENDER,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: SOFT_POTATO,
+    b: BEAN_SAUSAGE,
+    c: PLUMP_PUMPKIN
+  },
+  skill: ChargeEnergyS
+});
+
+export const CETITAN: Pokemon = evolvedPokemon(CETODDLE, {
+  name: 'CETITAN',
+  pokedexNumber: 975,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 20.9,
+  skillPercentage: 4.2,
+  carrySize: 25
+});
+
 export const CLODSIRE: Pokemon = evolvedPokemon(WOOPER_PALDEAN, {
   name: 'CLODSIRE',
   pokedexNumber: 980,
@@ -1143,6 +1188,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   SKELEDIRGE,
   QUAXWELL,
   QUAQUAVAL,
+  CETITAN,
   CLODSIRE
 ];
 
@@ -1174,6 +1220,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   LUXIO,
   MIME_JR,
   HAPPINY,
+  SPIRITOMB,
   CROAGUNK,
   SNOVER,
   PUMPKABOO_SMALL,
@@ -1185,7 +1232,8 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   STUFFUL,
   SPRIGATITO,
   FUECOCO,
-  QUAXLY
+  QUAXLY,
+  CETODDLE
 ];
 
 export const ALL_INGREDIENT_SPECIALISTS: Pokemon[] = [

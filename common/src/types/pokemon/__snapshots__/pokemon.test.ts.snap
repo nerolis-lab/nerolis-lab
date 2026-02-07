@@ -985,7 +985,7 @@ exports[`COMPLETE_POKEDEX > shall not change BAGON unexpectedly 1`] = `
   ],
   "ingredientPercentage": 20.9,
   "name": "BAGON",
-  "pokedexNumber": 328,
+  "pokedexNumber": 371,
   "previousEvolutions": 0,
   "remainingEvolutions": 2,
   "skill": {
@@ -2410,6 +2410,234 @@ exports[`COMPLETE_POKEDEX > shall not change CATERPIE unexpectedly 1`] = `
   },
   "skillPercentage": 0.8,
   "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change CETITAN unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "RAWST",
+    "type": "ice",
+    "value": 32,
+  },
+  "carrySize": 25,
+  "displayName": "Cetitan",
+  "evolvesFrom": "CETODDLE",
+  "evolvesInto": [],
+  "frequency": 2800,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 9,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.9,
+  "name": "CETITAN",
+  "pokedexNumber": 975,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      12,
+      16.2,
+      21.2,
+      26.6,
+      33.6,
+      43.4,
+    ],
+    "image": "energy",
+    "name": "Charge Energy S",
+  },
+  "skillPercentage": 4.2,
+  "specialty": "ingredient",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change CETODDLE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "RAWST",
+    "type": "ice",
+    "value": 32,
+  },
+  "carrySize": 12,
+  "displayName": "Cetoddle",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "CETITAN",
+  ],
+  "frequency": 5100,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 9,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredientPercentage": 22.3,
+  "name": "CETODDLE",
+  "pokedexNumber": 974,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      12,
+      16.2,
+      21.2,
+      26.6,
+      33.6,
+      43.4,
+    ],
+    "image": "energy",
+    "name": "Charge Energy S",
+  },
+  "skillPercentage": 4.2,
+  "specialty": "ingredient",
 }
 `;
 
@@ -5716,25 +5944,60 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
       5843,
     ],
     "activations": {
+      "candy": {
+        "amount": [Function],
+        "unit": "candy",
+      },
       "ingredients": {
         "amount": [Function],
         "unit": "ingredients",
       },
     },
+    "baseSkill": {
+      "RP": [
+        880,
+        1251,
+        1726,
+        2383,
+        3290,
+        4546,
+        5843,
+      ],
+      "activations": {
+        "ingredients": {
+          "amount": [Function],
+          "unit": "ingredients",
+        },
+      },
+      "description": [Function],
+      "image": "ingredients",
+      "ingredientAmounts": [
+        6,
+        8,
+        11,
+        14,
+        17,
+        21,
+        24,
+      ],
+      "name": "Ingredient Magnet S",
+    },
+    "candyAmount": 4,
+    "candyChance": 0.3333333333333333,
     "description": [Function],
     "image": "ingredients",
     "ingredientAmounts": [
+      4,
       6,
       8,
-      11,
-      14,
+      10,
+      12,
+      15,
       17,
-      21,
-      24,
     ],
-    "name": "Ingredient Magnet S",
+    "modifierName": "Present",
   },
-  "skillPercentage": 1.5,
+  "skillPercentage": 3,
   "specialty": "ingredient",
 }
 `;
@@ -8918,24 +9181,26 @@ exports[`COMPLETE_POKEDEX > shall not change FLYGON unexpectedly 1`] = `
       1083,
       1496,
       2066,
+      2656,
     ],
     "activations": {
-      "energy": {
+      "strength": {
         "amount": [Function],
-        "unit": "energy",
+        "unit": "strength",
       },
     },
     "description": [Function],
-    "energyAmounts": [
-      12,
-      16.2,
-      21.2,
-      26.6,
-      33.6,
-      43.4,
+    "image": "strength",
+    "name": "Charge Strength S",
+    "strengthAmounts": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      3002,
     ],
-    "image": "energy",
-    "name": "Charge Energy S",
   },
   "skillPercentage": 3.9,
   "specialty": "ingredient",
@@ -11025,7 +11290,7 @@ exports[`COMPLETE_POKEDEX > shall not change GULPIN unexpectedly 1`] = `
       1150,
       1575,
       2250,
-      3125,
+      2875,
     ],
   },
   "skillPercentage": 6.3,
@@ -14707,7 +14972,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
     "type": "psychic",
     "value": 26,
   },
-  "carrySize": 7,
+  "carrySize": 10,
   "displayName": "Mime Jr.",
   "evolvesFrom": undefined,
   "evolvesInto": [
@@ -16027,7 +16292,7 @@ exports[`COMPLETE_POKEDEX > shall not change MUNNA unexpectedly 1`] = `
       1150,
       1575,
       2250,
-      3125,
+      2875,
     ],
   },
   "skillPercentage": 4.3,
@@ -16379,7 +16644,7 @@ exports[`COMPLETE_POKEDEX > shall not change MUSHARNA unexpectedly 1`] = `
       1150,
       1575,
       2250,
-      3125,
+      2875,
     ],
   },
   "skillPercentage": 4.1,
@@ -20410,7 +20675,7 @@ exports[`COMPLETE_POKEDEX > shall not change SABLEYE unexpectedly 1`] = `
       1150,
       1575,
       2250,
-      3125,
+      2875,
     ],
   },
   "skillPercentage": 6.8,
@@ -20496,7 +20761,7 @@ exports[`COMPLETE_POKEDEX > shall not change SALAMENCE unexpectedly 1`] = `
   ],
   "ingredientPercentage": 21.7,
   "name": "SALAMENCE",
-  "pokedexNumber": 330,
+  "pokedexNumber": 373,
   "previousEvolutions": 2,
   "remainingEvolutions": 0,
   "skill": {
@@ -20850,9 +21115,9 @@ exports[`COMPLETE_POKEDEX > shall not change SHELGON unexpectedly 1`] = `
       },
     },
   ],
-  "ingredientPercentage": 20.4,
+  "ingredientPercentage": 20.6,
   "name": "SHELGON",
-  "pokedexNumber": 329,
+  "pokedexNumber": 372,
   "previousEvolutions": 1,
   "remainingEvolutions": 1,
   "skill": {
@@ -21003,6 +21268,152 @@ exports[`COMPLETE_POKEDEX > shall not change SHINX unexpectedly 1`] = `
   },
   "skillPercentage": 1.8,
   "specialty": "ingredient",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "LUM",
+    "type": "bug",
+    "value": 24,
+  },
+  "carrySize": 16,
+  "displayName": "Shuckle",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 3600,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.5,
+  "name": "SHUCKLE",
+  "pokedexNumber": 213,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1220,
+      1735,
+      2392,
+      3303,
+      4559,
+      6299,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+      "juice": {
+        "amount": [Function],
+        "unit": "items",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        1120,
+        1593,
+        2197,
+        3033,
+        4187,
+        5785,
+      ],
+      "activations": {
+        "energy": {
+          "amount": [Function],
+          "unit": "energy",
+        },
+      },
+      "description": [Function],
+      "energyAmounts": [
+        5,
+        7,
+        9,
+        11.4,
+        15,
+        18.1,
+      ],
+      "image": "energy",
+      "name": "Energy For Everyone",
+    },
+    "description": [Function],
+    "energyAmounts": [
+      5,
+      7,
+      9,
+      11.4,
+      15,
+      18.1,
+    ],
+    "image": "energy",
+    "juiceAmount": 1,
+    "juicePercent": 0,
+    "modifierName": "Berry Juice",
+  },
+  "skillPercentage": 5.9,
+  "specialty": "skill",
 }
 `;
 
@@ -22162,6 +22573,234 @@ exports[`COMPLETE_POKEDEX > shall not change SPHEAL unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change SPHEAL_HOLIDAY unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "RAWST",
+    "type": "ice",
+    "value": 32,
+  },
+  "carrySize": 20,
+  "displayName": "Spheal (Holiday)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 3300,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredientPercentage": 21.4,
+  "name": "SPHEAL_HOLIDAY",
+  "pokedexNumber": 363,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+    ],
+    "activations": {
+      "critChance": {
+        "amount": [Function],
+        "unit": "crit chance",
+      },
+    },
+    "chanceAmounts": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+    ],
+    "description": [Function],
+    "image": "chance",
+    "name": "Tasty Chance S",
+  },
+  "skillPercentage": 5,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change SPIRITOMB unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "WIKI",
+    "type": "dark",
+    "value": 31,
+  },
+  "carrySize": 27,
+  "displayName": "Spiritomb",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 3500,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.8,
+  "name": "SPIRITOMB",
+  "pokedexNumber": 442,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "helps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+    },
+    "description": [Function],
+    "helpAmounts": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ],
+    "image": "helps",
+    "name": "Extra Helpful S",
+  },
+  "skillPercentage": 3.6,
+  "specialty": "ingredient",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change SPRIGATITO unexpectedly 1`] = `
 {
   "berry": {
@@ -23122,7 +23761,7 @@ exports[`COMPLETE_POKEDEX > shall not change SWALOT unexpectedly 1`] = `
       1150,
       1575,
       2250,
-      3125,
+      2875,
     ],
   },
   "skillPercentage": 7,
@@ -23352,6 +23991,160 @@ exports[`COMPLETE_POKEDEX > shall not change SYLVEON unexpectedly 1`] = `
     "name": "Energy For Everyone",
   },
   "skillPercentage": 4,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "BELUE",
+    "type": "steel",
+    "value": 33,
+  },
+  "carrySize": 18,
+  "displayName": "Togedemaru",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2700,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+  ],
+  "ingredientPercentage": 16.9,
+  "name": "TOGEDEMARU",
+  "pokedexNumber": 777,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "targetLowestChance": 0.5,
+        "unit": "energy",
+      },
+      "skillHelps": {
+        "amount": [Function],
+        "unit": "skill helps",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        766,
+        1089,
+        1502,
+        2074,
+        2863,
+        3956,
+      ],
+      "activations": {
+        "energy": {
+          "amount": [Function],
+          "targetLowestChance": 0.5,
+          "unit": "energy",
+        },
+      },
+      "description": [Function],
+      "energyAmounts": [
+        12,
+        15,
+        20,
+        25,
+        33,
+        44,
+      ],
+      "image": "energy",
+      "name": "Energizing Cheer S",
+    },
+    "description": [Function],
+    "energyAmounts": [
+      9,
+      12,
+      16,
+      20,
+      27,
+      35,
+    ],
+    "image": "energy",
+    "modifierName": "Nuzzle",
+    "skillHelpsAmounts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+    ],
+  },
+  "skillPercentage": 5.4,
   "specialty": "skill",
 }
 `;
@@ -24940,24 +25733,26 @@ exports[`COMPLETE_POKEDEX > shall not change TRAPINCH unexpectedly 1`] = `
       1083,
       1496,
       2066,
+      2656,
     ],
     "activations": {
-      "energy": {
+      "strength": {
         "amount": [Function],
-        "unit": "energy",
+        "unit": "strength",
       },
     },
     "description": [Function],
-    "energyAmounts": [
-      12,
-      16.2,
-      21.2,
-      26.6,
-      33.6,
-      43.4,
+    "image": "strength",
+    "name": "Charge Strength S",
+    "strengthAmounts": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      3002,
     ],
-    "image": "energy",
-    "name": "Charge Energy S",
   },
   "skillPercentage": 3.1,
   "specialty": "ingredient",
@@ -25787,24 +26582,26 @@ exports[`COMPLETE_POKEDEX > shall not change VIBRAVA unexpectedly 1`] = `
       1083,
       1496,
       2066,
+      2656,
     ],
     "activations": {
-      "energy": {
+      "strength": {
         "amount": [Function],
-        "unit": "energy",
+        "unit": "strength",
       },
     },
     "description": [Function],
-    "energyAmounts": [
-      12,
-      16.2,
-      21.2,
-      26.6,
-      33.6,
-      43.4,
+    "image": "strength",
+    "name": "Charge Strength S",
+    "strengthAmounts": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      3002,
     ],
-    "image": "energy",
-    "name": "Charge Energy S",
   },
   "skillPercentage": 3.4,
   "specialty": "ingredient",

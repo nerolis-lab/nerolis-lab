@@ -278,6 +278,18 @@ export const CLODSIRE_ECLAIR = createDessert({
   bonus: 61
 });
 
+export const HONEY_GATHER_CHOCOLATE_WAFFLES = createDessert({
+  name: 'HONEY_GATHER_CHOCOLATE_WAFFLES',
+  displayName: '"Honey Gather" Chocolate Waffles',
+  ingredients: [
+    { amount: 38, ingredient: HONEY },
+    { amount: 28, ingredient: GREENGRASS_CORN },
+    { amount: 28, ingredient: PURE_OIL },
+    { amount: 21, ingredient: SOOTHING_CACAO }
+  ],
+  bonus: 78
+});
+
 export const SCARY_FACE_PANCAKES = createDessert({
   name: 'SCARY_FACE_PANCAKES',
   displayName: '"Scary Face" Pancakes',
@@ -326,6 +338,7 @@ export const DESSERTS: Recipe[] = [
   FLOWER_GIFT_MACARONS,
   ZING_ZAP_SPICED_COLA,
   CLODSIRE_ECLAIR,
+  HONEY_GATHER_CHOCOLATE_WAFFLES,
   SCARY_FACE_PANCAKES,
   LEAF_TORNADO_SMOOTHIE
 ];

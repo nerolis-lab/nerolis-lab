@@ -16,6 +16,8 @@ import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/tea
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
+import { EnergizingCheerSNuzzleEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-nuzzle-effect.js';
+import { EnergyForEveryoneBerryJuiceEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-berry-juice-effect.js';
 import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
 import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
@@ -25,6 +27,7 @@ import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-servi
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-effect.js';
 import { IngredientMagnetSPlusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-plus-effect.js';
+import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s-present-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-effect.js';
 import { SkillCopyMimicEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy-mimic-effect.js';
@@ -53,7 +56,9 @@ import {
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
+  EnergizingCheerSNuzzle,
   EnergyForEveryone,
+  EnergyForEveryoneBerryJuice,
   EnergyForEveryoneLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
@@ -64,6 +69,7 @@ import {
   IngredientMagnetSPlus,
   mainskillUnits,
   Metronome,
+  PresentIngredientMagnetS,
   SkillCopy,
   SkillCopyMimic,
   SkillCopyTransform,
@@ -111,12 +117,15 @@ export class SkillState {
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
       [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
       [EnergizingCheerS, new EnergizingCheerSEffect()],
+      [EnergizingCheerSNuzzle, new EnergizingCheerSNuzzleEffect()],
       [EnergyForEveryone, new EnergyForEveryoneEffect()],
+      [EnergyForEveryoneBerryJuice, new EnergyForEveryoneBerryJuiceEffect()],
       [EnergyForEveryoneLunarBlessing, new EnergyForEveryoneLunarBlessingEffect()],
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
       [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
+      [PresentIngredientMagnetS, new IngredientMagnetSPresentEffect()],
       [IngredientDrawS, new IngredientDrawSEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
@@ -141,6 +150,11 @@ export class SkillState {
     }
 
     return activations;
+  }
+
+  public addBonusActivation(): SkillActivation {
+    this.todaysSkillProcs += 1;
+    return this.activateSkill(this.skill, false);
   }
 
   public wakeup() {
@@ -206,7 +220,7 @@ export class SkillState {
     });
   }
 
-  private activateSkill(skill: Mainskill): SkillActivation {
+  private activateSkill(skill: Mainskill, resetPityProcCount: boolean = true): SkillActivation {
     const effect = this.skillEffects.get(skill);
     if (!effect) {
       throw new NotImplementedError(`No SkillEffect implemented for skill: ${skill.name}`);
@@ -216,7 +230,9 @@ export class SkillState {
 
     // update state
     this.skillProcs += 1;
-    this.helpsSinceLastSkillProc = 0;
+    if (resetPityProcCount) {
+      this.helpsSinceLastSkillProc = 0;
+    }
 
     let hadACrit = false;
     for (const activation of skillActivation.activations) {
