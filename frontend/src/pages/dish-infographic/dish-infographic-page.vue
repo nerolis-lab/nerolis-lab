@@ -45,10 +45,10 @@
         </div>
       </div>
       <div class="credits">
-        <div>original by</div>
-        <div>Anti</div>
-        <div>maintained by</div>
-        <div>tindo</div>
+        <span class="credits-line">original by</span>
+        <span class="credits-line">Anti</span>
+        <span class="credits-line">maintained by</span>
+        <span class="credits-line">tindo</span>
       </div>
     </div>
   </div>
@@ -108,23 +108,17 @@ export default defineComponent({
 
       isDownloading.value = true
       try {
-        const { default: html2canvas } = await import('html2canvas')
-
-        const canvas = await html2canvas(infographicContainer.value, {
+        // dynamically import to keep initial bundle smaller
+        const { domToPng } = await import('modern-screenshot')
+        const captureWidth = infographicContainer.value.scrollWidth
+        const captureHeight = infographicContainer.value.scrollHeight
+        const image = await domToPng(infographicContainer.value, {
           backgroundColor: '#1a3a3a',
-          useCORS: true,
-          scrollX: 0,
-          scrollY: 0,
           scale: 2,
-          width: infographicContainer.value.scrollWidth,
-          height: infographicContainer.value.scrollHeight,
-          logging: false,
-          allowTaint: true,
-          foreignObjectRendering: false,
-          imageTimeout: 15000
+          width: captureWidth,
+          height: captureHeight,
+          timeout: 15000
         })
-
-        const image = canvas.toDataURL('image/png', 0.95)
         const link = document.createElement('a')
         link.download = 'dish-infographic.png'
         link.href = image
@@ -161,7 +155,9 @@ export default defineComponent({
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  overflow: auto;
+  width: 100%;
   padding: 20px;
 }
 
@@ -285,6 +281,7 @@ export default defineComponent({
 .footer-note {
   position: absolute;
   bottom: 20px;
+  left: 50px;
   right: 50px;
   font-size: 36px;
   color: #000000;
@@ -299,9 +296,11 @@ export default defineComponent({
   color: #555;
   font-size: 36px;
   line-height: 1.4;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   text-align: right;
+}
+
+.credits-line {
+  display: block;
+  white-space: nowrap;
 }
 </style>

@@ -14,7 +14,7 @@ You will also need to run the backend and the database locally, for more informa
 
 ## Running the frontend in development mode
 
-Everytime a file in the folder is saved, the frontend will be automatically recompiled and restarted using [Vite][Vite].
+Every time a file in the folder is saved, the frontend will be automatically recompiled and restarted using [Vite][Vite].
 
 ### Start the development server
 
