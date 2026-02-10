@@ -108,19 +108,19 @@ export default defineComponent({
 
       isDownloading.value = true
       try {
-        // dynamically import to keep initial bundle smaller
-        const { domToPng } = await import('modern-screenshot')
+        const { domToJpeg } = await import('modern-screenshot')
         const captureWidth = infographicContainer.value.scrollWidth
         const captureHeight = infographicContainer.value.scrollHeight
-        const image = await domToPng(infographicContainer.value, {
+        const image = await domToJpeg(infographicContainer.value, {
           backgroundColor: '#1a3a3a',
-          scale: 2,
+          quality: 0.9,
+          scale: 1,
           width: captureWidth,
           height: captureHeight,
           timeout: 15000
         })
         const link = document.createElement('a')
-        link.download = 'dish-infographic.png'
+        link.download = 'dish-infographic.jpg'
         link.href = image
         link.click()
       } catch (err) {
@@ -206,8 +206,9 @@ export default defineComponent({
 }
 
 .infographic-container {
-  background-color: #1a3a3a;
-  background-image: url('@/assets/images/placeholder-background.png');
+  background-color: #a8d5ba;
+  background-image:
+    linear-gradient(rgba(141, 141, 141, 0.75), rgba(141, 141, 141, 0.75)), url('/images/infographics/dish-backdrop.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -219,7 +220,6 @@ export default defineComponent({
 }
 
 .recipe-section {
-  background-color: #a8d5ba;
   padding: 50px 50px 80px;
   flex-shrink: 0;
   position: relative;
@@ -239,13 +239,13 @@ export default defineComponent({
 }
 
 .ingredient-strength-section {
-  background-color: #5a8a7a;
   padding: 50px 10px 80px;
   flex-shrink: 0;
   width: 450px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-left: 45px solid #000000;
 }
 
 .strength-item {
@@ -293,7 +293,7 @@ export default defineComponent({
   position: absolute;
   bottom: 80px;
   left: 80px;
-  color: #555;
+  color: #222;
   font-size: 36px;
   line-height: 1.4;
   text-align: right;
