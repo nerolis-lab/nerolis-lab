@@ -55,6 +55,7 @@ import {
   EnergizingCheerS,
   EnergyForEveryone,
   ExtraHelpfulS,
+  IngredientDrawS,
   IngredientDrawSHyperCutter,
   IngredientMagnetS,
   PresentIngredientMagnetS,
@@ -931,6 +932,34 @@ export const VIKAVOLT: Pokemon = evolvedPokemon(CHARJABUG, {
   carrySize: 19
 });
 
+export const CUTIEFLY: Pokemon = createIngredientSpecialist({
+  name: 'CUTIEFLY',
+  pokedexNumber: 742,
+  frequency: toSeconds(1, 15, 0),
+  ingredientPercentage: 19.9,
+  skillPercentage: 1.9,
+  berry: PECHA,
+  genders: BALANCED_GENDER,
+  carrySize: 9,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: HONEY,
+    b: PURE_OIL,
+    c: GREENGRASS_CORN
+  },
+  skill: IngredientDrawS
+});
+
+export const RIBOMBEE: Pokemon = evolvedPokemon(CUTIEFLY, {
+  name: 'RIBOMBEE',
+  pokedexNumber: 743,
+  frequency: toSeconds(0, 38, 20),
+  ingredientPercentage: 19.4,
+  skillPercentage: 2.5,
+  carrySize: 19
+});
+
 export const STUFFUL: Pokemon = createIngredientSpecialist({
   name: 'STUFFUL',
   pokedexNumber: 759,
@@ -1189,7 +1218,8 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   QUAXWELL,
   QUAQUAVAL,
   CETITAN,
-  CLODSIRE
+  CLODSIRE,
+  RIBOMBEE
 ];
 
 export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
@@ -1228,6 +1258,7 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   PUMPKABOO_LARGE,
   PUMPKABOO_JUMBO,
   GRUBBIN,
+  CUTIEFLY,
   CHARJABUG,
   STUFFUL,
   SPRIGATITO,

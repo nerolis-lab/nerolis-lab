@@ -5296,6 +5296,123 @@ exports[`COMPLETE_POKEDEX > shall not change CUBONE unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change CUTIEFLY unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 9,
+  "displayName": "Cutiefly",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "RIBOMBEE",
+  ],
+  "frequency": 4500,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Greengrass Corn",
+        "name": "Corn",
+        "taxedValue": 57.3,
+        "value": 140,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.9,
+  "name": "CUTIEFLY",
+  "pokedexNumber": 742,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4846,
+      5843,
+    ],
+    "activations": {
+      "ingredients": {
+        "amount": [Function],
+        "unit": "ingredients",
+      },
+    },
+    "description": [Function],
+    "image": "ingredient_draw",
+    "ingredientAmounts": [
+      5,
+      6,
+      8,
+      11,
+      13,
+      16,
+      18,
+    ],
+    "name": "Ingredient Draw S",
+  },
+  "skillPercentage": 1.9,
+  "specialty": "ingredient",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change CYNDAQUIL unexpectedly 1`] = `
 {
   "berry": {
@@ -20320,6 +20437,121 @@ exports[`COMPLETE_POKEDEX > shall not change RATTATA unexpectedly 1`] = `
   },
   "skillPercentage": 3,
   "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change RIBOMBEE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 19,
+  "displayName": "Ribombee",
+  "evolvesFrom": "CUTIEFLY",
+  "evolvesInto": [],
+  "frequency": 2300,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Pure Oil",
+        "name": "Oil",
+        "taxedValue": 42.8,
+        "value": 121,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Greengrass Corn",
+        "name": "Corn",
+        "taxedValue": 57.3,
+        "value": 140,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.4,
+  "name": "RIBOMBEE",
+  "pokedexNumber": 743,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4846,
+      5843,
+    ],
+    "activations": {
+      "ingredients": {
+        "amount": [Function],
+        "unit": "ingredients",
+      },
+    },
+    "description": [Function],
+    "image": "ingredient_draw",
+    "ingredientAmounts": [
+      5,
+      6,
+      8,
+      11,
+      13,
+      16,
+      18,
+    ],
+    "name": "Ingredient Draw S",
+  },
+  "skillPercentage": 2.5,
+  "specialty": "ingredient",
 }
 `;
 
