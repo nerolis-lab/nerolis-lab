@@ -429,7 +429,7 @@ describe('activateIngredientMagnet', () => {
   it('shall correctly calculate ingredient amounts for a given berry set', () => {
     const berries = emptyBerryInventory();
     const params = {
-      berries: berries,
+      skill: IngredientMagnetS,
       skillLevel: 6,
       nrOfHelpsToActivate: 3,
       adjustedAmount: 0.5,
@@ -460,7 +460,7 @@ describe('activateIngredientMagnet', () => {
   it('shall handle zero adjusted amount', () => {
     const berries = emptyBerryInventory();
     const params = {
-      berries: berries,
+      skill: IngredientMagnetS,
       skillLevel: 6,
       nrOfHelpsToActivate: 2,
       adjustedAmount: 0,
@@ -487,7 +487,7 @@ describe('activateIngredientMagnet', () => {
   it('shall apply adjustment with high metronome factor', () => {
     const berries = emptyBerryInventory();
     const params = {
-      berries: berries,
+      skill: IngredientMagnetS,
       skillLevel: 6,
       nrOfHelpsToActivate: 4,
       adjustedAmount: 1,

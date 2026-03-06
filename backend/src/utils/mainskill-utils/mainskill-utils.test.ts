@@ -20,6 +20,8 @@ describe('getMainskillNames', () => {
         "Charge Strength S",
         "Charge Strength S Range",
         "Stockpile (Charge Strength S)",
+        "Cooking Assist S",
+        "Bulk Up (Cooking Assist S)",
         "Cooking Power-Up S",
         "Minus (Cooking Power-Up S)",
         "Dream Shard Magnet S",
