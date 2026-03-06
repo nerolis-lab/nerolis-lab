@@ -28,7 +28,7 @@ describe('ChargeStrengthMBadDreams', () => {
   it('should calculate correct strength amounts', () => {
     expect(ChargeStrengthMBadDreams.activations.strength.amount({ skillLevel: 1 })).toBe(2640);
     expect(ChargeStrengthMBadDreams.activations.strength.amount({ skillLevel: 3 })).toBe(5178);
-    expect(ChargeStrengthMBadDreams.activations.strength.amount({ skillLevel: 7 })).toBe(17304);
+    expect(ChargeStrengthMBadDreams.activations.strength.amount({ skillLevel: 7 })).toBe(18515);
   });
 
   it('should have specific RP values', () => {

@@ -30,7 +30,7 @@ describe('ChargeStrengthS', () => {
     expect(ChargeStrengthS.activations.strength.amount({ skillLevel: 4 })).toBe(1083);
     expect(ChargeStrengthS.activations.strength.amount({ skillLevel: 5 })).toBe(1496);
     expect(ChargeStrengthS.activations.strength.amount({ skillLevel: 6 })).toBe(2066);
-    expect(ChargeStrengthS.activations.strength.amount({ skillLevel: 7 })).toBe(3002);
+    expect(ChargeStrengthS.activations.strength.amount({ skillLevel: 7 })).toBe(3212);
   });
 
   it('should have strength unit only', () => {
