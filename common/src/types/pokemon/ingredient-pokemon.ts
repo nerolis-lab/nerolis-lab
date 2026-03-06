@@ -408,7 +408,7 @@ export const PINSIR: Pokemon = createIngredientSpecialist({
     b: FANCY_APPLE,
     c: BEAN_SAUSAGE
   },
-  skill: ChargeStrengthS
+  skill: ChargeStrengthM
 });
 
 export const DITTO: Pokemon = createIngredientSpecialist({
