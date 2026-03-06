@@ -30,6 +30,8 @@ import type {
 } from 'sleepapi-common';
 import {
   CarrySizeUtils,
+  CookingAssistS,
+  CookingAssistSBulkUp,
   CookingPowerUpS,
   getAllIngredientLists,
   HelperBoost,
@@ -182,6 +184,8 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
   // TODO: also misleading variable name since we really only filter here to figure out which skill mons we should give skill setup vs keeping ingredient setup
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(TastyChanceS.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientMagnetS.name);
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingAssistS.name);
+  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingAssistSBulkUp.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingPowerUpS.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawSSuperLuck.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawS.name);

@@ -4,6 +4,8 @@ import {
   BerryBurst,
   BerryBurstDisguise,
   ChargeEnergySMoonlight,
+  CookingAssistS,
+  CookingAssistSBulkUp,
   emptyBerryInventory,
   emptyIngredientInventory,
   EnergizingCheerS,
@@ -47,7 +49,37 @@ export function createSkillEvent(
     }
     case IngredientMagnetS: {
       skillActivations.push(
-        activateIngredientMagnet({ skillLevel, nrOfHelpsToActivate, adjustedAmount, metronomeFactor })
+        activateIngredientMagnet({
+          skill: IngredientMagnetS,
+          skillLevel,
+          nrOfHelpsToActivate,
+          adjustedAmount,
+          metronomeFactor
+        })
+      );
+      break;
+    }
+    case CookingAssistS: {
+      skillActivations.push(
+        activateIngredientMagnet({
+          skill: CookingAssistS,
+          skillLevel,
+          nrOfHelpsToActivate,
+          adjustedAmount,
+          metronomeFactor
+        })
+      );
+      break;
+    }
+    case CookingAssistSBulkUp: {
+      skillActivations.push(
+        activateIngredientMagnet({
+          skill: CookingAssistSBulkUp,
+          skillLevel,
+          nrOfHelpsToActivate,
+          adjustedAmount,
+          metronomeFactor
+        })
       );
       break;
     }
@@ -164,13 +196,13 @@ export function activateMoonlightChargeEnergy(params: {
 }
 
 export function activateIngredientMagnet(params: {
+  skill: typeof IngredientMagnetS | typeof CookingAssistS | typeof CookingAssistSBulkUp;
   skillLevel: number;
   nrOfHelpsToActivate: number;
   adjustedAmount: number;
   metronomeFactor: number;
 }): SkillActivation {
-  const { skillLevel, nrOfHelpsToActivate, adjustedAmount, metronomeFactor } = params;
-  const skill = IngredientMagnetS;
+  const { skill, skillLevel, nrOfHelpsToActivate, adjustedAmount, metronomeFactor } = params;
 
   const divideByAverageIngredientAndMetronome = ingredient.INGREDIENTS.length * metronomeFactor;
 

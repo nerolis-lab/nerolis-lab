@@ -99,8 +99,8 @@ describe('RP', () => {
     expect(rpUtils.miscFactor).toBe(1.22);
     expect(rpUtils.ingredientFactor).toBe(1754.81);
     expect(rpUtils.berryFactor).toBe(398.99);
-    expect(rpUtils.skillFactor).toBe(102.92);
-    expect(rpUtils.calc()).toBe(2753);
+    expect(rpUtils.skillFactor).toBe(226.42);
+    expect(rpUtils.calc()).toBe(2904);
   });
 
   it('shall calculate realistic level 60 Pokémon', () => {
@@ -193,7 +193,7 @@ describe('RP', () => {
       ]
     };
     const rpUtils = new RP(pokemonInstance);
-    expect(rpUtils.calc()).toBe(4295);
+    expect(rpUtils.calc()).toBe(4449);
   });
 
   it('shall calculate skill Pokémon', () => {

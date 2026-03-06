@@ -59,6 +59,7 @@ import {
   ChargeStrengthM,
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
+  CookingAssistSBulkUp,
   CookingPowerUpS,
   CookingPowerUpSMinus,
   DreamShardMagnetS,
@@ -532,7 +533,7 @@ export const HERACROSS: Pokemon = createSkillSpecialist({
     b: TASTY_MUSHROOM,
     c: BEAN_SAUSAGE
   },
-  skill: IngredientMagnetS
+  skill: CookingAssistSBulkUp
 });
 
 export const RAIKOU: Pokemon = createSkillSpecialist({

@@ -5,7 +5,7 @@ import {
   calculateSkillProcs,
   scheduleSkillEvents
 } from '@src/services/calculator/skill/skill-calculator.js';
-import { ChargeStrengthS, MathUtils, PINSIR, berry, ingredient } from 'sleepapi-common';
+import { ChargeStrengthM, MathUtils, PINSIR, berry, ingredient } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculateSkillProcs', () => {
@@ -170,14 +170,14 @@ describe('scheduleSkillEvents', () => {
     const skillActivations = scheduleSkillEvents(params);
 
     expect(skillActivations.length).toBe(5);
-    expect(skillActivations[0].adjustedAmount).toBe(1033); // Nightly proc
+    expect(skillActivations[0].adjustedAmount).toBe(2273); // Nightly proc
     expect(skillActivations[0].fractionOfProc).toBe(0.5); // Nightly proc
 
-    expect(skillActivations[1].adjustedAmount).toBe(2066); // First day proc
-    expect(skillActivations[2].adjustedAmount).toBe(2066); // Second day proc
-    expect(skillActivations[3].adjustedAmount).toBe(2066); // Third day proc
+    expect(skillActivations[1].adjustedAmount).toBe(4546); // First day proc
+    expect(skillActivations[2].adjustedAmount).toBe(4546); // Second day proc
+    expect(skillActivations[3].adjustedAmount).toBe(4546); // Third day proc
 
-    expect(Math.round(skillActivations[4].adjustedAmount)).toBe(207); // Final partial proc
+    expect(Math.round(skillActivations[4].adjustedAmount)).toBe(455); // Final partial proc
     expect(MathUtils.round(skillActivations[4].fractionOfProc, 1)).toBe(0.1); // Final partial proc
   });
 
@@ -196,18 +196,18 @@ describe('scheduleSkillEvents', () => {
     expect(skillActivations.length).toBe(2); // Nightly activation and final partial proc
     expect(skillActivations[0]).toMatchInlineSnapshot(`
       {
-        "adjustedAmount": 619.8,
+        "adjustedAmount": 1363.8,
         "fractionOfProc": 0.3,
         "nrOfHelpsToActivate": 0,
         "skill": {
           "RP": [
-            400,
-            569,
-            785,
-            1083,
-            1496,
-            2066,
-            2656,
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
           ],
           "activations": {
             "strength": {
@@ -217,15 +217,15 @@ describe('scheduleSkillEvents', () => {
           },
           "description": [Function],
           "image": "strength",
-          "name": "Charge Strength S",
+          "name": "Charge Strength M",
           "strengthAmounts": [
-            400,
-            569,
-            785,
-            1083,
-            1496,
-            2066,
-            3002,
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            6409,
           ],
         },
       }
@@ -237,13 +237,13 @@ describe('scheduleSkillEvents', () => {
         "nrOfHelpsToActivate": 0,
         "skill": {
           "RP": [
-            400,
-            569,
-            785,
-            1083,
-            1496,
-            2066,
-            2656,
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
           ],
           "activations": {
             "strength": {
@@ -253,15 +253,15 @@ describe('scheduleSkillEvents', () => {
           },
           "description": [Function],
           "image": "strength",
-          "name": "Charge Strength S",
+          "name": "Charge Strength M",
           "strengthAmounts": [
-            400,
-            569,
-            785,
-            1083,
-            1496,
-            2066,
-            3002,
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            6409,
           ],
         },
       }
@@ -283,17 +283,17 @@ describe('scheduleSkillEvents', () => {
     expect(skillActivations.length).toBe(4); // Including nightly and final partial procs
     // Nightly proc
     expect(skillActivations[0]).toEqual({
-      adjustedAmount: 826.4000000000001,
+      adjustedAmount: 1818.4,
       fractionOfProc: 0.4,
       nrOfHelpsToActivate: 0,
-      skill: ChargeStrengthS
+      skill: ChargeStrengthM
     });
     // Final partial proc
     expect(skillActivations[skillActivations.length - 1]).toEqual({
       adjustedAmount: 0,
       fractionOfProc: 0,
       nrOfHelpsToActivate: 10,
-      skill: ChargeStrengthS
+      skill: ChargeStrengthM
     });
   });
 });
