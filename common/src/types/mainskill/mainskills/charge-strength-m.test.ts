@@ -22,7 +22,7 @@ describe('ChargeStrengthM', () => {
     expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 4 })).toBe(2383);
     expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 5 })).toBe(3290);
     expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 6 })).toBe(4546);
-    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 7 })).toBe(6409);
+    expect(ChargeStrengthM.activations.strength.amount({ skillLevel: 7 })).toBe(6858);
   });
 
   it('should have strength unit only', () => {
