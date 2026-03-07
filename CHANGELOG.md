@@ -1,3 +1,18 @@
+# [2.38.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.37.0...v2.38.0) (2026-03-07)
+
+
+### Bug Fixes
+
+* **ribombee:** update backend island filter tests ([8ee54da](https://github.com/nerolis-lab/nerolis-lab/commit/8ee54da57138dc4046b93e4d6556f1893471f07d))
+
+
+### Features
+
+* add cutiefly and ribombee ([3ffa97a](https://github.com/nerolis-lab/nerolis-lab/commit/3ffa97a31363a8589e53fd45c2ea035890589832))
+* adds bulk up skill for heracross ([3c0e005](https://github.com/nerolis-lab/nerolis-lab/commit/3c0e005484ea927c3a613ef46abf2f5adc346b4a))
+* buff charge strength amounts ([33b59f4](https://github.com/nerolis-lab/nerolis-lab/commit/33b59f48992c9c2eae4becbd73783185864b2eca))
+* pinsir charge strength m ([8cce39b](https://github.com/nerolis-lab/nerolis-lab/commit/8cce39b4e425d50d50fc665b4841c16aa5d35edc))
+
 # [2.37.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.36.0...v2.37.0) (2026-02-06)
 
 
