@@ -123,6 +123,14 @@ export default defineComponent({
       }
     }
 
+    watch(
+      () => props.preSelectedIngredients,
+      (preSelectedIngredients) => {
+        selectedIngredients.value = [...preSelectedIngredients]
+        tempSelectedIngredients.value = [...preSelectedIngredients]
+      }
+    )
+
     watch(ingredientMenuOpen, (isOpen) => {
       if (isOpen) {
         tempSelectedIngredients.value = [...selectedIngredients.value]
