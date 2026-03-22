@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "dev": "vite --host",
     "clean": "rimraf dist",
@@ -65,7 +63,5 @@
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "4.9.5"
   },
-  "bundleDependencies": [
-    "sleepapi-common"
-  ]
+  "bundleDependencies": ["sleepapi-common"]
 }

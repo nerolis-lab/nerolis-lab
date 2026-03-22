@@ -34,7 +34,6 @@ export default defineComponent({
     }
   },
   setup(props) {
-    // calculate recipe value with bonus at level 1 (for display in parentheses)
     const getRecipeValue = (recipe: Recipe): number => {
       return calculateRecipeValue({
         bonus: recipe.bonus,
@@ -43,12 +42,9 @@ export default defineComponent({
       })
     }
 
-    // format recipe name to split into two lines if needed
     const formatRecipeName = (displayName: string): string => {
-      // remove quotation marks
-      let name = displayName.replace(/[""]/g, '')
+      let name = displayName.replace(/[""]/g, '') //remove quotes
 
-      // if name has exactly two words, split them onto two lines
       const words = name.split(' ')
       if (words.length === 2) {
         name = words[0] + '\n' + words[1]
@@ -73,6 +69,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+//note on all styles below: sizes are fixed based on the old infographic design
+//these are huge, fixed, unresponsive, and optimzied for download; not intended to be viewed in browser
 .recipe-card {
   flex-grow: 0;
   flex-shrink: 0;
@@ -89,7 +87,6 @@ export default defineComponent({
 
   > * {
     line-height: 1.1;
-    // align-self: start;
   }
 }
 

@@ -10,22 +10,18 @@
       </button>
     </div>
     <div ref="infographicContainer" class="infographic-container">
-      <!-- Left Section: Recipe Data -->
       <div class="recipe-section">
         <div class="recipe-grid">
-          <!-- Curries Row -->
           <div class="recipe-row">
             <img :src="recipeImage(mixedCurry.name)" :alt="mixedCurry.displayName" class="mixed-recipe-image" />
             <DishInfographicCard v-for="recipe in curries" :key="recipe.name" :recipe="recipe" />
           </div>
 
-          <!-- Salads Row -->
           <div class="recipe-row">
             <img :src="recipeImage(mixedSalad.name)" :alt="mixedSalad.displayName" class="mixed-recipe-image" />
             <DishInfographicCard v-for="recipe in salads" :key="recipe.name" :recipe="recipe" />
           </div>
 
-          <!-- Desserts Row -->
           <div class="recipe-row">
             <img :src="recipeImage(mixedJuice.name)" :alt="mixedJuice.displayName" class="mixed-recipe-image" />
             <DishInfographicCard v-for="recipe in desserts" :key="recipe.name" :recipe="recipe" />
@@ -37,7 +33,6 @@
         </div>
       </div>
 
-      <!-- Right Section: Ingredient Base Strength List -->
       <div class="ingredient-strength-section">
         <div v-for="ingredient in sortedIngredients" :key="ingredient.name" class="strength-item">
           <img :src="ingredientImage(ingredient.name)" :alt="ingredient.name" class="strength-ingredient-icon" />
@@ -73,7 +68,6 @@ export default defineComponent({
     // filter out mixed recipes (they have no ingredients)
     const recipesWithIngredients = RECIPES.filter((recipe) => recipe.ingredients.length > 0)
 
-    // group recipes by type and sort by value (descending), then take top 9 or all, then reverse to show least to most powerful
     const curries = computed(() => {
       const filtered = recipesWithIngredients.filter((r) => r.type === 'curry').sort((a, b) => b.value - a.value)
       const limited = showAllDishes.value ? filtered : filtered.slice(0, 9)
@@ -92,10 +86,8 @@ export default defineComponent({
       return limited.reverse()
     })
 
-    // sort ingredients by value (base strength)
     const sortedIngredients = [...ingredient.INGREDIENTS].sort((a, b) => a.value - b.value)
 
-    // mixed recipes for each type
     const mixedCurry = curry.MIXED_CURRY
     const mixedSalad = salad.MIXED_SALAD
     const mixedJuice = dessert.MIXED_JUICE
@@ -151,6 +143,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+//note on all styles below: sizes are fixed based on the old infographic design
+//these are huge, fixed, unresponsive, and optimzied for download; not intended to be viewed in browser
 .infographic-page {
   min-height: 100vh;
   display: flex;
