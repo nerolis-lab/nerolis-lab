@@ -94,6 +94,15 @@ describe('IngredientSelection', () => {
     expect(wrapper.vm.selectedIngredients).toEqual(mockIngredients)
   })
 
+  it('syncs selected ingredients when the parent updates preselected ingredients', async () => {
+    const updatedIngredients = mockIngredients.slice(0, 2)
+
+    await wrapper.setProps({ preSelectedIngredients: updatedIngredients })
+
+    expect(wrapper.vm.selectedIngredients).toEqual(updatedIngredients)
+    expect(wrapper.vm.tempSelectedIngredients).toEqual(updatedIngredients)
+  })
+
   it('emits updateIngredients when add is clicked', async () => {
     const button = wrapper.find('button')
     await button.trigger('click')
