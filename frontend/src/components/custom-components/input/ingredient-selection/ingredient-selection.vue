@@ -76,7 +76,7 @@
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { ingredient, type Ingredient } from 'sleepapi-common'
-import { defineComponent, ref, watch } from 'vue'
+import { computed, defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'IngredientSelection',
@@ -89,7 +89,7 @@ export default defineComponent({
   emits: ['updateIngredients'],
   setup(props, { emit }) {
     const ingredientMenuOpen = ref(false)
-    const selectedIngredients = ref([...props.preSelectedIngredients])
+    const selectedIngredients = computed(() => props.preSelectedIngredients)
     const tempSelectedIngredients = ref([...props.preSelectedIngredients])
 
     function closeIngredientMenu() {
@@ -97,7 +97,7 @@ export default defineComponent({
     }
 
     function cancelIngredients() {
-      tempSelectedIngredients.value = [...selectedIngredients.value]
+      tempSelectedIngredients.value = [...props.preSelectedIngredients]
       closeIngredientMenu()
     }
 
@@ -106,8 +106,7 @@ export default defineComponent({
     }
 
     function updateIngredients() {
-      selectedIngredients.value = [...tempSelectedIngredients.value]
-      emit('updateIngredients', selectedIngredients.value)
+      emit('updateIngredients', [...tempSelectedIngredients.value])
       closeIngredientMenu()
     }
 
@@ -122,14 +121,6 @@ export default defineComponent({
         tempSelectedIngredients.value = [...tempSelectedIngredients.value, ingredient]
       }
     }
-
-    watch(
-      () => props.preSelectedIngredients,
-      (preSelectedIngredients) => {
-        selectedIngredients.value = [...preSelectedIngredients]
-        tempSelectedIngredients.value = [...preSelectedIngredients]
-      }
-    )
 
     watch(ingredientMenuOpen, (isOpen) => {
       if (isOpen) {
