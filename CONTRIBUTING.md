@@ -6,7 +6,7 @@ Thank you for your interest in contributing to Neroli's Lab!
 
 For comprehensive contributing guidelines, please visit our documentation site:
 
-**👉 [Contributing Guide - docs.nerolislab.com](https://docs.nerolislab.com/contributing)**
+**👉 [Contributing Guide - docs.nerolislab.com](https://docs.nerolislab.com/getting-started/contributing.html)**
 
 The documentation includes:
 

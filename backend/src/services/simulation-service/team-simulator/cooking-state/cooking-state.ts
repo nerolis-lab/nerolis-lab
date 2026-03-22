@@ -157,6 +157,7 @@ export class CookingState {
   }
 
   public addCritBonus(amount: number) {
+    // TODO: instead of voiding the proc, we should postpone
     this.bonusCritChance = Math.min(0.7, this.bonusCritChance + amount);
   }
 

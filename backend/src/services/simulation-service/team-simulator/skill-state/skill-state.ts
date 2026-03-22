@@ -11,6 +11,8 @@ import { ChargeStrengthMEffect } from '@src/services/simulation-service/team-sim
 import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-effect.js';
 import { ChargeStrengthSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-range-effect.js';
 import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s-stockpile-effect.js';
+import { CookingAssistSBulkUpEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-assist-s-bulk-up-effect.js';
+import { CookingAssistSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-assist-s-effect.js';
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-effect.js';
 import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s-minus-effect.js';
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
@@ -50,6 +52,8 @@ import {
   ChargeStrengthS,
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
+  CookingAssistS,
+  CookingAssistSBulkUp,
   CookingPowerUpS,
   CookingPowerUpSMinus,
   defaultZero,
@@ -112,6 +116,8 @@ export class SkillState {
       [ChargeStrengthS, new ChargeStrengthSEffect()],
       [ChargeStrengthSRange, new ChargeStrengthSRangeEffect()],
       [ChargeStrengthSStockpile, new ChargeStrengthSStockpileEffect()],
+      [CookingAssistS, new CookingAssistSEffect()],
+      [CookingAssistSBulkUp, new CookingAssistSBulkUpEffect()],
       [CookingPowerUpS, new CookingPowerUpSEffect()],
       [CookingPowerUpSMinus, new CookingPowerUpSMinusEffect()],
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
