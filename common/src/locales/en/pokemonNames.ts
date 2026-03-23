@@ -128,6 +128,8 @@ export default {
   NATU: 'Natu',
   NINETALES_ALOLAN: 'Ninetales (Alolan Form)',
   NINETALES: 'Ninetales',
+  NOIBAT: 'Noibat',
+  NOIVERN: 'Noivern',
   ONIX: 'Onix',
   PAWMI: 'Pawmi',
   PAWMO: 'Pawmo',

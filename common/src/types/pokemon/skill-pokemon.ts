@@ -20,7 +20,8 @@ import {
   PERSIM,
   RAWST,
   SITRUS,
-  WIKI
+  WIKI,
+  YACHE
 } from '../berry/berries';
 import {
   BALANCED_GENDER,
@@ -1011,6 +1012,34 @@ export const DEDENNE: Pokemon = createSkillSpecialist({
   skill: TastyChanceS
 });
 
+export const NOIBAT: Pokemon = createSkillSpecialist({
+  name: 'NOIBAT',
+  pokedexNumber: 714,
+  frequency: toSeconds(1, 25, 0),
+  ingredientPercentage: 19.8,
+  skillPercentage: 4.8,
+  berry: YACHE,
+  genders: BALANCED_GENDER,
+  carrySize: 7,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: FANCY_APPLE,
+    b: LARGE_LEEK,
+    c: BEAN_SAUSAGE
+  },
+  skill: ChargeStrengthM
+});
+
+export const NOIVERN: Pokemon = evolvedPokemon(NOIBAT, {
+  name: 'NOIVERN',
+  pokedexNumber: 715,
+  frequency: toSeconds(0, 45, 0),
+  ingredientPercentage: 19.5,
+  skillPercentage: 4.8,
+  carrySize: 18
+});
+
 export const TOGEDEMARU: Pokemon = createSkillSpecialist({
   name: 'TOGEDEMARU',
   pokedexNumber: 777,
@@ -1189,6 +1218,8 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   MAREEP,
   FLAAFFY,
   MURKROW,
+  NOIBAT,
+  NOIVERN,
   TREECKO,
   GROVYLE,
   RALTS,

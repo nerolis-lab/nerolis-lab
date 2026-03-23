@@ -17157,6 +17157,238 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES_ALOLAN unexpectedly 1`] =
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change NOIBAT unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "YACHE",
+    "type": "dragon",
+    "value": 35,
+  },
+  "carrySize": 7,
+  "displayName": "Noibat",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "NOIVERN",
+  ],
+  "frequency": 5100,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.8,
+  "name": "NOIBAT",
+  "pokedexNumber": 714,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "image": "strength",
+    "name": "Charge Strength M",
+    "strengthAmounts": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6858,
+    ],
+  },
+  "skillPercentage": 4.8,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change NOIVERN unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "YACHE",
+    "type": "dragon",
+    "value": 35,
+  },
+  "carrySize": 18,
+  "displayName": "Noivern",
+  "evolvesFrom": "NOIBAT",
+  "evolvesInto": [],
+  "frequency": 2700,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.5,
+  "name": "NOIVERN",
+  "pokedexNumber": 715,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "image": "strength",
+    "name": "Charge Strength M",
+    "strengthAmounts": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6858,
+    ],
+  },
+  "skillPercentage": 4.8,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change ONIX unexpectedly 1`] = `
 {
   "berry": {
