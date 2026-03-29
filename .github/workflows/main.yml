@@ -29,7 +29,7 @@ jobs:
             frontend:
               - 'frontend/**'
             docs:
-              - 'docs/**'
+              - 'contributor-docs/**'
             bot:
               - 'bot/**'
             workflows:
@@ -85,7 +85,7 @@ jobs:
     if: needs.changes.outputs.docs == 'true'
     uses: ./.github/workflows/build-test.yml
     with:
-      working-directory: 'docs'
+      working-directory: 'contributor-docs'
 
   lint:
     name: Lint

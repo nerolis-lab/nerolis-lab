@@ -131,7 +131,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/nerolis-lab/nerolis-lab/edit/main/docs/:path',
+      pattern: 'https://github.com/nerolis-lab/nerolis-lab/edit/main/contributor-docs/:path',
       text: 'Edit this page on GitHub'
     }
   } satisfies DefaultTheme.Config,

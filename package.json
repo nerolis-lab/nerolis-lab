@@ -13,7 +13,11 @@
     "prettier-check": "prettier --check .",
     "prettier-fix": "prettier --write .",
     "commitlint": "commitlint",
-    "browser-tools": "concurrently \"npx @agentdeskai/browser-tools-server@1.2.0\" \"npx @agentdeskai/browser-tools-mcp@latest\""
+    "browser-tools": "concurrently \"npx @agentdeskai/browser-tools-server@1.2.0\" \"npx @agentdeskai/browser-tools-mcp@latest\"",
+    "contributor-docs:dev": "npm --prefix contributor-docs run dev",
+    "contributor-docs:build": "npm --prefix contributor-docs run build",
+    "guides:dev": "npm --prefix guides run dev",
+    "guides:build": "npm --prefix guides run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.0",

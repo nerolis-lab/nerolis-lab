@@ -77,7 +77,7 @@ jobs:
     if: ${{ inputs.environment == 'production' }}
     uses: ./.github/workflows/build-test.yml
     with:
-      working-directory: 'docs'
+      working-directory: 'contributor-docs'
       needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
       skip-tests: true
@@ -110,7 +110,7 @@ jobs:
           echo "Backend artifacts structure:"
           ls -la backend-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No backend artifacts directory"
           echo "Docs artifacts structure:"
-          ls -la docs-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No docs artifacts directory"
+          ls -la contributor-docs-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No docs artifacts directory"
       
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -198,16 +198,16 @@ jobs:
           echo "[${{ inputs.environment }}] Deploying docs..."
           
           # Check for docs artifacts
-          if [ ! -d "docs-${{ needs.determine-sha.outputs.sha }}" ]; then
-            echo "✗ Docs artifacts not found at: docs-${{ needs.determine-sha.outputs.sha }}"
+          if [ ! -d "contributor-docs-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Docs artifacts not found at: contributor-docs-${{ needs.determine-sha.outputs.sha }}"
             exit 1
           fi
           
           echo "✓ Docs artifacts found"
-          echo "Docs files: $(find docs-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
+          echo "Docs files: $(find contributor-docs-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
           # Deploy docs files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" contributor-docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
           
           echo "✓ Docs deployment complete!"
 
