@@ -15,7 +15,7 @@ describe('Guides VitePress config', () => {
 
   it('has guides sidebar entries', () => {
     const configContent = readFileSync(join(GUIDES_DIR, '.vitepress', 'config.ts'), 'utf-8');
-    expect(configContent).toMatch(/Pokémon Sleep Guides/);
-    expect(configContent).toMatch(/sleep-basics/);
+    expect(configContent).toMatch(/sidebar:\s*false/);
+    expect(configContent).toMatch(/@':\s*frontendSrcPath/);
   });
 });

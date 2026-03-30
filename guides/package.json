@@ -21,6 +21,11 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "axios": "^1.12.2",
+    "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.4.0",
+    "sleepapi-common": "file:../common",
+    "vue-router": "4.6.3",
     "vuetify": "^3.10.9"
   }
 }

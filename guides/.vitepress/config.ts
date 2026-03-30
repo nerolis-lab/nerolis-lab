@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = resolve(fileURLToPath(new URL('../../', import.meta.url)));
-const frontendSharedPath = resolve(repoRoot, 'frontend/src/shared');
+const frontendSrcPath = resolve(repoRoot, 'frontend/src');
 
 export default defineConfig({
   base: '/guides/',
@@ -13,15 +13,7 @@ export default defineConfig({
   ignoreDeadLinks: [/^http:\/\/localhost/, /^https:\/\/localhost/],
 
   themeConfig: {
-    sidebar: [
-      {
-        text: 'Pokémon Sleep Guides',
-        items: [
-          { text: 'Overview', link: '/' },
-          { text: 'Sleep Basics', link: '/sleep-basics' }
-        ]
-      }
-    ] satisfies DefaultTheme.SidebarItem[],
+    sidebar: false,
     search: {
       provider: 'local'
     }
@@ -34,7 +26,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        '@frontend-shared': frontendSharedPath
+        '@': frontendSrcPath
       }
     },
     server: {
