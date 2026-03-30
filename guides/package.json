@@ -1,9 +1,9 @@
 {
-  "name": "nerolis-lab-docs",
+  "name": "nerolis-lab-guides",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Documentation for Neroli's Lab - Pokémon Sleep data analysis tool",
+  "description": "Pokémon Sleep guides for Neroli's Lab",
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
@@ -18,5 +18,9 @@
     "typescript": "^5.8.3",
     "vitepress": "^1.5.0",
     "vitest": "^3.2.3"
+  },
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "vuetify": "^3.10.9"
   }
 }

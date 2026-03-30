@@ -4,6 +4,13 @@ Thank you for considering contributing to Neroli's Lab! We welcome contributions
 
 ## 🤝 How to Contribute
 
+## 📚 Documentation Areas
+
+- **Contributor Docs (`contributor-docs/`)**: Technical guides for developers, architecture, setup, and contribution workflow.
+- **Public Guides (`guides/`)**: Player-facing Pokémon Sleep guides that are published under `/guides`.
+
+When making documentation changes, please edit the correct project directory.
+
 ### Types of Contributions
 
 - **💻 Code Contributions**: Submit bug fixes, features, or optimizations

@@ -71,26 +71,38 @@ jobs:
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
       skip-tests: true
 
-  docs:
-    name: Build Docs
+  contributor-docs:
+    name: Build Contributor Docs
     needs: [determine-sha, common]
     if: ${{ inputs.environment == 'production' }}
     uses: ./.github/workflows/build-test.yml
     with:
-      working-directory: 'docs'
+      working-directory: 'contributor-docs'
+      needs-common-build: true
+      commit_sha: ${{ needs.determine-sha.outputs.sha }}
+      skip-tests: true
+
+  guides:
+    name: Build Guides
+    needs: [determine-sha, common]
+    if: ${{ inputs.environment == 'production' }}
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'guides'
       needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
       skip-tests: true
 
   release:
     name: Release
-    needs: [determine-sha, common, frontend, backend, docs]
+    needs: [determine-sha, common, frontend, backend, contributor-docs, guides]
     if: |
       always() &&
       (needs.common.result == 'success' || needs.common.result == 'skipped') &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
-      (needs.docs.result == 'success' || needs.docs.result == 'skipped')
+      (needs.contributor-docs.result == 'success' || needs.contributor-docs.result == 'skipped') &&
+      (needs.guides.result == 'success' || needs.guides.result == 'skipped')
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
@@ -109,8 +121,10 @@ jobs:
           ls -la frontend-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No frontend artifacts directory"
           echo "Backend artifacts structure:"
           ls -la backend-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No backend artifacts directory"
-          echo "Docs artifacts structure:"
-          ls -la docs-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No docs artifacts directory"
+          echo "Contributor docs artifacts structure:"
+          ls -la contributor-docs-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No contributor docs artifacts directory"
+          echo "Guides artifacts structure:"
+          ls -la guides-${{ needs.determine-sha.outputs.sha }}/ 2>/dev/null || echo "No guides artifacts directory"
       
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
@@ -192,24 +206,43 @@ jobs:
           
           echo "✓ Frontend deployment complete!"
 
-      - name: Deploy docs dist
+      - name: Deploy contributor docs dist
         if: ${{ inputs.environment == 'production' && vars.DOCS_DIR != '' }}
         run: |
-          echo "[${{ inputs.environment }}] Deploying docs..."
+          echo "[${{ inputs.environment }}] Deploying contributor docs..."
           
-          # Check for docs artifacts
-          if [ ! -d "docs-${{ needs.determine-sha.outputs.sha }}" ]; then
-            echo "✗ Docs artifacts not found at: docs-${{ needs.determine-sha.outputs.sha }}"
+          # Check for contributor docs artifacts
+          if [ ! -d "contributor-docs-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Contributor docs artifacts not found at: contributor-docs-${{ needs.determine-sha.outputs.sha }}"
             exit 1
           fi
           
-          echo "✓ Docs artifacts found"
-          echo "Docs files: $(find docs-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
+          echo "✓ Contributor docs artifacts found"
+          echo "Contributor docs files: $(find contributor-docs-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
           
-          # Deploy docs files
-          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
+          # Deploy contributor docs files
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" contributor-docs-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.DOCS_DIR }}/
           
-          echo "✓ Docs deployment complete!"
+          echo "✓ Contributor docs deployment complete!"
+
+      - name: Deploy guides dist under /guides
+        if: ${{ inputs.environment == 'production' && vars.FRONTEND_DIR != '' }}
+        run: |
+          echo "[${{ inputs.environment }}] Deploying guides under /guides..."
+          
+          # Check for guides artifacts
+          if [ ! -d "guides-${{ needs.determine-sha.outputs.sha }}" ]; then
+            echo "✗ Guides artifacts not found at: guides-${{ needs.determine-sha.outputs.sha }}"
+            exit 1
+          fi
+          
+          echo "✓ Guides artifacts found"
+          echo "Guides files: $(find guides-${{ needs.determine-sha.outputs.sha }} -type f | wc -l)"
+          
+          # Deploy guides static site under the frontend directory as /guides
+          rsync -az --delete -e "ssh -o StrictHostKeyChecking=no -o LogLevel=ERROR" guides-${{ needs.determine-sha.outputs.sha }}/ ${{ secrets.SSH_HOST }}:${{ vars.FRONTEND_DIR }}/guides/
+          
+          echo "✓ Guides deployment complete under /guides"
 
       - name: Deploy PM2 services
         run: |

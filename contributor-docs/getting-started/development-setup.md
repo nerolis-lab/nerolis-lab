@@ -62,6 +62,18 @@ npm install
 cd common && npm install && npm run build && cd ..
 cd backend && npm install && npm run build && cd ..
 cd frontend && npm install && npm run build && cd ..
+cd contributor-docs && npm install && cd ..
+cd guides && npm install && cd ..
+```
+
+### 4. Run documentation projects locally
+
+```bash
+# Contributor-focused technical documentation
+cd contributor-docs && npm run dev
+
+# Public guides content (served under /guides in production)
+cd guides && npm run dev
 ```
 
 ## Component Setup

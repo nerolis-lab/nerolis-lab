@@ -1,0 +1,22 @@
+{
+  "name": "nerolis-lab-contributor-docs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Documentation for Neroli's Lab - Pokémon Sleep data analysis tool",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "test": "vitest --run",
+    "test-watch": "vitest --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.4",
+    "globby": "^14.0.2",
+    "sass-embedded": "^1.89.2",
+    "typescript": "^5.8.3",
+    "vitepress": "^1.5.0",
+    "vitest": "^3.2.3"
+  }
+}

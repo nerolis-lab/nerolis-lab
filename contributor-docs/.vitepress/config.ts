@@ -90,7 +90,8 @@ export default defineConfig({
         items: [
           { text: 'Contributing', link: '/getting-started/contributing' },
           { text: 'Development Setup', link: '/getting-started/development-setup' },
-          { text: 'Linear History', link: '/getting-started/linear-history' }
+          { text: 'Linear History', link: '/getting-started/linear-history' },
+          { text: 'Guides Release Checklist', link: '/getting-started/guides-release-checklist' }
         ]
       },
       {
@@ -131,7 +132,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/nerolis-lab/nerolis-lab/edit/main/docs/:path',
+      pattern: 'https://github.com/nerolis-lab/nerolis-lab/edit/main/contributor-docs/:path',
       text: 'Edit this page on GitHub'
     }
   } satisfies DefaultTheme.Config,

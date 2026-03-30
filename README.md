@@ -16,12 +16,13 @@ Neroli's Lab helps users make informed decisions regarding their investments in 
 ## 🚀 Quick Links
 
 - **<img src="./frontend/public/favicon.svg" width="16" height="16" alt="Website" style="vertical-align: -0.125em;"> [Live Website](https://nerolislab.com)** - Try our tools and calculators
+- **📖 [Pokémon Sleep Guides](https://nerolislab.com/guides/)** - Learn game mechanics and walkthroughs
 - **<img src="https://di8m9w6rqrh5d.cloudfront.net/1zObrQ89Q4wHhgFCfYIUhMUvmNf4XjxO/big_preview_48848892-a237-4636-8aae-d5f3ff2f6482.png" width="16" alt="Discord" style="vertical-align: -0.125em;"> [Discord Community](https://discord.gg/SP9Ms69ueD)** - Get help and discuss
-- **📚 [Documentation](https://docs.nerolislab.com)** - Getting started guides, architecture, and technical specifications
+- **🛠️ [Contributor Docs](https://docs.nerolislab.com)** - Development setup, architecture, and technical standards
 
 ## 🤝 Contribute
 
-Want to contribute? You can find out how to get started on our documentation page:
+Want to contribute? Start with the contributor docs:
 
 **🔗 [docs.nerolislab.com →](https://docs.nerolislab.com)**
 

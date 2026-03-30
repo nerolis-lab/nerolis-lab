@@ -16,10 +16,10 @@ npm install -D typedoc typedoc-plugin-markdown
 
 ```bash
 # Generate HTML documentation
-npx typedoc --out docs/api/generated common/src/index.ts
+npx typedoc --out contributor-docs/api/generated common/src/index.ts
 
 # Generate markdown documentation
-npx typedoc --plugin typedoc-plugin-markdown --out docs/api/generated common/src/index.ts
+npx typedoc --plugin typedoc-plugin-markdown --out contributor-docs/api/generated common/src/index.ts
 ```
 
 ### TypeDoc Configuration
@@ -29,7 +29,7 @@ Create `typedoc.json` in the project root:
 ```json
 {
   "entryPoints": ["./common/src/index.ts"],
-  "out": "./docs/api/generated",
+  "out": "./contributor-docs/api/generated",
   "plugin": ["typedoc-plugin-markdown"],
   "readme": "./common/README.md",
   "name": "Neroli's Lab Common Library",
@@ -84,13 +84,13 @@ async function generateApiDocs() {
   app.bootstrap({
     entryPoints: ['./common/src/index.ts'],
     plugin: ['typedoc-plugin-markdown'],
-    out: './docs/api/generated'
+    out: './contributor-docs/api/generated'
   });
 
   const project = app.convert();
 
   if (project) {
-    await app.generateDocs(project, './docs/api/generated');
+    await app.generateDocs(project, './contributor-docs/api/generated');
     console.log('API documentation generated successfully');
   }
 }
@@ -104,8 +104,8 @@ Add to package.json scripts:
 {
   "scripts": {
     "docs:api": "node scripts/generate-docs.js",
-    "docs:dev": "npm run docs:api && vitepress dev docs",
-    "docs:build": "npm run docs:api && vitepress build docs"
+    "docs:dev": "npm run docs:api && vitepress dev contributor-docs",
+    "docs:build": "npm run docs:api && vitepress build contributor-docs"
   }
 }
 ```

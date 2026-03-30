@@ -17,8 +17,12 @@
       "path": "frontend"
     },
     {
-      "name": "docs",
-      "path": "docs"
+      "name": "contributor-docs",
+      "path": "contributor-docs"
+    },
+    {
+      "name": "guides",
+      "path": "guides"
     },
     {
       "name": "bot",
@@ -35,7 +39,12 @@
     },
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "eslint.validate": ["javascript", "typescript", "json", "markdown"],
+    "eslint.validate": [
+      "javascript",
+      "typescript",
+      "json",
+      "markdown"
+    ],
     "files.exclude": {
       "common": true,
       "backend": true,
@@ -67,6 +76,10 @@
     }
   },
   "extensions": {
-    "recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "gruntfuggly.todo-tree"]
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "gruntfuggly.todo-tree"
+    ]
   }
 }

@@ -18,20 +18,14 @@
   </v-app-bar>
 
   <v-navigation-drawer v-model="drawer" temporary>
-    <v-list nav>
-      <v-list-item prepend-icon="mdi-home" title="Home" to="/"></v-list-item>
-      <v-list-item prepend-icon="mdi-calculator" title="Calculator" to="/calculator"></v-list-item>
-      <v-list-item prepend-icon="mdi-compare-horizontal" title="Compare" to="/compare"></v-list-item>
-      <v-list-item prepend-icon="mdi-podium" title="Tier lists" to="/tierlist"></v-list-item>
-      <v-list-item prepend-icon="mdi-food" title="Recipes" to="/recipes"></v-list-item>
-
-      <v-list-item>
-        <v-divider />
-      </v-list-item>
-
-      <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings"></v-list-item>
-      <v-list-item v-if="isAdmin" prepend-icon="mdi-shield-account" title="Admin" to="/admin"></v-list-item>
-    </v-list>
+    <div class="drawer-content">
+      <SharedSidebarLinks :items="mainNavItems" />
+      <v-divider class="my-2" />
+      <v-list nav>
+        <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings"></v-list-item>
+        <v-list-item v-if="isAdmin" prepend-icon="mdi-shield-account" title="Admin" to="/admin"></v-list-item>
+      </v-list>
+    </div>
   </v-navigation-drawer>
 </template>
 
@@ -39,6 +33,8 @@
 import AccountMenu from '@/components/account/account-menu.vue'
 import DonateMenu from '@/components/donate/donate-menu.vue'
 import InboxMenu from '@/components/inbox/inbox-menu.vue'
+import { MAIN_SITE_NAV_ITEMS } from '@/shared/site-navigation'
+import SharedSidebarLinks from '@/shared/shared-sidebar-links.vue'
 import { useUserStore } from '@/stores/user-store'
 import { Roles } from 'sleepapi-common'
 import { defineComponent } from 'vue'
@@ -48,11 +44,12 @@ export default defineComponent({
   components: {
     AccountMenu,
     DonateMenu,
-    InboxMenu
+    InboxMenu,
+    SharedSidebarLinks
   },
   setup() {
     const userStore = useUserStore()
-    return { isAdmin: userStore.role === Roles.Admin, loggedIn: userStore.loggedIn }
+    return { isAdmin: userStore.role === Roles.Admin, loggedIn: userStore.loggedIn, mainNavItems: MAIN_SITE_NAV_ITEMS }
   },
   data: () => ({
     drawer: false
@@ -70,6 +67,10 @@ export default defineComponent({
   font-style: italic;
   font-size: 16px;
   margin: -6px 0 0 5px;
+}
+
+.drawer-content {
+  padding: 8px;
 }
 
 @media (max-width: $desktop) {
