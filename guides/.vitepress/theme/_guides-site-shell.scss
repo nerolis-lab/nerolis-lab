@@ -1,8 +1,4 @@
-// -----------------------------------------------------------------------------
-// Guides theme: site shell — fixed header bar, left site nav drawer, scrim, right doc
-// sidebar (VPSidebar). Hides default VPNav where we inject our layout. “On this page”
-// outline styles stay in `_guides-on-this-page-nav.scss`.
-// -----------------------------------------------------------------------------
+// Guides theme: site shell — custom toolbar, site nav drawer, scrim, VPSidebar.Default VPNav hidden
 @use './breakpoints' as *;
 
 .guides-app,
@@ -23,36 +19,23 @@
     }
   }
 
-  .guides-site-toolbar {
+  .guides-site-toolbar.v-toolbar {
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     z-index: 1200;
-    width: 100%;
     font-family: var(--font-family-base);
 
-    .page-title {
-      display: flex;
-    }
+    .v-toolbar-title {
+      margin-inline-start: 0;
 
-    &.v-toolbar {
-      .v-toolbar-title {
-        margin-inline-start: 0;
+      @include medium-and-up {
+        margin-inline-start: 20px;
+      }
 
-        .page-title {
-          display: flex;
-        }
-
-        &.v-toolbar {
-          .v-toolbar-title {
-            margin-inline-start: 0;
-
-            @include medium-and-up {
-              margin-inline-start: 20px;
-            }
-          }
-        }
+      .page-title {
+        display: flex;
       }
     }
   }
@@ -62,25 +45,26 @@
     display: none !important;
   }
 
-  .site-nav-drawer.v-navigation-drawer--temporary {
-    top: var(--vp-nav-height) !important;
-    height: calc(100% - var(--vp-nav-height)) !important;
-    max-height: calc(100vh - var(--vp-nav-height)) !important;
-    z-index: 1191 !important; // above scrim (1189); below fixed toolbar (1200)
+  .site-nav-drawer {
+    &.v-navigation-drawer--temporary {
+      top: var(--vp-nav-height) !important;
+      height: calc(100% - var(--vp-nav-height)) !important;
+      max-height: calc(100vh - var(--vp-nav-height)) !important;
+      z-index: 1191 !important; // above scrim (1189); below toolbar (1200)
+    }
+
+    .site-nav-drawer-list .v-list-item {
+      color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+    }
   }
 
   .v-navigation-drawer__scrim {
     position: fixed !important;
-    top: var(--vp-nav-height) !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    width: auto !important;
-    height: auto !important;
+    inset: var(--vp-nav-height) 0 0 0;
     z-index: 1189 !important;
   }
 
-  // doc sidebar: mobile slide-in from the right; from medium up VitePress docks it left
+  // mobile: slides in from the right; medium+: VitePress docks it left
   .VPSidebar {
     top: var(--vp-nav-height);
     left: auto !important;
@@ -96,16 +80,6 @@
       left: 0 !important;
       right: auto !important;
       transform: translateX(0) !important;
-
-      &.open {
-        transform: translateX(0) !important;
-      }
     }
-  }
-}
-
-.site-nav-drawer {
-  .site-nav-drawer-list .v-list-item {
-    color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
   }
 }
