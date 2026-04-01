@@ -1,40 +1,9 @@
 // -----------------------------------------------------------------------------
 // Guides theme: “On this page” local nav (VPLocalNav + outline dropdown)
-// Styles the sticky outline strip and flyout menu for in-page headings. Includes the
-// `v-list-row-overlay` mixin shared by outline links. Does not include site header or
-// doc sidebars — those live in `_guides-site-shell.scss`.
+// Sticky outline strip and flyout for in-page headings. Site header / doc sidebars:
+// `_guides-site-shell.scss`.
 // -----------------------------------------------------------------------------
 @use './breakpoints' as *;
-
-$outline-row-radius: 8px;
-
-// matches v-list-item row hover (.v-list-item__overlay) + keyboard focus
-@mixin v-list-row-overlay {
-  position: relative;
-  border-radius: $outline-row-radius;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background-color: currentColor;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease-in-out;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover::before {
-      opacity: calc(var(--v-hover-opacity) * var(--v-theme-overlay-multiplier));
-    }
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--color-secondary-500);
-    outline-offset: 2px;
-  }
-}
 
 .guides-shell {
   .VPLocalNav {
@@ -48,101 +17,101 @@ $outline-row-radius: 8px;
     .container {
       min-width: 0;
     }
-  }
 
-  // "On this page" flyout: only rendered while VPLocalNav is visible (<1280px in default theme).
-  .VPLocalNavOutlineDropdown {
-    position: relative;
-    min-width: 0;
-    flex: 1 1 0%;
-
-    button {
-      font-size: var(--text-body-size);
-    }
-
-    .icon {
-      font-size: 16px;
-    }
-
-    .items {
-      border: none;
-      border-radius: var(--guides-outline-menu-radius);
-      gap: 0;
+    // "On this page" flyout menu
+    .VPLocalNavOutlineDropdown {
+      position: relative;
       min-width: 0;
-      max-width: 100%;
-      box-sizing: border-box;
-      grid-template-columns: minmax(0, 1fr);
-      background-color: var(--guides-outline-menu-surface);
-      box-shadow: var(--guides-outline-menu-shadow);
+      flex: 1 1 0%;
 
-      @include medium-and-up {
-        left: 16px;
-        right: 16px;
+      button {
+        font-size: var(--text-body-size);
       }
-    }
 
-    .header {
-      min-width: 0;
-      max-width: 100%;
-      border-bottom: 1px solid var(--guides-outline-menu-divider);
+      .icon {
+        font-size: 16px;
+      }
 
-      .top-link {
-        @include v-list-row-overlay;
-
+      .header .top-link,
+      .outline .outline-link {
+        position: relative;
+        border-radius: 8px;
         display: block;
-        color: var(--color-neutral-100);
-        min-height: 44px;
-        line-height: 44px;
-        padding-inline: 16px;
-        text-decoration: none;
-        min-width: 0;
-        max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background-color: currentColor;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        &:hover::before {
+          opacity: calc(var(--v-hover-opacity) * var(--v-theme-overlay-multiplier));
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--color-secondary-500);
+          outline-offset: 2px;
+        }
       }
-    }
 
-    .outline {
-      min-width: 0;
-      width: 100%;
-      max-width: 100%;
-      padding: 4px 0 10px;
-      box-sizing: border-box;
+      .items {
+        border: none;
+        border-radius: var(--guides-outline-menu-radius);
+        gap: 0;
+        grid-template-columns: minmax(0, 1fr);
+        background-color: var(--guides-outline-menu-surface);
+        box-shadow: var(--guides-outline-menu-shadow);
 
-      ul {
-        min-width: 0;
-        width: 100%;
-        max-width: 100%;
-        margin: 0;
-        box-sizing: border-box;
+        @include medium-and-up {
+          left: 16px;
+          right: 16px;
+        }
       }
 
-      li {
-        min-width: 0;
-        max-width: 100%;
-      }
+      .header {
+        border-bottom: 1px solid var(--guides-outline-menu-divider);
 
-      .outline-link {
-        @include v-list-row-overlay;
-
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        min-height: 44px;
-        padding: 8px 0;
-        box-sizing: border-box;
-        font-size: 14px;
-        line-height: 1.35;
-        color: var(--color-neutral-200);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        &.active {
+        .top-link {
           color: var(--color-neutral-100);
-          font-weight: 500;
+          min-height: 44px;
+          line-height: 44px;
+          padding-inline: 16px;
+          text-decoration: none;
+        }
+      }
+
+      .outline {
+        padding: 4px 0 10px;
+
+        > .nested {
+          // skip padding on the first layer of nesting only
+          padding: 0;
+        }
+
+        // line-height = inner height for vertical centering. flexbox breaks ellipsis
+        $outline-link-vpad: 8px;
+        $outline-link-inner-h: 44px - 2 * $outline-link-vpad;
+
+        .outline-link {
+          box-sizing: border-box;
+          min-height: 44px;
+          padding: $outline-link-vpad 16px;
+          font-size: 14px;
+          line-height: $outline-link-inner-h;
+          color: var(--color-neutral-200);
+
+          &.active {
+            color: var(--color-neutral-100);
+            font-weight: 500;
+          }
         }
       }
     }
