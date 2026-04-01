@@ -74,13 +74,13 @@ $nav-bar-title-breakpoint: 960px;
   display: flex;
 }
 
-:deep(.v-app-bar-title) {
-  margin-inline-start: 0;
-}
-
-@media (min-width: $nav-bar-title-breakpoint) {
+.v-app-bar {
   :deep(.v-app-bar-title) {
-    margin-inline-start: initial;
+    margin-inline-start: 0;
+
+    @media (min-width: $nav-bar-title-breakpoint) {
+      margin-inline-start: 20px;
+    }
   }
 }
 </style>

@@ -40,20 +40,12 @@
         display: flex;
       }
 
-      &.v-toolbar,
-      &.v-app-bar {
-        .v-toolbar-title,
-        .v-app-bar-title {
+      &.v-toolbar {
+        .v-toolbar-title {
           margin-inline-start: 0;
-        }
-      }
 
-      @include medium-and-up {
-        &.v-toolbar,
-        &.v-app-bar {
-          .v-toolbar-title,
-          .v-app-bar-title {
-            margin-inline-start: initial;
+          @include medium-and-up {
+            margin-inline-start: 20px;
           }
         }
       }
