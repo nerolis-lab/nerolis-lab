@@ -40,8 +40,18 @@
       .v-toolbar-title {
         margin-inline-start: 0;
 
-        @include medium-and-up {
-          margin-inline-start: 20px;
+        .page-title {
+          display: flex;
+        }
+
+        &.v-toolbar {
+          .v-toolbar-title {
+            margin-inline-start: 0;
+
+            @include medium-and-up {
+              margin-inline-start: 20px;
+            }
+          }
         }
       }
     }
