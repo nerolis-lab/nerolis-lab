@@ -93,11 +93,12 @@ jobs:
 
   guides:
     name: Guides
-    needs: changes
-    if: needs.changes.outputs.guides == 'true'
+    needs: [changes, common]
+    if: needs.changes.outputs.guides == 'true' || needs.changes.outputs.common == 'true'
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'guides'
+      needs-common-build: true
 
   lint:
     name: Lint
