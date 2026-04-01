@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * Fork of VitePress default Layout so we share one useSidebar() with GuidesSiteHeader.
+ * Fork of VitePress default Layout; coordinates useSidebar() with GuidesSiteHeader (site nav).
  * See node_modules/vitepress/dist/client/theme-default/Layout.vue — keep in sync on upgrades.
  */
 import { useData, useRoute } from 'vitepress';
@@ -12,7 +12,7 @@ import VPNav from 'vitepress/dist/client/theme-default/components/VPNav.vue';
 import VPSidebar from 'vitepress/dist/client/theme-default/components/VPSidebar.vue';
 import VPSkipLink from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue';
 import { useCloseSidebarOnEscape, useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar.js';
-import { computed, provide, useSlots, watch } from 'vue';
+import { computed, provide, ref, useSlots, watch } from 'vue';
 import GuidesSiteHeader from './components/GuidesSiteHeader.vue';
 
 const {
@@ -24,7 +24,15 @@ const {
 } = useSidebar();
 
 const route = useRoute();
-watch(() => route.path, closeSidebar);
+const siteNavOpen = ref(false);
+
+watch(
+  () => route.path,
+  () => {
+    closeSidebar();
+    siteNavOpen.value = false;
+  }
+);
 
 useCloseSidebarOnEscape(isSidebarOpen, closeSidebar);
 
@@ -42,16 +50,28 @@ const slots = useSlots();
 const heroImageSlotExists = computed(() => !!slots['home-hero-image']);
 
 provide('hero-image-slot-exists', heroImageSlotExists);
+
+function onToggleDocSidebar() {
+  siteNavOpen.value = false;
+  toggleSidebar();
+}
+
+function onOpenDocSidebar() {
+  siteNavOpen.value = false;
+  openSidebar();
+}
 </script>
 
 <template>
   <v-app class="guides-app">
     <div v-if="frontmatter.layout !== false" class="Layout guides-shell" :class="frontmatter.pageClass">
       <GuidesSiteHeader
+        v-model:site-nav-open="siteNavOpen"
         :page-title="pageTitle"
         :has-sidebar="hasSidebar"
-        :vp-sidebar-open="isSidebarOpen"
-        @toggle-vp-sidebar="toggleSidebar"
+        :doc-sidebar-open="isSidebarOpen"
+        @toggle-doc-sidebar="onToggleDocSidebar"
+        @close-doc-sidebar="closeSidebar"
       />
       <VPSkipLink />
       <VPBackdrop class="backdrop" :show="isSidebarOpen" @click="closeSidebar" />
@@ -63,7 +83,7 @@ provide('hero-image-slot-exists', heroImageSlotExists);
         <template #nav-screen-content-before><slot name="nav-screen-content-before" /></template>
         <template #nav-screen-content-after><slot name="nav-screen-content-after" /></template>
       </VPNav>
-      <VPLocalNav :open="isSidebarOpen" @open-menu="openSidebar" />
+      <VPLocalNav :open="isSidebarOpen" @open-menu="onOpenDocSidebar" />
 
       <VPSidebar :open="isSidebarOpen">
         <template #sidebar-nav-before><slot name="sidebar-nav-before" /></template>

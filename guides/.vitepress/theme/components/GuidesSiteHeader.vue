@@ -13,7 +13,7 @@
         <v-app-bar-nav-icon
           :aria-expanded="siteNavOpen"
           :aria-label="siteNavOpen ? 'Close site menu' : 'Open site menu'"
-          @click.stop="siteNavOpen = !siteNavOpen"
+          @click.stop="onToggleSiteNav"
         >
           <v-icon size="24">mdi-menu</v-icon>
         </v-app-bar-nav-icon>
@@ -31,8 +31,8 @@
           variant="text"
           aria-label="Open guides navigation"
           aria-controls="VPSidebarNav"
-          :aria-expanded="vpSidebarOpen"
-          @click="emit('toggleVpSidebar')"
+          :aria-expanded="docSidebarOpen"
+          @click="emit('toggleDocSidebar')"
         >
           <v-icon size="24">mdi-book-open-variant-outline</v-icon>
         </v-btn>
@@ -47,7 +47,6 @@
         color="surface"
         class="site-nav-drawer vp-raw"
         :scrim="true"
-        @click:outside="siteNavOpen = false"
       >
         <v-list nav class="site-nav-drawer-list" @click="onSiteDrawerListClick">
           <template v-for="item in siteDrawerItems" :key="item.id">
@@ -71,32 +70,37 @@
 <script setup lang="ts">
 import type { SiteNavItem } from 'sleepapi-common';
 import { siteNavItemsForGuides } from 'sleepapi-common';
-import { useRoute } from 'vitepress';
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { useMainAppNavHref } from '../composables/useMainAppNavHref';
 
 defineProps<{
   pageTitle: string;
   hasSidebar: boolean;
-  vpSidebarOpen: boolean;
+  docSidebarOpen: boolean;
 }>();
 
 const emit = defineEmits<{
-  toggleVpSidebar: [];
+  toggleDocSidebar: [];
+  closeDocSidebar: [];
 }>();
 
+const siteNavOpen = defineModel<boolean>('siteNavOpen', { required: true });
+
 const mainAppNavHref = useMainAppNavHref();
-const siteNavOpen = ref(false);
-const route = useRoute();
 
 const siteDrawerItems = computed(() => siteNavItemsForGuides());
 
-watch(
-  () => route.path,
-  () => {
-    siteNavOpen.value = false;
+function onToggleSiteNav() {
+  const opening = !siteNavOpen.value;
+  if (opening) {
+    emit('closeDocSidebar');
   }
-);
+  siteNavOpen.value = opening;
+}
+
+function onSiteNavClickOutside() {
+  siteNavOpen.value = false;
+}
 
 function onSiteDrawerListClick(e: MouseEvent) {
   const target = e.target;
