@@ -2,7 +2,7 @@
 // Guides theme: “On this page” local nav (VPLocalNav + outline dropdown)
 // Styles the sticky outline strip and flyout menu for in-page headings. Includes the
 // `v-list-row-overlay` mixin shared by outline links. Does not include site header or
-// doc sidebars — those live in `_guides-chrome-header-drawer.scss`.
+// doc sidebars — those live in `_guides-site-shell.scss`.
 // -----------------------------------------------------------------------------
 @use './breakpoints' as *;
 

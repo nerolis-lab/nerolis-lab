@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * Fork of VitePress default Layout so we share one useSidebar() with GuidesChromeHeader.
+ * Fork of VitePress default Layout so we share one useSidebar() with GuidesSiteHeader.
  * See node_modules/vitepress/dist/client/theme-default/Layout.vue — keep in sync on upgrades.
  */
 import { useData, useRoute } from 'vitepress';
@@ -13,7 +13,7 @@ import VPSidebar from 'vitepress/dist/client/theme-default/components/VPSidebar.
 import VPSkipLink from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue';
 import { useCloseSidebarOnEscape, useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar.js';
 import { computed, provide, useSlots, watch } from 'vue';
-import GuidesChromeHeader from './components/GuidesChromeHeader.vue';
+import GuidesSiteHeader from './components/GuidesSiteHeader.vue';
 
 const {
   isOpen: isSidebarOpen,
@@ -47,7 +47,7 @@ provide('hero-image-slot-exists', heroImageSlotExists);
 <template>
   <v-app class="guides-app">
     <div v-if="frontmatter.layout !== false" class="Layout guides-shell" :class="frontmatter.pageClass">
-      <GuidesChromeHeader
+      <GuidesSiteHeader
         :page-title="pageTitle"
         :has-sidebar="hasSidebar"
         :vp-sidebar-open="isSidebarOpen"

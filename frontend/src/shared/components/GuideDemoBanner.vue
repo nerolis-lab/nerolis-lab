@@ -2,7 +2,8 @@
   <div class="guide-demo-banner" role="note">
     <span class="demo-label">Demo component</span>
     <p class="demo-text">
-      This block is a Vue component registered in the VitePress theme. Use it for callouts or future interactive embeds.
+      This block is a Vue component registered in the VitePress theme to demonstrate how to use a custom Vue component
+      in a guide. Replace it with the first custom component.
     </p>
   </div>
 </template>

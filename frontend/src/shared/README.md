@@ -1,6 +1,6 @@
 # Shared Vue (frontend + guides)
 
-Vue SFCs here are imported by **both** the main SPA (`frontend`) and the VitePress guides bundle (`guides/`).
+Vue SFCs here may be imported by **both** the main SPA (`frontend`) and the VitePress guides bundle (`guides/`).
 
 ## Constraints
 

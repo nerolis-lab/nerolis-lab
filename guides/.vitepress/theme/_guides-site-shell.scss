@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
-// Guides theme: app chrome — fixed toolbar, left site nav drawer, scrim, and right doc
-// sidebar (VPSidebar). Hides default VPNav where we inject custom chrome. “On this page”
+// Guides theme: site shell — fixed header bar, left site nav drawer, scrim, right doc
+// sidebar (VPSidebar). Hides default VPNav where we inject our layout. “On this page”
 // outline styles stay in `_guides-on-this-page-nav.scss`.
 // -----------------------------------------------------------------------------
 @use './breakpoints' as *;
@@ -13,7 +13,7 @@
 
 .guides-shell {
   --vp-layout-top-height: 0px;
-  padding-top: var(--guides-toolbar-height);
+  padding-top: var(--guides-header-height);
 
   @include medium-and-up {
     padding-top: 0;
@@ -23,38 +23,25 @@
     }
   }
 
-  .guides-chrome-wrap {
-    &.guides-chrome-fixed {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      z-index: 1200;
-      width: 100%;
+  .guides-site-toolbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1200;
+    width: 100%;
+    font-family: var(--font-family-base);
+
+    .page-title {
+      display: flex;
     }
 
-    .guides-chrome-toolbar {
-      font-family: var(--font-family-base);
+    &.v-toolbar {
+      .v-toolbar-title {
+        margin-inline-start: 0;
 
-      .page-title {
-        display: flex;
-      }
-
-      &.v-toolbar,
-      &.v-app-bar {
-        .v-toolbar-title,
-        .v-app-bar-title {
-          margin-inline-start: 0;
-        }
-      }
-
-      @include medium-and-up {
-        &.v-toolbar,
-        &.v-app-bar {
-          .v-toolbar-title,
-          .v-app-bar-title {
-            margin-inline-start: initial;
-          }
+        @include medium-and-up {
+          margin-inline-start: 20px;
         }
       }
     }

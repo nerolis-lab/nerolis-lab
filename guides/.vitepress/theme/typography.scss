@@ -1,11 +1,11 @@
 // -----------------------------------------------------------------------------
 // Guides theme: typography scale and font-related CSS variables
-// Sets `:root` font stacks, sizes, weights, and line heights for the guides chrome and
+// Sets `:root` font stacks, sizes, weights, and line heights for the guides site shell and
 // prose. Existing notes below still apply to how type is split between Chakra and Roboto.
 // -----------------------------------------------------------------------------
 // typography scale — source of truth for guides type
 // letter-spacing uses em (e.g. tight tracking ≈ -2% of font size → -0.02em)
-// Chakra Petch: shell, nav, VitePress chrome. Inside `.vp-doc`: Roboto; headings h1–h6 use Chakra again.
+// Chakra Petch: shell, nav, VitePress UI (outside `.vp-doc`). Inside `.vp-doc`: Roboto; headings h1–h6 use Chakra again.
 
 :root {
   // font stacks
@@ -61,22 +61,22 @@
   --vp-custom-block-code-font-size: 14px;
   font-family: var(--font-family-base);
 
-  // VitePress chrome (not .vp-doc body)
+  // VitePress shell UI (nav, sidebar, local nav — not .vp-doc body)
   .VPDoc,
   .VPSidebar,
   .VPLocalNav {
     font-family: var(--font-family-base);
   }
 
-  // toolbar / site chrome text
-  .guides-toolbar-link--brand {
+  // optional toolbar link typography (if used in content)
+  .guides-header-link-brand {
     font-size: var(--text-body-size);
     font-weight: var(--text-body-bold-weight);
     letter-spacing: var(--tracking-tight);
     line-height: var(--text-body-line-height);
   }
 
-  .guides-toolbar-link {
+  .guides-header-link {
     font-size: var(--text-small-size);
     font-weight: var(--text-small-weight);
     letter-spacing: var(--tracking-tight);

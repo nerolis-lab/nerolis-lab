@@ -1,20 +1,14 @@
-/**
- * Canonical site navigation for the main app drawer and guides chrome.
- * Keep labels, paths, icons, and flags in one place so SPA and guides stay aligned.
- */
-
 export interface SiteNavItem {
   readonly id: string;
   readonly label: string;
   readonly path: string;
   readonly icon: string;
-  /** Use in-app routing (`to`); false for full navigation (`href`), e.g. /guides/. */
-  readonly spa: boolean;
+  readonly spa: boolean; // use in-app routing (`to`); false for full navigation (`href`), e.g. /guides/.
   readonly adminOnly?: boolean;
-  /** Drawer: insert a divider row before this item. */
-  readonly dividerBefore?: boolean;
+  readonly dividerBefore?: boolean; // insert a divider row before this item.
 }
 
+// keep labels, paths, icons, and flags in one place so SPA and guides stay aligned.
 export const SITE_NAV_ITEMS: readonly SiteNavItem[] = [
   {
     id: 'home',

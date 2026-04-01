@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 // Guides theme: design tokens (colors, radii, shadows, layout vars)
-// Defines `:root` CSS custom properties for the VitePress guides shell and custom Vue
+// Defines `:root` CSS custom properties for the guides site shell and custom Vue
 // blocks. Other theme SCSS references these variables; keep in sync with the main app
 // palette where guides should match Neroli’s Lab branding.
 // -----------------------------------------------------------------------------
@@ -70,7 +70,7 @@
   --color-nature-up-orange: #fd6b37;
 
   // layout — align with main app v-app-bar height (64px)
-  --guides-toolbar-height: 64px;
+  --guides-header-height: 64px;
 
   // "On this page" flyout — align with v-menu / list surfaces (no primary accent on links)
   --guides-outline-menu-radius: 4px;
@@ -85,7 +85,7 @@
   --guides-color-muted: var(--color-neutral-300);
 
   // VitePress default theme bridge (aside / vp-content use vp-nav-height)
-  --vp-nav-height: var(--guides-toolbar-height);
+  --vp-nav-height: var(--guides-header-height);
   --vp-c-bg: var(--color-neutral-900);
   --vp-c-bg-alt: var(--color-neutral-800);
   --vp-c-bg-soft: var(--color-neutral-700);

@@ -1,46 +1,43 @@
 <template>
-  <!-- Drawer outside fixed chrome so the scrim stacks above page content. -->
-  <div class="guides-chrome-header">
-    <div class="guides-chrome-wrap guides-chrome-fixed vp-raw">
-      <v-toolbar
-        tag="header"
-        color="background"
-        density="default"
-        elevation="2"
-        class="guides-chrome-toolbar"
-        role="navigation"
-        aria-label="Site"
-      >
-        <template #prepend>
-          <v-app-bar-nav-icon
-            :aria-expanded="siteNavOpen"
-            :aria-label="siteNavOpen ? 'Close site menu' : 'Open site menu'"
-            @click.stop="siteNavOpen = !siteNavOpen"
-          >
-            <v-icon size="24">mdi-menu</v-icon>
-          </v-app-bar-nav-icon>
-        </template>
+  <div class="guides-site-header">
+    <v-toolbar
+      tag="header"
+      color="background"
+      density="default"
+      elevation="2"
+      class="guides-site-toolbar vp-raw"
+      role="navigation"
+      aria-label="Site"
+    >
+      <template #prepend>
+        <v-app-bar-nav-icon
+          :aria-expanded="siteNavOpen"
+          :aria-label="siteNavOpen ? 'Close site menu' : 'Open site menu'"
+          @click.stop="siteNavOpen = !siteNavOpen"
+        >
+          <v-icon size="24">mdi-menu</v-icon>
+        </v-app-bar-nav-icon>
+      </template>
 
-        <v-toolbar-title>
-          <div class="page-title">{{ pageTitle }}</div>
-        </v-toolbar-title>
+      <v-toolbar-title>
+        <div class="page-title">{{ pageTitle }}</div>
+      </v-toolbar-title>
 
-        <template #append>
-          <v-btn
-            v-if="hasSidebar"
-            class="guides-doc-sidebar-toggle"
-            icon
-            variant="text"
-            aria-label="Open guides navigation"
-            aria-controls="VPSidebarNav"
-            :aria-expanded="vpSidebarOpen"
-            @click="emit('toggleVpSidebar')"
-          >
-            <v-icon size="24">mdi-book-open-variant-outline</v-icon>
-          </v-btn>
-        </template>
-      </v-toolbar>
-    </div>
+      <template #append>
+        <v-btn
+          v-if="hasSidebar"
+          class="guides-doc-sidebar-toggle"
+          icon
+          variant="text"
+          aria-label="Open guides navigation"
+          aria-controls="VPSidebarNav"
+          :aria-expanded="vpSidebarOpen"
+          @click="emit('toggleVpSidebar')"
+        >
+          <v-icon size="24">mdi-book-open-variant-outline</v-icon>
+        </v-btn>
+      </template>
+    </v-toolbar>
 
     <ClientOnly>
       <v-navigation-drawer
@@ -78,7 +75,7 @@ import { useRoute } from 'vitepress';
 import { computed, ref, watch } from 'vue';
 import { useMainAppNavHref } from '../composables/useMainAppNavHref';
 
-const props = defineProps<{
+defineProps<{
   pageTitle: string;
   hasSidebar: boolean;
   vpSidebarOpen: boolean;

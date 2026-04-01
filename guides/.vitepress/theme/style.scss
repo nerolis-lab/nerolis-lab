@@ -1,11 +1,11 @@
 // -----------------------------------------------------------------------------
 // Guides theme: entry stylesheet
-// Loads tokens, typography, breakpoints-backed partials (chrome + “On this page” nav).
+// Loads tokens, typography, breakpoints-backed partials (site shell + “On this page” nav).
 // Remaining rules target VitePress doc content only.
 // -----------------------------------------------------------------------------
 @use './tokens';
 @use './typography';
-@use './guides-chrome-header-drawer';
+@use './guides-site-shell';
 @use './guides-on-this-page-nav';
 
 // VitePress doc shell
