@@ -1,0 +1,185 @@
+// -----------------------------------------------------------------------------
+// Guides theme: typography scale and font-related CSS variables
+// Sets `:root` font stacks, sizes, weights, and line heights for the guides chrome and
+// prose. Existing notes below still apply to how type is split between Chakra and Roboto.
+// -----------------------------------------------------------------------------
+// typography scale — source of truth for guides type
+// letter-spacing uses em (e.g. tight tracking ≈ -2% of font size → -0.02em)
+// Chakra Petch: shell, nav, VitePress chrome. Inside `.vp-doc`: Roboto; headings h1–h6 use Chakra again.
+
+:root {
+  // font stacks
+  --font-family-base: 'Chakra Petch', system-ui, -apple-system, sans-serif;
+  --font-family-prose: 'Roboto', system-ui, -apple-system, sans-serif;
+
+  // weights
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  // tracking
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.06em;
+  --tracking-subskill: 0.03em;
+
+  // display / page titles
+  --text-h1-site-size: 48px;
+  --text-h1-site-weight: var(--font-weight-semibold);
+  --text-h1-site-line-height: 1.15;
+
+  --text-h1-page-size: 36px;
+  --text-h1-page-weight: var(--font-weight-semibold);
+  --text-h1-page-line-height: 1.15;
+
+  --text-h2-size: 24px;
+  --text-h2-weight: var(--font-weight-medium);
+  --text-h2-line-height: 1.2;
+
+  --text-h3-size: 20px;
+  --text-h3-weight: var(--font-weight-semibold);
+  --text-h3-line-height: 1.25;
+
+  // body & small
+  --text-body-size: 16px;
+  --text-body-weight: var(--font-weight-regular);
+  --text-body-line-height: 1.5;
+  --text-body-bold-weight: var(--font-weight-semibold);
+
+  --text-small-size: 14px;
+  --text-small-weight: var(--font-weight-regular);
+  --text-small-line-height: 1.5;
+
+  // VitePress theme bridge (aside / vp-content use vp-nav-height)
+  --vp-font-family-base: var(--font-family-base);
+  --vp-font-family-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+// VitePress defaults use 14px in several places (tables, custom blocks, etc.).
+// Scope to .guides-shell: prose body 16px; 14px stays for small UI (sidebar, outline, lists).
+.guides-app .guides-shell {
+  --vp-custom-block-font-size: var(--text-body-size);
+  --vp-custom-block-code-font-size: 14px;
+  font-family: var(--font-family-base);
+
+  // VitePress chrome (not .vp-doc body)
+  .VPDoc,
+  .VPSidebar,
+  .VPLocalNav {
+    font-family: var(--font-family-base);
+  }
+
+  // toolbar / site chrome text
+  .guides-toolbar-link--brand {
+    font-size: var(--text-body-size);
+    font-weight: var(--text-body-bold-weight);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--text-body-line-height);
+  }
+
+  .guides-toolbar-link {
+    font-size: var(--text-small-size);
+    font-weight: var(--text-small-weight);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--text-small-line-height);
+  }
+
+  // marketing / utility classes (home hero, demos)
+  .guides-text-site-title {
+    font-size: var(--text-h1-site-size);
+    font-weight: var(--text-h1-site-weight);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--text-h1-site-line-height);
+  }
+
+  .guides-text-body-wide {
+    font-size: var(--text-body-size);
+    font-weight: var(--text-body-weight);
+    letter-spacing: var(--tracking-wide);
+    line-height: var(--text-body-line-height);
+  }
+
+  .guides-text-subskill {
+    font-size: var(--text-small-size);
+    font-weight: var(--text-small-weight);
+    letter-spacing: var(--tracking-subskill);
+    line-height: var(--text-small-line-height);
+  }
+
+  .vp-doc {
+    font-family: var(--font-family-prose);
+
+    :where(h1, h2, h3, h4, h5, h6) {
+      font-family: var(--font-family-base);
+    }
+
+    h1 {
+      font-size: var(--text-h1-page-size);
+      font-weight: var(--text-h1-page-weight);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--text-h1-page-line-height);
+      color: var(--color-neutral-100);
+    }
+
+    h2 {
+      font-size: var(--text-h2-size);
+      font-weight: var(--text-h2-weight);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--text-h2-line-height);
+      color: var(--color-neutral-100);
+      border-top: none;
+    }
+
+    h3 {
+      font-size: var(--text-h3-size);
+      font-weight: var(--text-h3-weight);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--text-h3-line-height);
+      color: var(--color-neutral-100);
+    }
+
+    h4,
+    h5,
+    h6 {
+      color: var(--color-neutral-100);
+    }
+
+    p,
+    li {
+      font-size: var(--text-body-size);
+      font-weight: var(--text-body-weight);
+      letter-spacing: var(--tracking-tight);
+      line-height: var(--text-body-line-height);
+      color: var(--color-neutral-200);
+    }
+
+    strong {
+      font-weight: var(--text-body-bold-weight);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-neutral-100);
+    }
+
+    small {
+      font-size: var(--text-small-size);
+      font-weight: var(--text-small-weight);
+      line-height: var(--text-small-line-height);
+      letter-spacing: var(--tracking-tight);
+    }
+
+    // VitePress table cells default to 14px; match prose body
+    th,
+    td {
+      font-size: var(--text-body-size);
+      line-height: var(--text-body-line-height);
+    }
+
+    // optional HTML in markdown: fine-print / caption (14px)
+    .fine-print,
+    .caption {
+      font-size: var(--text-small-size);
+      font-weight: var(--text-small-weight);
+      line-height: var(--text-small-line-height);
+      letter-spacing: var(--tracking-tight);
+      color: var(--color-neutral-300);
+    }
+  }
+}

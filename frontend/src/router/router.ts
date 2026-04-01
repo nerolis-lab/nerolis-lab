@@ -178,6 +178,10 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  if (to.path.startsWith('/guides')) {
+    window.location.assign(to.fullPath)
+    return next(false)
+  }
   if (to.meta.requiresAdmin) {
     const { AdminService } = await import('@/services/admin/admin-service')
     const { useUserStore } = await import('@/stores/user-store')

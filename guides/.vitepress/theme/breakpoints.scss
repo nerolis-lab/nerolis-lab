@@ -1,0 +1,13 @@
+// -----------------------------------------------------------------------------
+// Guides theme: shared breakpoints
+// Aligns with VitePress default doc layout (960px). Exports `$breakpoint-vitepress-medium`
+// and the `medium-and-up` mixin for min-width media queries used across guides partials.
+// -----------------------------------------------------------------------------
+// matches VitePress default doc breakpoint (see default theme components)
+$breakpoint-vitepress-medium: 960px;
+
+@mixin medium-and-up {
+  @media (min-width: $breakpoint-vitepress-medium) {
+    @content;
+  }
+}

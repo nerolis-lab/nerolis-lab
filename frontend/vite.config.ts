@@ -146,12 +146,24 @@ export default defineConfig(({ command }) => ({
     host: true,
     port: 8001,
     proxy: {
-      '/api': 'http://localhost:3000'
+      '/api': 'http://localhost:3000',
+      /**
+       * Local dev: VitePress guides run on port 5173 (see guides/.vitepress/config.ts).
+       * Use http://localhost:8001 as the single origin so / and /guides/* share one host;
+       * keep `vitepress dev` running in guides/ alongside `npm run dev` here.
+       */
+      '/guides': {
+        target: 'http://localhost:5173',
+        changeOrigin: true,
+        ws: true,
+        secure: false
+      }
     }
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@shared': fileURLToPath(new URL('./src/shared', import.meta.url))
     }
   },
   test: {

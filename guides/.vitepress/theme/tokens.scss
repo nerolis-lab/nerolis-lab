@@ -1,0 +1,100 @@
+// -----------------------------------------------------------------------------
+// Guides theme: design tokens (colors, radii, shadows, layout vars)
+// Defines `:root` CSS custom properties for the VitePress guides shell and custom Vue
+// blocks. Other theme SCSS references these variables; keep in sync with the main app
+// palette where guides should match Neroli’s Lab branding.
+// -----------------------------------------------------------------------------
+// color and theme tokens — source of truth for guides
+// custom Vue blocks use var(--color-*)
+
+:root {
+  // primary
+  --color-primary-200: #ffedeb;
+  --color-primary-300: #ffb3b1;
+  --color-primary-400: #f87c7e;
+  --color-primary-500: #e63946;
+  --color-primary-600: #bb152c;
+  --color-primary-700: #92001c;
+  --color-primary-800: #54000c;
+  --color-primary-900: #2c0003;
+
+  // secondary
+  --color-secondary-200: #fff5e5;
+  --color-secondary-300: #ffdd94;
+  --color-secondary-400: #ffca57;
+  --color-secondary-500: #ffb81f;
+  --color-secondary-600: #e09f00;
+  --color-secondary-700: #9d6e00;
+  --color-secondary-800: #5f4100;
+  --color-secondary-900: #422c00;
+
+  // neutral
+  --color-neutral-100: #fafaff;
+  --color-neutral-200: #ebeaf5;
+  --color-neutral-300: #cfceda;
+  --color-neutral-400: #a5a2b7;
+  --color-neutral-500: #817d95;
+  --color-neutral-600: #5e5a7f;
+  --color-neutral-700: #403d58;
+  --color-neutral-800: #231a33;
+  --color-neutral-900: #191224;
+  --color-neutral-990: #0e0e10;
+
+  // semantic — error
+  --color-semantic-error-200: #ffefe5;
+  --color-semantic-error-300: #ffd3b6;
+  --color-semantic-error-400: #ffb688;
+  --color-semantic-error-500: #ff8e39;
+  --color-semantic-error-600: #e3710a;
+  --color-semantic-error-700: #bd5c00;
+
+  // semantic — game / UI accents
+  --color-semantic-skill-500: #efd269;
+  --color-semantic-berry-400: #daccf5;
+  --color-semantic-berry-500: #b9a0e9;
+  --color-semantic-berry-600: #a986ea;
+  --color-semantic-salad-500: #bcda62;
+  --color-semantic-salad-600: #99c418;
+  --color-semantic-dessert-500: #fdb4ca;
+  --color-semantic-dessert-600: #fe8bae;
+  --color-semantic-curry-500: #e7a888;
+  --color-semantic-curry-600: #f59261;
+
+  // subskills
+  --color-subskill-gold: #ffe570;
+  --color-subskill-blue: #dcf2ff;
+  --color-subskill-white: #fafafa;
+
+  // nature
+  --color-nature-down-blue: #1da0fc;
+  --color-nature-up-orange: #fd6b37;
+
+  // layout — align with main app v-app-bar height (64px)
+  --guides-toolbar-height: 64px;
+
+  // "On this page" flyout — align with v-menu / list surfaces (no primary accent on links)
+  --guides-outline-menu-radius: 4px;
+  --guides-outline-menu-surface: var(--color-neutral-700);
+  --guides-outline-menu-divider: color-mix(in oklab, var(--color-neutral-100) 10%, transparent);
+  --guides-outline-menu-shadow: 0 4px 18px rgba(0, 0, 0, 0.42);
+
+  // legacy aliases
+  --guides-color-bg: var(--color-neutral-900);
+  --guides-color-primary: var(--color-primary-500);
+  --guides-color-text: var(--color-neutral-100);
+  --guides-color-muted: var(--color-neutral-300);
+
+  // VitePress default theme bridge (aside / vp-content use vp-nav-height)
+  --vp-nav-height: var(--guides-toolbar-height);
+  --vp-c-bg: var(--color-neutral-900);
+  --vp-c-bg-alt: var(--color-neutral-800);
+  --vp-c-bg-soft: var(--color-neutral-700);
+  --vp-c-bg-mute: var(--color-neutral-800);
+  --vp-c-text-1: var(--color-neutral-100);
+  --vp-c-text-2: var(--color-neutral-200);
+  --vp-c-text-3: var(--color-neutral-300);
+  --vp-c-brand-1: var(--color-primary-500);
+  --vp-c-brand-2: var(--color-primary-600);
+  --vp-c-brand-3: var(--color-primary-600);
+  --vp-c-divider: color-mix(in oklab, var(--color-neutral-600) 45%, transparent);
+}

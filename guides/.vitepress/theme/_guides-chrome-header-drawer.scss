@@ -1,0 +1,92 @@
+// -----------------------------------------------------------------------------
+// Guides theme: app chrome — fixed toolbar, left site nav drawer, scrim, and right doc
+// sidebar (VPSidebar). Hides default VPNav where we inject custom chrome. “On this page”
+// outline styles stay in `_guides-on-this-page-nav.scss`.
+// -----------------------------------------------------------------------------
+@use './breakpoints' as *;
+
+.guides-app,
+.guides-shell {
+  min-height: 100vh;
+  background: var(--color-neutral-900);
+}
+
+.guides-shell {
+  --vp-layout-top-height: 0px;
+  padding-top: var(--guides-toolbar-height);
+
+  @include medium-and-up {
+    padding-top: 0;
+
+    .guides-doc-sidebar-toggle {
+      display: none;
+    }
+  }
+
+  .guides-chrome-wrap {
+    &.guides-chrome-fixed {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1200;
+      width: 100%;
+    }
+
+    .app-toolbar-chrome {
+      font-family: var(--font-family-base);
+    }
+  }
+
+  // we're replacing the default nav
+  .VPNav {
+    display: none !important;
+  }
+
+  .site-nav-drawer.v-navigation-drawer--temporary {
+    top: var(--vp-nav-height) !important;
+    height: calc(100% - var(--vp-nav-height)) !important;
+    max-height: calc(100vh - var(--vp-nav-height)) !important;
+    z-index: 1191 !important; // above scrim (1189); below fixed toolbar (1200)
+  }
+
+  .v-navigation-drawer__scrim {
+    position: fixed !important;
+    top: var(--vp-nav-height) !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    z-index: 1189 !important;
+  }
+
+  // doc sidebar: mobile slide-in from the right; from medium up VitePress docks it left
+  .VPSidebar {
+    top: var(--vp-nav-height);
+    left: auto !important;
+    right: 0 !important;
+    transform: translateX(100%) !important;
+
+    &.open {
+      transform: translateX(0) !important;
+    }
+
+    @include medium-and-up {
+      top: 0;
+      left: 0 !important;
+      right: auto !important;
+      transform: translateX(0) !important;
+
+      &.open {
+        transform: translateX(0) !important;
+      }
+    }
+  }
+}
+
+.site-nav-drawer {
+  .site-nav-drawer-list .v-list-item {
+    color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
+  }
+}

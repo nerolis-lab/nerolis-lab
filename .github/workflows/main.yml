@@ -14,6 +14,7 @@ jobs:
       backend: ${{ steps.changes.outputs.backend }}
       frontend: ${{ steps.changes.outputs.frontend }}
       docs: ${{ steps.changes.outputs.docs }}
+      guides: ${{ steps.changes.outputs.guides }}
       bot: ${{ steps.changes.outputs.bot }}
       workflows: ${{ steps.changes.outputs.workflows }}
     steps:
@@ -30,6 +31,8 @@ jobs:
               - 'frontend/**'
             docs:
               - 'docs/**'
+            guides:
+              - 'guides/**'
             bot:
               - 'bot/**'
             workflows:
@@ -41,6 +44,7 @@ jobs:
           echo "Backend changes: ${{ steps.changes.outputs.backend }}"
           echo "Frontend changes: ${{ steps.changes.outputs.frontend }}"
           echo "Docs changes: ${{ steps.changes.outputs.docs }}"
+          echo "Guides changes: ${{ steps.changes.outputs.guides }}"
           echo "Bot changes: ${{ steps.changes.outputs.bot }}"
           echo "Workflow changes: ${{ steps.changes.outputs.workflows }}"
 
@@ -87,6 +91,14 @@ jobs:
     with:
       working-directory: 'docs'
 
+  guides:
+    name: Guides
+    needs: changes
+    if: needs.changes.outputs.guides == 'true'
+    uses: ./.github/workflows/build-test.yml
+    with:
+      working-directory: 'guides'
+
   lint:
     name: Lint
     permissions:
@@ -102,7 +114,7 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
-    needs: [common, backend, frontend, docs, bot, lint]
+    needs: [common, backend, frontend, docs, guides, bot, lint]
     if: |
       always() && 
       github.ref == 'refs/heads/main' &&
@@ -110,6 +122,7 @@ jobs:
       (needs.backend.result == 'success' || needs.backend.result == 'skipped') &&
       (needs.frontend.result == 'success' || needs.frontend.result == 'skipped') &&
       (needs.docs.result == 'success' || needs.docs.result == 'skipped') &&
+      (needs.guides.result == 'success' || needs.guides.result == 'skipped') &&
       (needs.bot.result == 'success' || needs.bot.result == 'skipped') &&
       needs.lint.result == 'success'
     steps:
