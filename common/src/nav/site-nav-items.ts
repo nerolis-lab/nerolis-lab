@@ -6,8 +6,6 @@
 export interface SiteNavItem {
   readonly id: string;
   readonly label: string;
-  /** Guides header: optional label override (e.g. "Neroli's Lab" instead of "Home"). */
-  readonly guidesLabel?: string;
   readonly path: string;
   readonly icon: string;
   /** Use in-app routing (`to`); false for full navigation (`href`), e.g. /guides/. */
@@ -15,21 +13,15 @@ export interface SiteNavItem {
   readonly adminOnly?: boolean;
   /** Drawer: insert a divider row before this item. */
   readonly dividerBefore?: boolean;
-  /** Guides chrome: style as primary / brand link. */
-  readonly guidesBrand?: boolean;
-  /** Guides chrome: active state for the Guides entry. */
-  readonly guidesCurrent?: boolean;
 }
 
 export const SITE_NAV_ITEMS: readonly SiteNavItem[] = [
   {
     id: 'home',
     label: 'Home',
-    guidesLabel: "Neroli's Lab",
     path: '/',
     icon: 'mdi-home',
-    spa: true,
-    guidesBrand: true
+    spa: true
   },
   {
     id: 'calculator',
@@ -64,8 +56,7 @@ export const SITE_NAV_ITEMS: readonly SiteNavItem[] = [
     label: 'Guides',
     path: '/guides/',
     icon: 'mdi-book-open-variant-outline',
-    spa: false,
-    guidesCurrent: true
+    spa: false
   },
   {
     id: 'settings',

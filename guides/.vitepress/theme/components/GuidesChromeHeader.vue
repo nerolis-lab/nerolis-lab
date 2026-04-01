@@ -7,7 +7,7 @@
         color="background"
         density="default"
         elevation="2"
-        class="app-toolbar-chrome"
+        class="guides-chrome-toolbar"
         role="navigation"
         aria-label="Site"
       >
@@ -59,7 +59,7 @@
             </v-list-item>
             <v-list-item
               :prepend-icon="item.icon"
-              :title="siteNavTitle(item)"
+              :title="item.label"
               :href="mainAppNavHref(item.path)"
               :active="isSiteNavActive(item)"
               rounded="lg"
@@ -108,11 +108,7 @@ function onSiteDrawerListClick(e: MouseEvent) {
   }
 }
 
-function siteNavTitle(item: SiteNavItem): string {
-  return item.guidesLabel ?? item.label;
-}
-
 function isSiteNavActive(item: SiteNavItem): boolean {
-  return !!item.guidesCurrent;
+  return item.id === 'guides';
 }
 </script>

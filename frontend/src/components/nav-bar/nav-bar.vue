@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="background" class="app-toolbar-chrome">
+  <v-app-bar color="background">
     <template #prepend>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
         <v-icon size="24">mdi-menu</v-icon>
@@ -66,5 +66,21 @@ export default defineComponent({
   font-style: italic;
   font-size: 16px;
   margin: -6px 0 0 5px;
+}
+
+$nav-bar-title-breakpoint: 960px;
+
+.page-title {
+  display: flex;
+}
+
+:deep(.v-app-bar-title) {
+  margin-inline-start: 0;
+}
+
+@media (min-width: $nav-bar-title-breakpoint) {
+  :deep(.v-app-bar-title) {
+    margin-inline-start: initial;
+  }
 }
 </style>

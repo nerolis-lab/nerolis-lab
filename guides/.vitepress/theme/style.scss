@@ -1,11 +1,10 @@
 // -----------------------------------------------------------------------------
 // Guides theme: entry stylesheet
-// Loads tokens, typography, shared toolbar partial, breakpoints, then feature partials
-// (chrome + “On this page” nav). Remaining rules target VitePress doc content only.
+// Loads tokens, typography, breakpoints-backed partials (chrome + “On this page” nav).
+// Remaining rules target VitePress doc content only.
 // -----------------------------------------------------------------------------
 @use './tokens';
 @use './typography';
-@use '../../../frontend/src/assets/app-toolbar-chrome.scss';
 @use './guides-chrome-header-drawer';
 @use './guides-on-this-page-nav';
 

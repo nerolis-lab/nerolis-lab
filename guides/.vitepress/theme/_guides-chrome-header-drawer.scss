@@ -33,8 +33,30 @@
       width: 100%;
     }
 
-    .app-toolbar-chrome {
+    .guides-chrome-toolbar {
       font-family: var(--font-family-base);
+
+      .page-title {
+        display: flex;
+      }
+
+      &.v-toolbar,
+      &.v-app-bar {
+        .v-toolbar-title,
+        .v-app-bar-title {
+          margin-inline-start: 0;
+        }
+      }
+
+      @include medium-and-up {
+        &.v-toolbar,
+        &.v-app-bar {
+          .v-toolbar-title,
+          .v-app-bar-title {
+            margin-inline-start: initial;
+          }
+        }
+      }
     }
   }
 

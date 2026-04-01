@@ -1,7 +1,7 @@
 <template>
   <div class="guide-demo-banner" role="note">
-    <span class="guide-demo-banner__label">Demo component</span>
-    <p class="guide-demo-banner__text">
+    <span class="demo-label">Demo component</span>
+    <p class="demo-text">
       This block is a Vue component registered in the VitePress theme. Use it for callouts or future interactive embeds.
     </p>
   </div>
@@ -17,7 +17,7 @@
   font-family: var(--font-family-base);
 }
 
-.guide-demo-banner__label {
+.demo-label {
   display: inline-block;
   margin-bottom: 6px;
   font-size: var(--text-small-size);
@@ -27,7 +27,7 @@
   color: var(--color-primary-500);
 }
 
-.guide-demo-banner__text {
+.demo-text {
   margin: 0;
   font-size: var(--text-body-size);
   font-weight: var(--text-body-weight);
