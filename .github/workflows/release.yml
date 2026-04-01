@@ -84,10 +84,11 @@ jobs:
 
   guides:
     name: Build Guides
-    needs: determine-sha
+    needs: [determine-sha, common]
     uses: ./.github/workflows/build-test.yml
     with:
       working-directory: 'guides'
+      needs-common-build: true
       commit_sha: ${{ needs.determine-sha.outputs.sha }}
       skip-tests: true
 
