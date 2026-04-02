@@ -1,14 +1,59 @@
-# Public guides (VitePress)
+# Guides
 
-Player-facing Pokémon Sleep guides are built with [VitePress](https://vitepress.dev/) and deployed under **`/guides/`** on the main site (Pattern A: custom slim top bar in the theme, not the main app `NavBar`).
+These pages are **player-facing documentation** for Pokémon Sleep and how Neroli’s Lab models it. They ship with the main site under **`/guides/`**.
 
-## Layout
+You do **not** need to be a developer to contribute. Most changes are plain **Markdown** in the **`content/`** folder (next to this README). If you've used formatting in Discord or a wiki, you've used Markdown before!
 
-- **`content/`** — Markdown pages published on the site (VitePress `srcDir`).
-- **`.vitepress/`** — theme and build config (most contributors editing copy only touch `content/`).
-- **`README.md`** (this file) — package notes for maintainers; **not** a VitePress page and not shown to site users.
+## Editing an existing page
 
-## Local preview
+The easiest path is the site itself: open the guide in your browser, scroll to the bottom, and use **Edit this page on GitHub**. That link opens the correct file in this repository so you can propose changes in a pull request.
+
+You’ll need a GitHub account. If it's your first time, GitHub will walk you through forking and opening a PR from your fork.
+
+## Adding a new page
+
+New guides are **Markdown files** under **`content/`**. The URL and sidebar follow the folder layout, so pick (or create) a folder that matches the topic.
+
+At the top of each file, YAML "frontmatter" sets how the page appears in the sidebar. Below that comes the Markdown body: **one** `#` heading for the page title, then `##` / `###` for subsections.
+
+Frontmatter structure:
+
+- **`title`** — Label for the sidebar and top bar header. Keep it short.
+- **`order`** — Lower values sort earlier among pages in the same folder. Start with **increments of 10** (10, 20, 30…) to leave room to slot pages in later without renumbering everything.
+
+Example structure:
+
+```markdown
+---
+title: Page Title
+order: 10
+---
+
+# Your full page title
+
+A short introduction.
+
+## First section
+
+Write your guide!
+```
+
+### Folders and `index.md`
+
+- **`content/index.md`** — Home of the guides (`/guides/`).
+- **`content/<topic>/index.md`** — Landing page for that **section** (for example `/guides/<topic>/`). The section’s name in the sidebar comes from the **`title`** in that `index.md`. You can add more `.md` files beside it; those show up as separate pages under the same section.
+
+If you are unsure where a new page should live, open an issue or ask in Discord—maintainers can help with structure.
+
+## Formatting with Markdown
+
+Use normal Markdown for headings, lists, links, and tables. The [Markdown Guide — basic syntax](https://www.markdownguide.org/basic-syntax/) explains common options. [VitePress Markdown extensions](https://vitepress.dev/guide/markdown) (tips, code blocks, etc.) work here too.
+
+Every page should have **exactly one** top-level heading: a single `#` line (one H1). Use `##` and `###` for sections inside the page.
+
+## Previewing your changes (optional)
+
+If you have [Node.js](https://nodejs.org/) installed, you can run the guides site on your machine:
 
 ```bash
 cd guides
@@ -16,35 +61,8 @@ npm install
 npm run dev
 ```
 
-Open the URL VitePress prints (typically with base path `/guides/`).
+Then open the URL shown in the terminal (often something like `http://localhost:5173/guides/`). You do not have to do this to submit edits; maintainers can verify the build.
 
-## Theme (SCSS)
+## Developers and maintainers
 
-- **Colors:** `.vitepress/theme/tokens.scss` — CSS custom properties (`--color-*`, `--vp-c-*`).
-- **Typography:** `.vitepress/theme/typography.scss` — type scale and `.vp-doc` content rules.
-- **Layout / shell:** `.vitepress/theme/style.scss` — imports tokens + typography, slim nav, VitePress overrides.
-
-Custom Vue components should use `var(--color-primary-500)`, `var(--tracking-tight)`, etc. (no JSON pipeline).
-
-**Shared with the main app:** reusable Vue SFCs live under **`frontend/src/shared/`** (Vite alias `@shared`). Import them from `.vitepress/theme` as `@shared/components/...` and register in `index.ts`. See `frontend/src/shared/README.md` for constraints (no Pinia/router in shared components).
-
-## Editing
-
-- Add or change **Markdown** in **`content/`** (player-facing pages only). New `.md` files there are picked up automatically; the sidebar is generated from that tree (see `.vitepress/sidebar.ts`). Package config (`.vitepress/`, `package.json`, this README) stays at the `guides/` root so it is separate from guide content.
-- Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoBanner />`). Prefer implementing those components under `frontend/src/shared/` when both the app and guides should use them.
-
-## Full-site navigation
-
-The slim bar links to the main Neroli's Lab app (`/`, `/calculator`, etc.). The main app links **Guides** to `/guides/` using a full-page navigation so the static guides bundle is loaded (see frontend router guard).
-
-## Production build
-
-```bash
-npm run build
-```
-
-Output is in `guides/.vitepress/dist` and should be deployed to `${FRONTEND_DIR}/guides/` per the release checklist.
-
-## GitHub “Edit this page”
-
-Configured in `.vitepress/config.ts` (`themeConfig.editLink`) to point at files under `guides/` in this repository (VitePress `srcDir` is `content/`).
+For **scripts, tests, the theme, build output, and repo layout**, see **[DEVELOPMENT.md](./DEVELOPMENT.md)** in this folder.

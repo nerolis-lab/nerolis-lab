@@ -10,7 +10,7 @@ Welcome to Neroli's Lab guides. These pages explain game mechanics and how we mo
 
 ## Getting started
 
-- [Sleep basics](./sleep-basics) — sleep sessions and scoring (sample page)
+- [Sleep basics](./sleep-basics/) — sleep sessions and scoring (sample page)
 
 ## Format preview
 
@@ -32,11 +32,11 @@ Lines starting with `##` render as **h2** (24px in this theme). Examples on this
 
 This block is a second `##` section so you can compare two h2s on one page: same size and weight, different text length. Major sections should usually start with a short lead sentence, then one or two fuller paragraphs that explain scope, assumptions, and where to read next. Longer copy here helps you judge line length, margin rhythm, and how h2 sits against following h3s without scrolling through the whole Lorem section later on.
 
-Add another sentence or two when you need to see how **strong** emphasis and `inline code` look in running text under an h2 before the next subsection. Links like [Sleep basics](./sleep-basics) should remain readable and tappable in context.
+Add another sentence or two when you need to see how **strong** emphasis and `inline code` look in running text under an h2 before the next subsection. Links like [Sleep basics](./sleep-basics/) should remain readable and tappable in context.
 
 ### Third-level heading (h3)
 
-Body text is 16px with **strong**, _emphasis_, `inline code`, and [relative links](./sleep-basics). Third-level headings mark subsections inside an h2; they are slightly smaller than h2 but still clearly above body. When you stack paragraphs here, check that list items and code blocks below still align with the prose rhythm and that heading color (`--color-neutral-100`) reads clearly on the page background.
+Body text is 16px with **strong**, _emphasis_, `inline code`, and [relative links](./sleep-basics/). Third-level headings mark subsections inside an h2; they are slightly smaller than h2 but still clearly above body. When you stack paragraphs here, check that list items and code blocks below still align with the prose rhythm and that heading color (`--color-neutral-100`) reads clearly on the page background.
 
 Use a second paragraph under h3 when you want to preview how consecutive blocks of body copy behave—especially when the next element is a table, quote, or fenced code block rather than another heading.
 

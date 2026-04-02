@@ -2,10 +2,7 @@ import type { ThemeDefinition } from 'vuetify';
 import { createVuetify } from 'vuetify';
 import 'vuetify/styles';
 
-/**
- * Match `frontend/src/assets/theme.ts` darkTheme so drawers, lists, and surfaces
- * align with the main app.
- */
+// match `frontend/src/assets/theme.ts` darkTheme so drawers, lists, and surfaces align with the main app
 const guidesDarkTheme: ThemeDefinition = {
   dark: true,
   colors: {
@@ -21,9 +18,7 @@ const guidesDarkTheme: ThemeDefinition = {
   }
 };
 
-/**
- * Vuetify for guides (navigation drawer, icons, lists), aligned with frontend setup.
- */
+// Vuetify for guides (navigation drawer, icons, lists), aligned with frontend setup
 export default createVuetify({
   theme: {
     defaultTheme: 'dark',
