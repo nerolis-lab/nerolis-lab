@@ -19,18 +19,17 @@
 
   <v-navigation-drawer v-model="drawer" temporary>
     <v-list nav>
-      <v-list-item prepend-icon="mdi-home" title="Home" to="/"></v-list-item>
-      <v-list-item prepend-icon="mdi-calculator" title="Calculator" to="/calculator"></v-list-item>
-      <v-list-item prepend-icon="mdi-compare-horizontal" title="Compare" to="/compare"></v-list-item>
-      <v-list-item prepend-icon="mdi-podium" title="Tier lists" to="/tierlist"></v-list-item>
-      <v-list-item prepend-icon="mdi-food" title="Recipes" to="/recipes"></v-list-item>
-
-      <v-list-item>
-        <v-divider />
-      </v-list-item>
-
-      <v-list-item prepend-icon="mdi-cog" title="Settings" to="/settings"></v-list-item>
-      <v-list-item v-if="isAdmin" prepend-icon="mdi-shield-account" title="Admin" to="/admin"></v-list-item>
+      <template v-for="item in drawerItems" :key="item.id">
+        <v-list-item v-if="item.dividerBefore">
+          <v-divider />
+        </v-list-item>
+        <v-list-item
+          :prepend-icon="item.icon"
+          :title="item.label"
+          :to="item.spa ? item.path : undefined"
+          :href="item.spa ? undefined : item.path"
+        />
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -40,8 +39,8 @@ import AccountMenu from '@/components/account/account-menu.vue'
 import DonateMenu from '@/components/donate/donate-menu.vue'
 import InboxMenu from '@/components/inbox/inbox-menu.vue'
 import { useUserStore } from '@/stores/user-store'
-import { Roles } from 'sleepapi-common'
-import { defineComponent } from 'vue'
+import { Roles, siteNavItemsForFrontend } from 'sleepapi-common'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'TheNavBar',
@@ -52,7 +51,8 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
-    return { isAdmin: userStore.role === Roles.Admin, loggedIn: userStore.loggedIn }
+    const drawerItems = computed(() => siteNavItemsForFrontend(userStore.role === Roles.Admin))
+    return { drawerItems, loggedIn: userStore.loggedIn }
   },
   data: () => ({
     drawer: false
@@ -61,10 +61,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.page-title {
-  display: flex;
-}
-
 .beta-tag {
   color: $primary;
   font-style: italic;
@@ -72,9 +68,19 @@ export default defineComponent({
   margin: -6px 0 0 5px;
 }
 
-@media (max-width: $desktop) {
-  .v-app-bar-title {
-    margin-inline-start: 0px !important;
+$nav-bar-title-breakpoint: 960px;
+
+.page-title {
+  display: flex;
+}
+
+.v-app-bar {
+  :deep(.v-app-bar-title) {
+    margin-inline-start: 0;
+
+    @media (min-width: $nav-bar-title-breakpoint) {
+      margin-inline-start: 20px;
+    }
   }
 }
 </style>

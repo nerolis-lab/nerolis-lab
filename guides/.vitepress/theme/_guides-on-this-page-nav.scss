@@ -1,0 +1,117 @@
+// “On this page” local nav (VPLocalNav + outline dropdown)
+// sticky outline strip and flyout for in-page headings
+@use './breakpoints' as *;
+@use './typography' as *;
+
+.guides-shell {
+  .VPLocalNav {
+    top: var(--vp-nav-height);
+    border-bottom: 1px solid var(--color-neutral-500);
+
+    .menu {
+      display: none !important;
+    }
+
+    .container {
+      min-width: 0;
+    }
+
+    // "On this page" flyout menu
+    .VPLocalNavOutlineDropdown {
+      position: relative;
+      min-width: 0;
+      flex: 1 1 0%;
+
+      button {
+        @include typography-body;
+      }
+
+      .icon {
+        font-size: var(--text-body-size);
+      }
+
+      .header .top-link,
+      .outline .outline-link {
+        position: relative;
+        border-radius: 8px;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background-color: currentColor;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        &:hover::before {
+          opacity: calc(var(--v-hover-opacity) * var(--v-theme-overlay-multiplier));
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--color-secondary-500);
+          outline-offset: 2px;
+        }
+      }
+
+      .items {
+        border: none;
+        border-radius: var(--guides-outline-menu-radius);
+        gap: 0;
+        grid-template-columns: minmax(0, 1fr);
+        background-color: var(--guides-outline-menu-surface);
+        box-shadow: var(--guides-outline-menu-shadow);
+
+        @include medium-and-up {
+          left: 16px;
+          right: 16px;
+        }
+      }
+
+      .header {
+        border-bottom: 1px solid var(--guides-outline-menu-divider);
+
+        .top-link {
+          color: var(--color-neutral-100);
+          min-height: 44px;
+          line-height: 44px;
+          padding-inline: 16px;
+          text-decoration: none;
+        }
+      }
+
+      .outline {
+        padding: 4px 0 10px;
+
+        > .nested {
+          // skip padding on the first layer of nesting only
+          padding: 0;
+        }
+
+        // line-height = inner height for vertical centering. flexbox breaks ellipsis
+        $outline-link-vpad: 8px;
+        $outline-link-inner-h: 44px - 2 * $outline-link-vpad;
+
+        .outline-link {
+          box-sizing: border-box;
+          min-height: 44px;
+          padding: $outline-link-vpad 16px;
+          @include typography-small;
+          line-height: $outline-link-inner-h;
+          color: var(--color-neutral-200);
+
+          &.active {
+            color: var(--color-neutral-100);
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

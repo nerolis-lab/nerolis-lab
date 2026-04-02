@@ -1,6 +1,6 @@
 # Components Overview
 
-Neroli's Lab is structured as a monorepo containing four main components that work together to provide a comprehensive Pokémon Sleep analysis platform.
+Neroli's Lab is structured as a monorepo containing the main application components (frontend, backend, common) plus player guides and other tooling, which together provide a comprehensive Pokémon Sleep analysis platform.
 
 ## Components
 
@@ -63,6 +63,15 @@ The shared library containing:
 - Shared utilities
 
 [📖 Common Library Documentation →](./common)
+
+---
+
+### 📖 Player guides (VitePress)
+
+**Location**: `guides/`  
+**Technology**: VitePress, Vue 3, Vuetify (theme shell), Markdown
+
+Player-facing documentation for Pokémon Sleep mechanics. The built site is deployed with the main web app and served at **`/guides/`** (for example [nerolislab.com/guides/](https://nerolislab.com/guides/)).
 
 ## Data Flow
 

@@ -105,6 +105,8 @@ export default defineConfig({
       {
         text: 'External Documentation',
         items: [
+          { text: 'Player guides (live)', link: 'https://nerolislab.com/guides/' },
+          { text: 'Guides source (GitHub)', link: 'https://github.com/nerolis-lab/nerolis-lab/tree/main/guides' },
           { text: 'Vuetify', link: 'https://vuetifyjs.com/en/' },
           { text: 'Vue', link: 'https://vuejs.org/' },
           { text: 'Vite', link: 'https://vite.dev/' },
