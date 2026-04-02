@@ -111,7 +111,7 @@ export default defineComponent({
   data: () => ({
     features: [
       {
-        description: "Calculate your team's or pokemon's production with our realistic Sleep API-powered simulations.",
+        description: "Calculate your team's or Pokémon's production with our realistic Sleep API-powered simulations.",
         title: 'Calculator',
         src: '/images/misc/doctor4.png',
         icon: 'mdi-square-root',
