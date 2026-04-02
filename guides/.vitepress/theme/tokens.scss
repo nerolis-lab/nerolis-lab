@@ -1,11 +1,6 @@
-// -----------------------------------------------------------------------------
-// Guides theme: design tokens (colors, radii, shadows, layout vars)
-// Defines `:root` CSS custom properties for the guides site shell and custom Vue
-// blocks. Other theme SCSS references these variables; keep in sync with the main app
-// palette where guides should match Neroli’s Lab branding.
-// -----------------------------------------------------------------------------
-// color and theme tokens — source of truth for guides
-// custom Vue blocks use var(--color-*)
+// Guides theme: `:root` design tokens (palette, shell layout, VitePress bridge).
+// Full Neroli palette (brand ramps + semantic + game + subskill + nature);
+// use `var(--color-*)` in SCSS.
 
 :root {
   // primary
@@ -69,22 +64,16 @@
   --color-nature-down-blue: #1da0fc;
   --color-nature-up-orange: #fd6b37;
 
-  // layout — align with main app v-app-bar height (64px)
+  // shell layout (matches main app v-app-bar height)
   --guides-header-height: 64px;
 
-  // "On this page" flyout — align with v-menu / list surfaces (no primary accent on links)
+  // “On this page” flyout
   --guides-outline-menu-radius: 4px;
   --guides-outline-menu-surface: var(--color-neutral-700);
   --guides-outline-menu-divider: color-mix(in oklab, var(--color-neutral-100) 10%, transparent);
   --guides-outline-menu-shadow: 0 4px 18px rgba(0, 0, 0, 0.42);
 
-  // legacy aliases
-  --guides-color-bg: var(--color-neutral-900);
-  --guides-color-primary: var(--color-primary-500);
-  --guides-color-text: var(--color-neutral-100);
-  --guides-color-muted: var(--color-neutral-300);
-
-  // VitePress default theme bridge (aside / vp-content use vp-nav-height)
+  // VitePress default theme bridge
   --vp-nav-height: var(--guides-header-height);
   --vp-c-bg: var(--color-neutral-900);
   --vp-c-bg-alt: var(--color-neutral-800);

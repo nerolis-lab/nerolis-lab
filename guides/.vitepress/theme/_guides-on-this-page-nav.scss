@@ -4,6 +4,7 @@
 // `_guides-site-shell.scss`.
 // -----------------------------------------------------------------------------
 @use './breakpoints' as *;
+@use './typography' as *;
 
 .guides-shell {
   .VPLocalNav {
@@ -25,11 +26,11 @@
       flex: 1 1 0%;
 
       button {
-        font-size: var(--text-body-size);
+        @include typography-body;
       }
 
       .icon {
-        font-size: 16px;
+        font-size: var(--text-body-size);
       }
 
       .header .top-link,
@@ -104,7 +105,7 @@
           box-sizing: border-box;
           min-height: 44px;
           padding: $outline-link-vpad 16px;
-          font-size: 14px;
+          @include typography-small;
           line-height: $outline-link-inner-h;
           color: var(--color-neutral-200);
 

@@ -12,6 +12,91 @@ Welcome to Neroli's Lab guides. These pages explain game mechanics and how we mo
 
 - [Sleep basics](./sleep-basics) — sleep sessions and scoring (sample page)
 
+## Format preview
+
+Examples for contributors: headings, prose, tables, quotes, code, and VitePress blocks. Use this page as a visual reference when writing or reviewing guides—compare spacing, weights, and colors against the main app where it matters. The sections below walk through each heading level and common markdown patterns so you can spot regressions quickly.
+
+::: tip Sample — h1 (page title)
+
+The single `#` line at the top of a guide file is the **only h1** on the page (here: “Pokémon Sleep guides”). It uses the page-title typography (36px). Do not add extra `#` headings in the same document; use `##` and below for structure.
+
+:::
+
+::: info Sample — h2 (major sections)
+
+Lines starting with `##` render as **h2** (24px in this theme). Examples on this page include **Format preview** and **Demo: second-level heading** below. Prefer `##` for top-level sections inside an article so the outline and “On this page” stay clear.
+
+:::
+
+## Demo: second-level heading (h2)
+
+This block is a second `##` section so you can compare two h2s on one page: same size and weight, different text length. Major sections should usually start with a short lead sentence, then one or two fuller paragraphs that explain scope, assumptions, and where to read next. Longer copy here helps you judge line length, margin rhythm, and how h2 sits against following h3s without scrolling through the whole Lorem section later on.
+
+Add another sentence or two when you need to see how **strong** emphasis and `inline code` look in running text under an h2 before the next subsection. Links like [Sleep basics](./sleep-basics) should remain readable and tappable in context.
+
+### Third-level heading (h3)
+
+Body text is 16px with **strong**, _emphasis_, `inline code`, and [relative links](./sleep-basics). Third-level headings mark subsections inside an h2; they are slightly smaller than h2 but still clearly above body. When you stack paragraphs here, check that list items and code blocks below still align with the prose rhythm and that heading color (`--color-neutral-100`) reads clearly on the page background.
+
+Use a second paragraph under h3 when you want to preview how consecutive blocks of body copy behave—especially when the next element is a table, quote, or fenced code block rather than another heading.
+
+#### Fourth-level heading (h4)
+
+At 18px and medium weight, h4 sits between h3 and body. It is useful for fine-grained structure inside a long subsection. Contributors rarely need h4 in Neroli’s Lab docs, but VitePress allows it, so the theme styles it explicitly. A bit more text here lets you see wrapping and anchor alignment on narrow viewports.
+
+If your guide uses h4, keep the title short; put nuance in the following paragraph so the outline stays scannable.
+
+##### Fifth-level heading (h5)
+
+Also 18px; semibold (600) versus h4’s 500. h5 and h6 share `--tracking-wide` so they still read as titles rather than bold body text. This paragraph is intentionally longer so you can compare line height and spacing against the h4 block above and the h6 block below.
+
+###### Sixth-level heading (h6)
+
+At 16px (same as body size) with semibold weight and wide tracking, h6 is the deepest heading style. Use it sparingly—often a bold lead-in or list is clearer. Extra sentences here show how an h6 looks when followed by more than one line of body text before a blockquote or list, which is how many real pages will look if someone does use h6.
+
+> Blockquote: use for citations, callouts, or quoted instructions.
+
+---
+
+| Mechanic         | Notes                 |
+| ---------------- | --------------------- |
+| Sleep score      | 0–100 per session     |
+| Helper frequency | Seconds between helps |
+
+```ts
+// Fenced code block (custom block body uses body size; code uses code size)
+export const example = (): number => 42;
+```
+
+- Unordered list item
+- Another item
+  - Nested item
+
+1. Ordered step one
+2. Ordered step two
+
+<div class="caption">Caption class — figures or table titles.</div>
+
+<div class="fine-print">Fine-print class — disclaimers or meta notes.</div>
+
+<small>HTML small element.</small>
+
+::: tip
+Tip: helpful asides for readers.
+:::
+
+::: info
+Info: neutral supplementary detail.
+:::
+
+::: warning
+Warning: things that can surprise or break assumptions.
+:::
+
+::: details Click to expand
+Details blocks hide longer content until opened.
+:::
+
 ## Sample sections for outline navigation with a really long header even longer
 
 Use the “On this page” control (mobile) or the right-hand outline (wide layouts) to jump between these headings.
