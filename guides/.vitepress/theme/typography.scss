@@ -1,0 +1,124 @@
+// typography CSS variables and mixins only (no selectors)
+
+:root {
+  // font stacks
+  --font-family-base: 'Chakra Petch', system-ui, -apple-system, sans-serif;
+  --font-family-prose: 'Roboto', system-ui, -apple-system, sans-serif;
+
+  // tracking
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.06em;
+
+  // display / page titles
+  --text-h1-site-size: 48px;
+  --text-h1-site-line-height: 1.15;
+
+  --text-h1-page-size: 36px;
+  --text-h1-page-line-height: 1.15;
+
+  --text-h2-size: 24px;
+  --text-h2-line-height: 1.2;
+
+  --text-h3-size: 20px;
+  --text-h3-line-height: 1.25;
+
+  // doc headings (h4–h6: rare in Neroli’s Lab; kept for VitePress / contributors)
+  --text-h4-size: 18px;
+  --text-h4-line-height: 1.35;
+  --text-h5-size: 18px;
+  --text-h5-line-height: 1.35;
+  --text-h6-size: 16px;
+  --text-h6-line-height: 1.5;
+
+  // body & small
+  --text-body-size: 16px;
+  --text-body-line-height: 1.5;
+
+  --text-small-size: 14px;
+  --text-small-line-height: 1.5;
+
+  // VitePress theme bridge
+  --text-code-size: 14px;
+  --vp-font-family-base: var(--font-family-base);
+  --vp-font-family-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@mixin typography-site-title {
+  font-size: var(--text-h1-site-size);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-h1-site-line-height);
+}
+
+@mixin typography-h1-page {
+  font-size: var(--text-h1-page-size);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-h1-page-line-height);
+}
+
+@mixin typography-h2 {
+  font-size: var(--text-h2-size);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-h2-line-height);
+}
+
+@mixin typography-h3 {
+  font-size: var(--text-h3-size);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-h3-line-height);
+}
+
+@mixin typography-h4 {
+  font-size: var(--text-h4-size);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-h4-line-height);
+}
+
+@mixin typography-h5 {
+  font-size: var(--text-h5-size);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--text-h5-line-height);
+}
+
+@mixin typography-h6 {
+  font-size: var(--text-h6-size);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--text-h6-line-height);
+}
+
+@mixin typography-body {
+  font-size: var(--text-body-size);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-body-line-height);
+}
+
+@mixin typography-body-wide {
+  font-size: var(--text-body-size);
+  font-weight: 400;
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--text-body-line-height);
+}
+
+@mixin typography-small {
+  font-size: var(--text-small-size);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--text-small-line-height);
+}
+
+@mixin typography-strong {
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+}
+
+@mixin typography-table-cell {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+}

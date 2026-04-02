@@ -177,6 +177,7 @@ Follow conventional commits (enforced by commitlint):
 - Common flex classes: `.flex-center`, `.flex-between`, `.flex-column`
 - Responsive text classes available
 - Prefer utility classes over Vuetify utilities or custom CSS
+- **Mobile-first:** default / base styles for narrow layouts, then `min-width` (or shared mixins) for larger breakpoints—see `.cursor/rules/frontend-rules/mobile-first-css-agent.mdc` for guides and `frontend/**/*.scss`
 - **Never use inline styles** - always use CSS classes or scoped styles
 
 ## Code Comments Guidelines

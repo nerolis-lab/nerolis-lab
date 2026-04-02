@@ -62,6 +62,7 @@ npm install
 cd common && npm install && npm run build && cd ..
 cd backend && npm install && npm run build && cd ..
 cd frontend && npm install && npm run build && cd ..
+cd guides && npm install && cd ..
 ```
 
 ## Component Setup
@@ -79,6 +80,17 @@ See the [Frontend Documentation](../components/frontend) for detailed setup inst
 
 - Development server setup
 - OAuth client configuration
+
+### Guides Setup (optional)
+
+If you work on the **guides** package ([`guides/`](https://github.com/nerolis-lab/nerolis-lab/tree/main/guides) in the repo), run the VitePress dev server:
+
+```bash
+cd guides
+npm run dev
+```
+
+See [`guides/README.md`](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/README.md) and [`guides/DEVELOPMENT.md`](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/DEVELOPMENT.md) for editing and tooling. Guides are served under `/guides/` on the main app in production.
 
 ## Development Workflow
 

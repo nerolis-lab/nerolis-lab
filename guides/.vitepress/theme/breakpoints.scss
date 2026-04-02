@@ -1,0 +1,8 @@
+// aligns with VitePress default doc layout (960px)
+$breakpoint-vitepress-medium: 960px;
+
+@mixin medium-and-up {
+  @media (min-width: $breakpoint-vitepress-medium) {
+    @content;
+  }
+}

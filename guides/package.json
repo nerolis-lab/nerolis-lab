@@ -1,0 +1,31 @@
+{
+  "name": "nerolis-lab-guides",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pokémon Sleep guides for Neroli's Lab (VitePress)",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "test": "vitest --run",
+    "test-watch": "vitest --watch",
+    "type-check": "tsc --noEmit -p tsconfig.typecheck.json",
+    "type-watch": "tsc --noEmit -p tsconfig.typecheck.json --watch"
+  },
+  "dependencies": {
+    "sleepapi-common": "file:../common"
+  },
+  "devDependencies": {
+    "@mdi/font": "^7.4.47",
+    "@types/node": "^22.10.4",
+    "glob": "^10.4.5",
+    "sass-embedded": "^1.89.2",
+    "typescript": "^5.8.3",
+    "vite-plugin-vuetify": "^2.1.2",
+    "vitepress": "^1.6.0",
+    "vitest": "^3.2.3",
+    "vue": "^3.5.19",
+    "vuetify": "^3.10.9"
+  }
+}

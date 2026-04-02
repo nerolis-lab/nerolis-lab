@@ -38,6 +38,7 @@ Neroli's Lab exists to help users make informed decisions regarding their invest
 Our platform consists of multiple components:
 
 - **[Website](https://nerolislab.com)** - Modern web interface with advanced features
+- **[Player guides](https://nerolislab.com/guides/)** - Pokémon Sleep mechanics and how we model them (VitePress; ships with the main site under `/guides/`)
 - **[Feedback](https://feedback.nerolislab.com)** - Our own feedback site, you can upvote tasks and help form our roadmap
 - **[Sleep API](https://api.sleepapi.net/docs)** - A comprehensive REST API for Pokémon Sleep data
 - **[Legacy Website](https://sleepapi.net)** - Our original website (deprecated)

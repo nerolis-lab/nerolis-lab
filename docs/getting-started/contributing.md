@@ -8,7 +8,7 @@ Thank you for considering contributing to Neroli's Lab! We welcome contributions
 
 - **💻 Code Contributions**: Submit bug fixes, features, or optimizations
 - **🎨 Design**: UI/UX improvements and user experience enhancements
-- **📚 Documentation**: Improve guides, API docs, or code comments
+- **📚 Documentation**: Improve [player-facing guides](https://nerolislab.com/guides/) (source in [`guides/`](https://github.com/nerolis-lab/nerolis-lab/tree/main/guides)), this contributor documentation site, API docs, or code comments
 - **✨ Feature Requests**: Suggest new features or improvements
 - **🐛 Bug Reports**: Help us identify and fix issues
 - **🧪 Testing**: Write tests or help with quality assurance
@@ -108,6 +108,7 @@ For detailed development guidelines specific to each component, please refer to 
 - **[Frontend Guidelines](../components/frontend.md#development-guidelines)** - Vue.js, Vuetify, and frontend-specific practices
 - **[Backend Guidelines](../components/backend.md#development-guidelines)** - Node.js, API design, and backend-specific practices
 - **[Common Library Guidelines](../components/common.md#development-guidelines)** - Shared library development practices
+- **Player guides** (Markdown under `guides/content/`, VitePress theme in `guides/.vitepress/`) have their own [non-technical README for contributors](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/README.md) and [maintainer notes](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/DEVELOPMENT.md).
 
 ## 📋 Code Review Process
 
