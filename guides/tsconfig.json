@@ -3,6 +3,7 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "noEmit": true,
     "strict": true,
     "skipLibCheck": true,
     "jsx": "preserve",
@@ -18,7 +19,6 @@
     ".vitepress/**/*.ts",
     ".vitepress/**/*.d.ts",
     ".vitepress/**/*.vue",
-    ".vitepress/**/*.scss",
     "../frontend/src/shared/**/*.vue",
     "tests/**/*.ts"
   ]

@@ -1,4 +1,5 @@
-// TS-only project: vue-tsc follows VitePress deep imports into node_modules and fails; theme .vue is validated by `vitepress build`.
+// TS-only project: vue-tsc follows VitePress deep imports into node_modules and fails
+// theme .vue is validated by `vitepress build`
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
