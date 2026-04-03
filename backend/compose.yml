@@ -5,5 +5,5 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=admin
     volumes:
-      - './db-setup:/docker-entrypoint-initdb.d'
+      - './db-setup:/docker-entrypoint-initdb.d:Z'
     image: 'mysql:latest'
