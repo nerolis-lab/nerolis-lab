@@ -19,6 +19,10 @@
     {
       "name": "docs",
       "path": "docs"
+    },
+    {
+      "name": "guides",
+      "path": "guides"
     }
   ],
   "settings": {
@@ -37,6 +41,7 @@
       "backend": true,
       "frontend": true,
       "docs": true,
+      "guides": true,
       ".vscode": true,
       "dev-dist": true,
       "*.tsbuildinfo": true,
