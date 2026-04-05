@@ -99,7 +99,7 @@ git commit -m "feat(api)!: change team calculation response format"
 
    - Use a descriptive title
    - Add screenshots for UI changes
-   - **Rebase to develop branch** before submitting (see [Linear History & Rebasing](./linear-history) guide)
+   - **Rebase to main branch** before submitting (see [Linear History & Rebasing](./linear-history) guide)
 
 ## 🏗️ Component-Specific Guidelines
 
