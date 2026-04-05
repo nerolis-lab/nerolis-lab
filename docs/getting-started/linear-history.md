@@ -27,12 +27,12 @@ Follow these steps to keep your fork up-to-date and our commit history linear:
 
 ### 1. Fork and Clone the Repository
 
-- Fork the repo on GitHub: [SleepAPI/SleepAPI](https://github.com/SleepAPI/SleepAPI)
+- Fork the repo on GitHub: [nerolis-lab/nerolis-lab](https://github.com/nerolis-lab/nerolis-lab)
 - Then clone your fork:
 
 ```bash
-git clone https://github.com/<your-username>/SleepAPI.git
-cd SleepAPI
+git clone https://github.com/<your-username>/nerolis-lab.git
+cd nerolis-lab
 ```
 
 ### 2. Add the Upstream Repository
@@ -40,7 +40,7 @@ cd SleepAPI
 Link your local repo to the original repository:
 
 ```bash
-git remote add upstream https://github.com/SleepAPI/SleepAPI.git
+git remote add upstream https://github.com/nerolis-lab/nerolis-lab.git
 git fetch upstream
 ```
 
@@ -61,7 +61,7 @@ git fetch upstream
 - Rebase your branch:
 
 ```bash
-git rebase upstream/develop
+git rebase upstream/main
 ```
 
 - Resolve any conflicts:
@@ -81,7 +81,7 @@ git push origin my-feature-branch --force-with-lease
 
 ### 6. Submit Your Pull Request
 
-Head over to GitHub and open your pull request. Whenever the develop branch changes just repeat steps 4 and 5.
+Head over to GitHub and open your pull request. Whenever the main branch changes just repeat steps 4 and 5.
 
 ## Final Note
 
