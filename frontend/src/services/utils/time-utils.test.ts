@@ -1,5 +1,15 @@
 import { TimeUtils } from '@/services/utils/time-utils'
-import { afterEach, describe, expect, it } from 'vitest'
+import { sleepDurationMinutesBetweenBedAndWake, sleepScoreFromBedAndWake } from 'sleepapi-common'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+
+vi.mock('sleepapi-common', async () => {
+  const actual = await vi.importActual('sleepapi-common')
+  return {
+    ...actual,
+    sleepScoreFromBedAndWake: vi.fn(),
+    sleepDurationMinutesBetweenBedAndWake: vi.fn()
+  }
+})
 
 describe('formatTime', () => {
   it('shall format seconds to hh:mm:ss', () => {
@@ -20,60 +30,15 @@ describe('formatTime', () => {
 })
 
 describe('sleepScore', () => {
-  it('calculates sleep score correctly for 8 hours', () => {
-    expect(
-      TimeUtils.sleepScore({
-        bedtime: '22:00',
-        wakeup: '06:00'
-      })
-    ).toBe(94) // 8 hours of sleep
+  beforeEach(() => {
+    vi.mocked(sleepScoreFromBedAndWake).mockReset()
   })
 
-  it('calculates sleep score correctly for 4 hours and 15 minutes', () => {
-    expect(
-      TimeUtils.sleepScore({
-        bedtime: '22:00',
-        wakeup: '02:15'
-      })
-    ).toBe(50) // 4 hours and 15 minutes of sleep
-  })
-
-  it('calculates sleep score correctly for full night', () => {
-    expect(
-      TimeUtils.sleepScore({
-        bedtime: '22:00',
-        wakeup: '06:30'
-      })
-    ).toBe(100) // 8.5 hours of sleep
-  })
-
-  it('calulcates sleep score for sleepless night', () => {
-    expect(
-      TimeUtils.sleepScore({
-        bedtime: '22:00',
-        wakeup: '22:00'
-      })
-    ).toBe(0) // no sleep
-  })
-
-  it('caps sleep score at 100', () => {
-    expect(
-      TimeUtils.sleepScore({
-        bedtime: '22:00',
-        wakeup: '10:00'
-      })
-    ).toBe(100) // 12 hours of sleep
-  })
-
-  it('calculates sleep score correctly for 1 hour and 15 minutes', () => {
-    expect(
-      Math.round(
-        TimeUtils.sleepScore({
-          bedtime: '22:00',
-          wakeup: '23:15'
-        })
-      )
-    ).toBe(15) // 1 hour and 15 minutes of sleep
+  it('delegates to sleepScoreFromBedAndWake from sleepapi-common', () => {
+    vi.mocked(sleepScoreFromBedAndWake).mockReturnValue(94)
+    const params = { bedtime: '22:00', wakeup: '06:00' }
+    expect(TimeUtils.sleepScore(params)).toBe(94)
+    expect(sleepScoreFromBedAndWake).toHaveBeenCalledWith(params)
   })
 })
 
@@ -100,85 +65,71 @@ describe('prettifySeconds', () => {
 })
 
 describe('calculateSleepDuration', () => {
+  beforeEach(() => {
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReset()
+  })
+
   it('formats 8 hours correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '06:00'
-      })
-    ).toBe('8 hours')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(480)
+    const params = { bedtime: '22:00', wakeup: '06:00' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('8 hours')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats 4 hours and 15 minutes correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '02:15'
-      })
-    ).toBe('4 hours and 15 minutes')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(255)
+    const params = { bedtime: '22:00', wakeup: '02:15' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('4 hours and 15 minutes')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats 8 hours and 30 minutes correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '06:30'
-      })
-    ).toBe('8 hours and 30 minutes')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(510)
+    const params = { bedtime: '22:00', wakeup: '06:30' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('8 hours and 30 minutes')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats no sleep correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '22:00'
-      })
-    ).toBe('0 minutes')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(0)
+    const params = { bedtime: '22:00', wakeup: '22:00' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('0 minutes')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats long sleep correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '10:00'
-      })
-    ).toBe('12 hours')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(720)
+    const params = { bedtime: '22:00', wakeup: '10:00' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('12 hours')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats 1 hour and 15 minutes correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '23:15'
-      })
-    ).toBe('1 hour and 15 minutes')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(75)
+    const params = { bedtime: '22:00', wakeup: '23:15' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('1 hour and 15 minutes')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('handles crossing midnight correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '23:30',
-        wakeup: '00:15'
-      })
-    ).toBe('45 minutes')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(45)
+    const params = { bedtime: '23:30', wakeup: '00:15' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('45 minutes')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats single hour correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '23:00'
-      })
-    ).toBe('1 hour')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(60)
+    const params = { bedtime: '22:00', wakeup: '23:00' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('1 hour')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 
   it('formats single minute correctly', () => {
-    expect(
-      TimeUtils.calculateSleepDuration({
-        bedtime: '22:00',
-        wakeup: '22:01'
-      })
-    ).toBe('1 minute')
+    vi.mocked(sleepDurationMinutesBetweenBedAndWake).mockReturnValue(1)
+    const params = { bedtime: '22:00', wakeup: '22:01' }
+    expect(TimeUtils.calculateSleepDuration(params)).toBe('1 minute')
+    expect(sleepDurationMinutesBetweenBedAndWake).toHaveBeenCalledWith(params)
   })
 })
 

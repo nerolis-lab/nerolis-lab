@@ -3,7 +3,7 @@
 @use './guides-site-shell';
 @use './guides-on-this-page-nav';
 
-.guides-app .guides-shell {
+.guides-shell {
   --vp-custom-block-font-size: var(--text-body-size);
   --vp-custom-block-code-font-size: var(--text-code-size);
   font-family: var(--font-family-base);

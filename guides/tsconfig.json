@@ -10,16 +10,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "types": ["node", "vite/client"],
-    "baseUrl": ".",
-    "paths": {
-      "@shared/*": ["../frontend/src/shared/*"]
-    }
+    "baseUrl": "."
   },
-  "include": [
-    ".vitepress/**/*.ts",
-    ".vitepress/**/*.d.ts",
-    ".vitepress/**/*.vue",
-    "../frontend/src/shared/**/*.vue",
-    "tests/**/*.ts"
-  ]
+  "include": [".vitepress/**/*.ts", ".vitepress/**/*.d.ts", ".vitepress/**/*.vue", "tests/**/*.ts"]
 }

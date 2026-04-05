@@ -1,7 +1,7 @@
 import '@mdi/font/css/materialdesignicons.css';
-import GuideDemoBanner from '@shared/components/GuideDemoBanner.vue';
 import type { EnhanceAppContext } from 'vitepress';
 import DefaultTheme from 'vitepress/theme';
+import GuideDemoBanner from './components/GuideDemoBanner.vue';
 import Layout from './Layout.vue';
 import './style.scss';
 import vuetify from './vuetify';
