@@ -14,8 +14,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@shared/*": ["./src/shared/*"]
+      "@/*": ["./src/*"]
     },
     "types": ["node", "jsdom", "vitest/globals"]
   }

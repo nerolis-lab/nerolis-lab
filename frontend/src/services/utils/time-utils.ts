@@ -1,11 +1,10 @@
-import { MathUtils, type Time } from 'sleepapi-common'
+import { MathUtils, sleepDurationMinutesBetweenBedAndWake, sleepScoreFromBedAndWake, type Time } from 'sleepapi-common'
 
 class TimeUtilsImpl {
   constructor() {
     this.formatTime = this.formatTime.bind(this)
     this.prettifyTime = this.prettifyTime.bind(this)
     this.prettifySeconds = this.prettifySeconds.bind(this)
-    this.calculateDurationInMinutes = this.calculateDurationInMinutes.bind(this)
     this.sleepScore = this.sleepScore.bind(this)
     this.calculateSleepDuration = this.calculateSleepDuration.bind(this)
   }
@@ -54,30 +53,12 @@ class TimeUtilsImpl {
     }).format(date)
   }
 
-  private calculateDurationInMinutes(params: { bedtime: string; wakeup: string }): number {
-    const [bedHour, bedMinute] = params.bedtime.split(':').map(Number)
-    const [wakeHour, wakeMinute] = params.wakeup.split(':').map(Number)
-
-    const bedTimeMinutes = bedHour * 60 + bedMinute
-    const wakeTimeMinutes = wakeHour * 60 + wakeMinute
-
-    // Calculate duration, handling the case where we cross midnight
-    let durationInMinutes = wakeTimeMinutes - bedTimeMinutes
-    if (durationInMinutes < 0) {
-      durationInMinutes += 1440 // Add 24 hours worth of minutes
-    }
-
-    return durationInMinutes
-  }
-
   public sleepScore(params: { bedtime: string; wakeup: string }) {
-    const durationInMinutes = this.calculateDurationInMinutes(params)
-    const maxDurationInMinutes = 510 // 8.5 hours in minutes
-    return Math.min(100, Math.round((durationInMinutes / maxDurationInMinutes) * 100))
+    return sleepScoreFromBedAndWake(params)
   }
 
   public calculateSleepDuration(params: { bedtime: string; wakeup: string }): string {
-    const durationInMinutes = this.calculateDurationInMinutes(params)
+    const durationInMinutes = sleepDurationMinutesBetweenBedAndWake(params)
     const hours = Math.floor(durationInMinutes / 60)
     const minutes = durationInMinutes % 60
 

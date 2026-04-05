@@ -19,7 +19,7 @@ import { EnergyEvent } from '@src/domain/event/events/energy-event/energy-event.
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type { SkillActivation, Time, TimePeriod } from 'sleepapi-common';
-import { subskill } from 'sleepapi-common';
+import { MAX_SLEEP_SCORE_MINUTES, subskill } from 'sleepapi-common';
 
 /**
  * Calculates a delta left at the end of the day and how that translates into tomorrow's starting energy
@@ -79,7 +79,7 @@ export function calculateSleepEnergyRecovery(nightPeriod: SleepInfo, maxEnergyRe
   const erbFactor = 1 + erb * subskill.ENERGY_RECOVERY_BONUS.amount;
   const incenseFactor = incense ? 2 : 1;
 
-  const energyRecoveredPerMinute = 100 / (8.5 * 60);
+  const energyRecoveredPerMinute = 100 / MAX_SLEEP_SCORE_MINUTES;
 
   const sleepDuration = TimeUtils.calculateDuration(period);
   const sleepDurationInMinutes = sleepDuration.hour * 60 + sleepDuration.minute;

@@ -47,13 +47,13 @@ Open the URL VitePress prints (default **http://localhost:5173/guides/** with th
 
 Custom Vue components should use the theme’s CSS variables (for example `var(--color-primary-500)`, `var(--tracking-tight)`).
 
-**Shared with the main app:** reusable Vue SFCs live under **`frontend/src/shared/`** (Vite alias `@shared`). Import them from `.vitepress/theme` as `@shared/components/...` and register in `index.ts`. See `frontend/src/shared/README.md` for constraints (no Pinia/router in shared components).
+Register guide-only components in `.vitepress/theme/index.ts` (place SFCs under `.vitepress/theme/components/`).
 
 ## Sidebar and content (technical summary)
 
 The sidebar is generated at build time from the **`content/`** tree. Folders become nested groups. YAML front matter supports **`title`** (nav label) and optional **`order`** (lower numbers sort earlier; ties use link order). Section folders may use **`index.md`** for the landing page and group title.
 
-Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoBanner />`). Prefer implementing those components under `frontend/src/shared/` when both the app and guides should use them.
+Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoBanner />`).
 
 ## Full-site navigation
 
