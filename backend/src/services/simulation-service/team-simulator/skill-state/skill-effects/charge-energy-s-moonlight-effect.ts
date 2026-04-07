@@ -19,7 +19,6 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
     if (skillState.rng() < ChargeEnergySMoonlight.activations.energy.critChance) {
       const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount({ skillLevel: skillState.skillLevel });
 
-      // currently uses equal chance to hit every member
       return {
         skill,
         activations: [
@@ -29,7 +28,7 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
             team: {
               regular: 0,
               crit: teamAmount,
-              chanceToTargetLowestMember: 1 / skillState.memberState.teamSize
+              chanceToTargetLowestMembers: skill.chanceToTargetLowestMembers
             }
           }
         ]
