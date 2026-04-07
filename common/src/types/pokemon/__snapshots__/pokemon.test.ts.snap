@@ -198,13 +198,13 @@ exports[`COMPLETE_POKEDEX > shall not change ABSOL unexpectedly 1`] = `
   "remainingEvolutions": 0,
   "skill": {
     "RP": [
-      400,
-      569,
-      785,
-      1083,
-      1496,
-      2066,
-      2656,
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
     ],
     "activations": {
       "strength": {
@@ -214,15 +214,15 @@ exports[`COMPLETE_POKEDEX > shall not change ABSOL unexpectedly 1`] = `
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S",
+    "name": "Charge Strength M",
     "strengthAmounts": [
-      400,
-      569,
-      785,
-      1083,
-      1496,
-      2066,
-      3212,
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6858,
     ],
   },
   "skillPercentage": 3.8,
@@ -12841,7 +12841,7 @@ exports[`COMPLETE_POKEDEX > shall not change KANGASKHAN unexpectedly 1`] = `
     ],
     "name": "Ingredient Magnet S",
   },
-  "skillPercentage": 1.7,
+  "skillPercentage": 3.2,
   "specialty": "ingredient",
 }
 `;

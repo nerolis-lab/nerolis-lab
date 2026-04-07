@@ -340,7 +340,7 @@ export const KANGASKHAN: Pokemon = createIngredientSpecialist({
   pokedexNumber: 115,
   frequency: toSeconds(0, 44, 10),
   ingredientPercentage: 22.2,
-  skillPercentage: 1.7,
+  skillPercentage: 3.2,
   berry: PERSIM,
   genders: FEMALE_ONLY,
   carrySize: 21,
@@ -689,7 +689,7 @@ export const ABSOL: Pokemon = createIngredientSpecialist({
     b: FANCY_APPLE,
     c: TASTY_MUSHROOM
   },
-  skill: ChargeStrengthS
+  skill: ChargeStrengthM
 });
 
 export const SHINX: Pokemon = createIngredientSpecialist({
