@@ -18,6 +18,7 @@ import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/tea
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
+import { EnergizingCheerSHealPulseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-heal-pulse-effect.js';
 import { EnergizingCheerSNuzzleEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-nuzzle-effect.js';
 import { EnergyForEveryoneBerryJuiceEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-berry-juice-effect.js';
 import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
@@ -60,6 +61,7 @@ import {
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
+  EnergizingCheerSHealPulse,
   EnergizingCheerSNuzzle,
   EnergyForEveryone,
   EnergyForEveryoneBerryJuice,
@@ -123,6 +125,7 @@ export class SkillState {
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
       [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
       [EnergizingCheerS, new EnergizingCheerSEffect()],
+      [EnergizingCheerSHealPulse, new EnergizingCheerSHealPulseEffect()],
       [EnergizingCheerSNuzzle, new EnergizingCheerSNuzzleEffect()],
       [EnergyForEveryone, new EnergyForEveryoneEffect()],
       [EnergyForEveryoneBerryJuice, new EnergyForEveryoneBerryJuiceEffect()],
