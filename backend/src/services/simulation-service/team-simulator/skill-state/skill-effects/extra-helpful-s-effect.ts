@@ -6,7 +6,7 @@ import { ExtraHelpfulS } from 'sleepapi-common';
 export class ExtraHelpfulSEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = ExtraHelpfulS;
-    const regularAmount = skillState.skillAmount(skill.activations.helps) / skillState.memberState.teamSize;
+    const regularAmount = skillState.skillAmount(skill.activations.helps);
 
     return {
       skill,
@@ -19,12 +19,7 @@ export class ExtraHelpfulSEffect implements SkillEffect {
           }
         }
       ],
-      targeting: {
-        chanceToTargetLowestMembers: skill.targeting.chanceToTargetLowestMembers,
-        // in this commit, the behavior of giving all team members 1/N of the helps rather than
-        // giving all the helps to one team member is preserved.
-        numMonsTargeted: skill.targeting.numMonsTargeted * skillState.memberState.teamSize
-      }
+      targeting: skill.targeting
     };
   }
 }
