@@ -99,6 +99,10 @@ describe('getExtraHelpfulEvents', () => {
               ],
               "image": "helps",
               "name": "Extra Helpful S",
+              "targeting": {
+                "chanceToTargetLowestMembers": 0,
+                "numMonsTargeted": 1,
+              },
             },
           },
           "time": {
@@ -166,6 +170,10 @@ describe('getExtraHelpfulEvents', () => {
               ],
               "image": "helps",
               "name": "Extra Helpful S",
+              "targeting": {
+                "chanceToTargetLowestMembers": 0,
+                "numMonsTargeted": 1,
+              },
             },
           },
           "time": {

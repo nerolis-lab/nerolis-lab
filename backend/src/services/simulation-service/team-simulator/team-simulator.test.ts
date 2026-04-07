@@ -1,4 +1,9 @@
-import type { TeamActivationValue } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type {
+  SkillActivation,
+  TeamActivationValue,
+  UnitActivation
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
@@ -391,7 +396,6 @@ describe('recoverMemberEnergy', () => {
       settings: mockSettings,
       members: mockMembers.concat(mockMembers),
       iterations: 1
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
 
     const energy: TeamActivationValue = {
@@ -399,9 +403,8 @@ describe('recoverMemberEnergy', () => {
       regular: 50
     };
 
-    simulator.recoverMemberEnergy(energy, simulator.memberStates[0]);
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0], simulator.memberStates);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     simulator.memberStates.forEach((member: any) => {
       expect(member.energy).toBe(50);
     });
@@ -412,19 +415,164 @@ describe('recoverMemberEnergy', () => {
       settings: mockSettings,
       members: mockMembers.concat(mockMembers),
       iterations: 1
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }) as any;
     simulator.memberStates[0].recoverEnergy(100, simulator.memberStates[0]);
 
     const energy: TeamActivationValue = {
       crit: 0,
-      regular: 50,
-      chanceToTargetLowestMember: 1
+      regular: 50
     };
 
-    simulator.recoverMemberEnergy(energy, simulator.memberStates[0]);
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0], [simulator.memberStates[1]]);
     expect(simulator.memberStates).toHaveLength(2);
     expect(simulator.memberStates[0].energy).toBe(100);
     expect(simulator.memberStates[1].energy).toBe(50);
+  });
+
+  it("shall recover some members' energy", () => {
+    const simulator = new TeamSimulator({
+      settings: mockSettings,
+      members: mockMembers.concat(mockMembers).concat(mockMembers),
+      iterations: 1
+    }) as any;
+
+    const energy: TeamActivationValue = {
+      crit: 0,
+      regular: 50
+    };
+
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0], [
+      simulator.memberStates[1],
+      simulator.memberStates[2]
+    ]);
+    expect(simulator.memberStates).toHaveLength(3);
+    expect(simulator.memberStates[0].energy).toBe(0);
+    expect(simulator.memberStates[1].energy).toBe(50);
+    expect(simulator.memberStates[2].energy).toBe(50);
+  });
+});
+
+describe('processTeamEnergyActivation', () => {
+  it('shall heal all members', () => {
+    const simulator = new TeamSimulator({
+      settings: mockSettings,
+      members: mockMembers.concat(mockMembers).concat(mockMembers),
+      iterations: 1
+    }) as any;
+
+    simulator.memberStates[0].recoverEnergy(50, simulator.memberStates[0]);
+    simulator.memberStates[1].recoverEnergy(30, simulator.memberStates[1]);
+    simulator.memberStates[2].recoverEnergy(10, simulator.memberStates[2]);
+
+    const energyActivation: UnitActivation = {
+      unit: 'energy',
+      team: {
+        crit: 0,
+        regular: 30
+      }
+    };
+
+    simulator.processTeamEnergyActivation(energyActivation, simulator.memberStates[0], simulator.memberStates);
+    expect(simulator.memberStates).toHaveLength(3);
+    expect(simulator.memberStates[0].energy).toBe(80);
+    expect(simulator.memberStates[1].energy).toBe(60);
+    expect(simulator.memberStates[2].energy).toBe(40);
+  });
+
+  it('shall heal some members', () => {
+    const simulator = new TeamSimulator({
+      settings: mockSettings,
+      members: mockMembers.concat(mockMembers).concat(mockMembers),
+      iterations: 1
+    }) as any;
+
+    simulator.memberStates[0].recoverEnergy(50, simulator.memberStates[0]);
+    simulator.memberStates[1].recoverEnergy(30, simulator.memberStates[1]);
+    simulator.memberStates[2].recoverEnergy(10, simulator.memberStates[2]);
+
+    const energyActivation: UnitActivation = {
+      unit: 'energy',
+      team: {
+        crit: 0,
+        regular: 30
+      }
+    };
+
+    simulator.processTeamEnergyActivation(energyActivation, simulator.memberStates[0], [
+      simulator.memberStates[1],
+      simulator.memberStates[2]
+    ]);
+    expect(simulator.memberStates).toHaveLength(3);
+    expect(simulator.memberStates[0].energy).toBe(50);
+    expect(simulator.memberStates[1].energy).toBe(60);
+    expect(simulator.memberStates[2].energy).toBe(40);
+  });
+});
+
+describe('maybeActivateTeamSkill (energy)', () => {
+  it('shall heal all members without chanceToTargetLowest', () => {
+    const simulator = new TeamSimulator({
+      settings: mockSettings,
+      members: mockMembers.concat(mockMembers).concat(mockMembers),
+      iterations: 1
+    }) as any;
+
+    simulator.memberStates[0].recoverEnergy(50, simulator.memberStates[0]);
+    simulator.memberStates[1].recoverEnergy(30, simulator.memberStates[1]);
+    simulator.memberStates[2].recoverEnergy(10, simulator.memberStates[2]);
+
+    const energyActivation: SkillActivation = {
+      skill: commonMocks.mockMainskill,
+      activations: [
+        {
+          unit: 'energy',
+          team: {
+            crit: 0,
+            regular: 30
+          }
+        }
+      ]
+    };
+
+    simulator.maybeActivateTeamSkill(energyActivation, simulator.memberStates[0]);
+    expect(simulator.memberStates).toHaveLength(3);
+    expect(simulator.memberStates[0].energy).toBe(80);
+    expect(simulator.memberStates[1].energy).toBe(60);
+    expect(simulator.memberStates[2].energy).toBe(40);
+  });
+
+  it('shall heal lowest members with chanceToTargetLowest', () => {
+    const simulator = new TeamSimulator({
+      settings: mockSettings,
+      members: mockMembers.concat(mockMembers).concat(mockMembers),
+      iterations: 1
+    }) as any;
+
+    simulator.memberStates[0].recoverEnergy(50, simulator.memberStates[0]);
+    simulator.memberStates[1].recoverEnergy(30, simulator.memberStates[1]);
+    simulator.memberStates[2].recoverEnergy(10, simulator.memberStates[2]);
+    expect(simulator.memberStates).toHaveLength(3);
+    expect(simulator.memberStates[0].energy).toBe(50);
+    expect(simulator.memberStates[1].energy).toBe(30);
+    expect(simulator.memberStates[2].energy).toBe(10);
+
+    const energyActivation: SkillActivation = {
+      skill: commonMocks.mockMainskill,
+      targeting: { chanceToTargetLowestMembers: 1, numMonsTargeted: 2 },
+      activations: [
+        {
+          unit: 'energy',
+          team: {
+            crit: 0,
+            regular: 30
+          }
+        }
+      ]
+    };
+
+    simulator.maybeActivateTeamSkill(energyActivation, simulator.memberStates[0]);
+    expect(simulator.memberStates[0].energy).toBe(50);
+    expect(simulator.memberStates[1].energy).toBe(60);
+    expect(simulator.memberStates[2].energy).toBe(40);
   });
 });

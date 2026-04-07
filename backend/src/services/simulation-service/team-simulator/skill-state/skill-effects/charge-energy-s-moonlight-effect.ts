@@ -27,11 +27,11 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
             self: { regular: clampedEnergyRecovered, crit: 0 },
             team: {
               regular: 0,
-              crit: teamAmount,
-              chanceToTargetLowestMember: 0.5
+              crit: teamAmount
             }
           }
-        ]
+        ],
+        targeting: skill.targeting
       };
     }
 

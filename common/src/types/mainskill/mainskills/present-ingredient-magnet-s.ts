@@ -1,5 +1,6 @@
 import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
+import type { MainskillTargeting } from '../mainskill-targeting';
 import { IngredientMagnetS } from './ingredient-magnet-s';
 
 export const PresentIngredientMagnetS = new (class extends ModifiedMainskill {
@@ -12,6 +13,11 @@ export const PresentIngredientMagnetS = new (class extends ModifiedMainskill {
   image = 'ingredients';
   description = (params: AmountParams) =>
     `Gets you ${this.ingredientAmounts[params.skillLevel - 1]} ingredients chosen at random. Sometimes gets an additional ${this.candyAmount} candy for one Pokémon on your team.`;
+
+  targeting: MainskillTargeting = {
+    numMonsTargeted: 1,
+    chanceToTargetLowestMembers: 0
+  };
 
   activations: ActivationsType = {
     ingredients: {

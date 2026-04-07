@@ -1,12 +1,11 @@
-import type { Mainskill, MainskillUnit } from 'sleepapi-common';
+import type { Mainskill, MainskillTargeting, MainskillUnit } from 'sleepapi-common';
 
 export interface SelfActivationValue {
   regular: number;
   crit: number;
 }
-export interface TeamActivationValue extends SelfActivationValue {
-  chanceToTargetLowestMember?: number; // optional, if undefined this skill does not randomize between members
-}
+// TODO: Maybe replace both of these types with ActivationValue
+export type TeamActivationValue = SelfActivationValue;
 
 export interface UnitActivation {
   unit: MainskillUnit;
@@ -16,5 +15,6 @@ export interface UnitActivation {
 
 export interface SkillActivation {
   skill: Mainskill;
+  targeting?: MainskillTargeting;
   activations: UnitActivation[];
 }
