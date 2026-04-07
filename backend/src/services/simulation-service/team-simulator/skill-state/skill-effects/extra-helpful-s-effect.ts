@@ -18,7 +18,13 @@ export class ExtraHelpfulSEffect implements SkillEffect {
             crit: 0
           }
         }
-      ]
+      ],
+      targeting: {
+        chanceToTargetLowestMembers: skill.targeting.chanceToTargetLowestMembers,
+        // in this commit, the behavior of giving all team members 1/N of the helps rather than
+        // giving all the helps to one team member is preserved.
+        numMonsTargeted: skill.targeting.numMonsTargeted * skillState.memberState.teamSize
+      }
     };
   }
 }

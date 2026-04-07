@@ -1,5 +1,6 @@
 import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
+import type { MainskillTargeting } from '../mainskill-targeting';
 import { EnergizingCheerS } from './energizing-cheer-s';
 
 export const EnergizingCheerSNuzzle = new (class extends ModifiedMainskill {
@@ -13,11 +14,15 @@ export const EnergizingCheerSNuzzle = new (class extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team. If you're lucky, that Pokémon will also gain a main skill activation bonus.`;
 
+  targeting: MainskillTargeting = {
+    numMonsTargeted: 1,
+    chanceToTargetLowestMembers: 0.5
+  };
+
   activations: ActivationsType = {
     energy: {
       unit: 'energy',
-      amount: this.leveledAmount(this.energyAmounts),
-      targetLowestChance: 0.5 // TODO: Research this value
+      amount: this.leveledAmount(this.energyAmounts)
     },
     skillHelps: {
       unit: 'skill helps',

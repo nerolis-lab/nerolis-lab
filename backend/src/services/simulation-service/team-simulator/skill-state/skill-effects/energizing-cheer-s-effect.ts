@@ -7,7 +7,6 @@ export class EnergizingCheerSEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = EnergizingCheerS;
     const regularEnergyAmount = skillState.skillAmount(skill.activations.energy);
-    const chanceToTargetLowestMember = EnergizingCheerS.activations.energy.targetLowestChance;
 
     return {
       skill,
@@ -16,11 +15,11 @@ export class EnergizingCheerSEffect implements SkillEffect {
           unit: 'energy',
           team: {
             regular: regularEnergyAmount,
-            crit: 0,
-            chanceToTargetLowestMember
+            crit: 0
           }
         }
-      ]
+      ],
+      targeting: skill.targeting
     };
   }
 }

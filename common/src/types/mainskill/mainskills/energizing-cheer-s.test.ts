@@ -27,7 +27,7 @@ describe('EnergizingCheerS', () => {
   });
 
   it('should have target lowest chance property', () => {
-    expect(EnergizingCheerS.activations.energy.targetLowestChance).toBe(0.5);
+    expect(EnergizingCheerS.targeting.chanceToTargetLowestMembers).toBe(0.5);
   });
 
   it('should have energy unit only', () => {

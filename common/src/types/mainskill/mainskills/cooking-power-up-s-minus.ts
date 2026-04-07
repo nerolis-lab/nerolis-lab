@@ -1,5 +1,6 @@
 import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
+import type { MainskillTargeting } from '../mainskill-targeting';
 import { CookingPowerUpS } from './cooking-power-up-s';
 
 export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
@@ -14,6 +15,11 @@ export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
   fullDescription = (params: AmountParams) =>
     `Gives your cooking pot room for ${this.potSizeAmounts[params.skillLevel - 1]} more ingredients next time you cook. If there's one or more other Pokémon on the team with the Plus or Minus main skills, also restores ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team.`;
 
+  targeting: MainskillTargeting = {
+    numMonsTargeted: 1,
+    chanceToTargetLowestMembers: 0.5
+  };
+
   activations: ActivationsType = {
     solo: {
       unit: 'pot size',
@@ -21,8 +27,7 @@ export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
     },
     paired: {
       unit: 'energy',
-      amount: this.leveledAmount(this.energyAmounts),
-      targetLowestChance: 0.5 // unverified
+      amount: this.leveledAmount(this.energyAmounts)
     }
   };
 })(true);

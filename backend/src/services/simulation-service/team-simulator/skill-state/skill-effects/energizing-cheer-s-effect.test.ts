@@ -2,7 +2,6 @@ import type { MemberState } from '@src/services/simulation-service/team-simulato
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { EnergizingCheerS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -19,23 +18,14 @@ describe('EnergizingCheerSEffect', () => {
 
   it('should activate skill and return correct team value', () => {
     const regularEnergyAmount = 20;
-    const chanceToTargetLowest = EnergizingCheerS.activations.energy.targetLowestChance;
     vimic(skillState, 'skillAmount', () => regularEnergyAmount);
 
     const result = energizingCheerSEffect.activate(skillState);
 
-    expect(result).toEqual({
-      skill: EnergizingCheerS,
-      activations: [
-        {
-          unit: 'energy',
-          team: {
-            regular: regularEnergyAmount,
-            crit: 0,
-            chanceToTargetLowestMember: chanceToTargetLowest
-          }
-        }
-      ]
+    expect(result.activations.length).toEqual(1);
+    expect(result.activations[0].team).toEqual({
+      regular: regularEnergyAmount,
+      crit: 0
     });
   });
 

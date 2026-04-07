@@ -34,7 +34,11 @@ describe('ExtraHelpfulSEffect', () => {
           unit: 'helps',
           team: { regular: regularAmount / memberState.teamSize, crit: 0 }
         }
-      ]
+      ],
+      targeting: {
+        chanceToTargetLowestMembers: 0,
+        numMonsTargeted: 4 // in this commit, the behavior of targeting each mon on the team is preserved
+      }
     });
   });
 
@@ -54,7 +58,11 @@ describe('ExtraHelpfulSEffect', () => {
           unit: 'helps',
           team: { regular: regularAmount, crit: 0 }
         }
-      ]
+      ],
+      targeting: {
+        chanceToTargetLowestMembers: 0,
+        numMonsTargeted: 1
+      }
     });
   });
 
@@ -74,7 +82,11 @@ describe('ExtraHelpfulSEffect', () => {
           unit: 'helps',
           team: { regular: 0, crit: 0 }
         }
-      ]
+      ],
+      targeting: {
+        chanceToTargetLowestMembers: 0,
+        numMonsTargeted: 1
+      }
     });
   });
 });

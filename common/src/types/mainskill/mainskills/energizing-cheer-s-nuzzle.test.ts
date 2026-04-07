@@ -23,6 +23,6 @@ describe('EnergizingCheerSNuzzle', () => {
   });
 
   it('should have target lowest chance property', () => {
-    expect(EnergizingCheerSNuzzle.activations.energy.targetLowestChance).toBe(0.5);
+    expect(EnergizingCheerSNuzzle.targeting.chanceToTargetLowestMembers).toBe(0.5);
   });
 });
