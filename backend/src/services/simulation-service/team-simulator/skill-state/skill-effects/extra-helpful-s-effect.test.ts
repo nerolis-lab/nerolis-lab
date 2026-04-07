@@ -32,9 +32,10 @@ describe('ExtraHelpfulSEffect', () => {
       activations: [
         {
           unit: 'helps',
-          team: { regular: regularAmount / memberState.teamSize, crit: 0 }
+          team: { regular: regularAmount / memberState.teamSize, crit: 0, chanceToTargetLowestmembers: 0 }
         }
-      ]
+      ],
+      numMonsTargeted: 1
     });
   });
 
@@ -52,9 +53,10 @@ describe('ExtraHelpfulSEffect', () => {
       activations: [
         {
           unit: 'helps',
-          team: { regular: regularAmount, crit: 0 }
+          team: { regular: regularAmount, crit: 0, chanceToTargetLowestMembers: 0 }
         }
-      ]
+      ],
+      numMonsTargeted: 1
     });
   });
 
@@ -72,9 +74,10 @@ describe('ExtraHelpfulSEffect', () => {
       activations: [
         {
           unit: 'helps',
-          team: { regular: 0, crit: 0 }
+          team: { regular: 0, crit: 0, chanceToTargetLowestMembers: 0 }
         }
-      ]
+      ],
+      numMonsTargeted: 1
     });
   });
 });

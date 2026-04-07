@@ -4,6 +4,7 @@ import { Mainskill } from '../mainskill';
 export const HelperBoost = new (class extends Mainskill {
   name = 'Helper Boost';
   RP = [2800, 3902, 5273, 6975, 9317, 12438];
+  numMonsTargeted = 5;
   image = 'helps';
 
   readonly baseAmounts: number[] = [2, 3, 3, 4, 4, 5];

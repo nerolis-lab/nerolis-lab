@@ -18,7 +18,8 @@ import type { CookingState } from '@src/services/simulation-service/team-simulat
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type {
   SkillActivation,
-  TeamActivationValue
+  TeamActivationValue,
+  UnitActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
@@ -203,58 +204,139 @@ export class TeamSimulator {
     }
   }
 
-  // TODO: won't change things now, but this should probably find all help/energy units rather than the first (which find does)
   private maybeActivateTeamSkill(result: SkillActivation, invoker: MemberState, recursionDepth: number = 0) {
-    const helpsActivation = result.activations.find((activation) => activation.unit === 'helps' && activation.team);
-    if (helpsActivation?.team) {
-      for (const mem of this.memberStatesWithoutFillers) {
-        mem.addHelpsFromSkill(helpsActivation.team, invoker);
-        invoker.addSkillValue(helpsActivation.team);
+    const teamActivations = result.activations.filter((activation) => activation.team);
+    const targetedActivations = teamActivations.filter((activation) => activation.team!.chanceToTargetLowestMembers);
+    const fullTeamActivations = teamActivations.filter(
+      (activation) => activation.team!.chanceToTargetLowestMembers === undefined
+    );
+
+    for (const activation of fullTeamActivations) {
+      this.processFullTeamActivation(activation, invoker, recursionDepth);
+    }
+
+    // Currently, all skills that do multiple things to targeted mons target the same mons for each of these things.
+    // E.g. Nuzzle restores energy to the same mon that gets the bonus skill helps
+    // That's why one method takes all of them, whereas the full team activations can be handled independently.
+    this.processTargetedActivation(
+      targetedActivations,
+      result.numMonsTargeted ?? invoker.teamSize,
+      invoker,
+      recursionDepth
+    );
+  }
+
+  private processFullTeamActivation(activation: UnitActivation, invoker: MemberState, recursionDepth: number) {
+    if (activation.team === undefined) {
+      return;
+    }
+    if (activation.unit === 'helps') {
+      this.processTeamHelpActivation(activation, invoker, this.memberStatesWithoutFillers);
+    }
+    if (activation.unit === 'skill helps') {
+      this.processTeamSkillHelpActivation(activation, invoker, this.memberStatesWithoutFillers, recursionDepth);
+    }
+    if (activation.unit === 'energy') {
+      this.processTeamEnergyActivation(activation, invoker, this.memberStatesWithoutFillers);
+    }
+  }
+
+  private processTargetedActivation(
+    activations: UnitActivation[],
+    numMonsTargeted: number,
+    invoker: MemberState,
+    recursionDepth: number
+  ) {
+    const teamActivations = activations.filter((activation) => activation.team);
+    if (teamActivations.length === 0) {
+      return;
+    }
+    const firstActivation = activations[0];
+    // Currently, all skills that do multiple things to targeted mons target the same mons for each of these things.
+    // E.g. Nuzzle restores energy to the same mon that gets the bonus skill helps
+    // So we can look at the `chanceToTargetLowestMembers` from the first activation and apply it to everything.
+    const chanceToTargetLowestMembers = firstActivation.team!.chanceToTargetLowestMembers;
+    const targetGroup: MemberState[] = this.findTargetGroup(numMonsTargeted, chanceToTargetLowestMembers);
+
+    for (const activation of teamActivations) {
+      if (activation.unit === 'helps') {
+        this.processTeamHelpActivation(activation, invoker, targetGroup);
+      }
+      if (activation.unit === 'skill helps') {
+        this.processTeamSkillHelpActivation(activation, invoker, targetGroup, recursionDepth);
+      }
+      if (activation.unit === 'energy') {
+        this.processTeamEnergyActivation(activation, invoker, targetGroup);
       }
     }
+  }
 
-    let membersHelped: MemberState[] = [];
+  private findTargetGroup(numMonsTargeted?: number, chanceToTargetLowestMembers?: number): MemberState[] {
+    const copyOfMemberStates = this.memberStatesWithoutFillers.slice();
+    const shuffledMembers = copyOfMemberStates
+      .map((member) => {
+        return {
+          member,
+          randVal: this.rng()
+        };
+      })
+      .sort((a, b) => a.randVal - b.randVal)
+      .map((member) => member.member);
+    const sortedMembers = shuffledMembers.sort((a, b) => a.energy - b.energy);
 
-    const energyActivation = result.activations.find((activation) => activation.unit === 'energy' && activation.team);
-    if (energyActivation?.team) {
-      const recovered = this.recoverMemberEnergy(energyActivation.team, invoker);
-      invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
-      invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
-      membersHelped = recovered.targetGroup;
+    const useLowestMembers = chanceToTargetLowestMembers !== undefined && this.rng() < chanceToTargetLowestMembers;
+    return (useLowestMembers ? shuffledMembers : sortedMembers).slice(0, numMonsTargeted ?? 5);
+  }
+
+  private processTeamHelpActivation(activation: UnitActivation, invoker: MemberState, membersHelped: MemberState[]) {
+    if (activation.unit !== 'helps' || activation.team === undefined) {
+      return;
     }
+    for (const member of membersHelped) {
+      member.addHelpsFromSkill(activation.team, invoker);
+      invoker.addSkillValue(activation.team);
+    }
+  }
 
-    const skillHelpsActivation = result.activations.find(
-      (activation) => activation.unit === 'skill helps' && activation.team
-    );
-    if (skillHelpsActivation?.team) {
-      for (const mem of membersHelped) {
-        const bonusActivations: SkillActivation[] = mem.addSkillHelps(skillHelpsActivation.team);
-        invoker.addSkillValue({ regular: bonusActivations.length, crit: 0 });
-        if (recursionDepth < 10) {
-          // In theory, a team of all Togedemaru could keep giving each other bonus activations.
-          // The odds are very slim, so I'm making the simulation slightly less accurate in order to avoid potential infinite recursion.
-          for (const bonusActivation of bonusActivations) {
-            this.maybeActivateTeamSkill(bonusActivation, mem, recursionDepth + 1);
-          }
+  private processTeamSkillHelpActivation(
+    activation: UnitActivation,
+    invoker: MemberState,
+    membersHelped: MemberState[],
+    recursionDepth: number
+  ) {
+    if (activation.unit !== 'helps' || activation.team === undefined) {
+      return;
+    }
+    for (const member of membersHelped) {
+      const bonusActivations: SkillActivation[] = member.addSkillHelps(activation.team);
+      invoker.addSkillValue({ regular: bonusActivations.length, crit: 0 });
+      if (recursionDepth < 10) {
+        // In theory, a team of all Togedemaru could keep giving each other bonus activations.
+        // The odds are very slim, so I'm making the simulation slightly less accurate in order to avoid potential infinite recursion.
+        for (const bonusActivation of bonusActivations) {
+          this.maybeActivateTeamSkill(bonusActivation, member, recursionDepth + 1);
         }
       }
     }
   }
 
-  private recoverMemberEnergy(activation: TeamActivationValue, invoker: MemberState) {
-    const { chanceToTargetLowestMember, crit, regular } = activation;
+  private processTeamEnergyActivation(activation: UnitActivation, invoker: MemberState, membersHelped: MemberState[]) {
+    if (activation.unit !== 'energy' || activation.team === undefined) {
+      return;
+    }
+    const recovered = this.recoverMemberEnergy(activation.team, invoker, membersHelped);
+    invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
+    invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
+  }
+
+  private recoverMemberEnergy(activation: TeamActivationValue, invoker: MemberState, targetGroup: MemberState[]) {
+    const { crit, regular } = activation;
     let valueRegular = 0;
     let valueCrit = 0;
     let wastedRegular = 0;
     let wastedCrit = 0;
-    let targetGroup: MemberState[] = [];
 
     if (regular + crit > 0) {
-      targetGroup =
-        chanceToTargetLowestMember !== undefined
-          ? this.energyTargetMember(chanceToTargetLowestMember)
-          : this.memberStates;
-
       for (const mem of targetGroup) {
         const { recovered: regularRecovered, wasted: regularWasted } = mem.recoverEnergy(regular, invoker);
         const { recovered: critRecovered, wasted: critWasted } = mem.recoverEnergy(crit, invoker);
@@ -270,20 +352,6 @@ export class TeamSimulator {
       crit: { wastedEnergy: wastedCrit, skillValue: valueCrit },
       targetGroup
     };
-  }
-
-  /**
-   * @returns array of size 1 containing the randomized member to target
-   */
-  private energyTargetMember(chanceTargetLowest: number): MemberState[] {
-    const sortedMembers = [...this.memberStates].sort((a, b) => a.energy - b.energy);
-    const lowestEnergy = sortedMembers[0]?.energy ?? 0;
-
-    const lowestEnergyMembers = sortedMembers.filter((mem) => mem.energy === lowestEnergy);
-    const allMembers = this.memberStates;
-
-    const targetGroup = this.rng() < chanceTargetLowest ? lowestEnergyMembers : allMembers;
-    return [this.rng.randomElement(targetGroup)].filter((member): member is MemberState => member !== undefined);
   }
 
   private collectInventory() {

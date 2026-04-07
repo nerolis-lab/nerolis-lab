@@ -31,7 +31,8 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
               chanceToTargetLowestMembers: skill.chanceToTargetLowestMembers
             }
           }
-        ]
+        ],
+        numMonsTargeted: skill.numMonsTargeted
       };
     }
 

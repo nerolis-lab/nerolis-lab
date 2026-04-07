@@ -5,7 +5,7 @@ export interface SelfActivationValue {
   crit: number;
 }
 export interface TeamActivationValue extends SelfActivationValue {
-  chanceToTargetLowestMember?: number; // optional, if undefined this skill does not randomize between members
+  chanceToTargetLowestMembers?: number; // optional, if undefined this skill does not randomize between members
 }
 
 export interface UnitActivation {
@@ -16,5 +16,7 @@ export interface UnitActivation {
 
 export interface SkillActivation {
   skill: Mainskill;
+  numMonsTargeted?: number;
+  chanceToTargetLowestMembers?: number;
   activations: UnitActivation[];
 }

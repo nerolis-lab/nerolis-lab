@@ -15,10 +15,12 @@ export class ExtraHelpfulSEffect implements SkillEffect {
           unit: 'helps',
           team: {
             regular: regularAmount,
-            crit: 0
+            crit: 0,
+            chanceToTargetLowestMembers: 0
           }
         }
-      ]
+      ],
+      numMonsTargeted: skill.numMonsTargeted
     };
   }
 }

@@ -7,6 +7,7 @@ export const EnergyForEveryoneLunarBlessing = new (class extends ModifiedMainski
   baseSkill = EnergyForEveryone;
   modifierName = 'Lunar Blessing';
   energyAmounts = [3, 4, 5, 7, 9, 11];
+  numMonsTargeted = 5;
   image = 'energy';
   description = (params: AmountParams) =>
     `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to all helper Pokémon on your team plus gives ${this.teamBerries[1][params.skillLevel - 1]} - ${this.selfBerries[MAX_TEAM_SIZE][params.skillLevel - 1]} of each of the Berries other Pokémon on your team collect.`;

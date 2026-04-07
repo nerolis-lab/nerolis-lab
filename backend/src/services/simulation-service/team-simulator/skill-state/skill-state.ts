@@ -145,7 +145,7 @@ export class SkillState {
     this.pityProcThreshold = calculatePityProcThreshold(memberState.member.pokemonWithIngredients.pokemon);
   }
 
-  // // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
+  // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
   public attemptSkill(): SkillActivation[] {
     const activations: SkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
@@ -186,8 +186,7 @@ export class SkillState {
       skillAmount: (this.regularValue + this.critValue) / iterations,
       skillValue: Object.fromEntries(
         Object.entries(this.skillValue)
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          .filter(([d_, value]) => value.amountToSelf !== 0 || value.amountToTeam !== 0)
+          .filter(([_d, value]) => value.amountToSelf !== 0 || value.amountToTeam !== 0)
           .map(([key, value]) => [
             key,
             {

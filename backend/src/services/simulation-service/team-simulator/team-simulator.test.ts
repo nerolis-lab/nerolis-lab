@@ -399,7 +399,7 @@ describe('recoverMemberEnergy', () => {
       regular: 50
     };
 
-    simulator.recoverMemberEnergy(energy, simulator.memberStates[0]);
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0], simulator.memberStates);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     simulator.memberStates.forEach((member: any) => {
@@ -419,10 +419,10 @@ describe('recoverMemberEnergy', () => {
     const energy: TeamActivationValue = {
       crit: 0,
       regular: 50,
-      chanceToTargetLowestMember: 1
+      chanceToTargetLowestMembers: 1
     };
 
-    simulator.recoverMemberEnergy(energy, simulator.memberStates[0]);
+    simulator.recoverMemberEnergy(energy, simulator.memberStates[0], [simulator.memberStates[1]]);
     expect(simulator.memberStates).toHaveLength(2);
     expect(simulator.memberStates[0].energy).toBe(100);
     expect(simulator.memberStates[1].energy).toBe(50);

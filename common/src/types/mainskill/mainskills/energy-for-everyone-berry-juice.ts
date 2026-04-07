@@ -14,6 +14,8 @@ export const EnergyForEveryoneBerryJuice = new (class extends ModifiedMainskill 
   juicePercent: number = 0.185;
   juiceAmount: number = 1;
 
+  numMonsTargeted = 5;
+
   activations = {
     energy: {
       unit: 'energy',
