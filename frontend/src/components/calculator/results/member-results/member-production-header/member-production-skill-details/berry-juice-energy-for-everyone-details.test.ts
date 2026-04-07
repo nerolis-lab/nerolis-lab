@@ -67,17 +67,13 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
       skillLevel: mockMember.member.skillLevel
     })
     const juicePercent = EnergyForEveryoneBerryJuice.juicePercent
-    expect(skillValuePerProc.text()).toBe(`x${juicePerSuccess * juicePercent}`)
+    const roundedJuicePerProc = compactNumber(MathUtils.round(juicePerSuccess * juicePercent, 2))
+    expect(skillValuePerProc.text()).toBe(`x${roundedJuicePerProc}`)
   })
 
   it('displays the correct total energy value', () => {
     const totalEnergyValue = wrapper.find('.energy-total')
     const expectedValue = mockMember.production.skillValue.energy.amountToTeam * timeWindowFactor('24H')
     expect(totalEnergyValue.text()).toContain(compactNumber(expectedValue))
-  })
-
-  it('displays the correct total energy value', () => {
-    const totalEnergyValue = wrapper.find('.juice-total')
-    expect(totalEnergyValue.text()).toContain('Unknown total')
   })
 })

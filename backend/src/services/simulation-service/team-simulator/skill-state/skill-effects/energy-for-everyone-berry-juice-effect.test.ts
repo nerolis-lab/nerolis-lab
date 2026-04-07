@@ -16,8 +16,7 @@ describe('EnergyForEveryoneBerryJuiceEffect', () => {
     effect = new EnergyForEveryoneBerryJuiceEffect();
   });
 
-  // TODO: Enable this test once real numbers are known.
-  it.skip('should create an item with a successful roll', () => {
+  it('should create an item with a successful roll', () => {
     const alwaysSucceed = 0;
     vimic(skillState, 'rng', () => alwaysSucceed);
 

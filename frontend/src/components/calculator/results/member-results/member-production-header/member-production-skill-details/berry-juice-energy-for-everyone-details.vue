@@ -101,7 +101,7 @@ export default defineComponent({
     },
     totalJuice() {
       const juiceAmount = MathUtils.round(this.memberWithProduction.production.skillValue.items?.amountToSelf ?? 0, 2)
-      return juiceAmount > 0 ? compactNumber(juiceAmount) : 'Unknown'
+      return compactNumber(juiceAmount)
     },
     timeWindowFactor() {
       return this.teamStore.timeWindowFactor

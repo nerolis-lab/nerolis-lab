@@ -1262,7 +1262,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "juiceAmount": 1,
-      "juicePercent": 0,
+      "juicePercent": 0.185,
       "modifierName": "Berry Juice",
     },
   },
