@@ -24058,7 +24058,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
     ],
     "image": "energy",
     "juiceAmount": 1,
-    "juicePercent": 0,
+    "juicePercent": 0.185,
     "modifierName": "Berry Juice",
   },
   "skillPercentage": 5.9,
