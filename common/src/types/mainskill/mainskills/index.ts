@@ -12,6 +12,7 @@ export * from './cooking-power-up-s';
 export * from './cooking-power-up-s-minus';
 export * from './dream-shard-magnet-s';
 export * from './energizing-cheer-s';
+export * from './energizing-cheer-s-heal-pulse';
 export * from './energizing-cheer-s-nuzzle';
 export * from './energy-for-everyone';
 export * from './energy-for-everyone-berry-juice';
