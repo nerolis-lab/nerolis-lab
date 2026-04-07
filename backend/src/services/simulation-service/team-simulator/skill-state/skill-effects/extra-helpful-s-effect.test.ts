@@ -32,7 +32,7 @@ describe('ExtraHelpfulSEffect', () => {
       activations: [
         {
           unit: 'helps',
-          team: { regular: regularAmount / memberState.teamSize, crit: 0, chanceToTargetLowestmembers: 0 }
+          team: { regular: regularAmount, crit: 0, chanceToTargetLowestMembers: 0 }
         }
       ],
       numMonsTargeted: 1

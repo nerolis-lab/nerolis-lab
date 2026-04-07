@@ -6,7 +6,7 @@ import { ExtraHelpfulS } from 'sleepapi-common';
 export class ExtraHelpfulSEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = ExtraHelpfulS;
-    const regularAmount = skillState.skillAmount(skill.activations.helps) / skillState.memberState.teamSize;
+    const regularAmount = skillState.skillAmount(skill.activations.helps);
 
     return {
       skill,
