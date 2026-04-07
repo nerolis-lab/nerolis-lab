@@ -772,6 +772,7 @@ exports[`COMPLETE_POKEDEX > shall not change ARCANINE unexpectedly 1`] = `
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -784,6 +785,7 @@ exports[`COMPLETE_POKEDEX > shall not change ARCANINE unexpectedly 1`] = `
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 4.9,
   "specialty": "skill",
@@ -1819,6 +1821,7 @@ exports[`COMPLETE_POKEDEX > shall not change BLISSEY unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 2.3,
   "specialty": "ingredient",
@@ -2750,6 +2753,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHANSEY unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 2.3,
   "specialty": "ingredient",
@@ -4378,10 +4382,10 @@ exports[`COMPLETE_POKEDEX > shall not change COMFEY unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -4393,6 +4397,7 @@ exports[`COMPLETE_POKEDEX > shall not change COMFEY unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 3.5,
   "specialty": "ingredient",
@@ -4642,6 +4647,7 @@ exports[`COMPLETE_POKEDEX > shall not change CRESSELIA unexpectedly 1`] = `
       ],
       "image": "energy",
       "name": "Energy For Everyone",
+      "numMonsTargeted": 5,
     },
     "description": [Function],
     "energyAmounts": [
@@ -4654,6 +4660,7 @@ exports[`COMPLETE_POKEDEX > shall not change CRESSELIA unexpectedly 1`] = `
     ],
     "image": "energy",
     "modifierName": "Lunar Blessing",
+    "numMonsTargeted": 5,
     "selfBerries": {
       "1": [
         5,
@@ -6101,6 +6108,7 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
     },
     "candyAmount": 4,
     "candyChance": 0.3333333333333333,
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "image": "ingredients",
     "ingredientAmounts": [
@@ -6113,6 +6121,7 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
       17,
     ],
     "modifierName": "Present",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 3,
   "specialty": "ingredient",
@@ -8485,6 +8494,7 @@ exports[`COMPLETE_POKEDEX > shall not change ENTEI unexpectedly 1`] = `
     "description": [Function],
     "image": "helps",
     "name": "Helper Boost",
+    "numMonsTargeted": 5,
     "uniqueBoostTable": {
       "1": [
         0,
@@ -9536,6 +9546,7 @@ exports[`COMPLETE_POKEDEX > shall not change GALLADE unexpectedly 1`] = `
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -9548,6 +9559,7 @@ exports[`COMPLETE_POKEDEX > shall not change GALLADE unexpectedly 1`] = `
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 5.4,
   "specialty": "skill",
@@ -9661,6 +9673,7 @@ exports[`COMPLETE_POKEDEX > shall not change GARDEVOIR unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 4.2,
   "specialty": "skill",
@@ -11161,6 +11174,7 @@ exports[`COMPLETE_POKEDEX > shall not change GROWLITHE unexpectedly 1`] = `
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -11173,6 +11187,7 @@ exports[`COMPLETE_POKEDEX > shall not change GROWLITHE unexpectedly 1`] = `
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 5,
   "specialty": "skill",
@@ -11524,6 +11539,7 @@ exports[`COMPLETE_POKEDEX > shall not change HAPPINY unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 1.3,
   "specialty": "ingredient",
@@ -12378,6 +12394,7 @@ exports[`COMPLETE_POKEDEX > shall not change IGGLYBUFF unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 3.8,
   "specialty": "skill",
@@ -12610,6 +12627,7 @@ exports[`COMPLETE_POKEDEX > shall not change JIGGLYPUFF unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 4.3,
   "specialty": "skill",
@@ -12713,6 +12731,7 @@ exports[`COMPLETE_POKEDEX > shall not change JOLTEON unexpectedly 1`] = `
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -12725,6 +12744,7 @@ exports[`COMPLETE_POKEDEX > shall not change JOLTEON unexpectedly 1`] = `
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 3.9,
   "specialty": "skill",
@@ -12956,6 +12976,7 @@ exports[`COMPLETE_POKEDEX > shall not change KIRLIA unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 4.3,
   "specialty": "skill",
@@ -13285,10 +13306,10 @@ exports[`COMPLETE_POKEDEX > shall not change LEAFEON unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -13300,6 +13321,7 @@ exports[`COMPLETE_POKEDEX > shall not change LEAFEON unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 6.9,
   "specialty": "skill",
@@ -15770,7 +15792,6 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
     "activations": {
       "paired": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
       "solo": {
@@ -15807,6 +15828,7 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
         31,
       ],
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       8,
@@ -15820,6 +15842,7 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
     "fullDescription": [Function],
     "image": "pot",
     "modifierName": "Minus",
+    "numMonsTargeted": 1,
     "potSizeAmounts": [
       5,
       7,
@@ -17021,10 +17044,10 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -17036,6 +17059,7 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 2.9,
   "specialty": "berry",
@@ -17139,6 +17163,7 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES_ALOLAN unexpectedly 1`] =
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -17151,6 +17176,7 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES_ALOLAN unexpectedly 1`] =
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 2.8,
   "specialty": "berry",
@@ -17383,6 +17409,7 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMI unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 3.6,
   "specialty": "skill",
@@ -17498,6 +17525,7 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMO unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 3.6,
   "specialty": "skill",
@@ -17611,6 +17639,7 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMOT unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 3.9,
   "specialty": "skill",
@@ -20091,6 +20120,7 @@ exports[`COMPLETE_POKEDEX > shall not change RAIKOU unexpectedly 1`] = `
     "description": [Function],
     "image": "helps",
     "name": "Helper Boost",
+    "numMonsTargeted": 5,
     "uniqueBoostTable": {
       "1": [
         0,
@@ -20248,6 +20278,7 @@ exports[`COMPLETE_POKEDEX > shall not change RALTS unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 4.3,
   "specialty": "skill",
@@ -21671,6 +21702,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
       ],
       "image": "energy",
       "name": "Energy For Everyone",
+      "numMonsTargeted": 5,
     },
     "description": [Function],
     "energyAmounts": [
@@ -21683,8 +21715,9 @@ exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
     ],
     "image": "energy",
     "juiceAmount": 1,
-    "juicePercent": 0,
+    "juicePercent": 0.185,
     "modifierName": "Berry Juice",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 5.9,
   "specialty": "skill",
@@ -22246,10 +22279,10 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWBRO unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -22261,6 +22294,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWBRO unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 8,
   "specialty": "skill",
@@ -22360,10 +22394,10 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWKING unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -22375,6 +22409,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWKING unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 8.7,
   "specialty": "skill",
@@ -22477,10 +22512,10 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWPOKE unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -22492,6 +22527,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWPOKE unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 7.8,
   "specialty": "skill",
@@ -23057,6 +23093,7 @@ exports[`COMPLETE_POKEDEX > shall not change SPIRITOMB unexpectedly 1`] = `
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -23069,6 +23106,7 @@ exports[`COMPLETE_POKEDEX > shall not change SPIRITOMB unexpectedly 1`] = `
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 3.6,
   "specialty": "ingredient",
@@ -23763,6 +23801,7 @@ exports[`COMPLETE_POKEDEX > shall not change SUICUNE unexpectedly 1`] = `
     "description": [Function],
     "image": "helps",
     "name": "Helper Boost",
+    "numMonsTargeted": 5,
     "uniqueBoostTable": {
       "1": [
         0,
@@ -24263,6 +24302,7 @@ exports[`COMPLETE_POKEDEX > shall not change SYLVEON unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 4,
   "specialty": "skill",
@@ -24362,7 +24402,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
       "skillHelps": {
@@ -24382,10 +24421,10 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
       "activations": {
         "energy": {
           "amount": [Function],
-          "targetLowestChance": 0.5,
           "unit": "energy",
         },
       },
+      "chanceToTargetLowestMembers": 0.5,
       "description": [Function],
       "energyAmounts": [
         12,
@@ -24397,7 +24436,9 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
       ],
       "image": "energy",
       "name": "Energizing Cheer S",
+      "numMonsTargeted": 1,
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       9,
@@ -24409,6 +24450,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
     ],
     "image": "energy",
     "modifierName": "Nuzzle",
+    "numMonsTargeted": 1,
     "skillHelpsAmounts": [
       1,
       2,
@@ -25851,7 +25893,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_LOW_KEY unexpectedly 1`]
     "activations": {
       "paired": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
       "solo": {
@@ -25888,6 +25929,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_LOW_KEY unexpectedly 1`]
         31,
       ],
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       8,
@@ -25901,6 +25943,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_LOW_KEY unexpectedly 1`]
     "fullDescription": [Function],
     "image": "pot",
     "modifierName": "Minus",
+    "numMonsTargeted": 1,
     "potSizeAmounts": [
       5,
       7,
@@ -26510,6 +26553,7 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
       "image": "energy",
       "name": "Charge Energy S",
     },
+    "chanceToTargetLowestMembers": 0.5,
     "critAmounts": [
       6.3,
       7.7,
@@ -26529,6 +26573,7 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
     ],
     "image": "energy",
     "modifierName": "Moonlight",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 10.1,
   "specialty": "skill",
@@ -27322,10 +27367,10 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -27337,6 +27382,7 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 3.2,
   "specialty": "berry",
@@ -27442,6 +27488,7 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX_ALOLAN unexpectedly 1`] = `
         "unit": "helps",
       },
     },
+    "chanceToTargetLowestMembers": 0,
     "description": [Function],
     "helpAmounts": [
       6,
@@ -27454,6 +27501,7 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX_ALOLAN unexpectedly 1`] = `
     ],
     "image": "helps",
     "name": "Extra Helpful S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 2.8,
   "specialty": "berry",
@@ -28027,6 +28075,7 @@ exports[`COMPLETE_POKEDEX > shall not change WIGGLYTUFF unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energy For Everyone",
+    "numMonsTargeted": 5,
   },
   "skillPercentage": 4,
   "specialty": "skill",
@@ -28126,10 +28175,10 @@ exports[`COMPLETE_POKEDEX > shall not change WOBBUFFET unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -28141,6 +28190,7 @@ exports[`COMPLETE_POKEDEX > shall not change WOBBUFFET unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 8.2,
   "specialty": "skill",
@@ -28472,10 +28522,10 @@ exports[`COMPLETE_POKEDEX > shall not change WYNAUT unexpectedly 1`] = `
     "activations": {
       "energy": {
         "amount": [Function],
-        "targetLowestChance": 0.5,
         "unit": "energy",
       },
     },
+    "chanceToTargetLowestMembers": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
@@ -28487,6 +28537,7 @@ exports[`COMPLETE_POKEDEX > shall not change WYNAUT unexpectedly 1`] = `
     ],
     "image": "energy",
     "name": "Energizing Cheer S",
+    "numMonsTargeted": 1,
   },
   "skillPercentage": 6.9,
   "specialty": "skill",
