@@ -1,3 +1,19 @@
+# [2.39.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.38.0...v2.39.0) (2026-04-07)
+
+
+### Bug Fixes
+
+* fix dish infographic warping on download ([d404c91](https://github.com/nerolis-lab/nerolis-lab/commit/d404c91b9d243dd7f29bb6c5c43ca25eec1ad6a0))
+* Fix inconsistent spelling of 'Pokémon' in home-page.vue ([432d7e5](https://github.com/nerolis-lab/nerolis-lab/commit/432d7e5cd9ef5ac1d3adb541109efe3db9b5b9cc))
+* update homepage test ([ac1e372](https://github.com/nerolis-lab/nerolis-lab/commit/ac1e372c6a33a80c68150e7a0f843b9859884ecc))
+
+
+### Features
+
+* add dish infographic background ([15f69b0](https://github.com/nerolis-lab/nerolis-lab/commit/15f69b07392486302c924d3bec3d7b61d6d22907))
+* add noibat and noivern ([6ee4d38](https://github.com/nerolis-lab/nerolis-lab/commit/6ee4d38b105b48457e6556deb9e5491e998842b3))
+* dish infographic first pass ([fc7c45d](https://github.com/nerolis-lab/nerolis-lab/commit/fc7c45dedad1e6c8e064619cfb1c5029b9769916))
+
 # [2.38.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.37.0...v2.38.0) (2026-03-07)
 
 
