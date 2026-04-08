@@ -19,10 +19,6 @@
     {
       "name": "docs",
       "path": "docs"
-    },
-    {
-      "name": "bot",
-      "path": "bot"
     }
   ],
   "settings": {
@@ -40,7 +36,6 @@
       "common": true,
       "backend": true,
       "frontend": true,
-      "bot": true,
       "docs": true,
       ".vscode": true,
       "dev-dist": true,
@@ -51,7 +46,6 @@
     "search.exclude": {
       "**/node_modules": true,
       "**/dist": true,
-      "bot/**": true,
       "**/data/**": true
     },
     "typescript.preferences.importModuleSpecifier": "non-relative",

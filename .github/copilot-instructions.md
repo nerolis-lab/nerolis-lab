@@ -7,8 +7,8 @@ Neroli's Lab (SleepAPI) is a full-stack Pokémon Sleep application with a monore
 - **backend**: Express API with Bun dev runtime, Node.js production (TypeScript, Knex, MySQL, TSOA)
 - **frontend**: Vue 3 SPA with Vuetify 3 (Pinia state, Vite, Chart.js)
 - **common**: Shared TypeScript library bundled with Rollup (types, utilities, mocks)
-- **bot**: Discord bot for recipe lookups
 - **docs**: VitePress documentation site
+- **guides**: Vitepress player-facing Pokemon Sleep guides
 
 ## Development Workflow
 
@@ -20,6 +20,9 @@ cd backend && npm run dev
 
 # Frontend (Vite)
 cd frontend && npm run dev
+
+# Guides (Vitepress)
+cd guides && npm run dev
 
 # Common library watch mode (when changing shared types)
 cd common && npm run build-watch
@@ -34,6 +37,7 @@ cd common && npm run build-watch
 3. **Type check**:
    - Frontend: `npm run type-check`
    - Backend: `npm run _compile`
+   - Guides: `npm run type-check`
 4. **Build common** if types changed: `cd common && npm run build`
 
 ### Test-Driven Development
@@ -289,7 +293,7 @@ This application simulates Pokémon Sleep mechanics. Key concepts:
 This VS Code workspace uses a multi-folder setup (`sleepapi.code-workspace`):
 
 - Root folder for shared configs (ESLint, Prettier, commitlint)
-- Individual folders for each package (backend, frontend, common, docs, bot)
+- Individual folders for each package (backend, frontend, common, docs, guides)
 - Relative imports configured via TypeScript path aliases (`@src/`, `@/`)
 
 **Import preference**: Use path aliases, not relative imports (configured in workspace settings).
