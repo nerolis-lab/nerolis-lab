@@ -27,6 +27,7 @@ import {
   commonMocks,
   event as expertModeGreengrassEvent,
   type CalculateTeamResponse,
+  type FunctionalEvent,
   type MemberProductionBase,
   type SimpleTeamResult,
   type TeamMemberExt,
@@ -40,6 +41,7 @@ export class TeamSimulator {
   private memberStates: MemberState[] = [];
   private memberStatesWithoutFillers: MemberState[] = [];
   private cookingState?: CookingState = undefined;
+  private expertModeEvent?: FunctionalEvent;
 
   private nightStartMinutes: number;
   private mealTimeMinutesSinceStart: number[];
@@ -69,10 +71,10 @@ export class TeamSimulator {
     this.mealTimeMinutesSinceStart = mealTimeMinutesSinceStart;
 
     const expertModeSettings = settings.island?.expertMode;
-    const expertModeEvent = expertModeSettings ? expertModeGreengrassEvent(expertModeSettings) : undefined;
+    this.expertModeEvent = expertModeSettings ? expertModeGreengrassEvent(expertModeSettings) : undefined;
     const preparedMembers = TeamSimulatorUtils.prepareMembers({
       members,
-      event: expertModeEvent
+      event: this.expertModeEvent
     });
 
     for (const member of preparedMembers) {
@@ -131,7 +133,13 @@ export class TeamSimulator {
   public results(): CalculateTeamResponse {
     this.collectInventory();
 
-    const members = this.memberStatesWithoutFillers.map((m) => m.results(this.run));
+    const members = this.memberStatesWithoutFillers.map((m) => {
+      const result = m.results(this.run);
+      if (this.expertModeEvent) {
+        result.strength = this.expertModeEvent.applyToStrength(result.strength);
+      }
+      return result;
+    });
     let cooking = undefined;
     if (this.cookingState) {
       cooking = this.cookingState.results(this.run);

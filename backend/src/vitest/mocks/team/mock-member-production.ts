@@ -2,10 +2,33 @@ import { berrySet } from '@src/vitest/mocks/berry/mock-berry-set.js';
 import { pokemonWithIngredientsIndexed } from '@src/vitest/mocks/pokemon/mock-pokemon-with-ingredients.js';
 import { produce } from '@src/vitest/mocks/produce/mock-produce.js';
 import type { MemberSkillValue } from 'sleepapi-common';
-import { mainskillUnits, type MemberProduction, type MemberProductionAdvanced } from 'sleepapi-common';
+import {
+  mainskillUnits,
+  type MemberProduction,
+  type MemberProductionAdvanced,
+  type MemberStrength
+} from 'sleepapi-common';
+
+const defaultStrength: MemberStrength = {
+  berries: {
+    total: 0,
+    breakdown: {
+      base: 0,
+      favored: 0,
+      islandBonus: 0
+    }
+  },
+  skill: {
+    total: 0,
+    breakdown: {
+      base: 0,
+      islandBonus: 0
+    }
+  }
+};
 
 export function memberProduction(attrs?: Partial<MemberProduction>): MemberProduction {
-  return {
+  const production: MemberProduction = {
     advanced: memberProductionAdvanced(),
     externalId: 'Mock id',
     pokemonWithIngredients: pokemonWithIngredientsIndexed(),
@@ -17,8 +40,15 @@ export function memberProduction(attrs?: Partial<MemberProduction>): MemberProdu
     skillValue: Object.fromEntries(
       mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])
     ) as MemberSkillValue,
-    ...attrs
+    strength: defaultStrength
   };
+
+  if (attrs) {
+    Object.assign(production, attrs);
+    production.strength = attrs.strength ?? production.strength;
+  }
+
+  return production;
 }
 
 export function memberProductionAdvanced(attrs?: Partial<MemberProductionAdvanced>): MemberProductionAdvanced {

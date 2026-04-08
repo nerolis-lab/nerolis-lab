@@ -1,5 +1,4 @@
 import MemberProductionIngredient from '@/components/calculator/results/member-results/member-production-header/member-production-ingredient.vue'
-import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
@@ -35,14 +34,14 @@ describe('MemberProductionIngredient', () => {
   })
 
   it('renders the correct ingredient images and amounts', async () => {
+    const teamStore = useTeamStore()
     mockMember.production.produceTotal.ingredients.forEach(async (ingredient, index) => {
       const ingredientRow = wrapper.findAll('.ingredient-row').at(index)
       const img = ingredientRow?.find('img')
       const amountSpan = ingredientRow?.find('span.font-weight-medium')
 
       expect(img?.attributes('src')).toBe(`/images/ingredient/${ingredient.ingredient.name.toLowerCase()}.png`)
-      const timeWindowFactor = StrengthService.timeWindowFactor(useTeamStore().timeWindow)
-      expect(amountSpan?.text()).toBe(`x${Math.round(ingredient.amount * timeWindowFactor * 10) / 10}`)
+      expect(amountSpan?.text()).toBe(`x${Math.round(ingredient.amount * teamStore.timeWindowFactor * 10) / 10}`)
     })
   })
 

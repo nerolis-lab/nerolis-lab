@@ -64,12 +64,10 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { EnergyForEveryoneBerryJuice, MathUtils, compactNumber, defaultZero } from 'sleepapi-common'
+import { EnergyForEveryoneBerryJuice, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -81,8 +79,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { teamStore, MathUtils, mainskillImage, berryImage, userStore }
+    return { teamStore, MathUtils, mainskillImage, berryImage }
   },
   computed: {
     energyValuePerProc() {
@@ -97,21 +94,15 @@ export default defineComponent({
     },
     totalEnergyValue() {
       return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: EnergyForEveryoneBerryJuice.activations.energy,
-          amount: defaultZero(this.memberWithProduction.production.skillValue['energy'].amountToTeam),
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
+        this.memberWithProduction.production.skillValue['energy'].amountToTeam * this.timeWindowFactor
       )
     },
     totalJuice() {
       const juiceAmount = MathUtils.round(this.memberWithProduction.production.skillValue.items?.amountToSelf ?? 0, 2)
       return juiceAmount > 0 ? compactNumber(juiceAmount) : 'Unknown'
     },
-
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })
