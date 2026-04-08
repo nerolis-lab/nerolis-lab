@@ -63,7 +63,7 @@ export default typescriptEslint.config(
   // backend-specific rules
   {
     name: 'sleepapi/backend-rules',
-    files: ['**/backend/**', '**/common/**', '**/bot/**'],
+    files: ['**/backend/**', '**/common/**'],
     languageOptions: {
       ecmaVersion: 'latest',
       globals: {
