@@ -30,10 +30,10 @@ Each day you can receive candies from each of your friends, you can get a minimu
 <:lets_electrode:1257367045775818822> What happens when I reach a new friendship level with a friend?
 You get a popup that says you've grown closer with your friend and you receive a reward based on level.
 
-Level 1 - 1x Handy Candy S
-Level 2 - 1x Ingredient Ticket S
-Level 3 - 1x Linking Cord
-Level 4 - 2x Ingredient Ticket S
+Level 1 - 1x Handy Candy S  
+Level 2 - 1x Ingredient Ticket S  
+Level 3 - 1x Linking Cord  
+Level 4 - 2x Ingredient Ticket S  
 Level 5 - 2x Handy Candy S
 
 Having level 5 friends is better than restarting friendships. Special events often have currencies that have an increased chance of being received if you have a high friendship level. Additionally, high friendship level friends have an increased chance to send two candies instead of one. Level 1 is about 10% and level 5 is 30%.

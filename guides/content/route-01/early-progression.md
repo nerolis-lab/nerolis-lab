@@ -31,11 +31,11 @@ You may have noticed a lack of mention for early game skill mons, and that’s b
 They do not teach you anything about the game and are frequently missing/assuming some information that tends to lead to misinformed choices. They also cannot compare across different species. A PR85 Xatu will likely beat out a PR95 Musharna, but you will not know that just comparing rankings.
 
 [Introductory Pokemon Rating Guide](../faq/rating-intro.md)
-This is a good introduction to judging subskills and natures, and matching the right ones to your Pokémon's specialty (Ing Finders are very important for Ing mon but less so on Skill mons). It still has the same problem with PR calcs where it can not compare mons across species but at least it breaks down what subskills and natures are beneficial to each other.
-It is highly recommended to move off of this system once you get a good feel on how to judge mons and move to one of the various calculators here:
-[Neroli's Lab] OMITTED -> SCREEENSHOT BASED
-[Nitoyon] OMITTED -> SCREEENSHOT BASED
-[RaenonX] OMITTED -> SCREEENSHOT BASED
+This is a good introduction to judging subskills and natures, and matching the right ones to your Pokémon's specialty (Ing Finders are very important for Ing mon but less so on Skill mons). It still has the same problem with PR calcs where it can not compare mons across species but at least it breaks down what subskills and natures are beneficial to each other.  
+It is highly recommended to move off of this system once you get a good feel on how to judge mons and move to one of the various calculators here:  
+[Neroli's Lab] OMITTED -> SCREEENSHOT BASED  
+[Nitoyon] OMITTED -> SCREEENSHOT BASED  
+[RaenonX] OMITTED -> SCREEENSHOT BASED  
 These calculators are species-agnostic and show you exactly what a mon produces for you to accurately assess between any 2 mons (for example, it can show the AAA dratini you caught can make 120 herbs at 60 while an AAA gastly you've been using makes about 80 herbs as a lvl 60 gengar)
 
 ## Which Pokemon do I use on the team? What do I cook early game?

@@ -15,9 +15,9 @@ _This system_
 - **DOES** provide a baseline for hyper early-game/casual players to judge how the various specialties interact with their respective subskills/natures. Rather, this is meant to be used more like a pass/fail system than a ranking system.
 - **IS NOT** capable of accurately replicating minor production nuances. Imprecision aside, the ranking of subskills is fairly accurate (ie. Inventory Up L being as good as Speed Up Nature on ing/skill mons).
 
-After learning more about what to look for in a mon and familiarizing yourself with the metagame, it is HIGHLY ENCOURAGED to graduate onto learning how to calculate your specific catch's production output using the available calculators here:
-[Neroli's Lab] PAGE OMITTED -> SCREENSHOT BASED
-[Nitoyon] PAGE OMITTED -> SCREENSHOT BASED
+After learning more about what to look for in a mon and familiarizing yourself with the metagame, it is HIGHLY ENCOURAGED to graduate onto learning how to calculate your specific catch's production output using the available calculators here:  
+[Neroli's Lab] PAGE OMITTED -> SCREENSHOT BASED  
+[Nitoyon] PAGE OMITTED -> SCREENSHOT BASED  
 [RaenonX] PAGE OMITTED -> SCREENSHOT BASED
 
 ## Berry Specialist Rater
@@ -69,11 +69,11 @@ Speed Down Nature(Not Modest): -1
 
 **ABB mons require a cross-species examination and are HIGHLY meta-dependent. Please post your mon in <#1299412905665757214> or #rate-my-mon for a better rating. This system does not support it.**
 
-¹ Default value, adjust as wanted (worth more the better your team is)
-² Worth points if this is potentially being used overnight (likely) OR you do not check often, **0 otherwise**
-³ Berry Finding S can be a perk for fast 3-stage ing mons with strong berries like Gengar, Dragonite, Meowscarada. Does not help with ingredient production but increases berry strength. If you are interested in learning more about hybrid ing mons, please discuss in <#1299412905665757214> or <#1186372821383917598>
-⁴ You may consider using a Neutralizing Mint on this nature but please ask in <#1396340509504438313> for details
-⁵ A Forever Temp mon is one that matches the output of the bare minimum of an AAA mon, but at a much earlier level. Do not ignore these, **bang for your buck**.
+¹ Default value, adjust as wanted (worth more the better your team is)  
+² Worth points if this is potentially being used overnight (likely) OR you do not check often, **0 otherwise**  
+³ Berry Finding S can be a perk for fast 3-stage ing mons with strong berries like Gengar, Dragonite, Meowscarada. Does not help with ingredient production but increases berry strength. If you are interested in learning more about hybrid ing mons, please discuss in <#1299412905665757214> or <#1186372821383917598>  
+⁴ You may consider using a Neutralizing Mint on this nature but please ask in <#1396340509504438313> for details  
+⁵ A Forever Temp mon is one that matches the output of the bare minimum of an AAA mon, but at a much earlier level. Do not ignore these, **bang for your buck**.  
 ⁶ Temp at 30 mons do not include Pseudo-Legendary Pokemon \* Some ing mons are able to meet _current_ late-game meal requirements with lower recommended minimums if AAA due to their great base stats such as Skeledirge, Golem, and Blastoise. This may make your hunt easier but there is a risk of _future_ recipes needing more of those ingredients than your Pokemon can manage.
 
 ## Support Skill Specialist Rater¹
@@ -151,13 +151,13 @@ Calm / Timid / Ingredient Finder S,M / Inventory Up S,M,L: 0⁹
 
 - Minimum Viable **BFS-Based** Strength Skill mons will be **10+** points¹⁰
 
-¹ Charge Strength/Berry Burst/Helper Boost/Extra Helpful and their variants
-² Trigger-based Strength Skill specialists benefit from Main Skill level more than level making them popular choices for early game with main seed investment. However, they are eventually replaced with high level BFS specialists so consider whether they are necessary for progression
-³ Default, adjust as wanted
-⁴ Does not help with their trigger output, but makes it cheaper to get to max skill level
-⁵ Not additive, pick the highest one. Worth points if it's being used overnight OR you do not check often, 0 otherwise
-⁶ Preferably has their good subskills by level 25
-⁷ Berry Finding S allows Skill Specialists to scale with levels, making it late-game viable
-⁸ Consider a Neutralizing Mint on this nature but ask in <#1396340509504438313> for help
-⁹ These subskills are not bad enough to warrant negative points
+¹ Charge Strength/Berry Burst/Helper Boost/Extra Helpful and their variants  
+² Trigger-based Strength Skill specialists benefit from Main Skill level more than level making them popular choices for early game with main seed investment. However, they are eventually replaced with high level BFS specialists so consider whether they are necessary for progression  
+³ Default, adjust as wanted  
+⁴ Does not help with their trigger output, but makes it cheaper to get to max skill level  
+⁵ Not additive, pick the highest one. Worth points if it's being used overnight OR you do not check often, 0 otherwise  
+⁶ Preferably has their good subskills by level 25  
+⁷ Berry Finding S allows Skill Specialists to scale with levels, making it late-game viable  
+⁸ Consider a Neutralizing Mint on this nature but ask in <#1396340509504438313> for help  
+⁹ These subskills are not bad enough to warrant negative points  
 ¹⁰ BFS-based Strength Skill specialists compete with BFS berry specialists so we raise our standards to compete with them due to extra seed costs
