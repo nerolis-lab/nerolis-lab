@@ -6,7 +6,7 @@ title: Guides overview
 
 Welcome to Neroli's Lab guides. These pages explain game mechanics and how we model them in the app.
 
-<GuideDemoBanner />
+<GuideDemoComponent />
 
 ## Getting started
 

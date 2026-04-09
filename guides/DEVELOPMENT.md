@@ -53,7 +53,7 @@ Register guide-only components in `.vitepress/theme/index.ts` (place SFCs under 
 
 The sidebar is generated at build time from the **`content/`** tree. Folders become nested groups. YAML front matter supports **`title`** (nav label) and optional **`order`** (lower numbers sort earlier; ties use link order). Section folders may use **`index.md`** for the landing page and group title.
 
-Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoBanner />`).
+Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoComponent />`).
 
 ## Full-site navigation
 
