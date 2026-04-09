@@ -125,6 +125,70 @@ describe('upsertTeam', () => {
     ]);
   });
 
+  it('should persist expert mode berry data when creating a team', async () => {
+    await upsertTeamMeta({
+      index: 0,
+      request: {
+        name: 'Expert Team',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.expertIslandDTO()
+      },
+      user
+    });
+
+    const teamArea = await TeamAreaDAO.findMultiple();
+    expect(teamArea).toHaveLength(1);
+    expect(teamArea[0]).toMatchObject({
+      favored_berries: 'BELUE',
+      expert_modifier: 'ingredient',
+      main_favorite_berry: 'BELUE',
+      sub_favorite_berries: 'GREPA,BLUK'
+    });
+  });
+
+  it('should update expert mode berry data on existing team', async () => {
+    await upsertTeamMeta({
+      index: 0,
+      request: {
+        name: 'Expert Team',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.expertIslandDTO()
+      },
+      user
+    });
+
+    await upsertTeamMeta({
+      index: 0,
+      request: {
+        name: 'Expert Team Updated',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.expertIslandDTO({
+          expertModifier: 'berry',
+          mainFavoriteBerry: 'GREPA',
+          subFavoriteBerries: 'BELUE,BLUK'
+        })
+      },
+      user
+    });
+
+    const teamArea = await TeamAreaDAO.findMultiple();
+    expect(teamArea).toHaveLength(1);
+    expect(teamArea[0]).toMatchObject({
+      expert_modifier: 'berry',
+      main_favorite_berry: 'GREPA',
+      sub_favorite_berries: 'BELUE,BLUK'
+    });
+  });
+
   it('should insert new team area when team does not exist', async () => {
     expect(await TeamDAO.findMultiple()).toEqual([]);
     expect(await TeamAreaDAO.findMultiple()).toEqual([]);
@@ -294,6 +358,62 @@ describe('getTeams', () => {
       version: 1,
       recipeType: 'curry'
     });
+  });
+
+  it('should return expert mode data when fetching teams', async () => {
+    await upsertTeamMeta({
+      index: 0,
+      request: {
+        name: 'Expert Team',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.expertIslandDTO()
+      },
+      user
+    });
+
+    const response = await getTeams(user);
+
+    expect(response.teams).toHaveLength(1);
+    expect(response.teams[0]).toMatchObject({
+      index: 0,
+      name: 'Expert Team',
+      island: {
+        islandName: 'GGEX',
+        favoredBerries: 'BELUE',
+        expertModifier: 'ingredient',
+        mainFavoriteBerry: 'BELUE',
+        subFavoriteBerries: 'GREPA,BLUK'
+      }
+    });
+  });
+
+  it('should return undefined expert mode fields for non-expert teams', async () => {
+    await upsertTeamMeta({
+      index: 0,
+      request: {
+        name: 'Normal Team',
+        camp: false,
+        bedtime: '21:30',
+        wakeup: '06:00',
+        recipeType: 'curry',
+        island: mocks.islandDTO()
+      },
+      user
+    });
+
+    const response = await getTeams(user);
+
+    expect(response.teams).toHaveLength(1);
+    expect(response.teams[0].island).toMatchObject({
+      islandName: 'greengrass',
+      favoredBerries: ''
+    });
+    expect(response.teams[0].island.expertModifier).toBeUndefined();
+    expect(response.teams[0].island.mainFavoriteBerry).toBeUndefined();
+    expect(response.teams[0].island.subFavoriteBerries).toBeUndefined();
   });
 
   it('should only return teams belonging to the specified user', async () => {

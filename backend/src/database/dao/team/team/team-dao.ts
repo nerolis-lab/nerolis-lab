@@ -5,6 +5,7 @@ import type { DBPokemon } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
 import { TeamAreaDAO } from '@src/database/dao/team/team-area/team-area-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
+import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
 import {
   CarrySizeUtils,
   getPokemon,
@@ -86,7 +87,7 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
       }
 
       const teamArea = await TeamAreaDAO.get({ id: team.fk_team_area_id });
-      const favoredBerries = teamArea.favored_berries.split(',').filter(Boolean);
+      const userArea = await UserAreaDAO.get({ id: teamArea.fk_user_area_id });
 
       teamsWithMembers.push({
         index: team.team_index,
@@ -95,7 +96,13 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         bedtime: team.bedtime,
         wakeup: team.wakeup,
         recipeType: team.recipe_type,
-        favoredBerries,
+        island: {
+          islandName: userArea.area,
+          favoredBerries: teamArea.favored_berries,
+          expertModifier: teamArea.expert_modifier,
+          mainFavoriteBerry: teamArea.main_favorite_berry,
+          subFavoriteBerries: teamArea.sub_favorite_berries
+        },
         stockpiledBerries: this.stringToStockpile(team.stockpiled_berries, true),
         stockpiledIngredients: this.stringToStockpile(team.stockpiled_ingredients, false),
         version: team.version,

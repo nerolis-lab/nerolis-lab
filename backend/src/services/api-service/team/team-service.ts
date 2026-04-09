@@ -24,7 +24,7 @@ export async function upsertTeamMeta(params: {
 }): Promise<UpsertTeamMetaResponse> {
   const { index, request, user } = params;
 
-  const { islandName, favoredBerries, expertModifier } = request.island;
+  const { islandName, favoredBerries, expertModifier, mainFavoriteBerry, subFavoriteBerries } = request.island;
 
   return DatabaseService.transaction(async (trx) => {
     const existingTeam = await TeamDAO.find({ fk_user_id: user.id, team_index: index }, { trx });
@@ -35,6 +35,8 @@ export async function upsertTeamMeta(params: {
     const teamArea = await upsertTeamArea({
       favoredBerries: favoredBerries,
       expertModifier,
+      mainFavoriteBerry,
+      subFavoriteBerries,
       userAreaId: userArea.id,
       existingTeam,
       trx
@@ -83,22 +85,30 @@ async function upsertTeamArea(params: {
   userAreaId: number;
   favoredBerries: string;
   expertModifier?: 'ingredient' | 'berry' | 'skill';
+  mainFavoriteBerry?: string;
+  subFavoriteBerries?: string;
   existingTeam?: DBTeam;
   trx?: Knex.Transaction;
 }) {
-  const { userAreaId, favoredBerries, expertModifier, existingTeam, trx } = params;
+  const { userAreaId, favoredBerries, expertModifier, mainFavoriteBerry, subFavoriteBerries, existingTeam, trx } =
+    params;
+
+  const teamAreaData = {
+    fk_user_area_id: userAreaId,
+    favored_berries: favoredBerries,
+    expert_modifier: expertModifier,
+    main_favorite_berry: mainFavoriteBerry,
+    sub_favorite_berries: subFavoriteBerries
+  };
 
   if (existingTeam) {
     return await TeamAreaDAO.upsert({
       filter: { id: existingTeam.fk_team_area_id },
-      updated: { fk_user_area_id: userAreaId, favored_berries: favoredBerries, expert_modifier: expertModifier },
+      updated: teamAreaData,
       options: { trx }
     });
   } else {
-    return await TeamAreaDAO.insert(
-      { fk_user_area_id: userAreaId, favored_berries: favoredBerries, expert_modifier: expertModifier },
-      { trx }
-    );
+    return await TeamAreaDAO.insert(teamAreaData, { trx });
   }
 }
 

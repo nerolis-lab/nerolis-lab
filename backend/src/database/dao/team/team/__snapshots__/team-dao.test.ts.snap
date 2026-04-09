@@ -5,8 +5,14 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
   {
     "bedtime": "21:30",
     "camp": false,
-    "favoredBerries": [],
     "index": 0,
+    "island": {
+      "expertModifier": undefined,
+      "favoredBerries": "",
+      "islandName": "greengrass",
+      "mainFavoriteBerry": undefined,
+      "subFavoriteBerries": undefined,
+    },
     "members": [
       {
         "carrySize": 22,

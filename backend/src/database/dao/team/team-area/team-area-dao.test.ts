@@ -95,6 +95,45 @@ describe('TeamAreaDAO insert', () => {
   });
 });
 
+describe('TeamAreaDAO insert with expert mode berries', () => {
+  it('shall insert entity with expert mode berry data', async () => {
+    const teamArea = await TeamAreaDAO.insert({
+      fk_user_area_id: userAreaId,
+      favored_berries: 'BELUE',
+      expert_modifier: 'ingredient',
+      main_favorite_berry: 'BELUE',
+      sub_favorite_berries: 'GREPA,BLUK'
+    });
+
+    expect(teamArea).toBeDefined();
+
+    const data = await TeamAreaDAO.findMultiple();
+    expect(data).toEqual([
+      expect.objectContaining({
+        id: teamArea.id,
+        fk_user_area_id: userAreaId,
+        favored_berries: 'BELUE',
+        expert_modifier: 'ingredient',
+        main_favorite_berry: 'BELUE',
+        sub_favorite_berries: 'GREPA,BLUK'
+      })
+    ]);
+  });
+
+  it('shall insert entity without expert mode berry data', async () => {
+    const teamArea = await TeamAreaDAO.insert({
+      fk_user_area_id: userAreaId,
+      favored_berries: 'ORAN,PAMTRE,PECHA'
+    });
+
+    const data = await TeamAreaDAO.findMultiple();
+    expect(data[0].main_favorite_berry).toBeUndefined();
+    expect(data[0].sub_favorite_berries).toBeUndefined();
+    expect(data[0].expert_modifier).toBeUndefined();
+    expect(data[0].id).toEqual(teamArea.id);
+  });
+});
+
 describe('TeamAreaDAO update', () => {
   it('shall update entity', async () => {
     const teamArea = await TeamAreaDAO.insert({
@@ -117,6 +156,33 @@ describe('TeamAreaDAO update', () => {
         fk_user_area_id: userAreaId,
         favored_berries: 'CHERI, DURIN, MAGO',
         expert_modifier: 'skill'
+      })
+    ]);
+  });
+
+  it('shall update entity with expert mode berry data', async () => {
+    const teamArea = await TeamAreaDAO.insert({
+      fk_user_area_id: userAreaId,
+      favored_berries: 'ORAN, PAMTRE, PECHA'
+    });
+
+    await TeamAreaDAO.update({
+      ...teamArea,
+      favored_berries: 'BELUE',
+      expert_modifier: 'berry',
+      main_favorite_berry: 'BELUE',
+      sub_favorite_berries: 'GREPA,BLUK'
+    });
+
+    const data = await TeamAreaDAO.findMultiple();
+    expect(data).toEqual([
+      expect.objectContaining({
+        id: teamArea.id,
+        version: 2,
+        favored_berries: 'BELUE',
+        expert_modifier: 'berry',
+        main_favorite_berry: 'BELUE',
+        sub_favorite_berries: 'GREPA,BLUK'
       })
     ]);
   });

@@ -112,6 +112,7 @@ describe('getTeams', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         recipeType: 'curry',
+        island: { islandName: 'greengrass', favoredBerries: '' },
         stockpiledBerries: [],
         stockpiledIngredients: [],
         version: 1,
@@ -171,7 +172,7 @@ describe('getTeams', () => {
       camp: index % 2 === 0,
       version: 1,
       recipeType: 'curry',
-      favoredBerries: [],
+      island: { islandName: 'greengrass', favoredBerries: '' },
       members: Array.from({ length: MAX_TEAM_SIZE }, (__, memberIndex) => ({
         version: 1,
         memberIndex,
