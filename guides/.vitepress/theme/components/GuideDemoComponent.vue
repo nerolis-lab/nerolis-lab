@@ -1,9 +1,9 @@
 <template>
-  <div class="guide-demo-banner" role="note">
+  <div class="guide-demo-component" role="note">
     <h4 class="demo-label">Demo Component</h4>
     <p>
-      Use the fields to set how long you slept (hours and minutes); the sleep score updates automatically. The score uses
-      the same formula as the main app by importing shared code from <code>sleepapi-common</code>. In the script,
+      Use the fields to set how long you slept (hours and minutes); the sleep score updates automatically. The score
+      uses the same formula as the main app by importing shared code from <code>sleepapi-common</code>. In the script,
       <code>ref</code> holds the inputs, <code>computed</code> properties derive the score and text color, and
       <code>resetDuration</code> runs when you press Reset.
     </p>
@@ -70,7 +70,9 @@ const sleepScore = computed(() => sleepScoreFromDurationMinutes(totalMinutes.val
 const sleepScoreToneClass = computed(() => {
   const s = sleepScore.value;
   if (s < 50) {
-    return 'text-error'; // these classes are defined by vuetify based on the theme colors
+    // these classesa are defined by vuetify based on the theme colors
+    // reference: https://vuetifyjs.com/en/features/theme/#custom-theme-colors
+    return 'text-error'; 
   }
   if (s < 80) {
     return 'text-secondary';
@@ -86,7 +88,7 @@ function resetDuration(): void {
 </script>
 
 <style scoped>
-.guide-demo-banner {
+.guide-demo-component {
   padding: 16px;
   border-radius: 8px;
   background: var(--color-neutral-700);
