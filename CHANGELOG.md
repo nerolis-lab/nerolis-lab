@@ -1,3 +1,10 @@
+## [2.39.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.39.5...v2.39.6) (2026-04-09)
+
+
+### Bug Fixes
+
+* sync removed starting ingredients selection ([1ed064b](https://github.com/nerolis-lab/nerolis-lab/commit/1ed064b7658d0a66c548dd43d4a06a416343b6f7))
+
 ## [2.39.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.39.4...v2.39.5) (2026-04-08)
 
 ## [2.39.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.39.3...v2.39.4) (2026-04-08)
