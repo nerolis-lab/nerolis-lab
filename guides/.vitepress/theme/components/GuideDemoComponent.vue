@@ -72,7 +72,7 @@ const sleepScoreToneClass = computed(() => {
   if (s < 50) {
     // these classesa are defined by vuetify based on the theme colors
     // reference: https://vuetifyjs.com/en/features/theme/#custom-theme-colors
-    return 'text-error'; 
+    return 'text-error';
   }
   if (s < 80) {
     return 'text-secondary';
