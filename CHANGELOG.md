@@ -1,3 +1,10 @@
+## [2.40.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.40.0...v2.40.1) (2026-04-09)
+
+
+### Bug Fixes
+
+* docker compose compatiblity with SELinux ([69d36d0](https://github.com/nerolis-lab/nerolis-lab/commit/69d36d077ce453cf360b6c16ffa008b3a6748169))
+
 # [2.40.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.39.6...v2.40.0) (2026-04-09)
 
 
