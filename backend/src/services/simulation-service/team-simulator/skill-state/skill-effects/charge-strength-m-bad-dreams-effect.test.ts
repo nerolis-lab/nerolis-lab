@@ -11,7 +11,7 @@ describe('ChargeStrengthMBadDreamsEffect', () => {
   let skillState: SkillState;
   let chargeStrengthMBadDreamsEffect: ChargeStrengthMBadDreamsEffect;
   let mockOtherMembers: MemberState[];
-  let addSkillValueMock: ReturnType<typeof vi.fn>;
+  let addSkillValueMock: ReturnType<typeof vi.fn<SkillState['addSkillValue']>>;
 
   beforeEach(() => {
     memberState = mocks.memberState();
@@ -25,7 +25,7 @@ describe('ChargeStrengthMBadDreamsEffect', () => {
       get: () => mockOtherMembers
     });
 
-    addSkillValueMock = vi.fn();
+    addSkillValueMock = vi.fn<SkillState['addSkillValue']>();
     skillState.addSkillValue = addSkillValueMock;
   });
 

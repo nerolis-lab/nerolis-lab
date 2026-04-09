@@ -26,6 +26,7 @@ import type {
   SolveSettingsExt,
   TeamMemberExt,
   TeamMemberSettingsExt,
+  TeamMemberSettingsResult,
   TeamSettingsExt
 } from 'sleepapi-common';
 import {
@@ -133,7 +134,7 @@ export function calculateProductionAll(params: {
   return { userProduction, nonSupportProduction, supportProduction };
 }
 
-export function settingsToArraySubskills(settings: TeamMemberSettingsExt) {
+export function settingsToArraySubskills(settings: TeamMemberSettingsExt): TeamMemberSettingsResult {
   return { ...settings, subskills: [...settings.subskills] };
 }
 

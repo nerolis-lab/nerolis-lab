@@ -9,29 +9,31 @@ import { describe, expect, it } from 'vitest';
 DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 vi.mock('google-auth-library', () => ({
-  OAuth2Client: vi.fn().mockImplementation(() => ({
-    getToken: vi.fn().mockResolvedValue({
-      tokens: { access_token: 'mockAccessToken', refresh_token: 'mockRefreshToken', expiry_date: new Date() }
-    }),
-    request: vi.fn().mockResolvedValue({
-      data: {
-        sub: 'mockSub',
-        email: 'mockEmail',
-        given_name: 'mockGivenName',
-        picture: 'mockPicture'
-      }
-    }),
-    credentials: {
-      access_token: 'mockAccessToken',
-      refresh_token: 'mockRefreshToken',
-      expiry_date: new Date()
-    },
-    getAccessToken: vi.fn().mockResolvedValue({
-      token: 'mockAccessToken',
-      expiry_date: new Date()
-    }),
-    setCredentials: vi.fn()
-  }))
+  OAuth2Client: vi.fn().mockImplementation(function () {
+    return {
+      getToken: vi.fn().mockResolvedValue({
+        tokens: { access_token: 'mockAccessToken', refresh_token: 'mockRefreshToken', expiry_date: new Date() }
+      }),
+      request: vi.fn().mockResolvedValue({
+        data: {
+          sub: 'mockSub',
+          email: 'mockEmail',
+          given_name: 'mockGivenName',
+          picture: 'mockPicture'
+        }
+      }),
+      credentials: {
+        access_token: 'mockAccessToken',
+        refresh_token: 'mockRefreshToken',
+        expiry_date: new Date()
+      },
+      getAccessToken: vi.fn().mockResolvedValue({
+        token: 'mockAccessToken',
+        expiry_date: new Date()
+      }),
+      setCredentials: vi.fn()
+    };
+  })
 }));
 
 describe('GoogleProvider', () => {

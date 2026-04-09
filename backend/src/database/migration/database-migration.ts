@@ -2,7 +2,7 @@ import { DatabaseService } from '@src/database/database-service.js';
 import { relativePath } from '@src/utils/file-utils/file-utils.js';
 import type { Knex } from 'knex';
 
-const DatabaseMigration = new (class {
+class DatabaseMigrationImpl {
   public async migrate() {
     const baseDir = relativePath('migrations', import.meta.url);
     const configuration: Knex.MigratorConfig = { directory: baseDir, loadExtensions: ['.js'] };
@@ -57,6 +57,8 @@ const DatabaseMigration = new (class {
       }
     }
   }
-})();
+}
+
+const DatabaseMigration = new DatabaseMigrationImpl();
 
 export default DatabaseMigration;
