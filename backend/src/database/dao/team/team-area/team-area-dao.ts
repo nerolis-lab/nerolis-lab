@@ -9,7 +9,9 @@ const DBTeamAreaSchema = Type.Composite([
   Type.Object({
     fk_user_area_id: Type.Number(),
     favored_berries: Type.String(),
-    expert_modifier: Type.Optional(ExpertRandomBonusType)
+    expert_modifier: Type.Optional(ExpertRandomBonusType),
+    main_favorite_berry: Type.Optional(Type.String()),
+    sub_favorite_berries: Type.Optional(Type.String())
   })
 ]);
 export type DBTeamArea = Static<typeof DBTeamAreaSchema>;

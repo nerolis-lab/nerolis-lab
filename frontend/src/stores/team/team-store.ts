@@ -263,7 +263,9 @@ export const useTeamStore = defineStore('team', {
           const islandDTO: TeamAreaDTO = {
             islandName: island.shortName,
             favoredBerries: island.berries.map((b) => b.name).join(','),
-            expertModifier: island.expertMode?.randomBonus
+            expertModifier: island.expertMode?.randomBonus,
+            mainFavoriteBerry: island.expertMode?.mainFavoriteBerry.name,
+            subFavoriteBerries: island.expertMode?.subFavoriteBerries.map((b) => b.name).join(',')
           }
 
           const { version } = await TeamService.createOrUpdateTeam(this.currentIndex, {
