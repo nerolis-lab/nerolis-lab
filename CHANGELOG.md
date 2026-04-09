@@ -1,3 +1,10 @@
+# [2.40.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.39.6...v2.40.0) (2026-04-09)
+
+
+### Features
+
+* add vitepress guides site, theme, and docs ([4226e15](https://github.com/nerolis-lab/nerolis-lab/commit/4226e15b5b38699270a751b8f664bdf9f28e67ab))
+
 ## [2.39.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.39.5...v2.39.6) (2026-04-09)
 
 
