@@ -16,11 +16,13 @@ import {
   type BerrySet,
   type CalculateIvResponse,
   type CalculateTeamResponse,
+  type ExpertModeSettings,
   type GetTeamsResponse,
   type IngredientSet,
   type IslandInstance,
   type PokemonInstanceExt,
   type PokemonInstanceIdentity,
+  type TeamAreaDTO,
   type TeamSettings,
   type UpsertTeamMemberResponse,
   type UpsertTeamMetaRequest,
@@ -84,25 +86,16 @@ class TeamServiceImpl {
           }
         }
 
-        const favoredBerries: Berry[] = []
-        if (serverTeam.favoredBerries?.length === 1 && serverTeam.favoredBerries[0] === 'all') {
-          favoredBerries.push(...berry.BERRIES)
-        } else {
-          for (const berryName of serverTeam.favoredBerries ?? []) {
-            const favoredBerry = berry.BERRIES.find((berry) => berry.name === berryName)
-            if (!favoredBerry) {
-              logger.error(`Couldn't find favored berry with name: ${berryName}, contact developer`)
-              continue
-            }
-            favoredBerries.push(favoredBerry)
-          }
-        }
+        const islandDTO = serverTeam.island
+        const favoredBerries: Berry[] = this.parseFavoredBerries(islandDTO.favoredBerries)
         const userStore = useUserStore()
         const island = getIsland(favoredBerries)
+        const expertMode = this.reconstructExpertMode(islandDTO)
         const islandInstance: IslandInstance = {
           ...island,
           berries: favoredBerries,
-          areaBonus: userStore.islands[island.shortName]?.areaBonus ?? 0
+          areaBonus: userStore.islands[island.shortName]?.areaBonus ?? 0,
+          ...(expertMode && { expertMode })
         }
 
         const instancedTeam: TeamInstance = {
@@ -235,6 +228,50 @@ class TeamServiceImpl {
       optimalBerry: berryProduction,
       optimalIngredient: ingredientProduction,
       optimalSkill: skillProduction
+    }
+  }
+
+  private parseFavoredBerries(favoredBerriesStr: string): Berry[] {
+    const berryNames = favoredBerriesStr.split(',').filter(Boolean)
+    if (berryNames.length === 1 && berryNames[0] === 'all') {
+      return [...berry.BERRIES]
+    }
+
+    const favoredBerries: Berry[] = []
+    for (const berryName of berryNames) {
+      const favoredBerry = berry.BERRIES.find((b) => b.name === berryName)
+      if (!favoredBerry) {
+        logger.error(`Couldn't find favored berry with name: ${berryName}, contact developer`)
+        continue
+      }
+      favoredBerries.push(favoredBerry)
+    }
+    return favoredBerries
+  }
+
+  private reconstructExpertMode(islandDTO: TeamAreaDTO): ExpertModeSettings | undefined {
+    if (!islandDTO.expertModifier || !islandDTO.mainFavoriteBerry) {
+      return undefined
+    }
+
+    const mainBerry = berry.BERRIES.find((b) => b.name === islandDTO.mainFavoriteBerry)
+    if (!mainBerry) {
+      return undefined
+    }
+
+    const subBerryNames = islandDTO.subFavoriteBerries?.split(',').filter(Boolean) ?? []
+    const subBerries: Berry[] = []
+    for (const berryName of subBerryNames) {
+      const subBerry = berry.BERRIES.find((b) => b.name === berryName)
+      if (subBerry) {
+        subBerries.push(subBerry)
+      }
+    }
+
+    return {
+      mainFavoriteBerry: mainBerry,
+      subFavoriteBerries: subBerries,
+      randomBonus: islandDTO.expertModifier
     }
   }
 }
