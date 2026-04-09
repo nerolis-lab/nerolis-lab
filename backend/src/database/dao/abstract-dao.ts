@@ -1,4 +1,4 @@
-import type { Static, TSchema } from '@sinclair/typebox';
+import type { Static, TObject, TSchema } from '@sinclair/typebox';
 import { Kind, Type } from '@sinclair/typebox';
 import type { Knex } from 'knex';
 import { chunkArray } from 'sleepapi-common';
@@ -20,8 +20,8 @@ type SortKey<DBEntityType extends object> = keyof DBEntityType extends string
   : never;
 
 export abstract class AbstractDAO<
-  DBEntitySchemaType extends typeof DBEntitySchema,
-  DBEntityType extends DBEntity = Static<DBEntitySchemaType>
+  DBEntitySchemaType extends TObject,
+  DBEntityType extends DBEntity = Static<DBEntitySchemaType> & DBEntity
 > {
   public abstract get tableName(): string;
   protected abstract get schema(): DBEntitySchemaType;
@@ -189,8 +189,8 @@ export abstract class AbstractDAO<
       filterValues.forEach((it) => {
         if (it instanceof AbstractFilterOperator) {
           query = it.apply(key, query);
-        } else if (filterValue !== undefined) {
-          query = query.where(key, filterValue);
+        } else if (it !== undefined) {
+          query = query.where(key, it as Knex.Value);
         }
       });
     });
@@ -202,8 +202,8 @@ export abstract class AbstractDAO<
           filterValues.forEach((it) => {
             if (it instanceof AbstractFilterOperator) {
               subquery = it.apply(key, subquery.or);
-            } else if (filterValue !== undefined) {
-              subquery = subquery.or.where(key, filterValue);
+            } else if (it !== undefined) {
+              subquery = subquery.or.where(key, it as Knex.Value);
             }
           });
         });

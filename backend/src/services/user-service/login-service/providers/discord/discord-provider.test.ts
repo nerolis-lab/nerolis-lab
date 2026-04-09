@@ -10,19 +10,21 @@ DaoFixture.init({ recreateDatabasesBeforeEachTest: true });
 
 vi.mock('discord-oauth2', () => {
   return {
-    default: vi.fn().mockImplementation(() => ({
-      tokenRequest: vi.fn().mockResolvedValue({
-        access_token: 'mockAccessToken',
-        refresh_token: 'mockRefreshToken',
-        expires_in: 3600
-      }),
-      getUser: vi.fn().mockResolvedValue({
-        id: 'mockDiscordId',
-        username: 'mockUsername',
-        discriminator: '1234',
-        avatar: 'mockAvatar'
-      })
-    }))
+    default: vi.fn().mockImplementation(function () {
+      return {
+        tokenRequest: vi.fn().mockResolvedValue({
+          access_token: 'mockAccessToken',
+          refresh_token: 'mockRefreshToken',
+          expires_in: 3600
+        }),
+        getUser: vi.fn().mockResolvedValue({
+          id: 'mockDiscordId',
+          username: 'mockUsername',
+          discriminator: '1234',
+          avatar: 'mockAvatar'
+        })
+      };
+    })
   };
 });
 

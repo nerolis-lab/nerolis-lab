@@ -314,7 +314,7 @@
 		"securitySchemes": {}
 	},
 	"info": {
-		"title": "Sleep API",
+		"title": "nerolis-lab-backend",
 		"version": "2.7.1",
 		"contact": {}
 	},
