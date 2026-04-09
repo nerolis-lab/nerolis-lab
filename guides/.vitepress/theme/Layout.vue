@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * Fork of VitePress default Layout; coordinates useSidebar() with GuidesSiteHeader (site nav).
+ * Fork of VitePress default Layout; coordinates useSidebarControl() with GuidesSiteHeader (site nav).
  * See node_modules/vitepress/dist/client/theme-default/Layout.vue — keep in sync on upgrades.
  */
 import { useData, useRoute } from 'vitepress';
@@ -11,17 +11,20 @@ import VPLocalNav from 'vitepress/dist/client/theme-default/components/VPLocalNa
 import VPNav from 'vitepress/dist/client/theme-default/components/VPNav.vue';
 import VPSidebar from 'vitepress/dist/client/theme-default/components/VPSidebar.vue';
 import VPSkipLink from 'vitepress/dist/client/theme-default/components/VPSkipLink.vue';
-import { useCloseSidebarOnEscape, useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar.js';
+import {
+  layoutInfoInjectionKey,
+  registerWatchers,
+  useLayout
+} from 'vitepress/dist/client/theme-default/composables/layout.js';
+import { useSidebarControl } from 'vitepress/dist/client/theme-default/composables/sidebar.js';
 import { computed, provide, ref, useSlots, watch } from 'vue';
 import GuidesSiteHeader from './components/GuidesSiteHeader.vue';
 
-const {
-  isOpen: isSidebarOpen,
-  open: openSidebar,
-  close: closeSidebar,
-  toggle: toggleSidebar,
-  hasSidebar
-} = useSidebar();
+const { isOpen: isSidebarOpen, open: openSidebar, close: closeSidebar, toggle: toggleSidebar } = useSidebarControl();
+
+registerWatchers({ closeSidebar });
+
+const { hasSidebar } = useLayout();
 
 const route = useRoute();
 const siteNavOpen = ref(false);
@@ -29,12 +32,9 @@ const siteNavOpen = ref(false);
 watch(
   () => route.path,
   () => {
-    closeSidebar();
     siteNavOpen.value = false;
   }
 );
-
-useCloseSidebarOnEscape(isSidebarOpen, closeSidebar);
 
 const { frontmatter, page, site } = useData();
 
@@ -49,7 +49,7 @@ const pageTitle = computed(() => {
 const slots = useSlots();
 const heroImageSlotExists = computed(() => !!slots['home-hero-image']);
 
-provide('hero-image-slot-exists', heroImageSlotExists);
+provide(layoutInfoInjectionKey, { heroImageSlotExists });
 
 function onToggleDocSidebar() {
   siteNavOpen.value = false;
@@ -65,6 +65,7 @@ function onOpenDocSidebar() {
 <template>
   <v-app class="guides-app">
     <div v-if="frontmatter.layout !== false" class="Layout guides-shell" :class="frontmatter.pageClass">
+      <slot name="layout-top" />
       <GuidesSiteHeader
         v-model:site-nav-open="siteNavOpen"
         :page-title="pageTitle"
@@ -100,6 +101,7 @@ function onOpenDocSidebar() {
         <template #home-hero-info><slot name="home-hero-info" /></template>
         <template #home-hero-info-after><slot name="home-hero-info-after" /></template>
         <template #home-hero-actions-after><slot name="home-hero-actions-after" /></template>
+        <template #home-hero-actions-before-actions><slot name="home-hero-actions-before-actions" /></template>
         <template #home-hero-image><slot name="home-hero-image" /></template>
         <template #home-hero-after><slot name="home-hero-after" /></template>
         <template #home-features-before><slot name="home-features-before" /></template>

@@ -20,7 +20,7 @@
     .VPLocalNavOutlineDropdown {
       position: relative;
       min-width: 0;
-      flex: 1 1 0%;
+      flex: 1 1 auto;
 
       button {
         @include typography-body;

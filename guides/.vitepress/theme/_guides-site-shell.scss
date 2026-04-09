@@ -9,10 +9,28 @@
 
 .guides-shell {
   --vp-layout-top-height: 0px;
-  padding-top: var(--guides-header-height);
+  --guides-local-nav-strip-height: 48px;
+  padding-top: calc(var(--guides-header-height) + var(--guides-local-nav-strip-height));
+
+  .VPLocalNav {
+    position: fixed; // can't use sticky with VPSidebar scroll-lock
+    top: var(--guides-header-height);
+    left: 0;
+    right: 0;
+    height: var(--guides-local-nav-strip-height);
+    background-color: var(--vp-local-nav-bg-color);
+  }
 
   @include medium-and-up {
     padding-top: 0;
+
+    .VPLocalNav {
+      position: sticky;
+      top: var(--vp-nav-height);
+      left: auto;
+      right: auto;
+      height: unset;
+    }
 
     .guides-doc-sidebar-toggle {
       display: none;
