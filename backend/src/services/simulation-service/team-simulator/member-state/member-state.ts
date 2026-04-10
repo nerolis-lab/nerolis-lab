@@ -15,6 +15,7 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   BerryIndexToFloatAmount,
   BerrySet,
+  ExpertModeSettings,
   IngredientIndexToFloatAmount,
   IngredientIndexToIntAmount,
   IngredientSet,
@@ -143,6 +144,9 @@ export class MemberState {
   private level0IngredientAmount: number;
   private level30IngredientAmount?: number;
   private level60IngredientAmount?: number;
+
+  // expert mode ingredient bonus — specialists roll an additional +1 at runtime
+  private expertIngredientSpecialistBonus = false;
 
   constructor(params: {
     member: TeamMemberExt;
@@ -289,6 +293,8 @@ export class MemberState {
     this.ingredient0ThresholdInt = Math.round(ingredient0Threshold * 255);
     this.ingredient30ThresholdInt = Math.round(ingredient30Threshold * 255);
     this.ingredient60ThresholdInt = Math.round(ingredient60Threshold * 255);
+
+    this.increaseIngredientDropForExpertMode();
   }
 
   get level() {
@@ -452,7 +458,7 @@ export class MemberState {
     } else if (rollInt < this.ingredient30ThresholdInt) {
       return {
         berryAmount: 0,
-        ingredient0Amount: this.level0IngredientAmount,
+        ingredient0Amount: this.level0IngredientAmount + this.rollExpertIngredientBonus(),
         ingredient30Amount: 0,
         ingredient60Amount: 0,
         ingredientId: this.level0IngredientId
@@ -461,7 +467,7 @@ export class MemberState {
       return {
         berryAmount: 0,
         ingredient0Amount: 0,
-        ingredient30Amount: this.level30IngredientAmount!,
+        ingredient30Amount: this.level30IngredientAmount! + this.rollExpertIngredientBonus(),
         ingredient60Amount: 0,
         ingredientId: this.level30IngredientId!
       };
@@ -470,7 +476,7 @@ export class MemberState {
         berryAmount: 0,
         ingredient0Amount: 0,
         ingredient30Amount: 0,
-        ingredient60Amount: this.level60IngredientAmount!,
+        ingredient60Amount: this.level60IngredientAmount! + this.rollExpertIngredientBonus(),
         ingredientId: this.level60IngredientId!
       };
     }
@@ -542,7 +548,6 @@ export class MemberState {
       return;
     }
 
-    // Ignoring inventory space for now, calculate what the help would be
     const { berryAmount, ingredient0Amount, ingredient30Amount, ingredient60Amount, ingredientId } =
       this.rollBerriesAndIngredients();
     const isBerryDrop = ingredientId === undefined;
@@ -794,6 +799,46 @@ export class MemberState {
       member: this.member,
       ingredientPercentage: this.ingredientPercentage
     };
+  }
+
+  private isExpertFavoredBerry(expertMode: ExpertModeSettings, berryName: string): boolean {
+    return (
+      expertMode.mainFavoriteBerry.name === berryName || expertMode.subFavoriteBerries.some((b) => b.name === berryName)
+    );
+  }
+
+  /**
+   * The flat +1 expert mode ingredient bonus is baked into the level*IngredientAmount fields
+   * in the constructor. This method only returns the additional 50% +1 roll for ingredient
+   * specialists with a favored berry.
+   */
+  private rollExpertIngredientBonus(): number {
+    if (this.expertIngredientSpecialistBonus && this.rng() < 0.5) {
+      return 1;
+    }
+    return 0;
+  }
+
+  private increaseIngredientDropForExpertMode() {
+    const expertMode = this.settings.island?.expertMode;
+    if (!expertMode || expertMode.randomBonus !== 'ingredient') {
+      return;
+    }
+    const pokemon = this.member.pokemonWithIngredients.pokemon;
+    if (!this.isExpertFavoredBerry(expertMode, pokemon.berry.name)) {
+      return;
+    }
+
+    // Expert mode ingredient modifier grants +1 ingredient per help for favored berries;
+    // ingredient specialists additionally roll for a further +1 at runtime.
+    this.expertIngredientSpecialistBonus = pokemon.specialty === 'ingredient';
+    this.level0IngredientAmount += 1;
+    if (this.level30IngredientAmount !== undefined) {
+      this.level30IngredientAmount += 1;
+    }
+    if (this.level60IngredientAmount !== undefined) {
+      this.level60IngredientAmount += 1;
+    }
   }
 
   private countFrequencyAndEnergyIntervals(period: HelpPeriod, frequency: number) {
