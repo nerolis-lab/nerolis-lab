@@ -3,6 +3,7 @@ import { CookingState } from '@src/services/simulation-service/team-simulator/co
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
+import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
@@ -663,5 +664,177 @@ describe('addSkillValue', () => {
     memberState.addSkillValue({ regular: 10, crit: 20 });
     expect(memberState.results(1).advanced.skillCritValue).toBe(20);
     expect(memberState.results(1).skillAmount).toBe(30);
+  });
+});
+
+describe('expert mode ingredient bonus', () => {
+  // Builds a fake RNG with a fixed uint8 roll (forces an ingredient drop when
+  // ingredientPercentage is 100%) and a scripted float sequence for specialist
+  // bonus rolls inside rollExpertIngredientBonus.
+  function fakeRng(floatRolls: number[] = []): PreGeneratedRandom {
+    let floatIndex = 0;
+    const fn = (() => {
+      const value = floatRolls[floatIndex] ?? 0.99;
+      floatIndex += 1;
+      return value;
+    }) as PreGeneratedRandom;
+    fn.getUint8 = () => 255; // lands past ingredient0Threshold into an ingredient slot
+    fn.getIndex = () => floatIndex;
+    fn.randomElement = <T>(array: T[]) => array[0];
+    return fn;
+  }
+
+  // Forces every roll to produce an ingredient by maxing ingredientPercentage.
+  const ingredientFavoredMember = (overrides?: Partial<PokemonWithIngredients['pokemon']>): TeamMemberExt => ({
+    pokemonWithIngredients: {
+      ...mockPokemonSet,
+      pokemon: commonMocks.mockPokemon({
+        carrySize: 10,
+        frequency: 3600,
+        berry: berry.BELUE,
+        ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+        ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+        ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+        ingredientPercentage: 100,
+        skill: ChargeStrengthS,
+        skillPercentage: 0,
+        specialty: 'berry',
+        ...overrides
+      })
+    },
+    settings: {
+      carrySize: 10,
+      level: 60,
+      ribbon: 0,
+      nature: nature.BASHFUL,
+      skillLevel: 6,
+      subskills: new Set(),
+      externalId: 'expert-test',
+      sneakySnacking: false
+    }
+  });
+
+  const withExpertMode = (
+    randomBonus: 'ingredient' | 'berry' | 'skill',
+    main = berry.BELUE,
+    subs: (typeof berry.BELUE)[] = []
+  ): TeamSettingsExt => ({
+    ...settings,
+    island: {
+      ...DEFAULT_ISLAND,
+      expertMode: {
+        mainFavoriteBerry: main,
+        subFavoriteBerries: subs,
+        randomBonus
+      }
+    }
+  });
+
+  it('grants +1 ingredient per help to non-specialist with the main favored berry', () => {
+    const m = ingredientFavoredMember({ specialty: 'berry' });
+    const memberState = new MemberState({
+      member: m,
+      settings: withExpertMode('ingredient'),
+      team: [m],
+      cookingState,
+      rng: fakeRng()
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    // base amount 1 + expert flat +1 = 2, no specialist roll applied
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(2);
+    expect(drop.berryAmount).toBe(0);
+  });
+
+  it('grants +1 ingredient per help when the pokemon berry matches a sub favored berry', () => {
+    const m = ingredientFavoredMember({ specialty: 'berry' });
+    const memberState = new MemberState({
+      member: m,
+      settings: withExpertMode('ingredient', berry.CHERI, [berry.BELUE]),
+      team: [m],
+      cookingState,
+      rng: fakeRng()
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(2);
+  });
+
+  it('grants an additional +1 to ingredient specialists when the runtime roll succeeds', () => {
+    const m = ingredientFavoredMember({ specialty: 'ingredient' });
+    const memberState = new MemberState({
+      member: m,
+      settings: withExpertMode('ingredient'),
+      team: [m],
+      cookingState,
+      rng: fakeRng([0.1]) // < 0.5 triggers the extra +1
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    // base 1 + flat +1 + specialist roll +1 = 3
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(3);
+  });
+
+  it('only applies the flat +1 to ingredient specialists when the runtime roll fails', () => {
+    const m = ingredientFavoredMember({ specialty: 'ingredient' });
+    const memberState = new MemberState({
+      member: m,
+      settings: withExpertMode('ingredient'),
+      team: [m],
+      cookingState,
+      rng: fakeRng([0.9]) // >= 0.5 skips the extra +1
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(2);
+  });
+
+  it('leaves ingredient amounts untouched for a non-favored berry', () => {
+    const m = ingredientFavoredMember({ berry: berry.LEPPA, specialty: 'ingredient' });
+    const memberState = new MemberState({
+      member: m,
+      settings: withExpertMode('ingredient', berry.BELUE, [berry.CHERI]),
+      team: [m],
+      cookingState,
+      rng: fakeRng([0.1]) // even if a specialist roll would succeed, nothing should apply
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(1);
+  });
+
+  it('leaves ingredient amounts untouched when randomBonus is not ingredient', () => {
+    const m = ingredientFavoredMember({ specialty: 'ingredient' });
+    const memberState = new MemberState({
+      member: m,
+      settings: withExpertMode('berry'),
+      team: [m],
+      cookingState,
+      rng: fakeRng([0.1])
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(1);
+  });
+
+  it('leaves ingredient amounts untouched when expert mode is not configured on the island', () => {
+    const m = ingredientFavoredMember({ specialty: 'ingredient' });
+    const memberState = new MemberState({
+      member: m,
+      settings, // no expertMode on island
+      team: [m],
+      cookingState,
+      rng: fakeRng([0.1])
+    });
+
+    const drop = memberState.rollBerriesAndIngredients();
+    const totalIngredient = drop.ingredient0Amount + drop.ingredient30Amount + drop.ingredient60Amount;
+    expect(totalIngredient).toBe(1);
   });
 });

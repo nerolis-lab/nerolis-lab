@@ -93,12 +93,14 @@ describe('CompareStrength', () => {
     const ingredientPower = firstRowCells[2].text()
     expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
-    // Check skill value
-    const skillValue = Math.floor(mockMemberProduction.strength.skill.total)
-    expect(firstRowCells[3].text()).toContain(skillValue.toString())
+    // Check skill value (cell displays sum of skillValue unit amounts)
+    const displayedSkillValue =
+      mockMemberProduction.skillValue.strength.amountToSelf + mockMemberProduction.skillValue.strength.amountToTeam
+    expect(firstRowCells[3].text()).toContain(displayedSkillValue.toString())
 
-    // Check total power
-    const totalPower = Math.floor(berryPower + lowestIngredientValue + skillValue)
+    // Check total power (cell uses skillStrength = strength.skill.total)
+    const skillStrength = Math.floor(mockMemberProduction.strength.skill.total)
+    const totalPower = Math.floor(berryPower + lowestIngredientValue + skillStrength)
     expect(firstRowCells[4].text()).toContain(totalPower.toString())
 
     expect(totalPower).toEqual(5520)
@@ -141,12 +143,15 @@ describe('CompareStrength', () => {
     const ingredientPower = firstRowCells[2].text()
     expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
-    // Check skill value
-    const skillValue = Math.floor(mockMemberProduction.strength.skill.total * factor)
-    expect(firstRowCells[3].text()).toContain(skillValue.toString())
+    // Check skill value (cell displays sum of skillValue unit amounts * factor)
+    const displayedSkillValue =
+      (mockMemberProduction.skillValue.strength.amountToSelf + mockMemberProduction.skillValue.strength.amountToTeam) *
+      factor
+    expect(firstRowCells[3].text()).toContain(displayedSkillValue.toString())
 
-    // Check total power
-    const totalPower = Math.floor(berryPower + lowestIngredientValue + skillValue)
+    // Check total power (cell uses skillStrength = strength.skill.total * factor)
+    const skillStrength = Math.floor(mockMemberProduction.strength.skill.total * factor)
+    const totalPower = Math.floor(berryPower + lowestIngredientValue + skillStrength)
     expect(Math.abs(+firstRowCells[4].text())).toEqual(totalPower)
     expect(totalPower).toEqual(1840)
   })

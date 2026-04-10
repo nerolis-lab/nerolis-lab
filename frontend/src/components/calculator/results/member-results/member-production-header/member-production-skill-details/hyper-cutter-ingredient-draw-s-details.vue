@@ -88,7 +88,7 @@ export default defineComponent({
       })
     },
     skillValuePerCritProc() {
-      return IngredientDrawSHyperCutter.activations.ingredients.critAmount({
+      return IngredientDrawSHyperCutter.activations.ingredients.critAmount!({
         skillLevel: this.memberWithProduction.member.skillLevel
       })
     },
