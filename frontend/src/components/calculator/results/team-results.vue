@@ -168,7 +168,8 @@ import { pokemonImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { MathUtils, compactNumber, getBerry, type RecipeTypeResult } from 'sleepapi-common'
+import { timeWindowFactor } from '@/types/time/time-window'
+import { MathUtils, berryPowerForLevel, compactNumber, getBerry, type RecipeTypeResult } from 'sleepapi-common'
 export default defineComponent({
   name: 'TeamResults',
   components: { StackedBar },

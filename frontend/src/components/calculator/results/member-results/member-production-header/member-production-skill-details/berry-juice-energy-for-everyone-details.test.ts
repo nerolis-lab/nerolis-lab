@@ -63,7 +63,9 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
 
   it('displays the correct juice per proc', () => {
     const skillValuePerProc = wrapper.find('.juice-per-proc')
-    const juicePerSuccess = EnergyForEveryoneBerryJuice.activations.juice.amount()
+    const juicePerSuccess = EnergyForEveryoneBerryJuice.activations.juice.amount({
+      skillLevel: mockMember.member.skillLevel
+    })
     const juicePercent = EnergyForEveryoneBerryJuice.juicePercent
     expect(skillValuePerProc.text()).toBe(`x${juicePerSuccess * juicePercent}`)
   })

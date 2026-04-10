@@ -89,7 +89,9 @@ export default defineComponent({
     },
     juicePerProc() {
       const juiceAmount =
-        EnergyForEveryoneBerryJuice.activations.juice.amount() * EnergyForEveryoneBerryJuice.juicePercent
+        EnergyForEveryoneBerryJuice.activations.juice.amount({
+          skillLevel: this.memberWithProduction.member.skillLevel
+        }) * EnergyForEveryoneBerryJuice.juicePercent
       return compactNumber(MathUtils.round(juiceAmount, 2))
     },
     totalEnergyValue() {
