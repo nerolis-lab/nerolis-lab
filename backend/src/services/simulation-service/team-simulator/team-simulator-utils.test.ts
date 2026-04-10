@@ -193,7 +193,7 @@ describe('prepareMembers', () => {
     expect(prepared).toBe(original);
   });
 
-  it('applies modifiers when provided', () => {
+  it('applies frequency buff and skill level +1 for main berry pokemon', () => {
     const original = createMember();
     const event = expertModeGreengrassEvent({
       mainFavoriteBerry: berry.ORAN,
@@ -208,8 +208,81 @@ describe('prepareMembers', () => {
 
     expect(prepared.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620); // 1800 * 0.9
     expect(prepared.settings.skillLevel).toBe(4);
+    expect(prepared.pokemonWithIngredients.pokemon.skillPercentage).toBeCloseTo(0.25); // 0.2 * 1.25
     expect(original.pokemonWithIngredients.pokemon.frequency).toBe(1800);
     expect(original.settings.skillLevel).toBe(3);
+  });
+
+  it('applies no frequency change for sub berry pokemon', () => {
+    const subBerryMember = mocks.teamMemberExt({
+      pokemonWithIngredients: mocks.pokemonWithIngredients({
+        pokemon: commonMocks.mockPokemon({
+          berry: berry.MAGO,
+          frequency: 1800,
+          skillPercentage: 0.2
+        })
+      }),
+      settings: mocks.teamMemberSettingsExt({ skillLevel: 3 })
+    });
+
+    const event = expertModeGreengrassEvent({
+      mainFavoriteBerry: berry.ORAN,
+      subFavoriteBerries: [berry.MAGO],
+      randomBonus: 'skill'
+    });
+
+    const [prepared] = TeamSimulatorUtils.prepareMembers({
+      members: [subBerryMember],
+      event
+    });
+
+    expect(prepared.pokemonWithIngredients.pokemon.frequency).toBe(1800);
+    expect(prepared.settings.skillLevel).toBe(3);
+    expect(prepared.pokemonWithIngredients.pokemon.skillPercentage).toBeCloseTo(0.25); // 0.2 * 1.25
+  });
+
+  it('applies 15% frequency nerf for non-favored pokemon', () => {
+    const unfavoredMember = mocks.teamMemberExt({
+      pokemonWithIngredients: mocks.pokemonWithIngredients({
+        pokemon: commonMocks.mockPokemon({
+          berry: berry.BELUE,
+          frequency: 1800,
+          skillPercentage: 0.2
+        })
+      }),
+      settings: mocks.teamMemberSettingsExt({ skillLevel: 3 })
+    });
+
+    const event = expertModeGreengrassEvent({
+      mainFavoriteBerry: berry.ORAN,
+      subFavoriteBerries: [berry.MAGO],
+      randomBonus: 'skill'
+    });
+
+    const [prepared] = TeamSimulatorUtils.prepareMembers({
+      members: [unfavoredMember],
+      event
+    });
+
+    expect(prepared.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(2070); // 1800 * 1.15
+    expect(prepared.settings.skillLevel).toBe(3);
+    expect(prepared.pokemonWithIngredients.pokemon.skillPercentage).toBe(0.2);
+  });
+
+  it('does not apply skill percentage boost when random bonus is not skill', () => {
+    const original = createMember();
+    const event = expertModeGreengrassEvent({
+      mainFavoriteBerry: berry.ORAN,
+      subFavoriteBerries: [berry.MAGO],
+      randomBonus: 'berry'
+    });
+
+    const [prepared] = TeamSimulatorUtils.prepareMembers({
+      members: [original],
+      event
+    });
+
+    expect(prepared.pokemonWithIngredients.pokemon.skillPercentage).toBe(0.2);
   });
 });
 
