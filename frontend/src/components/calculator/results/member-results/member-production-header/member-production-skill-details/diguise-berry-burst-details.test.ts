@@ -70,7 +70,8 @@ describe('MemberProductionSkill', () => {
 
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center')
-    const skillActivation = mockMember.member.pokemon.skill.getFirstActivation()!
+    const skillActivation =
+      mockMember.member.pokemon.skill.activations[mockMember.member.pokemon.skill.getActivationNames()[0]]
     const expectedValue = StrengthService.skillValue({
       skillActivation,
       amount: mockMember.production.produceFromSkill.berries.reduce(

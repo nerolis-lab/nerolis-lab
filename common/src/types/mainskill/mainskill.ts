@@ -94,15 +94,6 @@ export abstract class Mainskill {
     return this.activations[firstActivationKey].amount({ skillLevel, extra, ingredient });
   }
 
-  /**
-   * Get the first activation of this skill
-   * @deprecated use activations instead
-   */
-  getFirstActivation(): MainskillActivation | undefined {
-    const firstActivationKey = Object.keys(this.activations).at(0);
-    return firstActivationKey !== undefined ? this.activations[firstActivationKey] : undefined;
-  }
-
   get isModified(): boolean {
     return this instanceof ModifiedMainskill;
   }

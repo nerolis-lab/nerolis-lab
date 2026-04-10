@@ -284,32 +284,37 @@ export default defineComponent({
             ? this.lowestIngredientPower(memberProduction)
             : 0
 
-        // TODO: currently this will only work for the first activation of the skill, skills with multiple units are not yet supported
-        const skillActivation = memberPokemon.skill.getFirstActivation()
-        const skillStrength =
-          this.showSkills && skillActivation
-            ? StrengthService.skillStrength({
-                skillActivation,
-                skillValues: memberProduction.skillValue,
-                berries: memberProduction.produceFromSkill.berries,
-                island,
-                timeWindow,
-                areaBonus
-              })
-            : 0
+        let skillStrength = 0
+        let skillValue = 0
 
-        const skillValue =
-          this.showSkills && skillActivation
-            ? StrengthService.skillValue({
-                skillActivation,
-                amount: (() => {
-                  const value = memberProduction.skillValue[skillActivation.unit as MainskillUnit]
-                  return value ? value.amountToSelf + value.amountToTeam : 0
-                })(),
-                timeWindow,
-                areaBonus
-              })
-            : 0
+        for (const activationName of memberPokemon.skill.getActivationNames()) {
+          const skillActivation = memberPokemon.skill.activations[activationName]
+
+          skillStrength +=
+            this.showSkills && skillActivation
+              ? StrengthService.skillStrength({
+                  skillActivation,
+                  skillValues: memberProduction.skillValue,
+                  berries: memberProduction.produceFromSkill.berries,
+                  island,
+                  timeWindow,
+                  areaBonus
+                })
+              : 0
+
+          skillValue +=
+            this.showSkills && skillActivation
+              ? StrengthService.skillValue({
+                  skillActivation,
+                  amount: (() => {
+                    const value = memberProduction.skillValue[skillActivation.unit as MainskillUnit]
+                    return value ? value.amountToSelf + value.amountToTeam : 0
+                  })(),
+                  timeWindow,
+                  areaBonus
+                })
+              : 0
+        }
         const total = Math.floor(berryPower + ingredientPower + skillStrength)
 
         production.push({

@@ -84,7 +84,7 @@ describe('CompareStrength', () => {
 
     // Check skill value
     const skillValue = StrengthService.skillStrength({
-      skillActivation: member.pokemon.skill.getFirstActivation()!,
+      skillActivation: member.pokemon.skill.activations[member.pokemon.skill.getActivationNames()[0]],
       skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       island: comparisonStore.currentTeam?.island ?? GREENGRASS,
@@ -148,7 +148,7 @@ describe('CompareStrength', () => {
 
     // Check skill value
     const skillValue = StrengthService.skillStrength({
-      skillActivation: member.pokemon.skill.getFirstActivation()!,
+      skillActivation: member.pokemon.skill.activations[member.pokemon.skill.getActivationNames()[0]],
       skillValues: mockMemberProduction.skillValue,
       berries: mockMemberProduction.produceTotal.berries.filter((b) => b.level !== member.level),
       island: comparisonStore.currentTeam?.island ?? GREENGRASS,

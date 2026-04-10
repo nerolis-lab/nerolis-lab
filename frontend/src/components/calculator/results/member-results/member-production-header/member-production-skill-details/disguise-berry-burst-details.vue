@@ -99,7 +99,7 @@ export default defineComponent({
             b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
             b.level === this.memberWithProduction.member.level
         )?.amount ?? 0
-      const skillActivation = this.memberWithProduction.member.pokemon.skill.getFirstActivation()
+      const skillActivation = BerryBurstDisguise.activations.berries
       if (!skillActivation) {
         return 0
       }
@@ -122,7 +122,7 @@ export default defineComponent({
             : 0),
         0
       )
-      const skillActivation = this.memberWithProduction.member.pokemon.skill.getFirstActivation()
+      const skillActivation = BerryBurstDisguise.activations.berries
       if (!skillActivation) {
         return 0
       }

@@ -169,7 +169,14 @@ import { pokemonImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { MathUtils, compactNumber, getBerry, getIsland, type RecipeTypeResult } from 'sleepapi-common'
+import {
+  MathUtils,
+  compactNumber,
+  getBerry,
+  type MemberProduction,
+  type PokemonInstanceExt,
+  type RecipeTypeResult
+} from 'sleepapi-common'
 export default defineComponent({
   name: 'TeamResults',
   components: { StackedBar },
@@ -198,7 +205,7 @@ export default defineComponent({
       )
     },
     berryStrength() {
-      const members = this.teamStore.getCurrentTeam.production?.members || []
+      const members = this.teamStore.getCurrentTeam.production?.members ?? []
       const island = this.teamStore.getCurrentTeam.island
 
       return members.reduce((sum, member) => {
@@ -215,25 +222,10 @@ export default defineComponent({
       }, 0)
     },
     skillStrength() {
-      const members = this.teamStore.getCurrentTeam.production?.members || []
-
+      const members = this.teamStore.getCurrentTeam.production?.members ?? []
       return members.reduce((sum, memberProduction) => {
-        const member = this.pokemonStore.getPokemon(memberProduction.externalId)
-        const island = this.teamStore.getCurrentTeam.island
-
-        const skillActivation = member?.pokemon.skill.getFirstActivation()
-        const memberSkillStrength = skillActivation
-          ? StrengthService.skillStrength({
-              skillActivation,
-              skillValues: memberProduction.skillValue,
-              berries: memberProduction.produceFromSkill.berries,
-              island,
-              timeWindow: 'WEEK',
-              areaBonus: this.userStore.islandBonus(island.shortName)
-            })
-          : 0
-
-        return sum + memberSkillStrength
+        const skillStrength = this.memberSkillStrength(memberProduction) ?? 0
+        return sum + skillStrength
       }, 0)
     },
     stockpiledBerryStrength() {
@@ -319,18 +311,7 @@ export default defineComponent({
           timeWindow: 'WEEK',
           areaBonus: this.userStore.islandBonus(island.shortName)
         })
-
-        const skillActivation = member.pokemon.skill.getFirstActivation()
-        const skillStrength = skillActivation
-          ? StrengthService.skillStrength({
-              skillActivation,
-              skillValues: memberProduction.skillValue,
-              berries: memberProduction.produceFromSkill.berries,
-              island,
-              timeWindow: 'WEEK',
-              areaBonus: this.userStore.islandBonus(island.shortName)
-            })
-          : 0
+        const skillStrength = this.memberSkillStrength(memberProduction) ?? 0
 
         memberStrengths.push({
           berryStrength,
@@ -364,6 +345,29 @@ export default defineComponent({
   methods: {
     compactNumber(num: number) {
       return compactNumber(num)
+    },
+    memberSkillStrength(memberProduction: MemberProduction) {
+      const island = this.teamStore.getCurrentTeam.island
+      const member = this.pokemonStore.getPokemon(memberProduction.externalId)
+      if (!member) return undefined
+
+      let cumulativeSkillStrength = 0
+      const activationNames = member.pokemon.skill.getActivationNames()
+      for (const activationName of activationNames) {
+        const skillActivation = member.pokemon.skill.activations[activationName]
+        const activationStrength = skillActivation
+          ? StrengthService.skillStrength({
+              skillActivation,
+              skillValues: memberProduction.skillValue,
+              berries: memberProduction.produceFromSkill.berries,
+              island,
+              timeWindow: 'WEEK',
+              areaBonus: this.userStore.islandBonus(island.shortName)
+            })
+          : 0
+        cumulativeSkillStrength += activationStrength
+      }
+      return cumulativeSkillStrength
     }
   }
 })
