@@ -81,14 +81,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import {
-  CookingPowerUpSMinus,
-  IngredientMagnetSPlus,
-  MathUtils,
-  compactNumber,
-  getIsland,
-  ingredient
-} from 'sleepapi-common'
+import { CookingPowerUpSMinus, IngredientMagnetSPlus, MathUtils, compactNumber, ingredient } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -138,7 +131,7 @@ export default defineComponent({
     },
     magnetIngCountTotal() {
       const amount = this.averageMagnetAmount * ingredient.TOTAL_NUMBER_OF_INGREDIENTS
-      const skillActivation = this.memberWithProduction.member.pokemon.skill.activations.solo
+      const skillActivation = IngredientMagnetSPlus.activations.solo
       return compactNumber(
         StrengthService.skillValue({
           skillActivation,
@@ -154,7 +147,7 @@ export default defineComponent({
           (ing) => ing.ingredient.name === this.memberWithProduction.member.ingredients[0].ingredient.name
         )?.amount ?? 0
       const amount = Math.max(amountIncludingMagnet - this.averageMagnetAmount, 0)
-      const skillActivation = this.memberWithProduction.member.pokemon.skill.getFirstActivation()
+      const skillActivation = IngredientMagnetSPlus.activations.paired
       if (!skillActivation) {
         return 0
       }
