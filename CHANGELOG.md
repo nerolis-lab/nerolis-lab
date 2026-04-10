@@ -1,3 +1,10 @@
+## [2.40.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.40.1...v2.40.2) (2026-04-10)
+
+
+### Bug Fixes
+
+* **metronome:** update list of blocked skills ([bae08cf](https://github.com/nerolis-lab/nerolis-lab/commit/bae08cf2afb4415d3675dd63ab5b83c62fec928b))
+
 ## [2.40.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.40.0...v2.40.1) (2026-04-09)
 
 
