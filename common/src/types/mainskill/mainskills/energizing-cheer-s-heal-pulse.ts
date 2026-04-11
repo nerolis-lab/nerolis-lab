@@ -5,10 +5,10 @@ import { EnergizingCheerS } from './energizing-cheer-s';
 export const EnergizingCheerSHealPulse = new (class extends ModifiedMainskill {
   baseSkill = EnergizingCheerS;
   modifierName = 'Heal Pulse';
-  RP = [880, 1251, 1726, 2383, 3290, 4546]; // temp values because I don't have access to RP spreadsheet
+  RP = [1600, 2300, 3180, 4417, 6113, 8462];
   energyAmounts = [6, 8, 10, 13, 17, 22];
   helpsAmounts = [1, 2, 2, 3, 4, 4];
-  latiosHelpsAmounts = [0, 0, 0, 0, 0, 3]; // TODO: update numbers when Latios releases
+  latiosHelpsAmounts = [1, 1, 2, 2, 2, 3];
   image = 'energy';
   numMonsTargeted = 2;
   chanceToTargetLowestMembers = 0;
