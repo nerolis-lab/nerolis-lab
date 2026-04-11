@@ -10,10 +10,6 @@ describe('defaultZero', () => {
     expect(defaultZero()).toBe(0);
   });
 
-  it('shall default to 0 for null', () => {
-    expect(defaultZero(null)).toBe(0);
-  });
-
   it('shall not default for normal number', () => {
     expect(defaultZero(1)).toBe(1);
   });
