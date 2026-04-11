@@ -16,5 +16,7 @@ export interface UnitActivation {
 
 export interface SkillActivation {
   skill: Mainskill;
+  numMonsTargeted?: number;
+  chanceToTargetLowestMembers?: number;
   activations: UnitActivation[];
 }
