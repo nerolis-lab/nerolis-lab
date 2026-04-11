@@ -52,3 +52,23 @@ export const FEMALE_ONLY: GenderRatio = {
   male: 0,
   female: 1
 };
+
+/** True when the species can be male or female (gender button may toggle). */
+export function allowsGenderToggle(pkmn: Pokemon): boolean {
+  return pkmn.genders.male > 0 && pkmn.genders.female > 0;
+}
+
+/** Single-gender species return that gender; mixed or genderless return undefined. */
+export function fixedGenderForSpecies(pkmn: Pokemon): PokemonGender {
+  const { male, female } = pkmn.genders;
+  if (male === 0 && female === 0) {
+    return undefined;
+  }
+  if (male === 0) {
+    return 'female';
+  }
+  if (female === 0) {
+    return 'male';
+  }
+  return undefined;
+}
