@@ -1,3 +1,10 @@
+## [2.41.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.3...v2.41.4) (2026-04-11)
+
+
+### Bug Fixes
+
+* lock gender toggle button on single-gender pokemon ([e656005](https://github.com/nerolis-lab/nerolis-lab/commit/e656005cd578a4fc19b5f3df2c7e76995f5173e8))
+
 ## [2.41.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.2...v2.41.3) (2026-04-11)
 
 ## [2.41.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.1...v2.41.2) (2026-04-10)
