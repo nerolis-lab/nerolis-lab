@@ -15,6 +15,7 @@ import {
   DEFAULT_ISLAND,
   DOMAIN_VERSION,
   EnergizingCheerS,
+  EnergizingCheerSHealPulse,
   EnergyForEveryone,
   ExtraHelpfulS,
   HelperBoost,
@@ -488,9 +489,14 @@ export const useTeamStore = defineStore('team', {
             s.subskill.name.toLowerCase() === subskill.HELPING_BONUS.name.toLowerCase()) &&
           s.level <= member.level
       )
-      const supportSkill = [EnergizingCheerS, EnergyForEveryone, HelperBoost, ExtraHelpfulS, Metronome].some(
-        (s) => s.name.toLowerCase() === member.pokemon.skill.name.toLowerCase()
-      )
+      const supportSkill = [
+        EnergizingCheerS,
+        EnergizingCheerSHealPulse,
+        EnergyForEveryone,
+        HelperBoost,
+        ExtraHelpfulS,
+        Metronome
+      ].some((s) => s.name.toLowerCase() === member.pokemon.skill.name.toLowerCase())
 
       return hbOrErb || supportSkill
     }

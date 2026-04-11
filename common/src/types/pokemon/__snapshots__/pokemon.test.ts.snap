@@ -15126,6 +15126,174 @@ exports[`COMPLETE_POKEDEX > shall not change LARVITAR unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change LATIAS unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "YACHE",
+    "type": "dragon",
+    "value": 35,
+  },
+  "carrySize": 19,
+  "displayName": "Latias",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2800,
+  "genders": {
+    "female": 1,
+    "male": 0,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredientPercentage": 11.4,
+  "name": "LATIAS",
+  "pokedexNumber": 380,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1600,
+      2300,
+      3180,
+      4417,
+      6113,
+      8462,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+      "helps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        766,
+        1089,
+        1502,
+        2074,
+        2863,
+        3956,
+      ],
+      "activations": {
+        "energy": {
+          "amount": [Function],
+          "unit": "energy",
+        },
+      },
+      "description": [Function],
+      "energyAmounts": [
+        12,
+        15,
+        20,
+        25,
+        33,
+        44,
+      ],
+      "image": "energy",
+      "name": "Energizing Cheer S",
+      "targeting": {
+        "chanceToTargetLowestMembers": 0.5,
+        "numMonsTargeted": 1,
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      6,
+      8,
+      10,
+      13,
+      17,
+      22,
+    ],
+    "helpsAmounts": [
+      1,
+      2,
+      2,
+      3,
+      4,
+      4,
+    ],
+    "image": "energy",
+    "latiosHelpsAmounts": [
+      1,
+      1,
+      2,
+      2,
+      2,
+      3,
+    ],
+    "modifierName": "Heal Pulse",
+    "targeting": {
+      "chanceToTargetLowestMembers": 0,
+      "numMonsTargeted": 2,
+    },
+  },
+  "skillPercentage": 4.9,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change LEAFEON unexpectedly 1`] = `
 {
   "berry": {

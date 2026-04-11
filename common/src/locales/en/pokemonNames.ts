@@ -101,6 +101,7 @@ export default {
   KIRLIA: 'Kirlia',
   LAIRON: 'Lairon',
   LARVITAR: 'Larvitar',
+  LATIAS: 'Latias',
   LEAFEON: 'Leafeon',
   LUCARIO: 'Lucario',
   LUXIO: 'Luxio',

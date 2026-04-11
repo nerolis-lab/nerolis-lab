@@ -67,6 +67,7 @@ import {
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
+  EnergizingCheerSHealPulse,
   EnergizingCheerSNuzzle,
   EnergyForEveryone,
   EnergyForEveryoneBerryJuice,
@@ -810,6 +811,25 @@ export const SPHEAL_HOLIDAY: Pokemon = createSkillSpecialist({
   skill: TastyChanceS
 });
 
+export const LATIAS: Pokemon = createSkillSpecialist({
+  name: 'LATIAS',
+  pokedexNumber: 380,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 11.4,
+  skillPercentage: 4.9,
+  berry: YACHE,
+  genders: FEMALE_ONLY,
+  carrySize: 19,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: SNOOZY_TOMATO,
+    b: PLUMP_PUMPKIN,
+    c: TASTY_MUSHROOM
+  },
+  skill: EnergizingCheerSHealPulse
+});
+
 export const BONSLY: Pokemon = preEvolvedPokemon(SUDOWOODO, {
   name: 'BONSLY',
   pokedexNumber: 438,
@@ -1220,6 +1240,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   GLACEON,
   GALLADE,
   CRESSELIA,
+  LATIAS,
   CRUSTLE,
   SANDSLASH,
   BRAVIARY,
