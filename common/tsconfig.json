@@ -12,6 +12,7 @@
 
     // paths
     "sourceMap": true,
+    "rootDir": "./src",
     "outDir": "dist",
     "declaration": true,
 

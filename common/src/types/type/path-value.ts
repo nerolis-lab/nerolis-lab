@@ -14,13 +14,13 @@
  */
 export type PathValue<T, Path extends string> = Path extends `${infer Head}.${infer Rest}`
   ? Head extends keyof T
-    ? T[Head] extends Array<infer U>
+    ? NonNullable<T[Head]> extends Array<infer U>
       ? Rest extends `${number}.${infer RestAfterIndex}` | `*.${infer RestAfterIndex}`
         ? PathValue<U, RestAfterIndex>
         : Rest extends `${number}` | '*'
           ? U
           : never
-      : PathValue<T[Head], Rest>
+      : PathValue<NonNullable<T[Head]>, Rest>
     : never
   : Path extends keyof T
     ? T[Path]

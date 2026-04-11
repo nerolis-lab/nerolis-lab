@@ -8,12 +8,11 @@ export function sortPokemonByField<T extends keyof Pokemon>(
   order: sortOrder = 'asc'
 ): Pokemon[] {
   return pokemonList.sort((pokemonA, pokemonB) => {
-    if (pokemonA[field] < pokemonB[field]) {
-      return order === 'asc' ? -1 : 1;
-    }
-    if (pokemonA[field] > pokemonB[field]) {
-      return order === 'asc' ? 1 : -1;
-    }
+    const a = pokemonA[field];
+    const b = pokemonB[field];
+    if (a == null || b == null) return 0;
+    if (a < b) return order === 'asc' ? -1 : 1;
+    if (a > b) return order === 'asc' ? 1 : -1;
     return 0;
   });
 }

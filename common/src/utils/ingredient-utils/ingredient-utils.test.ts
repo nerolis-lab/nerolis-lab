@@ -842,7 +842,7 @@ const mockRecipeList = [
 
 describe('updateIngredientBonus', () => {
   beforeEach(() => {
-    global.logger = {
+    globalThis.logger = {
       error: vi.fn()
     } as unknown as Logger;
   });
@@ -863,6 +863,6 @@ describe('updateIngredientBonus', () => {
     for (const [ingredientName, bonus] of Object.entries(expectedBonuses)) {
       expect(getMaxIngredientBonus(ingredientName)).toBe(bonus);
     }
-    expect(global.logger.error).toHaveBeenCalledWith('Error: Max bonus for ingredient "Cheese" not found.');
+    expect(globalThis.logger.error).toHaveBeenCalledWith('Error: Max bonus for ingredient "Cheese" not found.');
   });
 });
