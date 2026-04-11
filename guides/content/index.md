@@ -7,8 +7,6 @@ author: Tooz
 
 Welcome to Neroli's Guides, a collaboration between the Neroli's Lab and the Route 01 aides in the [Pokémon sleep discord server](https://discord.gg/pokemonsleep). This wiki aims to provide... [-DISCUSS WITH AIDES-]
 
-Any pages subjective information is clearly marked using the following element:
-
 ## Credit
 
 This guide is a community effort made possible thanks to the efforts of its members. All content is either originally written or has the explicit permission of the original writer(s) to be used. Beneath every page is a footnote denoting that page's contributors [-NOT YET IMPLEMENTED-]. For a complete list of contributors, see [Credits](./credits/)
