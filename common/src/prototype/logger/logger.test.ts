@@ -12,8 +12,10 @@ describe('Logger in Node.js mode', () => {
     consoleInfoMock = vi.spyOn(console, 'info').mockImplementation(() => {});
     consoleWarnMock = vi.spyOn(console, 'warn').mockImplementation(() => {});
     consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(() => {});
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    vi.spyOn(logger as any, 'colorize').mockImplementation((_level, message: string): string => message);
+    vi.spyOn(
+      logger as unknown as { colorize: (level: string, message: string) => string },
+      'colorize'
+    ).mockImplementation((_level, message) => message);
     vi.useFakeTimers();
     vi.setSystemTime(new Date('2024-12-13T12:00:00.000Z'));
   });
@@ -87,7 +89,7 @@ describe('Logger in browser mode', () => {
   });
 
   afterAll(() => {
-    delete globalThis.window;
+    (globalThis as Record<string, unknown>).window = undefined;
     vi.useRealTimers();
   });
 

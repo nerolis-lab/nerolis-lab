@@ -40,11 +40,11 @@ describe('COMPLETE_POKEDEX', () => {
     it(`shall include matching evolution references for ${pokemon.name}`, () => {
       if (pokemon.evolvesFrom !== undefined) {
         const previousForm = COMPLETE_POKEDEX.find((mon: Pokemon) => mon.name === pokemon.evolvesFrom);
-        expect(previousForm.evolvesInto).toContain(pokemon.name);
+        expect(previousForm?.evolvesInto).toContain(pokemon.name);
       }
       pokemon.evolvesInto.forEach((evolvedFormName: string) => {
         const evolvedForm = COMPLETE_POKEDEX.find((mon: Pokemon) => mon.name === evolvedFormName);
-        expect(evolvedForm.evolvesFrom).toBe(pokemon.name);
+        expect(evolvedForm?.evolvesFrom).toBe(pokemon.name);
       });
     });
   });

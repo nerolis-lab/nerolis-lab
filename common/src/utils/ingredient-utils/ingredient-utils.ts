@@ -99,7 +99,10 @@ export function simplifyIngredientSet(ingredients: IngredientSet[]): IngredientS
 export function unsimplifyIngredientSet(ingredients: IngredientSetSimple[]): IngredientSet[] {
   const result: IngredientSet[] = [];
   for (const { name, amount } of ingredients) {
-    result.push({ ingredient: INGREDIENTS_WITH_LOCKED.find((ing) => ing.name === name), amount });
+    const ingredient = INGREDIENTS_WITH_LOCKED.find((ing) => ing.name === name);
+    if (ingredient) {
+      result.push({ ingredient, amount });
+    }
   }
   return result;
 }

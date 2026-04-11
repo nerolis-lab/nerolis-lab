@@ -100,7 +100,7 @@ export abstract class Mainskill {
    */
   getFirstActivation(): MainskillActivation | undefined {
     const firstActivationKey = Object.keys(this.activations).at(0);
-    return this.activations[firstActivationKey];
+    return firstActivationKey !== undefined ? this.activations[firstActivationKey] : undefined;
   }
 
   get isModified(): boolean {

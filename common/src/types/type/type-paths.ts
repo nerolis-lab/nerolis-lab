@@ -17,7 +17,7 @@
  * PathKeys provides autocomplete for valid paths and runtime validation catches invalid paths.
  */
 type PathsOfObject<T, Prefix extends string = ''> = {
-  [K in keyof T & string]: T[K] extends Array<infer U>
+  [K in keyof T & string]: NonNullable<T[K]> extends Array<infer U>
     ? U extends object
       ?
           | `${Prefix}${K}`
@@ -26,8 +26,8 @@ type PathsOfObject<T, Prefix extends string = ''> = {
           | PathsOfObject<U, `${Prefix}${K}.${number}.`>
           | PathsOfObject<U, `${Prefix}${K}.*.`>
       : `${Prefix}${K}` | `${Prefix}${K}.${number}` | `${Prefix}${K}.*`
-    : T[K] extends object
-      ? `${Prefix}${K}` | PathsOfObject<T[K], `${Prefix}${K}.`>
+    : NonNullable<T[K]> extends object
+      ? `${Prefix}${K}` | PathsOfObject<NonNullable<T[K]>, `${Prefix}${K}.`>
       : `${Prefix}${K}`;
 }[keyof T & string];
 
