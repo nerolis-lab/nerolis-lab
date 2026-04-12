@@ -25,7 +25,7 @@
     "vite-plugin-vuetify": "^2.1.2",
     "vitepress": "2.0.0-alpha.17",
     "vitest": "^3.2.3",
-    "vue": "^3.5.19",
+    "vue": "^3.5.32",
     "vuetify": "^3.10.9"
   }
 }
