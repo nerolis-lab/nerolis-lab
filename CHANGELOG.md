@@ -1,3 +1,10 @@
+## [2.41.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.5...v2.41.6) (2026-04-12)
+
+
+### Bug Fixes
+
+* remove deprecated 'getFirstActivation' ([0bbb556](https://github.com/nerolis-lab/nerolis-lab/commit/0bbb5567ab26c5d4a9325bc311e6134b34051123))
+
 ## [2.41.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.4...v2.41.5) (2026-04-12)
 
 ## [2.41.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.3...v2.41.4) (2026-04-11)
