@@ -8,11 +8,10 @@
     "moduleResolution": "bundler",
 
     "skipLibCheck": true,
-    "composite": true,
+    "composite": false,
     "resolveJsonModule": true,
     "noEmit": true,
 
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },

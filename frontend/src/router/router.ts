@@ -89,7 +89,7 @@ const router = createRouter({
       component: TierlistPage,
       beforeEnter: (to, from, next) => {
         if (to.query.level === undefined || to.query.camp === undefined) {
-          next({
+          return next({
             name: 'Tierlist',
             query: {
               level: to.query.level ?? '60',
@@ -99,7 +99,7 @@ const router = createRouter({
             replace: true
           })
         } else {
-          next()
+          return next()
         }
       },
       props: (route) => ({

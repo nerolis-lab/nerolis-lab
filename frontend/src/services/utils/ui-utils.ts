@@ -16,23 +16,23 @@ export function getDiffDisplayInfo(diff?: number): DiffDisplayInfo {
   if (diff === undefined) {
     return {
       text: '',
-      color: theme.current.value.colors.transparent
+      color: String(theme.current.value.colors.transparent)
     }
   }
   if (diff > 0) {
     return {
-      color: theme.current.value.colors.success,
+      color: String(theme.current.value.colors.success),
       text: '+' + diff
     }
   }
   if (diff < 0) {
     return {
-      color: theme.current.value.colors['error-3'],
+      color: String(theme.current.value.colors['error-3']),
       text: `${diff}`
     }
   }
   return {
-    color: theme.current.value.colors.secondary,
+    color: String(theme.current.value.colors.secondary),
     text: 'New'
   }
 }

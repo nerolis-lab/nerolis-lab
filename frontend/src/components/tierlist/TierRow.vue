@@ -33,7 +33,7 @@ const theme = useTheme()
 
 const tierLabelColor = computed(() => {
   const tierKey = `tier-${props.tier.toLowerCase()}`
-  return theme.current.value.colors[tierKey] || theme.current.value.colors.surface
+  return String(theme.current.value.colors[tierKey] || theme.current.value.colors.surface)
 })
 
 const tierRowBackgroundStyle = computed(() => getTierColor(props.tier))
