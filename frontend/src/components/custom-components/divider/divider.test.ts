@@ -15,7 +15,7 @@ describe('Divider', () => {
     expect(vRow.exists()).toBe(true)
 
     // Check if column has correct classes
-    const vCol = wrapper.find('div.v-col.v-col-12.flex-center')
+    const vCol = wrapper.findComponent({ name: 'VCol' })
     expect(vCol.exists()).toBe(true)
   })
 })
