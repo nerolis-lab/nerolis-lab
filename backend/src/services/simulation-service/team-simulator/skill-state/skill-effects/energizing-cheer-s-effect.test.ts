@@ -19,7 +19,7 @@ describe('EnergizingCheerSEffect', () => {
 
   it('should activate skill and return correct team value', () => {
     const regularEnergyAmount = 20;
-    const chanceToTargetLowest = EnergizingCheerS.activations.energy.targetLowestChance;
+    const chanceToTargetLowestMembers = EnergizingCheerS.chanceToTargetLowestMembers;
     vimic(skillState, 'skillAmount', () => regularEnergyAmount);
 
     const result = energizingCheerSEffect.activate(skillState);
@@ -32,10 +32,11 @@ describe('EnergizingCheerSEffect', () => {
           team: {
             regular: regularEnergyAmount,
             crit: 0,
-            chanceToTargetLowestMember: chanceToTargetLowest
+            chanceToTargetLowestMembers
           }
         }
-      ]
+      ],
+      numMonsTargeted: 1
     });
   });
 

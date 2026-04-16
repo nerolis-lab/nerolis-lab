@@ -137,6 +137,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "image": "energy",
         "name": "Charge Energy S",
       },
+      "chanceToTargetLowestMembers": 0.5,
       "critAmounts": [
         6.3,
         7.7,
@@ -156,6 +157,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "modifierName": "Moonlight",
+      "numMonsTargeted": 1,
     },
   },
   {
@@ -930,7 +932,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "activations": {
         "paired": {
           "amount": [Function],
-          "targetLowestChance": 0.5,
           "unit": "energy",
         },
         "solo": {
@@ -967,6 +968,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           31,
         ],
       },
+      "chanceToTargetLowestMembers": 0.5,
       "description": [Function],
       "energyAmounts": [
         8,
@@ -980,6 +982,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "fullDescription": [Function],
       "image": "pot",
       "modifierName": "Minus",
+      "numMonsTargeted": 1,
       "potSizeAmounts": [
         5,
         7,
@@ -1079,10 +1082,10 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "activations": {
         "energy": {
           "amount": [Function],
-          "targetLowestChance": 0.5,
           "unit": "energy",
         },
       },
+      "chanceToTargetLowestMembers": 0.5,
       "description": [Function],
       "energyAmounts": [
         12,
@@ -1094,6 +1097,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "name": "Energizing Cheer S",
+      "numMonsTargeted": 1,
     },
   },
   {
@@ -1112,7 +1116,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "activations": {
         "energy": {
           "amount": [Function],
-          "targetLowestChance": 0.5,
           "unit": "energy",
         },
         "skillHelps": {
@@ -1132,10 +1135,10 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "activations": {
           "energy": {
             "amount": [Function],
-            "targetLowestChance": 0.5,
             "unit": "energy",
           },
         },
+        "chanceToTargetLowestMembers": 0.5,
         "description": [Function],
         "energyAmounts": [
           12,
@@ -1147,7 +1150,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         ],
         "image": "energy",
         "name": "Energizing Cheer S",
+        "numMonsTargeted": 1,
       },
+      "chanceToTargetLowestMembers": 0.5,
       "description": [Function],
       "energyAmounts": [
         9,
@@ -1159,6 +1164,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "modifierName": "Nuzzle",
+      "numMonsTargeted": 1,
       "skillHelpsAmounts": [
         1,
         2,
@@ -1199,6 +1205,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "name": "Energy For Everyone",
+      "numMonsTargeted": 5,
     },
   },
   {
@@ -1250,6 +1257,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         ],
         "image": "energy",
         "name": "Energy For Everyone",
+        "numMonsTargeted": 5,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1262,8 +1270,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "juiceAmount": 1,
-      "juicePercent": 0,
+      "juicePercent": 0.185,
       "modifierName": "Berry Juice",
+      "numMonsTargeted": 5,
     },
   },
   {
@@ -1319,6 +1328,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         ],
         "image": "energy",
         "name": "Energy For Everyone",
+        "numMonsTargeted": 5,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1331,6 +1341,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "energy",
       "modifierName": "Lunar Blessing",
+      "numMonsTargeted": 5,
       "selfBerries": {
         "1": [
           5,
@@ -1461,6 +1472,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           "unit": "helps",
         },
       },
+      "chanceToTargetLowestMembers": 0,
       "description": [Function],
       "helpAmounts": [
         6,
@@ -1473,6 +1485,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "image": "helps",
       "name": "Extra Helpful S",
+      "numMonsTargeted": 1,
     },
   },
   {
@@ -1529,6 +1542,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "description": [Function],
       "image": "helps",
       "name": "Helper Boost",
+      "numMonsTargeted": 5,
       "uniqueBoostTable": {
         "1": [
           0,
@@ -2400,6 +2414,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       },
       "candyAmount": 4,
       "candyChance": 0.3333333333333333,
+      "chanceToTargetLowestMembers": 0,
       "description": [Function],
       "image": "ingredients",
       "ingredientAmounts": [
@@ -2412,6 +2427,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         17,
       ],
       "modifierName": "Present",
+      "numMonsTargeted": 1,
     },
   },
   {

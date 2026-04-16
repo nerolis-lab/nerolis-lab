@@ -14,7 +14,6 @@ export class CookingPowerUpSMinusEffect implements SkillEffect {
       ).length === 0
         ? 0
         : skillState.skillAmount(skill.activations.paired);
-    const chanceToTargetLowestMember = skill.activations.paired.targetLowestChance;
 
     return {
       skill,
@@ -28,10 +27,11 @@ export class CookingPowerUpSMinusEffect implements SkillEffect {
           team: {
             regular: energyAmount,
             crit: 0,
-            chanceToTargetLowestMember
+            chanceToTargetLowestMembers: skill.chanceToTargetLowestMembers
           }
         }
-      ]
+      ],
+      numMonsTargeted: skill.numMonsTargeted
     };
   }
 }

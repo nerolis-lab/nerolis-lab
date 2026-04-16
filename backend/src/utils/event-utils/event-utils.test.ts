@@ -87,6 +87,7 @@ describe('getExtraHelpfulEvents', () => {
                   "unit": "helps",
                 },
               },
+              "chanceToTargetLowestMembers": 0,
               "description": [Function],
               "helpAmounts": [
                 6,
@@ -99,6 +100,7 @@ describe('getExtraHelpfulEvents', () => {
               ],
               "image": "helps",
               "name": "Extra Helpful S",
+              "numMonsTargeted": 1,
             },
           },
           "time": {
@@ -154,6 +156,7 @@ describe('getExtraHelpfulEvents', () => {
                   "unit": "helps",
                 },
               },
+              "chanceToTargetLowestMembers": 0,
               "description": [Function],
               "helpAmounts": [
                 6,
@@ -166,6 +169,7 @@ describe('getExtraHelpfulEvents', () => {
               ],
               "image": "helps",
               "name": "Extra Helpful S",
+              "numMonsTargeted": 1,
             },
           },
           "time": {
@@ -249,6 +253,7 @@ describe('getHelperBoostEvents', () => {
               "description": [Function],
               "image": "helps",
               "name": "Helper Boost",
+              "numMonsTargeted": 5,
               "uniqueBoostTable": {
                 "1": [
                   0,
@@ -356,6 +361,7 @@ describe('getHelperBoostEvents', () => {
               "description": [Function],
               "image": "helps",
               "name": "Helper Boost",
+              "numMonsTargeted": 5,
               "uniqueBoostTable": {
                 "1": [
                   0,

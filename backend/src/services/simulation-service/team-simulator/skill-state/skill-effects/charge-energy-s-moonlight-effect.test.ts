@@ -56,6 +56,6 @@ describe('ChargeEnergySMoonlightEffect', () => {
     expect(activation.activations[0].self?.regular).toBeGreaterThan(0);
     expect(activation.activations[0].self?.crit).toBe(0);
     expect(activation.activations[0].team?.crit).toBe(teamAmount);
-    expect(activation.activations[0].team?.chanceToTargetLowestMember).toBe(1 / skillState.memberState.teamSize);
+    expect(activation.activations[0].team?.chanceToTargetLowestMembers).toBe(skill.chanceToTargetLowestMembers);
   });
 });

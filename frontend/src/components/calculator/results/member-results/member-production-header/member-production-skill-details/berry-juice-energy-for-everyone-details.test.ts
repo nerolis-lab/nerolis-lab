@@ -65,7 +65,8 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
     const skillValuePerProc = wrapper.find('.juice-per-proc')
     const juicePerSuccess = EnergyForEveryoneBerryJuice.activations.juice.amount()
     const juicePercent = EnergyForEveryoneBerryJuice.juicePercent
-    expect(skillValuePerProc.text()).toBe(`x${juicePerSuccess * juicePercent}`)
+    const roundedJuicePerProc = compactNumber(MathUtils.round(juicePerSuccess * juicePercent, 2))
+    expect(skillValuePerProc.text()).toBe(`x${roundedJuicePerProc}`)
   })
 
   it('displays the correct total energy value', () => {

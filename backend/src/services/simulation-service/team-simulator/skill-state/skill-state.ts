@@ -18,6 +18,7 @@ import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/tea
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
+import { EnergizingCheerSHealPulseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-heal-pulse-effect.js';
 import { EnergizingCheerSNuzzleEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-nuzzle-effect.js';
 import { EnergyForEveryoneBerryJuiceEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-berry-juice-effect.js';
 import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
@@ -60,6 +61,7 @@ import {
   DreamShardMagnetS,
   DreamShardMagnetSRange,
   EnergizingCheerS,
+  EnergizingCheerSHealPulse,
   EnergizingCheerSNuzzle,
   EnergyForEveryone,
   EnergyForEveryoneBerryJuice,
@@ -123,6 +125,7 @@ export class SkillState {
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
       [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
       [EnergizingCheerS, new EnergizingCheerSEffect()],
+      [EnergizingCheerSHealPulse, new EnergizingCheerSHealPulseEffect()],
       [EnergizingCheerSNuzzle, new EnergizingCheerSNuzzleEffect()],
       [EnergyForEveryone, new EnergyForEveryoneEffect()],
       [EnergyForEveryoneBerryJuice, new EnergyForEveryoneBerryJuiceEffect()],
@@ -145,7 +148,7 @@ export class SkillState {
     this.pityProcThreshold = calculatePityProcThreshold(memberState.member.pokemonWithIngredients.pokemon);
   }
 
-  // // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
+  // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
   public attemptSkill(): SkillActivation[] {
     const activations: SkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
@@ -186,8 +189,7 @@ export class SkillState {
       skillAmount: (this.regularValue + this.critValue) / iterations,
       skillValue: Object.fromEntries(
         Object.entries(this.skillValue)
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          .filter(([d_, value]) => value.amountToSelf !== 0 || value.amountToTeam !== 0)
+          .filter(([_d, value]) => value.amountToSelf !== 0 || value.amountToTeam !== 0)
           .map(([key, value]) => [
             key,
             {

@@ -8,6 +8,8 @@ export const EnergizingCheerSNuzzle = new (class extends ModifiedMainskill {
   RP = [880, 1251, 1726, 2383, 3290, 4546];
   energyAmounts = [9, 12, 16, 20, 27, 35];
   skillHelpsAmounts = [1, 2, 3, 4, 5, 6];
+  numMonsTargeted = 1;
+  chanceToTargetLowestMembers = 0.5;
   image = 'energy';
 
   description = (params: AmountParams) =>
@@ -16,8 +18,7 @@ export const EnergizingCheerSNuzzle = new (class extends ModifiedMainskill {
   activations = {
     energy: {
       unit: 'energy',
-      amount: this.leveledAmount(this.energyAmounts),
-      targetLowestChance: 0.5 // TODO: Research this value
+      amount: this.leveledAmount(this.energyAmounts)
     },
     skillHelps: {
       unit: 'skill helps',

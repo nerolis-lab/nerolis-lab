@@ -11,8 +11,10 @@ export const EnergyForEveryoneBerryJuice = new (class extends ModifiedMainskill 
     `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to all helper Pokémon on your team. Sometimes additionally gets you a Berry Juice.`;
   RP = [1220, 1735, 2392, 3303, 4559, 6299];
 
-  juicePercent: number = 0; // TODO: Replace once real numbers are known.
+  juicePercent: number = 0.185;
   juiceAmount: number = 1;
+
+  numMonsTargeted = 5;
 
   activations = {
     energy: {

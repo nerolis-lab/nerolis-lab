@@ -9,6 +9,8 @@ export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
   potSizeAmounts = [5, 7, 9, 12, 16, 20, 24];
   energyAmounts = [8, 10, 13, 17, 23, 30, 35];
   image = 'pot';
+  numMonsTargeted = 1;
+  chanceToTargetLowestMembers = 0.5;
   description = (params: AmountParams) =>
     `Gives your cooking pot room for ${this.potSizeAmounts[params.skillLevel - 1]} more ingredients next time you cook. Meet certain conditions to also restore ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team.`;
   fullDescription = (params: AmountParams) =>
@@ -21,8 +23,7 @@ export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
     },
     paired: {
       unit: 'energy',
-      amount: this.leveledAmount(this.energyAmounts),
-      targetLowestChance: 0.5 // unverified
+      amount: this.leveledAmount(this.energyAmounts)
     }
   };
 })(true);
