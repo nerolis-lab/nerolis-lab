@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Code Comments - Minimal and Purposeful
 
-## Critical Rules
+## Minimal and purposeful
 
 - **Only add comments when necessary** to understand complex logic, business rules, or non-obvious implementation details
 - **Avoid redundant comments** that simply restate what the code obviously does
@@ -19,6 +19,21 @@ alwaysApply: false
 - **Use meaningful variable and function names** instead of comments when possible
 - **Keep comments concise** and directly relevant to the code context
 - **Update or remove comments** when code changes to avoid misleading information
+
+## ASCII typography in comments (and docblocks)
+
+**Out of scope:** `**/*.md`. README, guides, and other Markdown may use curly quotes, em dashes, `×`, `→`, `…`, etc.
+
+**In scope:** Human-readable text in **`//`**, **`/* */`**, **`/** \*/`**, **`<!-- -->`\*\* (Vue), and SCSS/CSS comments. Keep that prose ASCII-friendly for tooling and diffs.
+
+- Use **straight apostrophe** `'` (U+0027) in words like `it's`, `Neroli's`, not curly single quotes
+- Use **straight double quotes** `"` (U+0022) in comments when you need quotes, not curly double quotes
+- Do **not** use **multiplication sign** `×` (U+00D7) for sizes in comments; write **`80x80`**, **`40x40`**, etc.
+- Do **not** use **em dash** `—` (U+2014) or **en dash** `–` (U+2013). Prefer **`-`** or **spaced hyphen** `-` for a break in a sentence
+- Do **not** use **Unicode arrow** `→` (U+2192) in comments; use **`->`** or rephrase (e.g. maps to, becomes)
+- Use **three ASCII periods** `...` for ellipsis, not `…` (U+2026)
+- Avoid **non-breaking space** (U+00A0) in comments unless the file already standardizes on it
+- **Exception:** Identifiers, URLs, regex, and pasted snippets stay as required. Proper names may stay accented when needed (e.g. Pokémon)
 
 ## Examples
 
@@ -51,4 +66,10 @@ alwaysApply: false
   // Import React
   import React from 'react';
   ```
-</example> 
+</example>
+
+<example type="invalid" title="Unicode dash and arrow in a comment">
+  ```ts
+  // Maps display name → slug — see format-utils.
+  ```
+</example>

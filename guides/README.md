@@ -8,28 +8,30 @@ You do **not** need to be a developer to contribute. Most changes are plain **Ma
 
 The easiest path is the site itself: open the guide in your browser, scroll to the bottom, and use **Edit this page on GitHub**. That link opens the correct file in this repository so you can propose changes in a pull request.
 
-You’ll need a GitHub account. If it's your first time, GitHub will walk you through forking and opening a PR from your fork.
+You'll need a GitHub account. If it's your first time, GitHub will walk you through forking and opening a PR from your fork.
 
 ## Adding a new page
 
 New guides are **Markdown files** under **`content/`**. The URL and sidebar follow the folder layout, so pick (or create) a folder that matches the topic.
 
-At the top of each file, YAML "frontmatter" sets how the page appears in the sidebar. Below that comes the Markdown body: **one** `#` heading for the page title, then `##` / `###` for subsections.
+At the top of each file, YAML "frontmatter" sets how the page appears in the sidebar. Below that comes the Markdown body. The main header `#` is reserved for the frontmatter, and `##` / `###` and other smaller headings can be used for subsections.
 
 Frontmatter structure:
 
-- **`title`** — Label for the sidebar and top bar header. Keep it short.
-- **`order`** — Lower values sort earlier among pages in the same folder. Start with **increments of 10** (10, 20, 30…) to leave room to slot pages in later without renumbering everything.
+- **`title`** - Label for the sidebar and top bar header. Keep it short.
+- **`fullTitle`** - The main heading (H1) shown at the top of the page. This may be longer than the `title`.
+- **`author`** - Comma-separated list of author names.
+- **`order`** - Lower values sort earlier among pages in the same folder. Start with **increments of 10** (10, 20, 30...) to leave room to slot pages in later without renumbering everything.
 
 Example structure:
 
 ```markdown
 ---
 title: Page Title
+fullTitle: Your full page title for readers
+author: Example, Contributor
 order: 10
 ---
-
-# Your full page title
 
 A short introduction.
 
@@ -40,16 +42,20 @@ Write your guide!
 
 ### Folders and `index.md`
 
-- **`content/index.md`** — Home of the guides (`/guides/`).
-- **`content/<topic>/index.md`** — Landing page for that **section** (for example `/guides/<topic>/`). The section’s name in the sidebar comes from the **`title`** in that `index.md`. You can add more `.md` files beside it; those show up as separate pages under the same section.
+- **`content/index.md`** - Home of the guides (`/guides/`).
+- **`content/<topic>/index.md`** - Landing page for that **section** (for example `/guides/<topic>/`). The section's name in the sidebar comes from the **`title`** in that `index.md`. You can add more `.md` files beside it; those show up as separate pages under the same section.
 
-If you are unsure where a new page should live, open an issue or ask in Discord—maintainers can help with structure.
+If you are unsure where a new page should live, open an issue or ask in Discord - maintainers can help with structure.
 
 ## Formatting with Markdown
 
-Use normal Markdown for headings, lists, links, and tables. The [Markdown Guide — basic syntax](https://www.markdownguide.org/basic-syntax/) explains common options. [VitePress Markdown extensions](https://vitepress.dev/guide/markdown) (tips, code blocks, etc.) work here too.
+Use normal Markdown for headings, lists, links, and tables. The [Markdown Guide - basic syntax](https://www.markdownguide.org/basic-syntax/) explains common options. [VitePress Markdown extensions](https://vitepress.dev/guide/markdown) (tips, code blocks, etc.) work here too.
 
-Every page should have **exactly one** top-level heading: a single `#` line (one H1). Use `##` and `###` for sections inside the page.
+The top level `#` is defined in the frontmatter as `fullTitle`. **Do not** use additional `#` top-level headings. Use `##`, `###`, and smaller headings for sections inside the page.
+
+## Author Avatars
+
+You can optionally add a **square PNG** avatar in **`images/avatars/`** to be displayed automatically on pages you contribute to (when your name is listed in the `author` frontmatter). Name the file the same as your author name, with non-alphanumeric characters replaced with `-` (for example `jane-doe.png` for “Jane Doe” or `neroli-s-lab-team.png` for "Neroli's Lab Team").
 
 ## Previewing your changes (optional)
 
