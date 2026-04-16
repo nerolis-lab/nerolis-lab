@@ -6,5 +6,11 @@
     "composite": false,
     "noEmit": true
   },
-  "include": [".vitepress/config.ts", ".vitepress/sidebar.ts", ".vitepress/**/*.d.ts", "tests/**/*.ts"]
+  "include": [
+    ".vitepress/config.ts",
+    ".vitepress/sidebar.ts",
+    ".vitepress/theme/utils/**/*.ts",
+    ".vitepress/**/*.d.ts",
+    "tests/**/*.ts"
+  ]
 }

@@ -8,8 +8,13 @@
   --vp-custom-block-code-font-size: var(--text-code-size);
   font-family: var(--font-family-base);
 
-  .vp-doc {
+  .VPDoc {
     font-family: var(--font-family-prose);
+
+    // page H1 is `fullTitle` in doc-before; hide a stray markdown `#` if present
+    > h1:first-of-type {
+      display: none;
+    }
 
     h1,
     h2,

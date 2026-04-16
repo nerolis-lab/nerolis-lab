@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * Fork of VitePress default Layout; coordinates useSidebarControl() with GuidesSiteHeader (site nav).
- * See node_modules/vitepress/dist/client/theme-default/Layout.vue — keep in sync on upgrades.
+ * See node_modules/vitepress/dist/client/theme-default/Layout.vue - keep in sync on upgrades.
  */
 import { useData, useRoute } from 'vitepress';
 import VPBackdrop from 'vitepress/dist/client/theme-default/components/VPBackdrop.vue';
@@ -18,6 +18,7 @@ import {
 } from 'vitepress/dist/client/theme-default/composables/layout.js';
 import { useSidebarControl } from 'vitepress/dist/client/theme-default/composables/sidebar.js';
 import { computed, provide, ref, useSlots, watch } from 'vue';
+import GuidesDocHeading from './components/GuidesDocHeading.vue';
 import GuidesSiteHeader from './components/GuidesSiteHeader.vue';
 
 const { isOpen: isSidebarOpen, open: openSidebar, close: closeSidebar, toggle: toggleSidebar } = useSidebarControl();
@@ -92,6 +93,10 @@ function onOpenDocSidebar() {
       </VPSidebar>
 
       <VPContent>
+        <template #doc-before>
+          <GuidesDocHeading />
+          <slot name="doc-before" />
+        </template>
         <template #page-top><slot name="page-top" /></template>
         <template #page-bottom><slot name="page-bottom" /></template>
 
@@ -108,7 +113,6 @@ function onOpenDocSidebar() {
         <template #home-features-after><slot name="home-features-after" /></template>
 
         <template #doc-footer-before><slot name="doc-footer-before" /></template>
-        <template #doc-before><slot name="doc-before" /></template>
         <template #doc-after><slot name="doc-after" /></template>
         <template #doc-top><slot name="doc-top" /></template>
         <template #doc-bottom><slot name="doc-bottom" /></template>

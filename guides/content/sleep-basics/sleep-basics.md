@@ -1,8 +1,8 @@
 ---
 title: Sleep basics
+fullTitle: Sleep basics
+author: Neroli's Lab
 ---
-
-# Sleep basics
 
 This is a sample guide page. Replace this content with player-facing documentation.
 

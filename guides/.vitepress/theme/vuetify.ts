@@ -6,11 +6,10 @@ import 'vuetify/styles';
 const guidesDarkTheme: ThemeDefinition = {
   dark: true,
   colors: {
-    background: '#191224',
-    primary: '#E63946',
-    secondary: '#5E5A7F',
-    surface: '#403D58',
-    accent: '#9A95C3',
+    background: '#191224', //neutral 900
+    primary: '#e63946', //primary 500
+    secondary: '#ffb81f', //secondary 500
+    surface: '#403D58', //neutral 700
     'on-background': '#ffffff',
     'on-surface': '#ffffff',
     'on-primary': '#ffffff',
