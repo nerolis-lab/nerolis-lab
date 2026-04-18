@@ -55,7 +55,17 @@ The top level `#` is defined in the frontmatter as `fullTitle`. **Do not** use a
 
 ## Author Avatars
 
-You can optionally add a **square PNG** avatar in **`images/avatars/`** to be displayed automatically on pages you contribute to (when your name is listed in the `author` frontmatter). Name the file the same as your author name, with non-alphanumeric characters replaced with `-` (for example `jane-doe.png` for “Jane Doe” or `neroli-s-lab-team.png` for "Neroli's Lab Team").
+You can optionally add a **square PNG** avatar in **`images/avatars/`** to be displayed automatically on pages you contribute to (when your name is listed in the `author` frontmatter). Name the file the same as your author name, with accents removed and any number of non-alphanumeric characters replaced with `-`. If you need help determining the correct file name, just ask in the Neroli's Lab Discord server!
+
+The table below demonstrates how author names map to file names.
+
+| Author name (`author` frontmatter) | Avatar PNG file (`images/avatars/`) |
+| ---------------------------------- | ----------------------------------- |
+| Pat                                | `pat.png`                           |
+| Example Author One                 | `example-author-one.png`            |
+| José                               | `jose.png`                          |
+| Neroli's Lab Team                  | `neroli-s-lab-team.png`             |
+| Jane Q. Contributor                | `jane-q-contributor.png`            |
 
 ## Previewing your changes (optional)
 

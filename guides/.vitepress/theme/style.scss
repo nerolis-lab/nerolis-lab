@@ -11,11 +11,6 @@
   .VPDoc {
     font-family: var(--font-family-prose);
 
-    // page H1 is `fullTitle` in doc-before; hide a stray markdown `#` if present
-    > h1:first-of-type {
-      display: none;
-    }
-
     h1,
     h2,
     h3,
