@@ -3,7 +3,15 @@ import { UserService } from '@/services/user/user-service'
 import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { commonMocks, delay, ISLANDS, MAX_ISLAND_BONUS, MAX_POT_SIZE, MIN_POT_SIZE } from 'sleepapi-common'
+import {
+  commonMocks,
+  delay,
+  EXPERT_ISLANDS,
+  ISLANDS,
+  MAX_ISLAND_BONUS,
+  MAX_POT_SIZE,
+  MIN_POT_SIZE
+} from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/services/user/user-service', () => ({
@@ -68,7 +76,7 @@ describe('GameSettings', () => {
       .findAllComponents({ name: 'NumberInput' })
       .filter((input) => input.props('suffix') === '%')
 
-    expect(numberInputs.length).toBe(ISLANDS.length)
+    expect(numberInputs.length).toBe(ISLANDS.length + EXPERT_ISLANDS.length)
 
     numberInputs.forEach((input) => {
       expect(input.props('min')).toBe(0)

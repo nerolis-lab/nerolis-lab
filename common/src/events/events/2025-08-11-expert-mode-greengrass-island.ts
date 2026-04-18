@@ -41,10 +41,13 @@ export const event = EventBuilder.create<ExpertModeSettings>()
     }
   }))
 
+  // Berry bonus: increase favored-berry multiplier from 2x to 2.4x. Since
+  // `breakdown.favored` holds only the +1x bonus above base for favored berries,
+  // multiplying it by 1.4 raises the total from base+base (=2x) to base+base*1.4 (=2.4x).
   .forStrength((input) => ({
     'berries.breakdown.favored': (value) => {
       if (input.randomBonus === 'berry') {
-        return value * 2.4;
+        return value * 1.4;
       }
       return value;
     }

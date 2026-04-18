@@ -18,6 +18,12 @@ describe('User Store', () => {
         "islands": {
           "GGEX": {
             "areaBonus": 0,
+            "base": {
+              "berries": [],
+              "expert": false,
+              "name": "Greengrass Isle",
+              "shortName": "greengrass",
+            },
             "berries": [],
             "expert": true,
             "name": "Greengrass Isle (Expert Mode)",
@@ -367,6 +373,12 @@ describe('User Store', () => {
         "islands": {
           "GGEX": {
             "areaBonus": 0,
+            "base": {
+              "berries": [],
+              "expert": false,
+              "name": "Greengrass Isle",
+              "shortName": "greengrass",
+            },
             "berries": [],
             "expert": true,
             "name": "Greengrass Isle (Expert Mode)",
@@ -555,6 +567,12 @@ describe('User Store', () => {
         "islands": {
           "GGEX": {
             "areaBonus": 0,
+            "base": {
+              "berries": [],
+              "expert": false,
+              "name": "Greengrass Isle",
+              "shortName": "greengrass",
+            },
             "berries": [],
             "expert": true,
             "name": "Greengrass Isle (Expert Mode)",
@@ -752,6 +770,12 @@ describe('User Store', () => {
         "islands": {
           "GGEX": {
             "areaBonus": 0,
+            "base": {
+              "berries": [],
+              "expert": false,
+              "name": "Greengrass Isle",
+              "shortName": "greengrass",
+            },
             "berries": [],
             "expert": true,
             "name": "Greengrass Isle (Expert Mode)",
