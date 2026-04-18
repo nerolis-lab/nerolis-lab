@@ -1,7 +1,8 @@
 import GenderButton from '@/components/pokemon-input/gender-button.vue'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
+import { KANGASKHAN } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 describe('GenderButton', () => {
@@ -64,5 +65,24 @@ describe('GenderButton', () => {
 
     const button = wrapper.find('.v-btn')
     expect(button.exists()).toBe(false)
+  })
+
+  it('clamps gender to female for female-only species', async () => {
+    await wrapper.setProps({
+      pokemonInstance: mocks.createMockPokemon({ pokemon: KANGASKHAN, gender: 'male' })
+    })
+    await flushPromises()
+    expect(wrapper.emitted('update-gender')?.[0]).toEqual(['female'])
+  })
+
+  it('disables toggle for female-only species without emitting on click', async () => {
+    await wrapper.setProps({
+      pokemonInstance: mocks.createMockPokemon({ pokemon: KANGASKHAN, gender: 'female' })
+    })
+    await flushPromises()
+    const button = wrapper.find('.v-btn')
+    expect(button.attributes('disabled')).toBeDefined()
+    await button.trigger('click')
+    expect(wrapper.emitted('update-gender')).toBeUndefined()
   })
 })
