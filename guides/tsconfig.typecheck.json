@@ -8,7 +8,7 @@
   },
   "include": [
     ".vitepress/config.ts",
-    ".vitepress/sidebar.ts",
+    ".vitepress/lib/**/*.ts",
     ".vitepress/theme/utils/**/*.ts",
     ".vitepress/**/*.d.ts",
     "tests/**/*.ts"

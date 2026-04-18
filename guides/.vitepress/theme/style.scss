@@ -3,9 +3,13 @@
 @use './guides-site-shell';
 @use './guides-on-this-page-nav';
 
-.guides-shell {
+:root {
+  --vp-local-search-result-selected-border: var(--color-neutral-300);
   --vp-custom-block-font-size: var(--text-body-size);
   --vp-custom-block-code-font-size: var(--text-code-size);
+}
+
+.guides-shell {
   font-family: var(--font-family-base);
 
   .VPDoc {

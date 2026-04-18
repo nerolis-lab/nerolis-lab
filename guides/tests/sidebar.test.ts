@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import type { DefaultTheme } from 'vitepress';
 import { describe, expect, it } from 'vitest';
-import { buildSidebar } from '../.vitepress/sidebar';
+import { buildSidebar } from '../.vitepress/lib/sidebar';
 
 type SidebarItem = DefaultTheme.SidebarItem;
 
