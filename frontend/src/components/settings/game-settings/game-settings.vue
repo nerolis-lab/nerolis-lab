@@ -10,9 +10,12 @@
       <SettingsCard title="Area Bonus" icon="mdi-map-marker">
         <v-row dense class="mx-2 flex-left">
           <div class="area-and-bonus" v-for="islandData in islandBonusData" :key="islandData.shortName">
-            <v-avatar size="54" class="mr-2 area-image">
-              <v-img :src="islandImage({ island: islandData.island })" />
-            </v-avatar>
+            <div class="area-image-wrapper mr-2">
+              <v-avatar size="54" class="area-image">
+                <v-img :src="islandImage({ island: islandData.island })" />
+              </v-avatar>
+              <span v-if="islandData.island.expert" class="expert-badge" aria-label="expert badge">EX</span>
+            </div>
 
             <div class="mr-2 area-name">{{ islandData.island.name }}</div>
 
@@ -94,7 +97,15 @@ import { UserService } from '@/services/user/user-service'
 import { islandImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { ISLANDS, MAX_ISLAND_BONUS, MAX_POT_SIZE, MIN_POT_SIZE, type IslandShortName } from 'sleepapi-common'
+import {
+  EXPERT_ISLANDS,
+  ISLANDS,
+  MAX_ISLAND_BONUS,
+  MAX_POT_SIZE,
+  MIN_POT_SIZE,
+  type Area,
+  type IslandShortName
+} from 'sleepapi-common'
 import { computed, reactive, ref } from 'vue'
 
 const userStore = useUserStore()
@@ -106,14 +117,16 @@ const rules = {
   maxBonusRule: (value: number) => value <= MAX_ISLAND_BONUS || `Value must be ${MAX_ISLAND_BONUS} or less`
 }
 
+const allIslands: Area[] = [...ISLANDS, ...EXPERT_ISLANDS]
+
 const loadingStates = reactive(
-  Object.fromEntries(ISLANDS.map((i) => [i.shortName, false])) as Record<IslandShortName, boolean>
+  Object.fromEntries(allIslands.map((i) => [i.shortName, false])) as Record<IslandShortName, boolean>
 )
 
 const loadingPotSize = ref(false)
 
 const islandBonusData = computed(() => {
-  return ISLANDS.map((islandObj) => ({
+  return allIslands.map((islandObj) => ({
     island: islandObj,
     shortName: islandObj.shortName as IslandShortName
   }))
@@ -199,5 +212,26 @@ function setPotSize(size: number) {
   .area-bonus-input {
     flex: 0 0 auto;
   }
+}
+
+.area-image-wrapper {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.expert-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-on-primary));
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 </style>

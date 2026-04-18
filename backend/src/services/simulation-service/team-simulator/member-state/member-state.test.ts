@@ -642,14 +642,15 @@ describe('expert mode ingredient bonus', () => {
     subs: (typeof berry.BELUE)[] = []
   ): TeamSettingsExt => ({
     ...settings,
-    island: {
-      ...DEFAULT_ISLAND,
+    island: commonMocks.islandInstance({
+      expert: true,
+      berries: DEFAULT_ISLAND.berries,
       expertMode: {
         mainFavoriteBerry: main,
         subFavoriteBerries: subs,
         randomBonus
       }
-    }
+    })
   });
 
   it('grants +1 ingredient per help to non-specialist with the main favored berry', () => {

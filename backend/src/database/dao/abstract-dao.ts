@@ -1,4 +1,4 @@
-import type { Static, TSchema } from '@sinclair/typebox';
+import type { Static, TObject, TProperties, TSchema } from '@sinclair/typebox';
 import { Kind, Type } from '@sinclair/typebox';
 import type { Knex } from 'knex';
 import { chunkArray } from 'sleepapi-common';
@@ -20,8 +20,8 @@ type SortKey<DBEntityType extends object> = keyof DBEntityType extends string
   : never;
 
 export abstract class AbstractDAO<
-  DBEntitySchemaType extends typeof DBEntitySchema,
-  DBEntityType extends DBEntity = Static<DBEntitySchemaType>
+  DBEntitySchemaType extends TObject<TProperties & (typeof DBWithVersionedIdSchema)['properties']>,
+  DBEntityType extends DBEntity = Static<DBEntitySchemaType> & DBEntity
 > {
   public abstract get tableName(): string;
   protected abstract get schema(): DBEntitySchemaType;
@@ -190,7 +190,7 @@ export abstract class AbstractDAO<
         if (it instanceof AbstractFilterOperator) {
           query = it.apply(key, query);
         } else if (filterValue !== undefined) {
-          query = query.where(key, filterValue);
+          query = query.where(key, filterValue as Knex.Value);
         }
       });
     });

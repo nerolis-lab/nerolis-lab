@@ -1,4 +1,5 @@
-import type { Island } from '../island';
+import type { ExpertIsland, Island } from '../island';
+import { createExpertIsland } from '../island';
 
 export const GREENGRASS: Island = {
   name: 'Greengrass Isle',
@@ -7,9 +8,6 @@ export const GREENGRASS: Island = {
   expert: false
 };
 
-export const GREENGRASS_EXPERT: Island = {
-  name: 'Greengrass Isle (Expert Mode)',
-  shortName: 'GGEX',
-  berries: [],
-  expert: true
-};
+export const GREENGRASS_EXPERT: ExpertIsland = createExpertIsland(GREENGRASS, {
+  shortName: 'GGEX'
+});

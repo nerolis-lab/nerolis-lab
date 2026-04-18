@@ -1,12 +1,16 @@
-import type { IslandShortName } from '../../types';
-import { GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
+import type { Area, BaseIslandInstance, IslandShortName } from '../../types';
+import { EXPERT_ISLANDS, GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
 
-export const DEFAULT_ISLAND = { ...GREENGRASS, areaBonus: 0 };
+export const DEFAULT_ISLAND: BaseIslandInstance = { ...GREENGRASS, areaBonus: 0 };
 
-export function getIsland(name: IslandShortName): Island;
+export function getIsland(name: IslandShortName): Area;
 export function getIsland(favoredBerries: Berry[]): Island;
-export function getIsland(nameOrBerries: IslandShortName | Berry[]): Island {
+export function getIsland(nameOrBerries: IslandShortName | Berry[]): Area {
   if (typeof nameOrBerries === 'string') {
+    const expert = EXPERT_ISLANDS.find((island) => island.shortName.toLowerCase() === nameOrBerries.toLowerCase());
+    if (expert) {
+      return expert;
+    }
     return ISLANDS.find((island) => island.shortName.toLowerCase() === nameOrBerries.toLowerCase()) ?? GREENGRASS;
   }
 

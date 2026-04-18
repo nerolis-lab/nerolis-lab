@@ -1,5 +1,7 @@
-import type { BerrySet, Island, MemberProduction, MemberStrength, TeamSettingsExt } from 'sleepapi-common';
+import type { BerrySet, MemberProduction, MemberStrength, TeamSettingsExt } from 'sleepapi-common';
 import { berryPowerForLevel } from 'sleepapi-common';
+
+type IslandBerries = { berries: TeamSettingsExt['island']['berries'] };
 
 export class StrengthCalculator {
   public calculateStrength(params: {
@@ -33,7 +35,7 @@ export class StrengthCalculator {
 
   private calculateBerryStrength(params: {
     berries: BerrySet[];
-    island: Island;
+    island: IslandBerries;
     areaBonus: number;
   }): MemberStrength['berries'] {
     const { berries, island, areaBonus } = params;
@@ -69,7 +71,7 @@ export class StrengthCalculator {
   private calculateSkillStrength(params: {
     produceFromSkill: MemberProduction['produceFromSkill'];
     skillValue: MemberProduction['skillValue'];
-    island: Island;
+    island: IslandBerries;
     areaBonus: number;
   }): MemberStrength['skill'] {
     const { produceFromSkill, skillValue, island, areaBonus } = params;

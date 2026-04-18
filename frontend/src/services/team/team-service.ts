@@ -89,14 +89,21 @@ class TeamServiceImpl {
         const islandDTO = serverTeam.island
         const favoredBerries: Berry[] = this.parseFavoredBerries(islandDTO.favoredBerries)
         const userStore = useUserStore()
-        const island = getIsland(favoredBerries)
+        const island = getIsland(islandDTO.islandName)
         const expertMode = this.reconstructExpertMode(islandDTO)
-        const islandInstance: IslandInstance = {
-          ...island,
-          berries: favoredBerries,
-          areaBonus: userStore.islands[island.shortName]?.areaBonus ?? 0,
-          ...(expertMode && { expertMode })
-        }
+        const areaBonus = userStore.islands[island.shortName]?.areaBonus ?? 0
+        const islandInstance: IslandInstance = island.expert
+          ? {
+              ...island,
+              berries: favoredBerries,
+              areaBonus,
+              expertMode
+            }
+          : {
+              ...island,
+              berries: favoredBerries,
+              areaBonus
+            }
 
         const instancedTeam: TeamInstance = {
           index: serverTeam.index,

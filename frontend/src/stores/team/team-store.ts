@@ -472,6 +472,7 @@ export const useTeamStore = defineStore('team', {
 
       this.updateTeam()
       await this.calculateProduction(this.currentIndex)
+      this.resetCurrentTeamIvs() // reset after production is available
     },
     clearCalculatorCache() {
       for (const team of this.teams) {

@@ -374,6 +374,141 @@ describe('TeamSimulator', () => {
     expect(member.settings.skillLevel).toBe(3);
     expect(member.pokemonWithIngredients.pokemon.frequency).toBe(1800);
   });
+
+  it('expert mode berry bonus raises favored berry strength from 2x to 2.4x', () => {
+    const buildSettings = (randomBonus: 'berry' | 'skill'): TeamSettingsExt =>
+      mocks.teamSettingsExt({
+        includeCooking: false,
+        island: commonMocks.islandInstance({
+          expert: true,
+          berries: [berry.BELUE],
+          expertMode: {
+            mainFavoriteBerry: berry.BELUE,
+            subFavoriteBerries: [],
+            randomBonus
+          }
+        })
+      });
+
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: {
+        pokemon: commonMocks.mockPokemon({
+          carrySize: 10,
+          frequency: 3600,
+          berry: berry.BELUE,
+          ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+          ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+          ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+          ingredientPercentage: 20,
+          skill: ChargeStrengthS,
+          skillPercentage: 20,
+          specialty: 'berry'
+        }),
+        ingredientList: [
+          { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+          { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+          { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }
+        ]
+      },
+      settings: {
+        carrySize: 10,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
+        skillLevel: 3,
+        subskills: new Set(),
+        externalId: 'berry-bonus-test'
+      }
+    };
+
+    const runTotals = (randomBonus: 'berry' | 'skill') => {
+      const simulator = new TeamSimulator({
+        settings: buildSettings(randomBonus),
+        members: [member],
+        iterations: 1
+      });
+      simulator.simulate();
+      const res = simulator.results().members[0];
+      return res.strength.berries;
+    };
+
+    // 'skill' bonus has no forStrength modifier — acts as a baseline that still
+    // applies the frequency/skill team mods so only the berry strength math differs.
+    const baseline = runTotals('skill');
+    const withBerry = runTotals('berry');
+
+    // baseline favored multiplier is 2x: total = base * 2, breakdown.favored === base
+    expect(baseline.breakdown.favored).toBeCloseTo(baseline.breakdown.base);
+    expect(baseline.total).toBeCloseTo(2 * baseline.breakdown.base);
+
+    // with berry bonus, total should equal base * 2.4
+    expect(withBerry.total).toBeCloseTo(2.4 * withBerry.breakdown.base);
+    // breakdown.favored holds the +1.4x delta
+    expect(withBerry.breakdown.favored).toBeCloseTo(1.4 * withBerry.breakdown.base);
+  });
+
+  it('expert mode ingredient bonus increases ingredients produced for favored-berry mon', () => {
+    const buildSettings = (randomBonus: 'ingredient' | 'skill'): TeamSettingsExt =>
+      mocks.teamSettingsExt({
+        includeCooking: false,
+        island: commonMocks.islandInstance({
+          expert: true,
+          berries: [berry.BELUE],
+          expertMode: {
+            mainFavoriteBerry: berry.BELUE,
+            subFavoriteBerries: [],
+            randomBonus
+          }
+        })
+      });
+
+    const member: TeamMemberExt = {
+      pokemonWithIngredients: {
+        pokemon: commonMocks.mockPokemon({
+          carrySize: 20,
+          frequency: 3600,
+          berry: berry.BELUE,
+          ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+          ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+          ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+          ingredientPercentage: 20,
+          skill: ChargeStrengthS,
+          skillPercentage: 20,
+          specialty: 'ingredient'
+        }),
+        ingredientList: [
+          { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+          { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+          { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }
+        ]
+      },
+      settings: {
+        carrySize: 20,
+        level: 60,
+        ribbon: 0,
+        nature: nature.BASHFUL,
+        skillLevel: 3,
+        subskills: new Set(),
+        externalId: 'ing-bonus-test'
+      }
+    };
+
+    const runIngredients = (randomBonus: 'ingredient' | 'skill') => {
+      const simulator = new TeamSimulator({
+        settings: buildSettings(randomBonus),
+        members: [member],
+        iterations: 1
+      });
+      simulator.simulate();
+      const res = simulator.results().members[0];
+      return res.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0);
+    };
+
+    const baseline = runIngredients('skill');
+    const withIngredient = runIngredients('ingredient');
+
+    expect(withIngredient).toBeGreaterThan(baseline);
+  });
 });
 
 describe('recoverMemberEnergy', () => {

@@ -179,7 +179,7 @@ export default defineComponent({
     const userStore = useUserStore()
     const { isMobile } = useBreakpoint()
 
-    return { teamStore, pokemonStore, userStore, isMobile }
+    return { teamStore, pokemonStore, userStore, isMobile, weeklyFactor: timeWindowFactor('WEEK') }
   },
   computed: {
     currentRecipeTypeResult(): RecipeTypeResult | undefined {
@@ -199,19 +199,16 @@ export default defineComponent({
     },
     berryStrength() {
       const members = this.teamStore.getCurrentTeam.production?.members || []
-      const weeklyFactor = timeWindowFactor('WEEK')
 
       return members.reduce((sum, member) => {
-        return sum + Math.floor(member.strength.berries.total * weeklyFactor)
+        return sum + Math.floor(member.strength.berries.total * this.weeklyFactor)
       }, 0)
     },
     skillStrength() {
       const members = this.teamStore.getCurrentTeam.production?.members || []
 
-      const weeklyFactor = timeWindowFactor('WEEK')
-
       return members.reduce((sum, memberProduction) => {
-        return sum + Math.floor(memberProduction.strength.skill.total * weeklyFactor)
+        return sum + Math.floor(memberProduction.strength.skill.total * this.weeklyFactor)
       }, 0)
     },
     stockpiledBerryStrength() {
@@ -287,12 +284,11 @@ export default defineComponent({
     },
     memberPercentages() {
       const memberStrengths = []
-      const weeklyFactor = timeWindowFactor('WEEK')
       for (const memberProduction of this.teamStore.getCurrentTeam.production?.members ?? []) {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
         if (!member) continue
-        const berryStrength = Math.floor(memberProduction.strength.berries.total * weeklyFactor)
-        const skillStrength = Math.floor(memberProduction.strength.skill.total * weeklyFactor)
+        const berryStrength = Math.floor(memberProduction.strength.berries.total * this.weeklyFactor)
+        const skillStrength = Math.floor(memberProduction.strength.skill.total * this.weeklyFactor)
 
         memberStrengths.push({
           berryStrength,
