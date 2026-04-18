@@ -56,7 +56,8 @@ export default {
 </script>
 
 <style lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .button-height {
-  height: 36px !important;
+  height: 36px;
 }
 </style>

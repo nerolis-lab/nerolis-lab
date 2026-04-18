@@ -1,7 +1,7 @@
 <template>
   <v-menu v-model="ingredientMenuOpen" :close-on-content-click="false">
     <template #activator="{ props }">
-      <v-row dense>
+      <v-row density="compact">
         <v-col>
           <v-btn
             append-icon="mdi-chevron-down"
@@ -27,8 +27,8 @@
       </v-row>
     </template>
 
-    <v-container class="bg-secondary-dark elevation-10">
-      <v-row dense class="grid-container" :class="isMobile ? 'mobile' : 'desktop'">
+    <v-container class="bg-secondary-dark elevation-5">
+      <v-row density="compact" class="grid-container" :class="isMobile ? 'mobile' : 'desktop'">
         <v-card
           v-for="(ingredient, index) in ingredients"
           class="grid-item"
@@ -44,7 +44,7 @@
         </v-card>
       </v-row>
 
-      <v-row dense class="mt-2 justify-space-between flex-center w-100">
+      <v-row density="compact" class="mt-2 justify-space-between flex-center w-100">
         <v-col cols="4" class="flex-left">
           <v-btn
             id="cancelButton"

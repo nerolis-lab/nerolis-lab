@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/valid-v-slot -->
 <template>
-  <v-row dense>
+  <v-row density="compact">
     <v-col cols="12">
       <v-card class="d-flex flex-column rounded-t-0 frosted-glass">
         <v-data-table
@@ -48,7 +48,7 @@
           </template>
 
           <template #item.ingredients="{ item }">
-            <v-row dense style="flex-wrap: nowrap; overflow-x: auto">
+            <v-row density="compact" style="flex-wrap: nowrap; overflow-x: auto">
               <v-col v-for="(ingredient, index) in item.ingredientList" :key="index" class="flex-start" cols="4">
                 <div class="flex-center flex-column">
                   <v-img
@@ -170,12 +170,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > td),
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > th),
 :deep(.v-table > .v-table__wrapper > table > thead > tr > td),
 :deep(.v-table > .v-table__wrapper > table > thead > tr > th) {
-  padding: 0 0px !important;
-  padding-left: 0px !important;
+  padding: 0 0px;
+  padding-left: 0px;
 }
 
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child)),

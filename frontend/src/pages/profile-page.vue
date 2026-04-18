@@ -40,7 +40,7 @@
             </v-col>
           </v-row>
 
-          <v-row dense class="flex-center">
+          <v-row density="compact" class="flex-center">
             <v-col cols="auto" class="flex-center">
               <span class="text-center font-weight-bold">User ID: </span>
             </v-col>
@@ -49,7 +49,7 @@
             </v-col>
           </v-row>
 
-          <v-row dense class="flex-center">
+          <v-row density="compact" class="flex-center">
             <v-col cols="auto" class="flex-center">
               <span class="text-center font-weight-bold">Supporter status: </span>
             </v-col>
@@ -60,7 +60,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="userStore.supporterSince" dense class="flex-center">
+          <v-row v-if="userStore.supporterSince" density="compact" class="flex-center">
             <v-col cols="auto" class="flex-center">
               <span class="text-center font-weight-bold">Supporter since: </span>
             </v-col>
@@ -124,21 +124,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .supporter-card {
-  box-shadow: 0 4px 20px rgba(var(--v-theme-strength), 0.3) !important;
+  box-shadow: 0 4px 20px rgba(var(--v-theme-strength), 0.3);
   transition: box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 6px 25px rgba(var(--v-theme-strength), 0.4) !important;
+    box-shadow: 0 6px 25px rgba(var(--v-theme-strength), 0.4);
   }
 }
 
 .admin-card {
-  box-shadow: 0 4px 20px rgba(var(--v-theme-admin), 0.3) !important;
+  box-shadow: 0 4px 20px rgba(var(--v-theme-admin), 0.3);
   transition: box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 6px 25px rgba(var(--v-theme-admin), 0.4) !important;
+    box-shadow: 0 6px 25px rgba(var(--v-theme-admin), 0.4);
   }
 }
 </style>

@@ -107,7 +107,7 @@
           </v-col>
         </v-row>
 
-        <v-row dense class="flex-nowrap flex-center">
+        <v-row density="compact" class="flex-nowrap flex-center">
           <v-col v-for="(subskillItem, i) in memberWithProduction.member.subskills" :key="i">
             <v-card
               :color="rarityColor(subskillItem.subskill)"
@@ -121,7 +121,7 @@
           </v-col>
         </v-row>
 
-        <v-row dense>
+        <v-row density="compact">
           <v-col cols="6" class="flex-center w-100 px-2">
             <v-btn-toggle
               v-model="teamStore.timeWindow"

@@ -1,5 +1,5 @@
 <template>
-  <v-row dense :class="{ 'flex-column': isMobile }">
+  <v-row density="compact" :class="{ 'flex-column': isMobile }">
     <v-col class="flex-column">
       <v-img
         :src="pokemonDisplayImageUrl"
@@ -41,7 +41,7 @@
             <span class="font-weight-medium">Ingredients ({{ pokemonData.ingredientPercentage }}%):</span>
           </div>
         </div>
-        <v-row dense>
+        <v-row density="compact">
           <v-col v-for="(ingredientOption, i) in ingredientOptions" :key="i" cols="4" class="pa-1">
             <template v-if="ingredientOption.ingredients.length > 3">
               <v-menu>
@@ -112,7 +112,7 @@
           <v-list-item-title class="font-weight-bold text-accent">{{ item.title }}</v-list-item-title>
           <v-list-item-subtitle class="list-item-subtitle-value">
             <template v-if="item.title === 'Subskills'">
-              <v-row dense class="flex-nowrap flex-center mt-1">
+              <v-row density="compact" class="flex-nowrap flex-center mt-1">
                 <v-col v-for="(subskillName, i) in pokemon.pokemonWithSettings.settings.subskills" :key="i">
                   <v-card :color="rarityColor(getSubskill(subskillName))" height="20px" class="text-body-2 text-center">
                     {{ isMobile ? getSubskill(subskillName).shortName : getSubskill(subskillName).shortName }}

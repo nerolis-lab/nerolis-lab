@@ -522,11 +522,12 @@ watch(
   }
 }
 
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 // Disable animations during image capture
 .tier-list-container.capturing-image {
   * {
-    animation: none !important;
-    transition: none !important;
+    animation: none;
+    transition: none;
   }
 }
 </style>

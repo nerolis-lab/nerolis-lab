@@ -61,8 +61,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 // override disabled styling so it appears as a flat indicator rather than a greyed-out button
 .gender-toggle[disabled] :deep(.v-btn__overlay) {
-  opacity: 0 !important;
+  opacity: 0;
 }
 </style>

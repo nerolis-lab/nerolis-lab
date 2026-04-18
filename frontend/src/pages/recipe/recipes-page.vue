@@ -7,7 +7,7 @@
       no-gutters
     >
       <!-- Title and sort -->
-      <v-row dense>
+      <v-row density="compact">
         <v-col
           class="d-flex flex-wrap justify-space-between"
           :class="isMobile ? 'text-h5' : 'text-h5 font-weight-semibold'"
@@ -25,7 +25,7 @@
       </v-row>
 
       <!-- Chip Group Row for filtering by recipe type -->
-      <v-row dense class="flex-left">
+      <v-row density="compact" class="flex-left">
         <v-chip-group v-model="selectedTypes" multiple>
           <CustomChip
             v-for="chip in chips"
@@ -79,7 +79,7 @@
         <v-col cols="auto" class="flex-center" v-if="!isMobile" style="align-self: stretch"> </v-col>
       </v-row>
 
-      <v-row dense>
+      <v-row density="compact">
         <v-col :cols="isMobile || isLargeDesktop ? '' : '6'">
           <IngredientSelection
             :pre-selected-ingredients="filteredIngredients"
@@ -88,7 +88,7 @@
         </v-col>
       </v-row>
 
-      <v-row dense :class="isMobile ? 'flex-column' : 'flex-row'">
+      <v-row density="compact" :class="isMobile ? 'flex-column' : 'flex-row'">
         <v-col v-if="!isLargeDesktop" v:cols="isMobile ? '' : '6'" class="flex-left">
           <span v-if="loggedIn" class="text-strength text-body-1">
             Setting your recipe levels here will affect calculations across Neroli's Lab

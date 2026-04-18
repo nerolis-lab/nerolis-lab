@@ -140,12 +140,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 @media (max-width: 450px) {
   .title {
-    font-size: 10vw !important;
+    font-size: 10vw;
   }
   .beta {
-    font-size: 8vw !important;
+    font-size: 8vw;
   }
 }
 
@@ -208,7 +209,8 @@ export default defineComponent({
   }
 }
 
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .fx01:hover {
-  background-color: rgb(var(--v-theme-accent)) !important;
+  background-color: rgb(var(--v-theme-accent));
 }
 </style>

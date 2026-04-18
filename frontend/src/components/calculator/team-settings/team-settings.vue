@@ -1,5 +1,5 @@
 <template>
-  <v-row dense>
+  <v-row density="compact">
     <v-col cols="12/5" class="flex-center">
       <v-btn icon color="transparent" elevation="0" aria-label="select recipe" @click="openRecipeMenu">
         <v-img height="48" width="48" :src="recipeTypeImage" alt="pot icon" class="recipe-color" />
