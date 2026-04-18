@@ -1,9 +1,9 @@
 ---
-title: General Calculations for Strength Skill Mons
+title: Strength Skill Calculations
+fullTitle: General Calculations for Strength Skill Mons
 author: Snackson5, mawilewave
+order: 90
 ---
-
-# General Calculations for Strength Skill Mons
 
 ## Strength Skillmon Basics
 

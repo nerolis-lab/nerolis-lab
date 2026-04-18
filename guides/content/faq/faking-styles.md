@@ -1,9 +1,9 @@
 ---
-title: Sleep Styles And How To Fake Them (if you want)
+title: Sleep Styles
+fullTitle: Sleep Styles And How To Fake Them (if you want)
 author: Snackson5, mawilewave
+order: 130
 ---
-
-# Sleep Styles And How To Fake Them (if you want)
 
 1. Download Tea Time (Android only) and make sure it has the permissions it needs (app icon below).
 2. Add a Tea Time timer widget to your home screen.

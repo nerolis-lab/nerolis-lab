@@ -1,9 +1,9 @@
 ---
 title: Item Management
+fullTitle: Item Management
 author: Cyars, Snackson5, Tindo
+order: 50
 ---
-
-# Item Management
 
 ## 1) Biscuits
 
@@ -13,7 +13,7 @@ The total Biscuits available to purchase with Sleep Points also differs dependin
 
 - **F2P** players have access to **30 Poké Biscuits** monthly from the Regular Exchange for _150 Sleep Points_ each.
 - **Premium Pass** players have access to an extra **10 Poké Biscuits** for _100 Sleep Points each_ and **5 Great Biscuits** for _400 Sleep Points_ each from the Premium Exchange monthly **in addition** to the **30 Poké Biscuits** monthly from the Regular Exchange.
-  There’s a chance to receive a Poké Biscuit (or other goodies) from your [free Daily Gift in the General Exchange] OMITTED LINK -> INFOGRAPHIC!
+  There’s a chance to receive a Poké Biscuit (or other goodies) from your [free Daily Gift in the General Exchange](https://discord.com/channels/1129035839398228028/1299412905665757214/1398692496405692477)!
 
 ### **Typical Catch Frequency: F2P vs. Premium Pass**
 
@@ -29,12 +29,8 @@ There are two baseline mechanics to be aware of:
 
 - After feeding a Pokémon its first Biscuit, there is a 50% chance of it becoming "full" with each subsequent Biscuit fed.
 - There is a chance for Biscuits to "crit" upon feeding a Mon.
-  [How do we take advantage of these mechanics?](../faq/catching-strategies.md)
-  -# Further crit rate documentation [here](https://pks.raenonx.cc/en/docs/view/game/biscuit-feeding) and in the [FAQ] OMITTED LINK -> INFOGRAPHIC.
-
-### **What About **Master Biscuits**?**
-
-The MB costs 4000 Sleep Points! This is a _significant_ portion of your monthly Points. Remember, use resources \***\*efficiently\*\***. MBs are an extremely **_inefficient_** use of Points so for the vast majority of players, buying the MB is **highly discouraged**.
+  [How do we take advantage of these mechanics?](https://discord.com/channels/1129035839398228028/1398521570787594422)
+  -# Further crit rate documentation [here](https://pks.raenonx.cc/en/docs/view/game/biscuit-feeding) and in the [FAQ](https://discord.com/channels/1129035839398228028/1398521570787594422/1398551901922131999).
 
 ### **What About **Shinies**?**
 
@@ -42,18 +38,45 @@ SHINIES ARE A **GUARANTEED** CATCH WITH A **SINGLE** POKÉ BISCUIT.
 
 - **DO NOT MASTER BISCUIT A SHINY**.
 
-## 2) Mints
+## 2) **Seeds**
 
-Neutral Mints change a Mon's Nature to Neutral. These are an **_extremely_** limited resource with **only 2** available. They're likely obtainable again in the future, but this is _not guaranteed_. **Always ask if unsure!**
+Main Skill Seeds (MSS) & Subskill Seeds (SSS) gained per month differ based on F2P or Premium status.
+
+- **F2P** players gain **~0.5 MSS** a month & **5 SSS lifetime**.¹
+- **Premium** players gain **~1.5 MSS** & **1 SSS** a month.¹
+
+### MSS Strategies
+
+New players gain several early-game MSS.
+
+- Rewards taper off & availability becomes scarce. Only use MSS on Mons worth investing!
+- Plan accordingly: Skill Mons need 3-6 seeds for max Main Skill level.
+  Do **NOT** use MSS on **NON-Skill Specialists in the early game**.
+
+### SSS Strategies
+
+Only seed **permanent** Mons with a **strong** preference for the following order of priority:
+
+- Ing Mons: IFS → IFM
+- Skill Mons: STS → STM
+- Berry Mons: HSS → HSM
+- Ing/Skill Mons: HSS → HSM
+  **Always ask if unsure!**
+  -# ¹ Event Missions/Rewards & Developer Gifts increase lifetime average.
+
+## 3) Mints
+
+Neutral Mints change a Mon's Nature to Neutral. These are an **_extremely_** limited resource with **only 2** available. They're likely obtainable again in the future, but this is _not guaranteed_.
 
 - Do **NOT** use mints to remove minorly inconvenient Natures.
 - Only mint if there's a significant impact on a **forever** Mon’s output.
+  See pins in <#1396340509504438313> for more details. **Always ask if unsure!**
 
-## 3) Handy Candies/Dream Shard Clusters
+## 4) Handy Candies/Dream Shard Clusters
 
 Use _S_ as needed (i.e. need candies/shards for leveling or to free up inventory space) and save _M_ and _L_ for rare species/higher RR.
 
-## 4) Incenses
+## 5) Incenses
 
 Use cases include but are not limited to:
 

@@ -1,9 +1,9 @@
 ---
-title: How To Build Team Comps
+title: Team Comps
+fullTitle: How To Build Team Comps
 author: Snackson5
+order: 50
 ---
-
-# How To Build Team Comps
 
 Here are some common team builds you'll typically see:
 

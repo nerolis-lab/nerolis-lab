@@ -1,9 +1,9 @@
 ---
-title: Sleep Sessions and Napping Explained
+title: Sleep Sessions and Napping
+fullTitle: Sleep Sessions and Napping Explained
 author: Snackson5, mawilewave, Tindo
+order: 40
 ---
-
-# Sleep Sessions and Napping Explained
 
 ## Understanding Sleep Sessions
 

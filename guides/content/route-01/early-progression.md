@@ -1,9 +1,9 @@
 ---
-title: Early game progression guide
+title: Early Game Progression
+fullTitle: Early Game Progression Guide
 author: Snackson5
+order: 10
 ---
-
-# Early game progression guide
 
 The early game is a completely different ecosystem compared to the mid or late game. Advice frequently given to players in the mid and late game is not necessarily representative of what you should be doing early game.
 

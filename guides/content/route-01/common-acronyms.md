@@ -1,9 +1,9 @@
 ---
-title: Commonly Used Acronyms/Terminology
+title: Acronyms/Terminology
+fullTitle: Commonly Used Acronyms/Terminology
 author: Cyars
+order: 20
 ---
-
-# Commonly Used Acronyms/Terminology
 
 ## General:
 

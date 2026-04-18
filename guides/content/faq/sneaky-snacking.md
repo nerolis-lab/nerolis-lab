@@ -1,9 +1,9 @@
 ---
-title: Sneaky Snacking explained
+title: Sneaky Snacking
+fullTitle: Sneaky Snacking Explained
 author: Snakson5, mawilewave, Tindo
+order: 20
 ---
-
-# Sneaky Snacking explained
 
 ## What is Sneaky Snacking?
 

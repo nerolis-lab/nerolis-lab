@@ -1,16 +1,15 @@
 ---
 title: Credits
+fullTitle: Credits
+author: Tooz
+order: 0
 ---
 
-# Credits
+## Writers
 
-All names in alphabetical order.
+- Cyars, Snackson5, mawilewave, Moose, Tindo
 
-## Authors of guides in the [Pokémon Sleep Discord](https://discord.gg/pokemonsleep)
-
-- Cyars, Snackson5, mawilewave, Moose, Tindo,
-
-## Wiki writers and editors
+## Editors
 
 - Tooz
 
@@ -18,6 +17,6 @@ All names in alphabetical order.
 
 - [- PLACEHOLDER TEXT -]
 
-## Creators of infograpics
+## Graphic designers
 
 -

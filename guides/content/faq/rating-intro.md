@@ -1,9 +1,9 @@
 ---
-title: An Introduction to Pokemon Evaluation
+title: Simplified Pokemon Evaluation
+FullTitle: A System for Easy Pokemon Evaluation
 author: Snackson5
+order: 10
 ---
-
-# An Introduction to Pokemon Evaluation
 
 To preface, this rating system is flawed, as is every other static rating system for this game (along with PRs). Systems like this don't necessarily represent the meta and fail to account for cross-species distinctions. (ie. is a 6 point Dragonite vs 9 point Gengar better for herbs?). **This guide only evaluates mons WITHIN their own species to determine if the one you caught is worth using.** If you are wondering if the species you caught is worth catching, check here:
 [Meta Analysis: Berry Specialists] OMITTED PAGE -> INFOGRAPHIC

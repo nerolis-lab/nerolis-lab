@@ -1,34 +1,46 @@
 ---
 title: Currency Management
+fullTitle: Currency Management
 author: Cyars, Snackson5, mawilewave, Tindo
+order: 40
 ---
 
-# Currency Management
-
-## 1) **Pace of Pokémon Sleep**
+## 1) **Pace of Gameplay**
 
 Resources are less abundant + catch frequency is FAR slower vs. Main Series/PoGO.
 
 - Spend your resources **effectively _and_ efficiently**!
 - Expect to encounter investable Mons 1-2 times a month _at most._ Leveling your first Mon to 60 takes ~6-12 months.
 
-## 2) **Sleep Points Gained Monthly**
+## 2) **Sleep Points**
 
-Max Points earned a day from sleeping = **100 Points**. Points received correspond to the player’s nightly Sleep Score (i.e. 100 Score = 100 Points). Should a player log two sleeps, total Points earned across both sleep sessions is **still capped to 100 Points total**.
+Points gained daily/monthly differs based on F2P or Premium Pass status.
 
-For in-game sleep tracking purposes, **a day ends at 3:59AM** & a **new day begins at 4:00AM**. For sleep to count towards a given day, the **tracking must begin before 3:59AM**. Tracking that begins **after** 4:00AM will count towards the _following_ day's Sleep Point + Pokémon research limit.
+### Sleep Tracking Disclaimer
 
-Points gained monthly differs based on F2P or Premium status.
+For in-game sleep tracking purposes, a **day ends at 3:59AM** and a **new day begins at 4:00AM**. For sleep to count towards a given day, the **tracking must begin before 3:59AM**. Tracking that begins **after** 4:00AM will count towards the _following_ day's Sleep Point + Pokémon research limit.
+
+### Daily Income
+
+Max Points earned a day from sleeping is **100 Points**. The Points received correspond to the player's nightly Sleep Score (i.e. 100 Score = 100 Points). Should a player log two sleeps, total Points earned across both sleep sessions _from Sleep Score alone_ is **still capped to 100 Points total**.
 
 - **F2P** players gain a max of **100 Points daily**.
-- **Premium Pass** players gain a max of **200 Points daily** and an _extra_ **1000 Points bonus** from monthly reward.
-  The max Points gained monthly (excluding Event Rewards/Developer Gifts) and factoring in the 2000 Points gained from GSD is **5000 Points for F2P** and **9000 Points for Premium**.
+- **Premium** players gain a max of **200 Points daily**.
+  - (Sleep Score + a static 100 extra from Premium Pass)
 
-## 3) **Optimal Sleep Points Usage: F2P vs. Premium**
+### Monthly Income
 
-ALL FOLLOWING CALULATIONS ASSUME NIGHTLY SLEEP SCORE OF **100**:
+Excluding Event Rewards/Developer Gifts and including the 2000 Points gained from GSD:
+
+- **F2P** players gain a max of **5000 Points monthly**.
+- **Premium** players gain a max of **9000 Points monthly**.
+  - (Includes the static 1000 Points bonus from monthly Premium Pass reward)
+
+## 3) **Optimal Sleep Points Usage**
 
 Expenditure priorities differ based on F2P or Premium status.
+
+ALL FOLLOWING CALCULATIONS ASSUME NIGHTLY SLEEP SCORE OF **100**:
 
 ### Order of **F2P** priorities:
 
@@ -48,33 +60,11 @@ Expenditure priorities differ based on F2P or Premium status.
 - _Handy Candy M_ (500)
 - _Save for F2P MSS_ (3600)
 
-## 4) **Optimal Seeds Usage: F2P vs. Premium**
+### **What About **Master Biscuits**?**
 
-Main Skill Seeds (MSS) & Subskill Seeds (SSS) gained per month differ based on F2P or Premium status.
+The MB costs 4000 Sleep Points! This is a _significant_ portion of your monthly Points. Remember, use resources \***\*efficiently\*\***. MBs are an extremely **_inefficient_** use of Points so for the vast majority of players, buying the MB is **highly discouraged**.
 
-- **F2P** players gain **~0.5 MSS** a month & **5 SSS lifetime**.¹
-- **Premium Pass** players gain **~1.5 MSS** & **1 SSS** a month.¹
-
-### MSS Strategies
-
-New players gain several early-game MSS.
-
-- Rewards taper off & availability becomes scarce. Only use MSS on Mons worth investing!
-- Plan accordingly: Skill Mons need 3-6 seeds for max Main Skill level.
-  Do **NOT** use MSS on **NON-Skill Specialists in the early game**.
-
-### SSS Strategies
-
-Only seed **permanent** Mons with a **strong** preference for the following order of priority:
-
-- Ing Mons: IFS → IFM
-- Skill Mons: STS → STM
-- Berry Mons: HSS → HSM
-- Ing/Skill Mons: HSS → HSM
-  **Always ask if unsure!**
-  -# ¹ Event Missions/Rewards & Developer Gifts increase lifetime average.
-
-## 5) **Diamonds (D) Gained + Optimal Usage**
+## 4) **Diamonds (D) Gained + Optimal Usage**
 
 Expect **~5650D per year** excluding Achievements/Recipe & Ingredient unlocks/Sleep Style Goals. Breakdown:
 
@@ -86,7 +76,7 @@ Expect **~5650D per year** excluding Achievements/Recipe & Ingredient unlocks/Sl
 
 ### Daily Gifts
 
-- [Breakdown + rates] OMITTED LINK -> INFOGRAPHIC → 6.675D per daily gift x 365 gifts = **2436.375D per year**
+- [Breakdown + rates](https://discord.com/channels/1129035839398228028/1137011809946193971/1186326923819892806) → 6.675D per daily gift x 365 gifts = **2436.375D per year**
 
 ### Weekly Missions
 

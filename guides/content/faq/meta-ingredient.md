@@ -1,9 +1,9 @@
 ---
-title: Who Should I Catch? (Meta Ingredient Specialists)
+title: Meta Ingredient Specialists
+fullTitle: Who Should I Catch? (Meta Ingredient Specialists)
 author: Snackson5, mawilewave
+order: 70
 ---
-
-# Who Should I Catch? (Meta Ingredient Specialists)
 
 ### [- MOST OF THIS PAGE HAS BEEN OMITTED DUE TO INFOGRAPHICS USAGE -]
 

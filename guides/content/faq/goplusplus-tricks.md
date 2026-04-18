@@ -1,9 +1,9 @@
 ---
-title: Pokemon Go++ Secret Techniques
+title: Pokemon Go++
+fullTitle: Pokemon Go++ Secret Techniques
 author: Snackson5
+order: 140
 ---
-
-# Pokemon Go++ Secret Techniques
 
 ## Should I Buy A PokeGo++?
 

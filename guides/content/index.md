@@ -1,11 +1,11 @@
 ---
-title: Welcome
+title: Welcome!
+fullTitle: Welcome to Neroli's Guides
 author: Tooz
+order: 0
 ---
 
-# Pokémon Sleep guides
-
-Welcome to Neroli's Guides, a collaboration between the Neroli's Lab and the Route 01 aides in the [Pokémon sleep discord server](https://discord.gg/pokemonsleep). This wiki aims to provide... [-DISCUSS WITH AIDES-]
+Welcome to Neroli's Guides, a collaboration between Neroli's Lab and the Route 01 aides in the [Pokémon sleep discord server](https://discord.gg/pokemonsleep). This wiki aims to provide... [-DISCUSS WITH AIDES-]
 
 ## Credit
 

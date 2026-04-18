@@ -1,9 +1,9 @@
 ---
-title: Who Should I Catch? (Meta Skill Specialists)
+title: Meta Skill Specialists
+fullTitle: Who Should I Catch? (Meta Skill Specialists)
 author: Snackson5
+order: 80
 ---
-
-# Who Should I Catch? (Meta Skill Specialists)
 
 ## What are the best skill mons?
 

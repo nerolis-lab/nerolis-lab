@@ -1,9 +1,9 @@
 ---
-title: FAQ table of contents
+title: FAQ
+fullTitle: FAQ Table of Contents
 author: Snackson5
+order: 0
 ---
-
-# FAQ Table of Contents
 
 List of FAQs and guides for learning the game
 

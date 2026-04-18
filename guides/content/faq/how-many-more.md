@@ -1,9 +1,9 @@
 ---
-title: Calculating Pokémon; A Basic Guide to How-Many-More
+title: How Many More
+fullTitle: Calculating Pokémon; A Basic Guide to How-Many-More
 author: Snackson5
+order: 60
 ---
-
-# Calculating Pokémon: A Basic Guide to How-Many-More
 
 This website is a little different than the other Calculators out there. This one tells you the probability of how many more you need to catch in order to find something better than the one you have in your hand.
 

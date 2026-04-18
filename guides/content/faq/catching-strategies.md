@@ -1,11 +1,9 @@
 ---
 title: Basic Catching Strategies
+fullTitle: Basic Catching Strategies; an Introduction to Biscuit Optimisation
 author: Cyars
+order: 50
 ---
-
-# Basic Catching Strategies
-
-# A Basic Guide to Biscuit Usage
 
 ## General Rules of Thumb:
 

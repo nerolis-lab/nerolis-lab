@@ -1,9 +1,9 @@
 ---
 title: Definitive Eevee Guide
+fullTitle: Definitive Eevee Guide
 author: Snackson5
+order: 110
 ---
-
-# Definitive Eevee Guide
 
 ## Intro
 

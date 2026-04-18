@@ -1,9 +1,9 @@
 ---
-title: Ing Finders on Non-Ingredient Specialists
+title: Ing Finders on Ing Specialists
+fullTitle: Ing Finders on Non-Ingredient Specialists
 author: Snackson5, mawilewave
+order: 100
 ---
-
-# Ing Finders on Non-Ingredient Specialists
 
 ### [- Most of this page is omitted as it is screenshot-based -]
 

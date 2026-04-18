@@ -1,9 +1,9 @@
 ---
-title: Friend candy explained!
+title: Friend Candy
+fullTitle: Friend Candy Explained!
 author: Argent, Moose, Redline
+order: 30
 ---
-
-# Friend candy explained!
 
 Sending Candy to Your Friends
 <:charthink:1197894702016499793> How does sending candy work?

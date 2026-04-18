@@ -1,9 +1,9 @@
 ---
-title: Darkrai FAQ
+title: Darkrai
+fullTitle: Darkrai FAQ
 author: Snackson5, mawilewave
+order: 120
 ---
-
-# Darkrai FAQ
 
 ## When can I see Darkrai?
 
