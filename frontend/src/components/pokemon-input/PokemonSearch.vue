@@ -22,7 +22,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="flex-left px-3 mt-0 mb-1 justify-space-between">
+    <v-row density="compact" class="flex-left px-3 mt-0 mb-1 justify-space-between">
       <v-chip-group v-model="selectedSpecialties" multiple>
         <CustomChip
           v-for="specialty in specialties"
@@ -52,7 +52,7 @@
       </v-badge>
     </v-row>
 
-    <v-row dense class="flex-center px-3 mt-0 flex-nowrap">
+    <v-row density="compact" class="flex-center px-3 mt-0 flex-nowrap">
       <v-checkbox
         v-if="!pokemonSearchStore.showPokebox"
         v-model="finalStageOnly"
@@ -89,7 +89,7 @@
           </div>
         </div>
       </div>
-      <v-row v-else dense class="d-flex justify-space-around mx-1">
+      <v-row v-else density="compact" class="d-flex justify-space-around mx-1">
         <v-col v-for="{ path, pokemon, instance } in filteredPokemon" :key="instance.externalId" class="flex-center">
           <div class="flex-column align-center">
             <div v-if="pokemonSearchStore.showPokebox && instance" class="text-center text-caption mb-1">

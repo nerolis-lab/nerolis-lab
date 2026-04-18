@@ -16,7 +16,7 @@
       </v-card-title>
 
       <v-container>
-        <v-row dense>
+        <v-row density="compact">
           <v-col v-for="{ name, path } in filteredAvatars" :key="name" class="flex-center">
             <v-avatar color="secondary" class="cursor-pointer" @click="selectAvatar(name)" :size="80" rounded="lg">
               <v-img :src="`/images/avatar/${path}`"></v-img>

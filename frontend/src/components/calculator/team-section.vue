@@ -32,7 +32,7 @@
 
         <v-window v-model="teamStore.currentIndex" continuous class="mt-2">
           <v-window-item v-for="(_, index) in teamStore.teams" :key="index">
-            <v-row class="flex-column" dense style="height: 75dvh">
+            <v-row class="flex-column" density="compact" style="height: 75dvh">
               <v-col v-for="member in teamSlots" :key="member" :class="[teamSlots > 1 ? 'team-slot' : '']">
                 <TeamSlot :member-index="member - 1" />
               </v-col>
@@ -125,7 +125,7 @@
 
       <v-window v-model="teamStore.currentIndex" continuous style="margin-top: -5px">
         <v-window-item v-for="(team, index) in teamStore.teams" :key="index">
-          <v-row class="flex-nowrap" dense>
+          <v-row class="flex-nowrap" density="compact">
             <v-col v-for="member in teamSlots" :key="member" class="team-slot" style="position: relative">
               <TeamSlot :member-index="member - 1" />
             </v-col>
@@ -135,7 +135,7 @@
 
       <TeamSettings class="pt-3 pb-2" />
 
-      <v-row v-if="teamStore.getCurrentTeam.production" dense>
+      <v-row v-if="teamStore.getCurrentTeam.production" density="compact">
         <v-col cols="12">
           <v-card :loading="teamStore.loadingTeams" class="fill-height frosted-glass">
             <template v-if="teamStore.getTeamSize > 1">

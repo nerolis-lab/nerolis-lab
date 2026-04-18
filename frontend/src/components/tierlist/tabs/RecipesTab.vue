@@ -128,7 +128,7 @@
             </template>
             <v-card title="Simulate this recipe team" :loading="isSimulating">
               <v-card-text>
-                <v-row dense>
+                <v-row density="compact">
                   <v-col cols="12">
                     <TeamSelect
                       v-model="teamIndex"
@@ -523,8 +523,9 @@ const simulateRecipe = async (contribution: RecipeContribution) => {
 </script>
 
 <style scoped lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .v-list-item-subtitle {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .v-list-item-subtitle .text-medium-emphasis {

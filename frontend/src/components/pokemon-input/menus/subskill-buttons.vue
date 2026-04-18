@@ -1,5 +1,5 @@
 <template>
-  <v-row id="subskills" dense>
+  <v-row id="subskills" density="compact">
     <v-col v-for="subskillLevel in subskillLevels" :key="subskillLevel" cols="6" class="flex-center">
       <v-badge
         id="subskillBadge"

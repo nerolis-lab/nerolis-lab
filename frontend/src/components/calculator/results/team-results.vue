@@ -13,7 +13,7 @@
             </v-col>
           </v-row>
 
-          <v-row dense class="flex-center">
+          <v-row density="compact" class="flex-center">
             <v-col cols="auto" class="flex-center">
               <div class="legend" :class="`bg-${teamStore.getCurrentTeam.recipeType}`">
                 <v-img :src="recipeTypeImage" contain width="32" height="32" alt="Cooking" title="Cooking" />
@@ -142,7 +142,7 @@
             </v-col>
           </v-row>
 
-          <v-row v-if="stockpiledIngredientAmount > 0" dense class="flex-center">
+          <v-row v-if="stockpiledIngredientAmount > 0" density="compact" class="flex-center">
             <v-col cols="auto" class="flex-center">
               <div class="">
                 <v-img src="/images/ingredient/ingredients.png" contain :width="isMobile ? '28' : '40'" />

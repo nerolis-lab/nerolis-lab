@@ -6,7 +6,7 @@
       :autofocus="autofocus && isExpanded"
       :label="isExpanded ? 'Search' : undefined"
       variant="outlined"
-      dense
+      density="comfortable"
       hide-details
       :clearable="isExpanded && clearable"
       :density="density"

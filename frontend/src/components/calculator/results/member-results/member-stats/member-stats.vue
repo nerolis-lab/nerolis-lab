@@ -9,7 +9,7 @@
     </v-col>
   </v-row>
 
-  <v-row class="flex-column px-2" dense>
+  <v-row class="flex-column px-2" density="compact">
     <!-- RP  -->
     <v-col class="text-no-wrap">
       <span> <span class="text-primary font-weight-medium">RP</span> {{ rp }}</span>
@@ -20,7 +20,7 @@
     </v-col>
 
     <v-col class="flex-center">
-      <v-row dense>
+      <v-row density="compact">
         <v-col cols="auto">
           <span> Ingredient list </span>
         </v-col>
@@ -50,7 +50,7 @@
 
     <SkillDistribution :pokemonProduction="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
 
-    <v-row dense :class="[{ 'flex-wrap': isMobile }]">
+    <v-row density="compact" :class="[{ 'flex-wrap': isMobile }]">
       <!-- Day period -->
       <v-col>
         <v-card class="day-card d-flex justify-space-between h-100" prepend-avatar="/images/misc/day.png">
@@ -71,7 +71,7 @@
               <span> Average Frequency: {{ averageNightFrequency }} </span>
               <span> Average Energy: {{ averageNightEnergy }} </span>
               <div v-if="spilledIngredients.length > 0">
-                <v-row dense>
+                <v-row density="compact">
                   <v-col v-for="(ingredientSet, index) in spilledIngredients" :key="index" cols="auto">
                     <div class="flex-center">
                       <div class="text-center">

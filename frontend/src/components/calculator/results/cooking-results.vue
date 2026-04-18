@@ -49,7 +49,7 @@
 
           <Divider />
 
-          <v-row v-if="mealTimes" class="flex-center" dense>
+          <v-row v-if="mealTimes" class="flex-center" density="compact">
             <v-col cols="12" class="flex-center">
               <span class="text-h6 text-center"> Daily meal times </span>
             </v-col>
@@ -74,7 +74,7 @@
 
           <Divider />
 
-          <v-row class="flex-center" dense>
+          <v-row class="flex-center" density="compact">
             <v-col cols="12" class="flex-center">
               <span class="text-h6 text-center"> Daily team ingredients </span>
             </v-col>
@@ -88,7 +88,7 @@
           </v-row>
 
           <template v-if="stockpiledIngredients.length > 0">
-            <v-row class="flex-center" dense>
+            <v-row class="flex-center" density="compact">
               <v-col cols="12" class="flex-center">
                 <span class="text-h6 text-center"> Weekly starting ingredients </span>
               </v-col>
@@ -102,7 +102,7 @@
             </v-row>
           </template>
 
-          <v-row class="flex-center" dense>
+          <v-row class="flex-center" density="compact">
             <v-col cols="12" class="w-100">
               <v-divider />
             </v-col>
@@ -114,7 +114,7 @@
           <v-row
             v-for="(cookedRecipe, index) in recipesCooked"
             :key="index"
-            dense
+            density="compact"
             class="expansion-panel"
             @click="toggleDetails(index)"
           >
@@ -162,7 +162,7 @@
                 </span>
               </v-progress-linear>
             </v-col>
-            <v-row v-if="cookedRecipe.showDetails" class="flex-center w-100 py-4" dense>
+            <v-row v-if="cookedRecipe.showDetails" class="flex-center w-100 py-4" density="compact">
               <v-col cols="12">
                 <v-divider />
               </v-col>

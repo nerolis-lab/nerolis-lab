@@ -36,7 +36,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="4" v-if="viewportWidth >= pokemonNameBreakpoint" class="flex-center">
         <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
       </v-col>
@@ -48,13 +48,13 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col>
         <v-divider />
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-2" v-if="viewportWidth < pokemonNameBreakpoint">
+    <v-row density="compact" class="mt-2" v-if="viewportWidth < pokemonNameBreakpoint">
       <v-col cols="12" class="level-ribbon-container">
         <LevelButton :level="pokemonInstance.level" @update-level="updateLevel" />
         <RibbonButton :pokemon-instance="pokemonInstance" @update-ribbon="updateRibbon" />
@@ -101,7 +101,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-2">
+    <v-row density="compact" class="mt-2">
       <v-col cols="12">
         <SubskillButtons
           :pokemon-level="pokemonInstance.level"
@@ -111,13 +111,13 @@
       </v-col>
     </v-row>
 
-    <v-row id="nature" class="mt-2" dense>
+    <v-row id="nature" class="mt-2" density="compact">
       <v-col cols="12">
         <NatureButton :nature="pokemonInstance.nature" @update-nature="updateNature" />
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-2">
+    <v-row density="compact" class="mt-2">
       <v-col cols="6">
         <v-btn id="cancelButton" class="w-100 text-body" size="large" rounded="lg" color="surface" @click="cancel"
           >Cancel</v-btn

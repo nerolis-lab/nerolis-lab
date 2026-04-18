@@ -32,12 +32,12 @@
           </v-col>
         </v-row>
 
-        <v-row dense class="pa-2">
+        <v-row density="compact" class="pa-2">
           <span>Set your area bonus: </span>
           <a class="btn-link" href="/settings">Settings</a>
         </v-row>
 
-        <v-row dense>
+        <v-row density="compact">
           <v-col cols="12">
             <v-sheet color="secondary" rounded style="overflow-y: auto">
               <v-chip-group v-model="island.berries" column multiple selected-class="bg-primary">

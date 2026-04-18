@@ -2,9 +2,10 @@
 @use '@/assets/common';
 @use '@/assets/animations';
 
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 a.simple {
   color: $berry-light;
-  transition: unset !important;
+  transition: unset;
 
   &:visited {
     color: $berry-light;
@@ -16,7 +17,7 @@ a.simple {
   }
 
   * {
-    transition: unset !important;
+    transition: unset;
   }
 }
 
@@ -66,18 +67,19 @@ a.btn-link::after {
   border-radius: 30px;
 }
 
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .frosted-glass-light {
-  background: rgba($surface, 0.2) !important;
+  background: rgba($surface, 0.2);
   backdrop-filter: blur(10px);
 }
 
 .frosted-glass {
-  background: rgba($surface, 0.4) !important;
+  background: rgba($surface, 0.4);
   backdrop-filter: blur(10px);
 }
 
 .frosted-glass-dark {
-  background: rgba($surface, 0.85) !important;
+  background: rgba($surface, 0.85);
   backdrop-filter: blur(10px);
 }
 

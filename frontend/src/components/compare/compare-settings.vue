@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-nowrap" dense>
+  <v-row class="flex-nowrap" density="compact">
     <v-col class="flex-left">
       <TeamSelect
         v-model="comparisonStore.teamIndex"

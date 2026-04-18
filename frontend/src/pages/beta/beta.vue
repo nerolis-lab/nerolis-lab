@@ -9,7 +9,7 @@
           <v-row>
             <v-divider />
           </v-row>
-          <v-row dense>
+          <v-row density="compact">
             <v-col cols="12" class="flex-column opener px-4">
               Welcome to the open beta of Neroli's Lab! Since the site is still under development, you may find bugs or
               incomplete features.
@@ -27,7 +27,7 @@
             </v-col>
           </v-row>
 
-          <v-row dense>
+          <v-row density="compact">
             <v-col cols="12" class="flex-center flex-column px-4">
               Neroli's Lab is the evolution of Sleep API. The beta version of Neroli's Lab is still missing two main
               features from Sleep API: team finder and tier lists—these are under construction and will be finished
@@ -35,7 +35,7 @@
               <v-img src="/images/beta/gurdurr.png" height="120" width="120"></v-img>
             </v-col>
           </v-row>
-          <v-row dense>
+          <v-row density="compact">
             <v-col cols="12" class="flex-center flex-column px-4">
               To take advantage of our biggest new feature, saving your teams and Pokemon across devices, log in by
               clicking the Pokeball in the upper-right corner of the screen.
@@ -52,7 +52,7 @@
             </v-col>
           </v-row>
 
-          <v-row dense>
+          <v-row density="compact">
             <v-col cols="12" class="flex-center flex-column px-4">
               <span>
                 We'd love to hear your feedback! You can report any suggestions or issues you're having with the site at
@@ -90,8 +90,9 @@
 </template>
 
 <style lang="scss" scoped>
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .heading {
-  margin: -12px 0 !important;
+  margin: -12px 0;
 }
 
 .opener {

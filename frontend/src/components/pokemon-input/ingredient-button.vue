@@ -132,8 +132,9 @@ export default {
 </script>
 
 <style lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .wide-speed-dial.v-overlay__content.v-speed-dial__content {
-  flex-direction: row !important;
+  flex-direction: row;
   flex-wrap: wrap;
   width: 176px;
   justify-content: center;

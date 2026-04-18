@@ -67,7 +67,8 @@ const diffInfo = computed<DiffDisplayInfo>(() => {
   background-color: rgba(var(--v-theme-surface), 0.5);
   backdrop-filter: blur(4px) saturate(100%);
   -webkit-backdrop-filter: blur(4px) saturate(100%);
-  border-radius: 6px !important;
+  // DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
+  border-radius: 6px;
 
   &:hover {
     transform: scale(1.1);

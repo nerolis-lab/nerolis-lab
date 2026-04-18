@@ -97,8 +97,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .transparent {
-  background: rgba($surface, 0) !important;
+  background: rgba($surface, 0);
 }
 
 .pokemon-image {
@@ -109,7 +110,7 @@ export default defineComponent({
 }
 
 .vertical-text {
-  color: rgba(white, 0.6) !important;
+  color: rgba(white, 0.6);
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);

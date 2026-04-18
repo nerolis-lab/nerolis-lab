@@ -39,7 +39,7 @@
       </template>
 
       <template #[`item.userStrength`]="{ item }">
-        <v-row class="d-flex justify-space-between" dense>
+        <v-row class="d-flex justify-space-between" density="compact">
           <v-col cols="auto">
             <img src="/images/misc/strength.png" height="24" alt="strength" title="strength" />
           </v-col>
@@ -157,8 +157,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 :deep(.v-table__wrapper) {
-  overflow-y: hidden !important;
+  overflow-y: hidden;
 }
 
 .ing-container {

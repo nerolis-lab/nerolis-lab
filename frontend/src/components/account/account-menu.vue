@@ -102,14 +102,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .supporter-avatar {
-  border-color: var(--v-theme-strength) !important;
+  border-color: var(--v-theme-strength);
   border-width: 2px;
   box-shadow: 0 0 10px rgba(var(--v-theme-strength), 0.6);
 }
 
 .admin-avatar {
-  border-color: var(--v-theme-admin) !important;
+  border-color: var(--v-theme-admin);
   border-width: 2px;
   box-shadow: 0 0 10px rgba(var(--v-theme-admin), 0.6);
 }

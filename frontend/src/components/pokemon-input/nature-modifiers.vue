@@ -65,7 +65,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .responsive-icon {
-  font-size: 0.875rem !important;
+  font-size: 0.875rem;
 }
 </style>

@@ -1,6 +1,6 @@
 <!-- TODO: add production and skill procs to each variant -->
 <template>
-  <v-row v-if="originalVariantCount > 10" dense class="flex-center mb-4" :class="{ 'flex-column': isMobile }">
+  <v-row v-if="originalVariantCount > 10" density="compact" class="flex-center mb-4" :class="{ 'flex-column': isMobile }">
     <v-col class="flex-center-y">
       <CustomSearchBar v-model="searchQuery" density="compact" placeholder="Search ingredients..." />
     </v-col>
@@ -191,7 +191,7 @@
   </v-list>
 
   <!-- Pagination -->
-  <v-row dense v-if="totalPages > 1" class="flex-center mb-4">
+  <v-row density="compact" v-if="totalPages > 1" class="flex-center mb-4">
     <v-col cols="auto">
       <v-pagination v-model="currentPage" :length="totalPages" :total-visible="5" density="compact" />
     </v-col>
@@ -551,29 +551,30 @@ const selectVariant = (index: number) => {
       }
     }
 
+    // DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
     .pokemon-avatar {
-      margin-right: 8px !important;
+      margin-right: 8px;
     }
 
     .variant-content {
-      flex-direction: column !important;
-      gap: 8px !important;
+      flex-direction: column;
+      gap: 8px;
       width: 100%;
       max-width: 100%;
       overflow: hidden;
     }
 
     .left-column {
-      max-width: 100% !important;
-      width: 100% !important;
+      max-width: 100%;
+      width: 100%;
       min-width: 0;
       overflow: hidden;
       margin-right: 0;
     }
 
     .right-column {
-      min-width: 0 !important;
-      width: 100% !important;
+      min-width: 0;
+      width: 100%;
     }
   }
 }
@@ -583,8 +584,9 @@ const selectVariant = (index: number) => {
     gap: 2px;
   }
 
+  // DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
   .mb-2 {
-    margin-bottom: 6px !important;
+    margin-bottom: 6px;
   }
 }
 
