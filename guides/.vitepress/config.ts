@@ -2,7 +2,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vuetify from 'vite-plugin-vuetify';
 import { defineConfig, type DefaultTheme } from 'vitepress';
-import { buildSidebar } from './sidebar';
+import { splitIntoSectionsForLocalSearch } from './lib/local-search-sections';
+import { buildSidebar } from './lib/sidebar';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const guidesRoot = resolve(__dirname, '..');
@@ -28,7 +29,12 @@ export default defineConfig({
 
   themeConfig: {
     search: {
-      provider: 'local'
+      provider: 'local',
+      options: {
+        miniSearch: {
+          _splitIntoSections: splitIntoSectionsForLocalSearch
+        }
+      }
     },
     outline: {
       level: [2, 3]

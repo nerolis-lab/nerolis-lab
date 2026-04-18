@@ -9,23 +9,23 @@ Player-facing Pokémon Sleep guides are built with [VitePress](https://vitepress
 ## Repository layout
 
 - **`content/`** - Markdown pages published on the site (VitePress `srcDir`).
-- **`.vitepress/`** - theme, build config, and sidebar generator (`sidebar.ts`).
-- **`tests/`** - unit tests for build-time helpers (for example `.vitepress/sidebar.ts`). Tests live here so **`.vitepress/`** stays focused on theme and config.
+- **`.vitepress/`** - theme, build config, and **`lib/`** (sidebar generator, local search indexing helpers used from `config.ts`).
+- **`tests/`** - unit tests for build-time helpers (for example `.vitepress/lib/sidebar.ts`). Tests live here so **`.vitepress/`** stays focused on theme and config.
 - **`tsconfig.json`** - TypeScript and paths for the theme, config, and tests.
 - **`tsconfig.typecheck.json`** - narrow project used by `npm run type-check` (TypeScript sources only; see **Scripts** below).
 - **`.env.example`** - optional dev-only variable for main-app origin when VitePress runs on a different port than the SPA.
 
 ## Scripts
 
-| Command              | Purpose                                                                                        |
-| -------------------- | ---------------------------------------------------------------------------------------------- |
-| `npm run dev`        | VitePress dev server (port **5173**, `strictPort`; base `/guides/`).                           |
-| `npm run build`      | Production static output to `.vitepress/dist`.                                                 |
-| `npm run preview`    | Serves the last build locally.                                                                 |
-| `npm run test`       | Vitest once (CI-friendly).                                                                     |
-| `npm run test-watch` | Vitest in watch mode.                                                                          |
-| `npm run type-check` | `tsc --noEmit` on `config.ts`, `sidebar.ts`, declaration shims, and `tests/` (see note below). |
-| `npm run type-watch` | Same as `type-check`, in watch mode.                                                           |
+| Command              | Purpose                                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `npm run dev`        | VitePress dev server (port **5173**, `strictPort`; base `/guides/`).                                       |
+| `npm run build`      | Production static output to `.vitepress/dist`.                                                             |
+| `npm run preview`    | Serves the last build locally.                                                                             |
+| `npm run test`       | Vitest once (CI-friendly).                                                                                 |
+| `npm run test-watch` | Vitest in watch mode.                                                                                      |
+| `npm run type-check` | `tsc --noEmit` on `config.ts`, `.vitepress/lib/**/*.ts`, declaration shims, and `tests/` (see note below). |
+| `npm run type-watch` | Same as `type-check`, in watch mode.                                                                       |
 
 **Type-checking:** `type-check` does **not** run `vue-tsc` over theme `.vue` files. Deep imports of VitePress internals would pull in `node_modules` graphs that fail under `vue-tsc`; theme SFCs are still validated when you run **`npm run build`**. The main app's frontend package uses `vue-tsc` end-to-end; guides uses this split on purpose.
 

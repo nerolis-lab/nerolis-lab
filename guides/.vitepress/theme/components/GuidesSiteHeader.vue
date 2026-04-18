@@ -23,6 +23,10 @@
         <div class="page-title">{{ pageTitle }}</div>
       </v-toolbar-title>
 
+      <div class="search">
+        <VPNavBarSearch />
+      </div>
+
       <template #append>
         <v-btn
           v-if="hasSidebar"
@@ -70,6 +74,7 @@
 <script setup lang="ts">
 import type { SiteNavItem } from 'sleepapi-common';
 import { siteNavItemsForGuides } from 'sleepapi-common';
+import { VPNavBarSearch } from 'vitepress/theme';
 import { computed } from 'vue';
 import { useMainAppNavHref } from '../composables/useMainAppNavHref';
 
@@ -113,3 +118,20 @@ function isSiteNavActive(item: SiteNavItem): boolean {
   return item.id === 'guides';
 }
 </script>
+
+<style scoped lang="scss">
+@use '../breakpoints' as *;
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-inline-end: 8px;
+
+  @include medium-and-up {
+    margin-inline-end: 16px;
+  }
+}
+</style>
