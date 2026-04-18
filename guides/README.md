@@ -51,6 +51,12 @@ Use normal Markdown for headings, lists, links, and tables. The [Markdown Guide 
 
 Every page should have **exactly one** top-level heading: a single `#` line (one H1). Use `##` and `###` for sections inside the page.
 
+## Using banners
+
+To use a banner in a page, simply invoke it with `<BannerName />`.
+
+Currently the only banner available is the SubjectiveInfoBanner.
+
 ## Previewing your changes (optional)
 
 If you have [Node.js](https://nodejs.org/) installed, you can run the guides site on your machine:
