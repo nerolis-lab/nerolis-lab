@@ -67,6 +67,12 @@ The table below demonstrates how author names map to file names.
 | Neroli's Lab Team                  | `neroli-s-lab-team.png`             |
 | Jane Q. Contributor                | `jane-q-contributor.png`            |
 
+## Using banners
+
+To use a banner in a page, simply invoke it with `<BannerName />`.
+
+Currently the only banner available is the SubjectiveInfoBanner.
+
 ## Previewing your changes (optional)
 
 If you have [Node.js](https://nodejs.org/) installed, you can run the guides site on your machine:
