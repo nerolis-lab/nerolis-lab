@@ -5,7 +5,7 @@ import { ChargeStrengthM } from './charge-strength-m';
 export const ChargeStrengthMBadDreams = new (class extends ModifiedMainskill {
   baseSkill = ChargeStrengthM;
   modifierName = 'Bad Dreams';
-  RP = [2400, 3313, 4643, 6441, 8864, 11878, 13140];
+  RP = [2400, 3313, 4643, 6441, 8864, 11878, 14072];
   strengthAmounts = [2640, 3753, 5178, 7149, 9870, 13638, 18515];
   energyReduction = 12;
   image = 'strength';

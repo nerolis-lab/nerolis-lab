@@ -89,7 +89,7 @@ exports[`COMPLETE_POKEDEX > shall not change ABOMASNOW unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -204,7 +204,7 @@ exports[`COMPLETE_POKEDEX > shall not change ABSOL unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -536,7 +536,7 @@ exports[`COMPLETE_POKEDEX > shall not change AMPHAROS unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -1111,7 +1111,7 @@ exports[`COMPLETE_POKEDEX > shall not change BANETTE unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -1228,7 +1228,7 @@ exports[`COMPLETE_POKEDEX > shall not change BAYLEEF unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -1458,7 +1458,7 @@ exports[`COMPLETE_POKEDEX > shall not change BEWEAR unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -1916,7 +1916,7 @@ exports[`COMPLETE_POKEDEX > shall not change BONSLY unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -2962,7 +2962,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHARJABUG unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -3313,7 +3313,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHIKORITA unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -3515,7 +3515,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -3532,7 +3532,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -3628,7 +3628,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -3645,7 +3645,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -3769,7 +3769,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -3786,7 +3786,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -3932,7 +3932,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -3949,7 +3949,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -4073,7 +4073,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -4090,7 +4090,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -4392,7 +4392,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -4409,7 +4409,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -4505,7 +4505,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -4522,7 +4522,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -4646,7 +4646,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -4663,7 +4663,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -4809,7 +4809,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -4826,7 +4826,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -4950,7 +4950,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -4967,7 +4967,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -5269,7 +5269,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -5286,7 +5286,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -5382,7 +5382,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -5399,7 +5399,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -5523,7 +5523,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -5540,7 +5540,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -5686,7 +5686,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -5703,7 +5703,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -5827,7 +5827,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -5844,7 +5844,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -6737,7 +6737,7 @@ exports[`COMPLETE_POKEDEX > shall not change CROAGUNK unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -6960,7 +6960,7 @@ exports[`COMPLETE_POKEDEX > shall not change CROCONAW unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -7415,7 +7415,7 @@ exports[`COMPLETE_POKEDEX > shall not change CYNDAQUIL unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -7710,7 +7710,7 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
       6441,
       8864,
       11878,
-      13140,
+      14072,
     ],
     "activations": {
       "strength": {
@@ -7727,7 +7727,7 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
         2383,
         3290,
         4546,
-        5843,
+        6252,
       ],
       "activations": {
         "strength": {
@@ -8121,7 +8121,7 @@ exports[`COMPLETE_POKEDEX > shall not change DIGLETT unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -8260,7 +8260,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
             6441,
             8864,
             11878,
-            13140,
+            14072,
           ],
           "activations": {
             "strength": {
@@ -8277,7 +8277,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {
@@ -8401,7 +8401,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -8418,7 +8418,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -9223,7 +9223,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
         1083,
         1496,
         2066,
-        2656,
+        2842,
       ],
       "activations": {
         "strength": {
@@ -9463,7 +9463,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
         1083,
         1496,
         2066,
-        2656,
+        2842,
       ],
       "activations": {
         "strength": {
@@ -9675,7 +9675,7 @@ exports[`COMPLETE_POKEDEX > shall not change DUGTRIO unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -10533,7 +10533,7 @@ exports[`COMPLETE_POKEDEX > shall not change ESPEON unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -10648,7 +10648,7 @@ exports[`COMPLETE_POKEDEX > shall not change FARFETCHD unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -10754,7 +10754,7 @@ exports[`COMPLETE_POKEDEX > shall not change FERALIGATR unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -10862,7 +10862,7 @@ exports[`COMPLETE_POKEDEX > shall not change FLAAFFY unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -11209,7 +11209,7 @@ exports[`COMPLETE_POKEDEX > shall not change FLYGON unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -11669,7 +11669,7 @@ exports[`COMPLETE_POKEDEX > shall not change GASTLY unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -11784,7 +11784,7 @@ exports[`COMPLETE_POKEDEX > shall not change GENGAR unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -11901,7 +11901,7 @@ exports[`COMPLETE_POKEDEX > shall not change GEODUDE unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12131,7 +12131,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOLDUCK unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12246,7 +12246,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOLEM unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12361,7 +12361,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_JUMBO unexpectedly 1`] = 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12476,7 +12476,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_LARGE unexpectedly 1`] = 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12591,7 +12591,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_MEDIUM unexpectedly 1`] =
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12706,7 +12706,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_SMALL unexpectedly 1`] = 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -12823,7 +12823,7 @@ exports[`COMPLETE_POKEDEX > shall not change GRAVELER unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -13181,7 +13181,7 @@ exports[`COMPLETE_POKEDEX > shall not change GRUBBIN unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -13532,7 +13532,7 @@ exports[`COMPLETE_POKEDEX > shall not change HAUNTER unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -14037,7 +14037,7 @@ exports[`COMPLETE_POKEDEX > shall not change HOUNDOOM unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -14154,7 +14154,7 @@ exports[`COMPLETE_POKEDEX > shall not change HOUNDOUR unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -15979,7 +15979,7 @@ exports[`COMPLETE_POKEDEX > shall not change MANKEY unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -16087,7 +16087,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAREEP unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -16667,7 +16667,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEGANIUM unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -17150,7 +17150,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
             6441,
             8864,
             11878,
-            13140,
+            14072,
           ],
           "activations": {
             "strength": {
@@ -17167,7 +17167,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {
@@ -17291,7 +17291,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -17308,7 +17308,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -17859,7 +17859,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
             6441,
             8864,
             11878,
-            13140,
+            14072,
           ],
           "activations": {
             "strength": {
@@ -17876,7 +17876,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {
@@ -18000,7 +18000,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -18017,7 +18017,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -19159,7 +19159,7 @@ exports[`COMPLETE_POKEDEX > shall not change NOIBAT unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -19274,7 +19274,7 @@ exports[`COMPLETE_POKEDEX > shall not change NOIVERN unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -19959,7 +19959,7 @@ exports[`COMPLETE_POKEDEX > shall not change PICHU unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -20076,7 +20076,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -20191,7 +20191,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HALLOWEEN unexpectedly 1`] 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -20423,7 +20423,7 @@ exports[`COMPLETE_POKEDEX > shall not change PINSIR unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -20707,7 +20707,7 @@ exports[`COMPLETE_POKEDEX > shall not change PRIMEAPE unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -20824,7 +20824,7 @@ exports[`COMPLETE_POKEDEX > shall not change PSYDUCK unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -20941,7 +20941,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_JUMBO unexpectedly 1`] = 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -21058,7 +21058,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_LARGE unexpectedly 1`] = 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -21175,7 +21175,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_MEDIUM unexpectedly 1`] =
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -21292,7 +21292,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_SMALL unexpectedly 1`] = 
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -21635,7 +21635,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAQUAVAL unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -21752,7 +21752,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAXLY unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -21869,7 +21869,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAXWELL unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -21986,7 +21986,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUILAVA unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -22101,7 +22101,7 @@ exports[`COMPLETE_POKEDEX > shall not change RAICHU unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -23925,7 +23925,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHUPPET unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -24847,7 +24847,7 @@ exports[`COMPLETE_POKEDEX > shall not change SNOVER unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -25658,7 +25658,7 @@ exports[`COMPLETE_POKEDEX > shall not change STUFFUL unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -25773,7 +25773,7 @@ exports[`COMPLETE_POKEDEX > shall not change SUDOWOODO unexpectedly 1`] = `
       2383,
       3290,
       4546,
-      5843,
+      6252,
     ],
     "activations": {
       "strength": {
@@ -26742,7 +26742,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -26759,7 +26759,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -26855,7 +26855,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -26872,7 +26872,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -26996,7 +26996,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -27013,7 +27013,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -27159,7 +27159,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -27176,7 +27176,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -27300,7 +27300,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -27317,7 +27317,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -27619,7 +27619,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -27636,7 +27636,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -27732,7 +27732,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -27749,7 +27749,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -27873,7 +27873,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -27890,7 +27890,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -28036,7 +28036,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -28053,7 +28053,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -28177,7 +28177,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -28194,7 +28194,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -28496,7 +28496,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           6441,
           8864,
           11878,
-          13140,
+          14072,
         ],
         "activations": {
           "strength": {
@@ -28513,7 +28513,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             2383,
             3290,
             4546,
-            5843,
+            6252,
           ],
           "activations": {
             "strength": {
@@ -28609,7 +28609,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -28626,7 +28626,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -28750,7 +28750,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -28767,7 +28767,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -28913,7 +28913,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 6441,
                 8864,
                 11878,
-                13140,
+                14072,
               ],
               "activations": {
                 "strength": {
@@ -28930,7 +28930,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   2383,
                   3290,
                   4546,
-                  5843,
+                  6252,
                 ],
                 "activations": {
                   "strength": {
@@ -29054,7 +29054,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               6441,
               8864,
               11878,
-              13140,
+              14072,
             ],
             "activations": {
               "strength": {
@@ -29071,7 +29071,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -29392,7 +29392,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOTODILE unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -29616,7 +29616,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXICROAK unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -30061,7 +30061,7 @@ exports[`COMPLETE_POKEDEX > shall not change TRAPINCH unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -30300,7 +30300,7 @@ exports[`COMPLETE_POKEDEX > shall not change TYPHLOSION unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -30910,7 +30910,7 @@ exports[`COMPLETE_POKEDEX > shall not change VIBRAVA unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {
@@ -31255,7 +31255,7 @@ exports[`COMPLETE_POKEDEX > shall not change VIKAVOLT unexpectedly 1`] = `
       1083,
       1496,
       2066,
-      2656,
+      2842,
     ],
     "activations": {
       "strength": {

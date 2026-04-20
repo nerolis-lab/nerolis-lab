@@ -170,7 +170,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2383,
         3290,
         4546,
-        5843,
+        6252,
       ],
       "activations": {
         "strength": {
@@ -204,7 +204,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         1083,
         1496,
         2066,
-        2656,
+        2842,
       ],
       "activations": {
         "strength": {
@@ -238,7 +238,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         1083,
         1496,
         2066,
-        2656,
+        2842,
       ],
       "activations": {
         "strength": {
@@ -298,7 +298,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           1083,
           1496,
           2066,
-          2656,
+          2842,
         ],
         "activations": {
           "strength": {
@@ -2213,7 +2213,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             6441,
             8864,
             11878,
-            13140,
+            14072,
           ],
           "activations": {
             "strength": {
@@ -2230,7 +2230,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {

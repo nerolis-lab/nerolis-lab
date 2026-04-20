@@ -3,7 +3,7 @@ import { Mainskill } from '../mainskill';
 
 export const ChargeStrengthM = new (class extends Mainskill {
   name = 'Charge Strength M';
-  RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];
+  RP = [880, 1251, 1726, 2383, 3290, 4546, 6252];
   strengthAmounts = [880, 1251, 1726, 2383, 3290, 4546, 6858];
   image = 'strength';
   description = (params: AmountParams) =>
