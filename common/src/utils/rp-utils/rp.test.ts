@@ -124,7 +124,7 @@ describe('RP', () => {
       ]
     };
     const rpUtils = new RP(pokemonInstance);
-    expect(rpUtils.calc()).toBe(5463);
+    expect(rpUtils.calc()).toBe(5698);
   });
 
   it('shall calculate realistic ribbon 500 hours Pokémon', () => {
@@ -219,7 +219,7 @@ describe('RP', () => {
       ]
     };
     const rpUtils = new RP(pokemonInstance);
-    expect(rpUtils.calc()).toBe(3726);
+    expect(rpUtils.calc()).toBe(3911);
   });
 
   it('shall calculate berry Pokémon', () => {

@@ -25,22 +25,26 @@ class NotificationRouterImpl {
       }
     });
 
-    BaseRouter.router.delete('/notifications/:externalId', validateAuthHeader, async (req: Request, res: Response) => {
-      try {
-        logger.log('Entered /notifications/:externalId DELETE');
+    BaseRouter.router.delete(
+      '/notifications/:externalId',
+      validateAuthHeader,
+      async (req: Request<{ externalId: string }>, res: Response) => {
+        try {
+          logger.log('Entered /notifications/:externalId DELETE');
 
-        const user = (req as AuthenticatedRequest).user;
-        if (!user) {
-          throw new Error('User not found');
+          const user = (req as AuthenticatedRequest).user;
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          await controller.dismissNotification(req.params.externalId);
+          res.sendStatus(204);
+        } catch (err) {
+          logger.error(err as Error);
+          res.status(500).send('Something went wrong');
         }
-
-        await controller.dismissNotification(req.params.externalId);
-        res.sendStatus(204);
-      } catch (err) {
-        logger.error(err as Error);
-        res.status(500).send('Something went wrong');
       }
-    });
+    );
 
     BaseRouter.router.get('/notifications/news', validateAdmin, async (req: Request, res: Response) => {
       try {

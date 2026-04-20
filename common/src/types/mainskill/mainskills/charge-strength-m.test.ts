@@ -5,7 +5,7 @@ describe('ChargeStrengthM', () => {
   it('should have correct basic properties', () => {
     expect(ChargeStrengthM.name).toBe('Charge Strength M');
     expect(ChargeStrengthM.description({ skillLevel: 1 })).toBe("Increases Snorlax's Strength by 880.");
-    expect(ChargeStrengthM.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
+    expect(ChargeStrengthM.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 6252]);
     expect(ChargeStrengthM.maxLevel).toBe(7);
   });
 
@@ -34,6 +34,6 @@ describe('ChargeStrengthM', () => {
   it('should have specific RP values', () => {
     expect(ChargeStrengthM.getRPValue(1)).toBe(880);
     expect(ChargeStrengthM.getRPValue(4)).toBe(2383);
-    expect(ChargeStrengthM.getRPValue(7)).toBe(5843);
+    expect(ChargeStrengthM.getRPValue(7)).toBe(6252);
   });
 });

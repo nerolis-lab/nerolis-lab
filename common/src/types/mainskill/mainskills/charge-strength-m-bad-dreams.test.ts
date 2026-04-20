@@ -14,7 +14,7 @@ describe('ChargeStrengthMBadDreams', () => {
     expect(ChargeStrengthMBadDreams.description({ skillLevel: 1 })).toBe(
       "Increases Snorlax's Strength by 2640, but at the same time, reduces the Energy of helper Pokémon on your team that aren't Dark type by 12."
     );
-    expect(ChargeStrengthMBadDreams.RP).toEqual([2400, 3313, 4643, 6441, 8864, 11878, 13140]);
+    expect(ChargeStrengthMBadDreams.RP).toEqual([2400, 3313, 4643, 6441, 8864, 11878, 14072]);
     expect(ChargeStrengthMBadDreams.maxLevel).toBe(7);
   });
 
