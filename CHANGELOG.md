@@ -1,3 +1,15 @@
+# [2.42.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.6...v2.42.0) (2026-04-21)
+
+
+### Bug Fixes
+
+* update RP values for charge strength level 7 ([239daa3](https://github.com/nerolis-lab/nerolis-lab/commit/239daa39ba1430311224d7370eb6046cdfe7f182))
+
+
+### Features
+
+* add fullTitle and author with avatars to guide frontmatter ([9559a35](https://github.com/nerolis-lab/nerolis-lab/commit/9559a3582563f07389dba6fb89f93cb2a3cfa5cd))
+
 ## [2.41.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.5...v2.41.6) (2026-04-12)
 
 
