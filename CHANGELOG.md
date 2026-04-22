@@ -1,3 +1,10 @@
+# [2.43.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.42.0...v2.43.0) (2026-04-22)
+
+
+### Features
+
+* implement ingredient expert bonus ([7179f96](https://github.com/nerolis-lab/nerolis-lab/commit/7179f96f8453d23f597fb522135a2e62bb4c93df))
+
 # [2.42.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.6...v2.42.0) (2026-04-21)
 
 
