@@ -48,11 +48,32 @@ Open the URL VitePress prints (default **http://localhost:5173/guides/** with th
 
 Register guide-only components in `.vitepress/theme/index.ts` (place SFCs under `.vitepress/theme/components/`).
 
+## VitePress upgrades
+
+After bumping `vitepress`, smoke-test the navigation and search experience on desktop and mobile, then reconcile anything below that changed upstream.
+
+### Layout and shell
+
+- **Forked default layout** - `theme/Layout.vue` is derived from `node_modules/vitepress/dist/client/theme-default/Layout.vue`. It wires the same default-theme building blocks (`VPBackdrop`, `VPContent`, `VPFooter`, `VPLocalNav`, `VPNav`, `VPSidebar`, `VPSkipLink`) and composables (`theme-default/composables/layout.js`, `sidebar.js`) around **GuidesSiteHeader** and Vuetify. Compare with upstream `Layout.vue` when upgrading.
+- **Hidden stock navbar** - Default `VPNav` is suppressed in `_guides-site-shell.scss` in favor of the custom toolbar; **VPLocalNav** / **VPSidebar** positioning and scroll behavior are customized there too (fixed vs sticky, drawer geometry).
+
+### Search (local)
+
+- **Custom navbar search** - `theme/components/GuidesNavBarSearch.vue` replaces stock **`VPNavBarSearch`**: it still uses **`VPLocalSearchBox`**, **`VPNavBarSearchButton`**, and **`resolveOptionsForLanguage`** from deep imports under `vitepress/dist/client/theme-default/`, maintaining the same keyboard controls. It adds a **mobile-only** toolbar close control (`mdi-close`) when the modal is open. Verify imports and markup against `VPNavBarSearch.vue` after upgrades.
+- **Teleported modal styling** - `_guides-local-search.scss` targets `body > .VPLocalSearchBox` (z-index, offset under the custom header, result styling). Class names and DOM structure can change with VitePress.
+- **Section splitting** - `themeConfig.search.options.miniSearch._splitIntoSections` points at `lib/local-search-sections.ts`, which must stay aligned with VitePress's server-side `splitPageIntoSections` logic for the indexed shape to match.
+- **Preamble search excerpts** - Stock `VPLocalSearchBox` only builds excerpt HTML for anchors on in-content headings; matches on `...#__preamble__` (intro before the first in-markdown heading, e.g. when `fullTitle` renders outside the markdown body) used to show empty previews. **`lib/vitepress-local-search-preamble-plugin.ts`** injects **`lib/fill-local-search-preamble-map.ts`** into upstream `VPLocalSearchBox.vue` at build time. Anchor id: **`lib/local-search-preamble-constants.ts`**. Tests: **`tests/vitepress-local-search-preamble-plugin.test.ts`** (patch + hook strings), **`tests/vitepress-local-search-upstream-invariants.test.ts`** (node bundle still has `splitPageIntoSections` / `_splitIntoSections`), **`tests/local-search-preamble-contract.test.ts`** (fragment literal). On VitePress bump failures: adjust the plugin needle/replacement or re-diff **`lib/local-search-sections.ts`** against upstream.
+
+### Theme tokens and typings
+
+- **`--vp-*` overrides** - `theme/vitepress-vars-overrides.scss` maps VitePress default-theme CSS variables to Neroli tokens; compare with `node_modules/vitepress/dist/client/theme-default/styles/vars.css` if variables are renamed or removed.
+- **Ambient `.d.ts` shims** - Deep imports without published types are declared in `vitepress-internal-modules.d.ts` and `shims-vitepress.d.ts`. If paths or exports change, update or drop these declarations.
+
 ## Author avatars (assets)
 
 - **Location:** **`images/avatars/`** (next to **`content/`**, not under `.vitepress`, so contributors can find PNGs without hidden folders).
 - **Files:** optional square **PNG**s named `{slug}.png`, where the slug matches the slugified `author:` frontmatter name (see `theme/utils/format-utils.ts`, `getAvatarUrlForAuthorName`).
-- **Size limit:** each PNG must be ≤ **256 KiB**; enforced by **`tests/avatars.test.ts`**. **`npm run test`** catches oversize files locally; **CI** runs the same tests in `.github/workflows/build-test.yml` after **`npm run build`** for the guides job (tests are not chained into `npm run build`).
+- **Size limit:** each PNG must be under **256 KiB**; enforced by **`tests/avatars.test.ts`**. **`npm run test`** catches oversize files locally; **CI** runs the same tests in `.github/workflows/build-test.yml` after **`npm run build`** for the guides job (tests are not chained into `npm run build`).
 
 ## Sidebar and content (technical summary)
 

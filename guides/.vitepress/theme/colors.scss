@@ -48,6 +48,7 @@
   --color-semantic-berry-400: #daccf5;
   --color-semantic-berry-500: #b9a0e9;
   --color-semantic-berry-600: #a986ea;
+  --color-semantic-berry-700: #825ec5;
   --color-semantic-salad-500: #bcda62;
   --color-semantic-salad-600: #99c418;
   --color-semantic-dessert-500: #fdb4ca;
@@ -66,29 +67,4 @@
 
   // unique colors
   --color-nerolis-aides: #a4d8a9;
-
-  // shell layout (matches main app v-app-bar height)
-  --guides-header-height: 64px;
-
-  // "On this page" flyout
-  --guides-outline-menu-radius: 4px;
-  --guides-outline-menu-surface: var(--color-neutral-700);
-  --guides-outline-menu-divider: color-mix(in oklab, var(--color-neutral-100) 10%, transparent);
-  --guides-outline-menu-shadow: 0 4px 18px rgba(0, 0, 0, 0.42);
-
-  // VitePress default theme bridge
-  --vp-nav-height: var(--guides-header-height);
-  --vp-c-bg: var(--color-neutral-900);
-  --vp-c-bg-alt: var(--color-neutral-800);
-  --vp-c-bg-soft: var(--color-neutral-700);
-  --vp-c-bg-mute: var(--color-neutral-800);
-  --vp-c-text-1: var(--color-neutral-100);
-  --vp-c-text-2: var(--color-neutral-200);
-  --vp-c-text-3: var(--color-neutral-300);
-  --vp-c-brand-1: var(--color-primary-500);
-  --vp-c-brand-2: var(--color-primary-600);
-  --vp-c-brand-3: var(--color-primary-600);
-  --vp-c-divider: color-mix(in oklab, var(--color-neutral-600) 45%, transparent);
-  --vp-code-bg: var(--color-neutral-600);
-  --vp-code-color: var(--color-neutral-200);
 }

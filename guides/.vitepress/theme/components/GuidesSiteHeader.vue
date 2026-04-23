@@ -23,23 +23,26 @@
         <div class="page-title">{{ pageTitle }}</div>
       </v-toolbar-title>
 
-      <div class="search">
-        <VPNavBarSearch />
-      </div>
+      <v-spacer />
 
       <template #append>
-        <v-btn
-          v-if="hasSidebar"
-          class="guides-doc-sidebar-toggle"
-          icon
-          variant="text"
-          aria-label="Open guides navigation"
-          aria-controls="VPSidebarNav"
-          :aria-expanded="docSidebarOpen"
-          @click="emit('toggleDocSidebar')"
-        >
-          <v-icon size="24">mdi-book-open-variant-outline</v-icon>
-        </v-btn>
+        <div class="guides-toolbar-append">
+          <v-btn
+            v-if="hasSidebar"
+            class="guides-doc-sidebar-toggle"
+            icon
+            variant="text"
+            aria-label="Open guides navigation"
+            aria-controls="VPSidebarNav"
+            :aria-expanded="docSidebarOpen"
+            @click="emit('toggleDocSidebar')"
+          >
+            <v-icon size="24">mdi-book-open-variant-outline</v-icon>
+          </v-btn>
+          <div class="search">
+            <GuidesNavBarSearch />
+          </div>
+        </div>
       </template>
     </v-toolbar>
 
@@ -74,9 +77,9 @@
 <script setup lang="ts">
 import type { SiteNavItem } from 'sleepapi-common';
 import { siteNavItemsForGuides } from 'sleepapi-common';
-import { VPNavBarSearch } from 'vitepress/theme';
 import { computed } from 'vue';
 import { useMainAppNavHref } from '../composables/useMainAppNavHref';
+import GuidesNavBarSearch from './GuidesNavBarSearch.vue';
 
 defineProps<{
   pageTitle: string;
@@ -122,16 +125,27 @@ function isSiteNavActive(item: SiteNavItem): boolean {
 <style scoped lang="scss">
 @use '../breakpoints' as *;
 
+.guides-toolbar-append {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .search {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 1 1 auto;
   min-width: 0;
-  margin-inline-end: 8px;
 
-  @include medium-and-up {
-    margin-inline-end: 16px;
+  // override defaults center positioning
+  :deep(.VPNavBarSearch) {
+    flex-grow: 0 !important;
+    padding-left: 0 !important;
+
+    .VPNavBarSearchButton {
+      margin-right: 14px;
+    }
   }
 }
 </style>

@@ -59,6 +59,8 @@ At 16px (same as body size) with semibold weight and wide tracking, h6 is the de
 | Mechanic         | Notes                 |
 | ---------------- | --------------------- |
 | Sleep score      | 0-100 per session     |
+| Sleep score      | 0-100 per session     |
+| Sleep score      | 0-100 per session     |
 | Helper frequency | Seconds between helps |
 
 ```ts
@@ -91,8 +93,73 @@ Info: neutral supplementary detail.
 Warning: things that can surprise or break assumptions.
 :::
 
+## More VitePress blocks (for theme work)
+
+Besides `tip`, `info`, `warning`, and `details`, VitePress ships **`danger`** and **GitHub-flavored blockquote alerts** (`[!NOTE]`, `[!TIP]`, etc.). There are also **`code-group`**, **`v-pre`**, and **`raw`** containers.
+
+### `::: danger`
+
+::: danger Sample - danger
+Use for destructive or high-risk actions.
+:::
+
+::: danger STOP Custom title
+You can set the title on the same line as the type.
+:::
+
+### GitHub-flavored alerts (blockquote)
+
+These render as callouts like the `:::` blocks; use them if you prefer GitHub-style markup.
+
+> [!NOTE]
+> Highlights information that users should take into account, even when skimming.
+
+> [!INFO]
+> Extra informational content (same family as `::: info`).
+
+> [!IMPORTANT]
+> Crucial information necessary for users to succeed.
+
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!WARNING]
+> Critical content demanding immediate user attention due to potential risks.
+
 ::: details Click to expand
 Details blocks hide longer content until opened.
+:::
+
+### `::: code-group`
+
+Tabbed code blocks (titles in `[brackets]` after the language tag):
+
+::: code-group
+
+```js [sample.js]
+export const one = 1;
+```
+
+```ts [sample.ts]
+export const one: number = number('1');
+```
+
+:::
+
+### `::: details` with attributes
+
+`{open}` starts expanded (see VitePress markdown docs for `markdown-it-attrs`).
+
+::: details Expanded by default {open}
+Body text inside a details block that starts open.
+:::
+
+### `::: v-pre`
+
+Use **`v-pre`** when you need literal characters without Vue interpreting them.
+
+::: v-pre
+Pre example: double curly braces {{ like this }} stay literal.
 :::
 
 ## Sample sections for outline navigation with a really long header even longer
