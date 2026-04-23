@@ -90,7 +90,7 @@ cd guides
 npm run dev
 ```
 
-See [`guides/README.md`](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/README.md) and [`guides/DEVELOPMENT.md`](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/DEVELOPMENT.md) for editing and tooling. Guides are served under `/guides/` on the main app in production.
+See [`guides/DEVELOPMENT.md`](https://github.com/nerolis-lab/nerolis-lab/blob/main/guides/DEVELOPMENT.md) for maintainer tooling and how guide content is structured. Guides are served under `/guides/` on the main app in production.
 
 ## Development Workflow
 

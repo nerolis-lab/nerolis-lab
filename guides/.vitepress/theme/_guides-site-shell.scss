@@ -1,6 +1,11 @@
 // Guides theme: site shell - custom toolbar, site nav drawer, scrim, VPSidebar.Default VPNav hidden
 @use './breakpoints' as *;
 
+:root {
+  // shell layout (matches main app v-app-bar height)
+  --guides-header-height: 64px;
+}
+
 .guides-app,
 .guides-shell {
   min-height: 100vh;

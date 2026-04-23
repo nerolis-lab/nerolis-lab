@@ -1,0 +1,113 @@
+// VitePress default-theme custom properties (`--vp-*`).
+// Full catalog: node_modules/vitepress/dist/client/theme-default/styles/vars.css
+// Neroli palette: `./tokens.scss`; fonts: `./typography.scss`.
+//
+// Color intent (match main app / global.scss):
+// - Primary red: sparingly - real brand CTAs, "buy-in" accents, home hero, ::vp-button-brand.
+// - Berry: default link / code-link / search accents - not error-associated red.
+// - Neutrals: body, chrome, secondary-looking surfaces, alt buttons (--vp-button-alt -> default grays).
+// - Orange error ramp: warning, danger, caution callouts (not VitePress default red).
+// - Tip: secondary gold; note: neutral; success: salad greens.
+//
+// Use `:root, .dark` so these beat VitePress `.dark` when this stylesheet loads after the default theme.
+
+:root,
+.dark {
+  // shell (aligns with `.guides-site-toolbar`)
+  --vp-nav-height: var(--guides-header-height);
+
+  // surfaces & text
+  --vp-c-bg: var(--color-neutral-900);
+  --vp-c-bg-alt: var(--color-neutral-800);
+  --vp-c-bg-elv: var(--color-neutral-700);
+  --vp-c-bg-soft: var(--color-neutral-700);
+  --vp-c-text-1: var(--color-neutral-100);
+  --vp-c-text-2: var(--color-neutral-200);
+  --vp-c-text-3: var(--color-neutral-300);
+
+  // "default" gray scale -> Neroli neutrals (drives secondary buttons, badges, soft fills)
+  --vp-c-gray-1: var(--color-neutral-200);
+  --vp-c-gray-2: var(--color-neutral-400);
+  --vp-c-gray-3: var(--color-neutral-600);
+  --vp-c-gray-soft: var(--color-neutral-800);
+
+  // brand = primary red (CTAs, hero, focus bars - not inline links; see code-link + prose `a`)
+  --vp-c-brand-1: var(--color-primary-500);
+  --vp-c-brand-2: var(--color-primary-600);
+  --vp-c-brand-3: var(--color-primary-600);
+  --vp-c-brand-soft: var(--color-primary-900);
+
+  --vp-c-divider: var(--color-neutral-700);
+  --vp-c-border: var(--color-neutral-600);
+  --vp-c-gutter: var(--color-neutral-900);
+
+  // tip
+  --vp-c-tip-1: var(--color-primary-500);
+  --vp-c-tip-2: var(--color-primary-600);
+  --vp-c-tip-3: var(--color-primary-600);
+  --vp-c-tip-soft: var(--color-primary-800);
+  --vp-custom-block-tip-code-bg: var(--color-neutral-800);
+
+  --vp-c-note-1: var(--color-neutral-200);
+  --vp-c-note-2: var(--color-neutral-300);
+  --vp-c-note-3: var(--color-neutral-500);
+  --vp-c-note-soft: var(--color-neutral-800);
+
+  --vp-custom-block-info-bg: var(--color-neutral-700);
+
+  // important - berry-ish (distinct from primary red and from orange alert)
+  --vp-c-important-1: var(--color-semantic-berry-500);
+  --vp-c-important-2: var(--color-semantic-berry-600);
+  --vp-c-important-3: var(--color-semantic-berry-600);
+  --vp-c-important-soft: color-mix(in oklab, var(--color-semantic-berry-700) 70%, transparent);
+
+  // success - salad green (game palette, clearly "ok" without red)
+  --vp-c-success-1: var(--color-semantic-salad-600);
+  --vp-c-success-2: var(--color-semantic-salad-500);
+  --vp-c-success-3: var(--color-semantic-salad-600);
+  --vp-c-success-soft: var(--color-semantic-salad-600);
+
+  // warning + danger + caution - orange "error" semantic (not VitePress stock red)
+  --vp-c-warning-1: var(--color-semantic-error-500);
+  --vp-c-warning-2: var(--color-semantic-error-600);
+  --vp-c-warning-3: var(--color-semantic-error-700);
+  --vp-c-warning-soft: color-mix(in oklab, var(--color-semantic-error-600) 60%, transparent);
+
+  --vp-c-danger-1: var(--color-semantic-error-500);
+  --vp-c-danger-2: var(--color-semantic-error-600);
+  --vp-c-danger-3: var(--color-semantic-error-700);
+  --vp-c-danger-soft: color-mix(in oklab, var(--color-semantic-error-600) 60%, transparent);
+
+  --vp-c-caution-1: var(--color-semantic-error-500);
+  --vp-c-caution-2: var(--color-semantic-error-600);
+  --vp-c-caution-3: var(--color-semantic-error-700);
+  --vp-c-caution-soft: color-mix(in oklab, var(--color-semantic-error-600) 60%, transparent);
+
+  // inline code: neutral copy; links inside code -> berry (same as app link behavior)
+  --vp-code-color: var(--color-neutral-200);
+  --vp-code-link-color: var(--color-semantic-berry-500);
+  --vp-code-link-hover-color: var(--color-semantic-berry-600);
+  --vp-code-bg: var(--color-neutral-700);
+
+  --vp-code-tab-active-bar-color: var(--color-primary-500);
+
+  // nav / sidebar
+  --vp-nav-bg-color: var(--vp-c-bg);
+  --vp-nav-screen-bg-color: var(--vp-c-bg);
+  --vp-local-nav-bg-color: var(--vp-c-bg);
+  --vp-sidebar-bg-color: var(--vp-c-bg-alt);
+  --vp-backdrop-bg-color: rgba(0, 0, 0, 0.72);
+
+  // custom blocks base font sizes
+  --vp-custom-block-font-size: var(--text-body-size);
+  --vp-custom-block-code-font-size: var(--text-code-size);
+
+  // local search - accent with berry; avoid primary red for selection chrome
+  --vp-local-search-bg: var(--vp-c-bg);
+  --vp-local-search-result-bg: var(--vp-c-bg);
+  --vp-local-search-result-border: var(--vp-c-divider);
+  --vp-local-search-result-selected-bg: var(--color-neutral-700);
+  --vp-local-search-result-selected-border: var(--color-semantic-berry-500);
+  --vp-local-search-highlight-bg: var(--color-semantic-berry-700);
+  --vp-local-search-highlight-text: var(--color-neutral-100);
+}

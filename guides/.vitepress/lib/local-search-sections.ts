@@ -1,4 +1,16 @@
 import { readFileSync } from 'node:fs';
+import { LOCAL_SEARCH_PREAMBLE_ANCHOR } from './local-search-preamble-constants';
+
+/**
+ * Custom splitter for VitePress local search (`themeConfig.search.options.miniSearch._splitIntoSections`).
+ *
+ * **Preamble label from markdown:** We read `title:` or `fullTitle:` as a single line of plain text
+ * (simple `key: value` rows). Anything else—multiline YAML, `|`, quotes spanning lines, etc.—is not
+ * handled. If the file cannot be read, the preamble is still indexed with an empty `titles` array.
+ *
+ * **Maintenance:** Matches VitePress `splitPageIntoSections`; compare when upgrading VitePress.
+ * Do not add the `g` flag to `headingContentRegex` (would break `exec` in the loop).
+ */
 
 // mirrors vitepress/dist/node localSearchPlugin.splitPageIntoSections (alpha.17); keeps i += 3 split shape
 const headingRegex = /<h(\d*).*?>(.*?<a.*? href="#.*?".*?>.*?<\/a>)<\/h\1>/gi;
@@ -32,10 +44,7 @@ function readMarkdownTitle(filePath: string): string | undefined {
   }
 }
 
-/**
- * VitePress local search only indexes text that appears after the first heading in the rendered HTML.
- * Guides use `fullTitle` for the visible H1 and start the body with paragraphs, so intros were missing from the index. This yields a synthetic section for that preamble using frontmatter `title` as the label.
- */
+/** Yields search sections; adds a synthetic preamble section when body text precedes the first heading (see file comment). */
 export function* splitIntoSectionsForLocalSearch(
   file: string,
   html: string
@@ -50,7 +59,7 @@ export function* splitIntoSectionsForLocalSearch(
   if (preambleText.length > 0) {
     const docTitle = readMarkdownTitle(file);
     yield {
-      anchor: '__preamble__',
+      anchor: LOCAL_SEARCH_PREAMBLE_ANCHOR,
       titles: docTitle ? [docTitle] : [],
       text: preambleText
     };

@@ -4,6 +4,7 @@ import vuetify from 'vite-plugin-vuetify';
 import { defineConfig, type DefaultTheme } from 'vitepress';
 import { splitIntoSectionsForLocalSearch } from './lib/local-search-sections';
 import { buildSidebar } from './lib/sidebar';
+import { vitepressLocalSearchPreamblePlugin } from './lib/vitepress-local-search-preamble-plugin';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const guidesRoot = resolve(__dirname, '..');
@@ -51,10 +52,17 @@ export default defineConfig({
   },
 
   markdown: {
+    theme: 'synthwave-84',
     lineNumbers: true
   },
 
   vite: {
+    resolve: {
+      alias: {
+        // Resolved from the patched VPLocalSearchBox path under node_modules.
+        '@guides/vitepress-local-search-preamble': resolve(__dirname, 'lib/fill-local-search-preamble-map.ts')
+      }
+    },
     server: {
       port: 5173,
       strictPort: true
@@ -62,6 +70,7 @@ export default defineConfig({
     ssr: {
       noExternal: ['vuetify']
     },
-    plugins: [vuetify({ autoImport: true })]
+    // Preamble plugin runs first (enforce: 'pre'); order relative to vuetify is irrelevant for the transform.
+    plugins: [vitepressLocalSearchPreamblePlugin(), vuetify({ autoImport: true })]
   }
 });

@@ -62,11 +62,11 @@
 
       .items {
         border: none;
-        border-radius: var(--guides-outline-menu-radius);
+        border-radius: 4px;
         gap: 0;
         grid-template-columns: minmax(0, 1fr);
-        background-color: var(--guides-outline-menu-surface);
-        box-shadow: var(--guides-outline-menu-shadow);
+        background-color: var(--color-neutral-700);
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.42);
 
         @include medium-and-up {
           left: 16px;
@@ -75,7 +75,7 @@
       }
 
       .header {
-        border-bottom: 1px solid var(--guides-outline-menu-divider);
+        border-bottom: 1px solid var(--color-neutral-600);
 
         .top-link {
           color: var(--color-neutral-100);
