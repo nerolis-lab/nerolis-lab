@@ -1,3 +1,10 @@
+# [2.44.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.43.0...v2.44.0) (2026-04-23)
+
+
+### Features
+
+* add Scald salad ([999fb8b](https://github.com/nerolis-lab/nerolis-lab/commit/999fb8b3b85d47badfb48a76e850446679f87a64))
+
 # [2.43.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.42.0...v2.43.0) (2026-04-22)
 
 
