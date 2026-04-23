@@ -10,6 +10,7 @@ import {
   HONEY,
   LARGE_LEEK,
   MOOMOO_MILK,
+  PLUMP_PUMPKIN,
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
@@ -294,6 +295,18 @@ export const BULLDOZE_GUACAMOLE_AND_CHIPS = createSalad({
   bonus: 78
 });
 
+export const SCALD_CHUNKY_SALAD = createSalad({
+  name: 'SCALD_CHUNKY_SALAD',
+  displayName: '"Scald" Chunky Salad',
+  ingredients: [
+    { amount: 20, ingredient: PLUMP_PUMPKIN },
+    { amount: 30, ingredient: SOFT_POTATO },
+    { amount: 18, ingredient: GREENGRASS_CORN },
+    { amount: 27, ingredient: TASTY_MUSHROOM }
+  ],
+  bonus: 61
+});
+
 export const SALADS: Recipe[] = [
   FANCY_APPLE_SALAD,
   BEAN_HAM_SALAD,
@@ -319,7 +332,8 @@ export const SALADS: Recipe[] = [
   APPLE_ACID_YOGURT_DRESSED_SALAD,
   DEFIANT_COFFEE_DRESSED_SALAD,
   LUSCIOUS_AVOCADO_SALAD,
-  BULLDOZE_GUACAMOLE_AND_CHIPS
+  BULLDOZE_GUACAMOLE_AND_CHIPS,
+  SCALD_CHUNKY_SALAD
 ];
 
 export const MIXED_SALAD_FLAT: RecipeFlat = recipesToFlat(MIXED_SALAD);
