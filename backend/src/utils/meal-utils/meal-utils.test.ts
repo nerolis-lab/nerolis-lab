@@ -87,6 +87,7 @@ describe('getMealsForFilter', () => {
         "DEFIANT_COFFEE_DRESSED_SALAD",
         "LUSCIOUS_AVOCADO_SALAD",
         "BULLDOZE_GUACAMOLE_AND_CHIPS",
+        "SCALD_CHUNKY_SALAD",
         "HUGE_POWER_SOY_DONUTS",
         "EXPLOSION_POPCORN",
         "EARLY_BIRD_COFFEE_JELLY",
