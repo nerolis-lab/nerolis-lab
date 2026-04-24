@@ -119,6 +119,23 @@ exports[`addHelpsFromSkill > shall add 1 average produce help 1`] = `
   "skillAmount": 0,
   "skillProcs": 0,
   "skillValue": {},
+  "strength": {
+    "berries": {
+      "breakdown": {
+        "base": 284,
+        "favored": 0,
+        "islandBonus": 0,
+      },
+      "total": 284,
+    },
+    "skill": {
+      "breakdown": {
+        "base": 0,
+        "islandBonus": 0,
+      },
+      "total": 0,
+    },
+  },
 }
 `;
 
@@ -231,6 +248,23 @@ exports[`addHelpsFromSkill > shall not add produce if adding 0 helps 1`] = `
   "skillAmount": 0,
   "skillProcs": 0,
   "skillValue": {},
+  "strength": {
+    "berries": {
+      "breakdown": {
+        "base": 0,
+        "favored": 0,
+        "islandBonus": 0,
+      },
+      "total": 0,
+    },
+    "skill": {
+      "breakdown": {
+        "base": 0,
+        "islandBonus": 0,
+      },
+      "total": 0,
+    },
+  },
 }
 `;
 
@@ -343,6 +377,23 @@ exports[`attemptDayHelp > shall not perform a help if time has not passed schedu
   "skillAmount": 0,
   "skillProcs": 0,
   "skillValue": {},
+  "strength": {
+    "berries": {
+      "breakdown": {
+        "base": 0,
+        "favored": 0,
+        "islandBonus": 0,
+      },
+      "total": 0,
+    },
+    "skill": {
+      "breakdown": {
+        "base": 0,
+        "islandBonus": 0,
+      },
+      "total": 0,
+    },
+  },
 }
 `;
 
@@ -465,6 +516,23 @@ exports[`attemptDayHelp > shall perform a help if time surpasses scheduled help 
   "skillAmount": 0,
   "skillProcs": 0,
   "skillValue": {},
+  "strength": {
+    "berries": {
+      "breakdown": {
+        "base": 142,
+        "favored": 0,
+        "islandBonus": 0,
+      },
+      "total": 142,
+    },
+    "skill": {
+      "breakdown": {
+        "base": 0,
+        "islandBonus": 0,
+      },
+      "total": 0,
+    },
+  },
 }
 `;
 
@@ -590,6 +658,23 @@ exports[`attemptNightHelp > shall roll skill proc on helps before inventory full
     "strength": {
       "amountToSelf": 2066,
       "amountToTeam": 0,
+    },
+  },
+  "strength": {
+    "berries": {
+      "breakdown": {
+        "base": 142,
+        "favored": 0,
+        "islandBonus": 0,
+      },
+      "total": 142,
+    },
+    "skill": {
+      "breakdown": {
+        "base": 2066,
+        "islandBonus": 0,
+      },
+      "total": 2066,
     },
   },
 }

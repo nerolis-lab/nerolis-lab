@@ -1,3 +1,29 @@
+# [2.44.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.43.0...v2.44.0) (2026-04-23)
+
+
+### Features
+
+* add Scald salad ([999fb8b](https://github.com/nerolis-lab/nerolis-lab/commit/999fb8b3b85d47badfb48a76e850446679f87a64))
+
+# [2.43.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.42.0...v2.43.0) (2026-04-22)
+
+
+### Features
+
+* implement ingredient expert bonus ([7179f96](https://github.com/nerolis-lab/nerolis-lab/commit/7179f96f8453d23f597fb522135a2e62bb4c93df))
+
+# [2.42.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.6...v2.42.0) (2026-04-21)
+
+
+### Bug Fixes
+
+* update RP values for charge strength level 7 ([239daa3](https://github.com/nerolis-lab/nerolis-lab/commit/239daa39ba1430311224d7370eb6046cdfe7f182))
+
+
+### Features
+
+* add fullTitle and author with avatars to guide frontmatter ([9559a35](https://github.com/nerolis-lab/nerolis-lab/commit/9559a3582563f07389dba6fb89f93cb2a3cfa5cd))
+
 ## [2.41.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.41.5...v2.41.6) (2026-04-12)
 
 

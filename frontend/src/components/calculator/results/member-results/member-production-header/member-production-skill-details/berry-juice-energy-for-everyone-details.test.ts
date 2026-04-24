@@ -1,5 +1,5 @@
-import { StrengthService } from '@/services/strength/strength-service'
 import { useTeamStore } from '@/stores/team/team-store'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
@@ -50,7 +50,7 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
   it('displays the correct number of skill procs', () => {
     const skillProcs = wrapper.find('.num-skill-procs')
     expect(skillProcs.text()).toBe(
-      MathUtils.round(mockMember.production.skillProcs * StrengthService.timeWindowFactor('24H'), 1).toString()
+      MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
   })
 
@@ -63,19 +63,16 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
 
   it('displays the correct juice per proc', () => {
     const skillValuePerProc = wrapper.find('.juice-per-proc')
-    const juicePerSuccess = EnergyForEveryoneBerryJuice.activations.juice.amount()
+    const juicePerSuccess = EnergyForEveryoneBerryJuice.activations.juice.amount({
+      skillLevel: mockMember.member.skillLevel
+    })
     const juicePercent = EnergyForEveryoneBerryJuice.juicePercent
     expect(skillValuePerProc.text()).toBe(`x${juicePerSuccess * juicePercent}`)
   })
 
   it('displays the correct total energy value', () => {
     const totalEnergyValue = wrapper.find('.energy-total')
-    const expectedValue = StrengthService.skillValue({
-      skillActivation: EnergyForEveryoneBerryJuice.activations.energy,
-      amount: mockMember.production.skillValue.energy.amountToTeam,
-      timeWindow: '24H',
-      areaBonus: 1
-    })
+    const expectedValue = mockMember.production.skillValue.energy.amountToTeam * timeWindowFactor('24H')
     expect(totalEnergyValue.text()).toContain(compactNumber(expectedValue))
   })
 

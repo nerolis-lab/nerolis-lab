@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const CookingPowerUpS = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const CookingPowerUpS = new (class extends Mainskill {
   image = 'pot';
   description = (params: AmountParams) =>
     `Increases the quantity of Cooking items you get by ${this.potSizeAmounts[params.skillLevel - 1]}.`;
-  activations = {
+  activations: ActivationsType = {
     potSize: {
       unit: 'pot size',
       amount: this.leveledAmount(this.potSizeAmounts)

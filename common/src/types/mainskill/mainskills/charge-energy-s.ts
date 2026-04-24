@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const ChargeEnergyS = new (class extends Mainskill {
@@ -8,7 +8,7 @@ export const ChargeEnergyS = new (class extends Mainskill {
   description = (params: AmountParams) => `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to the user.`;
   RP = [400, 569, 785, 1083, 1496, 2066];
 
-  activations = {
+  activations: ActivationsType = {
     energy: {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts)

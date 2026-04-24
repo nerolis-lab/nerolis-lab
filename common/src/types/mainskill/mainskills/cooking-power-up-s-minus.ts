@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { CookingPowerUpS } from './cooking-power-up-s';
 
@@ -14,7 +14,7 @@ export const CookingPowerUpSMinus = new (class extends ModifiedMainskill {
   fullDescription = (params: AmountParams) =>
     `Gives your cooking pot room for ${this.potSizeAmounts[params.skillLevel - 1]} more ingredients next time you cook. If there's one or more other Pokémon on the team with the Plus or Minus main skills, also restores ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team.`;
 
-  activations = {
+  activations: ActivationsType = {
     solo: {
       unit: 'pot size',
       amount: this.leveledAmount(this.potSizeAmounts)

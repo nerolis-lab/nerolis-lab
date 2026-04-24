@@ -84,7 +84,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { StrengthService } from '@/services/strength/strength-service'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -113,6 +112,7 @@ export default defineComponent({
   computed: {
     members() {
       const production = []
+      const factor = this.comparisonStore.timeWindowFactor
       for (const memberProduction of this.comparisonStore.members) {
         const member = this.pokemonStore.getPokemon(memberProduction.externalId)
         if (!member) continue
@@ -123,19 +123,11 @@ export default defineComponent({
           member: member.name,
           pokemonName: memberPokemon.name,
           shiny: member.shiny,
-          berries: MathUtils.round(
-            (memberBerry?.amount ?? 0) * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
-            1
-          ),
+          berries: MathUtils.round((memberBerry?.amount ?? 0) * factor, 1),
           berryName: memberBerry?.berry.name ?? member.pokemon.berry.name,
-          ingredients:
-            memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) *
-            StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
+          ingredients: memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) * factor,
           ingredientList: this.splitIngredientMagnetIngredients(memberProduction.produceTotal.ingredients),
-          skillProcs: MathUtils.round(
-            memberProduction.skillProcs * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
-            1
-          )
+          skillProcs: MathUtils.round(memberProduction.skillProcs * factor, 1)
         })
       }
 
@@ -153,15 +145,12 @@ export default defineComponent({
         const nonIngMagnetIngs = ingredients.filter((ing) => ing.amount !== ingMagnetAmount)
 
         return nonIngMagnetIngs.map(({ amount, ingredient }) => ({
-          amount: MathUtils.round(
-            (amount - ingMagnetAmount) * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow),
-            1
-          ),
+          amount: MathUtils.round((amount - ingMagnetAmount) * this.comparisonStore.timeWindowFactor, 1),
           name: ingredient.name
         }))
       } else {
         return ingredients.map(({ amount, ingredient }) => ({
-          amount: MathUtils.round(amount * StrengthService.timeWindowFactor(this.comparisonStore.timeWindow), 1),
+          amount: MathUtils.round(amount * this.comparisonStore.timeWindowFactor, 1),
           name: ingredient.name
         }))
       }

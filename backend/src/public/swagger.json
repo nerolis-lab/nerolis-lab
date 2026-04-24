@@ -407,7 +407,20 @@
 										},
 										"units": {
 											"items": {
-												"type": "string"
+												"type": "string",
+												"enum": [
+													"energy",
+													"berries",
+													"ingredients",
+													"helps",
+													"skill helps",
+													"dream shards",
+													"strength",
+													"pot size",
+													"crit chance",
+													"candy",
+													"items"
+												]
 											},
 											"type": "array"
 										},

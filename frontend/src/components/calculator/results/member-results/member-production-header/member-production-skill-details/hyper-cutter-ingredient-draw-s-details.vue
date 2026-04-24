@@ -63,10 +63,8 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { IngredientDrawSHyperCutter, MathUtils } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
@@ -81,8 +79,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { userStore, teamStore, MathUtils, mainskillImage }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerNormalProc() {
@@ -91,7 +88,7 @@ export default defineComponent({
       })
     },
     skillValuePerCritProc() {
-      return IngredientDrawSHyperCutter.activations.ingredients.critAmount({
+      return IngredientDrawSHyperCutter.activations.ingredients.critAmount!({
         skillLevel: this.memberWithProduction.member.skillLevel
       })
     },
@@ -103,7 +100,7 @@ export default defineComponent({
       }))
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

@@ -29,7 +29,7 @@ describe('setupAndRunProductionSimulation', () => {
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {
@@ -63,7 +63,7 @@ describe('setupAndRunProductionSimulation', () => {
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {
@@ -97,7 +97,7 @@ describe('setupAndRunProductionSimulation', () => {
               2383,
               3290,
               4546,
-              5843,
+              6252,
             ],
             "activations": {
               "strength": {
@@ -191,7 +191,7 @@ describe('setupAndRunProductionSimulation', () => {
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -225,7 +225,7 @@ describe('setupAndRunProductionSimulation', () => {
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {
@@ -259,7 +259,7 @@ describe('setupAndRunProductionSimulation', () => {
                 2383,
                 3290,
                 4546,
-                5843,
+                6252,
               ],
               "activations": {
                 "strength": {

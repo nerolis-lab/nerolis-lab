@@ -75,11 +75,9 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { CookingPowerUpSMinus, IngredientMagnetSPlus, MathUtils, compactNumber, ingredient } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
@@ -95,8 +93,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    const userStore = useUserStore()
-    return { teamStore, pokemonStore, userStore, MathUtils, mainskillImage }
+    return { teamStore, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     aIng() {
@@ -131,15 +128,7 @@ export default defineComponent({
     },
     magnetIngCountTotal() {
       const amount = this.averageMagnetAmount * ingredient.TOTAL_NUMBER_OF_INGREDIENTS
-      const skillActivation = IngredientMagnetSPlus.activations.solo
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
     aIngCountTotal() {
       const amountIncludingMagnet =
@@ -147,34 +136,13 @@ export default defineComponent({
           (ing) => ing.ingredient.name === this.memberWithProduction.member.ingredients[0].ingredient.name
         )?.amount ?? 0
       const amount = Math.max(amountIncludingMagnet - this.averageMagnetAmount, 0)
-      const skillActivation = IngredientMagnetSPlus.activations.paired
-      if (!skillActivation) {
-        return 0
-      }
-      return compactNumber(
-        StrengthService.skillValue({
-          skillActivation,
-          amount,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
-      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
     amountOfEachIngredient() {
-      return compactNumber(
-        MathUtils.round(
-          StrengthService.skillValue({
-            skillActivation: IngredientMagnetSPlus.activations.solo,
-            amount: this.averageMagnetAmount,
-            timeWindow: this.teamStore.timeWindow,
-            areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-          }),
-          2
-        )
-      )
+      return compactNumber(this.averageMagnetAmount * this.timeWindowFactor)
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { ChargeStrengthS } from './charge-strength-s';
 
@@ -22,7 +22,7 @@ export const ChargeStrengthSStockpile = new (class extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Stockpile or Spit Up is selected. When Spit Up triggers, Snorlax gains Strength from Stockpile's number.`;
 
-  activations = {
+  activations: ActivationsType = {
     strength: {
       unit: 'strength',
       amount: this.leveledAmount(this.averageStrengthAmounts), // TODO: I think we can remove this in sleepapi 2.0

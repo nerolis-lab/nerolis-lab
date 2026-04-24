@@ -1,4 +1,4 @@
-import type { Static, TObject, TSchema } from '@sinclair/typebox';
+import type { Static, TObject, TProperties, TSchema } from '@sinclair/typebox';
 import { Kind, Type } from '@sinclair/typebox';
 import type { Knex } from 'knex';
 import { chunkArray } from 'sleepapi-common';
@@ -20,7 +20,7 @@ type SortKey<DBEntityType extends object> = keyof DBEntityType extends string
   : never;
 
 export abstract class AbstractDAO<
-  DBEntitySchemaType extends TObject,
+  DBEntitySchemaType extends TObject<TProperties & (typeof DBWithVersionedIdSchema)['properties']>,
   DBEntityType extends DBEntity = Static<DBEntitySchemaType> & DBEntity
 > {
   public abstract get tableName(): string;

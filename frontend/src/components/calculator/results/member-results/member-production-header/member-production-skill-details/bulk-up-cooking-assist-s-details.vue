@@ -82,10 +82,8 @@
 </template>
 
 <script lang="ts">
-import { StrengthService } from '@/services/strength/strength-service'
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import { useUserStore } from '@/stores/user-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { CookingAssistSBulkUp, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
@@ -100,8 +98,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const userStore = useUserStore()
-    return { userStore, teamStore, MathUtils, mainskillImage }
+    return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
     ingredientValuePerProc() {
@@ -116,26 +113,16 @@ export default defineComponent({
     },
     totalIngredientValue() {
       return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: CookingAssistSBulkUp.activations.ingredients,
-          amount: this.memberWithProduction.production.skillValue.ingredients.amountToSelf,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
+        this.memberWithProduction.production.skillValue.ingredients.amountToSelf * this.timeWindowFactor
       )
     },
     totalCritValue() {
       return compactNumber(
-        StrengthService.skillValue({
-          skillActivation: CookingAssistSBulkUp.activations.critChance,
-          amount: this.memberWithProduction.production.skillValue['crit chance'].amountToSelf,
-          timeWindow: this.teamStore.timeWindow,
-          areaBonus: this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
-        })
+        this.memberWithProduction.production.skillValue['crit chance'].amountToSelf * this.timeWindowFactor
       )
     },
     timeWindowFactor() {
-      return StrengthService.timeWindowFactor(this.teamStore.timeWindow)
+      return this.teamStore.timeWindowFactor
     }
   }
 })

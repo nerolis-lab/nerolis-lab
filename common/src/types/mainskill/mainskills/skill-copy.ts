@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill, MAINSKILLS } from '../mainskill';
 import { BerryBurstDisguise } from './berry-burst-disguise';
 import { ChargeStrengthMBadDreams } from './charge-strength-m-bad-dreams';
@@ -12,7 +12,7 @@ export const SkillCopy = new (class extends Mainskill {
   description = (params: AmountParams) =>
     'Copies and performs the main skill of one randomly selected Pokémon on the team.';
 
-  activations = {};
+  activations: ActivationsType = {};
 
   readonly blockedSkills: Mainskill[] = [this, ChargeStrengthMBadDreams, BerryBurstDisguise];
 

@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
 export const BerryBurst = new (class extends Mainskill {
@@ -10,7 +10,7 @@ export const BerryBurst = new (class extends Mainskill {
   description = (params: AmountParams) =>
     `Gets ${this.selfBerryAmounts[params.skillLevel - 1]} Berries plus ${this.teamBerryAmounts[params.skillLevel - 1]} of each of the Berries other Pokémon on your team collect.`;
 
-  activations = {
+  activations: ActivationsType = {
     berries: {
       unit: 'berries',
       amount: this.leveledAmount(this.selfBerryAmounts),

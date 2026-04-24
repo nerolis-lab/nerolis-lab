@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { EnergizingCheerS } from './energizing-cheer-s';
 
@@ -13,7 +13,7 @@ export const EnergizingCheerSNuzzle = new (class extends ModifiedMainskill {
   description = (params: AmountParams) =>
     `Restores ${this.energyAmounts[params.skillLevel - 1]} Energy to one random Pokémon on your team. If you're lucky, that Pokémon will also gain a main skill activation bonus.`;
 
-  activations = {
+  activations: ActivationsType = {
     energy: {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts),

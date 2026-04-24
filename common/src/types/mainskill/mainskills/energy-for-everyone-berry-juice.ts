@@ -1,4 +1,4 @@
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { EnergyForEveryone } from './energy-for-everyone';
 
@@ -14,7 +14,7 @@ export const EnergyForEveryoneBerryJuice = new (class extends ModifiedMainskill 
   juicePercent: number = 0; // TODO: Replace once real numbers are known.
   juiceAmount: number = 1;
 
-  activations = {
+  activations: ActivationsType = {
     energy: {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts)

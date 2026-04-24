@@ -1,6 +1,6 @@
 import type { Ingredient } from '../../ingredient';
 import { MOOMOO_MILK, ROUSING_COFFEE } from '../../ingredient/ingredients';
-import type { AmountParams } from '../mainskill';
+import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
 import { IngredientMagnetS } from './ingredient-magnet-s';
 
@@ -34,7 +34,7 @@ export const IngredientMagnetSPlus = new (class extends ModifiedMainskill {
     gets an additional ${ingredientName} x ${bonusAmount}.`;
   };
 
-  activations = {
+  activations: ActivationsType = {
     solo: {
       unit: 'ingredients',
       amount: this.leveledAmount(this.ingredientAmounts)

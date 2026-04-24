@@ -263,12 +263,12 @@ export function simulation(params: {
             if (skillActivation.skill.is(ChargeEnergySMoonlight)) {
               const energyFromCrit =
                 skillActivation.fractionOfProc *
-                (ChargeEnergySMoonlight.activations.energy.critAmount({
+                (ChargeEnergySMoonlight.activations.energy.critAmount!({
                   skillLevel: input.skillLevel ?? skillActivation.skill.maxLevel
                 }) /
                   5);
 
-              skillEnergyOthersValue += energyFromCrit * ChargeEnergySMoonlight.activations.energy.critChance;
+              skillEnergyOthersValue += energyFromCrit * ChargeEnergySMoonlight.activations.energy.critChance!;
             }
           } else {
             skillEnergyOthersValue += skillActivation.adjustedAmount;
@@ -282,11 +282,11 @@ export function simulation(params: {
             const metronomeFactor = metronomeUser ? Metronome.metronomeSkills.length : 1;
 
             const amountNoCrit =
-              BerryBurstDisguise.activations.berries.teamAmount({ skillLevel }) * skillActivation.fractionOfProc;
-            const critChance = skillActivation.critChance ?? BerryBurstDisguise.activations.berries.critChance;
+              BerryBurstDisguise.activations.berries.teamAmount!({ skillLevel }) * skillActivation.fractionOfProc;
+            const critChance = skillActivation.critChance ?? BerryBurstDisguise.activations.berries.critChance!;
 
             const averageTeamBerryAmount =
-              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.activations.berries.critMultiplier) /
+              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.activations.berries.critMultiplier!) /
               metronomeFactor;
 
             skillBerriesOtherValue += averageTeamBerryAmount;
@@ -296,7 +296,7 @@ export function simulation(params: {
             const metronomeFactor = metronomeUser ? Metronome.metronomeSkills.length : 1;
 
             const amountNoCrit =
-              BerryBurst.activations.berries.teamAmount({ skillLevel }) * skillActivation.fractionOfProc;
+              BerryBurst.activations.berries.teamAmount!({ skillLevel }) * skillActivation.fractionOfProc;
 
             const averageTeamBerryAmount = amountNoCrit / metronomeFactor;
 

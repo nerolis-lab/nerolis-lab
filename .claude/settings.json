@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["Bash(npx vitest *)", "Bash(npx eslint *)", "Bash(npx tsc *)", "Bash(npm run lint)"]
+  }
+}

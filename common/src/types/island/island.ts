@@ -18,4 +18,6 @@ export interface TeamAreaDTO {
   islandName: IslandShortName;
   favoredBerries: string;
   expertModifier?: ExpertRandomBonusType;
+  mainFavoriteBerry?: string;
+  subFavoriteBerries?: string;
 }
