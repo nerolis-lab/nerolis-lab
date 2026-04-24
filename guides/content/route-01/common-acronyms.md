@@ -5,7 +5,7 @@ author: Cyars
 order: 20
 ---
 
-## General:
+## General
 
 **Pips** = Points required to befriend a Pokémon  
 **FL** = Friendship Level  
@@ -13,12 +13,12 @@ order: 20
 **DP** = Drowsy Power  
 **AB** = Area Bonus  
 **SS** = Sneaky Snacking (for more info, see [Sneaky Snacking Explained](../faq/sneaky-snacking.md))  
-**A/B/C** = Ingredient order/slot; use command `-ABC` for details  
+**A/B/C/X** = Ingredient order/slot e.g. AAA, ABB, ABC, AAX  
 **Potmon** = Pokémon with `Cooking Power-Up S` Main Skill  
 **Proc/Trigger** = Skill activation  
 **Ribbons** = Accrued sleep time bonuses
 
-## Main Skills:
+## Main Skills
 
 **CS S/M** = Charge Strength S/M  
 **DSM** = Dream Shard Magnet S  
@@ -31,11 +31,11 @@ order: 20
 **ID/IngDraw** = Ingredient Draw S  
 **BB** = Berry Burst  
 **TC** = Tasty Chance S  
--# ¹ In relation to Main Skills. Not to be confused with the Subskill `Helping Bonus`.
+¹ In relation to Main Skills. Not to be confused with the Subskill `Helping Bonus`.
 
-## Subskills:
+## Subskills
 
-**S/M/L** = Subskill tiers (e.g. BF\***\*S\*\***, HS\***\*M\*\***, Inv\***\*L\*\***)  
+**S/M/L** = Subskill tiers (e.g. BF**S**, HS**M**, Inv**L**)  
 **BFS** = Berry Finding  
 **IF** = Ingredient Finder  
 **HS** = Helping Speed  
@@ -47,15 +47,15 @@ order: 20
 **ERB** = Energy Recovery Bonus  
 **REB** = Research EXP Bonus  
 **SEB** = Sleep EXP Bonus  
--# ² In relation to Subskills. Not to be confused with the Main Skill `Helper Boost`.
+² In relation to Subskills. Not to be confused with the Main Skill `Helper Boost`.
 
-## Natures:
+## Natures
 
-**+/-** = Boost/Reduction; use command `-natures` for details  
+**+/-** = Up (boost) / Down (reduction)
 **SOH** = Speed of Help  
 **MSC** = Main Skill Chance
 
-## Islands:
+## Islands
 
 **GG** = Greengrass Isle  
 **GGEX** = Greengrass Isle Expert Mode  
@@ -65,9 +65,9 @@ order: 20
 **LL** = Lapis Lakeside  
 **OGPP** = Old Gold Power Plant  
 **AC** = Amber Canyon  
--# ³ In relation to Islands. Not to be confused with the abbreviation for `Skill Trigger`.
+³ In relation to Islands. Not to be confused with the abbreviation for `Skill Trigger`.
 
-## Items:
+## Items
 
 **GCT** = Good Camp Ticket  
 **Mainseed/MSS/MS/Gold** = Main Skill Seed  
@@ -75,7 +75,7 @@ order: 20
 **MB** = Master Biscuit  
 **HC** = Handy Candy
 
-## Events:
+## Events
 
 **GSD** = Good Sleep Day  
 **NMD** = New Moon Day

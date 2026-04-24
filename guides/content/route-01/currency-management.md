@@ -2,17 +2,17 @@
 title: Currency Management
 fullTitle: Currency Management
 author: Cyars, Snackson5, mawilewave, Tindo
-order: 40
+order: 50
 ---
 
-## 1) **Pace of Gameplay**
+## Pace of Gameplay
 
 Resources are less abundant + catch frequency is FAR slower vs. Main Series/PoGO.
 
 - Spend your resources **effectively _and_ efficiently**!
 - Expect to encounter investable Mons 1-2 times a month _at most._ Leveling your first Mon to 60 takes ~6-12 months.
 
-## 2) **Sleep Points**
+## Sleep Points
 
 Points gained daily/monthly differs based on F2P or Premium Pass status.
 
@@ -36,7 +36,7 @@ Excluding Event Rewards/Developer Gifts and including the 2000 Points gained fro
 - **Premium** players gain a max of **9000 Points monthly**.
   - (Includes the static 1000 Points bonus from monthly Premium Pass reward)
 
-## 3) **Optimal Sleep Points Usage**
+## Optimal Sleep Points Usage
 
 Expenditure priorities differ based on F2P or Premium status.
 
@@ -62,9 +62,9 @@ ALL FOLLOWING CALCULATIONS ASSUME NIGHTLY SLEEP SCORE OF **100**:
 
 ### **What About **Master Biscuits**?**
 
-The MB costs 4000 Sleep Points! This is a _significant_ portion of your monthly Points. Remember, use resources \***\*efficiently\*\***. MBs are an extremely **_inefficient_** use of Points so for the vast majority of players, buying the MB is **highly discouraged**.
+The MB costs 4000 Sleep Points! This is a _significant_ portion of your monthly Points. Remember, use resources **efficiently**. MBs are an extremely **_inefficient_** use of Points so for the vast majority of players, buying the MB is **highly discouraged**.
 
-## 4) **Diamonds (D) Gained + Optimal Usage**
+## Diamonds (D) Gained + Optimal Usage
 
 Expect **~5650D per year** excluding Achievements/Recipe & Ingredient unlocks/Sleep Style Goals. Breakdown:
 
@@ -76,14 +76,14 @@ Expect **~5650D per year** excluding Achievements/Recipe & Ingredient unlocks/Sl
 
 ### Daily Gifts
 
-- [Breakdown + rates](https://discord.com/channels/1129035839398228028/1137011809946193971/1186326923819892806) → 6.675D per daily gift x 365 gifts = **2436.375D per year**
+- You gain on average 6.675D per daily gift x 365 gifts = **2440D per year**
 
 ### Weekly Missions
 
 [Complete list here](https://www.serebii.net/pokemonsleep/missions.shtml)
 
 - The cooking mission is not guaranteed.
-- Rolling 5 of 7 missions means 21 combinations (10 with one diamond mission, 10 with both, and 1 with neither) = 21.429D per week x 52 weeks = **1114.308D per year**
+- Rolling 5 of 7 missions means 21 combinations (10 with one diamond mission, 10 with both, and 1 with neither) = 21.429D per week x 52 weeks = **1110D per year**
 
 ### Order of priority:
 
@@ -92,4 +92,3 @@ Expect **~5650D per year** excluding Achievements/Recipe & Ingredient unlocks/Sl
 - ↑ Ingredient Bag → MAX
 - Reassess Item Bag/Pokémon Box _again_ (increase **ONLY** as needed)
 - **GOOD** Bundles
-  -# Thank you Snack, Tindo, and o/ for contributions!

@@ -9,13 +9,11 @@ The early game is a completely different ecosystem compared to the mid or late g
 
 The goal of this guide is to help you navigate the early game, dispel some of the many misconceptions floating around, and make the start of your Pokémon Sleep journey easier! By no means is this the only way to play the game, but optimizing certain aspects of your early game will certainly help your progress. Let's begin!
 
-### [- Cute picture of snorlax omitted -]
-
 ## What Pokemon do I focus on catching early game?
 
-Berry mons followed by ingredient mons! The early game should be focused on getting to Friendship Level 10 on berry mons (through catching them) as that guarantees the first slot will be a gold skill. What that means is that the coveted Berry Finding S skill has a 1/7 chance of showing up in the first slot! If you’re wondering which berry mons to focus on early, I recommend Pichu, Totodile, Cyndaquil, Chikorita, Spheal, and Mudkip as they’re relatively common on Greengrass Isle, and one of the best berry mons of their respective islands. If you’re interested in reading more about berry mons, visit [Meta Analysis: Berry Specialists] OMITTED PAGE -> INFOGRAPHIC
+Berry mons followed by ingredient mons! The early game should be focused on getting to Friendship Level 10 on berry mons (through catching them) as that guarantees the first slot will be a gold skill. What that means is that the coveted Berry Finding S skill has a 1/7 chance of showing up in the first slot! If you’re wondering which berry mons to focus on early, I recommend Pichu, Totodile, Cyndaquil, Chikorita, Spheal, and Mudkip as they’re relatively common on Greengrass Isle, and one of the best berry mons of their respective islands. An in-depth berry mon meta analysis is coming soon.
 
-Sometimes you get unlucky and you don’t see any good berry mons to aim for, we can aim for ingredient mons during those unlucky mornings! Even though we may not want to use ing mons and cook bigger meals this early, it’s still a good idea to start catching them and look for keepers. If you’re interested in which ing mons are best for each ing, visit [Meta Analysis: Ingredient Specialists](../faq/meta-ingredient.md)
+Sometimes you get unlucky and you don’t see any good berry mons to aim for, we can aim for ingredient mons during those unlucky mornings! Even though we may not want to use ing mons and cook bigger meals this early, it’s still a good idea to start catching them and look for keepers. An in-depth ingredient mon meta analysis is coming soon.
 
 You may have noticed a lack of mention for early game skill mons, and that’s because the necessity of an early game skill mon is highly debatable. **They require being fed 3-5 Main Skill Seeds to be viable to use so we rate them with higher standards, and they are not worth running without main seeds**. Despite this, it might be lucrative to invest in one to speed up your early game at the expense of needing to recover the main seeds used (reminder that with sleep points, premium players get an average of 1 main seed a month and f2p players get one every other month). If you are interested in what skill mons are worth investing in, visit: [Meta Analysis: Skill Specialists](../faq/meta-skill.md)
 
@@ -32,11 +30,13 @@ They do not teach you anything about the game and are frequently missing/assumin
 
 [Introductory Pokemon Rating Guide](../faq/rating-intro.md)
 This is a good introduction to judging subskills and natures, and matching the right ones to your Pokémon's specialty (Ing Finders are very important for Ing mon but less so on Skill mons). It still has the same problem with PR calcs where it can not compare mons across species but at least it breaks down what subskills and natures are beneficial to each other.  
-It is highly recommended to move off of this system once you get a good feel on how to judge mons and move to one of the various calculators here:  
-[Neroli's Lab] OMITTED -> SCREEENSHOT BASED  
-[Nitoyon] OMITTED -> SCREEENSHOT BASED  
-[RaenonX] OMITTED -> SCREEENSHOT BASED  
-These calculators are species-agnostic and show you exactly what a mon produces for you to accurately assess between any 2 mons (for example, it can show the AAA dratini you caught can make 120 herbs at 60 while an AAA gastly you've been using makes about 80 herbs as a lvl 60 gengar)
+It is highly recommended to move off of this system once you get a good feel on how to judge mons and move to one of the various calculators here:
+
+- [Neroli's Lab](https://nerolislab.com/calculator)
+- [Nitoyon](https://nitoyon.github.io/pokesleep-tool/iv/)
+- [RaenonX](https://pks.raenonx.cc/en/production)
+
+  These calculators are species-agnostic and show you exactly what a mon produces for you to accurately assess between any 2 mons (for example, it can show the AAA dratini you caught can make 120 herbs at 60 while an AAA gastly you've been using makes about 80 herbs as a lvl 60 gengar)
 
 ## Which Pokemon do I use on the team? What do I cook early game?
 
@@ -44,9 +44,7 @@ Berry specialists!!! Ingredient specialists are terrible before level 30 as thei
 
 Go into the game and use the in-game berry team builder, which will display your strongest mons from left to right. Energy is accounted for, so if you have a good berry mon and it’s dead tired, it may not show up on the screen. Once your relevant mons have recovered, feel free to replace the last mon with an ing mon that synergizes with the ings produced by your team.
 
-Take a look at the below chart and see if an ing mon will unlock any of the 2 ing dishes available for your meal type this week. You may also run an early game skill mon if you've caught a good one to invest in.
-
-### [- infographic omitted -]
+Take a look at [the game's recipes](https://nerolislab.com/recipes) and see if an ing mon will unlock any of the 2 ing dishes available for your meal type this week. You may also run an early game skill mon if you've caught a good one to invest in.
 
 ## When do I leave Greengrass?
 

@@ -2,43 +2,43 @@
 title: Item Management
 fullTitle: Item Management
 author: Cyars, Snackson5, Tindo
-order: 50
+order: 40
 ---
 
-## 1) Biscuits
+## Biscuits
 
-### **Biscuit Economy: F2P vs. Premium Pass**
+### Biscuit Economy: F2P vs. Premium Pass
 
 The total Biscuits available to purchase with Sleep Points also differs depending on whether a player is F2P or Premium:
 
 - **F2P** players have access to **30 Poké Biscuits** monthly from the Regular Exchange for _150 Sleep Points_ each.
 - **Premium Pass** players have access to an extra **10 Poké Biscuits** for _100 Sleep Points each_ and **5 Great Biscuits** for _400 Sleep Points_ each from the Premium Exchange monthly **in addition** to the **30 Poké Biscuits** monthly from the Regular Exchange.
-  There’s a chance to receive a Poké Biscuit (or other goodies) from your [free Daily Gift in the General Exchange](https://discord.com/channels/1129035839398228028/1299412905665757214/1398692496405692477)!
 
-### **Typical Catch Frequency: F2P vs. Premium Pass**
+There’s a 25% chance to receive a Poké Biscuit (or other goodies) from the Daily Gift in the General Shop.
+
+### Typical Catch Frequency: F2P vs. Premium Pass
 
 Pay attention to your Biscuit expenditure! Consider allocating Biscuits to spend during Events with increased spawn rates.
 
-- **F2P** players have access to a 3 pip Daily Bonus Biscuit and can expect to catch Mons **\*every other day** on average\*.
-- **Premium** players have access to a 4 pip Daily Bonus Biscuit and can expect to catch Mons **\*every day** on average\*.
+- **F2P** players have access to a 3 pip Daily Bonus Biscuit and can expect to catch Mons **_every other day_** on average.
+- **Premium** players have access to a 4 pip Daily Bonus Biscuit and can expect to catch Mons **_every day_** on average.
   Of note, if a player logs two sleeps, the **first sleep** will count as the primary sleep and award a Daily Bonus Biscuit. The player will **not** receive a Daily Bonus Biscuit on their second sleep.
 
-### **Notable Biscuit Mechanics**
+### Notable Biscuit Mechanics
 
 There are two baseline mechanics to be aware of:
 
 - After feeding a Pokémon its first Biscuit, there is a 50% chance of it becoming "full" with each subsequent Biscuit fed.
 - There is a chance for Biscuits to "crit" upon feeding a Mon.
-  [How do we take advantage of these mechanics?](https://discord.com/channels/1129035839398228028/1398521570787594422)
-  -# Further crit rate documentation [here](https://pks.raenonx.cc/en/docs/view/game/biscuit-feeding) and in the [FAQ](https://discord.com/channels/1129035839398228028/1398521570787594422/1398551901922131999).
+  [How do we take advantage of these mechanics?](../faq/catching-strategies.md)
 
-### **What About **Shinies**?**
+### What About Shinies?
 
 SHINIES ARE A **GUARANTEED** CATCH WITH A **SINGLE** POKÉ BISCUIT.
 
 - **DO NOT MASTER BISCUIT A SHINY**.
 
-## 2) **Seeds**
+## Seeds
 
 Main Skill Seeds (MSS) & Subskill Seeds (SSS) gained per month differ based on F2P or Premium status.
 
@@ -64,19 +64,18 @@ Only seed **permanent** Mons with a **strong** preference for the following orde
   **Always ask if unsure!**
   -# ¹ Event Missions/Rewards & Developer Gifts increase lifetime average.
 
-## 3) Mints
+## Mints
 
 Neutral Mints change a Mon's Nature to Neutral. These are an **_extremely_** limited resource with **only 2** available. They're likely obtainable again in the future, but this is _not guaranteed_.
 
 - Do **NOT** use mints to remove minorly inconvenient Natures.
 - Only mint if there's a significant impact on a **forever** Mon’s output.
-  See pins in <#1396340509504438313> for more details. **Always ask if unsure!**
 
-## 4) Handy Candies/Dream Shard Clusters
+## Handy Candies/Dream Shard Clusters
 
 Use _S_ as needed (i.e. need candies/shards for leveling or to free up inventory space) and save _M_ and _L_ for rare species/higher RR.
 
-## 5) Incenses
+## Incenses
 
 Use cases include but are not limited to:
 
@@ -85,4 +84,3 @@ Use cases include but are not limited to:
 - Incenses on Monday-Wednesday to mitigate poor early week spawns
 - Growth/Focus Incenses on Sleep/Research EXP boosted days
 - Recovery Incense to clear Incense Missions during event weeks
-  -# Thank you Snack and Tindo for contributions!

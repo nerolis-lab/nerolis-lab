@@ -2,7 +2,7 @@
 title: Credits
 fullTitle: Credits
 author: Tooz
-order: 0
+order: 100
 ---
 
 ## Writers
@@ -13,6 +13,7 @@ order: 0
 
 - Tooz
 
+<!--
 ## Neroli's Lab devs
 
 - [- PLACEHOLDER TEXT -]
@@ -20,3 +21,4 @@ order: 0
 ## Graphic designers
 
 -
+-->

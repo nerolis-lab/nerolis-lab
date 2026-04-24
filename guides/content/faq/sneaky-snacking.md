@@ -1,7 +1,7 @@
 ---
 title: Sneaky Snacking
 fullTitle: Sneaky Snacking Explained
-author: Snakson5, mawilewave, Tindo
+author: Snackson5, mawilewave, Tindo
 order: 20
 ---
 

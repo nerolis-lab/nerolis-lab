@@ -2,7 +2,7 @@
 title: FAQ
 fullTitle: FAQ Table of Contents
 author: Snackson5
-order: 0
+order: 20
 ---
 
 List of FAQs and guides for learning the game
