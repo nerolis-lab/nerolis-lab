@@ -1,3 +1,11 @@
+# [2.45.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.44.0...v2.45.0) (2026-04-25)
+
+
+### Features
+
+* add search support to vitepress handling custom header ([37bb46f](https://github.com/nerolis-lab/nerolis-lab/commit/37bb46f3ef37bd7708a596d3adbb3e7458c015bf))
+* add search to guides site ([2904d96](https://github.com/nerolis-lab/nerolis-lab/commit/2904d96fd5b5c79002a625c908f99b2b5f2d19cd))
+
 # [2.44.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.43.0...v2.44.0) (2026-04-23)
 
 
