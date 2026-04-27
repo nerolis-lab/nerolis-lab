@@ -48,6 +48,13 @@ export default defineConfig({
     docFooter: {
       prev: 'Previous',
       next: 'Next'
+    },
+    lastUpdated: {
+      text: 'Last updated',
+      formatOptions: {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      }
     }
   },
 

@@ -50,15 +50,15 @@ export const SITE_NAV_ITEMS: readonly SiteNavItem[] = [
     label: 'Settings',
     path: '/settings',
     icon: 'mdi-cog',
-    spa: true,
-    dividerBefore: true
+    spa: true
   },
   // {
   //   id: 'guides',
   //   label: 'Guides',
   //   path: '/guides/',
   //   icon: 'mdi-book-open-variant-outline',
-  //   spa: false
+  //   spa: false,
+  //   dividerBefore: true
   // },
   {
     id: 'admin',
@@ -66,7 +66,8 @@ export const SITE_NAV_ITEMS: readonly SiteNavItem[] = [
     path: '/admin',
     icon: 'mdi-shield-account',
     spa: true,
-    adminOnly: true
+    adminOnly: true,
+    dividerBefore: true
   }
 ];
 
