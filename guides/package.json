@@ -19,7 +19,7 @@
   "devDependencies": {
     "@mdi/font": "^7.4.47",
     "@types/node": "^22.10.4",
-    "glob": "^10.4.5",
+    "glob": "^13.0.6",
     "sass-embedded": "^1.89.2",
     "typescript": "^5.8.3",
     "vite-plugin-vuetify": "^2.1.2",
