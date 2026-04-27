@@ -13,7 +13,7 @@ import {
   MOOMOO_MILK,
   ROUSING_COFFEE
 } from '../ingredient/ingredients';
-import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strength-m-bad-dreams';
+import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strength-m/charge-strength-m-bad-dreams';
 import type { Pokemon } from './pokemon';
 
 export const DARKRAI: Pokemon = createAllSpecialist({
