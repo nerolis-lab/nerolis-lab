@@ -72,13 +72,6 @@ onMounted(() => {
 
 .doc-heading {
   margin-bottom: 24px;
-
-  h1 {
-    font-family: var(--font-family-base);
-    @include typography-h1-page;
-    color: var(--color-secondary-500);
-    margin: 0;
-  }
 }
 
 .author-byline {
