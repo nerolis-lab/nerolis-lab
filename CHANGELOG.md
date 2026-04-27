@@ -1,3 +1,10 @@
+# [2.46.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.45.1...v2.46.0) (2026-04-27)
+
+
+### Features
+
+* add initial guides content ([b86a6b2](https://github.com/nerolis-lab/nerolis-lab/commit/b86a6b2c8b633984817e3126dd903de5ab3202e5))
+
 ## [2.45.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.45.0...v2.45.1) (2026-04-27)
 
 # [2.45.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.44.0...v2.45.0) (2026-04-25)
