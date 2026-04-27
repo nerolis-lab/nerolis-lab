@@ -1,8 +1,8 @@
 import type { ActivationsType, AmountParams } from '../mainskill';
 import { Mainskill } from '../mainskill';
 
-export const EnergyForEveryone = new (class extends Mainskill {
-  name = 'Energy For Everyone';
+export const EnergyForEveryoneS = new (class extends Mainskill {
+  name = 'Energy For Everyone S';
   RP = [1120, 1593, 2197, 3033, 4187, 5785];
   energyAmounts = [5, 7, 9, 11.4, 15, 18.1];
   image = 'energy';

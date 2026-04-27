@@ -1,20 +1,20 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
-import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
+import { EnergyForEveryoneSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { EnergyForEveryone } from 'sleepapi-common';
+import { EnergyForEveryoneS } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-describe('EnergyForEveryoneEffect', () => {
+describe('EnergyForEveryoneSEffect', () => {
   let memberState: MemberState;
   let skillState: SkillState;
-  let energyForEveryoneEffect: EnergyForEveryoneEffect;
+  let energyForEveryoneEffect: EnergyForEveryoneSEffect;
 
   beforeEach(() => {
     memberState = mocks.memberState();
     skillState = mocks.skillState(memberState);
-    energyForEveryoneEffect = new EnergyForEveryoneEffect();
+    energyForEveryoneEffect = new EnergyForEveryoneSEffect();
   });
 
   it('should activate energy for everyone correctly', () => {
@@ -24,7 +24,7 @@ describe('EnergyForEveryoneEffect', () => {
     const result = energyForEveryoneEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: EnergyForEveryone,
+      skill: EnergyForEveryoneS,
       activations: [
         {
           unit: 'energy',
@@ -41,7 +41,7 @@ describe('EnergyForEveryoneEffect', () => {
     const result = energyForEveryoneEffect.activate(skillState);
 
     expect(result).toEqual({
-      skill: EnergyForEveryone,
+      skill: EnergyForEveryoneS,
       activations: [
         {
           unit: 'energy',

@@ -69,9 +69,9 @@ import {
   EnergizingCheerS,
   EnergizingCheerSHealPulse,
   EnergizingCheerSNuzzle,
-  EnergyForEveryone,
-  EnergyForEveryoneBerryJuice,
-  EnergyForEveryoneLunarBlessing,
+  EnergyForEveryoneS,
+  EnergyForEveryoneSBerryJuice,
+  EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
   IngredientDrawS,
@@ -147,7 +147,7 @@ export const JIGGLYPUFF: Pokemon = createSkillSpecialist({
     b: PURE_OIL,
     c: SOOTHING_CACAO
   },
-  skill: EnergyForEveryone
+  skill: EnergyForEveryoneS
 });
 
 export const WIGGLYTUFF: Pokemon = evolvedPokemon(JIGGLYPUFF, {
@@ -545,7 +545,7 @@ export const SHUCKLE: Pokemon = createSkillSpecialist({
     b: ROUSING_COFFEE,
     c: HONEY
   },
-  skill: EnergyForEveryoneBerryJuice
+  skill: EnergyForEveryoneSBerryJuice
 });
 
 export const HERACROSS: Pokemon = createSkillSpecialist({
@@ -677,7 +677,7 @@ export const RALTS: Pokemon = createSkillSpecialist({
     b: GREENGRASS_CORN,
     c: LARGE_LEEK
   },
-  skill: EnergyForEveryone
+  skill: EnergyForEveryoneS
 });
 
 export const KIRLIA: Pokemon = evolvedPokemon(RALTS, {
@@ -972,7 +972,7 @@ export const CRESSELIA: Pokemon = createSkillSpecialist({
     b: SOOTHING_CACAO,
     c: SNOOZY_TOMATO
   },
-  skill: EnergyForEveryoneLunarBlessing
+  skill: EnergyForEveryoneSLunarBlessing
 });
 
 export const DWEBBLE: Pokemon = createSkillSpecialist({
@@ -1039,7 +1039,7 @@ export const SYLVEON: Pokemon = evolvedPokemon(EEVEE, {
   skillPercentage: 4.0,
   berry: PECHA,
   carrySize: 15,
-  skill: EnergyForEveryone
+  skill: EnergyForEveryoneS
 });
 
 export const DEDENNE: Pokemon = createSkillSpecialist({
@@ -1182,7 +1182,7 @@ export const PAWMI: Pokemon = createSkillSpecialist({
     b: MOOMOO_MILK,
     c: FANCY_EGG
   },
-  skill: EnergyForEveryone
+  skill: EnergyForEveryoneS
 });
 
 export const PAWMO: Pokemon = evolvedPokemon(PAWMI, {

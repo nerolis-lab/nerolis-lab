@@ -20,9 +20,9 @@ import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/t
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-effect.js';
 import { EnergizingCheerSHealPulseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-heal-pulse-effect.js';
 import { EnergizingCheerSNuzzleEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s-nuzzle-effect.js';
-import { EnergyForEveryoneBerryJuiceEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-berry-juice-effect.js';
-import { EnergyForEveryoneEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-effect.js';
-import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
+import { EnergyForEveryoneSBerryJuiceEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s-berry-juice-effect.js';
+import { EnergyForEveryoneSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s-effect.js';
+import { EnergyForEveryoneSLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost-effect.js';
 import { IngredientDrawSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s-effect.js';
@@ -63,9 +63,9 @@ import {
   EnergizingCheerS,
   EnergizingCheerSHealPulse,
   EnergizingCheerSNuzzle,
-  EnergyForEveryone,
-  EnergyForEveryoneBerryJuice,
-  EnergyForEveryoneLunarBlessing,
+  EnergyForEveryoneS,
+  EnergyForEveryoneSBerryJuice,
+  EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
   IngredientDrawS,
@@ -73,9 +73,9 @@ import {
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
   IngredientMagnetSPlus,
+  IngredientMagnetSPresent,
   mainskillUnits,
   Metronome,
-  PresentIngredientMagnetS,
   SkillCopy,
   SkillCopyMimic,
   SkillCopyTransform,
@@ -127,14 +127,14 @@ export class SkillState {
       [EnergizingCheerS, new EnergizingCheerSEffect()],
       [EnergizingCheerSHealPulse, new EnergizingCheerSHealPulseEffect()],
       [EnergizingCheerSNuzzle, new EnergizingCheerSNuzzleEffect()],
-      [EnergyForEveryone, new EnergyForEveryoneEffect()],
-      [EnergyForEveryoneBerryJuice, new EnergyForEveryoneBerryJuiceEffect()],
-      [EnergyForEveryoneLunarBlessing, new EnergyForEveryoneLunarBlessingEffect()],
+      [EnergyForEveryoneS, new EnergyForEveryoneSEffect()],
+      [EnergyForEveryoneSBerryJuice, new EnergyForEveryoneSBerryJuiceEffect()],
+      [EnergyForEveryoneSLunarBlessing, new EnergyForEveryoneSLunarBlessingEffect()],
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
       [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
-      [PresentIngredientMagnetS, new IngredientMagnetSPresentEffect()],
+      [IngredientMagnetSPresent, new IngredientMagnetSPresentEffect()],
       [IngredientDrawS, new IngredientDrawSEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],

@@ -16,7 +16,7 @@ import {
   DOMAIN_VERSION,
   EnergizingCheerS,
   EnergizingCheerSHealPulse,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   ExtraHelpfulS,
   HelperBoost,
   MAX_TEAM_SIZE,
@@ -492,7 +492,7 @@ export const useTeamStore = defineStore('team', {
       const supportSkill = [
         EnergizingCheerS,
         EnergizingCheerSHealPulse,
-        EnergyForEveryone,
+        EnergyForEveryoneS,
         HelperBoost,
         ExtraHelpfulS,
         Metronome

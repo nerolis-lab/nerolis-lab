@@ -10,7 +10,7 @@ import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sle
 import {
   BerryBurstDisguise,
   ChargeStrengthS,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   PINSIR,
   RandomUtils,
   berry,
@@ -187,7 +187,7 @@ describe('TeamSimulator', () => {
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonWithIngredients,
-        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
+        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryoneS }
       },
       settings: {
         carrySize: 10,
@@ -219,14 +219,14 @@ describe('TeamSimulator', () => {
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonWithIngredients,
-        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryone }
+        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryoneS }
       },
       settings: {
         carrySize: 10,
         level: 60,
         ribbon: 0,
         nature: nature.ADAMANT,
-        skillLevel: EnergyForEveryone.maxLevel,
+        skillLevel: EnergyForEveryoneS.maxLevel,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
         externalId: 'some id',
         sneakySnacking: false
@@ -254,7 +254,7 @@ describe('TeamSimulator', () => {
     expect(
       5 *
         result.members[0].skillProcs *
-        EnergyForEveryone.activations.energy.amount({ skillLevel: EnergyForEveryone.maxLevel })
+        EnergyForEveryoneS.activations.energy.amount({ skillLevel: EnergyForEveryoneS.maxLevel })
     ).toEqual(skillAmount + wasteAmount);
   });
 

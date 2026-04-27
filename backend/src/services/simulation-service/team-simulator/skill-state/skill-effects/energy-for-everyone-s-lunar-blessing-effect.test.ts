@@ -1,21 +1,21 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
-import { EnergyForEveryoneLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-lunar-blessing-effect.js';
+import { EnergyForEveryoneSLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s-lunar-blessing-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import * as commonModule from 'sleepapi-common';
-import { CarrySizeUtils, EnergyForEveryoneLunarBlessing, MAX_TEAM_SIZE } from 'sleepapi-common';
+import { CarrySizeUtils, EnergyForEveryoneSLunarBlessing, MAX_TEAM_SIZE } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-describe('EnergyForEveryoneLunarBlessingEffect', () => {
+describe('EnergyForEveryoneSLunarBlessingEffect', () => {
   let memberState: MemberState;
   let skillState: SkillState;
-  let effect: EnergyForEveryoneLunarBlessingEffect;
+  let effect: EnergyForEveryoneSLunarBlessingEffect;
 
   beforeEach(() => {
     memberState = mocks.memberState();
     skillState = mocks.skillState(memberState);
-    effect = new EnergyForEveryoneLunarBlessingEffect();
+    effect = new EnergyForEveryoneSLunarBlessingEffect();
   });
 
   it('should activate with correct berry amounts for 1 unique member', () => {
@@ -24,11 +24,11 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const energyForEveryoneAmount = 15;
 
     const preExistingSkillProduce = mocks.produce();
-    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
+    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
       skillLevel,
       extra: unique
     });
-    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
+    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
       skillLevel,
       extra: unique
     });
@@ -50,7 +50,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const result = effect.activate(skillState);
 
     expect(result).toEqual({
-      skill: EnergyForEveryoneLunarBlessing,
+      skill: EnergyForEveryoneSLunarBlessing,
       activations: [
         {
           unit: 'berries',
@@ -98,11 +98,11 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     skillState.memberState.member.settings.skillLevel = skillLevel;
     vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
-    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
+    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
       skillLevel,
       extra: unique
     });
-    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
+    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
       skillLevel,
       extra: unique
     });
@@ -118,7 +118,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const result = effect.activate(skillState);
 
     expect(result).toEqual({
-      skill: EnergyForEveryoneLunarBlessing,
+      skill: EnergyForEveryoneSLunarBlessing,
       activations: [
         {
           unit: 'berries',
@@ -171,11 +171,11 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
 
     // When team size exceeds MAX_TEAM_SIZE, unique is forced to 1
     const expectedUnique = 1;
-    const expectedSelfBerryAmount = EnergyForEveryoneLunarBlessing.activations.selfBerries.amount({
+    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
       skillLevel,
       extra: expectedUnique
     });
-    const expectedTeamBerryAmount = EnergyForEveryoneLunarBlessing.activations.teamBerries.amount({
+    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
       skillLevel,
       extra: expectedUnique
     });
@@ -191,7 +191,7 @@ describe('EnergyForEveryoneLunarBlessingEffect', () => {
     const result = effect.activate(skillState);
 
     expect(result).toEqual({
-      skill: EnergyForEveryoneLunarBlessing,
+      skill: EnergyForEveryoneSLunarBlessing,
       activations: [
         {
           unit: 'berries',

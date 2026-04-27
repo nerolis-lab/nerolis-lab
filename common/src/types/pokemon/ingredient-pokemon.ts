@@ -53,12 +53,12 @@ import {
   ChargeStrengthSRange,
   CookingPowerUpS,
   EnergizingCheerS,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   ExtraHelpfulS,
   IngredientDrawS,
   IngredientDrawSHyperCutter,
   IngredientMagnetS,
-  PresentIngredientMagnetS,
+  IngredientMagnetSPresent,
   SkillCopyMimic,
   SkillCopyTransform,
   TastyChanceS
@@ -370,7 +370,7 @@ export const CHANSEY: Pokemon = createIngredientSpecialist({
     b: SOFT_POTATO,
     c: HONEY
   },
-  skill: EnergyForEveryone
+  skill: EnergyForEveryoneS
 });
 
 export const MR_MIME: Pokemon = createIngredientSpecialist({
@@ -530,7 +530,7 @@ export const DELIBIRD: Pokemon = createIngredientSpecialist({
     b: FANCY_APPLE,
     c: SOOTHING_CACAO
   },
-  skill: PresentIngredientMagnetS
+  skill: IngredientMagnetSPresent
 });
 
 export const BLISSEY: Pokemon = evolvedPokemon(CHANSEY, {

@@ -1,5 +1,5 @@
-import { timeWindowFactor } from '@/types/time/time-window'
 import { useTeamStore } from '@/stores/team/team-store'
+import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
@@ -7,7 +7,7 @@ import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import { CRESSELIA, MathUtils, compactNumber } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
-import LunarBlessingEnergyForEveryoneDetails from './lunar-blessing-energy-for-everyone-details.vue'
+import LunarBlessingEnergyForEveryoneDetails from './lunar-blessing-energy-for-everyone-s-details.vue'
 
 const mockMember = mocks.createMockMemberProductionExt({
   member: mocks.createMockPokemon({ pokemon: CRESSELIA, skillLevel: 6 })

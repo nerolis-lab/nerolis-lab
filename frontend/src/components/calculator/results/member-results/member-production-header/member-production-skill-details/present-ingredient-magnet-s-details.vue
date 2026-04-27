@@ -76,7 +76,7 @@
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { PresentIngredientMagnetS, compactNumber, ingredient } from 'sleepapi-common'
+import { IngredientMagnetSPresent, compactNumber, ingredient } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -98,7 +98,7 @@ export default defineComponent({
       })
     },
     candyPerProc() {
-      return PresentIngredientMagnetS.candyAmount
+      return IngredientMagnetSPresent.candyAmount
     },
     totalSkillValue() {
       return compactNumber(this.memberWithProduction.production.skillAmount * this.timeWindowFactor)
