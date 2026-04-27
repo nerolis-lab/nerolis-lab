@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import type { ActivationsType, AmountParams } from './mainskill';
 import { INGREDIENT_SUPPORT_MAINSKILLS, Mainskill, MAINSKILLS, ModifiedMainskill } from '.';
+import type { ActivationsType, AmountParams } from './mainskill';
 import { mainskillUnits } from './mainskill-unit';
-import { ChargeEnergySMoonlight } from './mainskills/charge-energy-s-moonlight';
+import { ChargeEnergySMoonlight } from './mainskills/charge-energy-s/charge-energy-s-moonlight';
 import { Metronome } from './mainskills/metronome';
 
 const TestMainskill = new (class extends Mainskill {
