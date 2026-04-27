@@ -23,6 +23,18 @@
     {
       "name": "guides",
       "path": "guides"
+    },
+    {
+      "name": "skills/common",
+      "path": "common/src/types/mainskill/mainskills"
+    },
+    {
+      "name": "skills/backend",
+      "path": "backend/src/services/simulation-service/team-simulator/skill-state/skill-effects"
+    },
+    {
+      "name": "skills/frontend",
+      "path": "frontend/src/components/calculator/results/member-results/member-production-header/member-production-skill-details"
     }
   ],
   "settings": {
