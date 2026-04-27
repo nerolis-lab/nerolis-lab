@@ -1,9 +1,9 @@
 import type { ActivationsType, AmountParams } from '../mainskill';
 import { ModifiedMainskill } from '../mainskill';
-import { EnergyForEveryone } from './energy-for-everyone';
+import { EnergyForEveryoneS } from './energy-for-everyone-s';
 
-export const EnergyForEveryoneBerryJuice = new (class extends ModifiedMainskill {
-  baseSkill = EnergyForEveryone;
+export const EnergyForEveryoneSBerryJuice = new (class extends ModifiedMainskill {
+  baseSkill = EnergyForEveryoneS;
   modifierName = 'Berry Juice';
   energyAmounts = [5, 7, 9, 11.4, 15, 18.1];
   image = 'energy';

@@ -8,13 +8,13 @@ import {
   emptyIngredientInventoryFloat,
   flatToIngredientSet,
   ingredient,
-  ingredientSetToFloatFlat,
-  PresentIngredientMagnetS
+  IngredientMagnetSPresent,
+  ingredientSetToFloatFlat
 } from 'sleepapi-common';
 
 export class IngredientMagnetSPresentEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
-    const skill = PresentIngredientMagnetS;
+    const skill = IngredientMagnetSPresent;
     const ingMagnetAmount = skillState.skillAmount(skill.activations.ingredients);
     const magnetIngredients = emptyIngredientInventoryFloat().fill(
       ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS

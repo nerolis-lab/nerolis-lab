@@ -5,13 +5,13 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
-import { EnergyForEveryoneBerryJuice, MathUtils, commonMocks, compactNumber } from 'sleepapi-common'
+import { EnergyForEveryoneSBerryJuice, MathUtils, commonMocks, compactNumber } from 'sleepapi-common'
 import { beforeEach, describe, expect, it } from 'vitest'
-import BerryJuiceEnergyForEveryoneDetails from './berry-juice-energy-for-everyone-details.vue'
+import BerryJuiceEnergyForEveryoneDetails from './berry-juice-energy-for-everyone-s-details.vue'
 
 const mockMember = mocks.createMockMemberProductionExt({
   member: mocks.createMockPokemon({
-    pokemon: commonMocks.mockPokemon({ skill: EnergyForEveryoneBerryJuice }),
+    pokemon: commonMocks.mockPokemon({ skill: EnergyForEveryoneSBerryJuice }),
     skillLevel: 6
   })
 })
@@ -57,16 +57,16 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
   it('displays the correct energy per proc', () => {
     const skillValuePerProc = wrapper.find('.energy-per-proc')
     expect(skillValuePerProc.text()).toBe(
-      `x${EnergyForEveryoneBerryJuice.activations.energy.amount({ skillLevel: mockMember.member.skillLevel })}`
+      `x${EnergyForEveryoneSBerryJuice.activations.energy.amount({ skillLevel: mockMember.member.skillLevel })}`
     )
   })
 
   it('displays the correct juice per proc', () => {
     const skillValuePerProc = wrapper.find('.juice-per-proc')
-    const juicePerSuccess = EnergyForEveryoneBerryJuice.activations.juice.amount({
+    const juicePerSuccess = EnergyForEveryoneSBerryJuice.activations.juice.amount({
       skillLevel: mockMember.member.skillLevel
     })
-    const juicePercent = EnergyForEveryoneBerryJuice.juicePercent
+    const juicePercent = EnergyForEveryoneSBerryJuice.juicePercent
     const roundedJuicePerProc = compactNumber(MathUtils.round(juicePerSuccess * juicePercent, 2))
     expect(skillValuePerProc.text()).toBe(`x${roundedJuicePerProc}`)
   })
@@ -74,6 +74,12 @@ describe('BerryJuiceEnergyForEveryoneDetails', () => {
   it('displays the correct total energy value', () => {
     const totalEnergyValue = wrapper.find('.energy-total')
     const expectedValue = mockMember.production.skillValue.energy.amountToTeam * timeWindowFactor('24H')
+    expect(totalEnergyValue.text()).toContain(compactNumber(expectedValue))
+  })
+
+  it('displays the correct total juice value', () => {
+    const totalEnergyValue = wrapper.find('.juice-total')
+    const expectedValue = mockMember.production.skillValue.candy.amountToTeam * timeWindowFactor('24H')
     expect(totalEnergyValue.text()).toContain(compactNumber(expectedValue))
   })
 })

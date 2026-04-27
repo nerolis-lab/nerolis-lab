@@ -3,7 +3,7 @@ import { ModifiedMainskill } from '../mainskill';
 import type { MainskillTargeting } from '../mainskill-targeting';
 import { IngredientMagnetS } from './ingredient-magnet-s';
 
-export const PresentIngredientMagnetS = new (class extends ModifiedMainskill {
+export const IngredientMagnetSPresent = new (class extends ModifiedMainskill {
   baseSkill = IngredientMagnetS;
   modifierName = 'Present';
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];

@@ -14,7 +14,7 @@ import {
   ALL_INGREDIENT_SPECIALISTS,
   CarrySizeUtils,
   EnergizingCheerS,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   ExtraHelpfulS,
   HelperBoost,
   nature,
@@ -27,7 +27,7 @@ import { TeamSimulator } from './team-simulator.js';
 const isBenchmarking = process.env.MODE === 'benchmarking';
 
 const energySupportPokemon: Pokemon[] = OPTIMAL_SKILL_SPECIALISTS.filter((pokemon) =>
-  pokemon.skill.isOrModifies(EnergyForEveryone, EnergizingCheerS)
+  pokemon.skill.isOrModifies(EnergyForEveryoneS, EnergizingCheerS)
 );
 
 const helpSupportPokemon: Pokemon[] = OPTIMAL_SKILL_SPECIALISTS.filter((pokemon) =>

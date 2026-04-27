@@ -67,7 +67,7 @@
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { EnergyForEveryoneBerryJuice, MathUtils, compactNumber } from 'sleepapi-common'
+import { EnergyForEveryoneSBerryJuice, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -83,15 +83,15 @@ export default defineComponent({
   },
   computed: {
     energyValuePerProc() {
-      return EnergyForEveryoneBerryJuice.activations.energy.amount({
+      return EnergyForEveryoneSBerryJuice.activations.energy.amount({
         skillLevel: this.memberWithProduction.member.skillLevel
       })
     },
     juicePerProc() {
       const juiceAmount =
-        EnergyForEveryoneBerryJuice.activations.juice.amount({
+        EnergyForEveryoneSBerryJuice.activations.juice.amount({
           skillLevel: this.memberWithProduction.member.skillLevel
-        }) * EnergyForEveryoneBerryJuice.juicePercent
+        }) * EnergyForEveryoneSBerryJuice.juicePercent
       return compactNumber(MathUtils.round(juiceAmount, 2))
     },
     totalEnergyValue() {

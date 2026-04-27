@@ -3,7 +3,7 @@ import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet } from 'sleepapi-common';
-import { ingredient, ingredientSetToFloatFlat, MathUtils, PresentIngredientMagnetS } from 'sleepapi-common';
+import { ingredient, IngredientMagnetSPresent, ingredientSetToFloatFlat, MathUtils } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -38,7 +38,7 @@ describe('IngredientMagnetSPresentEffect', () => {
         amount: MathUtils.round(amount, 2)
       }))
     ).toEqual(magnetIngredients.map(({ ingredient, amount }) => ({ ingredient, amount: MathUtils.round(amount, 2) })));
-    expect(result.skill).toBe(PresentIngredientMagnetS);
+    expect(result.skill).toBe(IngredientMagnetSPresent);
     expect(result.activations).toHaveLength(2);
     expect(result.activations[0]).toEqual({
       unit: 'ingredients',
@@ -46,7 +46,7 @@ describe('IngredientMagnetSPresentEffect', () => {
     });
     expect(result.activations[1]).toEqual({
       unit: 'candy',
-      team: { regular: PresentIngredientMagnetS.candyAmount, crit: 0 }
+      team: { regular: IngredientMagnetSPresent.candyAmount, crit: 0 }
     });
   });
 
@@ -62,9 +62,9 @@ describe('IngredientMagnetSPresentEffect', () => {
     expect(result.activations).toHaveLength(2);
     expect(result.activations[1]).toEqual({
       unit: 'candy',
-      team: { regular: PresentIngredientMagnetS.candyAmount, crit: 0 }
+      team: { regular: IngredientMagnetSPresent.candyAmount, crit: 0 }
     });
-    expect(PresentIngredientMagnetS.candyAmount).toBe(4);
+    expect(IngredientMagnetSPresent.candyAmount).toBe(4);
   });
 
   it('should not include candy in activations when roll fails', () => {
@@ -87,6 +87,6 @@ describe('IngredientMagnetSPresentEffect', () => {
 
     const result = ingredientMagnetSPresentEffect.activate(skillState);
 
-    expect(result.skill).toBe(PresentIngredientMagnetS);
+    expect(result.skill).toBe(IngredientMagnetSPresent);
   });
 });

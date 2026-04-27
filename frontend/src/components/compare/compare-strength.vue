@@ -192,7 +192,7 @@ import { useUserStore } from '@/stores/user-store'
 import type { DataTableHeader } from '@/types/vuetify/table/table-header'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   MAX_RECIPE_LEVEL,
   MathUtils,
   Metronome,
@@ -336,7 +336,7 @@ export default defineComponent({
       const critAmount = member.advanced.skillCritValue
       const amountWithoutCrit = member.skillAmount - critAmount
 
-      const e4eSuffix = skill.isOrModifies(EnergyForEveryone) ? 'x5' : ''
+      const e4eSuffix = skill.isOrModifies(EnergyForEveryoneS) ? 'x5' : ''
       return `${MathUtils.round(amountWithoutCrit, 1)} ${e4eSuffix}${critAmount > 0 ? `+${MathUtils.round(critAmount, 1)}` : ''}`
     },
     lowestIngredientPower(memberProduction: MemberProduction) {

@@ -12,7 +12,7 @@ import type {
   nature
 } from 'sleepapi-common';
 import {
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   HelperBoost,
   MathUtils,
   prettifyBerries,
@@ -270,7 +270,7 @@ class WebsiteConverterServiceImpl {
     }
     if (filters.e4eProcs > 0) {
       teamInput.push(
-        `E4E: ${filters.e4eProcs} x ${EnergyForEveryone.activations.energy.amount({ skillLevel: filters.e4eLevel })} energy`
+        `E4E: ${filters.e4eProcs} x ${EnergyForEveryoneS.activations.energy.amount({ skillLevel: filters.e4eLevel })} energy`
       );
     }
     if (filters.helperBoostProcs > 0) {

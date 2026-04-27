@@ -4,11 +4,11 @@ import type {
   UnitActivation
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { EnergyForEveryoneBerryJuice } from 'sleepapi-common';
+import { EnergyForEveryoneSBerryJuice } from 'sleepapi-common';
 
-export class EnergyForEveryoneBerryJuiceEffect implements SkillEffect {
+export class EnergyForEveryoneSBerryJuiceEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
-    const skill = EnergyForEveryoneBerryJuice;
+    const skill = EnergyForEveryoneSBerryJuice;
     const energyAmount = skillState.skillAmount(skill.activations.energy);
 
     const activations: UnitActivation[] = [

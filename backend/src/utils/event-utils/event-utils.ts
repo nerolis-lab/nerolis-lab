@@ -9,7 +9,7 @@ import type { Produce, Time, TimePeriod, nature } from 'sleepapi-common';
 import {
   CarrySizeUtils,
   EnergizingCheerS,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   ExtraHelpfulS,
   HelperBoost,
   multiplyBerries
@@ -132,7 +132,7 @@ export function scheduleTeamEnergyEvents(
     const event: EnergyEvent = new EnergyEvent({
       time: e4ePeriods[i].start,
       description: 'E4E',
-      delta: e4eDeltas[i] * EnergyForEveryone.activations.energy.amount({ skillLevel: e4eLevel }) * nature.energy
+      delta: e4eDeltas[i] * EnergyForEveryoneS.activations.energy.amount({ skillLevel: e4eLevel }) * nature.energy
     });
     recoveryEvents.push(event);
   }
@@ -145,7 +145,7 @@ export function scheduleTeamEnergyEvents(
       description: 'Energizing Cheer',
       delta:
         (cheerDeltas[i] *
-          (EnergizingCheerS.activations.energy.amount({ skillLevel: EnergyForEveryone.maxLevel }) * nature.energy)) /
+          (EnergizingCheerS.activations.energy.amount({ skillLevel: EnergyForEveryoneS.maxLevel }) * nature.energy)) /
         5
     });
     recoveryEvents.push(event);

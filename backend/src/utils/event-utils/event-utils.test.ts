@@ -20,7 +20,7 @@ import { MOCKED_MAIN_SLEEP, MOCKED_PRODUCE } from '@src/utils/test-utils/default
 import {
   ABOMASNOW,
   CarrySizeUtils,
-  EnergyForEveryone,
+  EnergyForEveryoneS,
   ExtraHelpfulS,
   MathUtils,
   berry,
@@ -441,7 +441,7 @@ describe('scheduleEnergyForEveryoneEvents', () => {
       const energyEvent = event as EnergyEvent;
       expect(energyEvent.description).toEqual('E4E');
       expect(energyEvent.delta).toEqual(
-        MathUtils.round(EnergyForEveryone.activations.energy.amount({ skillLevel: 6 }) * nature.RELAXED.energy, 2)
+        MathUtils.round(EnergyForEveryoneS.activations.energy.amount({ skillLevel: 6 }) * nature.RELAXED.energy, 2)
       );
     });
   });
@@ -488,8 +488,8 @@ describe('getDefaultRecoveryEvents', () => {
 
     expect(recoveryEvents.length).toBe(2);
     expect(recoveryEvents.map((e) => e.delta)).toEqual([
-      EnergyForEveryone.activations.energy.amount({ skillLevel: 6 }),
-      EnergyForEveryone.activations.energy.amount({ skillLevel: 6 }) / 2
+      EnergyForEveryoneS.activations.energy.amount({ skillLevel: 6 }),
+      EnergyForEveryoneS.activations.energy.amount({ skillLevel: 6 }) / 2
     ]);
   });
 
