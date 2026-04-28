@@ -10,6 +10,7 @@ import {
   CHERI,
   CHESTO,
   DURIN,
+  FIGY,
   GREPA,
   LEPPA,
   LUM,
@@ -99,6 +100,34 @@ export const PIKACHU_HOLIDAY: Pokemon = createSkillSpecialist({
     c: FANCY_EGG
   },
   skill: DreamShardMagnetS
+});
+
+export const SANDSHREW: Pokemon = createSkillSpecialist({
+  name: 'SANDSHREW',
+  pokedexNumber: 27,
+  frequency: toSeconds(1, 28, 20),
+  ingredientPercentage: 10,
+  skillPercentage: 4.6,
+  berry: FIGY,
+  genders: BALANCED_GENDER,
+  carrySize: 11,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: PLUMP_PUMPKIN,
+    b: GREENGRASS_CORN,
+    c: SOFT_POTATO
+  },
+  skill: IngredientDrawS
+});
+
+export const SANDSLASH: Pokemon = evolvedPokemon(SANDSHREW, {
+  name: 'SANDSLASH',
+  pokedexNumber: 28,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 10.8,
+  skillPercentage: 4.3,
+  carrySize: 17
 });
 
 export const JIGGLYPUFF: Pokemon = createSkillSpecialist({
@@ -1192,6 +1221,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   GALLADE,
   CRESSELIA,
   CRUSTLE,
+  SANDSLASH,
   BRAVIARY,
   SYLVEON,
   DEDENNE,
@@ -1231,6 +1261,7 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   RIOLU,
   DWEBBLE,
   RUFFLET,
+  SANDSHREW,
   TOXEL,
   PAWMI,
   PAWMO
