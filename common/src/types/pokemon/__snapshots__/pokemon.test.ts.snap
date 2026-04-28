@@ -23108,7 +23108,7 @@ exports[`COMPLETE_POKEDEX > shall not change SALAMENCE unexpectedly 1`] = `
     "value": 35,
   },
   "carrySize": 22,
-  "displayName": "Salamance",
+  "displayName": "Salamence",
   "evolvesFrom": "SHELGON",
   "evolvesInto": [],
   "frequency": 2800,
@@ -23212,6 +23212,238 @@ exports[`COMPLETE_POKEDEX > shall not change SALAMENCE unexpectedly 1`] = `
   },
   "skillPercentage": 3.4,
   "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change SANDSHREW unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "FIGY",
+    "type": "ground",
+    "value": 29,
+  },
+  "carrySize": 11,
+  "displayName": "Sandshrew",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "SANDSLASH",
+  ],
+  "frequency": 5300,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Greengrass Corn",
+        "name": "Corn",
+        "taxedValue": 57.3,
+        "value": 140,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Greengrass Corn",
+        "name": "Corn",
+        "taxedValue": 57.3,
+        "value": 140,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 10,
+  "name": "SANDSHREW",
+  "pokedexNumber": 27,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4846,
+      5843,
+    ],
+    "activations": {
+      "ingredients": {
+        "amount": [Function],
+        "unit": "ingredients",
+      },
+    },
+    "description": [Function],
+    "image": "ingredient_draw",
+    "ingredientAmounts": [
+      5,
+      6,
+      8,
+      11,
+      13,
+      16,
+      18,
+    ],
+    "name": "Ingredient Draw S",
+  },
+  "skillPercentage": 4.6,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change SANDSLASH unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "FIGY",
+    "type": "ground",
+    "value": 29,
+  },
+  "carrySize": 17,
+  "displayName": "Sandslash",
+  "evolvesFrom": "SANDSHREW",
+  "evolvesInto": [],
+  "frequency": 2800,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Greengrass Corn",
+        "name": "Corn",
+        "taxedValue": 57.3,
+        "value": 140,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Plump Pumpkin",
+        "name": "Pumpkin",
+        "taxedValue": 182.7,
+        "value": 250,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Greengrass Corn",
+        "name": "Corn",
+        "taxedValue": 57.3,
+        "value": 140,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 10.8,
+  "name": "SANDSLASH",
+  "pokedexNumber": 28,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4846,
+      5843,
+    ],
+    "activations": {
+      "ingredients": {
+        "amount": [Function],
+        "unit": "ingredients",
+      },
+    },
+    "description": [Function],
+    "image": "ingredient_draw",
+    "ingredientAmounts": [
+      5,
+      6,
+      8,
+      11,
+      13,
+      16,
+      18,
+    ],
+    "name": "Ingredient Draw S",
+  },
+  "skillPercentage": 4.3,
+  "specialty": "skill",
 }
 `;
 
