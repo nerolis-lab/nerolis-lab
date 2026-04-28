@@ -1,3 +1,10 @@
+# [2.47.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.46.0...v2.47.0) (2026-04-28)
+
+
+### Features
+
+* add sandshrew ([a3de19b](https://github.com/nerolis-lab/nerolis-lab/commit/a3de19bd9988d10eb0a5de6a8deae7687d800407))
+
 # [2.46.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.45.1...v2.46.0) (2026-04-27)
 
 
