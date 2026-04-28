@@ -1,4 +1,4 @@
-import ChargeEnergySDetails from '@/components/calculator/results/member-results/member-production-header/member-production-skill-details/charge-energy-s-details.vue'
+import ChargeEnergySDetails from '@/components/calculator/results/member-results/member-production-header/member-production-skill-details/charge-energy-s/charge-energy-s-details.vue'
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
