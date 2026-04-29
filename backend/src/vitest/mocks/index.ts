@@ -1,4 +1,3 @@
-export * from './berry/index.js';
 export * from './database/index.js';
 export * from './pokemon/index.js';
 export * from './produce/index.js';

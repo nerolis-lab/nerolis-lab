@@ -1,8 +1,8 @@
-import { berrySet } from '@src/vitest/mocks/berry/mock-berry-set.js';
 import { pokemonWithIngredientsIndexed } from '@src/vitest/mocks/pokemon/mock-pokemon-with-ingredients.js';
 import { produce } from '@src/vitest/mocks/produce/mock-produce.js';
 import type { MemberSkillValue } from 'sleepapi-common';
 import {
+  commonMocks,
   mainskillUnits,
   type MemberProduction,
   type MemberProductionAdvanced,
@@ -80,7 +80,7 @@ export function memberProductionAdvanced(attrs?: Partial<MemberProductionAdvance
       helps: 0
     },
     skillRegularValue: 0,
-    sneakySnack: berrySet(),
+    sneakySnack: commonMocks.mockBerrySet(),
     dayPeriod: {
       averageEnergy: 0,
       averageFrequency: 0,
