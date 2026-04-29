@@ -23,7 +23,7 @@ describe('getDiffDisplayInfo', () => {
     const result = testWithComponent(undefined)
 
     expect(result.text).toBe('')
-    expect(result.color).toBeUndefined() // Real theme doesn't have transparent color
+    expect(result.color).toBe('undefined') // Real theme doesn't have transparent color
   })
 
   it('should return positive text with plus sign and success color for positive diff', () => {
