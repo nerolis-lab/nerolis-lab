@@ -177,7 +177,7 @@ onMounted(() => {
   padding-left: 12px;
 }
 
-// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
+/* DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS */
 .text-red {
   color: #f44336;
 }
