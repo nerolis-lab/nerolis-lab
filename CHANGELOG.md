@@ -1,3 +1,10 @@
+## [2.47.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.1...v2.47.2) (2026-04-29)
+
+
+### Bug Fixes
+
+* bugs in moonlight and berry juice ([e52a349](https://github.com/nerolis-lab/nerolis-lab/commit/e52a349fa98f6f095c786be372f13265a345e9ec))
+
 ## [2.47.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.0...v2.47.1) (2026-04-28)
 
 # [2.47.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.46.0...v2.47.0) (2026-04-28)
