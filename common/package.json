@@ -19,7 +19,7 @@
     "build-rollup": "rollup --config rollup.config.mjs",
     "build-watch": "npm run clean && npm run build-rollup -- --watch",
     "test": "vitest --run --coverage",
-    "test-watch": "vitest --changed",
+    "test-watch": "vitest --watch",
     "type-watch": "bun x tsc --noEmit --watch"
   },
   "devDependencies": {
