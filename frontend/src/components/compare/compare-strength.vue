@@ -111,6 +111,7 @@
           hide-default-footer
           class="bg-transparent"
           style="border-radius: 10px"
+          items-per-page="-1"
         >
           <template #item.member="{ item }">
             <div class="flex-center">
