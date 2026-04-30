@@ -3,7 +3,14 @@
   <v-row dense>
     <v-col cols="12">
       <v-card class="d-flex flex-column rounded-t-0 frosted-glass">
-        <v-data-table key="key" :items="members" :headers="headers" hide-default-footer class="bg-transparent">
+        <v-data-table
+          key="key"
+          :items="members"
+          :headers="headers"
+          hide-default-footer
+          class="bg-transparent"
+          items-per-page="-1"
+        >
           <template #item.member="{ item }">
             <div class="flex-center">
               <div style="overflow: hidden; width: 100px; height: 60px">
