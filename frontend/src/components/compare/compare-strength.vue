@@ -275,18 +275,17 @@ export default defineComponent({
             : 0
 
         const skillStrength = this.showSkills ? Math.floor(memberProduction.strength.skill.total * timeWindowFactor) : 0
-        let skillValue = 0
 
         // TODO: this feels hacky, we're just summing all skill values, even with completely unrelated units. Doesn't make sense. But we're reworking how compare tool is working anyway, this has always worked suboptimally.
+        let skillValue = 0
         for (const activation of memberPokemon.skill.getUnits()) {
           skillValue += this.showSkills
-            ? MathUtils.round(
-                memberProduction.skillValue[activation].amountToSelf +
-                  memberProduction.skillValue[activation].amountToTeam,
-                1
-              ) * timeWindowFactor
+            ? defaultZero(memberProduction.skillValue[activation]?.amountToSelf) +
+              defaultZero(memberProduction.skillValue[activation]?.amountToTeam)
             : 0
         }
+        skillValue = MathUtils.round(skillValue * timeWindowFactor, 1)
+
         const total = Math.floor(berryPower + ingredientPower + skillStrength)
 
         production.push({
