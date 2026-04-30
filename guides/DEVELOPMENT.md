@@ -75,6 +75,16 @@ After bumping `vitepress`, smoke-test the navigation and search experience on de
 - **Files:** optional square **PNG**s named `{slug}.png`, where the slug matches the slugified `author:` frontmatter name (see `theme/utils/format-utils.ts`, `getAvatarUrlForAuthorName`).
 - **Size limit:** each PNG must be under **256 KiB**; enforced by **`tests/avatars.test.ts`**. **`npm run test`** catches oversize files locally; **CI** runs the same tests in `.github/workflows/build-test.yml` after **`npm run build`** for the guides job (tests are not chained into `npm run build`).
 
+## Custom emoji shortcodes (assets + markdown)
+
+- **Source assets:** **`images/emojis/{category}/`** - PNG, GIF, or WebP files. Authors use **`:{filename-without-extension}:`** (Discord-style). Basenames must be **unique** across categories; see **`loadGuideEmojisByName`** in **`.vitepress/lib/guide-emojis.ts`** (markdown matcher at config time).
+- **Path parsing:** **`lib/guide-emoji-path-parse.ts`** is shared by **`loadGuideEmojisByName`** and **`theme/utils/guide-emoji-paths.ts`**.
+- **Shared constants:** **`lib/guide-emoji-constants.ts`**. **`import.meta.glob`** in **`guide-emoji-paths.ts`** must remain a **string literal** (Vite limitation).
+- **Runtime URLs:** **`guide-emoji-paths.ts`** - **`import.meta.glob(..., { query: '?url' })`** -> **`resolvedImageUrlByGlobKey`** (glob key -> URL); **`resolvedUrlByShortcodeName`** maps shortcode stem -> URL for **`<GuideEmoji>`** (markdown only passes **`name`**). No **`public/`** copy.
+- **Markdown:** **`markdownItGuideEmojis`** runs **before** the stock **`emoji`** rule and emits **`<GuideEmoji name="..." />`**.
+- **Prose styling:** **`.vp-doc img.guide-emoji`** in **`theme/style.scss`** sizes inline emoji in **`em`** so they track heading/body font size.
+- **Catalog page:** **`content/contributing/custom-emojis.md`** embeds **`<GuideEmojiCatalog />`** (registered in **`theme/index.ts`**) to list everything under **`images/emojis/`** for contributors.
+
 ## Sidebar and content (technical summary)
 
 The sidebar is generated at build time from the **`content/`** tree. Folders become nested groups. YAML front matter supports **`title`** (nav label), **`fullTitle`** (page H1), **`author`** (comma-separated list of names), and **`order`** (lower numbers sort earlier; ties use link order). Section folders may use **`index.md`** for the landing page and group title.

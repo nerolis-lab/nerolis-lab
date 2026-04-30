@@ -79,6 +79,16 @@
       margin: 0; //override Vitepress default margin: 16px 0; on images
     }
 
+    img.guide-emoji {
+      display: inline-block;
+      height: 1.2em;
+      width: auto;
+      max-height: 3.5em;
+      vertical-align: -0.15em;
+      margin: 0;
+      object-fit: contain;
+    }
+
     // make the clickable area of the collapsible blocks larger
     .custom-block.details summary {
       margin: -16px -16px -8px;

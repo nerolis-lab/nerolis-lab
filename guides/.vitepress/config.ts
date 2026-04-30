@@ -2,17 +2,22 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vuetify from 'vite-plugin-vuetify';
 import { defineConfig, type DefaultTheme } from 'vitepress';
+import { loadGuideEmojisByName } from './lib/guide-emojis';
 import { splitIntoSectionsForLocalSearch } from './lib/local-search-sections';
+import { markdownItGuideEmojis } from './lib/markdown-it-guide-emojis';
 import { buildSidebar } from './lib/sidebar';
 import { vitepressLocalSearchPreamblePlugin } from './lib/vitepress-local-search-preamble-plugin';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const guidesRoot = resolve(__dirname, '..');
 const guidesContentRoot = resolve(guidesRoot, 'content');
+const guidesEmojisRoot = resolve(guidesRoot, 'images/emojis');
+const guideEmojisByName = loadGuideEmojisByName(guidesEmojisRoot);
+const siteBase = '/guides/';
 
 export default defineConfig({
   srcDir: 'content',
-  base: '/guides/',
+  base: siteBase,
   title: "Neroli's Lab Guides",
   description: 'Guides for understanding Pokémon Sleep mechanics',
 
@@ -60,7 +65,11 @@ export default defineConfig({
 
   markdown: {
     theme: 'synthwave-84',
-    lineNumbers: true
+    lineNumbers: true,
+    config: (md) => {
+      //set up custom emoji shortcodes
+      markdownItGuideEmojis(md, { emojis: guideEmojisByName });
+    }
   },
 
   vite: {
