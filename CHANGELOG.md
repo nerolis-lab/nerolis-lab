@@ -1,3 +1,10 @@
+## [2.47.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.4...v2.47.5) (2026-04-30)
+
+
+### Bug Fixes
+
+* extra helpful ([feb5fd3](https://github.com/nerolis-lab/nerolis-lab/commit/feb5fd38eff4ef0ebe6c7dba788ef94df33d2aa7))
+
 ## [2.47.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.3...v2.47.4) (2026-04-30)
 
 ## [2.47.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.2...v2.47.3) (2026-04-29)
