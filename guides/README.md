@@ -67,6 +67,10 @@ The table below demonstrates how author names map to file names.
 | Neroli's Lab Team                  | `neroli-s-lab-team.png`             |
 | Jane Q. Contributor                | `jane-q-contributor.png`            |
 
+## Custom emoji shortcodes
+
+Small inline images (berries, reactions, ingredients, etc.) use **`:name:`** syntax in prose, same idea as Discord custom emoji. See **`content/contributing/custom-emojis.md`** (live URL: **`/guides/contributing/custom-emojis`**) for the full catalog and contributor rules.
+
 ## Using banners
 
 To use a banner in a page, simply invoke it with `<BannerName />`.

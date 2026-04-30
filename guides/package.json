@@ -11,7 +11,8 @@
     "test": "vitest --run",
     "test-watch": "vitest --watch",
     "type-check": "tsc --noEmit -p tsconfig.typecheck.json",
-    "type-watch": "tsc --noEmit -p tsconfig.typecheck.json --watch"
+    "type-watch": "tsc --noEmit -p tsconfig.typecheck.json --watch",
+    "sync-pokemon-emojis": "node ./scripts/sync-pokemon-emojis-from-frontend.mjs"
   },
   "dependencies": {
     "sleepapi-common": "file:../common"
@@ -20,6 +21,7 @@
     "@mdi/font": "^7.4.47",
     "@types/node": "^22.10.4",
     "glob": "^13.0.6",
+    "markdown-it": "^14.1.0",
     "sass-embedded": "^1.89.2",
     "typescript": "^5.8.3",
     "vite-plugin-vuetify": "^2.1.2",

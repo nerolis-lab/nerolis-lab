@@ -40,6 +40,20 @@ export default typescriptEslint.config(
     rules: {}
   },
 
+  // guides one-off Node scripts (e.g. emoji sync); not covered by frontend/backend globs
+  {
+    name: 'sleepapi/guides-scripts',
+    files: ['**/guides/**/*.mjs'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      globals: {
+        ...globals.node
+      },
+      sourceType: 'module'
+    },
+    rules: {}
+  },
+
   // frontend-specific rules
   {
     name: 'sleepapi/frontend-rules',
