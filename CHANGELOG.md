@@ -1,3 +1,12 @@
+# [2.48.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.5...v2.48.0) (2026-04-30)
+
+
+### Features
+
+* add Heal Pulse ([5d2e8d6](https://github.com/nerolis-lab/nerolis-lab/commit/5d2e8d6ecf125ad5d74d1b77552d4727abe9b812))
+* add Latias ([82841d8](https://github.com/nerolis-lab/nerolis-lab/commit/82841d812eb1b48942fbae021f62ac996f879f94))
+* add latias images ([103aabb](https://github.com/nerolis-lab/nerolis-lab/commit/103aabb4e63aae9e238f3a07ab15cd8f26f1d841))
+
 ## [2.47.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.4...v2.47.5) (2026-04-30)
 
 
