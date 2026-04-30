@@ -7,6 +7,7 @@ import { mount } from '@vue/test-utils'
 import {
   AVERAGE_WEEKLY_CRIT_MULTIPLIER,
   MAX_RECIPE_LEVEL,
+  MathUtils,
   getMaxIngredientBonus,
   recipeLevelBonus,
   type MemberProduction,
@@ -144,9 +145,11 @@ describe('CompareStrength', () => {
     expect(ingredientPower).toContain(lowestIngredientValue.toString())
 
     // Check skill value (cell displays sum of skillValue unit amounts * factor)
-    const displayedSkillValue =
+    const displayedSkillValue = MathUtils.round(
       (mockMemberProduction.skillValue.strength.amountToSelf + mockMemberProduction.skillValue.strength.amountToTeam) *
-      factor
+        factor,
+      1
+    )
     expect(firstRowCells[3].text()).toContain(displayedSkillValue.toString())
 
     // Check total power (cell uses skillStrength = strength.skill.total * factor)
