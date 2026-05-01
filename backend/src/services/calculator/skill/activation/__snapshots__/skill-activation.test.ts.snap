@@ -2457,7 +2457,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             "berries": {
               "amount": [Function],
               "critChance": 0.185,
-              "critMultiplier": 3,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -2498,6 +2497,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               5,
             ],
           },
+          "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
           "modifierName": "Disguise",

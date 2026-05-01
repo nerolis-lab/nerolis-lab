@@ -8,6 +8,7 @@ export const BerryBurstDisguise = new (class extends ModifiedMainskill {
   image = 'berries';
   selfBerryAmounts = [8, 10, 15, 17, 19, 21];
   teamBerryAmounts = [1, 2, 2, 3, 4, 5];
+  critMultiplier = 3;
 
   description = (params: AmountParams) =>
     `Gets ${this.selfBerryAmounts[params.skillLevel - 1]} Berries plus ${this.teamBerryAmounts[params.skillLevel - 1]} of each of the Berries other Pokémon on your team collect. May activate Greater Success once a day.`;
@@ -18,8 +19,7 @@ export const BerryBurstDisguise = new (class extends ModifiedMainskill {
       unit: 'berries',
       amount: this.leveledAmount(this.selfBerryAmounts),
       teamAmount: this.leveledAmount(this.teamBerryAmounts),
-      critChance: 0.185,
-      critMultiplier: 3
+      critChance: 0.185
     }
   };
 })();

@@ -23,7 +23,7 @@ describe('BerryBurstDisguise', () => {
     expect(typeof activation.amount).toBe('function');
     expect(typeof activation.teamAmount).toBe('function');
     expect(activation.critChance).toBe(0.185);
-    expect(activation.critMultiplier).toBe(3);
+    expect(BerryBurstDisguise.critMultiplier).toBe(3);
   });
 
   it('should calculate team amounts correctly', () => {
