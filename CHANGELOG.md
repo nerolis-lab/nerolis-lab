@@ -1,3 +1,10 @@
+## [2.49.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.1...v2.49.2) (2026-05-01)
+
+
+### Bug Fixes
+
+* **ci:** load common build when guides change ([1de3fc6](https://github.com/nerolis-lab/nerolis-lab/commit/1de3fc6a9911c0738b6fa98ac9c9c8349a5f67bf))
+
 ## [2.49.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.0...v2.49.1) (2026-05-01)
 
 
