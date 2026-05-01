@@ -1,36 +1,22 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import {
-  ING_ID_LOOKUP,
-  IngredientDrawS,
-  emptyIngredientInventoryFloat,
-  flatToIngredientSet,
-  ingredientSetToFloatFlat,
-  type Ingredient
-} from 'sleepapi-common';
+import { IngredientDrawS, ingredientSetToFloatFlat, type Ingredient } from 'sleepapi-common';
 
 export class IngredientDrawSEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = IngredientDrawS;
     const nrOfIngredients = skillState.skillAmount(skill.activations.ingredients);
 
-    const rolledIngredient: Ingredient = skillState.rng.randomElement(
+    const ingredient: Ingredient = skillState.rng.randomElement(
       skillState.memberState.member.pokemonWithIngredients.pokemon.ingredient60.map((ingSet) => ingSet.ingredient)
     );
 
-    const ingredientDrawIngredients = emptyIngredientInventoryFloat();
-    ingredientDrawIngredients[ING_ID_LOOKUP[rolledIngredient.name]] = nrOfIngredients;
+    const ingredients = [{ amount: nrOfIngredients, ingredient }];
+    const flatIngredients = ingredientSetToFloatFlat(ingredients);
 
-    skillState.memberState.cookingState?.addIngredients(ingredientDrawIngredients);
-
-    const produce = skillState.memberState.skillProduce;
-    produce.ingredients = flatToIngredientSet(
-      ingredientSetToFloatFlat(skillState.memberState.skillProduce.ingredients)._mutateCombine(
-        ingredientDrawIngredients,
-        (a, b) => a + b
-      )
-    );
+    skillState.memberState.cookingState?.addIngredients(flatIngredients);
+    skillState.memberState.addSkillProduce({ berries: [], ingredients });
 
     return {
       skill,

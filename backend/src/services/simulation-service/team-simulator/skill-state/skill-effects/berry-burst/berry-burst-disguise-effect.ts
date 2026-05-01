@@ -1,7 +1,7 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { BerryBurstDisguise, CarrySizeUtils } from 'sleepapi-common';
+import { BerryBurstDisguise } from 'sleepapi-common';
 
 export class BerryBurstDisguiseEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
@@ -34,10 +34,7 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
       level: memberState.level
     });
 
-    memberState.skillProduce = CarrySizeUtils.addToInventory(memberState.skillProduce, {
-      ingredients: [],
-      berries
-    });
+    memberState.addSkillProduce({ ingredients: [], berries });
 
     return {
       skill,

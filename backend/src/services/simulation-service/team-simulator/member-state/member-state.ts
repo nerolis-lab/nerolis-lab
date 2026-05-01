@@ -107,9 +107,10 @@ export class MemberState {
   // summary
 
   // TODO: move to skill-state
-  skillProduce: Produce = CarrySizeUtils.getEmptyInventory();
+  private skillProduce: Produce = CarrySizeUtils.getEmptyInventory();
   private totalRecovery = 0;
   private wastedEnergy = 0;
+
   private energyIntervalsDay = 0;
   private energyIntervalsNight = 0;
   private frequencyIntervalsDay = 0;
@@ -381,6 +382,10 @@ export class MemberState {
 
   public addSkillValue(skillValue: TeamActivationValue) {
     this.skillState.addValue(skillValue);
+  }
+
+  public addSkillProduce(produce: Produce) {
+    this.skillProduce = CarrySizeUtils.addToInventory(this.skillProduce, produce);
   }
 
   /**

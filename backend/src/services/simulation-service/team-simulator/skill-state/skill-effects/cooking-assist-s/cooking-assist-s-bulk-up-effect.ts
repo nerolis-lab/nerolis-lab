@@ -1,32 +1,22 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import {
-  CookingAssistSBulkUp,
-  emptyIngredientInventoryFloat,
-  flatToIngredientSet,
-  ingredient,
-  ingredientSetToFloatFlat
-} from 'sleepapi-common';
+import { CookingAssistSBulkUp, emptyIngredientInventoryFloat, flatToIngredientSet, ingredient } from 'sleepapi-common';
 
 export class CookingAssistSBulkUpEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = CookingAssistSBulkUp;
     const ingredientAmount = skillState.skillAmount(skill.activations.ingredients);
     const critAmount = skillState.skillAmount(skill.activations.critChance);
-    const magnetIngredients = emptyIngredientInventoryFloat().fill(
+    const flatIngredients = emptyIngredientInventoryFloat().fill(
       ingredientAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS
     );
+    const ingredients = flatToIngredientSet(flatIngredients);
 
-    skillState.memberState.cookingState?.addIngredients(magnetIngredients);
+    skillState.memberState.cookingState?.addIngredients(flatIngredients);
+    skillState.memberState.addSkillProduce({ berries: [], ingredients });
+
     skillState.memberState.cookingState?.addCritBonus(critAmount / 100);
-
-    skillState.memberState.skillProduce.ingredients = flatToIngredientSet(
-      ingredientSetToFloatFlat(skillState.memberState.skillProduce.ingredients)._mutateCombine(
-        magnetIngredients,
-        (a, b) => a + b
-      )
-    );
 
     return {
       skill,

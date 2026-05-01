@@ -1,9 +1,10 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { CookingAssistSBulkUpEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-assist-s/cooking-assist-s-bulk-up-effect.js';
+import { rounded } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-test-util.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, MainskillActivation } from 'sleepapi-common';
-import { CookingAssistSBulkUp, ingredient, ingredientSetToFloatFlat, MathUtils } from 'sleepapi-common';
+import { CookingAssistSBulkUp, ingredient, ingredientSetToFloatFlat } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -37,12 +38,8 @@ describe('CookingAssistSBulkUpEffect', () => {
 
     expect(addIngredientsMock).toHaveBeenCalledWith(magnetIngredientsFloat);
     expect(addCritBonusMock).toHaveBeenCalledWith(critAmount / 100);
-    expect(
-      skillState.memberState.skillProduce.ingredients.map(({ ingredient, amount }) => ({
-        ingredient,
-        amount: MathUtils.round(amount, 2)
-      }))
-    ).toEqual(magnetIngredients.map(({ ingredient, amount }) => ({ ingredient, amount: MathUtils.round(amount, 2) })));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(rounded((skillState.memberState as any).skillProduce.ingredients)).toEqual(rounded(magnetIngredients));
     expect(result).toEqual({
       skill: CookingAssistSBulkUp,
       activations: [

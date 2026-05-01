@@ -7,8 +7,7 @@ import {
   flatToIngredientSet,
   ING_ID_LOOKUP,
   ingredient,
-  IngredientMagnetSPlus,
-  ingredientSetToFloatFlat
+  IngredientMagnetSPlus
 } from 'sleepapi-common';
 
 export class IngredientMagnetSPlusEffect implements SkillEffect {
@@ -16,7 +15,9 @@ export class IngredientMagnetSPlusEffect implements SkillEffect {
     const skill = IngredientMagnetSPlus;
     const ingMagnetAmount = skillState.skillAmount(skill.activations.solo);
 
-    const ingredients = emptyIngredientInventoryFloat().fill(ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS);
+    const flatIngredients = emptyIngredientInventoryFloat().fill(
+      ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS
+    );
 
     const bonusAmount =
       skillState.memberState.otherMembers.filter((member) =>
@@ -24,19 +25,15 @@ export class IngredientMagnetSPlusEffect implements SkillEffect {
       ).length === 0
         ? 0
         : skillState.skillAmount(skill.activations.paired);
-
-    ingredients[
+    flatIngredients[
       ING_ID_LOOKUP[skillState.memberState.member.pokemonWithIngredients.ingredientList[0].ingredient.name]
     ] += bonusAmount;
 
-    skillState.memberState.cookingState?.addIngredients(ingredients);
+    const ingredients = flatToIngredientSet(flatIngredients);
 
-    skillState.memberState.skillProduce.ingredients = flatToIngredientSet(
-      ingredientSetToFloatFlat(skillState.memberState.skillProduce.ingredients)._mutateCombine(
-        ingredients,
-        (a, b) => a + b
-      )
-    );
+    skillState.memberState.cookingState?.addIngredients(flatIngredients);
+
+    skillState.memberState.addSkillProduce({ berries: [], ingredients });
 
     return {
       skill,
