@@ -29,7 +29,10 @@ import { IngredientDrawSEffect } from '@src/services/simulation-service/team-sim
 import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-hyper-cutter-effect.js';
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-effect.js';
-import { IngredientMagnetSPlusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-plus-effect.js';
+import {
+  IngredientMagnetSPlusPlusleEffect,
+  IngredientMagnetSPlusToxtricityEffect
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-plus-effect.js';
 import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-present-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy/skill-copy-effect.js';
@@ -72,7 +75,8 @@ import {
   IngredientDrawSHyperCutter,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
-  IngredientMagnetSPlus,
+  IngredientMagnetSPlusPlusle,
+  IngredientMagnetSPlusToxtricity,
   IngredientMagnetSPresent,
   mainskillUnits,
   Metronome,
@@ -134,7 +138,8 @@ export class SkillState {
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
-      [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
+      [IngredientMagnetSPlusPlusle, new IngredientMagnetSPlusPlusleEffect()],
+      [IngredientMagnetSPlusToxtricity, new IngredientMagnetSPlusToxtricityEffect()],
       [IngredientMagnetSPresent, new IngredientMagnetSPresentEffect()],
       [IngredientDrawS, new IngredientDrawSEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],

@@ -1,7 +1,7 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { CookingPowerUpSMinus, IngredientMagnetSPlus } from 'sleepapi-common';
+import { CookingPowerUpSMinus, isPlusOrMinus } from 'sleepapi-common';
 
 export class CookingPowerUpSMinusEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
@@ -9,9 +9,7 @@ export class CookingPowerUpSMinusEffect implements SkillEffect {
     const potAmount = skillState.skillAmount(skill.activations.solo);
     skillState.memberState.cookingState?.addPotSize(potAmount);
     const energyAmount =
-      skillState.memberState.otherMembers.filter((member) =>
-        member.skill.is(IngredientMagnetSPlus, CookingPowerUpSMinus)
-      ).length === 0
+      skillState.memberState.otherMembers.filter((member) => isPlusOrMinus(member.skill)).length === 0
         ? 0
         : skillState.skillAmount(skill.activations.paired);
 

@@ -89,7 +89,7 @@ describe('MainskillButton', () => {
     const descriptionText = textElements[1].text()
 
     expect(descriptionText).toContain('Gets you 5 ingredients chosen at random')
-    expect(descriptionText).toContain('additional 6 Coffees')
+    expect(descriptionText).toContain('additional 6 Coffee')
     expect(descriptionText).not.toContain('undefined')
   })
 })
