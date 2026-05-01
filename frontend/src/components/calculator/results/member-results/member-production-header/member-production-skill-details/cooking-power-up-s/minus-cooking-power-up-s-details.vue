@@ -68,7 +68,7 @@ import { mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { CookingPowerUpSMinus, IngredientMagnetSPlus, MathUtils, compactNumber } from 'sleepapi-common'
+import { CookingPowerUpSMinus, MathUtils, compactNumber, isPlusOrMinus } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -99,8 +99,7 @@ export default defineComponent({
       const teamMembers = this.teamStore.getCurrentTeam.members
         .filter(Boolean)
         .map((member) => this.pokemonStore.getPokemon(member!)!.pokemon)
-      const isPaired =
-        teamMembers.filter((member) => member.skill.is(IngredientMagnetSPlus, CookingPowerUpSMinus)).length > 1
+      const isPaired = teamMembers.filter((member) => isPlusOrMinus(member.skill)).length > 1
       const energyAmountToSelf = this.memberWithProduction.production.skillValue.energy?.amountToSelf ?? 0
       const energyAmountToTeam = this.memberWithProduction.production.skillValue.energy?.amountToTeam ?? 0
       const energyAmount = isPaired ? energyAmountToSelf + energyAmountToTeam : 0

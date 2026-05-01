@@ -78,7 +78,8 @@ import {
   IngredientDrawS,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
-  IngredientMagnetSPlus,
+  IngredientMagnetSPlusPlusle,
+  IngredientMagnetSPlusToxtricity,
   Metronome,
   TastyChanceS
 } from '../mainskill/mainskills';
@@ -734,7 +735,7 @@ export const PLUSLE: Pokemon = createSkillSpecialist({
     b: LARGE_LEEK,
     c: MOOMOO_MILK
   },
-  skill: IngredientMagnetSPlus
+  skill: IngredientMagnetSPlusPlusle
 });
 
 export const MINUN: Pokemon = createSkillSpecialist({
@@ -1173,7 +1174,7 @@ export const TOXTRICITY_AMPED: Pokemon = evolvedPokemon(TOXEL, {
   ingredientPercentage: 23.9,
   skillPercentage: 6.4,
   carrySize: 18,
-  skill: IngredientMagnetSPlus
+  skill: IngredientMagnetSPlusToxtricity
 });
 
 export const TOXTRICITY_LOW_KEY: Pokemon = evolvedPokemon(TOXEL, {
