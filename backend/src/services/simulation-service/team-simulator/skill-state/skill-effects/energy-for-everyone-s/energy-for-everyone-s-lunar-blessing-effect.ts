@@ -16,12 +16,10 @@ export class EnergyForEveryoneSLunarBlessingEffect implements SkillEffect {
           });
 
     const energyAmount = skillState.skillAmount(skill.activations.energy);
-    const selfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
-      skillLevel: skillState.skillLevel,
+    const selfBerryAmount = skillState.skillAmount(EnergyForEveryoneSLunarBlessing.activations.selfBerries, {
       extra: unique
     });
-    const teamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
-      skillLevel: skillState.skillLevel,
+    const teamBerryAmount = skillState.skillAmount(EnergyForEveryoneSLunarBlessing.activations.teamBerries, {
       extra: unique
     });
 

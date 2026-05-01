@@ -40,7 +40,7 @@ describe('ChargeEnergySMoonlightEffect', () => {
     const activation = effect.activate(skillState);
     const skill = ChargeEnergySMoonlight;
     const selfAmount = skillState.skillAmount(skill.activations.energy);
-    const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel: skillState.skillLevel });
+    const teamAmount = ChargeEnergySMoonlight.critAmounts[skillState.skillLevel - 1];
 
     expect(activation.skill).toBe(skill);
     expect(activation.activations.length).toBe(2);

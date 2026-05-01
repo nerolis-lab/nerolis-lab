@@ -8,9 +8,7 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
     const memberState = skillState.memberState;
     const skill = BerryBurstDisguise;
     const regularSelfAmount = skillState.skillAmount(skill.activations.berries);
-    const regularOtherAmount = BerryBurstDisguise.activations.berries.teamAmount!({
-      skillLevel: skillState.skillLevel
-    });
+    const regularOtherAmount = skillState.skillTeamAmount(BerryBurstDisguise.activations.berries);
     let critSelfAmount = 0;
     let critOtherAmount = 0;
 
