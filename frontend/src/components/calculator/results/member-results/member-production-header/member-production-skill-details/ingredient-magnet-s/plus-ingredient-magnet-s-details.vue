@@ -79,7 +79,7 @@ import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { CookingPowerUpSMinus, IngredientMagnetSPlus, MathUtils, compactNumber, ingredient } from 'sleepapi-common'
+import { MathUtils, compactNumber, ingredient, isPlusOrMinus } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -96,6 +96,10 @@ export default defineComponent({
     return { teamStore, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
+    skill() {
+      // Both versions of Plus use this component.
+      return this.memberWithProduction.member.pokemon.skill
+    },
     aIng() {
       const ing = this.memberWithProduction.member.ingredients[0].ingredient
       return {
@@ -104,18 +108,17 @@ export default defineComponent({
       }
     },
     combinedIngCountPerProc() {
-      const magnetIngs = IngredientMagnetSPlus.activations.solo.amount({
+      const magnetIngs = this.skill.activations.solo.amount({
         skillLevel: this.memberWithProduction.member.skillLevel
       })
-      const aSlotIngs = IngredientMagnetSPlus.activations.paired.amount({
+      const aSlotIngs = this.skill.activations.paired.amount({
         skillLevel: this.memberWithProduction.member.skillLevel,
         ingredient: this.memberWithProduction.member.pokemon.ingredient0.at(0)?.ingredient
       })
       const teamMembers = this.teamStore.getCurrentTeam.members
         .filter(Boolean)
         .map((member) => this.pokemonStore.getPokemon(member!)!.pokemon)
-      const isPaired =
-        teamMembers.filter((member) => member.skill.is(IngredientMagnetSPlus, CookingPowerUpSMinus)).length > 1
+      const isPaired = teamMembers.filter((member) => isPlusOrMinus(member.skill)).length > 1
       return isPaired ? aSlotIngs + magnetIngs : magnetIngs
     },
     averageMagnetAmount() {
