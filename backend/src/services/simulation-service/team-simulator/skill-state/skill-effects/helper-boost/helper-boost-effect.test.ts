@@ -24,7 +24,6 @@ describe('HelperBoostEffect', () => {
     HelperBoost.baseAmounts[0] = regularAmount;
     memberState = mocks.memberState();
     skillState = mocks.skillState(memberState);
-    vimic(skillState, 'skillAmount', () => regularAmount);
 
     const result = helperBoostEffect.activate(skillState);
 
@@ -41,14 +40,14 @@ describe('HelperBoostEffect', () => {
 
   it('should count only 1 unique if team size greater than MAX_TEAM_SIZE', () => {
     const regularAmount = 20;
-    HelperBoost.uniqueBoostTable[1] = [1];
+    const extraAmount = 1;
+    HelperBoost.uniqueBoostTable[1] = [extraAmount];
     HelperBoost.baseAmounts[0] = regularAmount;
 
     memberState = mocks.memberState({
       team: new Array(MAX_TEAM_SIZE + 1).fill(mocks.teamMemberExt())
     });
     skillState = mocks.skillState(memberState);
-    vimic(skillState, 'skillAmount', () => regularAmount);
 
     const result = helperBoostEffect.activate(skillState);
 
@@ -57,7 +56,7 @@ describe('HelperBoostEffect', () => {
       activations: [
         {
           unit: 'helps',
-          team: { regular: regularAmount + 1, crit: 0 }
+          team: { regular: regularAmount + extraAmount, crit: 0 }
         }
       ]
     });
