@@ -2398,7 +2398,6 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },

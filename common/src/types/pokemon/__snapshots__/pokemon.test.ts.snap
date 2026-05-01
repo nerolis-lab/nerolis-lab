@@ -3524,7 +3524,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -3637,7 +3636,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -3778,7 +3776,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -3941,7 +3938,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -4082,7 +4078,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -4401,7 +4396,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -4514,7 +4508,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -4655,7 +4648,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -4818,7 +4810,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -4959,7 +4950,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -5278,7 +5268,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -5391,7 +5380,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -5532,7 +5520,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -5695,7 +5682,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -5836,7 +5822,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -7722,7 +7707,6 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
     "activations": {
       "strength": {
         "amount": [Function],
-        "teamEnergyReduction": 12,
         "unit": "strength",
       },
     },
@@ -8276,7 +8260,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },
@@ -8417,7 +8400,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -17349,7 +17331,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },
@@ -17490,7 +17471,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -18061,7 +18041,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },
@@ -18202,7 +18181,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -27202,7 +27180,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -27315,7 +27292,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -27456,7 +27432,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -27619,7 +27594,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -27760,7 +27734,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -28079,7 +28052,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -28192,7 +28164,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -28333,7 +28304,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -28496,7 +28466,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -28637,7 +28606,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -28956,7 +28924,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -29069,7 +29036,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -29210,7 +29176,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -29373,7 +29338,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -29514,7 +29478,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },

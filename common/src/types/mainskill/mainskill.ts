@@ -17,8 +17,6 @@ export type MainskillActivation = {
   critChance?: number;
   /** @deprecated Get the crit multiplier from the mainskill definition directly */
   critMultiplier?: number;
-  /** @deprecated Get the energy reduction from the mainskill definition directly */
-  teamEnergyReduction?: number;
 };
 
 export interface MainskillBaseAttributes {

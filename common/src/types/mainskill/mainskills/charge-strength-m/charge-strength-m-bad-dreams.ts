@@ -15,8 +15,7 @@ export const ChargeStrengthMBadDreams = new (class extends ModifiedMainskill {
   activations: ActivationsType = {
     strength: {
       unit: 'strength',
-      amount: this.leveledAmount(this.strengthAmounts),
-      teamEnergyReduction: this.energyReduction
+      amount: this.leveledAmount(this.strengthAmounts)
     }
   };
 })();
