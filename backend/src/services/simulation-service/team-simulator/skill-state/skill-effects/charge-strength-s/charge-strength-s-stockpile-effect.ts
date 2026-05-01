@@ -21,7 +21,7 @@ export class ChargeStrengthSStockpileEffect implements SkillEffect {
 
     const currentLevelStocks: number[] =
       ChargeStrengthSStockpile.spitUpAmounts[Math.min(skillState.skillLevel, skill.maxLevel)];
-    const triggerSpitUp = skillState.rng() < ChargeStrengthSStockpile.activations.strength.critChance!;
+    const triggerSpitUp = skillState.rng() < ChargeStrengthSStockpile.critChance;
 
     if (triggerSpitUp || this.currentStockpile === currentLevelStocks.length - 1) {
       const stockpiledValue = currentLevelStocks[this.currentStockpile];

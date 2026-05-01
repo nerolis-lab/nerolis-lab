@@ -16,13 +16,7 @@ describe('ChargeStrengthSStockpile', () => {
     );
     expect(ChargeStrengthSStockpile.RP).toEqual([600, 853, 1177, 1625, 2243, 3099, 3984]);
     expect(ChargeStrengthSStockpile.maxLevel).toBe(7);
-  });
-
-  it('should have strength activation with crit chance', () => {
-    expect(ChargeStrengthSStockpile.activations).toHaveProperty('strength');
-    expect(ChargeStrengthSStockpile.activations.strength.unit).toBe('strength');
-    expect(typeof ChargeStrengthSStockpile.activations.strength.amount).toBe('function');
-    expect(ChargeStrengthSStockpile.activations.strength.critChance).toBe(0.2674);
+    expect(ChargeStrengthSStockpile.critChance).toBe(0.2674);
   });
 
   it('should calculate correct strength amounts', () => {

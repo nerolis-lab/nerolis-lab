@@ -12,7 +12,7 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
     let critSelfAmount = 0;
     let critOtherAmount = 0;
 
-    if (!memberState.disguiseBusted && skillState.rng() < BerryBurstDisguise.activations.berries.critChance!) {
+    if (!memberState.disguiseBusted && skillState.rng() < BerryBurstDisguise.critChance) {
       memberState.disguiseBusted = true;
 
       // -1 because the crit value is the difference between 1x and 3x, so only 2x

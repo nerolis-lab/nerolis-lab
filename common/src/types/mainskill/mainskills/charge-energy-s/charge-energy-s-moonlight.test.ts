@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { ChargeEnergySMoonlight } from './charge-energy-s-moonlight';
 import { ChargeEnergyS } from './charge-energy-s';
+import { ChargeEnergySMoonlight } from './charge-energy-s-moonlight';
 
 describe('ChargeEnergySMoonlight', () => {
   it('should have modified name format', () => {
@@ -12,14 +12,6 @@ describe('ChargeEnergySMoonlight', () => {
   it('should have modified RP values', () => {
     expect(ChargeEnergySMoonlight.RP).toEqual([560, 797, 1099, 1516, 2094, 2892]);
     expect(ChargeEnergySMoonlight.maxLevel).toBe(6);
-  });
-
-  it('should have enhanced activations with crit properties', () => {
-    const activation = ChargeEnergySMoonlight.activations.energy;
-    expect(activation.unit).toBe('energy');
-    expect(typeof activation.amount).toBe('function');
-    expect(activation.critChance).toBe(0.5);
-    expect(typeof activation.critAmount).toBe('function');
   });
 
   it('should calculate crit amounts correctly', () => {

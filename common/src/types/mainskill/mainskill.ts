@@ -13,8 +13,6 @@ export type MainskillActivation = {
   amount: AmountFunction;
   teamAmount?: AmountFunction;
   critAmount?: AmountFunction;
-  /** @deprecated Get the crit chance from the mainskill definition directly */
-  critChance?: number;
 };
 
 export interface MainskillBaseAttributes {
