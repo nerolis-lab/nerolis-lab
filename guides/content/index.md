@@ -30,3 +30,5 @@ Tooz is an editor for this project; we credit them for keeping guides organized 
 ## Contributing
 
 This site is a community effort and contributions are welcome. If you've spotted an error, have data to add, or want to propose a new guide entirely, check out [our Contributing page](contributing/) for info on how to contribute.
+
+This should fail CI due to a [broken link](broken)!
