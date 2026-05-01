@@ -14,7 +14,6 @@ import type {
   SolveRecipeSolutionWithSettings
 } from '@src/services/solve/types/solution-types.js';
 import { mocks } from '@src/vitest/index.js';
-import { convertFloat32ToInt16, splitArrayByCondition } from 'sleepapi-common';
 import type {
   IngredientIndexToFloatAmount,
   IngredientSet,
@@ -31,6 +30,7 @@ import type {
 } from 'sleepapi-common';
 import {
   CarrySizeUtils,
+  convertFloat32ToInt16,
   CookingAssistS,
   CookingAssistSBulkUp,
   CookingPowerUpS,
@@ -38,7 +38,6 @@ import {
   HelperBoost,
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
-  IngredientDrawS,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
   ingredientSetToFloatFlat,
@@ -47,6 +46,7 @@ import {
   MEALS_IN_DAY,
   Optimal,
   OPTIMAL_POKEDEX,
+  splitArrayByCondition,
   TastyChanceS
 } from 'sleepapi-common';
 
@@ -189,7 +189,6 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingAssistSBulkUp.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(CookingPowerUpS.name);
   INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawSSuperLuck.name);
-  INGREDIENT_SUPPORT_MAINSKILLS_SET.add(IngredientDrawS.name);
   for (let i = 0; i < pokedex.length; ++i) {
     const pkmn = pokedex[i];
 
