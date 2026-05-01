@@ -55,7 +55,7 @@ import {
   EnergizingCheerS,
   EnergyForEveryoneS,
   ExtraHelpfulS,
-  IngredientDrawS,
+  IngredientDrawSCutiefly,
   IngredientDrawSHyperCutter,
   IngredientMagnetS,
   IngredientMagnetSPresent,
@@ -948,7 +948,7 @@ export const CUTIEFLY: Pokemon = createIngredientSpecialist({
     b: PURE_OIL,
     c: GREENGRASS_CORN
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSCutiefly
 });
 
 export const RIBOMBEE: Pokemon = evolvedPokemon(CUTIEFLY, {

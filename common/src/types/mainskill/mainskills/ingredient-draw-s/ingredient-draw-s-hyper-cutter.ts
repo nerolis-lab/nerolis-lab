@@ -2,10 +2,10 @@ import type { ActivationsType, AmountFunction, AmountParams, Ingredient } from '
 import { rollToOutput } from '../../../../utils/mainskill-utils/mainskill-utils';
 import { GREENGRASS_CORN, PURE_OIL, SNOOZY_TOMATO, SOFT_POTATO } from '../../../ingredient/ingredients';
 import { ModifiedMainskill, ZeroAmount } from '../../mainskill';
-import { IngredientDrawS } from './ingredient-draw-s';
+import { IngredientDrawSSandshrew } from './ingredient-draw-s';
 
 class IngredientDrawSHyperCutterImpl extends ModifiedMainskill {
-  baseSkill = IngredientDrawS;
+  baseSkill = IngredientDrawSSandshrew; // any of the normal versions works
   modifierName = 'Hyper Cutter';
   RP = [880, 1251, 1726, 2383, 3290, 4846, 5843];
   ingredientAmounts = [5, 6, 8, 11, 13, 16, 18];

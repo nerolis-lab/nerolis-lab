@@ -2,7 +2,7 @@ import type { ActivationsType, AmountParams } from '../../mainskill';
 import { Mainskill, MAINSKILLS } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
-import { IngredientDrawS } from '../ingredient-draw-s';
+import { IngredientDrawSCutiefly, IngredientDrawSDwebble, IngredientDrawSSandshrew } from '../ingredient-draw-s';
 import { IngredientMagnetSPlusToxtricity } from '../ingredient-magnet-s';
 import { SkillCopyMimic } from '../skill-copy/skill-copy_mimic';
 import { SkillCopyTransform } from '../skill-copy/skill-copy_transform';
@@ -18,7 +18,9 @@ export const Metronome = new (class extends Mainskill {
     this,
     BerryBurstDisguise,
     ChargeStrengthMBadDreams,
-    IngredientDrawS,
+    IngredientDrawSSandshrew,
+    IngredientDrawSDwebble,
+    IngredientDrawSCutiefly,
     IngredientMagnetSPlusToxtricity,
     SkillCopyMimic,
     SkillCopyTransform
