@@ -3449,7 +3449,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -3490,6 +3489,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -3694,7 +3694,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -3735,6 +3734,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -3834,7 +3834,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -3875,6 +3874,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -3996,7 +3996,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -4037,6 +4036,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -4136,7 +4136,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -4177,6 +4176,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -4321,7 +4321,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -4362,6 +4361,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -4566,7 +4566,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -4607,6 +4606,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -4706,7 +4706,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -4747,6 +4746,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -4868,7 +4868,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -4909,6 +4908,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -5008,7 +5008,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -5049,6 +5048,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -5193,7 +5193,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -5234,6 +5233,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -5438,7 +5438,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -5479,6 +5478,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -5578,7 +5578,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -5619,6 +5618,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -5740,7 +5740,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -5781,6 +5780,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -5880,7 +5880,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -5921,6 +5920,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -8318,7 +8318,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           "activations": {
             "berries": {
               "amount": [Function],
-              "critChance": 0.185,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -8359,6 +8358,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
               5,
             ],
           },
+          "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
@@ -8458,7 +8458,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -8499,6 +8498,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -9308,7 +9308,6 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
     "activations": {
       "strength": {
         "amount": [Function],
-        "critChance": 0.2674,
         "unit": "strength",
       },
     },
@@ -9350,6 +9349,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
         3212,
       ],
     },
+    "critChance": 0.2674,
     "description": [Function],
     "image": "stockpile_strength",
     "modifierName": "Stockpile",
@@ -9548,7 +9548,6 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
     "activations": {
       "strength": {
         "amount": [Function],
-        "critChance": 0.2674,
         "unit": "strength",
       },
     },
@@ -9590,6 +9589,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
         3212,
       ],
     },
+    "critChance": 0.2674,
     "description": [Function],
     "image": "stockpile_strength",
     "modifierName": "Stockpile",
@@ -17745,7 +17745,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           "activations": {
             "berries": {
               "amount": [Function],
-              "critChance": 0.185,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -17786,6 +17785,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
               5,
             ],
           },
+          "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
@@ -17885,7 +17885,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -17926,6 +17925,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -18050,7 +18050,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
     "activations": {
       "berries": {
         "amount": [Function],
-        "critChance": 0.185,
         "teamAmount": [Function],
         "unit": "berries",
       },
@@ -18091,6 +18090,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
         5,
       ],
     },
+    "critChance": 0.185,
     "critMultiplier": 3,
     "description": [Function],
     "image": "berries",
@@ -18455,7 +18455,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           "activations": {
             "berries": {
               "amount": [Function],
-              "critChance": 0.185,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -18496,6 +18495,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
               5,
             ],
           },
+          "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
@@ -18595,7 +18595,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -18636,6 +18635,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -27461,7 +27461,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -27502,6 +27501,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -27706,7 +27706,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -27747,6 +27746,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -27846,7 +27846,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -27887,6 +27886,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -28008,7 +28008,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -28049,6 +28048,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -28148,7 +28148,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -28189,6 +28188,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -28333,7 +28333,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -28374,6 +28373,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -28578,7 +28578,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -28619,6 +28618,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -28718,7 +28718,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -28759,6 +28758,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -28880,7 +28880,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -28921,6 +28920,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -29020,7 +29020,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -29061,6 +29060,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -29205,7 +29205,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -29246,6 +29245,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
@@ -29450,7 +29450,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -29491,6 +29490,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -29590,7 +29590,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -29631,6 +29630,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -29752,7 +29752,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -29793,6 +29792,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
@@ -29892,7 +29892,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -29933,6 +29932,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
@@ -31542,7 +31542,6 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
       "energy": {
         "amount": [Function],
         "critAmount": [Function],
-        "critChance": 0.5,
         "unit": "energy",
       },
     },
@@ -31581,6 +31580,7 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
       17.2,
       22.8,
     ],
+    "critChance": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,
