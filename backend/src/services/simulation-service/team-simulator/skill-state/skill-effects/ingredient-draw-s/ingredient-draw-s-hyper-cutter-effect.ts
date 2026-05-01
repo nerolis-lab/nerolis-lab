@@ -1,13 +1,7 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import {
-  emptyIngredientInventoryFloat,
-  flatToIngredientSet,
-  ING_ID_LOOKUP,
-  IngredientDrawSHyperCutter,
-  ingredientSetToFloatFlat
-} from 'sleepapi-common';
+import { IngredientDrawSHyperCutter, ingredientSetToFloatFlat } from 'sleepapi-common';
 
 export class IngredientDrawSHyperCutterEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
@@ -19,17 +13,11 @@ export class IngredientDrawSHyperCutterEffect implements SkillEffect {
     const critAmount = critAmountFunc({ skillLevel: skillState.skillLevel });
     const nrOfIngredients = amount + critAmount;
 
-    const ingredientDrawIngredients = emptyIngredientInventoryFloat();
-    ingredientDrawIngredients[ING_ID_LOOKUP[ingredient.name]] = nrOfIngredients;
+    const ingredients = [{ amount: nrOfIngredients, ingredient }];
+    const flatIngredients = ingredientSetToFloatFlat(ingredients);
 
-    skillState.memberState.cookingState?.addIngredients(ingredientDrawIngredients);
-
-    skillState.memberState.skillProduce.ingredients = flatToIngredientSet(
-      ingredientSetToFloatFlat(skillState.memberState.skillProduce.ingredients)._mutateCombine(
-        ingredientDrawIngredients,
-        (a, b) => a + b
-      )
-    );
+    skillState.memberState.cookingState?.addIngredients(flatIngredients);
+    skillState.memberState.addSkillProduce({ berries: [], ingredients });
 
     return {
       skill,

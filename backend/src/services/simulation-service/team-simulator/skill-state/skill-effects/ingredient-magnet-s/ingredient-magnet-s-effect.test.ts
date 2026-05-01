@@ -1,9 +1,10 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-effect.js';
+import { rounded } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-test-util.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet } from 'sleepapi-common';
-import { ingredient, IngredientMagnetS, ingredientSetToFloatFlat, MathUtils } from 'sleepapi-common';
+import { ingredient, IngredientMagnetS, ingredientSetToFloatFlat } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -31,12 +32,8 @@ describe('IngredientMagnetSEffect', () => {
     const result = ingredientMagnetSEffect.activate(skillState);
 
     expect(skillState.memberState.cookingState?.addIngredients).toHaveBeenCalledWith(magnetIngredientsFloat);
-    expect(
-      skillState.memberState.skillProduce.ingredients.map(({ ingredient, amount }) => ({
-        ingredient,
-        amount: MathUtils.round(amount, 2)
-      }))
-    ).toEqual(magnetIngredients.map(({ ingredient, amount }) => ({ ingredient, amount: MathUtils.round(amount, 2) })));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(rounded((skillState.memberState as any).skillProduce.ingredients)).toEqual(rounded(magnetIngredients));
     expect(result).toEqual({
       skill: IngredientMagnetS,
       activations: [

@@ -8,26 +8,20 @@ import {
   emptyIngredientInventoryFloat,
   flatToIngredientSet,
   ingredient,
-  IngredientMagnetSPresent,
-  ingredientSetToFloatFlat
+  IngredientMagnetSPresent
 } from 'sleepapi-common';
 
 export class IngredientMagnetSPresentEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = IngredientMagnetSPresent;
     const ingMagnetAmount = skillState.skillAmount(skill.activations.ingredients);
-    const magnetIngredients = emptyIngredientInventoryFloat().fill(
+    const flatIngredients = emptyIngredientInventoryFloat().fill(
       ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS
     );
+    const ingredients = flatToIngredientSet(flatIngredients);
 
-    skillState.memberState.cookingState?.addIngredients(magnetIngredients);
-
-    skillState.memberState.skillProduce.ingredients = flatToIngredientSet(
-      ingredientSetToFloatFlat(skillState.memberState.skillProduce.ingredients)._mutateCombine(
-        magnetIngredients,
-        (a, b) => a + b
-      )
-    );
+    skillState.memberState.cookingState?.addIngredients(flatIngredients);
+    skillState.memberState.addSkillProduce({ berries: [], ingredients });
 
     const activations: UnitActivation[] = [
       {
