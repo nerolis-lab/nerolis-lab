@@ -66,7 +66,7 @@ export class MemberState {
   private pokemonWithIngredients: PokemonWithIngredientsIndexed;
 
   // state
-  currentEnergy = 0;
+  private currentEnergy = 0;
   disguiseBusted = false;
   private nextHelp: number;
   private currentNightHelps = 0;
@@ -108,8 +108,8 @@ export class MemberState {
 
   // TODO: move to skill-state
   skillProduce: Produce = CarrySizeUtils.getEmptyInventory();
-  totalRecovery = 0;
-  wastedEnergy = 0;
+  private totalRecovery = 0;
+  private wastedEnergy = 0;
   private energyIntervalsDay = 0;
   private energyIntervalsNight = 0;
   private frequencyIntervalsDay = 0;
@@ -363,9 +363,11 @@ export class MemberState {
     const recoveredWithNature = recovered * this.member.settings.nature.energy;
     const clampedEnergyRecovered =
       this.currentEnergy + recoveredWithNature > 150 ? 150 - this.currentEnergy : recoveredWithNature;
+    const wastedEnergy = recoveredWithNature - clampedEnergyRecovered;
 
     this.currentEnergy += clampedEnergyRecovered;
     this.totalRecovery += clampedEnergyRecovered;
+    invoker.wastedEnergy += wastedEnergy;
 
     if (invoker.id !== this.id) {
       this.totalHealedByMembers += clampedEnergyRecovered;
@@ -373,12 +375,8 @@ export class MemberState {
 
     return {
       recovered: clampedEnergyRecovered,
-      wasted: recoveredWithNature - clampedEnergyRecovered
+      wasted: wastedEnergy
     };
-  }
-
-  public wasteEnergy(wasted: number) {
-    this.wastedEnergy += wasted;
   }
 
   public addSkillValue(skillValue: TeamActivationValue) {

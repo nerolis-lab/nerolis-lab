@@ -11,6 +11,7 @@ import {
   BerryBurstDisguise,
   ChargeStrengthS,
   EnergyForEveryoneS,
+  MathUtils,
   PINSIR,
   RandomUtils,
   berry,
@@ -247,8 +248,8 @@ describe('TeamSimulator', () => {
     const result = simulator.results();
 
     expect(result.members).toHaveLength(5);
-    const skillAmount = result.members[0].skillAmount;
-    const wasteAmount = result.members[0].advanced.wastedEnergy;
+    const skillAmount = MathUtils.round(result.members[0].skillAmount, 1);
+    const wasteAmount = MathUtils.round(result.members[0].advanced.wastedEnergy, 1);
     expect(skillAmount).toMatchInlineSnapshot(`726.5`);
     expect(wasteAmount).toMatchInlineSnapshot(`4070`);
     expect(
