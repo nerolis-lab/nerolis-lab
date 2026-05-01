@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IngredientDrawS } from './ingredient-draw-s';
+import { IngredientDrawSSandshrew } from './ingredient-draw-s';
 import type { HyperCutterOutput } from './ingredient-draw-s-hyper-cutter';
 import { IngredientDrawSHyperCutter } from './ingredient-draw-s-hyper-cutter';
 
@@ -7,7 +7,7 @@ describe('IngredientDrawSHyperCutter', () => {
   it('should have modified name format', () => {
     expect(IngredientDrawSHyperCutter.name).toBe('Hyper Cutter (Ingredient Draw S)');
     expect(IngredientDrawSHyperCutter.modifierName).toBe('Hyper Cutter');
-    expect(IngredientDrawSHyperCutter.baseSkill).toBe(IngredientDrawS);
+    expect(IngredientDrawSHyperCutter.baseSkill).toBe(IngredientDrawSSandshrew);
   });
 
   it('should have correct basic properties', () => {

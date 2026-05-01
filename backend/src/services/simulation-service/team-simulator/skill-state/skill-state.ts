@@ -25,7 +25,11 @@ import { EnergyForEveryoneSEffect } from '@src/services/simulation-service/team-
 import { EnergyForEveryoneSLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s/energy-for-everyone-s-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost/helper-boost-effect.js';
-import { IngredientDrawSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
+import {
+  IngredientDrawSCutieflyEffect,
+  IngredientDrawSDwebbleEffect,
+  IngredientDrawSSandshrewEffect
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
 import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-hyper-cutter-effect.js';
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-effect.js';
@@ -71,8 +75,10 @@ import {
   EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
-  IngredientDrawS,
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
   IngredientDrawSHyperCutter,
+  IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
   IngredientMagnetSPlusPlusle,
@@ -141,7 +147,9 @@ export class SkillState {
       [IngredientMagnetSPlusPlusle, new IngredientMagnetSPlusPlusleEffect()],
       [IngredientMagnetSPlusToxtricity, new IngredientMagnetSPlusToxtricityEffect()],
       [IngredientMagnetSPresent, new IngredientMagnetSPresentEffect()],
-      [IngredientDrawS, new IngredientDrawSEffect()],
+      [IngredientDrawSCutiefly, new IngredientDrawSCutieflyEffect()],
+      [IngredientDrawSDwebble, new IngredientDrawSDwebbleEffect()],
+      [IngredientDrawSSandshrew, new IngredientDrawSSandshrewEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
       [Metronome, new MetronomeEffect()],

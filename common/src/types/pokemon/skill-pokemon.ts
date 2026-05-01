@@ -74,7 +74,8 @@ import {
   EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
-  IngredientDrawS,
+  IngredientDrawSDwebble,
+  IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
   IngredientMagnetSPlusPlusle,
@@ -120,7 +121,7 @@ export const SANDSHREW: Pokemon = createSkillSpecialist({
     b: GREENGRASS_CORN,
     c: SOFT_POTATO
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSSandshrew
 });
 
 export const SANDSLASH: Pokemon = evolvedPokemon(SANDSHREW, {
@@ -992,7 +993,7 @@ export const DWEBBLE: Pokemon = createSkillSpecialist({
     b: SOFT_POTATO,
     c: PURE_OIL
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSDwebble
 });
 
 export const CRUSTLE: Pokemon = evolvedPokemon(DWEBBLE, {

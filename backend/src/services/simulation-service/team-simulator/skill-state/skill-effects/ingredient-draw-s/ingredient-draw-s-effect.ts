@@ -1,16 +1,26 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { IngredientDrawS, ingredientSetToFloatFlat, type Ingredient } from 'sleepapi-common';
+import type { Mainskill } from 'sleepapi-common';
+import {
+  CUTIEFLY,
+  DWEBBLE,
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
+  IngredientDrawSSandshrew,
+  ingredientSetToFloatFlat,
+  SANDSHREW,
+  type Ingredient
+} from 'sleepapi-common';
 
-export class IngredientDrawSEffect implements SkillEffect {
+abstract class IngredientDrawSEffect implements SkillEffect {
+  abstract skill: Mainskill;
+  abstract ingredientOptions: Ingredient[];
+
   activate(skillState: SkillState): SkillActivation {
-    const skill = IngredientDrawS;
-    const nrOfIngredients = skillState.skillAmount(skill.activations.ingredients);
+    const nrOfIngredients = skillState.skillAmount(this.skill.activations.ingredients);
 
-    const ingredient: Ingredient = skillState.rng.randomElement(
-      skillState.memberState.member.pokemonWithIngredients.pokemon.ingredient60.map((ingSet) => ingSet.ingredient)
-    );
+    const ingredient: Ingredient = skillState.rng.randomElement(this.ingredientOptions);
 
     const ingredients = [{ amount: nrOfIngredients, ingredient }];
     const flatIngredients = ingredientSetToFloatFlat(ingredients);
@@ -19,7 +29,7 @@ export class IngredientDrawSEffect implements SkillEffect {
     skillState.memberState.addSkillProduce({ berries: [], ingredients });
 
     return {
-      skill,
+      skill: this.skill,
       activations: [
         {
           unit: 'ingredients',
@@ -31,4 +41,19 @@ export class IngredientDrawSEffect implements SkillEffect {
       ]
     };
   }
+}
+
+export class IngredientDrawSSandshrewEffect extends IngredientDrawSEffect {
+  skill = IngredientDrawSSandshrew;
+  ingredientOptions = SANDSHREW.ingredient60.map((ingSet) => ingSet.ingredient);
+}
+
+export class IngredientDrawSDwebbleEffect extends IngredientDrawSEffect {
+  skill = IngredientDrawSDwebble;
+  ingredientOptions = DWEBBLE.ingredient60.map((ingSet) => ingSet.ingredient);
+}
+
+export class IngredientDrawSCutieflyEffect extends IngredientDrawSEffect {
+  skill = IngredientDrawSCutiefly;
+  ingredientOptions = CUTIEFLY.ingredient60.map((ingSet) => ingSet.ingredient);
 }
