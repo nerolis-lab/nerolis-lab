@@ -13,9 +13,11 @@ export type MainskillActivation = {
   amount: AmountFunction;
   teamAmount?: AmountFunction;
   critAmount?: AmountFunction;
+  /** @deprecated Get the crit chance from the mainskill definition directly */
   critChance?: number;
+  /** @deprecated Get the crit multiplier from the mainskill definition directly */
   critMultiplier?: number;
-  targetLowestChance?: number;
+  /** @deprecated Get the energy reduction from the mainskill definition directly */
   teamEnergyReduction?: number;
 };
 
