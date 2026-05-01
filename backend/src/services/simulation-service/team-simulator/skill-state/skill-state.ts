@@ -41,7 +41,7 @@ import type {
   TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import type { Mainskill, MainskillActivation, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
+import type { AmountParams, Mainskill, MainskillActivation, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
 import {
   BerryBurst,
   BerryBurstDisguise,
@@ -79,7 +79,8 @@ import {
   SkillCopy,
   SkillCopyMimic,
   SkillCopyTransform,
-  TastyChanceS
+  TastyChanceS,
+  ZeroAmount
 } from 'sleepapi-common';
 
 export class SkillState {
@@ -221,10 +222,24 @@ export class SkillState {
     );
   }
 
-  public skillAmount(activation: MainskillActivation) {
+  public skillAmount(activation: MainskillActivation, params?: Partial<AmountParams>) {
     return activation.amount({
-      skillLevel: this.skillLevel,
-      ingredient: this.memberState.member.pokemonWithIngredients.ingredientList.at(0)?.ingredient
+      ...params,
+      skillLevel: this.skillLevel
+    });
+  }
+
+  public skillTeamAmount(activation: MainskillActivation, params?: Partial<AmountParams>) {
+    return (activation.teamAmount ?? ZeroAmount)({
+      ...params,
+      skillLevel: this.skillLevel
+    });
+  }
+
+  public skillCritAmount(activation: MainskillActivation, params?: Partial<AmountParams>) {
+    return (activation.critAmount ?? ZeroAmount)({
+      ...params,
+      skillLevel: this.skillLevel
     });
   }
 

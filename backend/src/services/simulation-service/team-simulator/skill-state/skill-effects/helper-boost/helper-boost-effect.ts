@@ -15,7 +15,7 @@ export class HelperBoostEffect implements SkillEffect {
             members: memberState.team.map((member) => member.pokemonWithIngredients.pokemon)
           });
 
-    const helps = HelperBoost.activations.helps.amount({ skillLevel: skillState.skillLevel, extra: unique });
+    const helps = skillState.skillAmount(HelperBoost.activations.helps, { extra: unique });
 
     return {
       skill,

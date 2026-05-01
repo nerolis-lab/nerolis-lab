@@ -24,7 +24,9 @@ export class IngredientMagnetSPlusEffect implements SkillEffect {
         member.skill.is(IngredientMagnetSPlus, CookingPowerUpSMinus)
       ).length === 0
         ? 0
-        : skillState.skillAmount(skill.activations.paired);
+        : skillState.skillAmount(skill.activations.paired, {
+            ingredient: skillState.memberState.member.pokemonWithIngredients.ingredientList[0].ingredient
+          });
     flatIngredients[
       ING_ID_LOOKUP[skillState.memberState.member.pokemonWithIngredients.ingredientList[0].ingredient.name]
     ] += bonusAmount;

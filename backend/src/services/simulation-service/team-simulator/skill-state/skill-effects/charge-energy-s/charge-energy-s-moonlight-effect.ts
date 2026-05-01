@@ -11,8 +11,7 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
     const memberState = skillState.memberState;
     const skill = ChargeEnergySMoonlight;
     const selfAmount = skillState.skillAmount(skill.activations.energy);
-    // TODO: implement skillState.critAmount and use that instead
-    const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel: skillState.skillLevel });
+    const teamAmount = skillState.skillCritAmount(ChargeEnergySMoonlight.activations.energy);
 
     const { recovered } = memberState.recoverEnergy(selfAmount, memberState);
 
