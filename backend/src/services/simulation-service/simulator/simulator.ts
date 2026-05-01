@@ -286,8 +286,7 @@ export function simulation(params: {
             const critChance = skillActivation.critChance ?? BerryBurstDisguise.activations.berries.critChance!;
 
             const averageTeamBerryAmount =
-              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.activations.berries.critMultiplier!) /
-              metronomeFactor;
+              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.critMultiplier) / metronomeFactor;
 
             skillBerriesOtherValue += averageTeamBerryAmount;
           } else if (skillActivation.skill.is(BerryBurst)) {
