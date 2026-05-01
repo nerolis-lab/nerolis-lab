@@ -1,3 +1,10 @@
+## [2.49.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.0...v2.49.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* **guides:** broken link to contributing page ([f8576ce](https://github.com/nerolis-lab/nerolis-lab/commit/f8576ce1bf662e7190e42f4b4efd175e096e1c3e))
+
 # [2.49.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.48.1...v2.49.0) (2026-05-01)
 
 
