@@ -1,3 +1,10 @@
+## [2.48.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.48.0...v2.48.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* cleanup skillValue in compare-strength.vue ([dc41f2c](https://github.com/nerolis-lab/nerolis-lab/commit/dc41f2cbd688b3602ec611f1fae8cb3fa61faec1))
+
 # [2.48.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.47.5...v2.48.0) (2026-04-30)
 
 
