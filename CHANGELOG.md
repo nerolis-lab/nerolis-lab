@@ -1,3 +1,11 @@
+# [2.49.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.48.1...v2.49.0) (2026-05-01)
+
+
+### Features
+
+* add custom emoji support to guides ([2826587](https://github.com/nerolis-lab/nerolis-lab/commit/28265870e6b86c19a14b7d195ebebe3567979488))
+* add latias to guides custom emojis ([41f52cf](https://github.com/nerolis-lab/nerolis-lab/commit/41f52cf6a1e86922c46de8e71b055c66d9ff20e0))
+
 ## [2.48.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.48.0...v2.48.1) (2026-05-01)
 
 
