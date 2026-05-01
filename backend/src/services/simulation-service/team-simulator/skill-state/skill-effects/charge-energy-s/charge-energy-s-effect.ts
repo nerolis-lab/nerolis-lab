@@ -7,24 +7,16 @@ export class ChargeEnergySEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const memberState = skillState.memberState;
     const skill = ChargeEnergyS;
-    const defaultEnergyAmount = skillState.skillAmount(skill.activations.energy);
+    const energyAmount = skillState.skillAmount(skill.activations.energy);
 
-    const clampedEnergyRecovered =
-      memberState.energy + defaultEnergyAmount > 150
-        ? 150 - memberState.energy
-        : skillState.skillAmount(skill.activations.energy);
-
-    // Apply changes to member state
-    memberState.currentEnergy += clampedEnergyRecovered;
-    memberState.totalRecovery += clampedEnergyRecovered;
-    memberState.wasteEnergy(defaultEnergyAmount - clampedEnergyRecovered);
+    const { recovered } = memberState.recoverEnergy(energyAmount, memberState);
 
     return {
       skill,
       activations: [
         {
           unit: 'energy',
-          self: { regular: clampedEnergyRecovered, crit: 0 }
+          self: { regular: recovered, crit: 0 }
         }
       ]
     };

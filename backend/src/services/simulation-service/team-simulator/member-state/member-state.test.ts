@@ -650,14 +650,6 @@ describe('degradeEnergy', () => {
   });
 });
 
-describe('wasteEnergy', () => {
-  it('should count wasted energy', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
-    memberState.wasteEnergy(10);
-    expect(memberState.results(1).advanced.wastedEnergy).toBe(10);
-  });
-});
-
 describe('addSkillValue', () => {
   it('should count regular and crit value', () => {
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
