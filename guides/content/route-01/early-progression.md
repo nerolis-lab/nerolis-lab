@@ -1,7 +1,7 @@
 ---
 title: Early Game Progression
 fullTitle: Early Game Progression Guide
-author: Snackson5
+author: Snackson5, Cyars, Tindo
 order: 30
 ---
 
@@ -32,6 +32,7 @@ That being said, we're not saying to "NEVER run Skill mons in the early stages."
 The single most important/impactful Skill to invest in is **Energy For Everyone (E4E)**. This allows your Pokémon to recover energy throughout the day which is disproportionately impactful from the mid game onwards. We do **NOT** recommend running temporary or univested E4E mons. The meta-defining E4E mons worth befriending are Gardevoir (Ralts), Pawmot (Pawmi), and Shuckle.
 
 Outside of E4E, there are 3 optional Main Skills that may be worth considering in your early game:
+
 - **Berry Burst (BB)**
   - Treecko
 - **Charge Strength M (CSM)**
