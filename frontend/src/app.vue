@@ -19,6 +19,7 @@
     <TheFooter></TheFooter>
 
     <!-- Global dialogs -->
+    <SleepApiReferrerWelcomeDialog />
     <PokemonSearchDialog />
     <PokemonInputDialog />
     <FilledSlotMenu />
@@ -32,6 +33,7 @@ import TheNavbar from '@/components/nav-bar/nav-bar.vue'
 import FilledSlotMenu from '@/components/pokemon-input/menus/FilledSlotMenu.vue'
 import PokemonInputDialog from '@/components/pokemon-input/PokemonInputDialog.vue'
 import PokemonSearchDialog from '@/components/pokemon-input/PokemonSearchDialog.vue'
+import SleepApiReferrerWelcomeDialog from '@/components/referrer-welcome/sleep-api-referrer-welcome-dialog.vue'
 import TheSnackbar from '@/components/snackbar/snackbar.vue'
 import { defineComponent } from 'vue'
 
@@ -41,6 +43,7 @@ export default defineComponent({
     TheBackground,
     TheSnackbar,
     TheFooter,
+    SleepApiReferrerWelcomeDialog,
     PokemonSearchDialog,
     PokemonInputDialog,
     FilledSlotMenu
