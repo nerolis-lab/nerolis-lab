@@ -74,6 +74,11 @@
       }
     }
 
+    // VitePress multi-line blockquotes are missing space between paragraphs
+    blockquote > p + p {
+      margin-top: 1em;
+    }
+
     .v-avatar img,
     .v-img img {
       margin: 0; //override Vitepress default margin: 16px 0; on images
@@ -89,14 +94,29 @@
       object-fit: contain;
     }
 
-    // make the clickable area of the collapsible blocks larger
-    .custom-block.details summary {
-      margin: -16px -16px -8px;
-      padding: 16px;
+    .custom-block {
+      .custom-block-title {
+        @include typography-body-wide;
+        text-transform: uppercase;
+      }
+
+      // make the clickable area of the collapsible blocks larger
+      .details summary {
+        margin: -16px -16px -8px;
+        padding: 16px;
+      }
     }
 
     tr {
       background-color: var(--color-neutral-800);
+
+      td {
+        border-color: var(--color-neutral-900);
+      }
+
+      code {
+        background-color: var(--color-neutral-600);
+      }
     }
 
     tr:nth-child(2n) {
