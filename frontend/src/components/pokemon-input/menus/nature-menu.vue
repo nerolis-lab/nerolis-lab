@@ -23,7 +23,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6">
         <v-btn
           class="w-100 text-small"
@@ -47,7 +47,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6">
         <v-btn
           class="w-100 text-small"
@@ -71,7 +71,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6">
         <v-btn
           class="w-100 text-small"
@@ -95,7 +95,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6">
         <v-btn
           class="w-100 text-small"
@@ -119,7 +119,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6">
         <v-btn
           class="w-100 text-small"
@@ -144,7 +144,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="12" class="flex-center">
         <v-btn
           class="w-50 text-body-2"
@@ -155,7 +155,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="5" class="w-100 flex-center">
         <v-divider></v-divider>
       </v-col>
@@ -165,7 +165,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="12">
         <v-sheet color="secondary" rounded height="100px" style="overflow-y: auto">
           <v-chip-group v-if="filteredNatures.length > 0" v-model="selectedNature" column selected-class="bg-primary">
@@ -184,7 +184,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-3">
+    <v-row density="compact" class="mt-3">
       <v-col cols="6">
         <v-btn
           class="w-100 text-body"
@@ -310,7 +310,8 @@ export default {
   }
 }
 
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .responsive-icon {
-  font-size: 0.875rem !important;
+  font-size: 0.875rem;
 }
 </style>

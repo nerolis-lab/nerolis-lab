@@ -1,6 +1,6 @@
 <template>
   <v-card color="surface" rounded="xl" class="fill-height d-flex flex-column">
-    <v-row dense class="flex-center">
+    <v-row density="compact" class="flex-center">
       <v-col cols="12" class="flex-center text-h6 text-ingredient font-weight-medium">
         {{ isMobile ? 'Ings' : 'Ingredients' }}
       </v-col>

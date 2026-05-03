@@ -384,12 +384,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > td),
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > th),
 :deep(.v-table > .v-table__wrapper > table > thead > tr > td),
 :deep(.v-table > .v-table__wrapper > table > thead > tr > th) {
-  padding: 0 0px !important;
-  padding-left: 0px !important;
+  padding: 0 0px;
+  padding-left: 0px;
 }
 
 :deep(.v-table > .v-table__wrapper > table > tbody > tr > td:not(:last-child)),

@@ -1,5 +1,5 @@
 <template>
-  <v-row dense class="frosted-glass mt-0 mx-0">
+  <v-row density="compact" class="frosted-glass mt-0 mx-0">
     <v-col v-for="(recipe, index) in recipes" :key="recipe.name" cols="12" class="px-2">
       <v-card rounded="xl" class="pa-2">
         <div class="recipe-grid">
@@ -87,13 +87,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .compact-x {
-  padding-left: 0px !important;
-  padding-right: 0px !important;
-}
-
-.no-uppercase {
-  text-transform: none !important;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .recipe-grid {

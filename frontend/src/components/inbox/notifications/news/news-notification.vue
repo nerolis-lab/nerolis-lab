@@ -15,7 +15,7 @@
     </template>
 
     <template #text>
-      <v-row dense>
+      <v-row density="compact">
         <v-col class="d-flex flex-column">
           <span>{{ news?.content }}</span>
 

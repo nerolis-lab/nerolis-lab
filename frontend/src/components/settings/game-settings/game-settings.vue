@@ -8,7 +8,7 @@
   <template v-else>
     <div class="game-settings-container">
       <SettingsCard title="Area Bonus" icon="mdi-map-marker">
-        <v-row dense class="mx-2 flex-left">
+        <v-row density="compact" class="mx-2 flex-left">
           <div class="area-and-bonus" v-for="islandData in islandBonusData" :key="islandData.shortName">
             <v-avatar size="54" class="mr-2 area-image">
               <v-img :src="islandImage({ island: islandData.island })" />
@@ -38,7 +38,7 @@
       </SettingsCard>
 
       <SettingsCard title="Recipe Bonus" icon="mdi-chef-hat">
-        <v-row dense>
+        <v-row density="compact">
           <v-col cols="12" class="flex-left">
             <span>Set your recipe levels: </span>
             <a class="btn-link" href="/recipes">Recipes</a>
@@ -47,7 +47,7 @@
       </SettingsCard>
 
       <SettingsCard title="Pot Size" icon="mdi-pot">
-        <v-row dense class="flex-top-left">
+        <v-row density="compact" class="flex-top-left">
           <v-col cols="auto">
             <v-btn icon @click="setPotSize(MIN_POT_SIZE)">Min</v-btn>
           </v-col>
@@ -76,7 +76,7 @@
           </v-col>
         </v-row>
 
-        <v-row dense>
+        <v-row density="compact">
           <v-col cols="12" class="fine-print">
             Calculations will use this as your baseline and apply any relevant bonuses, such as Good Camp Tickets or
             Pokémon skills, on top of this.

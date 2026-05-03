@@ -1,5 +1,5 @@
 <template>
-  <v-row class="align-stretch flex-top flex-nowrap" dense>
+  <v-row class="align-stretch flex-top flex-nowrap" density="compact">
     <v-col class="">
       <MemberProductionBerry :member-with-production="member" />
     </v-col>

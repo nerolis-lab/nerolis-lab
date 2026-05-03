@@ -21,13 +21,13 @@
           <v-card-title class="text-h5">Advanced Settings</v-card-title>
         </v-row>
 
-        <v-row dense>
+        <v-row density="compact">
           <v-col class="w-100">
             <span class="text-h6 text-no-wrap mb-2">Weekly Starting Inventory</span>
           </v-col>
 
           <v-col>
-            <v-row dense :class="['flex-right', isMobile ? 'justify-space-between' : '', 'flex-nowrap']">
+            <v-row density="compact" :class="['flex-right', isMobile ? 'justify-space-between' : '', 'flex-nowrap']">
               <v-col cols="auto">
                 <v-chip :color="ingredientChipColor" variant="outlined">
                   <v-img src="/images/ingredient/ingredients.png" class="me-2" contain width="24" height="24"></v-img>
@@ -55,7 +55,7 @@
           <v-divider />
         </v-row>
 
-        <v-row v-for="(ingredientSet, index) in stockpiledIngredients" :key="index" dense>
+        <v-row v-for="(ingredientSet, index) in stockpiledIngredients" :key="index" density="compact">
           <v-col>
             <v-text-field
               v-model="ingredientSet.amount"
@@ -181,7 +181,7 @@
           </template>
 
           <v-container
-            class="bg-secondary-dark flex-center flex-column elevation-10"
+            class="bg-secondary-dark flex-center flex-column elevation-5"
             :style="{ 'max-width': '518px', width: `${viewportWidth - 80}px` }"
           >
             <div class="text-subtitle-2 text-center font-weight-light mb-4">
@@ -189,7 +189,7 @@
               amounts after clicking add.
             </div>
 
-            <v-row class="flex-left" dense>
+            <v-row class="flex-left" density="compact">
               <v-col
                 v-for="(berryOption, index) in berryDefaultOptions"
                 :key="index"
@@ -212,7 +212,7 @@
             </v-row>
 
             <!-- Chip group to show selected berries -->
-            <v-row dense class="mt-2 w-100">
+            <v-row density="compact" class="mt-2 w-100">
               <v-col class="pa-0">
                 <v-sheet color="secondary" rounded min-height="48">
                   <v-chip-group column multiple class="ml-2">
@@ -229,7 +229,7 @@
               </v-col>
             </v-row>
 
-            <v-row dense class="mt-2 justify-space-between flex-center w-100">
+            <v-row density="compact" class="mt-2 justify-space-between flex-center w-100">
               <v-col cols="5" class="flex-left">
                 <v-btn
                   id="cancelButton"
@@ -258,7 +258,7 @@
           </v-container>
         </v-menu>
 
-        <v-row dense class="mt-4">
+        <v-row density="compact" class="mt-4">
           <v-col cols="6">
             <v-btn
               id="cancelButton"

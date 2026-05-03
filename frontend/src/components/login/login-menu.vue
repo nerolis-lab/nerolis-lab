@@ -128,8 +128,9 @@ const handlePatreonLogin = () => loginWithPatreon(route)
 </script>
 
 <style lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .g-btn-wrapper {
-  display: list-item !important;
+  display: list-item;
 }
 
 .login-card {
@@ -139,7 +140,6 @@ const handlePatreonLogin = () => loginWithPatreon(route)
 .provider-btn {
   display: flex;
   justify-content: space-between;
-  text-transform: none;
   font-size: 20px;
   letter-spacing: 0.0125em;
 

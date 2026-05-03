@@ -1,6 +1,6 @@
 <template>
   <v-container class="comparison-container">
-    <v-row dense class="scroll-container" style="flex-wrap: nowrap">
+    <v-row density="compact" class="scroll-container" style="flex-wrap: nowrap">
       <!-- Filled compare slot -->
       <v-col
         v-for="(mon, index) in members"
@@ -30,7 +30,7 @@
 
     <CompareSettings class="py-2" />
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="12">
         <v-card color="transparent" :loading="loading">
           <v-tabs v-model="tab" class="d-flex justify-space-around">

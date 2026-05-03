@@ -65,10 +65,10 @@ export default defineComponent({
       return theme.current.value.colors
     },
     skillColor(): string {
-      return this.themeColors['skill']
+      return String(this.themeColors['skill'])
     },
     strengthColor(): string {
-      return this.themeColors['strength']
+      return String(this.themeColors['strength'])
     },
     skillDistributions(): Record<number, number> {
       return this.pokemonProduction.production.advanced?.skillProcDistribution ?? {}

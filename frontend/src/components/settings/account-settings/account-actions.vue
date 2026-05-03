@@ -1,5 +1,5 @@
 <template>
-  <v-row :class="[isMobile ? 'flex-column' : '', 'mb-4']" dense>
+  <v-row :class="[isMobile ? 'flex-column' : '', 'mb-4']" density="compact">
     <v-col class="flex-center">
       <v-btn class="w-100" color="secondary" variant="elevated" prepend-icon="mdi-logout" @click="logout">
         LOGOUT

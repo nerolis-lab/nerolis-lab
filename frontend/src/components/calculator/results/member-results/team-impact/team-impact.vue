@@ -18,14 +18,14 @@
   </template>
 
   <template v-else-if="isMobile">
-    <v-row v-if="anyTeamMainSkill" class="flex-center px-2" dense>
+    <v-row v-if="anyTeamMainSkill" class="flex-center px-2" density="compact">
       <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Main Skills </v-col>
       <v-col>
         <v-divider />
       </v-col>
     </v-row>
 
-    <v-row v-if="anyTeamMainSkill" class="flex-left px-2 flex-nowrap" dense>
+    <v-row v-if="anyTeamMainSkill" class="flex-left px-2 flex-nowrap" density="compact">
       <v-col class="flex-left flex-column" style="align-items: flex-start">
         <div v-if="teamHelps > 0" class="flex-left">
           <v-img class="mr-1" src="/images/mainskill/helps.png" height="28" width="28px"></v-img>
@@ -61,14 +61,14 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="anyTeamSubSkill" class="flex-center px-2" dense>
+    <v-row v-if="anyTeamSubSkill" class="flex-center px-2" density="compact">
       <v-col>
         <v-divider />
       </v-col>
       <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Subskills </v-col>
     </v-row>
 
-    <v-row v-if="anyTeamSubSkill" class="flex-left px-2 flex-nowrap" dense>
+    <v-row v-if="anyTeamSubSkill" class="flex-left px-2 flex-nowrap" density="compact">
       <v-col class="flex-center" style="overflow: hidden">
         <v-avatar
           v-for="(helpingBonusMember, index) in helpingBonusMembers"
@@ -111,7 +111,7 @@
 
   <!-- Desktop layout -->
   <template v-else>
-    <v-row class="flex-center px-2" dense>
+    <v-row class="flex-center px-2" density="compact">
       <template v-if="anyTeamMainSkill">
         <v-col cols="auto" class="flex-center text-no-wrap text-accent"> Teammate Main Skills </v-col>
         <v-col>
@@ -128,7 +128,7 @@
       </template>
     </v-row>
 
-    <v-row class="flex-left px-2 flex-nowrap" dense>
+    <v-row class="flex-left px-2 flex-nowrap" density="compact">
       <v-col v-if="anyTeamMainSkill" class="flex-left flex-column" style="align-items: flex-start">
         <div v-if="teamHelps > 0" class="flex-left">
           <v-img class="mr-1" src="/images/mainskill/helps.png" height="28" width="28px"></v-img>

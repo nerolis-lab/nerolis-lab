@@ -17,7 +17,7 @@
     </v-row>
 
     <!-- Golden subskills -->
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.BERRY_FINDING_S"
@@ -34,7 +34,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.ENERGY_RECOVERY_BONUS"
@@ -51,7 +51,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6" class="flex-center">
         <SubskillButton
           :subskill="availableSubskills.DREAM_SHARD_BONUS"
@@ -68,7 +68,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6"> <CustomLabel> Helping Speed </CustomLabel> </v-col>
       <v-col cols="3" class="flex-center pr-1">
         <SubskillButton
@@ -90,7 +90,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6"> <CustomLabel> Ingredient Finder </CustomLabel> </v-col>
       <v-col cols="3" class="flex-center pr-1">
         <SubskillButton
@@ -112,7 +112,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6"> <CustomLabel> Skill Trigger </CustomLabel> </v-col>
       <v-col cols="3" class="flex-center pr-1">
         <SubskillButton
@@ -134,7 +134,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6"> <CustomLabel> Inventory Up </CustomLabel> </v-col>
       <v-col cols="2" class="flex-center pr-1 badge-col">
         <SubskillButton
@@ -165,7 +165,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense>
+    <v-row density="compact">
       <v-col cols="6"> <CustomLabel> Skill Level Up </CustomLabel> </v-col>
       <v-col cols="3" class="flex-center pr-1">
         <SubskillButton
@@ -187,7 +187,7 @@
       </v-col>
     </v-row>
 
-    <v-row dense class="mt-3">
+    <v-row density="compact" class="mt-3">
       <v-col cols="4">
         <v-btn class="w-100" size="large" rounded="lg" color="secondary" data-testid="cancel-button" @click="cancel"
           >Cancel</v-btn
@@ -284,9 +284,10 @@ export default {
 </script>
 
 <style scoped>
+/* DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS */
 .text-left-override :deep(.flex-center) {
-  justify-content: flex-start !important;
-  padding-left: 10px !important;
+  justify-content: flex-start;
+  padding-left: 10px;
 }
 
 .badge-col:nth-child(2) {

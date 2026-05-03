@@ -87,9 +87,9 @@ const router = createRouter({
       path: '/tierlist',
       name: 'Tierlist',
       component: TierlistPage,
-      beforeEnter: (to, from, next) => {
+      beforeEnter: (to) => {
         if (to.query.level === undefined || to.query.camp === undefined) {
-          next({
+          return {
             name: 'Tierlist',
             query: {
               level: to.query.level ?? '60',
@@ -97,9 +97,7 @@ const router = createRouter({
               ...to.query
             },
             replace: true
-          })
-        } else {
-          next()
+          }
         }
       },
       props: (route) => ({
@@ -183,10 +181,10 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to) => {
   if (to.path.startsWith('/guides')) {
     window.location.assign(to.fullPath)
-    return next(false)
+    return false
   }
   if (to.meta.requiresAdmin) {
     const { AdminService } = await import('@/services/admin/admin-service')
@@ -195,13 +193,10 @@ router.beforeEach(async (to, from, next) => {
 
     const userStore = useUserStore()
     if (userStore.role !== Roles.Admin) {
-      next({ name: RouteName.Home })
+      return { name: RouteName.Home }
     } else {
-      await AdminService.verifyAdmin()
-      next()
+      return await AdminService.verifyAdmin()
     }
-  } else {
-    next()
   }
 })
 

@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flex-center px-2" dense>
+  <v-row class="flex-center px-2" density="compact">
     <v-col>
       <v-divider />
     </v-col>

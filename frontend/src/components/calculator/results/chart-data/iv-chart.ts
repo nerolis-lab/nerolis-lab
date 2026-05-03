@@ -3,10 +3,10 @@ import { type ChartData, type Plugin } from 'chart.js'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 
-export function generateIvData(themeVariables: { [x: string]: string }): Ref<ChartData<'radar'>> {
-  const berry = themeVariables['berry']
-  const skill = themeVariables['skill']
-  const ingredient = themeVariables['ingredient']
+export function generateIvData(themeVariables: { [x: string]: unknown }): Ref<ChartData<'radar'>> {
+  const berry = String(themeVariables['berry'])
+  const skill = String(themeVariables['skill'])
+  const ingredient = String(themeVariables['ingredient'])
 
   return ref<ChartData<'radar'>>({
     labels: ['Skill', 'Ingredient', 'Berry'],
@@ -22,10 +22,10 @@ export function generateIvData(themeVariables: { [x: string]: string }): Ref<Cha
   })
 }
 
-export function generateIvTextPlugin(themeVariables: { [x: string]: string }): Plugin<'radar'> {
-  const berry = themeVariables['berry']
-  const skill = themeVariables['skill']
-  const ingredient = themeVariables['ingredient']
+export function generateIvTextPlugin(themeVariables: { [x: string]: unknown }): Plugin<'radar'> {
+  const berry = String(themeVariables['berry'])
+  const skill = String(themeVariables['skill'])
+  const ingredient = String(themeVariables['ingredient'])
   return {
     id: 'customPlugin',
     afterDraw(chart: Chart) {

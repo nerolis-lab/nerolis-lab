@@ -221,9 +221,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 :deep(.v-input__details) {
-  padding-inline: 0px !important;
-  text-align: center !important;
-  font-size: 14px !important;
+  padding-inline: 0px;
+  text-align: center;
+  font-size: 14px;
 }
 </style>

@@ -32,14 +32,14 @@ beforeEach(() => {
   intersectionCallback = null
 
   // Override the global IntersectionObserver with our testable version
-  global.IntersectionObserver = vi.fn().mockImplementation((callback) => {
+  // This below was added by Claude
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  global.IntersectionObserver = vi.fn(function (this: any, callback: (entries: IntersectionObserverEntry[]) => void) {
     intersectionCallback = callback
-    return {
-      observe: mockObserve,
-      disconnect: mockDisconnect,
-      unobserve: mockUnobserve
-    }
-  })
+    this.observe = mockObserve
+    this.disconnect = mockDisconnect
+    this.unobserve = mockUnobserve
+  }) as unknown as typeof IntersectionObserver
 
   // Override requestAnimationFrame to actually call the callback
   global.requestAnimationFrame = vi.fn((callback) => {

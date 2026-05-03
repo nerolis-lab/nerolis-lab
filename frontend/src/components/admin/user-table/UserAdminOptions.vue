@@ -9,7 +9,7 @@
             :rules="[rules.friendCode]"
             maxlength="6"
             counter
-            dense
+            density="comfortable"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="2">

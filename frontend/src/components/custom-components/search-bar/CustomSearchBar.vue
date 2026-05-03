@@ -6,10 +6,9 @@
       :autofocus="autofocus && isExpanded"
       :label="isExpanded ? 'Search' : undefined"
       variant="outlined"
-      dense
+      density="comfortable"
       hide-details
       :clearable="isExpanded && clearable"
-      :density="density"
       prepend-inner-icon="mdi-magnify"
       @keydown.enter="handleEnter"
       @update:model-value="handleInput"

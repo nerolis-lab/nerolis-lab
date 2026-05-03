@@ -79,9 +79,10 @@ const toggleSortDirection = () => {
 </script>
 
 <style scoped lang="scss">
+// DEBUG-Vuetify4-Upgrade: removed !important – v4 layered styles lose to unlayered user CSS
 .v-btn {
   min-width: 0px;
-  padding: 0 6px !important;
+  padding: 0 6px;
   height: 40px;
 }
 </style>
