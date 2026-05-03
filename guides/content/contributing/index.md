@@ -17,7 +17,7 @@ You'll need a (free) GitHub account. If it's your first time, GitHub will walk y
 
 ## Adding a new page :muscle:
 
-New guides are Markdown files under **`content/`**. The URL and sidebar follow the folder layout, so pick (or create) a folder that matches the topic.
+New guides are Markdown files under **`guides/content/`**. The URL and sidebar follow the folder layout, so pick (or create) a folder that matches the topic.
 
 At the top of each file, YAML "frontmatter" sets how the page appears in the sidebar. Below that comes the Markdown body. The main header `#` is reserved for the frontmatter, and `##` / `###` and other smaller headings can be used for subsections.
 
@@ -47,8 +47,8 @@ Write your guide!
 
 ### Folders and `index.md`
 
-- **`content/index.md`** - Home of the guides (`/guides/`).
-- **`content/<topic>/index.md`** - Landing page for that **section** (for example, you're reading `/guides/contributing/index.md` right now). The section's name in the sidebar comes from the **`title`** in that `index.md`. You can add more `.md` files beside it; those show up as separate pages under the same section.
+- **`guides/content/index.md`** - Home of the guides (`/guides/`).
+- **`guides/content/<topic>/index.md`** - Landing page for that **section** (for example, you're reading `/guides/contributing/index.md` right now). The section's name in the sidebar comes from the **`title`** in that `index.md`. You can add more `.md` files beside it; those show up as separate pages under the same section.
 
 If you are unsure where a new page should live, open an issue or ask in Discord; maintainers can help with structure.
 
