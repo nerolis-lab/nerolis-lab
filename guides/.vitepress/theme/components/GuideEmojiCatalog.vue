@@ -53,6 +53,10 @@ function categoryHeading(category: string): string {
     flex-direction: column;
     align-items: center;
     gap: 8px;
+
+    &:first-child {
+      margin-top: 8px;
+    }
   }
 
   img {
