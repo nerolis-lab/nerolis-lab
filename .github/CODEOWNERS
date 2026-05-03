@@ -1,0 +1,12 @@
+# Code owners: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# More specific paths should appear after broader ones; the last matching pattern wins.
+# With branch protection rule "Require review from Code Owners", approvals must cover
+# every changed file.
+#
+# Currently available teams are @nerolis-lab/core-team and @nerolis-lab/nerolis-aides
+
+* @nerolis-lab/core-team
+
+# guides/content: both teams are owners; one approval from either satisfies code owner review 
+/guides/content/ @nerolis-lab/core-team @nerolis-lab/nerolis-aides
