@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.49",
-    "axios": "^1.15.2",
+    "axios": "^1.16.0",
     "cookie-parser": "~1.4.7",
     "cors": "^2.8.6",
     "discord-oauth2": "^2.12.1",
