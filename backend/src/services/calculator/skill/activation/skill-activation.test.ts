@@ -199,7 +199,7 @@ describe('activateNonProduceSkills', () => {
       adjustedAmount: 0.8,
       metronomeFactor: 1
     };
-    const expectedAdjustedAmount = (ChargeStrengthSRange.activations.strength.amount({ skillLevel: 6 }) * 0.8) / 1;
+    const expectedAdjustedAmount = ChargeStrengthSRange.activations.mean.amount({ skillLevel: 6 }) * 0.8;
     const result = activateNonProduceSkills(params);
     expect(result).toEqual({
       skill: ChargeStrengthSRange,
