@@ -1,3 +1,10 @@
+# [2.50.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.4...v2.50.0) (2026-05-04)
+
+
+### Features
+
+* update common acronyms guide ([a72be84](https://github.com/nerolis-lab/nerolis-lab/commit/a72be84b6dd7122df6effec57b8cab96b1a355ab))
+
 ## [2.49.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.3...v2.49.4) (2026-05-03)
 
 ## [2.49.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.2...v2.49.3) (2026-05-03)
