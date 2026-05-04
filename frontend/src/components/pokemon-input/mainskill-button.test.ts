@@ -32,8 +32,8 @@ describe('MainskillButton', () => {
       }
     })
     const textElements = wrapper.findAll('.text-x-small')
-    expect(textElements[0].text()).toBe('Charge Strength S RangeLv.3')
-    expect(textElements[1].text()).toContain("Increases Snorlax's Strength on average by 981.25.")
+    expect(textElements[0].text()).toBe('Charge Strength SLv.3')
+    expect(textElements[1].text()).toContain("Increases Snorlax's Strength on average by anywhere from 393 to 1570.")
     expect(wrapper.find('img').attributes('src')).toBe('/images/mainskill/strength.png')
   })
 
