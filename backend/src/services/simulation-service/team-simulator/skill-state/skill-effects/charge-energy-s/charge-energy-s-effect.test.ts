@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
@@ -19,15 +20,15 @@ describe('ChargeEnergySEffect', () => {
 
   it('should recover energy correctly', () => {
     vimic(skillState, 'skillAmount', () => 50);
-    memberState.currentEnergy = 0;
-    memberState.totalRecovery = 0;
-    const wasteEnergyMock = vimic(memberState, 'wasteEnergy');
+    (memberState as any).currentEnergy = 0;
+    (memberState as any).totalRecovery = 0;
+    (memberState as any).wastedEnergy = 0;
 
     const result = chargeEnergySEffect.activate(skillState);
 
-    expect(skillState.memberState.currentEnergy).toBe(50);
-    expect(skillState.memberState.totalRecovery).toBe(50);
-    expect(wasteEnergyMock).toHaveBeenCalledWith(0);
+    expect((memberState as any).currentEnergy).toBe(50);
+    expect((memberState as any).totalRecovery).toBe(50);
+    expect((memberState as any).wastedEnergy).toBe(0);
     expect(result).toEqual({
       skill: ChargeEnergyS,
       activations: [
@@ -40,16 +41,16 @@ describe('ChargeEnergySEffect', () => {
   });
 
   it('should clamp energy recovery to max energy', () => {
-    skillState.skillAmount = () => 20;
-    memberState.currentEnergy = 140;
-    memberState.totalRecovery = 0;
-    const wasteEnergyMock = vimic(memberState, 'wasteEnergy');
+    vimic(skillState, 'skillAmount', () => 30);
+    (memberState as any).currentEnergy = 140;
+    (memberState as any).totalRecovery = 0;
+    (memberState as any).wastedEnergy = 0;
 
     const result = chargeEnergySEffect.activate(skillState);
 
-    expect(skillState.memberState.currentEnergy).toBe(150);
-    expect(skillState.memberState.totalRecovery).toBe(10);
-    expect(wasteEnergyMock).toHaveBeenCalledWith(10);
+    expect((memberState as any).currentEnergy).toBe(150);
+    expect((memberState as any).totalRecovery).toBe(10);
+    expect((memberState as any).wastedEnergy).toBe(20);
     expect(result).toEqual({
       skill: ChargeEnergyS,
       activations: [

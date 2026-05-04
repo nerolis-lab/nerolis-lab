@@ -11,7 +11,7 @@ export class DreamShardMagnetSRangeEffect implements SkillEffect {
       activations: [
         {
           unit: 'dream shards',
-          self: { regular: skillState.skillAmount(skill.activations.dreamShards), crit: 0 }
+          self: { regular: skillState.skillAmount(skill.activations.dreamShardsMean), crit: 0 }
         }
       ]
     };

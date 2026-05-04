@@ -13,10 +13,6 @@ export type MainskillActivation = {
   amount: AmountFunction;
   teamAmount?: AmountFunction;
   critAmount?: AmountFunction;
-  critChance?: number;
-  critMultiplier?: number;
-  targetLowestChance?: number;
-  teamEnergyReduction?: number;
 };
 
 export interface MainskillBaseAttributes {

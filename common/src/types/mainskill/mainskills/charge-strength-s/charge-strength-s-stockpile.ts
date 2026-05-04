@@ -7,6 +7,7 @@ export const ChargeStrengthSStockpile = new (class extends ModifiedMainskill {
   modifierName = 'Stockpile';
   RP = [600, 853, 1177, 1625, 2243, 3099, 3984];
   averageStrengthAmounts = [600, 853, 1177, 1625, 2243, 3099, 4497];
+  critChance = 0.2674;
   image = 'stockpile_strength';
   readonly spitUpAmounts: Record<number, number[]> = {
     1: [600, 1020, 1500, 2040, 2640, 3300, 4020, 4920, 6480, 8880, 12120],
@@ -18,15 +19,13 @@ export const ChargeStrengthSStockpile = new (class extends ModifiedMainskill {
     7: [4502, 7653, 11255, 15307, 19809, 24761, 30163, 36916, 48621, 66629, 90940]
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  description = (params: AmountParams) =>
+  description = (_params: AmountParams) =>
     `Stockpile or Spit Up is selected. When Spit Up triggers, Snorlax gains Strength from Stockpile's number.`;
 
   activations: ActivationsType = {
     strength: {
       unit: 'strength',
-      amount: this.leveledAmount(this.averageStrengthAmounts), // TODO: I think we can remove this in sleepapi 2.0
-      critChance: 0.2674
+      amount: this.leveledAmount(this.averageStrengthAmounts) // TODO: I think we can remove this in sleepapi 2.0
     }
   };
 

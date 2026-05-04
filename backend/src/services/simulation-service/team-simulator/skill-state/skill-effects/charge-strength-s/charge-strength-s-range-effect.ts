@@ -11,7 +11,7 @@ export class ChargeStrengthSRangeEffect implements SkillEffect {
       activations: [
         {
           unit: 'strength',
-          self: { regular: skillState.skillAmount(skill.activations.strength), crit: 0 }
+          self: { regular: skillState.skillAmount(skill.activations.mean), crit: 0 }
         }
       ]
     };

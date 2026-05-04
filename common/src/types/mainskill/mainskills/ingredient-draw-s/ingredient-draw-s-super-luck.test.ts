@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { IngredientDrawS } from './ingredient-draw-s';
+import { IngredientDrawSSandshrew } from './ingredient-draw-s';
 import type { SuperLuckOutput } from './ingredient-draw-s-super-luck';
 import { IngredientDrawSSuperLuck } from './ingredient-draw-s-super-luck';
 
@@ -7,7 +7,7 @@ describe('IngredientDrawSSuperLuck', () => {
   it('should have modified name format', () => {
     expect(IngredientDrawSSuperLuck.name).toBe('Super Luck (Ingredient Draw S)');
     expect(IngredientDrawSSuperLuck.modifierName).toBe('Super Luck');
-    expect(IngredientDrawSSuperLuck.baseSkill).toBe(IngredientDrawS);
+    expect(IngredientDrawSSuperLuck.baseSkill).toBe(IngredientDrawSSandshrew);
   });
 
   it('should have correct basic properties', () => {

@@ -185,7 +185,7 @@ export function activateMoonlightChargeEnergy(params: {
 
   const energyNormalProc = (skill.activations.energy.amount({ skillLevel }) * adjustedAmount) / metronomeFactor;
   const energyFromCrit = ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel }) / teamSize;
-  const averageEnergyGained = energyNormalProc + energyFromCrit * ChargeEnergySMoonlight.activations.energy.critChance!;
+  const averageEnergyGained = energyNormalProc + energyFromCrit * ChargeEnergySMoonlight.critChance;
 
   return {
     skill,
@@ -245,8 +245,7 @@ export function activateDisguiseBerryBurst(params: {
   const amountNoCrit = skill.activations.berries.amount({ skillLevel }) * fractionOfProc;
 
   const averageBerryAmount =
-    (amountNoCrit + avgCritChancePerProc * amountNoCrit * (ChargeEnergySMoonlight.activations.energy.critChance! - 1)) /
-    metronomeFactor;
+    (amountNoCrit + avgCritChancePerProc * amountNoCrit * (ChargeEnergySMoonlight.critChance - 1)) / metronomeFactor;
 
   return {
     skill,

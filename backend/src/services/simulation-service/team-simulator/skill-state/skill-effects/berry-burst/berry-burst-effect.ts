@@ -1,7 +1,7 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import { BerryBurst, CarrySizeUtils } from 'sleepapi-common';
+import { BerryBurst } from 'sleepapi-common';
 
 // implemented because metronome can proc it
 export class BerryBurstEffect implements SkillEffect {
@@ -9,7 +9,7 @@ export class BerryBurstEffect implements SkillEffect {
     const memberState = skillState.memberState;
     const skill = BerryBurst;
     const regularSelfAmount = skillState.skillAmount(skill.activations.berries);
-    const regularOtherAmount = BerryBurst.activations.berries.teamAmount!({ skillLevel: skillState.skillLevel });
+    const regularOtherAmount = skillState.skillTeamAmount(BerryBurst.activations.berries);
 
     const berries = memberState.otherMembers.map((member) => ({
       berry: member.berry,
@@ -23,10 +23,7 @@ export class BerryBurstEffect implements SkillEffect {
       level: memberState.level
     });
 
-    memberState.skillProduce = CarrySizeUtils.addToInventory(memberState.skillProduce, {
-      ingredients: [],
-      berries
-    });
+    memberState.addSkillProduce({ ingredients: [], berries });
 
     return {
       skill,

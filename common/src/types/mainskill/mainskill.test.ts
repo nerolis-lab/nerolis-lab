@@ -139,14 +139,6 @@ describe('Mainskill', () => {
       expect(ChargeEnergySMoonlight.maxLevel).toBe(6);
     });
 
-    it('should have enhanced activations with crit properties', () => {
-      const activation = ChargeEnergySMoonlight.activations.energy;
-      expect(activation.unit).toBe('energy');
-      expect(typeof activation.amount).toBe('function');
-      expect(activation.critChance).toBe(0.5);
-      expect(typeof activation.critAmount).toBe('function');
-    });
-
     it('should calculate crit amounts correctly', () => {
       const activation = ChargeEnergySMoonlight.activations.energy;
       const level1CritAmount = activation.critAmount!({ skillLevel: 1 });

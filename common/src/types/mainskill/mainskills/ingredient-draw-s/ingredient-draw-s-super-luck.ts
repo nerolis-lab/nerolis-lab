@@ -2,10 +2,10 @@ import type { ActivationsType, AmountFunction, AmountParams, Ingredient, Mainski
 import { rollToOutput } from '../../../../utils/mainskill-utils/mainskill-utils';
 import { BEAN_SAUSAGE, GREENGRASS_SOYBEANS, ROUSING_COFFEE, TASTY_MUSHROOM } from '../../../ingredient/ingredients';
 import { ModifiedMainskill, ZeroAmount } from '../../mainskill';
-import { IngredientDrawS } from './ingredient-draw-s';
+import { IngredientDrawSSandshrew } from './ingredient-draw-s';
 
 class IngredientDrawSSuperLuckImpl extends ModifiedMainskill {
-  baseSkill = IngredientDrawS;
+  baseSkill = IngredientDrawSSandshrew; // any of the normal versions works
   modifierName = 'Super Luck';
   // TODO: is RP sheet off? It has 4846 instead of 4546
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];

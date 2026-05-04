@@ -1,9 +1,10 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-present-effect.js';
+import { rounded } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-test-util.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet } from 'sleepapi-common';
-import { ingredient, IngredientMagnetSPresent, ingredientSetToFloatFlat, MathUtils } from 'sleepapi-common';
+import { ingredient, IngredientMagnetSPresent, ingredientSetToFloatFlat } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -22,7 +23,7 @@ describe('IngredientMagnetSPresentEffect', () => {
     const ingMagnetAmount = 50;
     vimic(skillState, 'skillAmount', () => ingMagnetAmount);
     vimic(skillState.memberState.cookingState!, 'addIngredients');
-    vimic(skillState, 'rng', () => 0.3); // Roll succeeds (0.3 < 0.5)
+    vimic(skillState, 'rng', () => 0); // Roll succeeds (0 < 0.5)
     const magnetIngredients: IngredientSet[] = ingredient.INGREDIENTS.map((ing) => ({
       amount: ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS,
       ingredient: ing
@@ -32,12 +33,8 @@ describe('IngredientMagnetSPresentEffect', () => {
     const result = ingredientMagnetSPresentEffect.activate(skillState);
 
     expect(skillState.memberState.cookingState?.addIngredients).toHaveBeenCalledWith(magnetIngredientsFloat);
-    expect(
-      skillState.memberState.skillProduce.ingredients.map(({ ingredient, amount }) => ({
-        ingredient,
-        amount: MathUtils.round(amount, 2)
-      }))
-    ).toEqual(magnetIngredients.map(({ ingredient, amount }) => ({ ingredient, amount: MathUtils.round(amount, 2) })));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect(rounded((skillState.memberState as any).skillProduce.ingredients)).toEqual(rounded(magnetIngredients));
     expect(result.skill).toBe(IngredientMagnetSPresent);
     expect(result.activations).toHaveLength(2);
     expect(result.activations[0]).toEqual({

@@ -74,10 +74,12 @@ import {
   EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
-  IngredientDrawS,
+  IngredientDrawSDwebble,
+  IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
-  IngredientMagnetSPlus,
+  IngredientMagnetSPlusPlusle,
+  IngredientMagnetSPlusToxtricity,
   Metronome,
   TastyChanceS
 } from '../mainskill/mainskills';
@@ -119,7 +121,7 @@ export const SANDSHREW: Pokemon = createSkillSpecialist({
     b: GREENGRASS_CORN,
     c: SOFT_POTATO
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSSandshrew
 });
 
 export const SANDSLASH: Pokemon = evolvedPokemon(SANDSHREW, {
@@ -733,7 +735,7 @@ export const PLUSLE: Pokemon = createSkillSpecialist({
     b: LARGE_LEEK,
     c: MOOMOO_MILK
   },
-  skill: IngredientMagnetSPlus
+  skill: IngredientMagnetSPlusPlusle
 });
 
 export const MINUN: Pokemon = createSkillSpecialist({
@@ -991,7 +993,7 @@ export const DWEBBLE: Pokemon = createSkillSpecialist({
     b: SOFT_POTATO,
     c: PURE_OIL
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSDwebble
 });
 
 export const CRUSTLE: Pokemon = evolvedPokemon(DWEBBLE, {
@@ -1153,7 +1155,7 @@ export const TOXTRICITY_AMPED: Pokemon = evolvedPokemon(TOXEL, {
   ingredientPercentage: 23.9,
   skillPercentage: 6.4,
   carrySize: 18,
-  skill: IngredientMagnetSPlus
+  skill: IngredientMagnetSPlusToxtricity
 });
 
 export const TOXTRICITY_LOW_KEY: Pokemon = evolvedPokemon(TOXEL, {

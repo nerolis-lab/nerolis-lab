@@ -19,13 +19,24 @@ export const DreamShardMagnetS = new (class extends Mainskill {
 export const DreamShardMagnetSRange = new (class extends Mainskill {
   name = 'Dream Shard Magnet S Range';
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843, 7303];
-  shardAmounts = [300, 425, 600, 837.5, 1150, 1575, 2250, 2875];
+  shardAmountsLow = [120, 170, 240, 335, 460, 630, 900, 1150];
+  shardAmountsHigh = [480, 680, 960, 1340, 1840, 2520, 3600, 4600];
+  shardAmountsMean = this.shardAmountsLow.map((low, i) => (low + this.shardAmountsHigh[i]) / 2);
   image = 'shards';
-  description = (params: AmountParams) => `Obtain ${this.shardAmounts[params.skillLevel - 1]} Dream Shards on average.`;
+  description = (params: AmountParams) =>
+    `Obtain ${this.shardAmountsLow[params.skillLevel - 1]} to ${this.shardAmountsHigh[params.skillLevel - 1]} Dream Shards.`;
   activations: ActivationsType = {
-    dreamShards: {
+    mean: {
       unit: 'dream shards',
-      amount: this.leveledAmount(this.shardAmounts)
+      amount: this.leveledAmount(this.shardAmountsMean)
+    },
+    low: {
+      unit: 'dream shards',
+      amount: this.leveledAmount(this.shardAmountsLow)
+    },
+    high: {
+      unit: 'dream shards',
+      amount: this.leveledAmount(this.shardAmountsHigh)
     }
   };
 })();

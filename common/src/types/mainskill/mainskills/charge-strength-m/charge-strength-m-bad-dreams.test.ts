@@ -16,13 +16,13 @@ describe('ChargeStrengthMBadDreams', () => {
     );
     expect(ChargeStrengthMBadDreams.RP).toEqual([2400, 3313, 4643, 6441, 8864, 11878, 14072]);
     expect(ChargeStrengthMBadDreams.maxLevel).toBe(7);
+    expect(ChargeStrengthMBadDreams.energyReduction).toBe(12);
   });
 
-  it('should have strength activation with team energy reduction', () => {
+  it('should have strength activation', () => {
     expect(ChargeStrengthMBadDreams.activations).toHaveProperty('strength');
     expect(ChargeStrengthMBadDreams.activations.strength.unit).toBe('strength');
     expect(typeof ChargeStrengthMBadDreams.activations.strength.amount).toBe('function');
-    expect(ChargeStrengthMBadDreams.activations.strength.teamEnergyReduction).toBe(12);
   });
 
   it('should calculate correct strength amounts', () => {

@@ -17,15 +17,6 @@ describe('BerryBurstDisguise', () => {
     );
   });
 
-  it('should have enhanced activations with crit properties', () => {
-    const activation = BerryBurstDisguise.activations.berries;
-    expect(activation.unit).toBe('berries');
-    expect(typeof activation.amount).toBe('function');
-    expect(typeof activation.teamAmount).toBe('function');
-    expect(activation.critChance).toBe(0.185);
-    expect(activation.critMultiplier).toBe(3);
-  });
-
   it('should calculate team amounts correctly', () => {
     const activation = BerryBurstDisguise.activations.berries;
     expect(activation.teamAmount!({ skillLevel: 1 })).toBe(1);

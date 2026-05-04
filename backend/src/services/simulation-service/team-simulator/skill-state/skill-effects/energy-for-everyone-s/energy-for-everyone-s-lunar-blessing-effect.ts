@@ -1,12 +1,7 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
-import {
-  CarrySizeUtils,
-  EnergyForEveryoneSLunarBlessing,
-  MAX_TEAM_SIZE,
-  uniqueMembersWithBerry
-} from 'sleepapi-common';
+import { EnergyForEveryoneSLunarBlessing, MAX_TEAM_SIZE, uniqueMembersWithBerry } from 'sleepapi-common';
 
 export class EnergyForEveryoneSLunarBlessingEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
@@ -21,12 +16,10 @@ export class EnergyForEveryoneSLunarBlessingEffect implements SkillEffect {
           });
 
     const energyAmount = skillState.skillAmount(skill.activations.energy);
-    const selfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
-      skillLevel: skillState.skillLevel,
+    const selfBerryAmount = skillState.skillAmount(EnergyForEveryoneSLunarBlessing.activations.selfBerries, {
       extra: unique
     });
-    const teamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
-      skillLevel: skillState.skillLevel,
+    const teamBerryAmount = skillState.skillAmount(EnergyForEveryoneSLunarBlessing.activations.teamBerries, {
       extra: unique
     });
 
@@ -42,10 +35,7 @@ export class EnergyForEveryoneSLunarBlessingEffect implements SkillEffect {
       level: memberState.level
     });
 
-    memberState.skillProduce = CarrySizeUtils.addToInventory(memberState.skillProduce, {
-      ingredients: [],
-      berries
-    });
+    memberState.addSkillProduce({ ingredients: [], berries });
 
     return {
       skill,

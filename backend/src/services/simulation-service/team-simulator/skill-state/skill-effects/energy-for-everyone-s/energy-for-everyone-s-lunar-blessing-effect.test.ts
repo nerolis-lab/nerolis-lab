@@ -21,17 +21,11 @@ describe('EnergyForEveryoneSLunarBlessingEffect', () => {
   it('should activate with correct berry amounts for 1 unique member', () => {
     const unique = 1;
     const skillLevel = 1;
-    const energyForEveryoneAmount = 15;
+    const energyForEveryoneAmount = EnergyForEveryoneSLunarBlessing.energyAmounts[skillLevel - 1];
 
     const preExistingSkillProduce = mocks.produce();
-    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
-      skillLevel,
-      extra: unique
-    });
-    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
-      skillLevel,
-      extra: unique
-    });
+    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.selfBerries[unique][skillLevel - 1];
+    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.teamBerries[unique][skillLevel - 1];
 
     const mockTeam = [mocks.teamMemberExt()];
     Object.defineProperty(memberState, 'team', {
@@ -43,7 +37,6 @@ describe('EnergyForEveryoneSLunarBlessingEffect', () => {
     });
 
     skillState.memberState.member.settings.skillLevel = skillLevel;
-    vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
     const addToInventoryMock = vimic(CarrySizeUtils, 'addToInventory');
 
@@ -73,7 +66,7 @@ describe('EnergyForEveryoneSLunarBlessingEffect', () => {
   it('should activate with correct berry amounts for maximum unique members', () => {
     const unique = MAX_TEAM_SIZE;
     const skillLevel = 3;
-    const energyForEveryoneAmount = 25;
+    const energyForEveryoneAmount = EnergyForEveryoneSLunarBlessing.energyAmounts[skillLevel - 1];
 
     const team = Array(5)
       .fill(null)
@@ -96,16 +89,9 @@ describe('EnergyForEveryoneSLunarBlessingEffect', () => {
     vimic(commonModule, 'uniqueMembersWithBerry', () => unique);
 
     skillState.memberState.member.settings.skillLevel = skillLevel;
-    vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
 
-    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
-      skillLevel,
-      extra: unique
-    });
-    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
-      skillLevel,
-      extra: unique
-    });
+    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.selfBerries[unique][skillLevel - 1];
+    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.teamBerries[unique][skillLevel - 1];
 
     const preExistingSkillProduce = mocks.produce();
     Object.defineProperty(memberState, 'skillProduce', {
@@ -147,7 +133,12 @@ describe('EnergyForEveryoneSLunarBlessingEffect', () => {
 
   it('should handle bogus members', () => {
     const skillLevel = 1;
-    const energyForEveryoneAmount = 15;
+    const energyForEveryoneAmount = EnergyForEveryoneSLunarBlessing.energyAmounts[skillLevel - 1];
+
+    // When team size exceeds MAX_TEAM_SIZE, unique is forced to 1
+    const expectedUnique = 1;
+    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.selfBerries[expectedUnique][skillLevel - 1];
+    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.teamBerries[expectedUnique][skillLevel - 1];
 
     const largeTeam = Array(MAX_TEAM_SIZE + 2)
       .fill(null)
@@ -167,18 +158,6 @@ describe('EnergyForEveryoneSLunarBlessingEffect', () => {
     });
 
     skillState.memberState.member.settings.skillLevel = skillLevel;
-    vimic(skillState, 'skillAmount', () => energyForEveryoneAmount);
-
-    // When team size exceeds MAX_TEAM_SIZE, unique is forced to 1
-    const expectedUnique = 1;
-    const expectedSelfBerryAmount = EnergyForEveryoneSLunarBlessing.activations.selfBerries.amount({
-      skillLevel,
-      extra: expectedUnique
-    });
-    const expectedTeamBerryAmount = EnergyForEveryoneSLunarBlessing.activations.teamBerries.amount({
-      skillLevel,
-      extra: expectedUnique
-    });
 
     const preExistingSkillProduce = mocks.produce();
     Object.defineProperty(memberState, 'skillProduce', {

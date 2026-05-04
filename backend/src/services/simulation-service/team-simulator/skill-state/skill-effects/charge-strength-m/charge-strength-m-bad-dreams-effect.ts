@@ -8,10 +8,11 @@ export class ChargeStrengthMBadDreamsEffect implements SkillEffect {
     const skill = ChargeStrengthMBadDreams;
 
     let energyDegraded = 0;
-    for (const otherMember of skillState.memberState.otherMembers) {
-      if (otherMember.berry.name !== berry.WIKI.name) {
-        energyDegraded += otherMember.degradeEnergy(ChargeStrengthMBadDreams.activations.strength.teamEnergyReduction);
-      }
+    const nonDarkTeamMembers = skillState.memberState.otherMembers.filter(
+      (member) => member.berry.name !== berry.WIKI.name
+    );
+    for (const otherMember of nonDarkTeamMembers) {
+      energyDegraded += otherMember.degradeEnergy(ChargeStrengthMBadDreams.energyReduction);
     }
 
     skillState.addSkillValue({ unit: 'energy', amountToSelf: 0, amountToTeam: -energyDegraded });
@@ -23,6 +24,7 @@ export class ChargeStrengthMBadDreamsEffect implements SkillEffect {
           unit: 'strength',
           self: { regular: skillState.skillAmount(skill.activations.strength), crit: 0 }
         }
+        // TODO: Add energy activation for degredation after team activations are refactored into effect files
       ]
     };
   }

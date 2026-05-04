@@ -25,11 +25,18 @@ import { EnergyForEveryoneSEffect } from '@src/services/simulation-service/team-
 import { EnergyForEveryoneSLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s/energy-for-everyone-s-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost/helper-boost-effect.js';
-import { IngredientDrawSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
+import {
+  IngredientDrawSCutieflyEffect,
+  IngredientDrawSDwebbleEffect,
+  IngredientDrawSSandshrewEffect
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
 import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-hyper-cutter-effect.js';
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-effect.js';
-import { IngredientMagnetSPlusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-plus-effect.js';
+import {
+  IngredientMagnetSPlusPlusleEffect,
+  IngredientMagnetSPlusToxtricityEffect
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-plus-effect.js';
 import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-present-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy/skill-copy-effect.js';
@@ -41,7 +48,7 @@ import type {
   TeamActivationValue
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { PreGeneratedRandom } from '@src/utils/random-utils/pre-generated-random.js';
-import type { Mainskill, MainskillActivation, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
+import type { AmountParams, Mainskill, MainskillActivation, MainskillUnit, MemberSkillValue } from 'sleepapi-common';
 import {
   BerryBurst,
   BerryBurstDisguise,
@@ -68,18 +75,22 @@ import {
   EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
-  IngredientDrawS,
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
   IngredientDrawSHyperCutter,
+  IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
-  IngredientMagnetSPlus,
+  IngredientMagnetSPlusPlusle,
+  IngredientMagnetSPlusToxtricity,
   IngredientMagnetSPresent,
   mainskillUnits,
   Metronome,
   SkillCopy,
   SkillCopyMimic,
   SkillCopyTransform,
-  TastyChanceS
+  TastyChanceS,
+  ZeroAmount
 } from 'sleepapi-common';
 
 export class SkillState {
@@ -133,9 +144,12 @@ export class SkillState {
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
-      [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
+      [IngredientMagnetSPlusPlusle, new IngredientMagnetSPlusPlusleEffect()],
+      [IngredientMagnetSPlusToxtricity, new IngredientMagnetSPlusToxtricityEffect()],
       [IngredientMagnetSPresent, new IngredientMagnetSPresentEffect()],
-      [IngredientDrawS, new IngredientDrawSEffect()],
+      [IngredientDrawSCutiefly, new IngredientDrawSCutieflyEffect()],
+      [IngredientDrawSDwebble, new IngredientDrawSDwebbleEffect()],
+      [IngredientDrawSSandshrew, new IngredientDrawSSandshrewEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
       [Metronome, new MetronomeEffect()],
@@ -221,10 +235,24 @@ export class SkillState {
     );
   }
 
-  public skillAmount(activation: MainskillActivation) {
+  public skillAmount(activation: MainskillActivation, params?: Partial<AmountParams>) {
     return activation.amount({
-      skillLevel: this.skillLevel,
-      ingredient: this.memberState.member.pokemonWithIngredients.ingredientList.at(0)?.ingredient
+      ...params,
+      skillLevel: this.skillLevel
+    });
+  }
+
+  public skillTeamAmount(activation: MainskillActivation, params?: Partial<AmountParams>) {
+    return (activation.teamAmount ?? ZeroAmount)({
+      ...params,
+      skillLevel: this.skillLevel
+    });
+  }
+
+  public skillCritAmount(activation: MainskillActivation, params?: Partial<AmountParams>) {
+    return (activation.critAmount ?? ZeroAmount)({
+      ...params,
+      skillLevel: this.skillLevel
     });
   }
 

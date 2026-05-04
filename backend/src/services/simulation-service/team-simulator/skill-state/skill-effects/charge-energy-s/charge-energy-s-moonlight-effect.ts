@@ -1,5 +1,8 @@
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
-import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
+import type {
+  SkillActivation,
+  UnitActivation
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { ChargeEnergySMoonlight } from 'sleepapi-common';
 
@@ -7,42 +10,29 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const memberState = skillState.memberState;
     const skill = ChargeEnergySMoonlight;
+    const selfAmount = skillState.skillAmount(skill.activations.energy);
+    const teamAmount = skillState.skillCritAmount(ChargeEnergySMoonlight.activations.energy);
 
-    const baseEnergyAmount = skillState.skillAmount(skill.activations.energy);
-    const clampedEnergyRecovered =
-      baseEnergyAmount > 150 ? 150 - memberState.energy : skillState.skillAmount(skill.activations.energy);
+    const { recovered } = memberState.recoverEnergy(selfAmount, memberState);
 
-    memberState.wasteEnergy(baseEnergyAmount - clampedEnergyRecovered);
-    memberState.currentEnergy += clampedEnergyRecovered;
-    memberState.totalRecovery += clampedEnergyRecovered;
-
-    if (skillState.rng() < ChargeEnergySMoonlight.activations.energy.critChance!) {
-      const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel: skillState.skillLevel });
-
-      return {
-        skill,
-        activations: [
-          {
-            unit: 'energy',
-            self: { regular: clampedEnergyRecovered, crit: 0 },
-            team: {
-              regular: 0,
-              crit: teamAmount
-            }
-          }
-        ],
-        targeting: skill.targeting
-      };
-    }
+    const selfActivation: UnitActivation = {
+      unit: 'energy',
+      self: { regular: recovered, crit: 0 }
+    };
+    const teamActivation: UnitActivation = {
+      unit: 'energy',
+      team: {
+        regular: 0,
+        crit: teamAmount
+      }
+    };
+    const isCrit = skillState.rng() < ChargeEnergySMoonlight.critChance;
+    const activations = isCrit ? [selfActivation, teamActivation] : [selfActivation];
 
     return {
       skill,
-      activations: [
-        {
-          unit: 'energy',
-          self: { regular: clampedEnergyRecovered, crit: 0 }
-        }
-      ]
+      activations,
+      targeting: skill.targeting
     };
   }
 }

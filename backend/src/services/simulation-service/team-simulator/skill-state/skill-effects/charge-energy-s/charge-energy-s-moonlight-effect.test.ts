@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChargeEnergySMoonlightEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-moonlight-effect.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { ChargeEnergySMoonlight, RandomUtils } from 'sleepapi-common';
+import { ChargeEnergySMoonlight } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -15,47 +16,42 @@ describe('ChargeEnergySMoonlightEffect', () => {
   });
 
   it('should activate skill and recover energy', () => {
-    vimic(RandomUtils, 'roll', () => false);
+    // always fail
+    vimic(skillState, 'rng', () => 1);
 
     const activation = effect.activate(skillState);
-
     const skill = ChargeEnergySMoonlight;
-    const baseEnergyAmount = skillState.skillAmount(skill.activations.energy);
-    const clampedEnergyRecovered = baseEnergyAmount > 150 ? 150 - skillState.memberState.energy : baseEnergyAmount;
+    const selfAmount = skillState.skillAmount(skill.activations.energy);
 
-    expect(skillState.memberState.currentEnergy).toBe(clampedEnergyRecovered);
-    expect(skillState.memberState.totalRecovery).toBe(clampedEnergyRecovered);
+    expect((skillState.memberState as any).currentEnergy).toBe(selfAmount);
+    expect((skillState.memberState as any).totalRecovery).toBe(selfAmount);
     expect(activation.skill).toBe(skill);
+    expect(activation.activations.length).toBe(1);
     expect(activation.activations[0].unit).toBe('energy');
-    expect(activation.activations[0].self?.regular).toBe(clampedEnergyRecovered);
+    expect(activation.activations[0].self?.regular).toBe(selfAmount);
     expect(activation.activations[0].self?.crit).toBe(0);
-  });
-
-  it('should waste excess energy', () => {
-    vimic(RandomUtils, 'roll', () => false);
-    vimic(skillState.memberState, 'wasteEnergy');
-
-    const skill = ChargeEnergySMoonlight;
-    const baseEnergyAmount = skillState.skillAmount(skill.activations.energy);
-    const clampedEnergyRecovered = baseEnergyAmount > 150 ? 150 - skillState.memberState.energy : baseEnergyAmount;
-
-    effect.activate(skillState);
-
-    expect(skillState.memberState.wasteEnergy).toHaveBeenCalledWith(baseEnergyAmount - clampedEnergyRecovered);
+    expect(activation.activations[0].team).toBe(undefined);
   });
 
   it('should activate skill with critical hit', () => {
-    vimic(RandomUtils, 'roll', () => true);
+    // always crit
+    vimic(skillState, 'rng', () => 0);
 
     const activation = effect.activate(skillState);
     const skill = ChargeEnergySMoonlight;
-    const teamAmount = ChargeEnergySMoonlight.activations.energy.critAmount!({ skillLevel: skillState.skillLevel });
+    const selfAmount = skillState.skillAmount(skill.activations.energy);
+    const teamAmount = ChargeEnergySMoonlight.critAmounts[skillState.skillLevel - 1];
 
     expect(activation.skill).toBe(skill);
+    expect(activation.activations.length).toBe(2);
     expect(activation.activations[0].unit).toBe('energy');
-    expect(activation.activations[0].self?.regular).toBeGreaterThan(0);
+    expect(activation.activations[0].self?.regular).toBe(selfAmount);
     expect(activation.activations[0].self?.crit).toBe(0);
-    expect(activation.activations[0].team?.crit).toBe(teamAmount);
+    expect(activation.activations[0].team).toBe(undefined);
+    expect(activation.activations[1].unit).toBe('energy');
+    expect(activation.activations[1].self).toBe(undefined);
+    expect(activation.activations[1].team?.regular).toBe(0);
+    expect(activation.activations[1].team?.crit).toBe(teamAmount);
     expect(activation.targeting?.chanceToTargetLowestMembers).toBe(skill.targeting.chanceToTargetLowestMembers);
   });
 });

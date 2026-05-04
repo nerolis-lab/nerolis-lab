@@ -326,7 +326,6 @@ export class TeamSimulator {
       return;
     }
     const recovered = this.recoverMemberEnergy(activation.team, invoker, membersHelped);
-    invoker.wasteEnergy(recovered.regular.wastedEnergy + recovered.crit.wastedEnergy);
     invoker.addSkillValue({ regular: recovered.regular.skillValue, crit: recovered.crit.skillValue });
   }
 

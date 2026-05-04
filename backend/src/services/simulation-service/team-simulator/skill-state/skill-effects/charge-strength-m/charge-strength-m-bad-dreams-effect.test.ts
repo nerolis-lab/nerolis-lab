@@ -50,9 +50,7 @@ describe('ChargeStrengthMBadDreamsEffect', () => {
 
     // Verify degradeEnergy was called for each other member
     mockOtherMembers.forEach((member) => {
-      expect(member.degradeEnergy).toHaveBeenCalledWith(
-        ChargeStrengthMBadDreams.activations.strength.teamEnergyReduction
-      );
+      expect(member.degradeEnergy).toHaveBeenCalledWith(ChargeStrengthMBadDreams.energyReduction);
     });
 
     // Verify addSkillValue was called with the correct values
@@ -83,9 +81,7 @@ describe('ChargeStrengthMBadDreamsEffect', () => {
 
     // The member with Wiki berry should not have energy degraded
     expect(mockOtherMembers[0].degradeEnergy).not.toHaveBeenCalled();
-    expect(mockOtherMembers[1].degradeEnergy).toHaveBeenCalledWith(
-      ChargeStrengthMBadDreams.activations.strength.teamEnergyReduction
-    );
+    expect(mockOtherMembers[1].degradeEnergy).toHaveBeenCalledWith(ChargeStrengthMBadDreams.energyReduction);
 
     // Verify addSkillValue was called with the correct values (only one member's energy was degraded)
     expect(addSkillValueMock).toHaveBeenCalledWith({

@@ -2,15 +2,15 @@ import type { ActivationsType, AmountParams } from '../../mainskill';
 import { Mainskill, MAINSKILLS } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
-import { IngredientDrawS } from '../ingredient-draw-s';
+import { IngredientDrawSCutiefly, IngredientDrawSDwebble, IngredientDrawSSandshrew } from '../ingredient-draw-s';
+import { IngredientMagnetSPlusToxtricity } from '../ingredient-magnet-s';
 import { SkillCopyMimic } from '../skill-copy/skill-copy_mimic';
 import { SkillCopyTransform } from '../skill-copy/skill-copy_transform';
 
 export const Metronome = new (class extends Mainskill {
   name = 'Metronome';
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  description = (params: AmountParams) => `Uses one randomly chosen main skill.`;
+  description = (_params: AmountParams) => `Uses one randomly chosen main skill.`;
   activations: ActivationsType = {};
   image = 'metronome';
 
@@ -18,10 +18,12 @@ export const Metronome = new (class extends Mainskill {
     this,
     BerryBurstDisguise,
     ChargeStrengthMBadDreams,
-    IngredientDrawS,
+    IngredientDrawSSandshrew,
+    IngredientDrawSDwebble,
+    IngredientDrawSCutiefly,
+    IngredientMagnetSPlusToxtricity,
     SkillCopyMimic,
     SkillCopyTransform
-    // Toxtricity's version of Plus is blocked, but we don't yet correctly split that into two skills
   ];
 
   get metronomeSkills(): Mainskill[] {
