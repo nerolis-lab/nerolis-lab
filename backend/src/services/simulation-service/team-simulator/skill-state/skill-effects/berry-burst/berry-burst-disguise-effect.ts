@@ -7,28 +7,32 @@ export class BerryBurstDisguiseEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const memberState = skillState.memberState;
     const skill = BerryBurstDisguise;
+
     const regularSelfAmount = skillState.skillAmount(skill.activations.berries);
     const regularOtherAmount = skillState.skillTeamAmount(BerryBurstDisguise.activations.berries);
-    let critSelfAmount = 0;
-    let critOtherAmount = 0;
+    let totalSelfAmount = regularSelfAmount;
+    let totalOtherAmount = regularOtherAmount;
 
-    if (!memberState.disguiseBusted && skillState.rng() < BerryBurstDisguise.critChance) {
+    const isCrit = !memberState.disguiseBusted && skillState.rng() < BerryBurstDisguise.critChance;
+    if (isCrit) {
       memberState.disguiseBusted = true;
 
-      // -1 because the crit value is the difference between 1x and 3x, so only 2x
-      critSelfAmount = regularSelfAmount * (BerryBurstDisguise.critMultiplier - 1);
-      critOtherAmount = regularOtherAmount * (BerryBurstDisguise.critMultiplier - 1);
+      totalSelfAmount = regularSelfAmount * BerryBurstDisguise.critMultiplier;
+      totalOtherAmount = regularOtherAmount * BerryBurstDisguise.critMultiplier;
     }
+
+    const critSelfAmount = totalSelfAmount - regularSelfAmount;
+    const critOtherAmount = totalOtherAmount - regularOtherAmount;
 
     const berries = memberState.otherMembers.map((member) => ({
       berry: member.berry,
-      amount: regularOtherAmount + critOtherAmount,
+      amount: totalOtherAmount,
       level: member.level
     }));
 
     berries.push({
       berry: memberState.berry,
-      amount: regularSelfAmount + critSelfAmount,
+      amount: totalSelfAmount,
       level: memberState.level
     });
 
