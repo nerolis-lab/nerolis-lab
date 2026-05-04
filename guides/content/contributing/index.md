@@ -9,13 +9,13 @@ Spotted something you can improve? Have an idea for a new guide? We welcome comm
 
 Most guides are written as plain **Markdown**. If you've used formatting in Discord or a wiki, you've used Markdown before! You do not need to be a developer to contribute.
 
-## Editing an existing page :note:
+## Editing an existing page
 
 The easiest way is through the site itself: open the guide in your browser, scroll to the bottom, and click `Edit this page on GitHub`. That link opens the correct file in GitHub so you can propose changes directly from your browser.
 
-You'll need a (free) GitHub account. If it's your first time, GitHub will walk you through forking and opening a pull request (PR) from your fork. Then Neroli's Lab maintainers will review your proposed change.
+If you're new to GitHub, see **[Using GitHub](./using-github)** for a step-by-step walkthrough.
 
-## Adding a new page :muscle:
+## Adding a new page
 
 New guides are Markdown files under **`content/`**. The URL and sidebar follow the folder layout, so pick (or create) a folder that matches the topic.
 
@@ -52,9 +52,13 @@ Write your guide!
 
 If you are unsure where a new page should live, open an issue or ask in Discord; maintainers can help with structure.
 
+For a step-by-step walkthrough of adding a new page in the GitHub UI, follow **[Using GitHub: Add a new page](./using-github#add-a-new-page-from-github)**.
+
 ## Formatting with Markdown
 
-Use normal Markdown for headings, lists, links, and tables. The [Markdown Guide - basic syntax](https://www.markdownguide.org/basic-syntax/) explains common options. [VitePress Markdown extensions](https://vitepress.dev/guide/markdown) (tips, code blocks, etc.) work here too.
+Use normal Markdown for headings, lists, links, and tables. The [Markdown Guide: basic syntax](https://www.markdownguide.org/basic-syntax/) explains common options. [VitePress Markdown extensions](https://vitepress.dev/guide/markdown) (tips, code blocks, etc.) work here too.
+
+For examples of available options (headers, callouts, tables, banners, and more), see **[Formatting](./formatting)**.
 
 The top level `#` is defined in the frontmatter as `fullTitle`. **Do not** use additional `#` top-level headings. Use `##`, `###`, and smaller headings for sections inside the page.
 
@@ -74,14 +78,6 @@ The table below demonstrates how author names map to file names.
 ## Custom emoji shortcodes :yay:
 
 Small inline images (berries, reactions, ingredients, etc.) can be added with **`:name:`**, just like in Discord. Here's the [full catalog of available emojis](./custom-emojis). Have fun!
-
-## Using banners
-
-To use a banner in a page, simply invoke it with `<BannerName />`.
-
-| Banner               | Purpose                                                                 |
-| -------------------- | ----------------------------------------------------------------------- |
-| SubjectiveInfoBanner | Identify the following content as subjective advice or recommendations. |
 
 ## Previewing your changes (optional)
 
