@@ -19,7 +19,7 @@ describe('ChargeStrengthSRangeEffect', () => {
     expect(activation.skill).toBe(ChargeStrengthSRange);
     expect(activation.activations[0].unit).toBe('strength');
     expect(activation.activations[0].self).toEqual({
-      regular: skillState.skillAmount(ChargeStrengthSRange.activations.strength),
+      regular: skillState.skillAmount(ChargeStrengthSRange.activations.mean),
       crit: 0
     });
   });
