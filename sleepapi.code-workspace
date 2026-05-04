@@ -26,11 +26,11 @@
     },
     {
       "name": "skills/common",
-      "path": "common/src/types/mainskill/mainskills"
+      "path": "common/src/types/mainskill"
     },
     {
       "name": "skills/backend",
-      "path": "backend/src/services/simulation-service/team-simulator/skill-state/skill-effects"
+      "path": "backend/src/services/simulation-service/team-simulator/skill-state"
     },
     {
       "name": "skills/frontend",
@@ -65,8 +65,7 @@
       "**/dist": true,
       "**/data/**": true
     },
-    "typescript.preferences.importModuleSpecifier": "non-relative",
-    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "js/ts.preferences.importModuleSpecifier": "non-relative",
     "[vue]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
