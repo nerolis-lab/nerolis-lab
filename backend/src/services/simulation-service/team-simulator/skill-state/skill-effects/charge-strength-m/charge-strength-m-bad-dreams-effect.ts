@@ -24,6 +24,7 @@ export class ChargeStrengthMBadDreamsEffect implements SkillEffect {
           unit: 'strength',
           self: { regular: skillState.skillAmount(skill.activations.strength), crit: 0 }
         }
+        // TODO: Add energy activation for degredation after team activations are refactored into effect files
       ]
     };
   }
