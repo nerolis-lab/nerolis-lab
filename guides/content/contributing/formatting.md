@@ -7,7 +7,7 @@ order: 70
 
 Guides are mostly written as **Markdown** text. This page demonstrates patterns that you can use on this site: headings, tables, callouts, custom emojis, and more.
 
-For general Markdown syntax, the [Markdown Guide — basic syntax](https://www.markdownguide.org/basic-syntax/) is a good reference. This site also supports [VitePress Markdown features](https://vitepress.dev/guide/markdown).
+For general Markdown syntax, the [Markdown Guide: basic syntax](https://www.markdownguide.org/basic-syntax/) is a good reference. This site also supports [VitePress Markdown features](https://vitepress.dev/guide/markdown).
 
 ## Headings and page title
 
@@ -35,7 +35,7 @@ To help readers distinguish between facts about game mechanics and subjective ad
 
 - **Bold** with `**double asterisks**`.
 - _Italic_ with `*single asterisks*` or `_underscores_`.
-- `Inline code` with backticks.
+- `Inline code` with <code v-pre>\`backticks\`</code>
 
 ## Lists
 

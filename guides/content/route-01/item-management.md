@@ -14,7 +14,7 @@ The total Biscuits available to purchase with Sleep Points also differs dependin
 - **F2P** players have access to **30 Poké Biscuits** monthly from the Regular Exchange for _150 Sleep Points_ each.
 - **Premium Pass** players have access to an extra **10 Poké Biscuits** for _100 Sleep Points each_ and **5 Great Biscuits** for _400 Sleep Points_ each from the Premium Exchange monthly **in addition** to the **30 Poké Biscuits** monthly from the Regular Exchange.
 
-There’s a 25% chance to receive a Poké Biscuit (or other goodies) from the Daily Gift in the General Shop.
+There's a 25% chance to receive a Poké Biscuit (or other goodies) from the Daily Gift in the General Shop.
 
 ### Typical Catch Frequency: F2P vs. Premium Pass
 
@@ -73,7 +73,7 @@ Only seed **permanent** Mons with a **strong** preference for the following orde
 Neutral Mints change a Mon's Nature to Neutral. These are an **_extremely_** limited resource with **only 2** available. They're likely obtainable again in the future, but this is _not guaranteed_.
 
 - Do **NOT** use mints to remove minorly inconvenient Natures.
-- Only mint if there's a significant impact on a **forever** Mon’s output.
+- Only mint if there's a significant impact on a **forever** Mon's output.
 
 ### Handy Candies/Dream Shard Clusters Strategies
 

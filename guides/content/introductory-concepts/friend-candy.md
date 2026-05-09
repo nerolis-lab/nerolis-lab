@@ -19,7 +19,7 @@ The star rating relates to the rarity of the sleep style you studied and does no
 
 ## 🍬 What kind of candies do friends like to receive?
 
-Generally, people want candies for Pokémon that are useful and played often. Many people will remove you from their friends list if you consistently send bad candies and/or autopick. If you don't know which Pokémon to send, you can ask in ⁠Route 01. Some people make exceptions for people who send shinies. Additionally the Discord server has additional candy lists if it interests you!
+Generally, people want candies for Pokémon that are useful and played often. Many people will remove you from their friends list if you consistently send bad candies and/or autopick. If you don't know which Pokémon to send, you can ask in Route 01. Some people make exceptions for people who send shinies. Additionally the Discord server has additional candy lists if it interests you!
 
 Also personally I always use photos of "pseudo-legends" when available; they need _tons_ of candy to level (e.g. larvitar, dratini, and their evos)
 
