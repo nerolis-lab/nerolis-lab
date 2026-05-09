@@ -5,7 +5,7 @@ author: Tindo
 order: 60
 ---
 
-This walkthrough is for **editing or adding guides entirely in the browser**, using GitHub’s interface. You do not need to install Git or editors on your computer.
+This walkthrough is for **editing or adding guides entirely in the browser**, using GitHub's interface. You do not need to install Git or editors on your computer.
 
 If you already know how to fork a repository, edit files, and open a pull request, you can skip this and use the [Contributing overview](./) for file locations and frontmatter.
 
@@ -16,7 +16,7 @@ If you already know how to fork a repository, edit files, and open a pull reques
 3. If you have not contributed before, when going through these steps, GitHub may ask to **create a fork** (your copy of the repo). Create the fork when prompted so you can save changes.
 
 > [!Important] Mental model
-> You will not have direct write access to the Neroli’s Lab repository; GitHub saves your work on **your fork** until you open a **pull request** and a Neroli's Lab maintainer merges it.
+> You will not have direct write access to the Neroli's Lab repository; GitHub saves your work on **your fork** until you open a **pull request** and a Neroli's Lab maintainer merges it.
 
 ![Fork this repository](fork_this_repo.png)
 
@@ -24,7 +24,7 @@ If you already know how to fork a repository, edit files, and open a pull reques
 
 The guides site links straight to the source file for each page.
 
-1. Open the guide on **Neroli’s Lab** in your browser (the page you want to change).
+1. Open the guide on **Neroli's Lab** in your browser (the page you want to change).
 2. Scroll to the footer and click **`Edit this page on GitHub`**. GitHub will open the matching file under `guides/content/`.
 3. Edit the file.
    - You can toggle between Edit and Preview mode (red circle) to preview your changes. Note that the Preview will only handle basic markdown, and certain things like banners or special formatting may not appear in the Preview here, though they will work on the live site.
@@ -53,7 +53,7 @@ The guides site links straight to the source file for each page.
 
 These steps are the same whether you edited an existing guide or created a new file.
 
-1. When you are satisfied, click **Commit changes…**.
+1. When you are satisfied, click **Commit changes...**.
 
    - Write a **short commit message** that says what you changed (for example, `fix typo in sleep score guide`).
    - Click **Propose Changes**.
@@ -63,15 +63,15 @@ These steps are the same whether you edited an existing guide or created a new f
 
 ![Compare changes: review the diff before opening a PR](compare_changes.png)
 
-3. Open a **pull request** back to the main Neroli’s Lab repository.
+3. Open a **pull request** back to the main Neroli's Lab repository.
 
 ![Open pull request: title, description, and create pull request](open_pull_request.png)
 
-That’s it for now! Maintainers will review and may merge your change, or ask for edits.
+That's it for now! Maintainers will review and may merge your change, or ask for edits.
 
 ## Keep your fork up to date
 
-If your fork is outdated, GitHub shows a **Sync fork** option on your fork’s default page on GitHub. Use it to pull in the latest changes from Neroli’s Lab before you edit, so you avoid merge conflicts.
+If your fork is outdated, GitHub shows a **Sync fork** option on your fork's default page on GitHub. Use it to pull in the latest changes from Neroli's Lab before you edit, so you avoid merge conflicts.
 
 ## After your pull request is merged
 

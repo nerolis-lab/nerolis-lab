@@ -190,6 +190,16 @@ Follow conventional commits (enforced by commitlint):
 - Never use inline styles
 - Never use any as a type unless working with generics
 
+### Typography (repo-wide)
+
+Whenever you author or edit text anywhere in this repository (guides, docs, READMEs, UI copy, comments, commits when you propose message text, examples in code, configuration strings, etc.):
+
+- **Never** use curly/smart apostrophes (U+2019) or curly double quotes (U+201C, U+201D). Use ASCII `'` (U+0027) and `"` (U+0022) only.
+- **Never** use the Unicode ellipsis character (U+2026). Use three ASCII periods: `...`
+- **Minimize** em dash (U+2014) and en dash (U+2013): prefer hyphen-minus (`-`, U+002D), commas, or rephrasing unless a non-hyphen dash is clearly the right editorial choice.
+
+Strip invisible formatting characters (for example U+2060 word joiner) that may come from pasted content.
+
 ## Pokemon Sleep Game Mechanics
 
 This section provides a comprehensive understanding of Pokemon Sleep's core mechanics as implemented in this application.
