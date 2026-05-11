@@ -901,6 +901,34 @@ export const MUSHARNA: Pokemon = evolvedPokemon(MUNNA, {
   carrySize: 24
 });
 
+export const TYRUNT: Pokemon = createBerrySpecialist({
+  name: 'TYRUNT',
+  pokedexNumber: 696,
+  frequency: toSeconds(1, 26, 40),
+  ingredientPercentage: 20.3,
+  skillPercentage: 2.4,
+  berry: SITRUS,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 11,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: BEAN_SAUSAGE,
+    b: FANCY_APPLE,
+    c: SOFT_POTATO
+  },
+  skill: CookingPowerUpS
+});
+
+export const TYRANTRUM: Pokemon = evolvedPokemon(TYRUNT, {
+  name: 'TYRANTRUM',
+  pokedexNumber: 697,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 17.8,
+  skillPercentage: 2.9,
+  carrySize: 23
+});
+
 export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   BUTTERFREE,
   RATICATE,
@@ -929,7 +957,8 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   WALREIN,
   SALAMENCE,
   WEAVILE,
-  MUSHARNA
+  MUSHARNA,
+  TYRANTRUM
 ];
 
 export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
@@ -967,7 +996,8 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   SEALEO,
   BAGON,
   SHELGON,
-  MUNNA
+  MUNNA,
+  TYRUNT
 ];
 
 export const ALL_BERRY_SPECIALISTS: Pokemon[] = [...OPTIMAL_BERRY_SPECIALISTS, ...INFERIOR_BERRY_SPECIALISTS];

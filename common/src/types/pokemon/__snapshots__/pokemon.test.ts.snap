@@ -30897,6 +30897,238 @@ exports[`COMPLETE_POKEDEX > shall not change TYRANITAR unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change TYRANTRUM unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "SITRUS",
+    "type": "rock",
+    "value": 30,
+  },
+  "carrySize": 23,
+  "displayName": "Tyrantrum",
+  "evolvesFrom": "TYRUNT",
+  "evolvesInto": [],
+  "frequency": 2800,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 17.8,
+  "name": "TYRANTRUM",
+  "pokedexNumber": 697,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "potSize": {
+        "amount": [Function],
+        "unit": "pot size",
+      },
+    },
+    "description": [Function],
+    "image": "pot",
+    "name": "Cooking Power-Up S",
+    "potSizeAmounts": [
+      7,
+      10,
+      12,
+      17,
+      22,
+      27,
+      31,
+    ],
+  },
+  "skillPercentage": 2.9,
+  "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TYRUNT unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "SITRUS",
+    "type": "rock",
+    "value": 30,
+  },
+  "carrySize": 11,
+  "displayName": "Tyrunt",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "TYRANTRUM",
+  ],
+  "frequency": 5200,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.3,
+  "name": "TYRUNT",
+  "pokedexNumber": 696,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "potSize": {
+        "amount": [Function],
+        "unit": "pot size",
+      },
+    },
+    "description": [Function],
+    "image": "pot",
+    "name": "Cooking Power-Up S",
+    "potSizeAmounts": [
+      7,
+      10,
+      12,
+      17,
+      22,
+      27,
+      31,
+    ],
+  },
+  "skillPercentage": 2.4,
+  "specialty": "berry",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
 {
   "berry": {
