@@ -1,3 +1,10 @@
+## [2.50.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.50.1...v2.50.2) (2026-05-11)
+
+
+### Bug Fixes
+
+* **charge energy:** call MemberState.recoverEnergy ([91345fe](https://github.com/nerolis-lab/nerolis-lab/commit/91345fe89e8082b2261f939af3498aa331e92044))
+
 ## [2.50.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.50.0...v2.50.1) (2026-05-10)
 
 # [2.50.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.49.4...v2.50.0) (2026-05-04)
