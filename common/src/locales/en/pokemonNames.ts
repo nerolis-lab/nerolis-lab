@@ -207,6 +207,8 @@ export default {
   TREECKO: 'Treecko',
   TYPHLOSION: 'Typhlosion',
   TYRANITAR: 'Tyranitar',
+  TYRUNT: 'Tyrunt',
+  TYRANTRUM: 'Tyrantrum',
   UMBREON: 'Umbreon',
   VAPOREON: 'Vaporeon',
   VENUSAUR: 'Venusaur',
