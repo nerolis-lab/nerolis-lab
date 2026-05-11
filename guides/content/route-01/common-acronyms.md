@@ -106,6 +106,6 @@ order: 20
 | NMD              | New Moon Day (monthly at the new moon)                |
 | Holiday          | Event that takes place at Christmas                   |
 | Anniversary/Anni | Anniversary event that occurs yearly around late July |
-| Cram             | Cram-o-matic                                          |
+| Cram             | Event with a Cram-o-matic (machine that converts your unwanted species candy into Candy of one type)                                         |
 | Mini boost       | Mini Candy Boost event function                       |
 | Holiday boost    | (Special) Candy Boost event function                  |
