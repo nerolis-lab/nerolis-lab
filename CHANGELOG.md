@@ -1,3 +1,11 @@
+# [2.52.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.51.0...v2.52.0) (2026-05-11)
+
+
+### Features
+
+* add tyrantrum stats ([2098e72](https://github.com/nerolis-lab/nerolis-lab/commit/2098e72f81eb8b7572ddef22ac23724776cd8807))
+* add tyrunt and tyrantrum images ([1149b16](https://github.com/nerolis-lab/nerolis-lab/commit/1149b1614475dab8fdf01e96d1cce5b88721aeb0))
+
 # [2.51.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.50.2...v2.51.0) (2026-05-11)
 
 
