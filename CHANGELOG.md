@@ -1,3 +1,10 @@
+# [2.51.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.50.2...v2.51.0) (2026-05-11)
+
+
+### Features
+
+* expand on contributing guide ([ba8d996](https://github.com/nerolis-lab/nerolis-lab/commit/ba8d996d7d977129362ea3930064202693cbc117))
+
 ## [2.50.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.50.1...v2.50.2) (2026-05-11)
 
 
