@@ -1,3 +1,10 @@
+# [2.53.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.52.0...v2.53.0) (2026-05-21)
+
+
+### Features
+
+* updates for 3.5.0 ([ccd67c4](https://github.com/nerolis-lab/nerolis-lab/commit/ccd67c4fc490484a87d9f2b731f5722cef6b29aa))
+
 # [2.52.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.51.0...v2.52.0) (2026-05-11)
 
 
