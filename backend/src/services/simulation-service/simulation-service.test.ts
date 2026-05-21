@@ -134,12 +134,12 @@ describe('setupAndRunProductionSimulation', () => {
       {
         "averageTotalSkillProcs": 1.990164943083223,
         "dayHelps": 54,
-        "nightHelps": 20,
+        "nightHelps": 21,
         "nightHelpsBeforeSS": 15,
         "produce": {
           "berries": [
             {
-              "amount": 48.24720747725384,
+              "amount": 49.24720747725384,
               "berry": {
                 "name": "BELUE",
                 "type": "steel",
@@ -284,7 +284,7 @@ describe('setupAndRunProductionSimulation', () => {
         ],
         "sneakySnack": [
           {
-            "amount": 5,
+            "amount": 6,
             "berry": {
               "name": "BELUE",
               "type": "steel",
@@ -295,7 +295,7 @@ describe('setupAndRunProductionSimulation', () => {
         ],
         "spilledIngredients": [
           {
-            "amount": 1.3298692855567018,
+            "amount": 1.576269299122719,
             "ingredient": {
               "longName": "Fancy Apple",
               "name": "Apple",
@@ -304,7 +304,7 @@ describe('setupAndRunProductionSimulation', () => {
             },
           },
           {
-            "amount": 0.6649346427783509,
+            "amount": 0.7881346495613595,
             "ingredient": {
               "longName": "Bean Sausage",
               "name": "Sausage",
@@ -313,7 +313,7 @@ describe('setupAndRunProductionSimulation', () => {
             },
           },
           {
-            "amount": 1.9948038076983106,
+            "amount": 2.3644038056955945,
             "ingredient": {
               "longName": "Fancy Egg",
               "name": "Egg",

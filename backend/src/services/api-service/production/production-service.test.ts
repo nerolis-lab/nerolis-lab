@@ -106,7 +106,7 @@ describe('calculateTeam', () => {
       {
         "berries": [
           {
-            "amount": 40.2152,
+            "amount": 40.7858,
             "berry": {
               "name": "LUM",
               "type": "bug",
@@ -117,7 +117,7 @@ describe('calculateTeam', () => {
         ],
         "ingredients": [
           {
-            "amount": 90.94400024414062,
+            "amount": 90.50740051269531,
             "ingredient": {
               "longName": "Honey",
               "name": "Honey",

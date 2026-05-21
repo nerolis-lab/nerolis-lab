@@ -73,17 +73,23 @@ export function getDefaultMealTimes(dayPeriod: TimePeriod): { meals: MealTimes; 
 }
 
 export function getMealRecoveryAmount(currentEnergy: number) {
-  if (currentEnergy >= 150) {
-    return 0;
-  } else if (currentEnergy >= 80) {
+  if (currentEnergy >= 81) {
     return 1;
-  } else if (currentEnergy >= 60) {
+  } else if (currentEnergy >= 71) {
     return 2;
-  } else if (currentEnergy >= 40) {
+  } else if (currentEnergy >= 61) {
     return 3;
-  } else if (currentEnergy >= 20) {
+  } else if (currentEnergy >= 51) {
     return 4;
-  } else {
+  } else if (currentEnergy >= 41) {
     return 5;
+  } else if (currentEnergy >= 31) {
+    return 6;
+  } else if (currentEnergy >= 21) {
+    return 7;
+  } else if (currentEnergy >= 11) {
+    return 8;
+  } else {
+    return 9;
   }
 }

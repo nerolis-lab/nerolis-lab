@@ -440,8 +440,10 @@ export class MemberState {
   }
 
   public recoverMeal() {
-    this.totalRecovery += getMealRecoveryAmount(this.currentEnergy);
-    this.currentEnergy += getMealRecoveryAmount(this.currentEnergy);
+    const recovered = getMealRecoveryAmount(this.currentEnergy);
+    const clampedRecovered = this.currentEnergy + recovered > 150 ? 150 - this.currentEnergy : recovered;
+    this.totalRecovery += clampedRecovered;
+    this.currentEnergy += clampedRecovered;
   }
 
   public rollBerriesAndIngredients(): {
