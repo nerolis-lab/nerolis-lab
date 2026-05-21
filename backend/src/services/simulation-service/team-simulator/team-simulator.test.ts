@@ -69,7 +69,7 @@ describe('TeamSimulator', () => {
     const result = simulator.results();
 
     expect(result.members).toHaveLength(1);
-    expect(result.members[0].produceTotal.berries[0].amount).toMatchInlineSnapshot(`36`);
+    expect(result.members[0].produceTotal.berries[0].amount).toMatchInlineSnapshot(`37`);
     expect(result.members[0].produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`8`);
     expect(result.members[0].advanced.morningProcs).toBe(2);
     expect(result.members[0].skillProcs).toMatchInlineSnapshot(`35`);
@@ -82,7 +82,7 @@ describe('TeamSimulator', () => {
 
     const result = simulator.ivResults(mockMembers[0].settings.externalId);
 
-    expect(result.produceTotal.berries[0].amount).toMatchInlineSnapshot(`36`);
+    expect(result.produceTotal.berries[0].amount).toMatchInlineSnapshot(`37`);
     expect(result.produceTotal.ingredients[0].amount).toMatchInlineSnapshot(`8`);
     expect(result.skillProcs).toMatchInlineSnapshot(`35`);
   });
@@ -122,7 +122,7 @@ describe('TeamSimulator', () => {
     const result = simulator.results();
 
     expect(result.members).toHaveLength(1);
-    expect(result.members[0].produceTotal.berries[0].amount).toBeCloseTo(41);
+    expect(result.members[0].produceTotal.berries[0].amount).toBeCloseTo(42);
     expect(result.members[0].produceTotal.ingredients[0].amount).toBeCloseTo(96);
   });
 
@@ -150,23 +150,23 @@ describe('TeamSimulator', () => {
 
     expect(result.members).toHaveLength(5);
 
-    expect(result.members[0].produceTotal.berries[0].amount).toEqual(37);
+    expect(result.members[0].produceTotal.berries[0].amount).toEqual(38);
     expect(result.members[0].produceTotal.ingredients[0].amount).toEqual(7);
     expect(result.members[0].skillProcs).toEqual(35);
 
-    expect(result.members[1].produceTotal.berries[0].amount).toEqual(32);
+    expect(result.members[1].produceTotal.berries[0].amount).toEqual(33);
     expect(result.members[1].produceTotal.ingredients[0].amount).toEqual(12);
     expect(result.members[1].skillProcs).toEqual(35);
 
-    expect(result.members[2].produceTotal.berries[0].amount).toEqual(36);
+    expect(result.members[2].produceTotal.berries[0].amount).toEqual(37);
     expect(result.members[2].produceTotal.ingredients[0].amount).toEqual(8);
     expect(result.members[2].skillProcs).toEqual(35);
 
-    expect(result.members[3].produceTotal.berries[0].amount).toEqual(36);
+    expect(result.members[3].produceTotal.berries[0].amount).toEqual(37);
     expect(result.members[3].produceTotal.ingredients[0].amount).toEqual(8);
     expect(result.members[3].skillProcs).toEqual(35);
 
-    expect(result.members[4].produceTotal.berries[0].amount).toEqual(37);
+    expect(result.members[4].produceTotal.berries[0].amount).toEqual(38);
     expect(result.members[4].produceTotal.ingredients[0].amount).toEqual(7);
     expect(result.members[4].skillProcs).toEqual(35);
   });

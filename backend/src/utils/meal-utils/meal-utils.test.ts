@@ -223,33 +223,49 @@ describe('getDefaultMealTimes', () => {
 });
 
 describe('getMealRecoveryAmount', () => {
-  it('shall return 0 for currentEnergy >= 150', () => {
-    expect(getMealRecoveryAmount(150)).toBe(0);
-  });
-
-  it('shall return 1 for 80 <= currentEnergy < 150', () => {
-    expect(getMealRecoveryAmount(80)).toBe(1);
+  it('shall return 1 for 81 <= currentEnergy', () => {
+    expect(getMealRecoveryAmount(81)).toBe(1);
     expect(getMealRecoveryAmount(99)).toBe(1);
-    expect(getMealRecoveryAmount(149)).toBe(1);
+    expect(getMealRecoveryAmount(150)).toBe(1);
   });
 
-  it('shall return 2 for 60 <= currentEnergy < 80', () => {
-    expect(getMealRecoveryAmount(60)).toBe(2);
-    expect(getMealRecoveryAmount(79)).toBe(2);
+  it('shall return 2 for 71 <= currentEnergy < 81', () => {
+    expect(getMealRecoveryAmount(71)).toBe(2);
+    expect(getMealRecoveryAmount(80)).toBe(2);
   });
 
-  it('shall return 3 for 40 <= currentEnergy < 60', () => {
-    expect(getMealRecoveryAmount(40)).toBe(3);
-    expect(getMealRecoveryAmount(59)).toBe(3);
+  it('shall return 3 for 61 <= currentEnergy < 71', () => {
+    expect(getMealRecoveryAmount(61)).toBe(3);
+    expect(getMealRecoveryAmount(70)).toBe(3);
   });
 
-  it('shall return 4 for 20 <= currentEnergy < 40', () => {
-    expect(getMealRecoveryAmount(20)).toBe(4);
-    expect(getMealRecoveryAmount(39)).toBe(4);
+  it('shall return 4 for 51 <= currentEnergy < 61', () => {
+    expect(getMealRecoveryAmount(51)).toBe(4);
+    expect(getMealRecoveryAmount(60)).toBe(4);
   });
 
-  it('shall return 5 for currentEnergy < 20', () => {
-    expect(getMealRecoveryAmount(19)).toBe(5);
-    expect(getMealRecoveryAmount(0)).toBe(5);
+  it('shall return 5 for 41 <= currentEnergy < 51', () => {
+    expect(getMealRecoveryAmount(41)).toBe(5);
+    expect(getMealRecoveryAmount(50)).toBe(5);
+  });
+
+  it('shall return 6 for 31 <= currentEnergy < 41', () => {
+    expect(getMealRecoveryAmount(31)).toBe(6);
+    expect(getMealRecoveryAmount(40)).toBe(6);
+  });
+
+  it('shall return 7 for 21 <= currentEnergy < 31', () => {
+    expect(getMealRecoveryAmount(21)).toBe(7);
+    expect(getMealRecoveryAmount(30)).toBe(7);
+  });
+
+  it('shall return 8 for 11 <= currentEnergy < 21', () => {
+    expect(getMealRecoveryAmount(11)).toBe(8);
+    expect(getMealRecoveryAmount(20)).toBe(8);
+  });
+
+  it('shall return 9 for currentEnergy < 11', () => {
+    expect(getMealRecoveryAmount(10)).toBe(9);
+    expect(getMealRecoveryAmount(0)).toBe(9);
   });
 });

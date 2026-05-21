@@ -153,10 +153,10 @@ export const JIGGLYPUFF: Pokemon = createSkillSpecialist({
 export const WIGGLYTUFF: Pokemon = evolvedPokemon(JIGGLYPUFF, {
   name: 'WIGGLYTUFF',
   pokedexNumber: 40,
-  frequency: toSeconds(0, 48, 20),
-  ingredientPercentage: 17.4,
+  frequency: toSeconds(0, 45, 50),
+  ingredientPercentage: 19.1,
   skillPercentage: 4.0,
-  carrySize: 13
+  carrySize: 22
 });
 
 export const MEOWTH: Pokemon = createSkillSpecialist({

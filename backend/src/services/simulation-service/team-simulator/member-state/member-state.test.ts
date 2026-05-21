@@ -432,7 +432,7 @@ describe('recoverMeal', () => {
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
     expect(memberState.energy).toBe(0);
     memberState.recoverMeal();
-    expect(memberState.energy).toBe(5);
+    expect(memberState.energy).toBe(9);
   });
 
   it('shall recover no energy from cooking at 150 energy', () => {
