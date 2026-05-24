@@ -22,7 +22,7 @@
     "@types/node": "^22.10.4",
     "glob": "^13.0.6",
     "markdown-it": "^14.1.0",
-    "sass-embedded": "^1.89.2",
+    "sass-embedded": "^1.100.0",
     "typescript": "^5.8.3",
     "vite-plugin-vuetify": "^2.1.2",
     "vitepress": "2.0.0-alpha.17",
