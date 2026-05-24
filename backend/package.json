@@ -19,7 +19,7 @@
   },
   "files": ["dist"],
   "devDependencies": {
-    "@types/bun": "^1.3.13",
+    "@types/bun": "^1.3.14",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.49",
-    "axios": "^1.16.0",
+    "axios": "^1.16.1",
     "cookie-parser": "~1.4.7",
     "cors": "^2.8.6",
     "discord-oauth2": "^2.12.1",
