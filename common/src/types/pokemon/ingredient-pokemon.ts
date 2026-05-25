@@ -1026,6 +1026,25 @@ export const CRAMORANT: Pokemon = createIngredientSpecialist({
   skill: TastyChanceS
 });
 
+export const DRAMPA: Pokemon = createIngredientSpecialist({
+  name: 'DRAMPA',
+  pokedexNumber: 780,
+  frequency: toSeconds(0, 58, 20),
+  ingredientPercentage: 29.4,
+  skillPercentage: 4.6,
+  berry: YACHE,
+  genders: BALANCED_GENDER,
+  carrySize: 25,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: GREENGRASS_SOYBEANS,
+    b: GLOSSY_AVOCADO,
+    c: BEAN_SAUSAGE
+  },
+  skill: TastyChanceS
+});
+
 export const SPRIGATITO: Pokemon = createIngredientSpecialist({
   name: 'SPRIGATITO',
   pokedexNumber: 906,
@@ -1211,6 +1230,7 @@ export const OPTIMAL_INGREDIENT_SPECIALISTS: Pokemon[] = [
   BEWEAR,
   COMFEY,
   CRAMORANT,
+  DRAMPA,
   FLORAGATO,
   MEOWSCARADA,
   CROCALOR,
