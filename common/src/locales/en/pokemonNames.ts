@@ -52,6 +52,7 @@ export default {
   DODUO: 'Doduo',
   DRAGONAIR: 'Dragonair',
   DRAGONITE: 'Dragonite',
+  DRAMPA: 'Drampa',
   DRATINI: 'Dratini',
   DRIFBLIM: 'Drifblim',
   DRIFLOON: 'Drifloon',
