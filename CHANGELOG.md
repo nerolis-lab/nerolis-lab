@@ -1,3 +1,11 @@
+# [2.54.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.53.0...v2.54.0) (2026-05-25)
+
+
+### Features
+
+* add drampa ([88b9d50](https://github.com/nerolis-lab/nerolis-lab/commit/88b9d5033eaf5d976a319e14dabe327380171587))
+* add drampa images ([d8d1167](https://github.com/nerolis-lab/nerolis-lab/commit/d8d11676b52fea7530756a7f27a69d2586b3d640))
+
 # [2.53.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.52.0...v2.53.0) (2026-05-21)
 
 
