@@ -7,7 +7,14 @@ export class EnergizingCheerSHealPulseEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const skill = EnergizingCheerSHealPulse;
     const energyAmount = skillState.skillAmount(skill.activations.energy);
-    const extraHelpsAmount = skillState.skillAmount(skill.activations.helps);
+    const baseHelpsAmount = skillState.skillAmount(skill.activations.soloHelps);
+    const bonusHelpsAmount = skillState.skillAmount(skill.activations.pairedHelps);
+
+    const pairedWithLatios =
+      skillState.memberState.otherMembers.find(
+        (member) => member.member.pokemonWithIngredients.pokemon.name === 'LATIOS'
+      ) !== undefined;
+    const totalHelpsAmount = baseHelpsAmount + (pairedWithLatios ? bonusHelpsAmount : 0);
 
     return {
       skill,
@@ -22,7 +29,7 @@ export class EnergizingCheerSHealPulseEffect implements SkillEffect {
         {
           unit: 'helps',
           team: {
-            regular: extraHelpsAmount,
+            regular: totalHelpsAmount,
             crit: 0
           }
         }

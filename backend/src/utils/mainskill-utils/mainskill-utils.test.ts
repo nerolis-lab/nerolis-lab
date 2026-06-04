@@ -13,6 +13,7 @@ describe('getMainskillNames', () => {
       [
         "Berry Burst",
         "Disguise (Berry Burst)",
+        "Draco Meteor (Berry Burst)",
         "Charge Energy S",
         "Moonlight (Charge Energy S)",
         "Charge Strength M",
