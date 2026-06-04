@@ -75,7 +75,7 @@ describe('HealPulseEnergizingCheerSDetails', () => {
   it('displays the correct helps per proc', () => {
     const row = wrapper.find('.helps-per-proc')
     expect(row.text()).toBe(
-      `x${EnergizingCheerSHealPulse.activations.helps.amount({ skillLevel: mockMember.member.skillLevel })}`
+      `x${EnergizingCheerSHealPulse.activations.soloHelps.amount({ skillLevel: mockMember.member.skillLevel })}`
     )
   })
 

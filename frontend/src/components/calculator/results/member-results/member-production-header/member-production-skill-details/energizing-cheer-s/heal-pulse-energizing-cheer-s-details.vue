@@ -67,6 +67,7 @@
 
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
+import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { EnergizingCheerSHealPulse, MathUtils, compactNumber, defaultZero } from 'sleepapi-common'
@@ -81,21 +82,38 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, MathUtils, mainskillImage }
+    const pokemonStore = usePokemonStore()
+    return { teamStore, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
+    isPaired() {
+      const latiosIfOnTeam = this.teamStore.getCurrentTeam.members
+        .filter(Boolean)
+        .map((member) => this.pokemonStore.getPokemon(member!)?.pokemon)
+        .find((member) => member?.name === 'LATIOS')
+      return latiosIfOnTeam !== undefined
+    },
+    skillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
     numMonsHelped() {
       return Math.min(this.teamStore.getTeamSize, 2)
     },
     energyPerProc() {
       return EnergizingCheerSHealPulse.activations.energy.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel
+        skillLevel: this.skillLevel
       })
     },
     helpsPerProc() {
-      return EnergizingCheerSHealPulse.activations.helps.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel
+      const baseHelpsAmount = EnergizingCheerSHealPulse.activations.soloHelps.amount({
+        skillLevel: this.skillLevel
       })
+      const bonusHelpsAmount = this.isPaired
+        ? EnergizingCheerSHealPulse.activations.pairedHelps.amount({
+            skillLevel: this.skillLevel
+          })
+        : 0
+      return baseHelpsAmount + bonusHelpsAmount
     },
     totalEnergyValue() {
       const { amountToSelf, amountToTeam } = this.memberWithProduction.production.skillValue.energy

@@ -3,6 +3,7 @@ import { calculateDistribution } from '@src/services/simulation-service/team-sim
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-disguise-effect.js';
+import { BerryBurstDracoMeteorEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-draco-meteor-effect.js';
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-effect.js';
 import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-effect.js';
 import { ChargeEnergySMoonlightEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-moonlight-effect.js';
@@ -45,6 +46,7 @@ import type { AmountParams, Mainskill, MainskillActivation, MainskillUnit, Membe
 import {
   BerryBurst,
   BerryBurstDisguise,
+  BerryBurstDracoMeteor,
   calculatePityProcThreshold,
   ChargeEnergyS,
   ChargeEnergySMoonlight,
@@ -112,6 +114,7 @@ export class SkillState {
     this.skillEffects = new Map<Mainskill, SkillEffect>([
       [BerryBurst, new BerryBurstEffect()],
       [BerryBurstDisguise, new BerryBurstDisguiseEffect()],
+      [BerryBurstDracoMeteor, new BerryBurstDracoMeteorEffect()],
       [ChargeEnergyS, new ChargeEnergySEffect()],
       [ChargeEnergySMoonlight, new ChargeEnergySMoonlightEffect()],
       [ChargeStrengthM, new ChargeStrengthMEffect()],

@@ -15334,7 +15334,11 @@ exports[`COMPLETE_POKEDEX > shall not change LATIAS unexpectedly 1`] = `
         "amount": [Function],
         "unit": "energy",
       },
-      "helps": {
+      "pairedHelps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+      "soloHelps": {
         "amount": [Function],
         "unit": "helps",
       },

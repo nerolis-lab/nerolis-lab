@@ -16,10 +16,16 @@ describe('EnergizingCheerSHealPulse', () => {
     expect(typeof EnergizingCheerSHealPulse.activations.energy.amount).toBe('function');
   });
 
-  it('should have extra helps activation', () => {
-    expect(EnergizingCheerSHealPulse.activations).toHaveProperty('helps');
-    expect(EnergizingCheerSHealPulse.activations.helps.unit).toBe('helps');
-    expect(typeof EnergizingCheerSHealPulse.activations.helps.amount).toBe('function');
+  it('should have solo extra helps activation', () => {
+    expect(EnergizingCheerSHealPulse.activations).toHaveProperty('soloHelps');
+    expect(EnergizingCheerSHealPulse.activations.soloHelps.unit).toBe('helps');
+    expect(typeof EnergizingCheerSHealPulse.activations.soloHelps.amount).toBe('function');
+  });
+
+  it('should have paired extra helps activation', () => {
+    expect(EnergizingCheerSHealPulse.activations).toHaveProperty('pairedHelps');
+    expect(EnergizingCheerSHealPulse.activations.pairedHelps.unit).toBe('helps');
+    expect(typeof EnergizingCheerSHealPulse.activations.pairedHelps.amount).toBe('function');
   });
 
   it('should have targeting property', () => {
