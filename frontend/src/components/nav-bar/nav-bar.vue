@@ -7,7 +7,7 @@
     </template>
 
     <v-app-bar-title>
-      <div class="page-title">{{ $route.name }}<RouterLink to="/beta" class="beta-tag">beta</RouterLink></div>
+      <div class="page-title">{{ $route.name }}</div>
     </v-app-bar-title>
 
     <template #append>
@@ -61,13 +61,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.beta-tag {
-  color: $primary;
-  font-style: italic;
-  font-size: 16px;
-  margin: -6px 0 0 5px;
-}
-
 $nav-bar-title-breakpoint: 960px;
 
 .page-title {
