@@ -4,53 +4,64 @@
       <v-btn icon color="transparent" elevation="0" v-bind="props">
         <div class="island-activator">
           <v-img height="48" width="48" :src="islandImage({ island, background: false })" alt="island icon" />
-          <span v-if="isExpertIsland" class="expert-badge" aria-label="expert badge">EX</span>
+          <span v-if="isExpertIsland" class="expert-chip expert-badge text-small" aria-label="expert badge">EX</span>
         </div>
       </v-btn>
     </template>
 
     <v-card>
       <v-container>
-        <v-card-title class="mb-1 pl-0">Select island or berries</v-card-title>
-
-        <section class="island-grid">
-          <v-btn
-            v-for="i in displayedIslands"
-            :key="i.shortName"
-            class="island-card"
-            :class="{ 'island-card--active': island.shortName === i.shortName }"
-            :aria-label="i.shortName"
-            :style="{
-              '--island-card-image': `url(/images/island/${i.expert && i.base ? i.base.shortName : i.shortName}.png)`
-            }"
-            color="secondary"
-            height="80"
-            @click="selectIsland(i)"
-          >
-            <div class="island-card__content">
-              <div class="island-card__title-row">
-                <div class="island-card__name">{{ filterIslandName(i.name) }}</div>
-                <span v-if="i.expert" class="island-card__expert-chip">EX</span>
-              </div>
-              <small class="island-card__bonus">{{ areaBonus(i) }}% area bonus</small>
-            </div>
-          </v-btn>
-        </section>
-
-        <v-row dense class="pa-2 flex-between">
-          <div>
-            <span>Set your area bonus: </span>
-            <a class="btn-link" href="/settings">Settings</a>
-          </div>
+        <div class="dialog-header flex-between flex-wrap">
+          <v-card-title class="dialog-title pl-0">Island Settings</v-card-title>
           <v-switch
             v-model="expertToggle"
             aria-label="expert-mode-toggle"
+            class="expert-mode-toggle"
             color="primary"
             density="compact"
             hide-details
             label="Expert Mode"
             @update:model-value="onExpertToggle"
           />
+        </div>
+
+        <section class="island-grid">
+          <v-btn
+            v-for="i in displayedIslands"
+            :key="i.shortName"
+            class="island-card"
+            :class="{ active: island.shortName === i.shortName }"
+            :aria-label="i.shortName"
+            :style="{
+              '--card-image': `url(${islandImage({ island: i, background: true })})`
+            }"
+            color="secondary"
+            @click="selectIsland(i)"
+          >
+            <div class="flex-top-left card-row">
+              <v-img
+                class="island-icon"
+                :src="islandImage({ island: i, background: false })"
+                :alt="`${filterIslandName(i.name)} icon`"
+                width="24"
+                height="24"
+              />
+              <div class="flex-column grow min-w-0 card-body">
+                <div class="flex-wrap title-row">
+                  <span class="text-body island-name grow min-w-0">{{ filterIslandName(i.name) }}</span>
+                  <span v-if="i.expert" class="expert-chip text-small">EX</span>
+                </div>
+                <span class="text-small island-bonus">{{ areaBonus(i) }}% area bonus</span>
+              </div>
+            </div>
+          </v-btn>
+        </section>
+
+        <v-row dense class="pa-2">
+          <v-col cols="12">
+            <span>Set your area bonus: </span>
+            <a class="btn-link" href="/settings">Settings</a>
+          </v-col>
         </v-row>
 
         <template v-if="!isExpertIsland">
@@ -146,19 +157,19 @@
           <v-row dense class="mt-2">
             <v-col cols="12">
               <div class="text-subtitle-2 mb-1">Weekly random bonus</div>
-              <div class="expert-bonus-grid">
+              <div class="option-grid">
                 <button
                   v-for="option in RANDOM_BONUS_OPTIONS"
                   :key="option.value"
                   type="button"
                   :aria-label="`random-bonus-${option.value}`"
                   :aria-pressed="randomBonus === option.value"
-                  :class="['expert-bonus-tile', { 'expert-bonus-tile--active': randomBonus === option.value }]"
+                  :class="['option-tile', 'flex-column-center', { active: randomBonus === option.value }]"
                   @click="selectRandomBonus(option.value)"
                 >
-                  <v-img :src="option.image" :alt="option.alt" width="32" height="32" class="expert-bonus-tile__icon" />
-                  <span class="expert-bonus-tile__label">{{ option.label }}</span>
-                  <span class="expert-bonus-tile__hint">{{ option.hint }}</span>
+                  <v-img :src="option.image" :alt="option.alt" width="32" height="32" />
+                  <span class="text-small option-label">{{ option.label }}</span>
+                  <span class="text-small option-hint">{{ option.hint }}</span>
                 </button>
               </div>
             </v-col>
@@ -412,10 +423,27 @@ defineExpose({
 })
 </script>
 
-<style scoped>
-.selected-island {
-  box-shadow: 0 0 0 3px rgb(var(--v-theme-primary));
-  transform: scale(1.1);
+<style scoped lang="scss">
+$card-background-breakpoint: 460px;
+$dialog-header-inline-breakpoint: 420px;
+
+.grow {
+  flex: 1 1 auto;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.expert-chip {
+  flex: 0 0 auto;
+  background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-on-primary));
+  font-weight: 700 !important;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
 }
 
 .island-activator {
@@ -423,11 +451,83 @@ defineExpose({
   display: inline-block;
 }
 
+.expert-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.dialog-header {
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.dialog-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.expert-mode-toggle {
+  flex: 0 0 auto;
+}
+
+@media (min-width: $dialog-header-inline-breakpoint) {
+  .dialog-header {
+    align-items: center;
+  }
+}
+
 .island-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 8px;
   margin-bottom: 8px;
+}
+
+.island-icon {
+  flex: 0 0 24px;
+  border-radius: 4px;
+}
+
+.card-row {
+  gap: 10px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.card-body {
+  gap: 2px;
+  padding: 16px 0;
+  justify-content: space-between;
+  text-shadow: 0 0 1px #000;
+  text-align: left;
+
+  > .island-bonus {
+    opacity: 0.7;
+    line-height: 1.2;
+  }
+}
+
+.title-row {
+  align-items: baseline;
+  gap: 6px;
+  width: 100%;
+}
+
+.island-name {
+  font-weight: 600 !important;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .island-card {
@@ -436,116 +536,31 @@ defineExpose({
   letter-spacing: 0.03em;
   overflow: hidden;
   position: relative;
+  min-height: 48px;
+  height: auto !important;
+
+  &::before {
+    content: none;
+  }
+
+  :deep(.v-btn__content) {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  &.active {
+    box-shadow: 10px 0px 0px 1px rgb(var(--v-theme-primary)) inset;
+  }
 }
 
-.island-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 55%;
-  background-image: var(--island-card-image);
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: cover;
-  pointer-events: none;
-  z-index: 0;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 40%, #000 90%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 40%, #000 90%);
-}
-
-.island-card :deep(.v-btn__content) {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.island-card__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 4px;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
-
-.island-card__title-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  min-width: 0;
-}
-
-.island-card__name {
-  font-weight: 600;
-  font-size: 0.95rem;
-  line-height: 1.15;
-  text-align: left;
-  white-space: normal;
-  word-wrap: break-word;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.island-card__bonus {
-  font-size: 0.75rem;
-  opacity: 0.7;
-  text-align: left;
-}
-
-.island-card__expert-chip {
-  flex: 0 0 auto;
-  background: rgb(var(--v-theme-primary));
-  color: rgb(var(--v-theme-on-primary));
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 4px;
-  letter-spacing: 0.05em;
-}
-
-.island-card--active {
-  box-shadow: 0 0 0 2px rgb(var(--v-theme-primary)) inset;
-}
-
-.expert-badge {
-  position: absolute;
-  bottom: -4px;
-  right: -4px;
-  background: rgb(var(--v-theme-primary));
-  color: rgb(var(--v-theme-on-primary));
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 4px;
-  pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-}
-
-.expert-badge--option {
-  bottom: 0;
-  right: 0;
-}
-
-.expert-bonus-grid {
+.option-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
-.expert-bonus-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.option-tile {
   gap: 2px;
   min-width: 0;
   padding: 10px 6px;
@@ -554,47 +569,98 @@ defineExpose({
   background: rgb(var(--v-theme-surface));
   color: rgb(var(--v-theme-on-surface));
   cursor: pointer;
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    transform 0.1s ease,
-    box-shadow 0.15s ease;
+  transition: all 0.15s ease;
   text-align: center;
+
+  .option-label {
+    font-weight: 700 !important;
+  }
+
+  .option-hint {
+    opacity: 0.7;
+    line-height: 1.2;
+  }
+
+  :deep(.v-img) {
+    flex: 0 0 auto;
+    margin-bottom: 2px;
+    opacity: 0.9;
+  }
+
+  &:hover {
+    border-color: rgba(var(--v-theme-primary), 0.5);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.active {
+    background: rgb(var(--v-theme-primary));
+    color: rgb(var(--v-theme-on-primary));
+    border-color: rgb(var(--v-theme-primary));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+    .option-hint {
+      opacity: 0.85;
+    }
+  }
 }
 
-.expert-bonus-tile:hover {
-  border-color: rgba(var(--v-theme-primary), 0.5);
-}
+@media (min-width: $card-background-breakpoint) {
+  .island-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
 
-.expert-bonus-tile:active {
-  transform: scale(0.98);
-}
+  .island-icon {
+    display: none;
+  }
 
-.expert-bonus-tile--active {
-  background: rgb(var(--v-theme-primary));
-  color: rgb(var(--v-theme-on-primary));
-  border-color: rgb(var(--v-theme-primary));
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
+  .card-row {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    height: 100%;
+    overflow: hidden;
+  }
 
-.expert-bonus-tile__icon {
-  flex: 0 0 auto;
-  margin-bottom: 2px;
-  opacity: 0.9;
-}
+  .title-row {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
 
-.expert-bonus-tile__label {
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.2;
-  word-break: break-word;
-}
+  .island-card {
+    min-height: 80px;
+    height: 80px !important;
 
-.expert-bonus-tile__hint {
-  font-size: 0.75rem;
-  line-height: 1.2;
-  opacity: 0.85;
-  word-break: break-word;
-  white-space: normal;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      background-image: var(--card-image);
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-size: cover;
+      pointer-events: none;
+      z-index: 0;
+      -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(var(--v-theme-surface), 5%) 0%,
+        rgba(var(--v-theme-surface), 30%) 64%,
+        rgba(var(--v-theme-surface), 100%) 100%
+      );
+      mask-image: linear-gradient(
+        to right,
+        rgba(var(--v-theme-surface), 5%) 0%,
+        rgba(var(--v-theme-surface), 30%) 64%,
+        rgba(var(--v-theme-surface), 100%) 100%
+      );
+    }
+  }
 }
 </style>
