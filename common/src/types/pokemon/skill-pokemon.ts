@@ -57,6 +57,7 @@ import {
 import {
   BerryBurst,
   BerryBurstDisguise,
+  BerryBurstDracoMeteor,
   ChargeEnergySMoonlight,
   ChargeStrengthM,
   ChargeStrengthSRange,
@@ -830,6 +831,25 @@ export const LATIAS: Pokemon = createSkillSpecialist({
   skill: EnergizingCheerSHealPulse
 });
 
+export const LATIOS: Pokemon = createSkillSpecialist({
+  name: 'LATIOS',
+  pokedexNumber: 381,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 19.8,
+  skillPercentage: 3,
+  berry: YACHE,
+  genders: MALE_ONLY,
+  carrySize: 19,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: SNOOZY_TOMATO,
+    b: FANCY_EGG,
+    c: MOOMOO_MILK
+  },
+  skill: BerryBurstDracoMeteor
+});
+
 export const BONSLY: Pokemon = preEvolvedPokemon(SUDOWOODO, {
   name: 'BONSLY',
   pokedexNumber: 438,
@@ -1241,6 +1261,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   GALLADE,
   CRESSELIA,
   LATIAS,
+  LATIOS,
   CRUSTLE,
   SANDSLASH,
   BRAVIARY,

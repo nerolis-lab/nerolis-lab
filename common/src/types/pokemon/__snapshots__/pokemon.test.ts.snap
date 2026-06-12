@@ -15411,6 +15411,245 @@ exports[`COMPLETE_POKEDEX > shall not change LATIAS unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change LATIOS unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "YACHE",
+    "type": "dragon",
+    "value": 35,
+  },
+  "carrySize": 19,
+  "displayName": "Latios",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2800,
+  "genders": {
+    "female": 0,
+    "male": 1,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.8,
+  "name": "LATIOS",
+  "pokedexNumber": 381,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1400,
+      1991,
+      2747,
+      3791,
+      5234,
+      7232,
+    ],
+    "activations": {
+      "paired": {
+        "amount": [Function],
+        "teamAmount": [Function],
+        "unit": "berries",
+      },
+      "solo": {
+        "amount": [Function],
+        "teamAmount": [Function],
+        "unit": "berries",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        1400,
+        1991,
+        2747,
+        3791,
+        5234,
+        7232,
+      ],
+      "activations": {
+        "berries": {
+          "amount": [Function],
+          "teamAmount": [Function],
+          "unit": "berries",
+        },
+      },
+      "description": [Function],
+      "image": "berries",
+      "name": "Berry Burst",
+      "selfBerryAmounts": [
+        11,
+        14,
+        21,
+        24,
+        27,
+        30,
+      ],
+      "teamBerryAmounts": [
+        1,
+        2,
+        2,
+        3,
+        4,
+        5,
+      ],
+    },
+    "description": [Function],
+    "image": "berries",
+    "latiasBerriesAmounts": [
+      2,
+      4,
+      6,
+      8,
+      9,
+      10,
+    ],
+    "modifierName": "Draco Meteor",
+    "selfBerryTable": {
+      "1": [
+        12,
+        21,
+        29,
+        38,
+        43,
+        48,
+      ],
+      "2": [
+        14,
+        24,
+        29,
+        39,
+        44,
+        50,
+      ],
+      "3": [
+        18,
+        29,
+        35,
+        42,
+        48,
+        55,
+      ],
+      "4": [
+        18,
+        30,
+        37,
+        45,
+        49,
+        55,
+      ],
+      "5": [
+        20,
+        33,
+        41,
+        49,
+        53,
+        58,
+      ],
+    },
+    "teamBerryTable": {
+      "1": [
+        1,
+        1,
+        1,
+        1,
+        2,
+        3,
+      ],
+      "2": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        4,
+      ],
+      "3": [
+        1,
+        1,
+        2,
+        3,
+        4,
+        4,
+      ],
+      "4": [
+        2,
+        2,
+        3,
+        4,
+        5,
+        5,
+      ],
+      "5": [
+        2,
+        2,
+        3,
+        4,
+        5,
+        5,
+      ],
+    },
+  },
+  "skillPercentage": 3,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change LEAFEON unexpectedly 1`] = `
 {
   "berry": {

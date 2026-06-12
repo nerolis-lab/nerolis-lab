@@ -103,6 +103,7 @@ export default {
   LAIRON: 'Lairon',
   LARVITAR: 'Larvitar',
   LATIAS: 'Latias',
+  LATIOS: 'Latios',
   LEAFEON: 'Leafeon',
   LUCARIO: 'Lucario',
   LUXIO: 'Luxio',

@@ -80,7 +80,7 @@ import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { BerryBurstDracoMeteor, MathUtils } from 'sleepapi-common'
+import { BerryBurstDracoMeteor, compactNumber, MathUtils } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -93,7 +93,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage, berryImage }
+    return { teamStore, pokemonStore, MathUtils, compactNumber, mainskillImage, berryImage }
   },
   computed: {
     isPaired() {
@@ -119,12 +119,25 @@ export default defineComponent({
       return this.skillActivation.teamAmount!({ skillLevel: this.skillLevel })
     },
     totalSelfBerries() {
-      const { amountToSelf } = this.memberWithProduction.production.skillValue.berries
-      return amountToSelf
+      const amount =
+        this.memberWithProduction.production.produceFromSkill.berries.find(
+          (b) =>
+            b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
+            b.level === this.memberWithProduction.member.level
+        )?.amount ?? 0
+      return compactNumber(amount * this.timeWindowFactor)
     },
     totalTeamBerries() {
-      const { amountToTeam } = this.memberWithProduction.production.skillValue.berries
-      return amountToTeam
+      const amount = this.memberWithProduction.production.produceFromSkill.berries.reduce(
+        (sum, cur) =>
+          sum +
+          (cur.berry.name !== this.memberWithProduction.member.pokemon.berry.name ||
+          cur.level !== this.memberWithProduction.member.level
+            ? cur.amount
+            : 0),
+        0
+      )
+      return compactNumber(amount * this.timeWindowFactor)
     },
     timeWindowFactor() {
       return this.teamStore.timeWindowFactor
