@@ -35,6 +35,7 @@ To build and run the app locally, you will need:
 - We recommend using [nvm](https://github.com/nvm-sh/nvm) to install and select the repo's Node.js version for non-Nix setups
 
 ### ❄️ Optional Nix Dev Shell
+*This option is community-maintained and is not officially supported by the core dev team.*
 
 If you use Nix, this repo includes an optional dev shell:
 
