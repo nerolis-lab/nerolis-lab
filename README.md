@@ -49,10 +49,10 @@ The dev shell provides `node`, `npm`, and `bun`. Docker is still expected to be 
 
 If you want to get the project running locally, follow these docs in order:
 
-1. Start with [Development Setup](docs/getting-started/development-setup.md): prerequisites, workspace setup, and the shape of the project.
-2. Build the shared library using instructions from [Common Library](docs/components/common.md).
-3. Set up the local database and backend environment following [Backend](docs/components/backend.md).
-4. Start the frontend with [Frontend](docs/components/frontend.md).
+1. Start with [Development Setup](https://docs.nerolislab.com/getting-started/development-setup.html): prerequisites, workspace setup, and the shape of the project.
+2. Build the shared library using instructions from [Common Library](https://docs.nerolislab.com/components/common.html).
+3. Set up the local database and backend environment following [Backend](https://docs.nerolislab.com/components/backend.html).
+4. Start the frontend with [Frontend](https://docs.nerolislab.com/components/frontend.html).
 
 ## 📄 License
 
