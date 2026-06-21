@@ -1,13 +1,16 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
+import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { useTeamStore } from '@/stores/team/team-store'
 import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
+import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { berry, compactNumber, LATIOS, MathUtils } from 'sleepapi-common'
+import { berry, BerryBurstDracoMeteor, compactNumber, DRAGONAIR, DRAGONITE, DRATINI, LATIAS, LATIOS, MathUtils } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
-  member: mocks.createMockPokemon({ pokemon: LATIOS }),
+  member: mocks.createMockPokemon({ pokemon: LATIOS, skillLevel: 6, level: 1 }),
   production: {
     ...mocks.createMockMemberProductionExt().production,
     produceFromSkill: {
@@ -22,8 +25,34 @@ const mockMember = mocks.createMockMemberProductionExt({
 
 describe('DracoMeteorBerryBurstDetails', () => {
   let wrapper: VueWrapper<InstanceType<typeof MemberProductionSkill>>
+  let teamStore: ReturnType<typeof useTeamStore>
+  let pokemonStore: ReturnType<typeof usePokemonStore>
 
   beforeEach(async () => {
+    teamStore = useTeamStore()
+    pokemonStore = usePokemonStore()
+
+    const latios = mocks.createMockPokemon({
+      externalId: mockMember.member.externalId,
+      pokemon: LATIOS,
+      skillLevel: 6,
+      level: 1
+    })
+    const latias = mocks.createMockPokemon({ externalId: 'latias-id', pokemon: LATIAS })
+    const dratini = mocks.createMockPokemon({ externalId: 'dratini-id', pokemon: DRATINI })
+    const dragonair = mocks.createMockPokemon({ externalId: 'dragonair-id', pokemon: DRAGONAIR })
+    const dragonite = mocks.createMockPokemon({ externalId: 'dragonite-id', pokemon: DRAGONITE })
+
+    pokemonStore.upsertLocalPokemon(latios)
+    pokemonStore.upsertLocalPokemon(latias)
+    pokemonStore.upsertLocalPokemon(dratini)
+    pokemonStore.upsertLocalPokemon(dragonair)
+    pokemonStore.upsertLocalPokemon(dragonite)
+
+    teamStore.teams = createMockTeams(1, {
+      members: [latios.externalId, latias.externalId, dratini.externalId, dragonair.externalId, dragonite.externalId]
+    })
+
     wrapper = mount(MemberProductionSkill, {
       props: {
         memberWithProduction: mockMember
@@ -41,6 +70,18 @@ describe('DracoMeteorBerryBurstDetails', () => {
 
   it('renders correctly with the provided member data', () => {
     expect(wrapper.exists()).toBe(true)
+  })
+
+  it('displays the paired distinct-species berry values per proc', () => {
+    const perProcValues = wrapper.findAll('.font-weight-light.text-body-2.text-no-wrap.font-italic.text-center.mr-1')
+    const sameTypeSpeciesCount = 5
+
+    expect(perProcValues.at(0)?.text()).toBe(
+      `x${BerryBurstDracoMeteor.activations.paired.amount({ skillLevel: mockMember.member.skillLevel, extra: sameTypeSpeciesCount })}`
+    )
+    expect(perProcValues.at(1)?.text()).toBe(
+      `x${BerryBurstDracoMeteor.activations.paired.teamAmount!({ skillLevel: mockMember.member.skillLevel, extra: sameTypeSpeciesCount })}`
+    )
   })
 
   it('displays rounded self berry totals from produceFromSkill', () => {

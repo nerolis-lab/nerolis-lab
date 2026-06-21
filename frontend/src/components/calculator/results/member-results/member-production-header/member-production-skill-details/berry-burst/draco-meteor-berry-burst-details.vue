@@ -80,7 +80,7 @@ import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { BerryBurstDracoMeteor, compactNumber, MathUtils } from 'sleepapi-common'
+import { BerryBurstDracoMeteor, compactNumber, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -112,11 +112,24 @@ export default defineComponent({
     berryName() {
       return this.memberWithProduction.member.pokemon.berry.name.toLowerCase()
     },
+    sameTypeSpeciesCount() {
+      const members = this.teamStore.getCurrentTeam.members
+        .filter(Boolean)
+        .flatMap((member) => {
+          const pokemon = this.pokemonStore.getPokemon(member!)?.pokemon
+          return pokemon ? [pokemon] : []
+        })
+
+      return uniqueMembersWithBerry({
+        berry: this.memberWithProduction.member.pokemon.berry,
+        members
+      })
+    },
     selfBerriesPerProc() {
-      return this.skillActivation.amount({ skillLevel: this.skillLevel })
+      return this.skillActivation.amount({ skillLevel: this.skillLevel, extra: this.sameTypeSpeciesCount })
     },
     teamBerriesPerProc() {
-      return this.skillActivation.teamAmount!({ skillLevel: this.skillLevel })
+      return this.skillActivation.teamAmount!({ skillLevel: this.skillLevel, extra: this.sameTypeSpeciesCount })
     },
     totalSelfBerries() {
       const amount =
