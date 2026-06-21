@@ -6,7 +6,17 @@ import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { berry, BerryBurstDracoMeteor, compactNumber, DRAGONAIR, DRAGONITE, DRATINI, LATIAS, LATIOS, MathUtils } from 'sleepapi-common'
+import {
+  berry,
+  BerryBurstDracoMeteor,
+  compactNumber,
+  DRAGONAIR,
+  DRAGONITE,
+  DRATINI,
+  LATIAS,
+  LATIOS,
+  MathUtils
+} from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
