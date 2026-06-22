@@ -83,7 +83,7 @@ describe('DracoMeteorBerryBurstDetails', () => {
   })
 
   it('displays the paired distinct-species berry values per proc', () => {
-    const perProcValues = wrapper.findAll('.font-weight-light.text-body-2.text-no-wrap.font-italic.text-center.mr-1')
+    const perProcValues = wrapper.findAll('.per-proc-amount')
     const sameTypeSpeciesCount = 5
 
     expect(perProcValues.at(0)?.text()).toBe(

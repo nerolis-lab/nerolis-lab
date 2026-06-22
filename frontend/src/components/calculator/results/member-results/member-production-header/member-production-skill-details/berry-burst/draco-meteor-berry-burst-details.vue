@@ -30,7 +30,7 @@
           ></v-img>
         </div>
         <div class="flex-left">
-          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+          <span class="per-proc-amount font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
             >x{{ selfBerriesPerProc }}</span
           >
           <v-img
@@ -42,7 +42,7 @@
           ></v-img>
         </div>
         <div class="flex-left">
-          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+          <span class="per-proc-amount font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
             >x{{ teamBerriesPerProc }}</span
           >
           <v-img src="/images/berries/berries.png" height="20" width="20" alt="berries" title="berries"></v-img>
@@ -113,12 +113,10 @@ export default defineComponent({
       return this.memberWithProduction.member.pokemon.berry.name.toLowerCase()
     },
     sameTypeSpeciesCount() {
-      const members = this.teamStore.getCurrentTeam.members
-        .filter(Boolean)
-        .flatMap((member) => {
-          const pokemon = this.pokemonStore.getPokemon(member!)?.pokemon
-          return pokemon ? [pokemon] : []
-        })
+      const members = this.teamStore.getCurrentTeam.members.filter(Boolean).flatMap((member) => {
+        const pokemon = this.pokemonStore.getPokemon(member!)?.pokemon
+        return pokemon ? [pokemon] : []
+      })
 
       return uniqueMembersWithBerry({
         berry: this.memberWithProduction.member.pokemon.berry,
