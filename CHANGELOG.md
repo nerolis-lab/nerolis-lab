@@ -1,3 +1,16 @@
+# [2.55.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.54.1...v2.55.0) (2026-06-22)
+
+
+### Features
+
+* add Draco Meteor ([87db750](https://github.com/nerolis-lab/nerolis-lab/commit/87db750ee3173090760ec5e070eb3e09a146f628))
+* add latios ([892fa7f](https://github.com/nerolis-lab/nerolis-lab/commit/892fa7f32f05f766ad5201a35bdebaf158b62b5e))
+* add latios, connected unique team member count to berry amount ([fb03cf0](https://github.com/nerolis-lab/nerolis-lab/commit/fb03cf0c3f07d859f7570fea4c5d5104cf058796))
+* fixed lint on draco meteor frontend tests ([966628b](https://github.com/nerolis-lab/nerolis-lab/commit/966628b4d84823c4a2e1fa6862db6d3fa6a3f7e9))
+* updated draco meteor calculator display values to reflect team ([198867d](https://github.com/nerolis-lab/nerolis-lab/commit/198867d57f26c049f12f0412b8ac204388f4d971))
+* updated draco meteor frontend test to use a micro-class to ([b925d74](https://github.com/nerolis-lab/nerolis-lab/commit/b925d74fe343edfbbacf09d3bda7df86e1551500))
+* updated draco meteor tests to check all member berries are added ([948e4f3](https://github.com/nerolis-lab/nerolis-lab/commit/948e4f3ae18fecf975c4244f72f27d73975b1aa3))
+
 ## [2.54.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.54.0...v2.54.1) (2026-06-22)
 
 # [2.54.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.53.0...v2.54.0) (2026-05-25)
