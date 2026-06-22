@@ -5,7 +5,7 @@ import { BerryBurst } from './berry-burst';
 export const BerryBurstDracoMeteor = new (class extends ModifiedMainskill {
   baseSkill = BerryBurst;
   modifierName = 'Draco Meteor';
-  RP = [1400, 1991, 2747, 3791, 5234, 7232];
+  RP = [2380, 3385, 4670, 6445, 8898, 12294];
   image = 'berries';
 
   readonly selfBerryTable: Record<number, number[]> = {

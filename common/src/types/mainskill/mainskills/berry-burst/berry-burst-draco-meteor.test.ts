@@ -31,7 +31,7 @@ describe('BerryBurstDracoMeteor', () => {
     expect(BerryBurstDracoMeteor.description({ skillLevel: 1 })).toBe(
       'Gets the Berries the Pokémon on your team (including itself) collect. Meet certain conditions to boost effect.'
     );
-    expect(BerryBurstDracoMeteor.RP).toEqual([1400, 1991, 2747, 3791, 5234, 7232]);
+    expect(BerryBurstDracoMeteor.RP).toEqual([2380, 3385, 4670, 6445, 8898, 12294]);
     expect(BerryBurstDracoMeteor.maxLevel).toBe(6);
   });
 

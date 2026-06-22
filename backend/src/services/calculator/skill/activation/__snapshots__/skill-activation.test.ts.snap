@@ -63,12 +63,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
-        1400,
-        1991,
-        2747,
-        3791,
-        5234,
-        7232,
+        2380,
+        3385,
+        4670,
+        6445,
+        8898,
+        12294,
       ],
       "activations": {
         "paired": {
