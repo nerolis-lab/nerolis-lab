@@ -1,3 +1,10 @@
+## [2.55.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.55.0...v2.55.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* updated draco meteor skill RP ([8084cfa](https://github.com/nerolis-lab/nerolis-lab/commit/8084cfa6f5f46d5427088ae76c1f5e9db6e39177))
+
 # [2.55.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.54.1...v2.55.0) (2026-06-22)
 
 
