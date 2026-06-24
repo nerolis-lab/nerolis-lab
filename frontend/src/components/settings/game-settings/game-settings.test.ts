@@ -102,17 +102,17 @@ describe('GameSettings', () => {
 
   describe('pot size controls', () => {
     it('increases pot size by 3 when plus button is clicked', async () => {
-      userStore.potSize = 30
+      userStore.potSize = 60
       const plusButton = wrapper.find('button:has(.mdi-plus)')
       await plusButton.trigger('click')
-      expect(userStore.potSize).toBe(33)
+      expect(userStore.potSize).toBe(63)
     })
 
     it('decreases pot size by 3 when minus button is clicked', async () => {
-      userStore.potSize = 30
+      userStore.potSize = 60
       const minusButton = wrapper.find('button:has(.mdi-minus)')
       await minusButton.trigger('click')
-      expect(userStore.potSize).toBe(27)
+      expect(userStore.potSize).toBe(57)
     })
 
     it('sets pot size to minimum when Min button is clicked', async () => {
@@ -146,7 +146,7 @@ describe('GameSettings', () => {
 
   describe('pot size debouncing', () => {
     it('debounces API calls when updating pot size', async () => {
-      userStore.potSize = 30
+      userStore.potSize = 60
       const plusButton = wrapper.find('button:has(.mdi-plus)')
 
       // Trigger multiple updates in quick succession
@@ -163,7 +163,7 @@ describe('GameSettings', () => {
 
       // API should be called once with the final value
       expect(UserService.upsertUserSettings).toHaveBeenCalledTimes(1)
-      expect(UserService.upsertUserSettings).toHaveBeenCalledWith({ potSize: 39 })
+      expect(UserService.upsertUserSettings).toHaveBeenCalledWith({ potSize: 69 })
     })
 
     it('cancels pending debounced calls when unmounted', async () => {

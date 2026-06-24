@@ -235,7 +235,7 @@ export default {
   emits: ['cancel', 'update-subskills'],
   data: () => ({
     selectedSubskills: [] as SubskillInstanceExt[],
-    availableLevels: [10, 25, 50, 75, 100]
+    availableLevels: [10, 25, 50, 70, 80]
   }),
   computed: {
     subskillName() {

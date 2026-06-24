@@ -44,7 +44,7 @@ export default {
   data: () => ({
     menu: false,
     customValue: 60,
-    defaultValues: [25, 30, 50, 60, 75, 100]
+    defaultValues: [25, 30, 50, 60, 70, 80]
   }),
   computed: {
     firstRowValues() {

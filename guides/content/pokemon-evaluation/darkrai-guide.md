@@ -41,5 +41,5 @@ Catching just one is very expensive. Making that one good requires catching many
 2. Reroll each of these subskill slots until you get any 3 of **Berry Finding S**, **Helping Bonus**, **Helping Speed M** or **Skill Trigger M**. The **S** versions of the last two can be upgraded with subseeds later.
 3. Roll each of the two empty ing slots (lv. 30, 60) once.
 4. Reroll each ing slot until you have a list that works well for you.
-5. Roll the 4th subskill slot (lv .75) until you get one of the above subskills.
+5. Roll the 4th subskill slot (lv. 70) until you get one of the above subskills.
 6. Subseed any **S** versions to **M**.

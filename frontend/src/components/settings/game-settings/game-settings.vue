@@ -59,7 +59,7 @@
               v-model="userStore.potSize"
               :min="MIN_POT_SIZE"
               :max="MAX_POT_SIZE"
-              :step="3"
+              :step="1"
               :loading="loadingPotSize"
               @update-number="updatePotSize"
               density="comfortable"
@@ -94,7 +94,16 @@ import { UserService } from '@/services/user/user-service'
 import { islandImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
-import { ISLANDS, MAX_ISLAND_BONUS, MAX_POT_SIZE, MIN_POT_SIZE, type IslandShortName } from 'sleepapi-common'
+import {
+  ISLANDS,
+  MAX_ISLAND_BONUS,
+  MAX_POT_SIZE,
+  MIN_POT_SIZE,
+  POT_GROWTH_HIGH,
+  POT_GROWTH_LOW,
+  POT_GROWTH_THRESHOLD,
+  type IslandShortName
+} from 'sleepapi-common'
 import { computed, reactive, ref } from 'vue'
 
 const userStore = useUserStore()
@@ -142,25 +151,35 @@ async function updatePotSize() {
 }
 
 function increasePotSize() {
-  if (userStore.potSize < MAX_POT_SIZE) {
-    if (userStore.potSize + 3 > MAX_POT_SIZE) {
-      userStore.potSize = MAX_POT_SIZE
-    } else {
-      userStore.potSize += 3
-    }
-    updatePotSize()
+  if (userStore.potSize >= MAX_POT_SIZE) {
+    return
   }
+  if (userStore.potSize >= POT_GROWTH_THRESHOLD) {
+    const normalizedPotSize =
+      Math.floor((userStore.potSize - POT_GROWTH_THRESHOLD) / POT_GROWTH_HIGH) * POT_GROWTH_HIGH + POT_GROWTH_THRESHOLD
+    userStore.potSize = normalizedPotSize + POT_GROWTH_HIGH
+  } else {
+    const normalizedPotSize =
+      Math.floor((userStore.potSize - MIN_POT_SIZE) / POT_GROWTH_LOW) * POT_GROWTH_LOW + MIN_POT_SIZE
+    userStore.potSize = normalizedPotSize + POT_GROWTH_LOW
+  }
+  updatePotSize()
 }
 
 function decreasePotSize() {
-  if (userStore.potSize > MIN_POT_SIZE) {
-    if (userStore.potSize - 3 < MIN_POT_SIZE) {
-      userStore.potSize = MIN_POT_SIZE
-    } else {
-      userStore.potSize -= 3
-    }
-    updatePotSize()
+  if (userStore.potSize <= MIN_POT_SIZE) {
+    return
   }
+  if (userStore.potSize <= POT_GROWTH_THRESHOLD) {
+    const normalizedPotSize =
+      Math.ceil((userStore.potSize - MIN_POT_SIZE) / POT_GROWTH_LOW) * POT_GROWTH_LOW + MIN_POT_SIZE
+    userStore.potSize = normalizedPotSize - POT_GROWTH_LOW
+  } else {
+    const normalizedPotSize =
+      Math.ceil((userStore.potSize - POT_GROWTH_THRESHOLD) / POT_GROWTH_HIGH) * POT_GROWTH_HIGH + POT_GROWTH_THRESHOLD
+    userStore.potSize = normalizedPotSize - POT_GROWTH_HIGH
+  }
+  updatePotSize()
 }
 
 function setPotSize(size: number) {
