@@ -159,8 +159,8 @@ export async function upsertTeamMember(params: {
         subskill_10: PokemonDAO.subskillForLevel(10, request.subskills),
         subskill_25: PokemonDAO.subskillForLevel(25, request.subskills),
         subskill_50: PokemonDAO.subskillForLevel(50, request.subskills),
-        subskill_75: PokemonDAO.subskillForLevel(75, request.subskills),
-        subskill_100: PokemonDAO.subskillForLevel(100, request.subskills),
+        subskill_70: PokemonDAO.subskillForLevel(70, request.subskills),
+        subskill_80: PokemonDAO.subskillForLevel(80, request.subskills),
         ingredient_0: PokemonDAO.ingredientForLevel(0, request.ingredients),
         ingredient_30: PokemonDAO.ingredientForLevel(30, request.ingredients),
         ingredient_60: PokemonDAO.ingredientForLevel(60, request.ingredients)

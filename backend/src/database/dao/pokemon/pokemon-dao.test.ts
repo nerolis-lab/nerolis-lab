@@ -29,8 +29,8 @@ describe('PokemonDAO insert', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -58,10 +58,10 @@ describe('PokemonDAO insert', () => {
     "shiny": false,
     "skill_level": 5,
     "subskill_10": "Thunderbolt",
-    "subskill_100": "Thunder",
     "subskill_25": "Quick Attack",
     "subskill_50": "Iron Tail",
-    "subskill_75": "Electro Ball",
+    "subskill_70": "Electro Ball",
+    "subskill_80": "Thunder",
     "version": 1,
   },
 ]
@@ -85,8 +85,8 @@ describe('PokemonDAO insert', () => {
         subskill_10: 'Thunderbolt',
         subskill_25: 'Quick Attack',
         subskill_50: 'Iron Tail',
-        subskill_75: 'Electro Ball',
-        subskill_100: 'Thunder',
+        subskill_70: 'Electro Ball',
+        subskill_80: 'Thunder',
         ingredient_0: 'Berry',
         ingredient_30: 'Potion',
         ingredient_60: 'Elixir'
@@ -111,8 +111,8 @@ describe('PokemonDAO insert', () => {
         subskill_10: 'Thunderbolt',
         subskill_25: 'Quick Attack',
         subskill_50: 'Iron Tail',
-        subskill_75: 'Electro Ball',
-        subskill_100: 'Thunder',
+        subskill_70: 'Electro Ball',
+        subskill_80: 'Thunder',
         ingredient_0: 'Berry',
         ingredient_30: 'Potion',
         ingredient_60: 'Elixir'
@@ -138,8 +138,8 @@ describe('PokemonDAO update', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -169,10 +169,10 @@ describe('PokemonDAO update', () => {
     "shiny": false,
     "skill_level": 5,
     "subskill_10": "Thunderbolt",
-    "subskill_100": "Thunder",
     "subskill_25": "Quick Attack",
     "subskill_50": "Iron Tail",
-    "subskill_75": "Electro Ball",
+    "subskill_70": "Electro Ball",
+    "subskill_80": "Thunder",
     "version": 2,
   },
 ]
@@ -197,8 +197,8 @@ describe('PokemonDAO delete', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -228,8 +228,8 @@ describe('filterFilledSubskills', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -250,11 +250,11 @@ describe('filterFilledSubskills', () => {
     "subskill": "Iron Tail",
   },
   {
-    "level": 75,
+    "level": 70,
     "subskill": "Electro Ball",
   },
   {
-    "level": 100,
+    "level": 80,
     "subskill": "Thunder",
   },
 ]
@@ -297,7 +297,7 @@ describe('filterFilledSubskills', () => {
       nature: 'Brave',
       subskill_10: 'Thunderbolt',
       subskill_50: 'Iron Tail',
-      subskill_100: 'Thunder',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -314,7 +314,7 @@ describe('filterFilledSubskills', () => {
     "subskill": "Iron Tail",
   },
   {
-    "level": 100,
+    "level": 80,
     "subskill": "Thunder",
   },
 ]
