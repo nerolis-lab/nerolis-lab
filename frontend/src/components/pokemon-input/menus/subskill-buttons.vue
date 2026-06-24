@@ -63,7 +63,7 @@ export default {
   data: () => ({
     subskillMenu: false,
     subskillOptions: subskill.SUBSKILLS,
-    subskillLevels: [10, 25, 50, 75, 100]
+    subskillLevels: [10, 25, 50, 70, 80]
   }),
   computed: {
     maybeRarityColor() {

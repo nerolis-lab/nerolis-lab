@@ -67,9 +67,9 @@ describe('toPokemonInstanceExt', () => {
         { level: 10, subskill: 'Helping Hand' },
         { level: 25, subskill: 'Berry Finder' },
         { level: 50, subskill: 'Speed Boost' },
-        { level: 75, subskill: 'Item Finder' },
-        { level: 100, subskill: 'Quick Attack' },
-        { level: 100, subskill: 'Thunderbolt' } // Extra subskill
+        { level: 70, subskill: 'Item Finder' },
+        { level: 80, subskill: 'Quick Attack' },
+        { level: 80, subskill: 'Thunderbolt' } // Extra subskill
       ]
     }
 
@@ -101,9 +101,9 @@ describe('toUpsertTeamMemberRequest', () => {
         { level: 10, subskill: subskill.HELPING_BONUS },
         { level: 25, subskill: subskill.DREAM_SHARD_BONUS },
         { level: 50, subskill: subskill.ENERGY_RECOVERY_BONUS },
-        { level: 75, subskill: subskill.BERRY_FINDING_S },
-        { level: 100, subskill: subskill.HELPING_SPEED_M },
-        { level: 100, subskill: subskill.INGREDIENT_FINDER_S } // Extra subskill
+        { level: 70, subskill: subskill.BERRY_FINDING_S },
+        { level: 80, subskill: subskill.HELPING_SPEED_M },
+        { level: 80, subskill: subskill.INGREDIENT_FINDER_S } // Extra subskill
       ]
     }
 
@@ -318,8 +318,8 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
       { level: 10, subskill: subskill.HELPING_BONUS },
       { level: 25, subskill: subskill.BERRY_FINDING_S },
       { level: 50, subskill: subskill.ENERGY_RECOVERY_BONUS },
-      { level: 75, subskill: subskill.INGREDIENT_FINDER_M },
-      { level: 100, subskill: subskill.HELPING_SPEED_S }
+      { level: 70, subskill: subskill.INGREDIENT_FINDER_M },
+      { level: 80, subskill: subskill.HELPING_SPEED_S }
     ]
 
     const existingInstance: PokemonInstanceExt = mocks.createMockPokemon({
