@@ -59,11 +59,11 @@ class TeamDAOImpl extends AbstractDAO<typeof DBTeamSchema> {
         if (member.subskill_50) {
           subskills.push({ level: 50, subskill: member.subskill_50 });
         }
-        if (member.subskill_75) {
-          subskills.push({ level: 75, subskill: member.subskill_75 });
+        if (member.subskill_70) {
+          subskills.push({ level: 70, subskill: member.subskill_70 });
         }
-        if (member.subskill_100) {
-          subskills.push({ level: 100, subskill: member.subskill_100 });
+        if (member.subskill_80) {
+          subskills.push({ level: 80, subskill: member.subskill_80 });
         }
 
         members.push({

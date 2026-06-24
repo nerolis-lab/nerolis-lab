@@ -45,8 +45,8 @@ export async function upsertPokemon(params: { user: DBUser; pokemonInstance: Pok
       subskill_10: PokemonDAO.subskillForLevel(10, pokemonInstance.subskills),
       subskill_25: PokemonDAO.subskillForLevel(25, pokemonInstance.subskills),
       subskill_50: PokemonDAO.subskillForLevel(50, pokemonInstance.subskills),
-      subskill_75: PokemonDAO.subskillForLevel(75, pokemonInstance.subskills),
-      subskill_100: PokemonDAO.subskillForLevel(100, pokemonInstance.subskills),
+      subskill_70: PokemonDAO.subskillForLevel(70, pokemonInstance.subskills),
+      subskill_80: PokemonDAO.subskillForLevel(80, pokemonInstance.subskills),
       ingredient_0: PokemonDAO.ingredientForLevel(0, pokemonInstance.ingredients),
       ingredient_30: PokemonDAO.ingredientForLevel(30, pokemonInstance.ingredients),
       ingredient_60: PokemonDAO.ingredientForLevel(60, pokemonInstance.ingredients)

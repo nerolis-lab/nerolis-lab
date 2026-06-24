@@ -59,11 +59,11 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
             "subskill": "Iron Tail",
           },
           {
-            "level": 75,
+            "level": 70,
             "subskill": "Electro Ball",
           },
           {
-            "level": 100,
+            "level": 80,
             "subskill": "Thunder",
           },
         ],
@@ -114,11 +114,11 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
             "subskill": "Iron Tail",
           },
           {
-            "level": 75,
+            "level": 70,
             "subskill": "Electro Ball",
           },
           {
-            "level": 100,
+            "level": 80,
             "subskill": "Thunder",
           },
         ],
@@ -169,11 +169,11 @@ exports[`findTeamsWithMembers > shall get team with members 1`] = `
             "subskill": "Iron Tail",
           },
           {
-            "level": 75,
+            "level": 70,
             "subskill": "Electro Ball",
           },
           {
-            "level": 100,
+            "level": 80,
             "subskill": "Thunder",
           },
         ],

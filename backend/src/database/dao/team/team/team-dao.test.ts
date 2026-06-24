@@ -275,8 +275,8 @@ describe('findTeamsWithMembers', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -297,8 +297,8 @@ describe('findTeamsWithMembers', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'
@@ -320,8 +320,8 @@ describe('findTeamsWithMembers', () => {
       subskill_10: 'Thunderbolt',
       subskill_25: 'Quick Attack',
       subskill_50: 'Iron Tail',
-      subskill_75: 'Electro Ball',
-      subskill_100: 'Thunder',
+      subskill_70: 'Electro Ball',
+      subskill_80: 'Thunder',
       ingredient_0: 'Berry',
       ingredient_30: 'Potion',
       ingredient_60: 'Elixir'

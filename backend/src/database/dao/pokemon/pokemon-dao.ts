@@ -22,8 +22,8 @@ const DBPokemonSchema = Type.Composite([
     subskill_10: Type.Optional(Type.String()),
     subskill_25: Type.Optional(Type.String()),
     subskill_50: Type.Optional(Type.String()),
-    subskill_75: Type.Optional(Type.String()),
-    subskill_100: Type.Optional(Type.String()),
+    subskill_70: Type.Optional(Type.String()),
+    subskill_80: Type.Optional(Type.String()),
     ingredient_0: Type.String(),
     ingredient_30: Type.String(),
     ingredient_60: Type.String()
@@ -48,11 +48,11 @@ class PokemonDAOImpl extends AbstractDAO<typeof DBPokemonSchema> {
     if (subskills.subskill_50) {
       filledSubskills.push({ level: 50, subskill: subskills.subskill_50 });
     }
-    if (subskills.subskill_75) {
-      filledSubskills.push({ level: 75, subskill: subskills.subskill_75 });
+    if (subskills.subskill_70) {
+      filledSubskills.push({ level: 70, subskill: subskills.subskill_70 });
     }
-    if (subskills.subskill_100) {
-      filledSubskills.push({ level: 100, subskill: subskills.subskill_100 });
+    if (subskills.subskill_80) {
+      filledSubskills.push({ level: 80, subskill: subskills.subskill_80 });
     }
 
     return filledSubskills;
