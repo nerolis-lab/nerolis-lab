@@ -229,7 +229,12 @@ export class RP {
     62: 1.975,
     63: 2.024,
     64: 2.075,
-    65: 2.127
+    65: 2.127,
+    66: 2.18,
+    67: 2.235,
+    68: 2.29,
+    69: 2.348,
+    70: 2.406
   };
 
   private filteredSubskills(pokemonInstance: PokemonInstanceWithoutRP): Set<string> {

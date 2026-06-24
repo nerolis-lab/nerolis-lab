@@ -86,8 +86,8 @@ describe('RP', () => {
         { level: 10, subskill: INGREDIENT_FINDER_M },
         { level: 25, subskill: INGREDIENT_FINDER_S },
         { level: 50, subskill: DREAM_SHARD_BONUS },
-        { level: 75, subskill: SKILL_LEVEL_UP_S },
-        { level: 100, subskill: SKILL_LEVEL_UP_M }
+        { level: 70, subskill: SKILL_LEVEL_UP_S },
+        { level: 80, subskill: SKILL_LEVEL_UP_M }
       ],
       ingredients: [
         { level: 0, ingredient: HONEY, amount: 2 },
@@ -184,8 +184,8 @@ describe('RP', () => {
         { level: 10, subskill: INGREDIENT_FINDER_M },
         { level: 25, subskill: INGREDIENT_FINDER_S },
         { level: 50, subskill: DREAM_SHARD_BONUS },
-        { level: 75, subskill: SKILL_LEVEL_UP_S },
-        { level: 100, subskill: SKILL_LEVEL_UP_M }
+        { level: 70, subskill: SKILL_LEVEL_UP_S },
+        { level: 80, subskill: SKILL_LEVEL_UP_M }
       ],
       ingredients: [
         { level: 0, ingredient: HONEY, amount: 2 },
@@ -209,8 +209,8 @@ describe('RP', () => {
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: SKILL_TRIGGER_M },
         { level: 50, subskill: INVENTORY_L },
-        { level: 75, subskill: INGREDIENT_FINDER_S },
-        { level: 100, subskill: HELPING_SPEED_S }
+        { level: 70, subskill: INGREDIENT_FINDER_S },
+        { level: 80, subskill: HELPING_SPEED_S }
       ],
       ingredients: [
         { level: 0, ingredient: SOOTHING_CACAO, amount: 1 },
@@ -234,8 +234,8 @@ describe('RP', () => {
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: SLEEP_EXP_BONUS },
         { level: 50, subskill: SKILL_LEVEL_UP_S },
-        { level: 75, subskill: HELPING_BONUS },
-        { level: 100, subskill: SKILL_TRIGGER_M }
+        { level: 70, subskill: HELPING_BONUS },
+        { level: 80, subskill: SKILL_TRIGGER_M }
       ],
       ingredients: [
         { level: 0, ingredient: FANCY_APPLE, amount: 1 },
