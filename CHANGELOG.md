@@ -1,3 +1,12 @@
+# [2.56.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.55.1...v2.56.0) (2026-06-26)
+
+
+### Features
+
+* **v3.6.0:** changes in backend ([5103031](https://github.com/nerolis-lab/nerolis-lab/commit/5103031bed2c5dcc8923c932b8ab540ae7defbd5))
+* **v3.6.0:** changes in common ([546539e](https://github.com/nerolis-lab/nerolis-lab/commit/546539ecb6dfc244d249272313a3a3955563690a))
+* **v3.6.0:** changes in frontend ([a3e867e](https://github.com/nerolis-lab/nerolis-lab/commit/a3e867ec2b7f7c93d4175832336264f9f9c25a1f))
+
 ## [2.55.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.55.0...v2.55.1) (2026-06-22)
 
 
