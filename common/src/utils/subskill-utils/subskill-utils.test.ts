@@ -73,7 +73,7 @@ describe('limitSubSkillsToLevel', () => {
     );
   });
 
-  it('shall return five subskills for level 70', () => {
+  it('shall return four subskills for level 70', () => {
     expect(limitSubSkillsToLevel(overstuffedSubskillSet, 70)).toEqual(
       new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name, INGREDIENT_FINDER_S.name, INVENTORY_L.name])
     );
