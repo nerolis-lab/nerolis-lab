@@ -1,7 +1,7 @@
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import { mocks } from '@src/vitest/index.js';
-import { BerryBurst, capitalize, MAINSKILLS } from 'sleepapi-common';
+import { BerryBurst, MAINSKILLS } from 'sleepapi-common';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('SkillState', () => {
@@ -32,7 +32,7 @@ describe('SkillState', () => {
   it('should activate skill if roll is successful', () => {
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skillPercentage = 100;
-    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'] - 1; // ensure we dont hit pity threshold
+    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'] - 1; // ensure we don't hit pity threshold
     const activation1 = skillState.attemptSkill();
     const activation2 = skillState.attemptSkill();
     expect([activation1, activation2]).toHaveLength(2);
@@ -132,29 +132,10 @@ describe('SkillState', () => {
   });
 
   it('should initialize skillEffects map with all mainskills', () => {
-    const skillEffects = skillState['skillEffects'];
-
-    skillEffects.forEach((effect, mainskill) => {
-      expect(skillEffects.has(mainskill)).toBe(true);
+    MAINSKILLS.forEach((mainskill) => {
+      expect(skillState.skillEffects.has(mainskill)).toBe(true);
+      const effect = skillState.skillEffects.get(mainskill);
       expect(effect).toBeDefined();
-
-      const skillName = mainskill.name;
-      let expectedEffectName: string;
-
-      if (mainskill.isModified) {
-        const [modifier, baseName] = skillName.split('(');
-        const cleanBaseName = baseName.replace(')', '').trim();
-        const cleanModifier = modifier.trim();
-
-        expectedEffectName =
-          cleanBaseName.split(/[- ]/g).map(capitalize).join('') +
-          cleanModifier.split(/[- ]/g).map(capitalize).join('') +
-          'Effect';
-      } else {
-        expectedEffectName = skillName.split(/[- ]/g).map(capitalize).join('') + 'Effect';
-      }
-
-      expect(effect.constructor.name).toBe(expectedEffectName);
     });
   });
   it('should reset todaysSkillProcs and push to skillProcsPerDay on wakeup', () => {

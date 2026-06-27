@@ -92,19 +92,45 @@ exports[`COMPLETE_POKEDEX > shall not change ABOMASNOW unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -1118,19 +1144,45 @@ exports[`COMPLETE_POKEDEX > shall not change BANETTE unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -1235,19 +1287,45 @@ exports[`COMPLETE_POKEDEX > shall not change BAYLEEF unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -1465,19 +1543,45 @@ exports[`COMPLETE_POKEDEX > shall not change BEWEAR unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -3320,19 +3424,45 @@ exports[`COMPLETE_POKEDEX > shall not change CHIKORITA unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -3449,8 +3579,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -3491,6 +3619,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -3524,7 +3654,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -3602,6 +3731,142 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
       },
       {
         "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "paired": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+          "solo": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "baseSkill": {
+          "RP": [
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
+          ],
+          "activations": {
+            "ingredients": {
+              "amount": [Function],
+              "unit": "ingredients",
+            },
+          },
+          "description": [Function],
+          "image": "ingredients",
+          "ingredientAmounts": [
+            6,
+            8,
+            11,
+            14,
+            17,
+            21,
+            24,
+          ],
+          "name": "Ingredient Magnet S",
+        },
+        "bonusIngredientAmounts": [
+          6,
+          7,
+          9,
+          10,
+          12,
+          13,
+          14,
+        ],
+        "description": [Function],
+        "fullDescription": [Function],
+        "image": "ingredients",
+        "ingredient": {
+          "longName": "Moomoo Milk",
+          "name": "Milk",
+          "taxedValue": 28.1,
+          "value": 98,
+        },
+        "ingredientAmounts": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "modifierName": "Plus",
+      },
+      {
+        "RP": [
           600,
           853,
           1177,
@@ -3637,7 +3902,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -3696,8 +3960,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -3738,6 +4000,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -3778,7 +4042,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -3837,8 +4100,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -3879,6 +4140,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -3941,7 +4204,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -4000,8 +4262,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -4042,6 +4302,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -4082,7 +4344,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -4141,8 +4402,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -4183,6 +4442,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -4326,8 +4587,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -4368,6 +4627,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -4401,7 +4662,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -4479,6 +4739,142 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
       },
       {
         "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "paired": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+          "solo": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "baseSkill": {
+          "RP": [
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
+          ],
+          "activations": {
+            "ingredients": {
+              "amount": [Function],
+              "unit": "ingredients",
+            },
+          },
+          "description": [Function],
+          "image": "ingredients",
+          "ingredientAmounts": [
+            6,
+            8,
+            11,
+            14,
+            17,
+            21,
+            24,
+          ],
+          "name": "Ingredient Magnet S",
+        },
+        "bonusIngredientAmounts": [
+          6,
+          7,
+          9,
+          10,
+          12,
+          13,
+          14,
+        ],
+        "description": [Function],
+        "fullDescription": [Function],
+        "image": "ingredients",
+        "ingredient": {
+          "longName": "Moomoo Milk",
+          "name": "Milk",
+          "taxedValue": 28.1,
+          "value": 98,
+        },
+        "ingredientAmounts": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "modifierName": "Plus",
+      },
+      {
+        "RP": [
           600,
           853,
           1177,
@@ -4514,7 +4910,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -4573,8 +4968,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -4615,6 +5008,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -4655,7 +5050,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -4714,8 +5108,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -4756,6 +5148,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -4818,7 +5212,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -4877,8 +5270,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -4919,6 +5310,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -4959,7 +5352,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -5018,8 +5410,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -5060,6 +5450,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -5203,8 +5595,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -5245,6 +5635,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -5278,7 +5670,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -5356,6 +5747,142 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
       },
       {
         "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "paired": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+          "solo": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "baseSkill": {
+          "RP": [
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
+          ],
+          "activations": {
+            "ingredients": {
+              "amount": [Function],
+              "unit": "ingredients",
+            },
+          },
+          "description": [Function],
+          "image": "ingredients",
+          "ingredientAmounts": [
+            6,
+            8,
+            11,
+            14,
+            17,
+            21,
+            24,
+          ],
+          "name": "Ingredient Magnet S",
+        },
+        "bonusIngredientAmounts": [
+          6,
+          7,
+          9,
+          10,
+          12,
+          13,
+          14,
+        ],
+        "description": [Function],
+        "fullDescription": [Function],
+        "image": "ingredients",
+        "ingredient": {
+          "longName": "Moomoo Milk",
+          "name": "Milk",
+          "taxedValue": 28.1,
+          "value": 98,
+        },
+        "ingredientAmounts": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "modifierName": "Plus",
+      },
+      {
+        "RP": [
           600,
           853,
           1177,
@@ -5391,7 +5918,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -5450,8 +5976,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -5492,6 +6016,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -5532,7 +6058,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -5591,8 +6116,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -5633,6 +6156,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -5695,7 +6220,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -5754,8 +6278,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -5796,6 +6318,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -5836,7 +6360,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -5895,8 +6418,6 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -5937,6 +6458,8 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -6970,19 +7493,45 @@ exports[`COMPLETE_POKEDEX > shall not change CROCONAW unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -7425,19 +7974,45 @@ exports[`COMPLETE_POKEDEX > shall not change CYNDAQUIL unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -7722,7 +8297,6 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
     "activations": {
       "strength": {
         "amount": [Function],
-        "teamEnergyReduction": 12,
         "unit": "strength",
       },
     },
@@ -8276,7 +8850,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },
@@ -8335,8 +8908,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           "activations": {
             "berries": {
               "amount": [Function],
-              "critChance": 0.185,
-              "critMultiplier": 3,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -8377,6 +8948,8 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
               5,
             ],
           },
+          "critChance": 0.185,
+          "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
           "modifierName": "Disguise",
@@ -8417,7 +8990,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -8476,8 +9048,6 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -8518,6 +9088,8 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -9326,7 +9898,6 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
     "activations": {
       "strength": {
         "amount": [Function],
-        "critChance": 0.2674,
         "unit": "strength",
       },
     },
@@ -9368,6 +9939,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
         3212,
       ],
     },
+    "critChance": 0.2674,
     "description": [Function],
     "image": "stockpile_strength",
     "modifierName": "Stockpile",
@@ -9566,7 +10138,6 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
     "activations": {
       "strength": {
         "amount": [Function],
-        "critChance": 0.2674,
         "unit": "strength",
       },
     },
@@ -9608,6 +10179,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
         3212,
       ],
     },
+    "critChance": 0.2674,
     "description": [Function],
     "image": "stockpile_strength",
     "modifierName": "Stockpile",
@@ -10881,19 +11453,45 @@ exports[`COMPLETE_POKEDEX > shall not change FERALIGATR unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -11800,19 +12398,45 @@ exports[`COMPLETE_POKEDEX > shall not change GASTLY unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -11915,19 +12539,45 @@ exports[`COMPLETE_POKEDEX > shall not change GENGAR unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -12032,19 +12682,45 @@ exports[`COMPLETE_POKEDEX > shall not change GEODUDE unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -12262,19 +12938,45 @@ exports[`COMPLETE_POKEDEX > shall not change GOLDUCK unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -12377,19 +13079,45 @@ exports[`COMPLETE_POKEDEX > shall not change GOLEM unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -12954,19 +13682,45 @@ exports[`COMPLETE_POKEDEX > shall not change GRAVELER unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -13434,7 +14188,15 @@ exports[`COMPLETE_POKEDEX > shall not change GULPIN unexpectedly 1`] = `
       7303,
     ],
     "activations": {
-      "dreamShards": {
+      "high": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "dream shards",
       },
@@ -13442,7 +14204,27 @@ exports[`COMPLETE_POKEDEX > shall not change GULPIN unexpectedly 1`] = `
     "description": [Function],
     "image": "shards",
     "name": "Dream Shard Magnet S Range",
-    "shardAmounts": [
+    "shardAmountsHigh": [
+      480,
+      680,
+      960,
+      1340,
+      1840,
+      2520,
+      3600,
+      4600,
+    ],
+    "shardAmountsLow": [
+      120,
+      170,
+      240,
+      335,
+      460,
+      630,
+      900,
+      1150,
+    ],
+    "shardAmountsMean": [
       300,
       425,
       600,
@@ -13667,19 +14449,45 @@ exports[`COMPLETE_POKEDEX > shall not change HAUNTER unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -16532,19 +17340,45 @@ exports[`COMPLETE_POKEDEX > shall not change MANKEY unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -17220,19 +18054,45 @@ exports[`COMPLETE_POKEDEX > shall not change MEGANIUM unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -17705,7 +18565,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },
@@ -17764,8 +18623,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           "activations": {
             "berries": {
               "amount": [Function],
-              "critChance": 0.185,
-              "critMultiplier": 3,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -17806,6 +18663,8 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
               5,
             ],
           },
+          "critChance": 0.185,
+          "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
           "modifierName": "Disguise",
@@ -17846,7 +18705,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -17905,8 +18763,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -17947,6 +18803,8 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -18070,8 +18928,6 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
     "activations": {
       "berries": {
         "amount": [Function],
-        "critChance": 0.185,
-        "critMultiplier": 3,
         "teamAmount": [Function],
         "unit": "berries",
       },
@@ -18112,6 +18968,8 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
         5,
       ],
     },
+    "critChance": 0.185,
+    "critMultiplier": 3,
     "description": [Function],
     "image": "berries",
     "modifierName": "Disguise",
@@ -18417,7 +19275,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           "activations": {
             "strength": {
               "amount": [Function],
-              "teamEnergyReduction": 12,
               "unit": "strength",
             },
           },
@@ -18476,8 +19333,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           "activations": {
             "berries": {
               "amount": [Function],
-              "critChance": 0.185,
-              "critMultiplier": 3,
               "teamAmount": [Function],
               "unit": "berries",
             },
@@ -18518,6 +19373,8 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
               5,
             ],
           },
+          "critChance": 0.185,
+          "critMultiplier": 3,
           "description": [Function],
           "image": "berries",
           "modifierName": "Disguise",
@@ -18558,7 +19415,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -18617,8 +19473,6 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -18659,6 +19513,8 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -18899,7 +19755,15 @@ exports[`COMPLETE_POKEDEX > shall not change MUNNA unexpectedly 1`] = `
       7303,
     ],
     "activations": {
-      "dreamShards": {
+      "high": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "dream shards",
       },
@@ -18907,7 +19771,27 @@ exports[`COMPLETE_POKEDEX > shall not change MUNNA unexpectedly 1`] = `
     "description": [Function],
     "image": "shards",
     "name": "Dream Shard Magnet S Range",
-    "shardAmounts": [
+    "shardAmountsHigh": [
+      480,
+      680,
+      960,
+      1340,
+      1840,
+      2520,
+      3600,
+      4600,
+    ],
+    "shardAmountsLow": [
+      120,
+      170,
+      240,
+      335,
+      460,
+      630,
+      900,
+      1150,
+    ],
+    "shardAmountsMean": [
       300,
       425,
       600,
@@ -19251,7 +20135,15 @@ exports[`COMPLETE_POKEDEX > shall not change MUSHARNA unexpectedly 1`] = `
       7303,
     ],
     "activations": {
-      "dreamShards": {
+      "high": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "dream shards",
       },
@@ -19259,7 +20151,27 @@ exports[`COMPLETE_POKEDEX > shall not change MUSHARNA unexpectedly 1`] = `
     "description": [Function],
     "image": "shards",
     "name": "Dream Shard Magnet S Range",
-    "shardAmounts": [
+    "shardAmountsHigh": [
+      480,
+      680,
+      960,
+      1340,
+      1840,
+      2520,
+      3600,
+      4600,
+    ],
+    "shardAmountsLow": [
+      120,
+      170,
+      240,
+      335,
+      460,
+      630,
+      900,
+      1150,
+    ],
+    "shardAmountsMean": [
       300,
       425,
       600,
@@ -20754,19 +21666,45 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HALLOWEEN unexpectedly 1`] 
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -21139,29 +22077,24 @@ exports[`COMPLETE_POKEDEX > shall not change PLUSLE unexpectedly 1`] = `
       ],
       "name": "Ingredient Magnet S",
     },
-    "bonusIngredientAmounts": Map {
-      "Coffee" => [
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-      ],
-      "Milk" => [
-        6,
-        7,
-        9,
-        10,
-        12,
-        13,
-        14,
-      ],
-    },
+    "bonusIngredientAmounts": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ],
     "description": [Function],
     "fullDescription": [Function],
     "image": "ingredients",
+    "ingredient": {
+      "longName": "Rousing Coffee",
+      "name": "Coffee",
+      "taxedValue": 68.4,
+      "value": 153,
+    },
     "ingredientAmounts": [
       5,
       7,
@@ -21270,19 +22203,45 @@ exports[`COMPLETE_POKEDEX > shall not change PRIMEAPE unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -21387,19 +22346,45 @@ exports[`COMPLETE_POKEDEX > shall not change PSYDUCK unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -22549,19 +23534,45 @@ exports[`COMPLETE_POKEDEX > shall not change QUILAVA unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -23636,7 +24647,15 @@ exports[`COMPLETE_POKEDEX > shall not change SABLEYE unexpectedly 1`] = `
       7303,
     ],
     "activations": {
-      "dreamShards": {
+      "high": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "dream shards",
       },
@@ -23644,7 +24663,27 @@ exports[`COMPLETE_POKEDEX > shall not change SABLEYE unexpectedly 1`] = `
     "description": [Function],
     "image": "shards",
     "name": "Dream Shard Magnet S Range",
-    "shardAmounts": [
+    "shardAmountsHigh": [
+      480,
+      680,
+      960,
+      1340,
+      1840,
+      2520,
+      3600,
+      4600,
+    ],
+    "shardAmountsLow": [
+      120,
+      170,
+      240,
+      335,
+      460,
+      630,
+      900,
+      1150,
+    ],
+    "shardAmountsMean": [
       300,
       425,
       600,
@@ -24720,19 +25759,45 @@ exports[`COMPLETE_POKEDEX > shall not change SHUPPET unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -25651,19 +26716,45 @@ exports[`COMPLETE_POKEDEX > shall not change SNOVER unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -26466,19 +27557,45 @@ exports[`COMPLETE_POKEDEX > shall not change STUFFUL unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -26967,7 +28084,15 @@ exports[`COMPLETE_POKEDEX > shall not change SWALOT unexpectedly 1`] = `
       7303,
     ],
     "activations": {
-      "dreamShards": {
+      "high": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "dream shards",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "dream shards",
       },
@@ -26975,7 +28100,27 @@ exports[`COMPLETE_POKEDEX > shall not change SWALOT unexpectedly 1`] = `
     "description": [Function],
     "image": "shards",
     "name": "Dream Shard Magnet S Range",
-    "shardAmounts": [
+    "shardAmountsHigh": [
+      480,
+      680,
+      960,
+      1340,
+      1840,
+      2520,
+      3600,
+      4600,
+    ],
+    "shardAmountsLow": [
+      120,
+      170,
+      240,
+      335,
+      460,
+      630,
+      900,
+      1150,
+    ],
+    "shardAmountsMean": [
       300,
       425,
       600,
@@ -27483,8 +28628,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -27525,6 +28668,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -27558,7 +28703,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -27636,6 +28780,142 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
       },
       {
         "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "paired": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+          "solo": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "baseSkill": {
+          "RP": [
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
+          ],
+          "activations": {
+            "ingredients": {
+              "amount": [Function],
+              "unit": "ingredients",
+            },
+          },
+          "description": [Function],
+          "image": "ingredients",
+          "ingredientAmounts": [
+            6,
+            8,
+            11,
+            14,
+            17,
+            21,
+            24,
+          ],
+          "name": "Ingredient Magnet S",
+        },
+        "bonusIngredientAmounts": [
+          6,
+          7,
+          9,
+          10,
+          12,
+          13,
+          14,
+        ],
+        "description": [Function],
+        "fullDescription": [Function],
+        "image": "ingredients",
+        "ingredient": {
+          "longName": "Moomoo Milk",
+          "name": "Milk",
+          "taxedValue": 28.1,
+          "value": 98,
+        },
+        "ingredientAmounts": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "modifierName": "Plus",
+      },
+      {
+        "RP": [
           600,
           853,
           1177,
@@ -27671,7 +28951,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -27730,8 +29009,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -27772,6 +29049,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -27812,7 +29091,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -27871,8 +29149,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -27913,6 +29189,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -27975,7 +29253,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -28034,8 +29311,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -28076,6 +29351,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -28116,7 +29393,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -28175,8 +29451,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -28217,6 +29491,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -28360,8 +29636,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -28402,6 +29676,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -28435,7 +29711,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -28513,6 +29788,142 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
       },
       {
         "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "paired": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+          "solo": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "baseSkill": {
+          "RP": [
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
+          ],
+          "activations": {
+            "ingredients": {
+              "amount": [Function],
+              "unit": "ingredients",
+            },
+          },
+          "description": [Function],
+          "image": "ingredients",
+          "ingredientAmounts": [
+            6,
+            8,
+            11,
+            14,
+            17,
+            21,
+            24,
+          ],
+          "name": "Ingredient Magnet S",
+        },
+        "bonusIngredientAmounts": [
+          6,
+          7,
+          9,
+          10,
+          12,
+          13,
+          14,
+        ],
+        "description": [Function],
+        "fullDescription": [Function],
+        "image": "ingredients",
+        "ingredient": {
+          "longName": "Moomoo Milk",
+          "name": "Milk",
+          "taxedValue": 28.1,
+          "value": 98,
+        },
+        "ingredientAmounts": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "modifierName": "Plus",
+      },
+      {
+        "RP": [
           600,
           853,
           1177,
@@ -28548,7 +29959,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -28607,8 +30017,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -28649,6 +30057,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -28689,7 +30099,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -28748,8 +30157,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -28790,6 +30197,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -28852,7 +30261,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -28911,8 +30319,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -28953,6 +30359,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -28993,7 +30401,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -29052,8 +30459,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -29094,6 +30499,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -29237,8 +30644,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         "activations": {
           "berries": {
             "amount": [Function],
-            "critChance": 0.185,
-            "critMultiplier": 3,
             "teamAmount": [Function],
             "unit": "berries",
           },
@@ -29279,6 +30684,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             5,
           ],
         },
+        "critChance": 0.185,
+        "critMultiplier": 3,
         "description": [Function],
         "image": "berries",
         "modifierName": "Disguise",
@@ -29312,7 +30719,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         "activations": {
           "strength": {
             "amount": [Function],
-            "teamEnergyReduction": 12,
             "unit": "strength",
           },
         },
@@ -29390,6 +30796,142 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
       },
       {
         "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4846,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "image": "ingredient_draw",
+        "ingredientAmounts": [
+          5,
+          6,
+          8,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "name": "Ingredient Draw S",
+      },
+      {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "paired": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+          "solo": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "baseSkill": {
+          "RP": [
+            880,
+            1251,
+            1726,
+            2383,
+            3290,
+            4546,
+            5843,
+          ],
+          "activations": {
+            "ingredients": {
+              "amount": [Function],
+              "unit": "ingredients",
+            },
+          },
+          "description": [Function],
+          "image": "ingredients",
+          "ingredientAmounts": [
+            6,
+            8,
+            11,
+            14,
+            17,
+            21,
+            24,
+          ],
+          "name": "Ingredient Magnet S",
+        },
+        "bonusIngredientAmounts": [
+          6,
+          7,
+          9,
+          10,
+          12,
+          13,
+          14,
+        ],
+        "description": [Function],
+        "fullDescription": [Function],
+        "image": "ingredients",
+        "ingredient": {
+          "longName": "Moomoo Milk",
+          "name": "Milk",
+          "taxedValue": 28.1,
+          "value": 98,
+        },
+        "ingredientAmounts": [
+          5,
+          7,
+          9,
+          11,
+          13,
+          16,
+          18,
+        ],
+        "modifierName": "Plus",
+      },
+      {
+        "RP": [
           600,
           853,
           1177,
@@ -29425,7 +30967,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -29484,8 +31025,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -29526,6 +31065,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -29566,7 +31107,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -29625,8 +31165,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -29667,6 +31205,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -29729,7 +31269,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "strength": {
                   "amount": [Function],
-                  "teamEnergyReduction": 12,
                   "unit": "strength",
                 },
               },
@@ -29788,8 +31327,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "activations": {
                 "berries": {
                   "amount": [Function],
-                  "critChance": 0.185,
-                  "critMultiplier": 3,
                   "teamAmount": [Function],
                   "unit": "berries",
                 },
@@ -29830,6 +31367,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   5,
                 ],
               },
+              "critChance": 0.185,
+              "critMultiplier": 3,
               "description": [Function],
               "image": "berries",
               "modifierName": "Disguise",
@@ -29870,7 +31409,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "strength": {
                 "amount": [Function],
-                "teamEnergyReduction": 12,
                 "unit": "strength",
               },
             },
@@ -29929,8 +31467,6 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "activations": {
               "berries": {
                 "amount": [Function],
-                "critChance": 0.185,
-                "critMultiplier": 3,
                 "teamAmount": [Function],
                 "unit": "berries",
               },
@@ -29971,6 +31507,8 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 5,
               ],
             },
+            "critChance": 0.185,
+            "critMultiplier": 3,
             "description": [Function],
             "image": "berries",
             "modifierName": "Disguise",
@@ -30206,19 +31744,45 @@ exports[`COMPLETE_POKEDEX > shall not change TOTODILE unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -30583,29 +32147,24 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_AMPED unexpectedly 1`] =
       ],
       "name": "Ingredient Magnet S",
     },
-    "bonusIngredientAmounts": Map {
-      "Coffee" => [
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-      ],
-      "Milk" => [
-        6,
-        7,
-        9,
-        10,
-        12,
-        13,
-        14,
-      ],
-    },
+    "bonusIngredientAmounts": [
+      6,
+      7,
+      9,
+      10,
+      12,
+      13,
+      14,
+    ],
     "description": [Function],
     "fullDescription": [Function],
     "image": "ingredients",
+    "ingredient": {
+      "longName": "Moomoo Milk",
+      "name": "Milk",
+      "taxedValue": 28.1,
+      "value": 98,
+    },
     "ingredientAmounts": [
       5,
       7,
@@ -31117,19 +32676,45 @@ exports[`COMPLETE_POKEDEX > shall not change TYPHLOSION unexpectedly 1`] = `
       2842,
     ],
     "activations": {
-      "strength": {
+      "high": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "low": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+      "mean": {
         "amount": [Function],
         "unit": "strength",
       },
     },
     "description": [Function],
     "image": "strength",
-    "name": "Charge Strength S Range",
-    "strengthAmounts": [
+    "name": "Charge Strength S",
+    "strengthAmountsHigh": [
+      800,
+      1138,
+      1570,
+      2166,
+      2992,
+      4132,
+      6424,
+    ],
+    "strengthAmountsLow": [
+      200,
+      285,
+      393,
+      542,
+      748,
+      1033,
+      1606,
+    ],
+    "strengthAmountsMean": [
       500,
-      711.25,
-      981.25,
-      1353.75,
+      711.5,
+      981.5,
+      1354,
       1870,
       2582.5,
       4015,
@@ -31579,7 +33164,6 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
       "energy": {
         "amount": [Function],
         "critAmount": [Function],
-        "critChance": 0.5,
         "unit": "energy",
       },
     },
@@ -31618,6 +33202,7 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
       17.2,
       22.8,
     ],
+    "critChance": 0.5,
     "description": [Function],
     "energyAmounts": [
       12,

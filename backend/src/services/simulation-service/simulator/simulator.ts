@@ -268,7 +268,7 @@ export function simulation(params: {
                 }) /
                   5);
 
-              skillEnergyOthersValue += energyFromCrit * ChargeEnergySMoonlight.activations.energy.critChance!;
+              skillEnergyOthersValue += energyFromCrit * ChargeEnergySMoonlight.critChance;
             }
           } else {
             skillEnergyOthersValue += skillActivation.adjustedAmount;
@@ -283,11 +283,10 @@ export function simulation(params: {
 
             const amountNoCrit =
               BerryBurstDisguise.activations.berries.teamAmount!({ skillLevel }) * skillActivation.fractionOfProc;
-            const critChance = skillActivation.critChance ?? BerryBurstDisguise.activations.berries.critChance!;
+            const critChance = skillActivation.critChance ?? BerryBurstDisguise.critChance;
 
             const averageTeamBerryAmount =
-              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.activations.berries.critMultiplier!) /
-              metronomeFactor;
+              (amountNoCrit + critChance * amountNoCrit * BerryBurstDisguise.critMultiplier) / metronomeFactor;
 
             skillBerriesOtherValue += averageTeamBerryAmount;
           } else if (skillActivation.skill.is(BerryBurst)) {

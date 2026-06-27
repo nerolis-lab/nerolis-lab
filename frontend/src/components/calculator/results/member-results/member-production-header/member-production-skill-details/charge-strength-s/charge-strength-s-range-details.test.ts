@@ -52,9 +52,7 @@ describe('MemberProductionSkill', () => {
 
   it('displays the correct skill value per proc', () => {
     const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(
-      `${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)} avg.`
-    )
+    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}`)
   })
 
   it('displays the correct total skill value', () => {
