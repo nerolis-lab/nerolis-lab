@@ -3343,6 +3343,130 @@ exports[`COMPLETE_POKEDEX > shall not change CHIKORITA unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change CHIMCHAR unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "LEPPA",
+    "type": "fire",
+    "value": 27,
+  },
+  "carrySize": 10,
+  "displayName": "Chimchar",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MONFERNO",
+  ],
+  "frequency": 4100,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredientPercentage": 11.4,
+  "name": "CHIMCHAR",
+  "pokedexNumber": 390,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 2,
+  "skill": {
+    "RP": [
+      1400,
+      1991,
+      2747,
+      3791,
+      5234,
+      7232,
+    ],
+    "activations": {
+      "berries": {
+        "amount": [Function],
+        "teamAmount": [Function],
+        "unit": "berries",
+      },
+    },
+    "description": [Function],
+    "image": "berries",
+    "name": "Berry Burst",
+    "selfBerryAmounts": [
+      11,
+      14,
+      21,
+      24,
+      27,
+      30,
+    ],
+    "teamBerryAmounts": [
+      1,
+      2,
+      2,
+      3,
+      4,
+      5,
+    ],
+  },
+  "skillPercentage": 3.3,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
 {
   "berry": {
@@ -10413,6 +10537,125 @@ exports[`COMPLETE_POKEDEX > shall not change EKANS unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change EMPOLEON unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "BELUE",
+    "type": "steel",
+    "value": 33,
+  },
+  "carrySize": 18,
+  "displayName": "Empoleon",
+  "evolvesFrom": "PRINPLUP",
+  "evolvesInto": [],
+  "frequency": 3200,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredientPercentage": 16.8,
+  "name": "EMPOLEON",
+  "pokedexNumber": 395,
+  "previousEvolutions": 2,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "helps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+    },
+    "description": [Function],
+    "helpAmounts": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ],
+    "image": "helps",
+    "name": "Extra Helpful S",
+    "targeting": {
+      "chanceToTargetLowestMembers": 0,
+      "numMonsTargeted": 1,
+    },
+  },
+  "skillPercentage": 3.8,
+  "specialty": "berry",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change ENTEI unexpectedly 1`] = `
 {
   "berry": {
@@ -12977,6 +13220,121 @@ exports[`COMPLETE_POKEDEX > shall not change GRAVELER unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change GROTLE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "DURIN",
+    "type": "grass",
+    "value": 30,
+  },
+  "carrySize": 14,
+  "displayName": "Grotle",
+  "evolvesFrom": "TURTWIG",
+  "evolvesInto": [
+    "TORTERRA",
+  ],
+  "frequency": 3700,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredientPercentage": 15,
+  "name": "GROTLE",
+  "pokedexNumber": 388,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      1120,
+      1593,
+      2197,
+      3033,
+      4187,
+      5785,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      5,
+      7,
+      9,
+      11.4,
+      15,
+      18.1,
+    ],
+    "image": "energy",
+    "name": "Energy For Everyone S",
+  },
+  "skillPercentage": 4.6,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change GROVYLE unexpectedly 1`] = `
 {
   "berry": {
@@ -14423,6 +14781,128 @@ exports[`COMPLETE_POKEDEX > shall not change IGGLYBUFF unexpectedly 1`] = `
     "name": "Energy For Everyone S",
   },
   "skillPercentage": 3.8,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change INFERNAPE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "CHERI",
+    "type": "fighting",
+    "value": 27,
+  },
+  "carrySize": 18,
+  "displayName": "Infernape",
+  "evolvesFrom": "MONFERNO",
+  "evolvesInto": [],
+  "frequency": 2400,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredientPercentage": 10.6,
+  "name": "INFERNAPE",
+  "pokedexNumber": 392,
+  "previousEvolutions": 2,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1400,
+      1991,
+      2747,
+      3791,
+      5234,
+      7232,
+    ],
+    "activations": {
+      "berries": {
+        "amount": [Function],
+        "teamAmount": [Function],
+        "unit": "berries",
+      },
+    },
+    "description": [Function],
+    "image": "berries",
+    "name": "Berry Burst",
+    "selfBerryAmounts": [
+      11,
+      14,
+      21,
+      24,
+      27,
+      30,
+    ],
+    "teamBerryAmounts": [
+      1,
+      2,
+      2,
+      3,
+      4,
+      5,
+    ],
+  },
+  "skillPercentage": 3.3,
   "specialty": "skill",
 }
 `;
@@ -18299,6 +18779,130 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change MONFERNO unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "CHERI",
+    "type": "fighting",
+    "value": 27,
+  },
+  "carrySize": 14,
+  "displayName": "Monferno",
+  "evolvesFrom": "CHIMCHAR",
+  "evolvesInto": [
+    "INFERNAPE",
+  ],
+  "frequency": 3100,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredientPercentage": 11.4,
+  "name": "MONFERNO",
+  "pokedexNumber": 391,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      1400,
+      1991,
+      2747,
+      3791,
+      5234,
+      7232,
+    ],
+    "activations": {
+      "berries": {
+        "amount": [Function],
+        "teamAmount": [Function],
+        "unit": "berries",
+      },
+    },
+    "description": [Function],
+    "image": "berries",
+    "name": "Berry Burst",
+    "selfBerryAmounts": [
+      11,
+      14,
+      21,
+      24,
+      27,
+      30,
+    ],
+    "teamBerryAmounts": [
+      1,
+      2,
+      2,
+      3,
+      4,
+      5,
+    ],
+  },
+  "skillPercentage": 3.3,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
 {
   "berry": {
@@ -21009,6 +21613,127 @@ exports[`COMPLETE_POKEDEX > shall not change PINSIR unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change PIPLUP unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "ORAN",
+    "type": "water",
+    "value": 31,
+  },
+  "carrySize": 11,
+  "displayName": "Piplup",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "PRINPLUP",
+  ],
+  "frequency": 4500,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredientPercentage": 15.9,
+  "name": "PIPLUP",
+  "pokedexNumber": 393,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 2,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "helps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+    },
+    "description": [Function],
+    "helpAmounts": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ],
+    "image": "helps",
+    "name": "Extra Helpful S",
+    "targeting": {
+      "chanceToTargetLowestMembers": 0,
+      "numMonsTargeted": 1,
+    },
+  },
+  "skillPercentage": 2.6,
+  "specialty": "berry",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change PLUSLE unexpectedly 1`] = `
 {
   "berry": {
@@ -21289,6 +22014,127 @@ exports[`COMPLETE_POKEDEX > shall not change PRIMEAPE unexpectedly 1`] = `
     ],
   },
   "skillPercentage": 2.4,
+  "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change PRINPLUP unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "ORAN",
+    "type": "water",
+    "value": 31,
+  },
+  "carrySize": 15,
+  "displayName": "Prinplup",
+  "evolvesFrom": "PIPLUP",
+  "evolvesInto": [
+    "EMPOLEON",
+  ],
+  "frequency": 3700,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Honey",
+        "name": "Honey",
+        "taxedValue": 29.8,
+        "value": 101,
+      },
+    },
+  ],
+  "ingredientPercentage": 16.3,
+  "name": "PRINPLUP",
+  "pokedexNumber": 394,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "helps": {
+        "amount": [Function],
+        "unit": "helps",
+      },
+    },
+    "description": [Function],
+    "helpAmounts": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+    ],
+    "image": "helps",
+    "name": "Extra Helpful S",
+    "targeting": {
+      "chanceToTargetLowestMembers": 0,
+      "numMonsTargeted": 1,
+    },
+  },
+  "skillPercentage": 3.5,
   "specialty": "berry",
 }
 `;
@@ -30121,6 +30967,119 @@ exports[`COMPLETE_POKEDEX > shall not change TORCHIC unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change TORTERRA unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "FIGY",
+    "type": "ground",
+    "value": 29,
+  },
+  "carrySize": 17,
+  "displayName": "Torterra",
+  "evolvesFrom": "GROTLE",
+  "evolvesInto": [],
+  "frequency": 2900,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredientPercentage": 15.6,
+  "name": "TORTERRA",
+  "pokedexNumber": 389,
+  "previousEvolutions": 2,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1120,
+      1593,
+      2197,
+      3033,
+      4187,
+      5785,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      5,
+      7,
+      9,
+      11.4,
+      15,
+      18.1,
+    ],
+    "image": "energy",
+    "name": "Energy For Everyone S",
+  },
+  "skillPercentage": 4.8,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change TOTODILE unexpectedly 1`] = `
 {
   "berry": {
@@ -31021,6 +31980,121 @@ exports[`COMPLETE_POKEDEX > shall not change TREECKO unexpectedly 1`] = `
     ],
   },
   "skillPercentage": 3.5,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TURTWIG unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "DURIN",
+    "type": "grass",
+    "value": 30,
+  },
+  "carrySize": 12,
+  "displayName": "Turtwig",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "GROTLE",
+  ],
+  "frequency": 4500,
+  "genders": {
+    "female": 0.125,
+    "male": 0.875,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 6,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredientPercentage": 13.2,
+  "name": "TURTWIG",
+  "pokedexNumber": 387,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 2,
+  "skill": {
+    "RP": [
+      1120,
+      1593,
+      2197,
+      3033,
+      4187,
+      5785,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      5,
+      7,
+      9,
+      11.4,
+      15,
+      18.1,
+    ],
+    "image": "energy",
+    "name": "Energy For Everyone S",
+  },
+  "skillPercentage": 4.1,
   "specialty": "skill",
 }
 `;

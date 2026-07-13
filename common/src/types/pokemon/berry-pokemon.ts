@@ -864,6 +864,44 @@ export const SALAMENCE: Pokemon = evolvedPokemon(SHELGON, {
   carrySize: 22
 });
 
+export const PIPLUP: Pokemon = createBerrySpecialist({
+  name: 'PIPLUP',
+  pokedexNumber: 393,
+  frequency: toSeconds(1, 15, 0),
+  ingredientPercentage: 15.9,
+  skillPercentage: 2.6,
+  berry: ORAN,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 11,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredients: {
+    a: FANCY_EGG,
+    b: LARGE_LEEK,
+    c: HONEY
+  },
+  skill: ExtraHelpfulS
+});
+
+export const PRINPLUP: Pokemon = evolvedPokemon(PIPLUP, {
+  name: 'PRINPLUP',
+  pokedexNumber: 394,
+  frequency: toSeconds(1, 1, 40),
+  ingredientPercentage: 16.3,
+  skillPercentage: 3.5,
+  carrySize: 15
+});
+
+export const EMPOLEON: Pokemon = evolvedPokemon(PRINPLUP, {
+  name: 'EMPOLEON',
+  pokedexNumber: 395,
+  frequency: toSeconds(0, 53, 20),
+  ingredientPercentage: 16.8,
+  skillPercentage: 3.8,
+  berry: BELUE,
+  carrySize: 18
+});
+
 export const WEAVILE: Pokemon = evolvedPokemon(SNEASEL, {
   name: 'WEAVILE',
   pokedexNumber: 461,
@@ -956,6 +994,7 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   BANETTE,
   WALREIN,
   SALAMENCE,
+  EMPOLEON,
   WEAVILE,
   MUSHARNA,
   TYRANTRUM
@@ -996,6 +1035,8 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   SEALEO,
   BAGON,
   SHELGON,
+  PIPLUP,
+  PRINPLUP,
   MUNNA,
   TYRUNT
 ];
