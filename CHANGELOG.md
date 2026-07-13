@@ -1,3 +1,10 @@
+# [2.57.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.3...v2.57.0) (2026-07-13)
+
+
+### Features
+
+* add turtwig, piplup, and chimchar lines ([18507a9](https://github.com/nerolis-lab/nerolis-lab/commit/18507a909bf50283faf714bef2a8c63b42ab1cb4))
+
 ## [2.56.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.2...v2.56.3) (2026-06-27)
 
 ## [2.56.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.1...v2.56.2) (2026-06-27)
