@@ -1,3 +1,11 @@
+## [2.57.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.1...v2.57.2) (2026-07-14)
+
+
+### Bug Fixes
+
+* **Ingredient Draw:** separate into 3 skills ([849d5dd](https://github.com/nerolis-lab/nerolis-lab/commit/849d5dd75f284c5f506434b8a566be198d8ffa65))
+* **Plus:** separate Plus into two skills ([c759577](https://github.com/nerolis-lab/nerolis-lab/commit/c759577d29dc679cef7cbf11ec3679c63f7f450c))
+
 ## [2.57.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.0...v2.57.1) (2026-07-14)
 
 # [2.57.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.3...v2.57.0) (2026-07-13)
