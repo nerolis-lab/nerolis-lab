@@ -14,7 +14,6 @@ export function getSubskill(name: string) {
 }
 
 export function limitSubSkillsToLevel(subskills: Set<string>, level: number): Set<string> {
-  // eslint-disable-next-line prettier/prettier
   const numberOfElements = level < 10 ? 0 : level < 25 ? 1 : level < 50 ? 2 : level < 70 ? 3 : level < 80 ? 4 : 5;
 
   const result = new Set<string>();
