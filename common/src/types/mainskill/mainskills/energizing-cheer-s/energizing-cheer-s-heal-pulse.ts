@@ -9,7 +9,7 @@ export const EnergizingCheerSHealPulse = new (class extends ModifiedMainskill {
   RP = [1600, 2300, 3180, 4417, 6113, 8462];
   energyAmounts = [6, 8, 10, 13, 17, 22];
   helpsAmounts = [1, 2, 2, 3, 4, 4];
-  latiosHelpsAmounts = [1, 1, 2, 2, 2, 3]; // unused until Latios is added to the game
+  latiosHelpsAmounts = [1, 1, 2, 2, 2, 3];
   image = 'energy';
 
   description = (params: AmountParams) =>
@@ -25,9 +25,13 @@ export const EnergizingCheerSHealPulse = new (class extends ModifiedMainskill {
       unit: 'energy',
       amount: this.leveledAmount(this.energyAmounts)
     },
-    helps: {
+    soloHelps: {
       unit: 'helps',
       amount: this.leveledAmount(this.helpsAmounts)
+    },
+    pairedHelps: {
+      unit: 'helps',
+      amount: this.leveledAmount(this.latiosHelpsAmounts)
     }
   };
 })(true);

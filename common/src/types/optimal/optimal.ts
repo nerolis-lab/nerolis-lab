@@ -31,8 +31,8 @@ class OptimalImpl {
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: HELPING_SPEED_S },
-        { level: 75, subskill: HELPING_BONUS },
-        { level: 100, subskill: SKILL_TRIGGER_M }
+        { level: 70, subskill: HELPING_BONUS },
+        { level: 80, subskill: SKILL_TRIGGER_M }
       ],
       nature: ADAMANT,
       skillLevel: skillLevel ?? pokemon.skill.maxLevel,
@@ -47,8 +47,8 @@ class OptimalImpl {
         { level: 10, subskill: INGREDIENT_FINDER_M },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: INGREDIENT_FINDER_S },
-        { level: 75, subskill: INVENTORY_L },
-        { level: 100, subskill: HELPING_SPEED_S }
+        { level: 70, subskill: INVENTORY_L },
+        { level: 80, subskill: HELPING_SPEED_S }
       ],
       nature: QUIET,
       skillLevel: skillLevel ?? pokemon.skill.maxLevel,
@@ -63,8 +63,8 @@ class OptimalImpl {
         { level: 10, subskill: SKILL_TRIGGER_M },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: SKILL_TRIGGER_S },
-        { level: 75, subskill: HELPING_SPEED_S },
-        { level: 100, subskill: HELPING_BONUS }
+        { level: 70, subskill: HELPING_SPEED_S },
+        { level: 80, subskill: HELPING_BONUS }
       ],
       nature: CAREFUL,
       skillLevel: skillLevel ?? pokemon.skill.maxLevel,

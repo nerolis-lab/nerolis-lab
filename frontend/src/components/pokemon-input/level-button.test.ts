@@ -44,13 +44,13 @@ describe('LevelButton', () => {
   it('updates level when a custom value is entered and saved', async () => {
     await wrapper.setData({ menu: true })
     const customInput = wrapper.findComponent({ name: 'v-text-field' })
-    await customInput.setValue(75)
+    await customInput.setValue(69)
     await customInput.trigger('keydown.enter')
 
-    // should emit on mount and update to 75
+    // should emit on mount and update to 69
     expect(wrapper.emitted('update-level')).toHaveLength(2)
     expect(wrapper.emitted('update-level')![0]).toEqual([50])
-    expect(wrapper.emitted('update-level')![1]).toEqual([75])
+    expect(wrapper.emitted('update-level')![1]).toEqual([69])
   })
 
   it('does not emit update-level for invalid custom values', async () => {

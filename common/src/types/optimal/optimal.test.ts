@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { CarrySizeUtils } from '../../utils';
 import { mockPokemon } from '../../vitest/mocks';
 import { Mainskill } from '../mainskill';
 import { ADAMANT, CAREFUL, QUIET } from '../nature/nature';
@@ -15,7 +16,6 @@ import {
   SKILL_TRIGGER_S
 } from '../subskill/subskills';
 import { Optimal } from './optimal';
-import { CarrySizeUtils } from '../../utils';
 
 describe('Optimal', () => {
   const baseSkill: Mainskill = new (class extends Mainskill {
@@ -37,8 +37,8 @@ describe('Optimal', () => {
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: HELPING_SPEED_S },
-        { level: 75, subskill: HELPING_BONUS },
-        { level: 100, subskill: SKILL_TRIGGER_M }
+        { level: 70, subskill: HELPING_BONUS },
+        { level: 80, subskill: SKILL_TRIGGER_M }
       ],
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
@@ -55,8 +55,8 @@ describe('Optimal', () => {
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: HELPING_SPEED_S },
-        { level: 75, subskill: HELPING_BONUS },
-        { level: 100, subskill: SKILL_TRIGGER_M }
+        { level: 70, subskill: HELPING_BONUS },
+        { level: 80, subskill: SKILL_TRIGGER_M }
       ],
       nature: ADAMANT,
       skillLevel: 4,
@@ -73,8 +73,8 @@ describe('Optimal', () => {
         { level: 10, subskill: BERRY_FINDING_S },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: HELPING_SPEED_S },
-        { level: 75, subskill: HELPING_BONUS },
-        { level: 100, subskill: SKILL_TRIGGER_M }
+        { level: 70, subskill: HELPING_BONUS },
+        { level: 80, subskill: SKILL_TRIGGER_M }
       ],
       nature: ADAMANT,
       skillLevel: mockedPokemon.skill.maxLevel,
@@ -91,8 +91,8 @@ describe('Optimal', () => {
         { level: 10, subskill: INGREDIENT_FINDER_M },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: INGREDIENT_FINDER_S },
-        { level: 75, subskill: INVENTORY_L },
-        { level: 100, subskill: HELPING_SPEED_S }
+        { level: 70, subskill: INVENTORY_L },
+        { level: 80, subskill: HELPING_SPEED_S }
       ],
       nature: QUIET,
       skillLevel: mockedPokemon.skill.maxLevel,
@@ -109,8 +109,8 @@ describe('Optimal', () => {
         { level: 10, subskill: SKILL_TRIGGER_M },
         { level: 25, subskill: HELPING_SPEED_M },
         { level: 50, subskill: SKILL_TRIGGER_S },
-        { level: 75, subskill: HELPING_SPEED_S },
-        { level: 100, subskill: HELPING_BONUS }
+        { level: 70, subskill: HELPING_SPEED_S },
+        { level: 80, subskill: HELPING_BONUS }
       ],
       nature: CAREFUL,
       skillLevel: mockedPokemon.skill.maxLevel,
@@ -148,8 +148,8 @@ describe('Optimal', () => {
           { level: 10, subskill: INGREDIENT_FINDER_M },
           { level: 25, subskill: HELPING_SPEED_M },
           { level: 50, subskill: INGREDIENT_FINDER_S },
-          { level: 75, subskill: INVENTORY_L },
-          { level: 100, subskill: HELPING_SPEED_S }
+          { level: 70, subskill: INVENTORY_L },
+          { level: 80, subskill: HELPING_SPEED_S }
         ],
         nature: QUIET,
         skillLevel: mockedPokemon.skill.maxLevel,
@@ -159,7 +159,7 @@ describe('Optimal', () => {
 
       const memberSettings = Optimal.toMemberSettings({
         stats: optimalStats,
-        level: 75,
+        level: 70,
         externalId: 'test-id-2',
         sneakySnacking: false
       });
@@ -170,7 +170,7 @@ describe('Optimal', () => {
         ribbon: 0,
         skillLevel: mockedPokemon.skill.maxLevel,
         subskills: new Set(optimalStats.subskills.slice(0, 4).map((subskill) => subskill.subskill.name)),
-        level: 75,
+        level: 70,
         externalId: 'test-id-2',
         sneakySnacking: false
       });

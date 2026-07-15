@@ -105,8 +105,8 @@ describe('PokemonInput', () => {
   })
 
   it('updates level correctly', async () => {
-    wrapper.vm.updateLevel(75)
-    expect(wrapper.vm.pokemonInstance.level).toBe(75)
+    wrapper.vm.updateLevel(67)
+    expect(wrapper.vm.pokemonInstance.level).toBe(67)
   })
 
   it('updates carry size correctly', async () => {

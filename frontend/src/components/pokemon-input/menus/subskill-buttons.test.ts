@@ -26,7 +26,7 @@ describe('SubskillButtons', () => {
     expect(wrapper.exists()).toBe(true)
 
     const subskillButtons = wrapper.findAll('.v-btn')
-    expect(subskillButtons.length).toBe(5) // subskillLevels are [10, 25, 50, 75, 100]
+    expect(subskillButtons.length).toBe(5) // subskillLevels are [10, 25, 50, 70, 80]
 
     const firstButton = subskillButtons[0]
     expect(firstButton.exists()).toBe(true)

@@ -3,6 +3,7 @@ import { calculateDistribution } from '@src/services/simulation-service/team-sim
 import type { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-disguise-effect.js';
+import { BerryBurstDracoMeteorEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-draco-meteor-effect.js';
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-effect.js';
 import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-effect.js';
 import { ChargeEnergySMoonlightEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-moonlight-effect.js';
@@ -25,11 +26,18 @@ import { EnergyForEveryoneSEffect } from '@src/services/simulation-service/team-
 import { EnergyForEveryoneSLunarBlessingEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energy-for-everyone-s/energy-for-everyone-s-lunar-blessing-effect.js';
 import { ExtraHelpfulSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/extra-helpful-s/extra-helpful-s-effect.js';
 import { HelperBoostEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/helper-boost/helper-boost-effect.js';
-import { IngredientDrawSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
+import {
+  IngredientDrawSCutieflyEffect,
+  IngredientDrawSDwebbleEffect,
+  IngredientDrawSSandshrewEffect
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
 import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-hyper-cutter-effect.js';
 import { IngredientDrawSSuperLuckEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-super-luck-effect.js';
 import { IngredientMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-effect.js';
-import { IngredientMagnetSPlusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-plus-effect.js';
+import {
+  IngredientMagnetSPlusPlusleEffect,
+  IngredientMagnetSPlusToxtricityEffect
+} from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-plus-effect.js';
 import { IngredientMagnetSPresentEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-magnet-s/ingredient-magnet-s-present-effect.js';
 import { MetronomeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/metronome/metronome-effect.js';
 import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy/skill-copy-effect.js';
@@ -45,6 +53,7 @@ import type { AmountParams, Mainskill, MainskillActivation, MainskillUnit, Membe
 import {
   BerryBurst,
   BerryBurstDisguise,
+  BerryBurstDracoMeteor,
   calculatePityProcThreshold,
   ChargeEnergyS,
   ChargeEnergySMoonlight,
@@ -68,11 +77,14 @@ import {
   EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
-  IngredientDrawS,
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
   IngredientDrawSHyperCutter,
+  IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
-  IngredientMagnetSPlus,
+  IngredientMagnetSPlusPlusle,
+  IngredientMagnetSPlusToxtricity,
   IngredientMagnetSPresent,
   mainskillUnits,
   Metronome,
@@ -112,6 +124,7 @@ export class SkillState {
     this.skillEffects = new Map<Mainskill, SkillEffect>([
       [BerryBurst, new BerryBurstEffect()],
       [BerryBurstDisguise, new BerryBurstDisguiseEffect()],
+      [BerryBurstDracoMeteor, new BerryBurstDracoMeteorEffect()],
       [ChargeEnergyS, new ChargeEnergySEffect()],
       [ChargeEnergySMoonlight, new ChargeEnergySMoonlightEffect()],
       [ChargeStrengthM, new ChargeStrengthMEffect()],
@@ -134,9 +147,12 @@ export class SkillState {
       [ExtraHelpfulS, new ExtraHelpfulSEffect()],
       [HelperBoost, new HelperBoostEffect()],
       [IngredientMagnetS, new IngredientMagnetSEffect()],
-      [IngredientMagnetSPlus, new IngredientMagnetSPlusEffect()],
+      [IngredientMagnetSPlusPlusle, new IngredientMagnetSPlusPlusleEffect()],
+      [IngredientMagnetSPlusToxtricity, new IngredientMagnetSPlusToxtricityEffect()],
       [IngredientMagnetSPresent, new IngredientMagnetSPresentEffect()],
-      [IngredientDrawS, new IngredientDrawSEffect()],
+      [IngredientDrawSCutiefly, new IngredientDrawSCutieflyEffect()],
+      [IngredientDrawSDwebble, new IngredientDrawSDwebbleEffect()],
+      [IngredientDrawSSandshrew, new IngredientDrawSSandshrewEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
       [Metronome, new MetronomeEffect()],

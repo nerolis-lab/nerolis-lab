@@ -26,10 +26,8 @@ export class ChargeEnergySMoonlightEffect implements SkillEffect {
         crit: teamAmount
       }
     };
-    const activations =
-      skillState.rng() < ChargeEnergySMoonlight.activations.energy.critChance!
-        ? [selfActivation, teamActivation]
-        : [selfActivation];
+    const isCrit = skillState.rng() < ChargeEnergySMoonlight.critChance;
+    const activations = isCrit ? [selfActivation, teamActivation] : [selfActivation];
 
     return {
       skill,

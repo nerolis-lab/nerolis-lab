@@ -80,7 +80,7 @@ describe('BerryBurstDisguiseEffect', () => {
         berries: [
           {
             berry: memberState.berry,
-            amount: regularSelfAmount * BerryBurstDisguise.activations.berries.critMultiplier!,
+            amount: regularSelfAmount * BerryBurstDisguise.critMultiplier,
             level: memberState.level
           }
         ]

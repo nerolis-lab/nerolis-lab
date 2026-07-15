@@ -79,7 +79,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    const critModifier = BerryBurstDisguise.activations.berries.critMultiplier!
+    const critModifier = BerryBurstDisguise.critMultiplier
     return { teamStore, MathUtils, mainskillImage, critModifier, berryImage }
   },
   computed: {

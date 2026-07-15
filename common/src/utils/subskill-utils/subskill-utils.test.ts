@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { PokemonInstanceExt } from '../../types/instance/pokemon-instance';
 import type { Subskill } from '../../types/subskill/subskill';
 import {
+  DREAM_SHARD_BONUS,
   HELPING_SPEED_M,
   HELPING_SPEED_S,
   INGREDIENT_FINDER_M,
@@ -52,19 +53,16 @@ describe('getSubskill', () => {
 });
 
 describe('limitSubSkillsToLevel', () => {
-  it('shall return all subskills for level 100', () => {
-    expect(
-      limitSubSkillsToLevel(
-        new Set([
-          INGREDIENT_FINDER_M.name,
-          HELPING_SPEED_M.name,
-          INGREDIENT_FINDER_S.name,
-          INVENTORY_L.name,
-          HELPING_SPEED_S.name
-        ]),
-        100
-      )
-    ).toEqual(
+  const overstuffedSubskillSet = new Set([
+    INGREDIENT_FINDER_M.name,
+    HELPING_SPEED_M.name,
+    INGREDIENT_FINDER_S.name,
+    INVENTORY_L.name,
+    HELPING_SPEED_S.name,
+    DREAM_SHARD_BONUS.name
+  ]);
+  it('shall return five subskills for level 80', () => {
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 80)).toEqual(
       new Set([
         INGREDIENT_FINDER_M.name,
         HELPING_SPEED_M.name,
@@ -75,79 +73,42 @@ describe('limitSubSkillsToLevel', () => {
     );
   });
 
+  it('shall return four subskills for level 70', () => {
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 70)).toEqual(
+      new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name, INGREDIENT_FINDER_S.name, INVENTORY_L.name])
+    );
+  });
+
   it('shall return first 3 subskills for level 60', () => {
-    expect(
-      limitSubSkillsToLevel(
-        new Set([
-          INGREDIENT_FINDER_M.name,
-          HELPING_SPEED_M.name,
-          INGREDIENT_FINDER_S.name,
-          INVENTORY_L.name,
-          HELPING_SPEED_S.name
-        ]),
-        60
-      )
-    ).toEqual(new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name, INGREDIENT_FINDER_S.name]));
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 60)).toEqual(
+      new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name, INGREDIENT_FINDER_S.name])
+    );
   });
 
   it('shall return first 3 subskills for level 50', () => {
-    expect(
-      limitSubSkillsToLevel(
-        new Set([
-          INGREDIENT_FINDER_M.name,
-          HELPING_SPEED_M.name,
-          INGREDIENT_FINDER_S.name,
-          INVENTORY_L.name,
-          HELPING_SPEED_S.name
-        ]),
-        50
-      )
-    ).toEqual(new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name, INGREDIENT_FINDER_S.name]));
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 50)).toEqual(
+      new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name, INGREDIENT_FINDER_S.name])
+    );
   });
 
   it('shall return first 2 subskills for level 49', () => {
-    expect(
-      limitSubSkillsToLevel(
-        new Set([
-          INGREDIENT_FINDER_M.name,
-          HELPING_SPEED_M.name,
-          INGREDIENT_FINDER_S.name,
-          INVENTORY_L.name,
-          HELPING_SPEED_S.name
-        ]),
-        49
-      )
-    ).toEqual(new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name]));
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 49)).toEqual(
+      new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name])
+    );
   });
 
   it('shall return first 2 subskills for level 25', () => {
-    expect(
-      limitSubSkillsToLevel(
-        new Set([
-          INGREDIENT_FINDER_M.name,
-          HELPING_SPEED_M.name,
-          INGREDIENT_FINDER_S.name,
-          INVENTORY_L.name,
-          HELPING_SPEED_S.name
-        ]),
-        25
-      )
-    ).toEqual(new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name]));
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 25)).toEqual(
+      new Set([INGREDIENT_FINDER_M.name, HELPING_SPEED_M.name])
+    );
   });
 
-  it('shall return first subskill for level <25', () => {
-    expect(
-      limitSubSkillsToLevel(
-        new Set([
-          INGREDIENT_FINDER_M.name,
-          HELPING_SPEED_M.name,
-          INGREDIENT_FINDER_S.name,
-          INVENTORY_L.name,
-          HELPING_SPEED_S.name
-        ]),
-        24
-      )
-    ).toEqual(new Set([INGREDIENT_FINDER_M.name]));
+  it('shall return first subskill for level 24', () => {
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 24)).toEqual(new Set([INGREDIENT_FINDER_M.name]));
+  });
+
+  it('shall return no subskill for level 9', () => {
+    expect(limitSubSkillsToLevel(overstuffedSubskillSet, 9)).toEqual(new Set([]));
   });
 });
 

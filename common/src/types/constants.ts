@@ -2,19 +2,22 @@
 export const TASTY_CHANCE_S_CAP = 0.7;
 
 // recipe
-export const MAX_RECIPE_LEVEL = 65;
+export const MAX_RECIPE_LEVEL = 70;
 
 // ingredient
 export const MAX_INGREDIENT_INVENTORY = 800;
 
 // pokemon
-export const MAX_POKEMON_LEVEL = 65;
+export const MAX_POKEMON_LEVEL = 70;
 export const MAX_RIBBON_LEVEL = 4;
 export const MAX_STOCKPILED_BERRIES = 999;
 
 // cooking
-export const MIN_POT_SIZE = 15;
+export const MIN_POT_SIZE = 21;
 export const MAX_POT_SIZE = 81;
+export const POT_GROWTH_LOW = 2;
+export const POT_GROWTH_HIGH = 3;
+export const POT_GROWTH_THRESHOLD = 33;
 export const MEALS_IN_DAY = 3;
 export const WEEKDAY_CRIT_CHANCE = 0.1;
 export const WEEKDAY_CRIT_MULTIPLIER = 2;

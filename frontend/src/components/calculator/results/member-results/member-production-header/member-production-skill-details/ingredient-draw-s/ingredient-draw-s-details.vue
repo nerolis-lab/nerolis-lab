@@ -66,7 +66,7 @@
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { IngredientDrawS, MathUtils } from 'sleepapi-common'
+import { MathUtils } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -82,8 +82,12 @@ export default defineComponent({
     return { teamStore, MathUtils, mainskillImage }
   },
   computed: {
+    skill() {
+      // All base versions of Ingredient Draw use this component.
+      return this.memberWithProduction.member.pokemon.skill
+    },
     skillValuePerNormalProc() {
-      return IngredientDrawS.activations.ingredients.amount({
+      return this.skill.activations.ingredients.amount({
         skillLevel: this.memberWithProduction.member.skillLevel
       })
     },

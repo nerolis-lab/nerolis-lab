@@ -57,6 +57,7 @@ import {
 import {
   BerryBurst,
   BerryBurstDisguise,
+  BerryBurstDracoMeteor,
   ChargeEnergySMoonlight,
   ChargeStrengthM,
   ChargeStrengthSRange,
@@ -74,10 +75,12 @@ import {
   EnergyForEveryoneSLunarBlessing,
   ExtraHelpfulS,
   HelperBoost,
-  IngredientDrawS,
+  IngredientDrawSDwebble,
+  IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
-  IngredientMagnetSPlus,
+  IngredientMagnetSPlusPlusle,
+  IngredientMagnetSPlusToxtricity,
   Metronome,
   TastyChanceS
 } from '../mainskill/mainskills';
@@ -119,7 +122,7 @@ export const SANDSHREW: Pokemon = createSkillSpecialist({
     b: GREENGRASS_CORN,
     c: SOFT_POTATO
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSSandshrew
 });
 
 export const SANDSLASH: Pokemon = evolvedPokemon(SANDSHREW, {
@@ -733,7 +736,7 @@ export const PLUSLE: Pokemon = createSkillSpecialist({
     b: LARGE_LEEK,
     c: MOOMOO_MILK
   },
-  skill: IngredientMagnetSPlus
+  skill: IngredientMagnetSPlusPlusle
 });
 
 export const MINUN: Pokemon = createSkillSpecialist({
@@ -828,6 +831,101 @@ export const LATIAS: Pokemon = createSkillSpecialist({
     c: TASTY_MUSHROOM
   },
   skill: EnergizingCheerSHealPulse
+});
+
+export const LATIOS: Pokemon = createSkillSpecialist({
+  name: 'LATIOS',
+  pokedexNumber: 381,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 19.8,
+  skillPercentage: 3,
+  berry: YACHE,
+  genders: MALE_ONLY,
+  carrySize: 19,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: SNOOZY_TOMATO,
+    b: FANCY_EGG,
+    c: MOOMOO_MILK
+  },
+  skill: BerryBurstDracoMeteor
+});
+
+export const TURTWIG: Pokemon = createSkillSpecialist({
+  name: 'TURTWIG',
+  pokedexNumber: 387,
+  frequency: toSeconds(1, 15, 0),
+  ingredientPercentage: 13.2,
+  skillPercentage: 4.1,
+  berry: DURIN,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredients: {
+    a: TASTY_MUSHROOM,
+    b: SOFT_POTATO,
+    c: WARMING_GINGER
+  },
+  skill: EnergyForEveryoneS
+});
+
+export const GROTLE: Pokemon = evolvedPokemon(TURTWIG, {
+  name: 'GROTLE',
+  pokedexNumber: 388,
+  frequency: toSeconds(1, 1, 40),
+  ingredientPercentage: 15,
+  skillPercentage: 4.6,
+  carrySize: 14
+});
+
+export const TORTERRA: Pokemon = evolvedPokemon(GROTLE, {
+  name: 'TORTERRA',
+  pokedexNumber: 389,
+  frequency: toSeconds(0, 48, 20),
+  ingredientPercentage: 15.6,
+  skillPercentage: 4.8,
+  berry: FIGY,
+  carrySize: 17
+});
+
+export const CHIMCHAR: Pokemon = createSkillSpecialist({
+  name: 'CHIMCHAR',
+  pokedexNumber: 390,
+  frequency: toSeconds(1, 8, 20),
+  ingredientPercentage: 11.4,
+  skillPercentage: 3.3,
+  berry: LEPPA,
+  genders: SEVEN_EIGHTHS_MALE,
+  carrySize: 10,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredients: {
+    a: FIERY_HERB,
+    b: WARMING_GINGER,
+    c: ROUSING_COFFEE
+  },
+  skill: BerryBurst
+});
+
+export const MONFERNO: Pokemon = evolvedPokemon(CHIMCHAR, {
+  name: 'MONFERNO',
+  pokedexNumber: 391,
+  frequency: toSeconds(0, 51, 40),
+  ingredientPercentage: 11.4,
+  skillPercentage: 3.3,
+  berry: CHERI,
+  carrySize: 14
+});
+
+export const INFERNAPE: Pokemon = evolvedPokemon(MONFERNO, {
+  name: 'INFERNAPE',
+  pokedexNumber: 392,
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 10.6,
+  skillPercentage: 3.3,
+  carrySize: 18
 });
 
 export const BONSLY: Pokemon = preEvolvedPokemon(SUDOWOODO, {
@@ -991,7 +1089,7 @@ export const DWEBBLE: Pokemon = createSkillSpecialist({
     b: SOFT_POTATO,
     c: PURE_OIL
   },
-  skill: IngredientDrawS
+  skill: IngredientDrawSDwebble
 });
 
 export const CRUSTLE: Pokemon = evolvedPokemon(DWEBBLE, {
@@ -1153,7 +1251,7 @@ export const TOXTRICITY_AMPED: Pokemon = evolvedPokemon(TOXEL, {
   ingredientPercentage: 23.9,
   skillPercentage: 6.4,
   carrySize: 18,
-  skill: IngredientMagnetSPlus
+  skill: IngredientMagnetSPlusToxtricity
 });
 
 export const TOXTRICITY_LOW_KEY: Pokemon = evolvedPokemon(TOXEL, {
@@ -1225,6 +1323,8 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   ENTEI,
   SUICUNE,
   SCEPTILE,
+  TORTERRA,
+  INFERNAPE,
   GARDEVOIR,
   SABLEYE,
   PLUSLE,
@@ -1241,6 +1341,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   GALLADE,
   CRESSELIA,
   LATIAS,
+  LATIOS,
   CRUSTLE,
   SANDSLASH,
   BRAVIARY,
@@ -1273,6 +1374,10 @@ export const INFERIOR_SKILL_SPECIALISTS: Pokemon[] = [
   NOIVERN,
   TREECKO,
   GROVYLE,
+  TURTWIG,
+  GROTLE,
+  CHIMCHAR,
+  MONFERNO,
   RALTS,
   KIRLIA,
   GULPIN,

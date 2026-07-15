@@ -1,7 +1,7 @@
 import type { ActivationsType, AmountParams } from '../../mainskill';
 import { Mainskill } from '../../mainskill';
 
-export const IngredientDrawS = new (class extends Mainskill {
+abstract class IngredientDrawS extends Mainskill {
   name = 'Ingredient Draw S';
   RP = [880, 1251, 1726, 2383, 3290, 4846, 5843];
   ingredientAmounts = [5, 6, 8, 11, 13, 16, 18];
@@ -14,4 +14,8 @@ export const IngredientDrawS = new (class extends Mainskill {
       amount: this.leveledAmount(this.ingredientAmounts)
     }
   };
-})();
+}
+
+export const IngredientDrawSSandshrew = new (class extends IngredientDrawS {})();
+export const IngredientDrawSDwebble = new (class extends IngredientDrawS {})();
+export const IngredientDrawSCutiefly = new (class extends IngredientDrawS {})();

@@ -25,6 +25,36 @@ Want to contribute? You can find out how to get started on our documentation pag
 
 **🔗 [docs.nerolislab.com →](https://docs.nerolislab.com)**
 
+### 📦 Build And Run Dependencies
+
+To build and run the app locally, you will need:
+
+- Node.js and npm
+- Bun
+- Docker with Compose support for the backend database
+- We recommend using [nvm](https://github.com/nvm-sh/nvm) to install and select the repo's Node.js version for non-Nix setups
+
+### ❄️ Optional Nix Dev Shell
+
+_This option is community-maintained and is not officially supported by the core dev team._
+
+If you use Nix, this repo includes an optional dev shell:
+
+```bash
+nix develop
+```
+
+The dev shell provides `node`, `npm`, and `bun`. Docker is still expected to be installed and available on your system outside the dev shell.
+
+## 🛠️ Quick Start
+
+If you want to get the project running locally, follow these docs in order:
+
+1. Start with [Development Setup](https://docs.nerolislab.com/getting-started/development-setup.html): prerequisites, workspace setup, and the shape of the project.
+2. Build the shared library using instructions from [Common Library](https://docs.nerolislab.com/components/common.html).
+3. Set up the local database and backend environment following [Backend](https://docs.nerolislab.com/components/backend.html).
+4. Start the frontend with [Frontend](https://docs.nerolislab.com/components/frontend.html).
+
 ## 📄 License
 
 Released under the [Apache 2.0 License](LICENSE.md).

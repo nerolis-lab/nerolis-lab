@@ -76,3 +76,6 @@ Thumbs.db
 secrets
 .env
 *.local
+
+### AI ###
+.codex

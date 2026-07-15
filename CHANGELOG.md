@@ -1,3 +1,57 @@
+## [2.57.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.1...v2.57.2) (2026-07-14)
+
+
+### Bug Fixes
+
+* **Ingredient Draw:** separate into 3 skills ([849d5dd](https://github.com/nerolis-lab/nerolis-lab/commit/849d5dd75f284c5f506434b8a566be198d8ffa65))
+* **Plus:** separate Plus into two skills ([c759577](https://github.com/nerolis-lab/nerolis-lab/commit/c759577d29dc679cef7cbf11ec3679c63f7f450c))
+
+## [2.57.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.0...v2.57.1) (2026-07-14)
+
+# [2.57.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.3...v2.57.0) (2026-07-13)
+
+
+### Features
+
+* add turtwig, piplup, and chimchar lines ([18507a9](https://github.com/nerolis-lab/nerolis-lab/commit/18507a909bf50283faf714bef2a8c63b42ab1cb4))
+
+## [2.56.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.2...v2.56.3) (2026-06-27)
+
+## [2.56.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.1...v2.56.2) (2026-06-27)
+
+## [2.56.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.56.0...v2.56.1) (2026-06-27)
+
+# [2.56.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.55.1...v2.56.0) (2026-06-26)
+
+
+### Features
+
+* **v3.6.0:** changes in backend ([5103031](https://github.com/nerolis-lab/nerolis-lab/commit/5103031bed2c5dcc8923c932b8ab540ae7defbd5))
+* **v3.6.0:** changes in common ([546539e](https://github.com/nerolis-lab/nerolis-lab/commit/546539ecb6dfc244d249272313a3a3955563690a))
+* **v3.6.0:** changes in frontend ([a3e867e](https://github.com/nerolis-lab/nerolis-lab/commit/a3e867ec2b7f7c93d4175832336264f9f9c25a1f))
+
+## [2.55.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.55.0...v2.55.1) (2026-06-22)
+
+
+### Bug Fixes
+
+* updated draco meteor skill RP ([8084cfa](https://github.com/nerolis-lab/nerolis-lab/commit/8084cfa6f5f46d5427088ae76c1f5e9db6e39177))
+
+# [2.55.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.54.1...v2.55.0) (2026-06-22)
+
+
+### Features
+
+* add Draco Meteor ([87db750](https://github.com/nerolis-lab/nerolis-lab/commit/87db750ee3173090760ec5e070eb3e09a146f628))
+* add latios ([892fa7f](https://github.com/nerolis-lab/nerolis-lab/commit/892fa7f32f05f766ad5201a35bdebaf158b62b5e))
+* add latios, connected unique team member count to berry amount ([fb03cf0](https://github.com/nerolis-lab/nerolis-lab/commit/fb03cf0c3f07d859f7570fea4c5d5104cf058796))
+* fixed lint on draco meteor frontend tests ([966628b](https://github.com/nerolis-lab/nerolis-lab/commit/966628b4d84823c4a2e1fa6862db6d3fa6a3f7e9))
+* updated draco meteor calculator display values to reflect team ([198867d](https://github.com/nerolis-lab/nerolis-lab/commit/198867d57f26c049f12f0412b8ac204388f4d971))
+* updated draco meteor frontend test to use a micro-class to ([b925d74](https://github.com/nerolis-lab/nerolis-lab/commit/b925d74fe343edfbbacf09d3bda7df86e1551500))
+* updated draco meteor tests to check all member berries are added ([948e4f3](https://github.com/nerolis-lab/nerolis-lab/commit/948e4f3ae18fecf975c4244f72f27d73975b1aa3))
+
+## [2.54.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.54.0...v2.54.1) (2026-06-22)
+
 # [2.54.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.53.0...v2.54.0) (2026-05-25)
 
 

@@ -11,6 +11,9 @@ import {
   MAX_ISLAND_BONUS,
   MAX_POT_SIZE,
   MIN_POT_SIZE
+  POT_GROWTH_HIGH,
+  POT_GROWTH_LOW,
+  POT_GROWTH_THRESHOLD
 } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -109,20 +112,6 @@ describe('GameSettings', () => {
   })
 
   describe('pot size controls', () => {
-    it('increases pot size by 3 when plus button is clicked', async () => {
-      userStore.potSize = 30
-      const plusButton = wrapper.find('button:has(.mdi-plus)')
-      await plusButton.trigger('click')
-      expect(userStore.potSize).toBe(33)
-    })
-
-    it('decreases pot size by 3 when minus button is clicked', async () => {
-      userStore.potSize = 30
-      const minusButton = wrapper.find('button:has(.mdi-minus)')
-      await minusButton.trigger('click')
-      expect(userStore.potSize).toBe(27)
-    })
-
     it('sets pot size to minimum when Min button is clicked', async () => {
       userStore.potSize = 30
       const minButton = wrapper.findAll('button').find((btn) => btn.text().includes('Min'))
@@ -150,11 +139,62 @@ describe('GameSettings', () => {
       await minusButton.trigger('click')
       expect(userStore.potSize).toBe(MIN_POT_SIZE)
     })
+
+    it('increases pot size by 3 above the threshold', async () => {
+      userStore.potSize = POT_GROWTH_THRESHOLD
+      const plusButton = wrapper.find('button:has(.mdi-plus)')
+      await plusButton.trigger('click')
+      expect(userStore.potSize).toBe(POT_GROWTH_THRESHOLD + POT_GROWTH_HIGH)
+
+      userStore.potSize = MAX_POT_SIZE - POT_GROWTH_HIGH
+      await plusButton.trigger('click')
+      expect(userStore.potSize).toBe(MAX_POT_SIZE)
+    })
+
+    it('decreases pot size by 3 above the threshold', async () => {
+      userStore.potSize = POT_GROWTH_THRESHOLD + POT_GROWTH_HIGH
+      const minusButton = wrapper.find('button:has(.mdi-minus)')
+      await minusButton.trigger('click')
+      expect(userStore.potSize).toBe(POT_GROWTH_THRESHOLD)
+
+      userStore.potSize = MAX_POT_SIZE
+      await minusButton.trigger('click')
+      expect(userStore.potSize).toBe(MAX_POT_SIZE - POT_GROWTH_HIGH)
+    })
+
+    it('increases pot size by 2 below the threshold', async () => {
+      userStore.potSize = POT_GROWTH_THRESHOLD - POT_GROWTH_LOW
+      const plusButton = wrapper.find('button:has(.mdi-plus)')
+      await plusButton.trigger('click')
+      expect(userStore.potSize).toBe(POT_GROWTH_THRESHOLD)
+
+      userStore.potSize = MIN_POT_SIZE
+      await plusButton.trigger('click')
+      expect(userStore.potSize).toBe(MIN_POT_SIZE + POT_GROWTH_LOW)
+    })
+
+    it('decreases pot size by 2 below the threshold', async () => {
+      userStore.potSize = POT_GROWTH_THRESHOLD
+      const minusButton = wrapper.find('button:has(.mdi-minus)')
+      await minusButton.trigger('click')
+      expect(userStore.potSize).toBe(POT_GROWTH_THRESHOLD - POT_GROWTH_LOW)
+
+      userStore.potSize = MIN_POT_SIZE + POT_GROWTH_LOW
+      await minusButton.trigger('click')
+      expect(userStore.potSize).toBe(MIN_POT_SIZE)
+    })
+
+    it('snaps to a legal pot size', async () => {
+      userStore.potSize = POT_GROWTH_THRESHOLD - 1
+      const plusButton = wrapper.find('button:has(.mdi-plus)')
+      await plusButton.trigger('click')
+      expect(userStore.potSize).toBe(POT_GROWTH_THRESHOLD)
+    })
   })
 
   describe('pot size debouncing', () => {
     it('debounces API calls when updating pot size', async () => {
-      userStore.potSize = 30
+      userStore.potSize = 60
       const plusButton = wrapper.find('button:has(.mdi-plus)')
 
       // Trigger multiple updates in quick succession
@@ -171,7 +211,7 @@ describe('GameSettings', () => {
 
       // API should be called once with the final value
       expect(UserService.upsertUserSettings).toHaveBeenCalledTimes(1)
-      expect(UserService.upsertUserSettings).toHaveBeenCalledWith({ potSize: 39 })
+      expect(UserService.upsertUserSettings).toHaveBeenCalledWith({ potSize: 69 })
     })
 
     it('cancels pending debounced calls when unmounted', async () => {
