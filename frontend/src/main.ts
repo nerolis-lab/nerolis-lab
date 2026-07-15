@@ -26,6 +26,11 @@ async function initializeApp() {
       themes: {
         darkTheme
       }
+    },
+    defaults: {
+      VAvatar: {
+        color: 'transparent'
+      }
     }
   })
 
