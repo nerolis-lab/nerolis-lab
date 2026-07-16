@@ -1,3 +1,10 @@
+## [2.57.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.2...v2.57.3) (2026-07-15)
+
+
+### Bug Fixes
+
+* set VAvatar default color to transparent ([5563484](https://github.com/nerolis-lab/nerolis-lab/commit/5563484a4644cb0323275991fbcaa07758d11852))
+
 ## [2.57.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.1...v2.57.2) (2026-07-14)
 
 
