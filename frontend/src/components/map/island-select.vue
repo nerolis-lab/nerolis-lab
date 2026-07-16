@@ -38,14 +38,20 @@
             color="secondary"
             @click="selectIsland(i)"
           >
+            <div class="card-mobile">
+              <div class="card-mobile-info flex-column">
+                <div class="flex-wrap title-row">
+                  <span class="text-body island-name grow min-w-0">{{ filterIslandName(i.name) }}</span>
+                  <span v-if="i.expert" class="expert-chip text-small">EX</span>
+                </div>
+                <span class="text-small island-bonus">{{ areaBonus(i) }}% area bonus</span>
+              </div>
+              <div class="card-mobile-divider" aria-hidden="true"></div>
+              <v-avatar size="40" class="card-mobile-avatar">
+                <v-img :src="islandImage({ island: i })" :alt="`${filterIslandName(i.name)} icon`" />
+              </v-avatar>
+            </div>
             <div class="flex-top-left card-row">
-              <v-img
-                class="island-icon"
-                :src="islandImage({ island: i, background: false })"
-                :alt="`${filterIslandName(i.name)} icon`"
-                width="24"
-                height="24"
-              />
               <div class="flex-column grow min-w-0 card-body">
                 <div class="flex-wrap title-row">
                   <span class="text-body island-name grow min-w-0">{{ filterIslandName(i.name) }}</span>
@@ -60,7 +66,7 @@
         <v-row dense class="pa-2">
           <v-col cols="12">
             <span>Set your area bonus: </span>
-            <a class="btn-link" href="/settings">Settings</a>
+            <a class="settings-link btn-link" href="/settings">Settings</a>
           </v-col>
         </v-row>
 
@@ -424,8 +430,8 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-$card-background-breakpoint: 460px;
-$dialog-header-inline-breakpoint: 420px;
+$card-background-breakpoint: 500px;
+$mobile-layout-breakpoint: 400px;
 
 .grow {
   flex: 1 1 auto;
@@ -479,12 +485,6 @@ $dialog-header-inline-breakpoint: 420px;
   flex: 0 0 auto;
 }
 
-@media (min-width: $dialog-header-inline-breakpoint) {
-  .dialog-header {
-    align-items: center;
-  }
-}
-
 .island-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -492,13 +492,8 @@ $dialog-header-inline-breakpoint: 420px;
   margin-bottom: 8px;
 }
 
-.island-icon {
-  flex: 0 0 24px;
-  border-radius: 4px;
-}
-
 .card-row {
-  gap: 10px;
+  display: none;
   width: 100%;
   position: relative;
   z-index: 1;
@@ -536,7 +531,7 @@ $dialog-header-inline-breakpoint: 420px;
   letter-spacing: 0.03em;
   overflow: hidden;
   position: relative;
-  min-height: 48px;
+  min-height: 60px;
   height: auto !important;
 
   &::before {
@@ -550,8 +545,108 @@ $dialog-header-inline-breakpoint: 420px;
   }
 
   &.active {
-    box-shadow: 10px 0px 0px 1px rgb(var(--v-theme-primary)) inset;
+    box-shadow: 0 0 0 2px rgb(var(--v-theme-primary)) inset;
   }
+}
+
+.card-mobile {
+  display: grid;
+  grid-template-columns: 1fr 1px 40px;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.card-mobile-info {
+  gap: 3px;
+  text-align: left;
+  min-width: 0;
+  overflow: hidden;
+
+  .island-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .island-bonus {
+    opacity: 0.7;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+}
+
+.card-mobile-divider {
+  width: 100%;
+  height: 32px;
+  background: rgba(var(--v-theme-on-surface), 0.2);
+  border-radius: 1px;
+}
+
+.card-mobile-avatar {
+  justify-self: center;
+}
+
+@media (min-width: $mobile-layout-breakpoint) {
+  .island-card {
+    min-height: 80px;
+    height: 80px !important;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      background-image: var(--card-image);
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-size: cover;
+      pointer-events: none;
+      z-index: 0;
+      -webkit-mask-image: linear-gradient(
+        to right,
+        rgba(var(--v-theme-surface), 5%) 10%,
+        rgba(var(--v-theme-surface), 40%) 60%,
+        rgba(var(--v-theme-surface), 100%) 90%
+      );
+      mask-image: linear-gradient(
+        to right,
+        rgba(var(--v-theme-surface), 5%) 10%,
+        rgba(var(--v-theme-surface), 40%) 60%,
+        rgba(var(--v-theme-surface), 100%) 90%
+      );
+    }
+
+    &.active {
+      box-shadow: 10px 0px 0px 1px rgb(var(--v-theme-primary)) inset;
+    }
+  }
+
+  .card-mobile {
+    display: none;
+  }
+
+  .card-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 4px;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .title-row {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+
+.settings-link {
+  display: inline-block;
 }
 
 .option-grid {
@@ -611,56 +706,6 @@ $dialog-header-inline-breakpoint: 420px;
   .island-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-  }
-
-  .island-icon {
-    display: none;
-  }
-
-  .card-row {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 4px;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .title-row {
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
-  .island-card {
-    min-height: 80px;
-    height: 80px !important;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      background-image: var(--card-image);
-      background-repeat: no-repeat;
-      background-position: right center;
-      background-size: cover;
-      pointer-events: none;
-      z-index: 0;
-      -webkit-mask-image: linear-gradient(
-        to right,
-        rgba(var(--v-theme-surface), 5%) 0%,
-        rgba(var(--v-theme-surface), 30%) 64%,
-        rgba(var(--v-theme-surface), 100%) 100%
-      );
-      mask-image: linear-gradient(
-        to right,
-        rgba(var(--v-theme-surface), 5%) 0%,
-        rgba(var(--v-theme-surface), 30%) 64%,
-        rgba(var(--v-theme-surface), 100%) 100%
-      );
-    }
   }
 }
 </style>
