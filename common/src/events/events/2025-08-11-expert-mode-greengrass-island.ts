@@ -41,16 +41,7 @@ export const event = EventBuilder.create<ExpertModeSettings>()
     }
   }))
 
-  // Berry bonus: increase favored-berry multiplier from 2x to 2.4x. Since
-  // `breakdown.favored` holds only the +1x bonus above base for favored berries,
-  // multiplying it by 1.4 raises the total from base+base (=2x) to base+base*1.4 (=2.4x).
-  .forStrength((input) => ({
-    'berries.breakdown.favored': (value) => {
-      if (input.randomBonus === 'berry') {
-        return value * 1.4;
-      }
-      return value;
-    }
-  }))
-
+  // The weekly 'berry' bonus (favored berries 2.4x instead of 2x) is applied in the
+  // backend StrengthCalculator, where it can compound with the area bonus and also
+  // cover berries produced by skills like Berry Burst.
   .build();

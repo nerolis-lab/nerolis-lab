@@ -135,23 +135,7 @@ export class TeamSimulator {
   public results(): CalculateTeamResponse {
     this.collectInventory();
 
-    const members = this.memberStatesWithoutFillers.map((m) => {
-      const result = m.results(this.run);
-      if (this.expertModeEvent) {
-        result.strength = this.expertModeEvent.applyToStrength(result.strength);
-        // Recompute totals — the event modifies individual breakdown fields
-        // and the total must be kept in sync with its constituent parts.
-        const berriesBreakdown = result.strength.berries.breakdown;
-        result.strength.berries.total =
-          berriesBreakdown.base +
-          berriesBreakdown.favored +
-          berriesBreakdown.islandBonus +
-          (berriesBreakdown.event ?? 0);
-        const skillBreakdown = result.strength.skill.breakdown;
-        result.strength.skill.total = skillBreakdown.base + skillBreakdown.islandBonus + (skillBreakdown.event ?? 0);
-      }
-      return result;
-    });
+    const members = this.memberStatesWithoutFillers.map((m) => m.results(this.run));
     let cooking = undefined;
     if (this.cookingState) {
       cooking = this.cookingState.results(this.run);
