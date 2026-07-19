@@ -44,7 +44,7 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true // Open the dialog
     await wrapper.vm.$nextTick()
 
-    const ggButton = document.querySelector('[aria-label="greengrass"]') as HTMLElement
+    const ggButton = document.querySelector('[aria-label="Greengrass Isle"]') as HTMLElement
     expect(ggButton).not.toBeNull()
     ggButton.click()
 
@@ -55,7 +55,7 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true // Open the dialog
     await wrapper.vm.$nextTick()
 
-    const cyanButton = document.querySelector('[aria-label="cyan"]') as HTMLElement
+    const cyanButton = document.querySelector('[aria-label="Cyan Beach"]') as HTMLElement
     expect(cyanButton).not.toBeNull()
     cyanButton.click()
 
@@ -66,7 +66,7 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true // Open the dialog
     await wrapper.vm.$nextTick()
 
-    const button = document.querySelector('[aria-label="taupe"]') as HTMLElement
+    const button = document.querySelector('[aria-label="Taupe Hollow"]') as HTMLElement
     expect(button).not.toBeNull()
     button.click()
 
@@ -77,7 +77,7 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true // Open the dialog
     await wrapper.vm.$nextTick()
 
-    const button = document.querySelector('[aria-label="snowdrop"]') as HTMLElement
+    const button = document.querySelector('[aria-label="Snowdrop Tundra"]') as HTMLElement
     expect(button).not.toBeNull()
     button.click()
 
@@ -88,7 +88,7 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true // Open the dialog
     await wrapper.vm.$nextTick()
 
-    const button = document.querySelector('[aria-label="lapis"]') as HTMLElement
+    const button = document.querySelector('[aria-label="Lapis Lakeside"]') as HTMLElement
     expect(button).not.toBeNull()
     button.click()
 
@@ -99,7 +99,7 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true // Open the dialog
     await wrapper.vm.$nextTick()
 
-    const button = document.querySelector('[aria-label="powerplant"]') as HTMLElement
+    const button = document.querySelector('[aria-label="Old Gold Power Plant"]') as HTMLElement
     expect(button).not.toBeNull()
     button.click()
 

@@ -10,11 +10,13 @@
       <SettingsCard title="Area Bonus" icon="mdi-map-marker">
         <v-row dense class="mx-2 flex-left">
           <div class="area-and-bonus" v-for="islandData in islandBonusData" :key="islandData.shortName">
-            <div class="area-image-wrapper mr-2">
+            <div class="badge-anchor mr-2">
               <v-avatar size="54" class="area-image">
                 <v-img :src="islandImage({ island: islandData.island })" />
               </v-avatar>
-              <span v-if="islandData.island.expert" class="expert-badge" aria-label="expert badge">EX</span>
+              <span v-if="islandData.island.expert" class="expert-chip expert-badge text-small" aria-label="expert badge"
+                >EX</span
+              >
             </div>
 
             <div class="mr-2 area-name">{{ islandData.island.name }}</div>
@@ -225,26 +227,5 @@ function setPotSize(size: number) {
   .area-bonus-input {
     flex: 0 0 auto;
   }
-}
-
-.area-image-wrapper {
-  position: relative;
-  display: inline-block;
-  line-height: 0;
-}
-
-.expert-badge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  background: rgb(var(--v-theme-primary));
-  color: rgb(var(--v-theme-on-primary));
-  font-size: 10px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 4px;
-  pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 </style>

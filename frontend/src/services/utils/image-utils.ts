@@ -48,7 +48,8 @@ export function islandImage(params: {
 }) {
   const { background = false, island } = params
   const maybeBackground = background ? 'background-' : ''
-  const shortName = island.expert && island.base ? island.base.shortName : island.shortName
+  // Expert islands have their own background art but reuse the base island's icon
+  const shortName = !background && island.expert && island.base ? island.base.shortName : island.shortName
 
   return `/images/island/${maybeBackground}${shortName}.png`
 }

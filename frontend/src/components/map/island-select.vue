@@ -2,7 +2,7 @@
   <v-dialog v-model="menu" max-width="560px" class="flex-center">
     <template #activator="{ props }">
       <v-btn icon color="transparent" elevation="0" v-bind="props">
-        <div class="island-activator">
+        <div class="badge-anchor">
           <v-img height="48" width="48" :src="islandImage({ island, background: false })" alt="island icon" />
           <span v-if="isExpertIsland" class="expert-chip expert-badge text-small" aria-label="expert mode">EX</span>
         </div>
@@ -31,7 +31,7 @@
             :key="i.shortName"
             class="island-card"
             :class="{ active: island.shortName === i.shortName }"
-            :aria-label="i.shortName"
+            :aria-label="i.name"
             :style="{
               '--card-image': `url(${islandImage({ island: i, background: true })})`
             }"
@@ -109,7 +109,7 @@
             <v-col cols="12">
               <div class="typography-h6 mb-1">Weekly random bonus</div>
               <span class="bonus-caption text-small">
-                Rolled each week; only Pokemon whose berry is favored gain the bonus
+                Rolled each week; only Pokémon whose berry is favored gain the bonus
               </span>
               <div class="bonus-chips">
                 <v-chip
@@ -451,30 +451,6 @@ $mobile-layout-breakpoint: 400px;
 
 .min-w-0 {
   min-width: 0;
-}
-
-.expert-chip {
-  flex: 0 0 auto;
-  background: rgb(var(--v-theme-primary));
-  color: rgb(var(--v-theme-on-primary));
-  font-weight: 700 !important;
-  line-height: 1;
-  padding: 2px 4px;
-  border-radius: 4px;
-  letter-spacing: 0.05em;
-}
-
-.island-activator {
-  position: relative;
-  display: inline-block;
-}
-
-.expert-badge {
-  position: absolute;
-  bottom: -4px;
-  right: -4px;
-  pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
 .dialog-header {
