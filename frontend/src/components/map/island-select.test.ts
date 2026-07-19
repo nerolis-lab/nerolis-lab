@@ -129,7 +129,7 @@ describe('IslandSelect', () => {
     wrapper.vm.island = { ...CYAN, areaBonus: 0 }
     await wrapper.vm.$nextTick()
 
-    const clearButton = document.querySelector('button[aria-label="clear button"]') as HTMLElement
+    const clearButton = document.querySelector('button[aria-label="clear berries"]') as HTMLElement
     expect(clearButton).not.toBeNull()
 
     clearButton.click()
@@ -143,7 +143,7 @@ describe('IslandSelect', () => {
     wrapper.vm.island = { ...CYAN, areaBonus: 0 }
     await wrapper.vm.$nextTick()
 
-    const allButton = document.querySelector('button[aria-label="select all button"]') as HTMLElement
+    const allButton = document.querySelector('button[aria-label="select all berries"]') as HTMLElement
     expect(allButton).not.toBeNull()
 
     allButton.click()
@@ -159,7 +159,9 @@ describe('IslandSelect', () => {
     wrapper.vm.menu = true
     await wrapper.vm.$nextTick()
 
-    const closeButton = document.querySelector('button[aria-label="save button"]')
+    const closeButton = Array.from(document.querySelectorAll('button')).find(
+      (button) => button.textContent?.trim() === 'Save'
+    )
     expect(closeButton).not.toBeNull()
 
     closeButton?.dispatchEvent(new Event('click'))
@@ -199,19 +201,20 @@ describe('IslandSelect', () => {
       expect(wrapper.vm.isExpertIsland).toBe(false)
     })
 
-    it('becomes expert when the GGEX island is selected and populates defaults', () => {
+    it('starts with an empty picker when a fresh expert island is selected', () => {
       const expertIsland: IslandInstance = { ...GREENGRASS_EXPERT, areaBonus: 0 }
       wrapper.vm.selectIsland(expertIsland)
 
       expect(wrapper.vm.isExpertIsland).toBe(true)
-      expect(wrapper.vm.island.expertMode).toBeDefined()
-      expect(wrapper.vm.island.expertMode?.mainFavoriteBerry).toBeDefined()
-      expect(wrapper.vm.island.expertMode?.subFavoriteBerries).toEqual([])
-      expect(wrapper.vm.island.expertMode?.randomBonus).toBe('ingredient')
+      expect(wrapper.vm.island.expertMode).toBeUndefined()
+      expect(wrapper.vm.mainFavoriteBerry).toBe('')
+      expect(wrapper.vm.subFavoriteBerries).toEqual([])
+      expect(wrapper.vm.randomBonus).toBe('ingredient')
     })
 
     it('clears expertMode when switching back to a non-expert island', () => {
       wrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0 })
+      wrapper.vm.selectMainFavoriteBerry(sortedBerries[0].name)
       expect(wrapper.vm.island.expertMode).toBeDefined()
 
       wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
@@ -248,16 +251,79 @@ describe('IslandSelect', () => {
       expertWrapper.unmount()
     })
 
-    it('selects sub favorite berries and filters out the main berry', () => {
+    it('selects sub favorite berries, filters out the main berry and caps at 2', () => {
       const expertWrapper = mountWithExpertIsland()
-      const main = expertWrapper.vm.island.expertMode?.mainFavoriteBerry.name
-      expect(main).toBeDefined()
+      const main = sortedBerries[sortedBerries.length - 1].name
+      expertWrapper.vm.selectMainFavoriteBerry(main)
 
       const others = sortedBerries.filter((b) => b.name !== main).slice(0, 3)
-      expertWrapper.vm.selectSubFavoriteBerries([main!, ...others.map((b) => b.name)])
+      expertWrapper.vm.selectSubFavoriteBerries([main, ...others.map((b) => b.name)])
 
       expect(expertWrapper.vm.subFavoriteBerries).not.toContain(main)
-      expect(expertWrapper.vm.subFavoriteBerries).toEqual(others.map((b) => b.name))
+      expect(expertWrapper.vm.subFavoriteBerries).toEqual(others.slice(0, 2).map((b) => b.name))
+      expertWrapper.unmount()
+    })
+
+    it('discards unsaved picker edits when the dialog closes without saving', async () => {
+      const expertWrapper = mountWithExpertIsland()
+      expertWrapper.vm.menu = true
+      await expertWrapper.vm.$nextTick()
+
+      expertWrapper.vm.selectMainFavoriteBerry(sortedBerries[0].name)
+      expertWrapper.vm.selectSubFavoriteBerries([sortedBerries[1].name])
+
+      expertWrapper.vm.menu = false
+      await expertWrapper.vm.$nextTick()
+
+      expect(expertWrapper.vm.mainFavoriteBerry).toBe('')
+      expect(expertWrapper.vm.subFavoriteBerries).toEqual([])
+      expect(expertWrapper.vm.island.expertMode).toBeUndefined()
+      expect(expertWrapper.emitted('update-island')).toBeFalsy()
+
+      // Let VDialog finish its async close handling before tearing down
+      await new Promise((resolve) => setTimeout(resolve, 0))
+      expertWrapper.unmount()
+    })
+
+    it('restores the previous island when the dialog closes without saving', async () => {
+      wrapper.vm.menu = true
+      await wrapper.vm.$nextTick()
+
+      wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
+      expect(wrapper.vm.island.shortName).toBe(CYAN.shortName)
+
+      wrapper.vm.menu = false
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.vm.island.shortName).toBe(DEFAULT_ISLAND.shortName)
+      expect(wrapper.emitted('update-island')).toBeFalsy()
+    })
+
+    it('keeps the current picks when the already-selected island is clicked again', () => {
+      const expertWrapper = mountWithExpertIsland()
+      const main = sortedBerries[4]
+      const sub = sortedBerries[5]
+      expertWrapper.vm.selectMainFavoriteBerry(main.name)
+      expertWrapper.vm.selectSubFavoriteBerries([sub.name])
+
+      expertWrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0 })
+
+      expect(expertWrapper.vm.mainFavoriteBerry).toBe(main.name)
+      expect(expertWrapper.vm.subFavoriteBerries).toEqual([sub.name])
+      expertWrapper.unmount()
+    })
+
+    it('clears the drafts when the picker emits empty values', () => {
+      const expertWrapper = mountWithExpertIsland()
+      expertWrapper.vm.selectMainFavoriteBerry(sortedBerries[0].name)
+      expertWrapper.vm.selectSubFavoriteBerries([sortedBerries[1].name, sortedBerries[2].name])
+
+      expertWrapper.vm.selectMainFavoriteBerry('')
+      expertWrapper.vm.selectSubFavoriteBerries([])
+
+      expect(expertWrapper.vm.mainFavoriteBerry).toBe('')
+      expect(expertWrapper.vm.subFavoriteBerries).toEqual([])
+      expect(expertWrapper.vm.island.expertMode?.subFavoriteBerries).toEqual([])
       expertWrapper.unmount()
     })
 
@@ -276,7 +342,8 @@ describe('IslandSelect', () => {
     it('ignores invalid random bonus values', () => {
       const expertWrapper = mountWithExpertIsland()
       expertWrapper.vm.selectRandomBonus('invalid')
-      expect(expertWrapper.vm.island.expertMode?.randomBonus).toBe('ingredient')
+      expect(expertWrapper.vm.island.expertMode).toBeUndefined()
+      expect(expertWrapper.vm.randomBonus).toBe('ingredient')
       expertWrapper.unmount()
     })
 

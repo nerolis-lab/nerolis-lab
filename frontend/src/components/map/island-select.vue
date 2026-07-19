@@ -4,7 +4,7 @@
       <v-btn icon color="transparent" elevation="0" v-bind="props">
         <div class="island-activator">
           <v-img height="48" width="48" :src="islandImage({ island, background: false })" alt="island icon" />
-          <span v-if="isExpertIsland" class="expert-chip expert-badge text-small" aria-label="expert badge">EX</span>
+          <span v-if="isExpertIsland" class="expert-chip expert-badge text-small" aria-label="expert mode">EX</span>
         </div>
       </v-btn>
     </template>
@@ -15,7 +15,7 @@
           <v-card-title class="dialog-title pl-0">Island Settings</v-card-title>
           <v-switch
             v-model="expertToggle"
-            aria-label="expert-mode-toggle"
+            aria-label="toggle expert mode"
             class="expert-mode-toggle"
             color="primary"
             density="compact"
@@ -72,34 +72,21 @@
 
         <template v-if="!isExpertIsland">
           <v-row dense>
+            <v-col cols="12" class="flex-between berry-actions">
+              <span class="berry-hint text-small">Selected berries</span>
+              <div class="flex-right berry-actions">
+                <v-btn color="secondary" size="small" aria-label="select all berries" @click="selectAll()">All</v-btn>
+                <v-btn color="error-3" size="small" aria-label="clear berries" @click="clear()">Clear</v-btn>
+              </div>
+            </v-col>
             <v-col cols="12">
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group v-model="island.berries" column multiple selected-class="bg-primary">
-                  <v-chip
-                    v-for="berry in berries"
-                    :key="berry.name"
-                    :value="berry"
-                    class="ma-1"
-                    @click="toggleBerry(berry)"
-                  >
-                    <v-avatar size="24">
-                      <v-img :src="`/images/berries/${berry.name.toLowerCase()}.png`" />
-                    </v-avatar>
-                  </v-chip>
-                </v-chip-group>
-              </v-sheet>
+              <BerryGrid :berries="berries" :selection="islandBerryNames" @toggle="toggleBerry" />
             </v-col>
           </v-row>
 
           <v-row>
-            <v-col cols="4" class="flex-left">
-              <v-btn color="surface" aria-label="clear button" @click="clear()">Clear</v-btn>
-            </v-col>
-            <v-col cols="4" class="flex-center">
-              <v-btn color="surface" aria-label="select all button" @click="selectAll()">All</v-btn>
-            </v-col>
-            <v-col cols="4" class="flex-right">
-              <v-btn color="secondary" aria-label="save button" @click="saveBerries()">Save</v-btn>
+            <v-col cols="12" class="flex-right">
+              <v-btn color="secondary" @click="saveBerries()">Save</v-btn>
             </v-col>
           </v-row>
         </template>
@@ -107,62 +94,20 @@
         <template v-else>
           <v-row dense class="mt-2">
             <v-col cols="12">
-              <div class="text-subtitle-2 mb-1">Main favorite berry</div>
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group
-                  :model-value="mainFavoriteBerry"
-                  column
-                  mandatory
-                  selected-class="bg-primary"
-                  @update:model-value="selectMainFavoriteBerry"
-                >
-                  <v-chip
-                    v-for="b in berries"
-                    :key="`main-${b.name}`"
-                    :value="b.name"
-                    class="ma-1"
-                    :aria-label="`main-${b.name.toLowerCase()}`"
-                  >
-                    <v-avatar size="24">
-                      <v-img :src="`/images/berries/${b.name.toLowerCase()}.png`" />
-                    </v-avatar>
-                  </v-chip>
-                </v-chip-group>
-              </v-sheet>
+              <div class="typography-h6 mb-1">Favorite berries</div>
+              <FavoriteBerryPicker
+                :berries="berries"
+                :main="mainFavoriteBerry"
+                :subs="subFavoriteBerries"
+                @update:main="selectMainFavoriteBerry"
+                @update:subs="selectSubFavoriteBerries"
+              />
             </v-col>
           </v-row>
 
           <v-row dense class="mt-2">
             <v-col cols="12">
-              <div class="text-subtitle-2 mb-1">Sub favorite berries</div>
-              <v-sheet color="secondary" rounded style="overflow-y: auto">
-                <v-chip-group
-                  :model-value="subFavoriteBerries"
-                  column
-                  multiple
-                  selected-class="bg-primary"
-                  @update:model-value="selectSubFavoriteBerries"
-                >
-                  <v-chip
-                    v-for="b in berries"
-                    :key="`sub-${b.name}`"
-                    :value="b.name"
-                    :disabled="b.name === mainFavoriteBerry"
-                    class="ma-1"
-                    :aria-label="`sub-${b.name.toLowerCase()}`"
-                  >
-                    <v-avatar size="24">
-                      <v-img :src="`/images/berries/${b.name.toLowerCase()}.png`" />
-                    </v-avatar>
-                  </v-chip>
-                </v-chip-group>
-              </v-sheet>
-            </v-col>
-          </v-row>
-
-          <v-row dense class="mt-2">
-            <v-col cols="12">
-              <div class="text-subtitle-2 mb-1">Weekly random bonus</div>
+              <div class="typography-h6 mb-1">Weekly random bonus</div>
               <div class="option-grid">
                 <button
                   v-for="option in RANDOM_BONUS_OPTIONS"
@@ -183,7 +128,7 @@
 
           <v-row class="mt-2">
             <v-col cols="12" class="flex-right">
-              <v-btn color="secondary" aria-label="save button" @click="saveBerries()">Save</v-btn>
+              <v-btn color="secondary" :disabled="!mainFavoriteBerry" @click="saveBerries()">Save</v-btn>
             </v-col>
           </v-row>
         </template>
@@ -193,12 +138,15 @@
 </template>
 
 <script setup lang="ts">
+import BerryGrid from '@/components/map/berry-favorites/berry-grid.vue'
+import FavoriteBerryPicker from '@/components/map/berry-favorites/favorite-berry-picker.vue'
 import { islandImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
 import {
   berry,
   EXPERT_ISLANDS,
   ISLANDS,
+  MAX_SUB_FAVORITE_BERRIES,
   type Berry,
   type ExpertModeSettings,
   type ExpertRandomBonusType,
@@ -257,18 +205,24 @@ const defaultExpertMode = (): ExpertModeSettings => ({
   randomBonus: 'ingredient'
 })
 
+// A fresh expert island keeps expertMode unset until the user picks something
 const initIsland = (input: IslandInstance): IslandInstance => {
   if (input.expert) {
     return {
       ...input,
       berries: [...input.berries],
-      expertMode: input.expertMode ?? defaultExpertMode()
+      expertMode: input.expertMode && {
+        ...input.expertMode,
+        subFavoriteBerries: [...input.expertMode.subFavoriteBerries]
+      }
     }
   }
   return { ...input, berries: [...input.berries] }
 }
 
 const island = ref<IslandInstance>(initIsland(props.previousIsland))
+
+const islandBerryNames = computed(() => island.value.berries.map((b) => b.name))
 
 const selectableIslands = computed<IslandInstance[]>(() => [...userStore.baseIslands, ...userStore.expertIslands])
 
@@ -280,23 +234,40 @@ const displayedIslands = computed<IslandInstance[]>(() =>
   selectableIslands.value.filter((i) => (expertToggle.value ? i.expert : !i.expert))
 )
 
-const mainFavoriteBerry = computed(() =>
-  island.value.expert ? (island.value.expertMode?.mainFavoriteBerry.name ?? '') : ''
-)
-const subFavoriteBerries = computed(() =>
-  island.value.expert ? (island.value.expertMode?.subFavoriteBerries.map((b) => b.name) ?? []) : []
-)
+// Draft state allows an empty main while editing; expertMode keeps the last valid pick
+const draftMain = ref('')
+const draftSubs = ref<string[]>([])
+
+const syncDraft = (i: IslandInstance) => {
+  draftMain.value = i.expert ? (i.expertMode?.mainFavoriteBerry.name ?? '') : ''
+  draftSubs.value = i.expert ? (i.expertMode?.subFavoriteBerries.map((b) => b.name) ?? []) : []
+}
+syncDraft(island.value)
+
+const mainFavoriteBerry = computed(() => (island.value.expert ? draftMain.value : ''))
+const subFavoriteBerries = computed(() => (island.value.expert ? draftSubs.value : []))
 const randomBonus = computed<ExpertRandomBonusType>(() =>
   island.value.expert ? (island.value.expertMode?.randomBonus ?? 'ingredient') : 'ingredient'
 )
 
+const resetToIsland = (source: IslandInstance) => {
+  island.value = initIsland(source)
+  expertToggle.value = source.expert === true
+  syncDraft(island.value)
+}
+
 watch(
   () => props.previousIsland,
-  (newIsland) => {
-    island.value = initIsland(newIsland)
-    expertToggle.value = newIsland.expert === true
-  }
+  (newIsland) => resetToIsland(newIsland)
 )
+
+// Closing without saving discards edits so the dialog and activator mirror the
+// actual team state; after a save the prop already holds the saved island
+watch(menu, (open) => {
+  if (!open) {
+    resetToIsland(props.previousIsland)
+  }
+})
 
 const areaBonus = (i: IslandInstance): number => Math.round((userStore.islandBonus(i.shortName) - 1) * 100)
 
@@ -318,7 +289,7 @@ const saveBerries = () => {
     island.value.berries = [expertMode.mainFavoriteBerry, ...expertMode.subFavoriteBerries]
   }
   menu.value = false
-  updateBerries()
+  emit('update-island', island.value)
 }
 
 const toggleBerry = (berryToToggle: Berry) => {
@@ -348,8 +319,10 @@ const findExpertPairedToBase = (base: Island): IslandInstance | undefined =>
 const findFirstExpertIsland = (): IslandInstance | undefined => userStore.expertIslands[0]
 
 const selectIsland = (newIsland: IslandInstance) => {
+  if (newIsland.shortName === island.value.shortName) return
   island.value = initIsland(newIsland)
   expertToggle.value = island.value.expert === true
+  syncDraft(island.value)
 }
 
 const onExpertToggle = (value: boolean | null) => {
@@ -375,31 +348,34 @@ const onExpertToggle = (value: boolean | null) => {
   }
 }
 
-const selectMainFavoriteBerry = (berryName: unknown) => {
-  if (typeof berryName !== 'string' || berryName.length === 0) return
+const selectMainFavoriteBerry = (berryName: string) => {
+  if (berryName.length === 0) {
+    draftMain.value = ''
+    return
+  }
   const selected = berries.value.find((b) => b.name === berryName)
   if (!selected) return
+
+  draftMain.value = selected.name
+  draftSubs.value = draftSubs.value.filter((name) => name !== selected.name)
 
   const expertMode = ensureExpertMode()
   expertMode.mainFavoriteBerry = selected
   expertMode.subFavoriteBerries = expertMode.subFavoriteBerries.filter((b) => b.name !== selected.name)
 }
 
-const selectSubFavoriteBerries = (berryNames: unknown) => {
-  if (!Array.isArray(berryNames)) return
+const selectSubFavoriteBerries = (berryNames: string[]) => {
+  const names = berryNames.filter((name) => name !== draftMain.value && berries.value.some((b) => b.name === name))
+  draftSubs.value = names.slice(0, MAX_SUB_FAVORITE_BERRIES)
+
   const expertMode = ensureExpertMode()
-  const mainName = expertMode.mainFavoriteBerry.name
-  expertMode.subFavoriteBerries = berries.value.filter((b) => berryNames.includes(b.name) && b.name !== mainName)
+  expertMode.subFavoriteBerries = berries.value.filter((b) => draftSubs.value.includes(b.name))
 }
 
-const selectRandomBonus = (value: unknown) => {
+const selectRandomBonus = (value: string) => {
   if (value !== 'ingredient' && value !== 'berry' && value !== 'skill') return
   const expertMode = ensureExpertMode()
   expertMode.randomBonus = value
-}
-
-const updateBerries = () => {
-  emit('update-island', island.value)
 }
 
 // Expose methods and data for testing
@@ -647,6 +623,16 @@ $mobile-layout-breakpoint: 400px;
 
 .settings-link {
   display: inline-block;
+}
+
+.berry-actions {
+  align-items: center;
+  gap: 8px;
+}
+
+.berry-hint {
+  opacity: 0.7;
+  padding-left: 2px;
 }
 
 .option-grid {
