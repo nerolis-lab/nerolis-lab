@@ -62,7 +62,7 @@ export function islandInstance(attrs?: IslandInstanceInput): IslandInstance {
 
 export function expertIslandInstance(attrs?: Partial<Omit<ExpertIslandInstance, 'expert'>>): ExpertIslandInstance {
   return {
-    ...expertIsland({ base: attrs?.base, shortName: attrs?.shortName, name: attrs?.name, berries: attrs?.berries }),
+    ...expertIsland(),
     areaBonus: 0,
     ...attrs,
     expert: true,
