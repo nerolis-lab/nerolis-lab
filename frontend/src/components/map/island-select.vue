@@ -108,21 +108,43 @@
           <v-row dense class="mt-2">
             <v-col cols="12">
               <div class="typography-h6 mb-1">Weekly random bonus</div>
-              <div class="option-grid">
-                <button
+              <span class="bonus-caption text-small">
+                Rolled each week; only Pokemon whose berry is favored gain the bonus
+              </span>
+              <div class="bonus-chips">
+                <v-chip
                   v-for="option in RANDOM_BONUS_OPTIONS"
                   :key="option.value"
-                  type="button"
+                  class="bonus-chip"
+                  :class="{ active: randomBonus === option.value }"
+                  :color="randomBonus === option.value ? option.color : undefined"
                   :aria-label="`random-bonus-${option.value}`"
                   :aria-pressed="randomBonus === option.value"
-                  :class="['option-tile', 'flex-column-center', { active: randomBonus === option.value }]"
                   @click="selectRandomBonus(option.value)"
                 >
-                  <v-img :src="option.image" :alt="option.alt" width="32" height="32" />
-                  <span class="text-small option-label">{{ option.label }}</span>
-                  <span class="text-small option-hint">{{ option.hint }}</span>
-                </button>
+                  <v-img class="bonus-chip-icon" :src="option.image" alt="" width="24" height="24" />
+                  <span class="text-small bonus-chip-label">{{ option.label }}</span>
+                </v-chip>
               </div>
+
+              <v-sheet color="secondary" rounded class="bonus-detail">
+                <v-btn
+                  block
+                  variant="text"
+                  class="bonus-detail-toggle"
+                  aria-label="toggle random bonus details"
+                  :aria-expanded="showBonusDetails"
+                  @click="showBonusDetails = !showBonusDetails"
+                >
+                  <span class="text-small bonus-detail-hint">{{ selectedBonusOption.hint }}</span>
+                  <v-icon size="18" :icon="showBonusDetails ? 'mdi-chevron-up' : 'mdi-chevron-down'" />
+                </v-btn>
+                <v-expand-transition>
+                  <div v-show="showBonusDetails">
+                    <p class="text-small bonus-detail-text">{{ selectedBonusOption.detail }}</p>
+                  </div>
+                </v-expand-transition>
+              </v-sheet>
             </v-col>
           </v-row>
 
@@ -173,31 +195,39 @@ const RANDOM_BONUS_OPTIONS: Array<{
   value: ExpertRandomBonusType
   label: string
   hint: string
+  detail: string
+  color: string
   image: string
-  alt: string
 }> = [
   {
     value: 'ingredient',
     label: 'Ingredient',
-    hint: '+1 ingredient, sometimes +2',
-    image: '/images/ingredient/ingredients.png',
-    alt: 'ingredients icon'
+    hint: '+1-2 ingredients',
+    detail:
+      'Favored helpers will have 1 extra ingredient each time they bring you ingredients, ' +
+      'with favored Ingredients specialists having a 50% chance to bring you 2 extra instead.',
+    color: 'ingredient',
+    image: '/images/ingredient/ingredients.png'
   },
   {
     value: 'berry',
     label: 'Berry',
     hint: '2.4x favorite berry power',
-    image: '/images/berries/berries.png',
-    alt: 'berries icon'
+    detail: 'Favored berries are worth 2.4x their normal power instead of 2x.',
+    color: 'berry',
+    image: '/images/berries/berries.png'
   },
   {
     value: 'skill',
     label: 'Skill',
     hint: '1.25x main skill chance',
-    image: '/images/misc/skillproc.png',
-    alt: 'skill proc icon'
+    detail: 'Main skills of favored helpers are 1.25x more likely to trigger.',
+    color: 'skill',
+    image: '/images/misc/skillproc.png'
   }
 ]
+
+const showBonusDetails = ref(false)
 
 const defaultExpertMode = (): ExpertModeSettings => ({
   mainFavoriteBerry: berries.value[0],
@@ -248,6 +278,10 @@ const mainFavoriteBerry = computed(() => (island.value.expert ? draftMain.value 
 const subFavoriteBerries = computed(() => (island.value.expert ? draftSubs.value : []))
 const randomBonus = computed<ExpertRandomBonusType>(() =>
   island.value.expert ? (island.value.expertMode?.randomBonus ?? 'ingredient') : 'ingredient'
+)
+
+const selectedBonusOption = computed(
+  () => RANDOM_BONUS_OPTIONS.find((option) => option.value === randomBonus.value) ?? RANDOM_BONUS_OPTIONS[0]
 )
 
 const resetToIsland = (source: IslandInstance) => {
@@ -391,6 +425,8 @@ defineExpose({
   subFavoriteBerries,
   randomBonus,
   RANDOM_BONUS_OPTIONS,
+  selectedBonusOption,
+  showBonusDetails,
   areaBonus,
   filterIslandName,
   saveBerries,
@@ -635,57 +671,62 @@ $mobile-layout-breakpoint: 400px;
   padding-left: 2px;
 }
 
-.option-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+.bonus-caption {
+  display: block;
+  opacity: 0.7;
+  padding-left: 2px;
+  line-height: 1.3;
 }
 
-.option-tile {
-  gap: 2px;
-  min-width: 0;
-  padding: 10px 6px;
-  border-radius: 8px;
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
-  background: rgb(var(--v-theme-surface));
-  color: rgb(var(--v-theme-on-surface));
-  cursor: pointer;
-  transition: all 0.15s ease;
-  text-align: center;
+.bonus-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
 
-  .option-label {
-    font-weight: 700 !important;
-  }
-
-  .option-hint {
-    opacity: 0.7;
-    line-height: 1.2;
-  }
-
-  :deep(.v-img) {
+.bonus-chip {
+  .bonus-chip-icon {
     flex: 0 0 auto;
-    margin-bottom: 2px;
-    opacity: 0.9;
+    margin-right: 6px;
   }
 
-  &:hover {
-    border-color: rgba(var(--v-theme-primary), 0.5);
-  }
-
-  &:active {
-    transform: scale(0.98);
+  .bonus-chip-label {
+    font-weight: 600 !important;
   }
 
   &.active {
-    background: rgb(var(--v-theme-primary));
-    color: rgb(var(--v-theme-on-primary));
-    border-color: rgb(var(--v-theme-primary));
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-
-    .option-hint {
-      opacity: 0.85;
-    }
+    box-shadow: 0 0 0 1.5px currentColor inset;
   }
+}
+
+.bonus-detail {
+  margin-top: 8px;
+}
+
+.bonus-detail-toggle {
+  text-transform: none;
+  letter-spacing: normal;
+
+  :deep(.v-btn__content) {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+}
+
+.bonus-detail-hint {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.bonus-detail-text {
+  padding: 0 12px 10px;
+  opacity: 0.85;
+  line-height: 1.4;
 }
 
 @media (min-width: $card-background-breakpoint) {

@@ -429,11 +429,27 @@ describe('IslandSelect', () => {
     })
 
     describe('Expert bonus hints', () => {
-      it('exposes hint text for each random bonus option', () => {
+      it('exposes hint, detail and semantic color for each random bonus option', () => {
         const options = wrapper.vm.RANDOM_BONUS_OPTIONS
         const values = options.map((o) => o.value).sort()
         expect(values).toEqual(['berry', 'ingredient', 'skill'])
         expect(options.every((o) => o.hint.length > 0)).toBe(true)
+        expect(options.every((o) => o.detail.length > 0)).toBe(true)
+        expect(options.map((o) => o.color)).toEqual(['ingredient', 'berry', 'skill'])
+      })
+
+      it('shows the details for the currently selected bonus', () => {
+        const expertWrapper = mountWithExpertIsland()
+        expect(expertWrapper.vm.selectedBonusOption.value).toBe('ingredient')
+
+        expertWrapper.vm.selectRandomBonus('skill')
+        expect(expertWrapper.vm.selectedBonusOption.value).toBe('skill')
+        expect(expertWrapper.vm.selectedBonusOption.hint).toBe('1.25x main skill chance')
+        expertWrapper.unmount()
+      })
+
+      it('starts with bonus details collapsed', () => {
+        expect(wrapper.vm.showBonusDetails).toBe(false)
       })
     })
   })
