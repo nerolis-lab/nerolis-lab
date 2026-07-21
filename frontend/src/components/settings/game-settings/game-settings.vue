@@ -14,7 +14,10 @@
               <v-avatar size="54" class="area-image">
                 <v-img :src="islandImage({ island: islandData.island })" />
               </v-avatar>
-              <span v-if="islandData.island.expert" class="expert-chip expert-badge text-small" aria-label="expert badge"
+              <span
+                v-if="islandData.island.expert"
+                class="expert-chip expert-badge text-small"
+                aria-label="expert badge"
                 >EX</span
               >
             </div>

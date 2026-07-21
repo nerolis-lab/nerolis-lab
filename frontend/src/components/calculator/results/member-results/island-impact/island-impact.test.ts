@@ -84,7 +84,7 @@ describe('IslandImpact', () => {
   it('shows the ingredient random bonus for sub-favorite berries', async () => {
     await wrapper.setProps({ member: subFavoriteMember() })
     expect(wrapper.text()).toContain('Grepa is a sub-favorite berry')
-    expect(wrapper.text()).toContain('+1 ingredient per help')
+    expect(wrapper.text()).toContain('+1 ingredient per ingredient help')
     expect(wrapper.text()).not.toContain('faster helps')
   })
 
@@ -93,7 +93,7 @@ describe('IslandImpact', () => {
       pokemon: commonMocks.mockPokemon({ berry: berry.GREPA, specialty: 'ingredient' })
     })
     await wrapper.setProps({ member })
-    expect(wrapper.text()).toContain('+1-2 ingredients per help')
+    expect(wrapper.text()).toContain('+1-2 ingredients per ingredient help')
   })
 
   it('shows the berry random bonus for favored berries', async () => {

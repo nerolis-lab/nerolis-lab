@@ -124,7 +124,7 @@ const effects = computed<IslandEffect[]>(() => {
           image: '/images/ingredient/ingredients.png',
           value: ingredientSpecialist ? '+1-2' : '+1',
           valueClass: 'text-ingredient',
-          text: ingredientSpecialist ? 'ingredients per help' : 'ingredient per help'
+          text: ingredientSpecialist ? 'ingredients per ingredient help' : 'ingredient per ingredient help'
         })
       } else if (mode.randomBonus === 'berry') {
         result.push({

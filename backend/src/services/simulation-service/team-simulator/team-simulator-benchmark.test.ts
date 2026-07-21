@@ -12,6 +12,7 @@ import type {
 import {
   ALL_BERRY_SPECIALISTS,
   ALL_INGREDIENT_SPECIALISTS,
+  calculatePityProcThreshold,
   CarrySizeUtils,
   EnergizingCheerS,
   EnergyForEveryoneS,
@@ -65,7 +66,8 @@ function randomTeamMemberSettings(pokemon: Pokemon): TeamMemberSettingsExt {
     carrySize: CarrySizeUtils.baseCarrySize(pokemon),
     ribbon: 0,
     externalId: 'something' + rng.getUint8() + rng.getUint8() + rng.getUint8() + rng.getUint8() + rng.getUint8(),
-    sneakySnacking: false
+    sneakySnacking: false,
+    pityProcThreshold: calculatePityProcThreshold(pokemon)
   };
 }
 

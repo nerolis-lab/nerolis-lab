@@ -54,7 +54,6 @@ import {
   BerryBurst,
   BerryBurstDisguise,
   BerryBurstDracoMeteor,
-  calculatePityProcThreshold,
   ChargeEnergyS,
   ChargeEnergySMoonlight,
   ChargeStrengthM,
@@ -162,7 +161,9 @@ export class SkillState {
       [TastyChanceS, new TastyChanceSEffect()]
     ]);
 
-    this.pityProcThreshold = calculatePityProcThreshold(memberState.member.pokemonWithIngredients.pokemon);
+    // Static stat computed at mon creation time from base species stats,
+    // unaffected by event modifiers such as the expert mode frequency changes
+    this.pityProcThreshold = memberState.member.settings.pityProcThreshold;
   }
 
   // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected

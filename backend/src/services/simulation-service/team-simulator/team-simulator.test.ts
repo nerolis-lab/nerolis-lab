@@ -6,7 +6,7 @@ import type {
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { mocks } from '@src/vitest/index.js';
-import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import type { Berry, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BerryBurstDisguise,
   ChargeStrengthS,
@@ -55,7 +55,8 @@ const mockMembers: TeamMemberExt[] = [
       skillLevel: 6,
       subskills: new Set(),
       externalId: 'some id',
-      sneakySnacking: false
+      sneakySnacking: false,
+      pityProcThreshold: calculatePityProcThreshold(mockPokemonWithIngredients.pokemon)
     }
   }
 ];
@@ -111,7 +112,8 @@ describe('TeamSimulator', () => {
           skillLevel: 6,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
           externalId: 'some id',
-          sneakySnacking: false
+          sneakySnacking: false,
+          pityProcThreshold: calculatePityProcThreshold(PINSIR)
         }
       }
     ];
@@ -137,7 +139,8 @@ describe('TeamSimulator', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false
+        sneakySnacking: false,
+        pityProcThreshold: calculatePityProcThreshold(mockPokemonWithIngredients.pokemon)
       }
     };
 
@@ -182,13 +185,19 @@ describe('TeamSimulator', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false
+        sneakySnacking: false,
+        pityProcThreshold: calculatePityProcThreshold(mockPokemonWithIngredients.pokemon)
       }
+    };
+    const mockMemberSupportPokemon = {
+      ...mockPokemonWithIngredients.pokemon,
+      skillPercentage: 100,
+      skill: EnergyForEveryoneS
     };
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonWithIngredients,
-        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryoneS }
+        pokemon: mockMemberSupportPokemon
       },
       settings: {
         carrySize: 10,
@@ -198,7 +207,8 @@ describe('TeamSimulator', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false
+        sneakySnacking: false,
+        pityProcThreshold: calculatePityProcThreshold(mockMemberSupportPokemon)
       }
     };
 
@@ -217,10 +227,15 @@ describe('TeamSimulator', () => {
   });
 
   it('shall count wasted energy', () => {
+    const mockMemberSupportPokemon = {
+      ...mockPokemonWithIngredients.pokemon,
+      skillPercentage: 100,
+      skill: EnergyForEveryoneS
+    };
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonWithIngredients,
-        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryoneS }
+        pokemon: mockMemberSupportPokemon
       },
       settings: {
         carrySize: 10,
@@ -230,7 +245,8 @@ describe('TeamSimulator', () => {
         skillLevel: EnergyForEveryoneS.maxLevel,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
         externalId: 'some id',
-        sneakySnacking: false
+        sneakySnacking: false,
+        pityProcThreshold: calculatePityProcThreshold(mockMemberSupportPokemon)
       }
     };
 
@@ -275,7 +291,8 @@ describe('TeamSimulator', () => {
           skillLevel: 6,
           subskills: new Set(),
           externalId: 'some id',
-          sneakySnacking: false
+          sneakySnacking: false,
+          pityProcThreshold: calculatePityProcThreshold(mockMember.pokemon)
         }
       }
     ];
@@ -301,18 +318,19 @@ describe('TeamSimulator', () => {
   it('shall only allow 1 disguise crit until sleep reset', () => {
     const spy = vimic(RandomUtils, 'roll', () => true);
 
+    const disguisePokemon = {
+      ...commonMocks.mockPokemon(),
+      skill: BerryBurstDisguise,
+      // one help every ~12 hours, final x2 multiplication is to account for energy frequency
+      frequency: 60 * 60 * 12 * 2,
+      // 100% chance to activate skill per help
+      skillPercentage: 100
+    };
     const members: TeamMemberExt[] = [
       {
         pokemonWithIngredients: {
           ...mockPokemonWithIngredients,
-          pokemon: {
-            ...commonMocks.mockPokemon(),
-            skill: BerryBurstDisguise,
-            // one help every ~12 hours, final x2 multiplication is to account for energy frequency
-            frequency: 60 * 60 * 12 * 2,
-            // 100% chance to activate skill per help
-            skillPercentage: 100
-          }
+          pokemon: disguisePokemon
         },
         settings: {
           carrySize: 10,
@@ -322,7 +340,8 @@ describe('TeamSimulator', () => {
           skillLevel: 6,
           subskills: new Set(),
           externalId: 'some id',
-          sneakySnacking: false
+          sneakySnacking: false,
+          pityProcThreshold: calculatePityProcThreshold(disguisePokemon)
         }
       }
     ];
@@ -343,51 +362,73 @@ describe('TeamSimulator', () => {
   });
 
   it('applies expert mode event modifiers when provided in settings', () => {
-    const settings: TeamSettingsExt = mocks.teamSettingsExt({
-      includeCooking: false,
-      island: commonMocks.islandInstance({
-        expert: true,
-        berries: [berry.ORAN, berry.MAGO],
-        expertMode: {
-          mainFavoriteBerry: berry.ORAN,
-          subFavoriteBerries: [berry.MAGO],
-          randomBonus: 'skill'
-        }
-      })
-    });
+    const buildSettings = (mainFavoriteBerry: Berry): TeamSettingsExt =>
+      mocks.teamSettingsExt({
+        includeCooking: false,
+        island: commonMocks.islandInstance({
+          expert: true,
+          berries: [mainFavoriteBerry],
+          expertMode: {
+            mainFavoriteBerry,
+            subFavoriteBerries: [],
+            randomBonus: 'skill'
+          }
+        })
+      });
 
-    const member: TeamMemberExt = {
-      pokemonWithIngredients: {
-        pokemon: commonMocks.mockPokemon({
-          berry: berry.ORAN,
-          frequency: 1800,
-          skillPercentage: 0.2,
-          skill: ChargeStrengthS
-        }),
-        ingredientList: [commonMocks.mockIngredientSet()]
-      },
-      settings: {
-        carrySize: 10,
-        level: 60,
-        ribbon: 0,
-        nature: nature.BASHFUL,
-        skillLevel: 3,
-        subskills: new Set(),
-        sneakySnacking: false,
-        externalId: 'event-test'
-      }
+    const buildMember = (): TeamMemberExt => {
+      // skill specialist so the pity threshold is frequency-derived, making it a
+      // meaningful check that the event's frequency modifier doesn't leak into it
+      const pokemon = commonMocks.mockPokemon({
+        berry: berry.ORAN,
+        frequency: 1800,
+        skillPercentage: 0.2,
+        skill: ChargeStrengthS,
+        specialty: 'skill'
+      });
+      return {
+        pokemonWithIngredients: {
+          pokemon,
+          ingredientList: [commonMocks.mockIngredientSet()]
+        },
+        settings: {
+          carrySize: 10,
+          level: 60,
+          ribbon: 0,
+          nature: nature.BASHFUL,
+          skillLevel: 3,
+          subskills: new Set(),
+          sneakySnacking: false,
+          externalId: 'event-test',
+          pityProcThreshold: calculatePityProcThreshold(pokemon)
+        }
+      };
     };
 
-    const simulator = new TeamSimulator({ settings, members: [member], iterations: 1 });
+    const runSimpleResults = (mainFavoriteBerry: Berry) => {
+      const simulator = new TeamSimulator({
+        settings: buildSettings(mainFavoriteBerry),
+        members: [buildMember()],
+        iterations: 1
+      });
+      simulator.simulate();
+      return simulator.simpleResults()[0];
+    };
 
-    simulator.simulate();
+    // member's ORAN is the main favorite: +1 skill level, 10% faster helps
+    const favored = runSimpleResults(berry.ORAN);
+    expect(favored.member.settings.skillLevel).toBe(4);
+    expect(favored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620); // 1800 * 0.9
 
-    const [result] = simulator.simpleResults();
+    // member's ORAN is not favored: no skill level bonus, 15% slower helps
+    const notFavored = runSimpleResults(berry.MAGO);
+    expect(notFavored.member.settings.skillLevel).toBe(3);
+    expect(notFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(2070); // 1800 * 1.15
 
-    expect(result.member.settings.skillLevel).toBe(4);
-    expect(result.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620);
-    expect(member.settings.skillLevel).toBe(3);
-    expect(member.pokemonWithIngredients.pokemon.frequency).toBe(1800);
+    expect(favored.totalHelps).toBeGreaterThan(notFavored.totalHelps);
+
+    // pity proc threshold is snapshotted at mon creation and stays unmodified
+    expect(favored.member.settings.pityProcThreshold).toBe(notFavored.member.settings.pityProcThreshold);
   });
 
   it('expert mode berry bonus raises favored berry strength from 2x to 2.4x and compounds with area bonus', () => {
@@ -406,20 +447,21 @@ describe('TeamSimulator', () => {
         })
       });
 
+    const berryBonusPokemon = commonMocks.mockPokemon({
+      carrySize: 10,
+      frequency: 3600,
+      berry: berry.BELUE,
+      ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+      ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+      ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+      ingredientPercentage: 20,
+      skill: ChargeStrengthS,
+      skillPercentage: 20,
+      specialty: 'berry'
+    });
     const member: TeamMemberExt = {
       pokemonWithIngredients: {
-        pokemon: commonMocks.mockPokemon({
-          carrySize: 10,
-          frequency: 3600,
-          berry: berry.BELUE,
-          ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
-          ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
-          ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
-          ingredientPercentage: 20,
-          skill: ChargeStrengthS,
-          skillPercentage: 20,
-          specialty: 'berry'
-        }),
+        pokemon: berryBonusPokemon,
         ingredientList: [
           { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
           { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
@@ -434,7 +476,8 @@ describe('TeamSimulator', () => {
         skillLevel: 3,
         subskills: new Set(),
         externalId: 'berry-bonus-test',
-        sneakySnacking: false
+        sneakySnacking: false,
+        pityProcThreshold: calculatePityProcThreshold(berryBonusPokemon)
       }
     };
 
@@ -479,20 +522,21 @@ describe('TeamSimulator', () => {
         })
       });
 
+    const ingredientBonusPokemon = commonMocks.mockPokemon({
+      carrySize: 20,
+      frequency: 3600,
+      berry: berry.BELUE,
+      ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+      ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+      ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+      ingredientPercentage: 20,
+      skill: ChargeStrengthS,
+      skillPercentage: 20,
+      specialty: 'ingredient'
+    });
     const member: TeamMemberExt = {
       pokemonWithIngredients: {
-        pokemon: commonMocks.mockPokemon({
-          carrySize: 20,
-          frequency: 3600,
-          berry: berry.BELUE,
-          ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
-          ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
-          ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
-          ingredientPercentage: 20,
-          skill: ChargeStrengthS,
-          skillPercentage: 20,
-          specialty: 'ingredient'
-        }),
+        pokemon: ingredientBonusPokemon,
         ingredientList: [
           { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
           { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
@@ -507,7 +551,8 @@ describe('TeamSimulator', () => {
         skillLevel: 3,
         subskills: new Set(),
         externalId: 'ing-bonus-test',
-        sneakySnacking: false
+        sneakySnacking: false,
+        pityProcThreshold: calculatePityProcThreshold(ingredientBonusPokemon)
       }
     };
 

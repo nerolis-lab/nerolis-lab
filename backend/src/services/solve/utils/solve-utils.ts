@@ -205,6 +205,7 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
       : Optimal.ingredient(pkmn, 4, pkmn.skill.maxLevel);
     const settings = Optimal.toMemberSettings({
       stats: optimalSettings,
+      pokemon: pkmn,
       level,
       externalId: pkmn.name,
       sneakySnacking: false // for cooking, sneaky snacking is always worse

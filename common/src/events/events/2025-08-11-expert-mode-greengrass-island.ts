@@ -26,7 +26,7 @@ export const event = EventBuilder.create<ExpertModeSettings>()
     },
 
     'settings.skillLevel': (level) => {
-      if (member.pokemonWithIngredients.pokemon.berry.name === input.mainFavoriteBerry.name) {
+      if (isMainBerry(input, member)) {
         const maxLevel = member.pokemonWithIngredients.pokemon.skill.maxLevel;
         return Math.min(level + 1, maxLevel);
       }

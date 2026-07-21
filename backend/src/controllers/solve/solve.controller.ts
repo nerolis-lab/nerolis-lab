@@ -6,6 +6,7 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   IngredientIndexToIntAmount,
   IngredientSet,
+  Pokemon,
   Recipe,
   RecipeTeamSolution,
   SolveRecipeRequest,
@@ -19,6 +20,7 @@ import type {
   TeamMemberWithProduce
 } from 'sleepapi-common';
 import {
+  calculatePityProcThreshold,
   emptyIngredientInventoryFloat,
   flatToIngredientSet,
   getIngredient,
@@ -45,13 +47,16 @@ export default class SolveController {
 
   private parseInput(input: SolveRecipeRequest): SolveRecipeInput {
     const includedMembers: TeamMemberExt[] =
-      input.includedMembers?.map((member) => ({
-        pokemonWithIngredients: {
-          pokemon: getPokemon(member.pokemonWithIngredients.pokemon),
-          ingredientList: flatToIngredientSet(member.pokemonWithIngredients.ingredients)
-        },
-        settings: this.enrichMemberSettings(member.settings)
-      })) ?? [];
+      input.includedMembers?.map((member) => {
+        const pokemon = getPokemon(member.pokemonWithIngredients.pokemon);
+        return {
+          pokemonWithIngredients: {
+            pokemon,
+            ingredientList: flatToIngredientSet(member.pokemonWithIngredients.ingredients)
+          },
+          settings: this.enrichMemberSettings(member.settings, pokemon)
+        };
+      }) ?? [];
     const maxTeamSize = MAX_TEAM_SIZE; // default to this, but we might want to limit further in future
     return {
       solveSettings: this.enrichSolveSettings(input.settings),
@@ -82,7 +87,7 @@ export default class SolveController {
     };
   }
 
-  private enrichMemberSettings(settings: TeamMemberSettings): TeamMemberSettingsExt {
+  private enrichMemberSettings(settings: TeamMemberSettings, pokemon: Pokemon): TeamMemberSettingsExt {
     const { level, carrySize, externalId, ribbon, skillLevel, sneakySnacking } = settings;
     const subskills = new Set(settings.subskills);
     const nature = getNature(settings.nature);
@@ -94,7 +99,8 @@ export default class SolveController {
       ribbon,
       skillLevel,
       subskills,
-      sneakySnacking
+      sneakySnacking,
+      pityProcThreshold: calculatePityProcThreshold(pokemon)
     };
   }
 

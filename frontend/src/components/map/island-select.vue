@@ -205,7 +205,7 @@ const RANDOM_BONUS_OPTIONS: Array<{
     hint: '+1-2 ingredients',
     detail:
       'Favored helpers will have 1 extra ingredient each time they bring you ingredients, ' +
-      'with favored Ingredients specialists having a 50% chance to bring you 2 extra instead.',
+      'with favored Ingredient specialists having a 50% chance to bring you 2 extra instead.',
     color: 'ingredient',
     image: '/images/ingredient/ingredients.png'
   },

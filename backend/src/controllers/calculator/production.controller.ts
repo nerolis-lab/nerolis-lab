@@ -32,6 +32,7 @@ import type {
   TeamSettingsExt
 } from 'sleepapi-common';
 import {
+  calculatePityProcThreshold,
   calculateRecipeValue,
   CarrySizeUtils,
   curry,
@@ -214,7 +215,8 @@ export default class ProductionController {
           skillLevel: Math.min(member.skillLevel, pokemon.skill.maxLevel),
           subskills,
           externalId: member.externalId,
-          sneakySnacking: member.sneakySnacking
+          sneakySnacking: member.sneakySnacking,
+          pityProcThreshold: calculatePityProcThreshold(pokemon)
         }
       });
     }

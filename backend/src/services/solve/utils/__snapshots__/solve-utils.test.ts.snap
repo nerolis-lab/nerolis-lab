@@ -16,6 +16,7 @@ exports[`solve-utils > bogusMembers > should create an array of mocked Pokémon 
     "prettyName": "Bashful (neutral)",
     "skill": 1,
   },
+  "pityProcThreshold": 78,
   "ribbon": 0,
   "skillLevel": 1,
   "sneakySnacking": false,

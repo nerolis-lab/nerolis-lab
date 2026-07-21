@@ -2,12 +2,7 @@
   <div class="favorite-berry-picker">
     <div class="hint-row flex-between">
       <span class="hint text-small">{{ hint }}</span>
-      <v-btn
-        v-if="picks.length > 0"
-        color="error-3"
-        size="small"
-        aria-label="clear favorite berries"
-        @click="clearAll"
+      <v-btn v-if="picks.length > 0" color="error-3" size="small" aria-label="clear favorite berries" @click="clearAll"
         >Clear</v-btn
       >
     </div>
