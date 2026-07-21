@@ -1,7 +1,7 @@
 import { TeamSimulatorUtils } from '@src/services/simulation-service/team-simulator/team-simulator-utils.js';
 import { mocks } from '@src/vitest/index.js';
 import type { PokemonWithIngredients, TeamMemberExt, TeamMemberSettingsExt } from 'sleepapi-common';
-import { berry, commonMocks, event as expertModeGreengrassEvent, ingredient, nature, Optimal } from 'sleepapi-common';
+import { berry, commonMocks, event as expertModeEvent, ingredient, nature, Optimal } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('calculateSkillPercentage', () => {
@@ -205,7 +205,7 @@ describe('prepareMembers', () => {
 
   it('applies frequency buff and skill level +1 for main berry pokemon', () => {
     const original = createMember();
-    const event = expertModeGreengrassEvent({
+    const event = expertModeEvent({
       mainFavoriteBerry: berry.ORAN,
       subFavoriteBerries: [berry.MAGO],
       randomBonus: 'skill'
@@ -239,7 +239,7 @@ describe('prepareMembers', () => {
       settings: mocks.teamMemberSettingsExt({ skillLevel: 3 })
     });
 
-    const event = expertModeGreengrassEvent({
+    const event = expertModeEvent({
       mainFavoriteBerry: berry.ORAN,
       subFavoriteBerries: [berry.MAGO],
       randomBonus: 'skill'
@@ -267,7 +267,7 @@ describe('prepareMembers', () => {
       settings: mocks.teamMemberSettingsExt({ skillLevel: 3 })
     });
 
-    const event = expertModeGreengrassEvent({
+    const event = expertModeEvent({
       mainFavoriteBerry: berry.ORAN,
       subFavoriteBerries: [berry.MAGO],
       randomBonus: 'skill'
@@ -285,7 +285,7 @@ describe('prepareMembers', () => {
 
   it('does not apply skill percentage boost when random bonus is not skill', () => {
     const original = createMember();
-    const event = expertModeGreengrassEvent({
+    const event = expertModeEvent({
       mainFavoriteBerry: berry.ORAN,
       subFavoriteBerries: [berry.MAGO],
       randomBonus: 'berry'

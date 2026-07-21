@@ -75,7 +75,7 @@ order: 20
 | LL        | :lapis:&nbsp; Lapis Lakeside                             |
 | OGPP/PP   | :powerplant:&nbsp; Old Gold Power Plant                  |
 | AC        | :amber:&nbsp; Amber Canyon                               |
-| EX        | Expert Mode, i.e. GGEX for Greengrass Island Expert Mode |
+| EX        | Expert Mode, i.e. GGEX for Greengrass Island Expert Mode, CBEX for Cyan Beach Expert Mode |
 
 ## Items
 

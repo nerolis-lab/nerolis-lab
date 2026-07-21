@@ -16,6 +16,35 @@ describe('User Store', () => {
         "externalId": null,
         "friendCode": null,
         "islands": {
+          "CBEX": {
+            "areaBonus": 0,
+            "base": {
+              "berries": [
+                {
+                  "name": "ORAN",
+                  "type": "water",
+                  "value": 31,
+                },
+                {
+                  "name": "PAMTRE",
+                  "type": "flying",
+                  "value": 24,
+                },
+                {
+                  "name": "PECHA",
+                  "type": "fairy",
+                  "value": 26,
+                },
+              ],
+              "expert": false,
+              "name": "Cyan Beach",
+              "shortName": "cyan",
+            },
+            "berries": [],
+            "expert": true,
+            "name": "Cyan Beach (Expert Mode)",
+            "shortName": "CBEX",
+          },
           "GGEX": {
             "areaBonus": 0,
             "base": {
@@ -371,6 +400,35 @@ describe('User Store', () => {
         "externalId": "some id",
         "friendCode": "some friend code",
         "islands": {
+          "CBEX": {
+            "areaBonus": 0,
+            "base": {
+              "berries": [
+                {
+                  "name": "ORAN",
+                  "type": "water",
+                  "value": 31,
+                },
+                {
+                  "name": "PAMTRE",
+                  "type": "flying",
+                  "value": 24,
+                },
+                {
+                  "name": "PECHA",
+                  "type": "fairy",
+                  "value": 26,
+                },
+              ],
+              "expert": false,
+              "name": "Cyan Beach",
+              "shortName": "cyan",
+            },
+            "berries": [],
+            "expert": true,
+            "name": "Cyan Beach (Expert Mode)",
+            "shortName": "CBEX",
+          },
           "GGEX": {
             "areaBonus": 0,
             "base": {
@@ -565,6 +623,35 @@ describe('User Store', () => {
         "externalId": null,
         "friendCode": null,
         "islands": {
+          "CBEX": {
+            "areaBonus": 0,
+            "base": {
+              "berries": [
+                {
+                  "name": "ORAN",
+                  "type": "water",
+                  "value": 31,
+                },
+                {
+                  "name": "PAMTRE",
+                  "type": "flying",
+                  "value": 24,
+                },
+                {
+                  "name": "PECHA",
+                  "type": "fairy",
+                  "value": 26,
+                },
+              ],
+              "expert": false,
+              "name": "Cyan Beach",
+              "shortName": "cyan",
+            },
+            "berries": [],
+            "expert": true,
+            "name": "Cyan Beach (Expert Mode)",
+            "shortName": "CBEX",
+          },
           "GGEX": {
             "areaBonus": 0,
             "base": {
@@ -768,6 +855,35 @@ describe('User Store', () => {
         "externalId": null,
         "friendCode": null,
         "islands": {
+          "CBEX": {
+            "areaBonus": 0,
+            "base": {
+              "berries": [
+                {
+                  "name": "ORAN",
+                  "type": "water",
+                  "value": 31,
+                },
+                {
+                  "name": "PAMTRE",
+                  "type": "flying",
+                  "value": 24,
+                },
+                {
+                  "name": "PECHA",
+                  "type": "fairy",
+                  "value": 26,
+                },
+              ],
+              "expert": false,
+              "name": "Cyan Beach",
+              "shortName": "cyan",
+            },
+            "berries": [],
+            "expert": true,
+            "name": "Cyan Beach (Expert Mode)",
+            "shortName": "CBEX",
+          },
           "GGEX": {
             "areaBonus": 0,
             "base": {

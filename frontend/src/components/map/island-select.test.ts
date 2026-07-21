@@ -4,6 +4,7 @@ import { mount } from '@vue/test-utils'
 import {
   berry,
   CYAN,
+  CYAN_EXPERT,
   DEFAULT_ISLAND,
   GREENGRASS,
   GREENGRASS_EXPERT,
@@ -405,14 +406,25 @@ describe('IslandSelect', () => {
         expect(wrapper.vm.island.shortName).toBe(GREENGRASS_EXPERT.shortName)
       })
 
-      it('switches to the first expert island when toggling on from a base island without a paired expert', () => {
+      it('switches to the paired expert island when toggling on from Cyan Beach', () => {
+        // Start on CYAN (has CBEX pair)
         wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
         expect(wrapper.vm.isExpertIsland).toBe(false)
 
         wrapper.vm.onExpertToggle(true)
 
         expect(wrapper.vm.isExpertIsland).toBe(true)
-        // Only one expert island currently exists, so it should be selected
+        expect(wrapper.vm.island.shortName).toBe(CYAN_EXPERT.shortName)
+      })
+
+      it('switches to the first expert island when toggling on from a base island without a paired expert', () => {
+        wrapper.vm.selectIsland({ ...TAUPE, areaBonus: 0 })
+        expect(wrapper.vm.isExpertIsland).toBe(false)
+
+        wrapper.vm.onExpertToggle(true)
+
+        expect(wrapper.vm.isExpertIsland).toBe(true)
+        // TAUPE has no paired expert island, so it falls back to the first available expert island
         expect(wrapper.vm.island.shortName).toBe(GREENGRASS_EXPERT.shortName)
       })
 

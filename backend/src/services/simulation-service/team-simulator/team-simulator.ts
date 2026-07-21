@@ -27,7 +27,7 @@ import { createPreGeneratedRandom } from '@src/utils/random-utils/pre-generated-
 import type { MainskillTargeting } from 'sleepapi-common';
 import {
   commonMocks,
-  event as expertModeGreengrassEvent,
+  event as expertModeEvent,
   type CalculateTeamResponse,
   type FunctionalEvent,
   type MemberProductionBase,
@@ -73,7 +73,7 @@ export class TeamSimulator {
     this.mealTimeMinutesSinceStart = mealTimeMinutesSinceStart;
 
     const expertModeSettings = settings.island?.expertMode;
-    this.expertModeEvent = expertModeSettings ? expertModeGreengrassEvent(expertModeSettings) : undefined;
+    this.expertModeEvent = expertModeSettings ? expertModeEvent(expertModeSettings) : undefined;
     const preparedMembers = TeamSimulatorUtils.prepareMembers({
       members,
       event: this.expertModeEvent
