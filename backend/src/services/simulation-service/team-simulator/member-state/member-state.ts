@@ -724,6 +724,7 @@ export class MemberState {
       produceFromSkill: totalSkillProduce,
       skillAmount,
       skillValue,
+      skillLevel: this.skillState.skillLevel,
       skillProcs,
       strength,
       externalId: this.id,

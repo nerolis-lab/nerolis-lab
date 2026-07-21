@@ -66,6 +66,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
     skillValue: Object.fromEntries(
       mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])
     ) as MemberSkillValue,
+    skillLevel: mockPokemon.skillLevel,
     skillProcs: 5,
     advanced: {
       averageHelps: 0,
@@ -117,10 +118,11 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
 
 export function createMockMemberProductionExt(attrs?: Partial<MemberProductionExt>): MemberProductionExt {
   const mockPokemon = createMockPokemon()
+  const member = attrs?.member ?? mockPokemon
 
   return {
-    member: mockPokemon,
-    production: createMockMemberProduction(),
+    member,
+    production: createMockMemberProduction({ skillLevel: member.skillLevel }),
     iv: createMockMemberIv(),
     ...attrs
   }

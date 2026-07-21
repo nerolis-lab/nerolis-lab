@@ -158,7 +158,11 @@
 
         <TeamImpact :production-advanced-stats="memberWithProduction.production.advanced" />
 
-        <IslandImpact :member="memberWithProduction.member" :island="teamStore.getCurrentTeam.island" />
+        <IslandImpact
+          :member="memberWithProduction.member"
+          :island="teamStore.getCurrentTeam.island"
+          :effective-skill-level="memberWithProduction.production.skillLevel"
+        />
 
         <!-- <SkillBreakdown :pokemonProduction="memberWithProduction" /> -->
       </template>

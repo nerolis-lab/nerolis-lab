@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Berry Juice (Energy for Everyone) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Berry Juice (Energy for Everyone) level ${memberWithProduction.production.skillLevel}`"
           title="Berry Juice (Energy for Everyone)"
         ></v-img>
       </v-badge>
@@ -65,6 +67,7 @@
 
 <script lang="ts">
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { EnergyForEveryoneSBerryJuice, MathUtils, compactNumber } from 'sleepapi-common'
@@ -79,18 +82,18 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, MathUtils, mainskillImage, berryImage }
+    return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage, berryImage }
   },
   computed: {
     energyValuePerProc() {
       return EnergyForEveryoneSBerryJuice.activations.energy.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel
+        skillLevel: this.memberWithProduction.production.skillLevel
       })
     },
     juicePerProc() {
       const juiceAmount =
         EnergyForEveryoneSBerryJuice.activations.juice.amount({
-          skillLevel: this.memberWithProduction.member.skillLevel
+          skillLevel: this.memberWithProduction.production.skillLevel
         }) * EnergyForEveryoneSBerryJuice.juicePercent
       return compactNumber(MathUtils.round(juiceAmount, 2))
     },

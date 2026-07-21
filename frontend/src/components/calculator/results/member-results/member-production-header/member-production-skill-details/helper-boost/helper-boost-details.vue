@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Helper Boost level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Helper Boost level ${memberWithProduction.production.skillLevel}`"
           title="Helper Boost"
         ></v-img>
       </v-badge>
@@ -53,6 +55,7 @@
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { compactNumber, HelperBoost, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
@@ -68,7 +71,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage }
+    return { teamStore, skillLevelBadgeText, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
@@ -78,7 +81,7 @@ export default defineComponent({
           .filter(Boolean)
           .map((member) => this.pokemonStore.getPokemon(member!)!.pokemon)
       })
-      return HelperBoost.getHelps(this.memberWithProduction.member.skillLevel, count)
+      return HelperBoost.getHelps(this.memberWithProduction.production.skillLevel, count)
     },
     totalSkillValue() {
       return compactNumber(this.memberWithProduction.production.skillAmount * this.timeWindowFactor)

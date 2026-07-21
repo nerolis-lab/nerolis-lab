@@ -106,6 +106,8 @@ export interface MemberProduction extends MemberProductionBase {
    */
   skillAmount: number;
   skillValue: MemberSkillValue;
+  /** Main skill level actually used during simulation, after event bonuses (e.g. expert mode) and capped at the skill's max level */
+  skillLevel: number;
   advanced: MemberProductionAdvanced;
   strength: MemberStrength;
 }

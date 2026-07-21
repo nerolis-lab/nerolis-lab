@@ -23,7 +23,7 @@ describe('IslandImpact', () => {
 
   beforeEach(() => {
     wrapper = mount(IslandImpact, {
-      props: { member: mainFavoriteMember(), island: expertIsland() }
+      props: { member: mainFavoriteMember(), island: expertIsland(), effectiveSkillLevel: 2 }
     })
   })
 
@@ -77,7 +77,7 @@ describe('IslandImpact', () => {
   it('hides the skill level bonus when the main skill is already max level', async () => {
     const member = mainFavoriteMember()
     member.skillLevel = member.pokemon.skill.maxLevel
-    await wrapper.setProps({ member })
+    await wrapper.setProps({ member, effectiveSkillLevel: member.skillLevel })
     expect(wrapper.text()).not.toContain('main skill level')
   })
 

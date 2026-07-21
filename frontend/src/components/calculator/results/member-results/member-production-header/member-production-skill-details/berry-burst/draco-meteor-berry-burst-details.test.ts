@@ -21,8 +21,8 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberProductionExt({
   member: mocks.createMockPokemon({ pokemon: LATIOS, skillLevel: 6, level: 1 }),
-  production: {
-    ...mocks.createMockMemberProductionExt().production,
+  production: mocks.createMockMemberProduction({
+    skillLevel: 6,
     produceFromSkill: {
       berries: [
         { amount: 217.5334637964775, berry: LATIOS.berry, level: 1 },
@@ -30,7 +30,7 @@ const mockMember = mocks.createMockMemberProductionExt({
       ],
       ingredients: []
     }
-  }
+  })
 })
 
 describe('DracoMeteorBerryBurstDetails', () => {

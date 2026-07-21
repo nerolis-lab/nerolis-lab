@@ -59,6 +59,7 @@ interface IslandEffect {
 const props = defineProps<{
   member: PokemonInstanceExt
   island: IslandInstance
+  effectiveSkillLevel: number
 }>()
 
 const userStore = useUserStore()
@@ -105,7 +106,7 @@ const effects = computed<IslandEffect[]>(() => {
   if (mode) {
     if (isMainFavorite.value) {
       result.push({ image: '/images/mainskill/helps.png', value: '10%', valueClass: 'text-help', text: 'faster helps' })
-      if (props.member.skillLevel < props.member.pokemon.skill.maxLevel) {
+      if (props.effectiveSkillLevel > props.member.skillLevel) {
         result.push({
           image: '/images/misc/skillproc.png',
           value: '+1',
