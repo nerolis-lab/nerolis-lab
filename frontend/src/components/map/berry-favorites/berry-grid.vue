@@ -12,7 +12,7 @@
         :key="b.name"
         :value="b.name"
         class="berry-chip"
-        :aria-label="`${ariaPrefix}-${b.name.toLowerCase()}`"
+        :aria-label="capitalize(b.name)"
         @click="emit('toggle', b)"
       >
         <v-avatar size="28" rounded="0">
@@ -28,18 +28,16 @@
 
 <script setup lang="ts">
 import { berryImage } from '@/services/utils/image-utils'
-import type { Berry } from 'sleepapi-common'
+import { capitalize, type Berry } from 'sleepapi-common'
 
 withDefaults(
   defineProps<{
     berries: Berry[]
     selection: string[]
     main?: string
-    ariaPrefix?: string
   }>(),
   {
-    main: '',
-    ariaPrefix: 'berry'
+    main: ''
   }
 )
 

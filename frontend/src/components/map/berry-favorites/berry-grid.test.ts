@@ -1,13 +1,13 @@
 import BerryGrid from '@/components/map/berry-favorites/berry-grid.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { berry } from 'sleepapi-common'
+import { berry, capitalize } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const sortedBerries = berry.BERRIES.slice().sort((a, b) => a.name.localeCompare(b.name))
 
-const chip = (wrapper: VueWrapper<InstanceType<typeof BerryGrid>>, name: string, prefix = 'berry') =>
-  wrapper.find(`[aria-label="${prefix}-${name.toLowerCase()}"]`)
+const chip = (wrapper: VueWrapper<InstanceType<typeof BerryGrid>>, name: string) =>
+  wrapper.find(`[aria-label="${capitalize(name)}"]`)
 
 describe('BerryGrid', () => {
   let wrapper: VueWrapper<InstanceType<typeof BerryGrid>>
@@ -33,13 +33,8 @@ describe('BerryGrid', () => {
     expect(wrapper.findAll('.v-chip')).toHaveLength(sortedBerries.length)
   })
 
-  it('labels chips with the default aria prefix', () => {
+  it('labels each chip with the berry name', () => {
     expect(chip(wrapper, sortedBerries[0].name).exists()).toBe(true)
-  })
-
-  it('labels chips with a custom aria prefix', async () => {
-    await wrapper.setProps({ ariaPrefix: 'picks' })
-    expect(chip(wrapper, sortedBerries[0].name, 'picks').exists()).toBe(true)
   })
 
   it('emits toggle with the clicked berry', async () => {

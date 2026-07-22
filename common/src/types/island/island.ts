@@ -4,24 +4,23 @@ import type { ExpertModeSettings, ExpertRandomBonusType } from '../expert-mode';
 export type IslandShortName =
   'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant' | 'GGEX' | 'CBEX' | 'amber';
 
-export interface Island {
+interface IslandBase {
   name: string;
   shortName: IslandShortName;
+}
+
+export interface Island extends IslandBase {
   berries: Berry[];
   expert: false;
 }
 
-export interface ExpertIsland {
-  name: string;
-  shortName: IslandShortName;
-  berries: Berry[];
+// An expert island definition has no fixed favorite berries
+export interface ExpertIsland extends IslandBase {
   expert: true;
   base: Island;
 }
 
-/**
- * Discriminated union of base and expert islands. Narrow via the `expert` property.
- */
+// Discriminated union of base and expert islands. Narrow via the `expert` property.
 export type Area = Island | ExpertIsland;
 
 export type BaseIslandInstance = Island & {
@@ -31,12 +30,11 @@ export type BaseIslandInstance = Island & {
 };
 export type ExpertIslandInstance = ExpertIsland & {
   areaBonus: number;
+  berries: Berry[];
   expertMode?: ExpertModeSettings;
 };
 
-/**
- * Runtime island instance, either base or expert. Narrow via the `expert` property.
- */
+// Runtime island instance, either base or expert. Narrow via the `expert` property.
 export type IslandInstance = BaseIslandInstance | ExpertIslandInstance;
 
 /**
@@ -45,11 +43,10 @@ export type IslandInstance = BaseIslandInstance | ExpertIslandInstance;
  */
 export function createExpertIsland(
   base: Island,
-  overrides: Partial<Omit<ExpertIsland, 'expert' | 'base'>> & Pick<ExpertIsland, 'shortName'>
+  overrides: { name?: string; shortName: IslandShortName }
 ): ExpertIsland {
   return {
     name: `${base.name} (Expert Mode)`,
-    berries: [],
     ...overrides,
     expert: true,
     base

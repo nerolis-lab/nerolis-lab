@@ -7,7 +7,7 @@
       >
     </div>
 
-    <BerryGrid :berries="berries" :selection="selection" :main="main" aria-prefix="picks" @toggle="onToggle" />
+    <BerryGrid :berries="berries" :selection="selection" :main="main" @toggle="onToggle" />
 
     <div class="picks">
       <template v-for="(slot, index) in pickSlots" :key="typeof slot === 'string' ? `empty-${index}` : slot.name">

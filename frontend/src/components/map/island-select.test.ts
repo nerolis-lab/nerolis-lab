@@ -186,7 +186,7 @@ describe('IslandSelect', () => {
     const sortedBerries = berry.BERRIES.slice().sort((a, b) => a.name.localeCompare(b.name))
 
     const mountWithExpertIsland = () => {
-      const expertIsland: IslandInstance = { ...GREENGRASS_EXPERT, areaBonus: 0 }
+      const expertIsland: IslandInstance = { ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] }
       return mount(IslandSelect, {
         props: { previousIsland: expertIsland }
       })
@@ -203,7 +203,7 @@ describe('IslandSelect', () => {
     })
 
     it('starts with an empty picker when a fresh expert island is selected', () => {
-      const expertIsland: IslandInstance = { ...GREENGRASS_EXPERT, areaBonus: 0 }
+      const expertIsland: IslandInstance = { ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] }
       wrapper.vm.selectIsland(expertIsland)
 
       expect(wrapper.vm.isExpertIsland).toBe(true)
@@ -214,7 +214,7 @@ describe('IslandSelect', () => {
     })
 
     it('clears expertMode when switching back to a non-expert island', () => {
-      wrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0 })
+      wrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] })
       wrapper.vm.selectMainFavoriteBerry(sortedBerries[0].name)
       expect(wrapper.vm.island.expertMode).toBeDefined()
 
@@ -307,7 +307,7 @@ describe('IslandSelect', () => {
       expertWrapper.vm.selectMainFavoriteBerry(main.name)
       expertWrapper.vm.selectSubFavoriteBerries([sub.name])
 
-      expertWrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0 })
+      expertWrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] })
 
       expect(expertWrapper.vm.mainFavoriteBerry).toBe(main.name)
       expect(expertWrapper.vm.subFavoriteBerries).toEqual([sub.name])

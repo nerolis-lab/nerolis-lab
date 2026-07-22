@@ -14,7 +14,7 @@ const mountPicker = (main = '', subs: string[] = []): PickerWrapper =>
     props: { berries: sortedBerries, main, subs }
   })
 
-const gridChip = (wrapper: PickerWrapper, name: string) => wrapper.find(`[aria-label="picks-${name.toLowerCase()}"]`)
+const gridChip = (wrapper: PickerWrapper, name: string) => wrapper.find(`[aria-label="${capitalize(name)}"]`)
 
 const starButton = (wrapper: PickerWrapper, name: string) =>
   wrapper.find(`button[aria-label="star-${name.toLowerCase()}"]`)

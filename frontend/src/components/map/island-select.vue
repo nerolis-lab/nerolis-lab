@@ -165,8 +165,10 @@ import FavoriteBerryPicker from '@/components/map/berry-favorites/favorite-berry
 import { islandImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
 import {
+  BASE_FAVORED_BERRY_MULTIPLIER,
   berry,
   EXPERT_ISLANDS,
+  EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
   ISLANDS,
   MAX_SUB_FAVORITE_BERRIES,
   type Berry,
@@ -212,8 +214,8 @@ const RANDOM_BONUS_OPTIONS: Array<{
   {
     value: 'berry',
     label: 'Berry',
-    hint: '2.4x favorite berry power',
-    detail: 'Favored berries are worth 2.4x their normal power instead of 2x.',
+    hint: `${EXPERT_MODE_BERRY_BONUS_MULTIPLIER}x favorite berry power`,
+    detail: `Favored berries are worth ${EXPERT_MODE_BERRY_BONUS_MULTIPLIER}x their normal power instead of ${BASE_FAVORED_BERRY_MULTIPLIER}x.`,
     color: 'berry',
     image: '/images/berries/berries.png'
   },

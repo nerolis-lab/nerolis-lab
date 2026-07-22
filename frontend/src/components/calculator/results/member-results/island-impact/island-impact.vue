@@ -46,7 +46,13 @@
 <script setup lang="ts">
 import { berryImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
-import { capitalize, type IslandInstance, type PokemonInstanceExt } from 'sleepapi-common'
+import {
+  BASE_FAVORED_BERRY_MULTIPLIER,
+  capitalize,
+  EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
+  type IslandInstance,
+  type PokemonInstanceExt
+} from 'sleepapi-common'
 import { computed } from 'vue'
 
 interface IslandEffect {
@@ -99,52 +105,87 @@ const statusLabel = computed(() => {
   return `${berryName} is not favored`
 })
 
+const baseFavoriteBerryEffect: IslandEffect = {
+  image: '/images/berries/berries.png',
+  value: `${BASE_FAVORED_BERRY_MULTIPLIER}x`,
+  valueClass: 'text-berry',
+  text: 'berry power'
+}
+
+const expertMainFavoriteFasterHelps: IslandEffect = {
+  image: '/images/mainskill/helps.png',
+  value: '10%',
+  valueClass: 'text-help',
+  text: 'faster helps'
+}
+
+const expertMainFavoriteSkillLevel: IslandEffect = {
+  image: '/images/misc/skillproc.png',
+  value: '+1',
+  valueClass: 'text-skill',
+  text: 'main skill level'
+}
+
+const expertUnfavoredSlowerHelps: IslandEffect = {
+  image: '/images/mainskill/helps.png',
+  value: '15%',
+  valueClass: 'text-help',
+  text: 'slower helps'
+}
+
+const expertIngredientBonus: IslandEffect = {
+  image: '/images/ingredient/ingredients.png',
+  value: '+1',
+  valueClass: 'text-ingredient',
+  text: 'ingredient per ingredient help'
+}
+
+const expertIngredientSpecialtyBonus: IslandEffect = {
+  image: '/images/ingredient/ingredients.png',
+  value: '+1-2',
+  valueClass: 'text-ingredient',
+  text: 'ingredients per ingredient help'
+}
+
+const expertBerryBonus: IslandEffect = {
+  image: '/images/berries/berries.png',
+  value: `${EXPERT_MODE_BERRY_BONUS_MULTIPLIER}x`,
+  valueClass: 'text-berry',
+  text: 'favored berry power'
+}
+
+const expertSkillChanceBonus: IslandEffect = {
+  image: '/images/misc/skillproc.png',
+  value: '1.25x',
+  valueClass: 'text-skill',
+  text: 'main skill chance'
+}
+
 const effects = computed<IslandEffect[]>(() => {
   const result: IslandEffect[] = []
-  const mode = expertMode.value
 
-  if (mode) {
+  if (isBaseFavorite.value) {
+    result.push(baseFavoriteBerryEffect)
+  } else if (expertMode.value) {
     if (isMainFavorite.value) {
-      result.push({ image: '/images/mainskill/helps.png', value: '10%', valueClass: 'text-help', text: 'faster helps' })
+      result.push(expertMainFavoriteFasterHelps)
       if (props.effectiveSkillLevel > props.member.skillLevel) {
-        result.push({
-          image: '/images/misc/skillproc.png',
-          value: '+1',
-          valueClass: 'text-skill',
-          text: 'main skill level'
-        })
+        result.push(expertMainFavoriteSkillLevel)
       }
     } else if (!isFavored.value) {
-      result.push({ image: '/images/mainskill/helps.png', value: '15%', valueClass: 'text-help', text: 'slower helps' })
+      result.push(expertUnfavoredSlowerHelps)
     }
 
     if (isFavored.value) {
-      if (mode.randomBonus === 'ingredient') {
+      if (expertMode.value.randomBonus === 'ingredient') {
         const ingredientSpecialist = props.member.pokemon.specialty === 'ingredient'
-        result.push({
-          image: '/images/ingredient/ingredients.png',
-          value: ingredientSpecialist ? '+1-2' : '+1',
-          valueClass: 'text-ingredient',
-          text: ingredientSpecialist ? 'ingredients per ingredient help' : 'ingredient per ingredient help'
-        })
-      } else if (mode.randomBonus === 'berry') {
-        result.push({
-          image: '/images/berries/berries.png',
-          value: '2.4x',
-          valueClass: 'text-berry',
-          text: 'favored berry power'
-        })
+        result.push(ingredientSpecialist ? expertIngredientSpecialtyBonus : expertIngredientBonus)
+      } else if (expertMode.value.randomBonus === 'berry') {
+        result.push(expertBerryBonus)
       } else {
-        result.push({
-          image: '/images/misc/skillproc.png',
-          value: '1.25x',
-          valueClass: 'text-skill',
-          text: 'main skill chance'
-        })
+        result.push(expertSkillChanceBonus)
       }
     }
-  } else if (isBaseFavorite.value) {
-    result.push({ image: '/images/berries/berries.png', value: '2x', valueClass: 'text-berry', text: 'berry power' })
   }
 
   return result

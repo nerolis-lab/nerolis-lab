@@ -1,5 +1,5 @@
 import type { BerrySet, MemberProduction, MemberStrength, TeamSettingsExt } from 'sleepapi-common';
-import { berryPowerForLevel } from 'sleepapi-common';
+import { BASE_FAVORED_BERRY_MULTIPLIER, berryPowerForLevel, EXPERT_MODE_BERRY_BONUS_MULTIPLIER } from 'sleepapi-common';
 
 type IslandBerries = Pick<TeamSettingsExt['island'], 'berries' | 'expertMode'>;
 
@@ -40,7 +40,6 @@ export class StrengthCalculator {
   }): MemberStrength['berries'] {
     const { berries, island, areaBonus } = params;
 
-    // Expert mode's weekly berry bonus raises the favored multiplier from 2x to 2.4x
     const berryBonusActive = island.expertMode?.randomBonus === 'berry';
 
     let totalBase = 0;
@@ -49,7 +48,11 @@ export class StrengthCalculator {
 
     for (const producedBerry of berries) {
       const isFavored = island.berries.some((b) => b.name === producedBerry.berry.name);
-      const favoredMultiplier = isFavored ? (berryBonusActive ? 2.4 : 2) : 1;
+      const favoredMultiplier = isFavored
+        ? berryBonusActive
+          ? EXPERT_MODE_BERRY_BONUS_MULTIPLIER
+          : BASE_FAVORED_BERRY_MULTIPLIER
+        : 1;
       const power = berryPowerForLevel(producedBerry.berry, producedBerry.level);
 
       const baseStrength = producedBerry.amount * power;

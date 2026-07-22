@@ -99,9 +99,6 @@ export class SkillState {
   skillEffects: Map<Mainskill, SkillEffect>;
   rng: PreGeneratedRandom;
 
-  // quick access
-  private pityProcThreshold;
-
   // state
   private helpsSinceLastSkillProc = 0;
   private todaysSkillProcs = 0;
@@ -160,10 +157,6 @@ export class SkillState {
       [SkillCopyTransform, new SkillCopyTransformEffect()],
       [TastyChanceS, new TastyChanceSEffect()]
     ]);
-
-    // Static stat computed at mon creation time from base species stats,
-    // unaffected by event modifiers such as the expert mode frequency changes
-    this.pityProcThreshold = memberState.member.settings.pityProcThreshold;
   }
 
   // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
@@ -171,7 +164,10 @@ export class SkillState {
     const activations: SkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
 
-    if (this.helpsSinceLastSkillProc > this.pityProcThreshold || this.rng() < this.skillPercentage) {
+    if (
+      this.helpsSinceLastSkillProc > this.memberState.member.settings.pityProcThreshold ||
+      this.rng() < this.skillPercentage
+    ) {
       this.todaysSkillProcs += 1;
       activations.push(this.activateSkill(this.skill));
     }

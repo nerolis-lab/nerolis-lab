@@ -18,12 +18,12 @@ describe('SkillState', () => {
   });
 
   it('should instantiate pityProcThreshold', () => {
-    expect(skillState['pityProcThreshold']).toBeGreaterThan(0);
+    expect(skillState['memberState'].member.settings.pityProcThreshold).toBeGreaterThan(0);
   });
 
   it("should guarantee skill activation if we're past the pity threshold", () => {
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
-    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'];
+    skillState['helpsSinceLastSkillProc'] = skillState['memberState'].member.settings.pityProcThreshold;
     const activation1 = skillState.attemptSkill();
     const activation2 = skillState.attemptSkill();
     expect([activation1, activation2]).toHaveLength(2);
@@ -32,7 +32,7 @@ describe('SkillState', () => {
   it('should activate skill if roll is successful', () => {
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skillPercentage = 100;
-    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'] - 1; // ensure we don't hit pity threshold
+    skillState['helpsSinceLastSkillProc'] = skillState['memberState'].member.settings.pityProcThreshold - 1; // ensure we don't hit pity threshold
     const activation1 = skillState.attemptSkill();
     const activation2 = skillState.attemptSkill();
     expect([activation1, activation2]).toHaveLength(2);
@@ -96,11 +96,11 @@ describe('SkillState', () => {
     mockMemberState = mocks.memberState({ member: mockTeamMember });
     skillState = mocks.skillState(mockMemberState);
 
-    skillState['helpsSinceLastSkillProc'] = skillState['pityProcThreshold'];
+    skillState['helpsSinceLastSkillProc'] = skillState['memberState'].member.settings.pityProcThreshold;
     const activation = skillState['addBonusActivation']();
     expect(activation).toBeDefined();
     expect(skillState['skillProcs']).toBe(1);
-    expect(skillState['helpsSinceLastSkillProc']).toBe(skillState['pityProcThreshold']);
+    expect(skillState['helpsSinceLastSkillProc']).toBe(skillState['memberState'].member.settings.pityProcThreshold);
   });
 
   it('should throw error for unimplemented skill effect', () => {

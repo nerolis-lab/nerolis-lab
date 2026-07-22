@@ -1,5 +1,6 @@
 import { BELUE, BLUK, GREPA } from '../../../types/berry/berries';
 import type {
+  Berry,
   ExpertIsland,
   ExpertIslandInstance,
   ExpertModeSettings,
@@ -9,7 +10,7 @@ import type {
 } from '../../../types';
 import { GREENGRASS } from '../../../types';
 
-export function island(attrs?: Partial<Omit<Island, 'expert'>>): Island {
+export function island(attrs?: Partial<Island>): Island {
   return {
     name: 'Mock Island',
     berries: [],
@@ -19,10 +20,9 @@ export function island(attrs?: Partial<Omit<Island, 'expert'>>): Island {
   };
 }
 
-export function expertIsland(attrs?: Partial<Omit<ExpertIsland, 'expert'>>): ExpertIsland {
+export function expertIsland(attrs?: Partial<ExpertIsland>): ExpertIsland {
   return {
     name: 'Mock Island (Expert Mode)',
-    berries: [],
     shortName: 'GGEX',
     base: GREENGRASS,
     ...attrs,
@@ -38,6 +38,7 @@ type BaseIslandInstanceInput = Partial<Omit<Island, 'expert'>> & {
 type ExpertIslandInstanceInput = Partial<Omit<ExpertIsland, 'expert' | 'base'>> & {
   expert: true;
   base?: Island;
+  berries?: Berry[];
   areaBonus?: number;
   expertMode?: ExpertModeSettings;
 };
@@ -49,6 +50,7 @@ export function islandInstance(attrs?: IslandInstanceInput): IslandInstance {
     return {
       ...expertIsland({ base: attrs.base ?? GREENGRASS }),
       areaBonus: 0,
+      berries: [],
       ...attrs,
       base: attrs.base ?? GREENGRASS
     };
@@ -60,10 +62,11 @@ export function islandInstance(attrs?: IslandInstanceInput): IslandInstance {
   };
 }
 
-export function expertIslandInstance(attrs?: Partial<Omit<ExpertIslandInstance, 'expert'>>): ExpertIslandInstance {
+export function expertIslandInstance(attrs?: Partial<ExpertIslandInstance>): ExpertIslandInstance {
   return {
     ...expertIsland(),
     areaBonus: 0,
+    berries: [],
     ...attrs,
     expert: true,
     base: attrs?.base ?? GREENGRASS
