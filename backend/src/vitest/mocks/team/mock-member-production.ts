@@ -36,6 +36,7 @@ export function memberProduction(attrs?: Partial<MemberProduction>): MemberProdu
     produceTotal: produce(),
     produceWithoutSkill: produce(),
     skillAmount: 0,
+    skillLevel: 1,
     skillProcs: 0,
     skillValue: Object.fromEntries(
       mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])

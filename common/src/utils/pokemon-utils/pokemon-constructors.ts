@@ -4,6 +4,7 @@ import type { GenderRatio } from '../../types/gender';
 import type { Ingredient, IngredientSet } from '../../types/ingredient';
 import type { Mainskill } from '../../types/mainskill';
 import type { Pokemon, PokemonSpecialty } from '../../types/pokemon';
+import { calculatePityProcThreshold } from '../stat-utils/stat-utils';
 import { evolvesFrom, evolvesInto } from './evolution-utils';
 
 export type IngredientDefinition = {
@@ -36,7 +37,7 @@ function createPokemon(params: {
   skill: Mainskill;
 }): Pokemon {
   const { ingredients, ...otherParams } = params;
-  const { name, specialty } = otherParams;
+  const { name, specialty, frequency } = otherParams;
   const { ingredient0, ingredient30, ingredient60 } = getIngredientSets(ingredients, specialty);
   return {
     ...otherParams,
@@ -46,7 +47,8 @@ function createPokemon(params: {
     evolvesInto: [],
     ingredient0,
     ingredient30,
-    ingredient60
+    ingredient60,
+    pityProcThreshold: calculatePityProcThreshold(specialty, frequency)
   };
 }
 
@@ -146,7 +148,8 @@ export function evolvedPokemon(
     ...params,
     displayName: pokemonNames[params.name],
     evolvesFrom: previousForm.name,
-    evolvesInto: []
+    evolvesInto: [],
+    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? previousForm.specialty, params.frequency)
   };
   previousForm.evolvesInto.push(evolvedMon.name);
   return evolvedMon;
@@ -168,7 +171,8 @@ export function preEvolvedPokemon(
     ...params,
     displayName: pokemonNames[params.name],
     evolvesFrom: undefined,
-    evolvesInto: [nextForm.name]
+    evolvesInto: [nextForm.name],
+    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? nextForm.specialty, params.frequency)
   };
   nextForm.evolvesFrom = preEvolvedMon.name;
   return preEvolvedMon;

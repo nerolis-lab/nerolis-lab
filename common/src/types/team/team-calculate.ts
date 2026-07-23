@@ -106,6 +106,7 @@ export interface MemberProduction extends MemberProductionBase {
    */
   skillAmount: number;
   skillValue: MemberSkillValue;
+  skillLevel: number; // effective skill level after bonuses and capped at max
   advanced: MemberProductionAdvanced;
   strength: MemberStrength;
 }

@@ -6,6 +6,7 @@ import { mount } from '@vue/test-utils'
 import {
   commonMocks,
   delay,
+  EXPERT_ISLANDS,
   ISLANDS,
   MAX_ISLAND_BONUS,
   MAX_POT_SIZE,
@@ -78,7 +79,7 @@ describe('GameSettings', () => {
       .findAllComponents({ name: 'NumberInput' })
       .filter((input) => input.props('suffix') === '%')
 
-    expect(numberInputs.length).toBe(ISLANDS.length)
+    expect(numberInputs.length).toBe(ISLANDS.length + EXPERT_ISLANDS.length)
 
     numberInputs.forEach((input) => {
       expect(input.props('min')).toBe(0)

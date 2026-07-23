@@ -28,6 +28,10 @@ export const AVERAGE_WEEKLY_CRIT_MULTIPLIER = 1.171428571;
 // island
 export const MAX_ISLAND_BONUS = 85;
 
+// berries
+export const BASE_FAVORED_BERRY_MULTIPLIER = 2;
+export const EXPERT_MODE_BERRY_BONUS_MULTIPLIER = 2.4;
+
 // misc
 export const MAX_TEAM_SIZE = 5;
 export const MAX_ENERGY_RECOVERY = 100;

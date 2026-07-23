@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Minus (Cooking Power-Up S) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Minus (Cooking Power-Up S) level ${memberWithProduction.production.skillLevel}`"
           title="Minus (Cooking Power-Up S)"
         ></v-img>
       </v-badge>
@@ -66,6 +68,7 @@
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { CookingPowerUpSMinus, MathUtils, compactNumber, isPlusOrMinus } from 'sleepapi-common'
@@ -82,12 +85,12 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage }
+    return { teamStore, skillLevelBadgeText, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
       return CookingPowerUpSMinus.activations.solo.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel
+        skillLevel: this.memberWithProduction.production.skillLevel
       })
     },
     totalPotValue() {

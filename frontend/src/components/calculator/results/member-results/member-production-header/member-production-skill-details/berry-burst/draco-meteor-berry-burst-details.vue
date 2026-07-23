@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Draco Meteor (Berry Burst) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Draco Meteor (Berry Burst) level ${memberWithProduction.production.skillLevel}`"
           title="Draco Meteor (Berry Burst)"
         ></v-img>
       </v-badge>
@@ -78,6 +80,7 @@
 <script lang="ts">
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { BerryBurstDracoMeteor, compactNumber, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
@@ -93,7 +96,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    return { teamStore, pokemonStore, MathUtils, compactNumber, mainskillImage, berryImage }
+    return { teamStore, skillLevelBadgeText, pokemonStore, MathUtils, compactNumber, mainskillImage, berryImage }
   },
   computed: {
     isPaired() {
@@ -107,7 +110,7 @@ export default defineComponent({
       return this.isPaired ? BerryBurstDracoMeteor.activations.paired : BerryBurstDracoMeteor.activations.solo
     },
     skillLevel() {
-      return this.memberWithProduction.member.skillLevel
+      return this.memberWithProduction.production.skillLevel
     },
     berryName() {
       return this.memberWithProduction.member.pokemon.berry.name.toLowerCase()

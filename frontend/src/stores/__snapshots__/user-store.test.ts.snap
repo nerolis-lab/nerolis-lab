@@ -1,0 +1,204 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`User Store > should have expected default state 1`] = `
+{
+  "auth": null,
+  "avatar": null,
+  "externalId": null,
+  "friendCode": null,
+  "islands": {
+    "CBEX": {
+      "areaBonus": 0,
+      "base": {
+        "berries": [
+          {
+            "name": "ORAN",
+            "type": "water",
+            "value": 31,
+          },
+          {
+            "name": "PAMTRE",
+            "type": "flying",
+            "value": 24,
+          },
+          {
+            "name": "PECHA",
+            "type": "fairy",
+            "value": 26,
+          },
+        ],
+        "expert": false,
+        "name": "Cyan Beach",
+        "shortName": "cyan",
+      },
+      "berries": [],
+      "expert": true,
+      "name": "Cyan Beach (Expert Mode)",
+      "shortName": "CBEX",
+    },
+    "GGEX": {
+      "areaBonus": 0,
+      "base": {
+        "berries": [],
+        "expert": false,
+        "name": "Greengrass Isle",
+        "shortName": "greengrass",
+      },
+      "berries": [],
+      "expert": true,
+      "name": "Greengrass Isle (Expert Mode)",
+      "shortName": "GGEX",
+    },
+    "amber": {
+      "areaBonus": 0,
+      "berries": [
+        {
+          "name": "CHESTO",
+          "type": "poison",
+          "value": 32,
+        },
+        {
+          "name": "LUM",
+          "type": "bug",
+          "value": 24,
+        },
+        {
+          "name": "YACHE",
+          "type": "dragon",
+          "value": 35,
+        },
+      ],
+      "expert": false,
+      "name": "Amber Canyon",
+      "shortName": "amber",
+    },
+    "cyan": {
+      "areaBonus": 0,
+      "berries": [
+        {
+          "name": "ORAN",
+          "type": "water",
+          "value": 31,
+        },
+        {
+          "name": "PAMTRE",
+          "type": "flying",
+          "value": 24,
+        },
+        {
+          "name": "PECHA",
+          "type": "fairy",
+          "value": 26,
+        },
+      ],
+      "expert": false,
+      "name": "Cyan Beach",
+      "shortName": "cyan",
+    },
+    "greengrass": {
+      "areaBonus": 0,
+      "berries": [],
+      "expert": false,
+      "name": "Greengrass Isle",
+      "shortName": "greengrass",
+    },
+    "lapis": {
+      "areaBonus": 0,
+      "berries": [
+        {
+          "name": "CHERI",
+          "type": "fighting",
+          "value": 27,
+        },
+        {
+          "name": "DURIN",
+          "type": "grass",
+          "value": 30,
+        },
+        {
+          "name": "MAGO",
+          "type": "psychic",
+          "value": 26,
+        },
+      ],
+      "expert": false,
+      "name": "Lapis Lakeside",
+      "shortName": "lapis",
+    },
+    "powerplant": {
+      "areaBonus": 0,
+      "berries": [
+        {
+          "name": "BELUE",
+          "type": "steel",
+          "value": 33,
+        },
+        {
+          "name": "BLUK",
+          "type": "ghost",
+          "value": 26,
+        },
+        {
+          "name": "GREPA",
+          "type": "electric",
+          "value": 25,
+        },
+      ],
+      "expert": false,
+      "name": "Old Gold Power Plant",
+      "shortName": "powerplant",
+    },
+    "snowdrop": {
+      "areaBonus": 0,
+      "berries": [
+        {
+          "name": "PERSIM",
+          "type": "normal",
+          "value": 28,
+        },
+        {
+          "name": "RAWST",
+          "type": "ice",
+          "value": 32,
+        },
+        {
+          "name": "WIKI",
+          "type": "dark",
+          "value": 31,
+        },
+      ],
+      "expert": false,
+      "name": "Snowdrop Tundra",
+      "shortName": "snowdrop",
+    },
+    "taupe": {
+      "areaBonus": 0,
+      "berries": [
+        {
+          "name": "FIGY",
+          "type": "ground",
+          "value": 29,
+        },
+        {
+          "name": "LEPPA",
+          "type": "fire",
+          "value": 27,
+        },
+        {
+          "name": "SITRUS",
+          "type": "rock",
+          "value": 30,
+        },
+      ],
+      "expert": false,
+      "name": "Taupe Hollow",
+      "shortName": "taupe",
+    },
+  },
+  "name": "Guest",
+  "potSize": 81,
+  "randomizeNicknames": true,
+  "role": "default",
+  "supporterSince": null,
+}
+`;

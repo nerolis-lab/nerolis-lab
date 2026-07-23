@@ -36,7 +36,10 @@ export const useUserStore = defineStore('user', {
   state: (): UserState => {
     const allIslands = [...ISLANDS, ...EXPERT_ISLANDS]
     const islandsRecord = Object.fromEntries(
-      allIslands.map((island) => [island.shortName, { ...island, areaBonus: 0 }])
+      allIslands.map((island) => [
+        island.shortName,
+        { ...island, berries: island.expert ? [] : island.berries, areaBonus: 0 }
+      ])
     ) as Record<IslandShortName, IslandInstance>
 
     return {

@@ -1,5 +1,7 @@
-import type { BerrySet, Island, MemberProduction, MemberStrength, TeamSettingsExt } from 'sleepapi-common';
-import { berryPowerForLevel } from 'sleepapi-common';
+import type { BerrySet, MemberProduction, MemberStrength, TeamSettingsExt } from 'sleepapi-common';
+import { BASE_FAVORED_BERRY_MULTIPLIER, berryPowerForLevel, EXPERT_MODE_BERRY_BONUS_MULTIPLIER } from 'sleepapi-common';
+
+type IslandBerries = Pick<TeamSettingsExt['island'], 'berries' | 'expertMode'>;
 
 export class StrengthCalculator {
   public calculateStrength(params: {
@@ -33,10 +35,12 @@ export class StrengthCalculator {
 
   private calculateBerryStrength(params: {
     berries: BerrySet[];
-    island: Island;
+    island: IslandBerries;
     areaBonus: number;
   }): MemberStrength['berries'] {
     const { berries, island, areaBonus } = params;
+
+    const berryBonusActive = island.expertMode?.randomBonus === 'berry';
 
     let totalBase = 0;
     let totalFavored = 0;
@@ -44,7 +48,11 @@ export class StrengthCalculator {
 
     for (const producedBerry of berries) {
       const isFavored = island.berries.some((b) => b.name === producedBerry.berry.name);
-      const favoredMultiplier = isFavored ? 2 : 1;
+      const favoredMultiplier = isFavored
+        ? berryBonusActive
+          ? EXPERT_MODE_BERRY_BONUS_MULTIPLIER
+          : BASE_FAVORED_BERRY_MULTIPLIER
+        : 1;
       const power = berryPowerForLevel(producedBerry.berry, producedBerry.level);
 
       const baseStrength = producedBerry.amount * power;
@@ -69,7 +77,7 @@ export class StrengthCalculator {
   private calculateSkillStrength(params: {
     produceFromSkill: MemberProduction['produceFromSkill'];
     skillValue: MemberProduction['skillValue'];
-    island: Island;
+    island: IslandBerries;
     areaBonus: number;
   }): MemberStrength['skill'] {
     const { produceFromSkill, skillValue, island, areaBonus } = params;

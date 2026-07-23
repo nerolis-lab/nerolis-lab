@@ -22,5 +22,10 @@ exports[`migration-utils > getMigrations > should return migrations sorted by ve
     "up": [Function],
     "version": 4,
   },
+  {
+    "description": "Adds the GGEX and CBEX expert islands to existing users islands state.",
+    "up": [Function],
+    "version": 5,
+  },
 ]
 `;
