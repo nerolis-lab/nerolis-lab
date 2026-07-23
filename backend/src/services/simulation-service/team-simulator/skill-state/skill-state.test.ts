@@ -17,10 +17,6 @@ describe('SkillState', () => {
     expect(skillState.skillEffects.size).toBe(MAINSKILLS.length);
   });
 
-  it('should instantiate pityProcThreshold', () => {
-    expect(skillState['memberState'].member.pokemonWithIngredients.pokemon.pityProcThreshold).toBeGreaterThan(0);
-  });
-
   it("should guarantee skill activation if we're past the pity threshold", () => {
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
     skillState['helpsSinceLastSkillProc'] =
@@ -33,8 +29,7 @@ describe('SkillState', () => {
   it('should activate skill if roll is successful', () => {
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skill = BerryBurst;
     skillState['memberState'].member.pokemonWithIngredients.pokemon.skillPercentage = 100;
-    skillState['helpsSinceLastSkillProc'] =
-      skillState['memberState'].member.pokemonWithIngredients.pokemon.pityProcThreshold - 1; // ensure we don't hit pity threshold
+    skillState['helpsSinceLastSkillProc'] = 0; // ensure we don't hit pity threshold
     const activation1 = skillState.attemptSkill();
     const activation2 = skillState.attemptSkill();
     expect([activation1, activation2]).toHaveLength(2);

@@ -14,12 +14,15 @@ describe('StrengthCalculator', () => {
       })
     });
 
+    const belueAmountWithoutSkill = 10;
+    const cheriAmountWithoutSkill = 5;
+
     const result = calculator.calculateStrength({
       settings,
       produceWithoutSkill: {
         berries: [
-          { berry: berry.BELUE, level: 60, amount: 10 },
-          { berry: berry.CHERI, level: 30, amount: 5 }
+          { berry: berry.BELUE, level: 60, amount: belueAmountWithoutSkill },
+          { berry: berry.CHERI, level: 30, amount: cheriAmountWithoutSkill }
         ],
         ingredients: []
       },
@@ -27,11 +30,11 @@ describe('StrengthCalculator', () => {
       skillValue: emptySkillValue()
     });
 
-    const belueBase = 10 * berryPowerForLevel(berry.BELUE, 60);
+    const belueBase = belueAmountWithoutSkill * berryPowerForLevel(berry.BELUE, 60);
     const belueFavored = belueBase; // favored berries have 2x multiplier
     const belueIsland = (belueBase + belueFavored) * 0.15;
 
-    const cheriBase = 5 * berryPowerForLevel(berry.CHERI, 30);
+    const cheriBase = cheriAmountWithoutSkill * berryPowerForLevel(berry.CHERI, 30);
     const cheriIsland = cheriBase * 0.15;
 
     expect(result.berries.breakdown).toEqual({
@@ -51,13 +54,16 @@ describe('StrengthCalculator', () => {
       })
     });
 
+    const belueAmountFromSkill = 4;
+    const pechaAmountFromSkill = 2;
+
     const result = calculator.calculateStrength({
       settings,
       produceWithoutSkill: { berries: [], ingredients: [] },
       produceFromSkill: {
         berries: [
-          { berry: berry.BELUE, amount: 4, level: 60 },
-          { berry: berry.PECHA, amount: 2, level: 30 }
+          { berry: berry.BELUE, amount: belueAmountFromSkill, level: 60 },
+          { berry: berry.PECHA, amount: pechaAmountFromSkill, level: 30 }
         ],
         ingredients: []
       },
@@ -68,11 +74,11 @@ describe('StrengthCalculator', () => {
       })()
     });
 
-    const belueBase = 4 * berryPowerForLevel(berry.BELUE, 60);
+    const belueBase = belueAmountFromSkill * berryPowerForLevel(berry.BELUE, 60);
     const belueFavored = belueBase;
     const belueIsland = (belueBase + belueFavored) * 0.2;
 
-    const pechaBase = 2 * berryPowerForLevel(berry.PECHA, 30);
+    const pechaBase = pechaAmountFromSkill * berryPowerForLevel(berry.PECHA, 30);
     const pechaIsland = pechaBase * 0.2;
 
     const skillBase = 150;
@@ -100,27 +106,31 @@ describe('StrengthCalculator', () => {
       })
     });
 
+    const belueAmountWithoutSkill = 10;
+    const cheriAmountWithoutSkill = 5;
+    const belueAmountFromSkill = 4;
+
     const result = calculator.calculateStrength({
       settings,
       produceWithoutSkill: {
         berries: [
-          { berry: berry.BELUE, amount: 10, level: 60 },
-          { berry: berry.CHERI, amount: 5, level: 30 }
+          { berry: berry.BELUE, amount: belueAmountWithoutSkill, level: 60 },
+          { berry: berry.CHERI, amount: cheriAmountWithoutSkill, level: 30 }
         ],
         ingredients: []
       },
       produceFromSkill: {
-        berries: [{ berry: berry.BELUE, amount: 4, level: 60 }],
+        berries: [{ berry: berry.BELUE, amount: belueAmountFromSkill, level: 60 }],
         ingredients: []
       },
       skillValue: emptySkillValue()
     });
 
-    const belueBase = 10 * berryPowerForLevel(berry.BELUE, 60);
+    const belueBase = belueAmountWithoutSkill * berryPowerForLevel(berry.BELUE, 60);
     const belueFavored = belueBase * 1.4; // 2.4x total instead of 2x
     const belueIsland = (belueBase + belueFavored) * 0.5;
 
-    const cheriBase = 5 * berryPowerForLevel(berry.CHERI, 30);
+    const cheriBase = cheriAmountWithoutSkill * berryPowerForLevel(berry.CHERI, 30);
     const cheriIsland = cheriBase * 0.5;
 
     expect(result.berries.breakdown).toEqual({
@@ -130,7 +140,7 @@ describe('StrengthCalculator', () => {
     });
     expect(result.berries.total).toBeCloseTo(belueBase * 2.4 * 1.5 + cheriBase * 1.5);
 
-    const skillBerryBase = 4 * berryPowerForLevel(berry.BELUE, 60);
+    const skillBerryBase = belueAmountFromSkill * berryPowerForLevel(berry.BELUE, 60);
     expect(result.skill.total).toBeCloseTo(skillBerryBase * 2.4 * 1.5);
   });
 
