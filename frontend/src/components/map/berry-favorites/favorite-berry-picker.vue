@@ -7,7 +7,7 @@
       >
     </div>
 
-    <BerryGrid :berries="berries" :selection="selection" :main="main" @toggle="onToggle" />
+    <BerryGrid :berries="berries" :selection="selection" :main="main" @toggle-berry="onToggle" />
 
     <div class="picks">
       <template v-for="(slot, index) in pickSlots" :key="typeof slot === 'string' ? `empty-${index}` : slot.name">
@@ -15,7 +15,11 @@
           <v-btn
             class="pick-btn"
             :color="slot.isMain ? 'primary' : 'surface'"
-            :aria-label="`star-${slot.name.toLowerCase()}`"
+            :aria-label="
+              slot.isMain
+                ? `${capitalize(slot.name)} is your main favorite berry`
+                : `set ${capitalize(slot.name)} as main favorite berry`
+            "
             :aria-pressed="slot.isMain"
             @click="starPick(slot.name)"
           >
@@ -30,7 +34,7 @@
             size="36"
             variant="text"
             color="error-3"
-            :aria-label="`remove-${slot.name.toLowerCase()}`"
+            :aria-label="`remove ${capitalize(slot.name)} from favorite berries`"
             @click="removePick(slot.name)"
           ></v-btn>
         </div>

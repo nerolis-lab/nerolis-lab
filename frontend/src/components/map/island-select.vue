@@ -80,7 +80,7 @@
               </div>
             </v-col>
             <v-col cols="12">
-              <BerryGrid :berries="berries" :selection="islandBerryNames" @toggle="toggleBerry" />
+              <BerryGrid :berries="berries" :selection="islandBerryNames" @toggle-berry="toggleBerry" />
             </v-col>
           </v-row>
 

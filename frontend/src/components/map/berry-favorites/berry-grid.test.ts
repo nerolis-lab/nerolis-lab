@@ -37,11 +37,11 @@ describe('BerryGrid', () => {
     expect(chip(wrapper, sortedBerries[0].name).exists()).toBe(true)
   })
 
-  it('emits toggle with the clicked berry', async () => {
+  it('emits toggle-berry with the clicked berry', async () => {
     const target = sortedBerries[3]
     await chip(wrapper, target.name).trigger('click')
 
-    const emitted = wrapper.emitted('toggle')
+    const emitted = wrapper.emitted('toggle-berry')
     expect(emitted).toBeTruthy()
     expect(emitted![0][0]).toEqual(target)
   })

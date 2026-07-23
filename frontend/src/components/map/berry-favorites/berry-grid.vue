@@ -13,7 +13,7 @@
         :value="b.name"
         class="berry-chip"
         :aria-label="capitalize(b.name)"
-        @click="emit('toggle', b)"
+        @click="emit('toggle-berry', b)"
       >
         <v-avatar size="28" rounded="0">
           <v-img :src="berryImage(b)" :alt="`${b.name.toLowerCase()} berry`" />
@@ -42,12 +42,12 @@ withDefaults(
 )
 
 const emit = defineEmits<{
-  toggle: [berry: Berry]
+  'toggle-berry': [berry: Berry]
 }>()
 
 // Vuetify only honors :model-value when an update listener is registered;
 // without this the group tracks its own selection and highlights chips the
-// parent rejected (e.g. a 4th berry past the cap). Selection flows via toggle
+// parent rejected (e.g. a 4th berry past the cap). Selection flows via toggle-berry
 const ignoreGroupModel = () => undefined
 </script>
 
@@ -66,15 +66,13 @@ const ignoreGroupModel = () => undefined
   }
 }
 
-// Square item-grid tiles; filter/action chips elsewhere in the app stay pill shaped
 .berry-chip {
   width: 44px;
   height: 44px;
   padding: 0;
   justify-content: center;
   border-radius: 8px;
-  // Let the main badge sit on the tile corner
-  overflow: visible;
+  overflow: visible; // main berry icon will overflow
 }
 
 .berry-badge {

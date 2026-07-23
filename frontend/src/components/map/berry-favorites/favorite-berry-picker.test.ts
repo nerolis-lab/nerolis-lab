@@ -17,10 +17,10 @@ const mountPicker = (main = '', subs: string[] = []): PickerWrapper =>
 const gridChip = (wrapper: PickerWrapper, name: string) => wrapper.find(`[aria-label="${capitalize(name)}"]`)
 
 const starButton = (wrapper: PickerWrapper, name: string) =>
-  wrapper.find(`button[aria-label="star-${name.toLowerCase()}"]`)
+  wrapper.find(`button.pick-btn[aria-label*="${capitalize(name)}"]`)
 
 const removeButton = (wrapper: PickerWrapper, name: string) =>
-  wrapper.find(`button[aria-label="remove-${name.toLowerCase()}"]`)
+  wrapper.find(`button[aria-label="remove ${capitalize(name)} from favorite berries"]`)
 
 const clearButton = (wrapper: PickerWrapper) => wrapper.find('button[aria-label="clear favorite berries"]')
 
@@ -153,6 +153,17 @@ describe('FavoriteBerryPicker', () => {
 
       expect(wrapper.emitted('update:main')).toBeFalsy()
       expect(wrapper.emitted('update:subs')).toBeFalsy()
+    })
+
+    it('labels the main pick as a statement instead of an action, since starring it again is a no-op', () => {
+      wrapper = mountPicker(berryA, [berryB])
+
+      expect(starButton(wrapper, berryA).attributes('aria-label')).toBe(
+        `${capitalize(berryA)} is your main favorite berry`
+      )
+      expect(starButton(wrapper, berryB).attributes('aria-label')).toBe(
+        `set ${capitalize(berryB)} as main favorite berry`
+      )
     })
 
     it('keeps the display order stable when the main changes', async () => {
