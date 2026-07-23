@@ -117,6 +117,7 @@ exports[`addHelpsFromSkill > shall add 1 average produce help 1`] = `
     "ingredients": [],
   },
   "skillAmount": 0,
+  "skillLevel": 6,
   "skillProcs": 0,
   "skillValue": {},
   "strength": {
@@ -246,6 +247,7 @@ exports[`addHelpsFromSkill > shall not add produce if adding 0 helps 1`] = `
     "ingredients": [],
   },
   "skillAmount": 0,
+  "skillLevel": 6,
   "skillProcs": 0,
   "skillValue": {},
   "strength": {
@@ -375,6 +377,7 @@ exports[`attemptDayHelp > shall not perform a help if time has not passed schedu
     "ingredients": [],
   },
   "skillAmount": 0,
+  "skillLevel": 6,
   "skillProcs": 0,
   "skillValue": {},
   "strength": {
@@ -514,6 +517,7 @@ exports[`attemptDayHelp > shall perform a help if time surpasses scheduled help 
     "ingredients": [],
   },
   "skillAmount": 0,
+  "skillLevel": 6,
   "skillProcs": 0,
   "skillValue": {},
   "strength": {
@@ -653,6 +657,7 @@ exports[`attemptNightHelp > shall roll skill proc on helps before inventory full
     "ingredients": [],
   },
   "skillAmount": 2066,
+  "skillLevel": 6,
   "skillProcs": 1,
   "skillValue": {
     "strength": {

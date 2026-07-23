@@ -42,9 +42,14 @@ export function berryImage(berry: Berry) {
   return `/images/berries/${berry.name.toLowerCase()}.png`
 }
 
-export function islandImage(params: { island: Island; background?: boolean }) {
+export function islandImage(params: {
+  island: Pick<Island, 'shortName'> & { expert?: boolean; base?: Pick<Island, 'shortName'> }
+  background?: boolean
+}) {
   const { background = false, island } = params
   const maybeBackground = background ? 'background-' : ''
+  // Expert islands have their own background art but reuse the base island's icon
+  const shortName = !background && island.expert && island.base ? island.base.shortName : island.shortName
 
-  return `/images/island/${maybeBackground}${island.shortName}.png`
+  return `/images/island/${maybeBackground}${shortName}.png`
 }

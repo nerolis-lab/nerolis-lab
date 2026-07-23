@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Present (Ingredient Magnet S) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Present (Ingredient Magnet S) level ${memberWithProduction.production.skillLevel}`"
           title="Present (Ingredient Magnet S)"
         ></v-img>
       </v-badge>
@@ -74,6 +76,7 @@
 
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { IngredientMagnetSPresent, compactNumber, ingredient } from 'sleepapi-common'
@@ -89,12 +92,12 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, mainskillImage, compactNumber }
+    return { teamStore, skillLevelBadgeText, mainskillImage, compactNumber }
   },
   computed: {
     skillValuePerProc() {
       return this.memberWithProduction.member.pokemon.skill.activations.ingredients.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel
+        skillLevel: this.memberWithProduction.production.skillLevel
       })
     },
     candyPerProc() {

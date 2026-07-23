@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Heal Pulse (Energizing Cheer S) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Heal Pulse (Energizing Cheer S) level ${memberWithProduction.production.skillLevel}`"
           title="Heal Pulse (Energizing Cheer S)"
         ></v-img>
       </v-badge>
@@ -68,6 +70,7 @@
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { EnergizingCheerSHealPulse, MathUtils, compactNumber, defaultZero } from 'sleepapi-common'
@@ -83,7 +86,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage }
+    return { teamStore, skillLevelBadgeText, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     isPaired() {
@@ -94,7 +97,7 @@ export default defineComponent({
       return latiosIfOnTeam !== undefined
     },
     skillLevel() {
-      return this.memberWithProduction.member.skillLevel
+      return this.memberWithProduction.production.skillLevel
     },
     numMonsHelped() {
       return Math.min(this.teamStore.getTeamSize, 2)

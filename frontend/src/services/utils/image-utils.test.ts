@@ -15,7 +15,9 @@ import {
   ChargeEnergyS,
   ChargeStrengthSStockpile,
   commonMocks,
+  CYAN_EXPERT,
   GREENGRASS,
+  GREENGRASS_EXPERT,
   HelperBoost,
   ISLANDS,
   type Pokemon
@@ -102,6 +104,13 @@ describe('islandImage', () => {
   it('returns greengrass image path if no match is found', () => {
     const imagePath = islandImage({ island: GREENGRASS, background: false })
     expect(imagePath).toBe('/images/island/greengrass.png')
+  })
+
+  it('returns own background but base island icon for expert islands', () => {
+    expect(islandImage({ island: GREENGRASS_EXPERT, background: true })).toBe('/images/island/background-GGEX.png')
+    expect(islandImage({ island: GREENGRASS_EXPERT, background: false })).toBe('/images/island/greengrass.png')
+    expect(islandImage({ island: CYAN_EXPERT, background: true })).toBe('/images/island/background-CBEX.png')
+    expect(islandImage({ island: CYAN_EXPERT, background: false })).toBe('/images/island/cyan.png')
   })
 })
 

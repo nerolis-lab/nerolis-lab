@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Stockpile (Charge Strength S) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Stockpile (Charge Strength S) level ${memberWithProduction.production.skillLevel}`"
           title="Stockpile (Charge Strength S)"
         ></v-img>
       </v-badge>
@@ -49,6 +51,7 @@
 
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils, compactNumber } from 'sleepapi-common'
@@ -63,11 +66,11 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, MathUtils, mainskillImage }
+    return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage }
   },
   computed: {
     skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.member.skillLevel)
+      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.production.skillLevel)
     },
     totalSkillValue() {
       return compactNumber(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor, 'floor')

@@ -45,13 +45,16 @@ export default class SolveController {
 
   private parseInput(input: SolveRecipeRequest): SolveRecipeInput {
     const includedMembers: TeamMemberExt[] =
-      input.includedMembers?.map((member) => ({
-        pokemonWithIngredients: {
-          pokemon: getPokemon(member.pokemonWithIngredients.pokemon),
-          ingredientList: flatToIngredientSet(member.pokemonWithIngredients.ingredients)
-        },
-        settings: this.enrichMemberSettings(member.settings)
-      })) ?? [];
+      input.includedMembers?.map((member) => {
+        const pokemon = getPokemon(member.pokemonWithIngredients.pokemon);
+        return {
+          pokemonWithIngredients: {
+            pokemon,
+            ingredientList: flatToIngredientSet(member.pokemonWithIngredients.ingredients)
+          },
+          settings: this.enrichMemberSettings(member.settings)
+        };
+      }) ?? [];
     const maxTeamSize = MAX_TEAM_SIZE; // default to this, but we might want to limit further in future
     return {
       solveSettings: this.enrichSolveSettings(input.settings),

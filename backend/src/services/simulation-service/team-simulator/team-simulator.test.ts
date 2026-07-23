@@ -6,10 +6,12 @@ import type {
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { mocks } from '@src/vitest/index.js';
-import type { PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import type { Berry, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
+  BASE_FAVORED_BERRY_MULTIPLIER,
   BerryBurstDisguise,
   ChargeStrengthS,
+  EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
   EnergyForEveryoneS,
   MathUtils,
   PINSIR,
@@ -185,10 +187,15 @@ describe('TeamSimulator', () => {
         sneakySnacking: false
       }
     };
+    const mockMemberSupportPokemon = {
+      ...mockPokemonWithIngredients.pokemon,
+      skillPercentage: 100,
+      skill: EnergyForEveryoneS
+    };
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonWithIngredients,
-        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryoneS }
+        pokemon: mockMemberSupportPokemon
       },
       settings: {
         carrySize: 10,
@@ -217,10 +224,15 @@ describe('TeamSimulator', () => {
   });
 
   it('shall count wasted energy', () => {
+    const mockMemberSupportPokemon = {
+      ...mockPokemonWithIngredients.pokemon,
+      skillPercentage: 100,
+      skill: EnergyForEveryoneS
+    };
     const mockMemberSupport: TeamMemberExt = {
       pokemonWithIngredients: {
         ...mockPokemonWithIngredients,
-        pokemon: { ...mockPokemonWithIngredients.pokemon, skillPercentage: 100, skill: EnergyForEveryoneS }
+        pokemon: mockMemberSupportPokemon
       },
       settings: {
         carrySize: 10,
@@ -262,7 +274,12 @@ describe('TeamSimulator', () => {
   it('shall give pity procs when threshold met', () => {
     const mockMember = {
       ...mockPokemonWithIngredients,
-      pokemon: { ...mockPokemonWithIngredients.pokemon, frequency: 3000, skillPercentage: 0 }
+      pokemon: {
+        ...mockPokemonWithIngredients.pokemon,
+        frequency: 3000,
+        skillPercentage: 0,
+        pityProcThreshold: calculatePityProcThreshold('skill', 3000)
+      }
     };
     const members: TeamMemberExt[] = [
       {
@@ -288,7 +305,7 @@ describe('TeamSimulator', () => {
     const member = result.members[0];
 
     const helpsBeforeSS = member.advanced.dayHelps + member.advanced.nightHelpsBeforeSS;
-    const pityProcThreshold = calculatePityProcThreshold(mockMember.pokemon);
+    const pityProcThreshold = mockMember.pokemon.pityProcThreshold;
     const expectedPityProcs = Math.floor(helpsBeforeSS / pityProcThreshold);
 
     expect(helpsBeforeSS).toMatchInlineSnapshot(`49`);
@@ -301,18 +318,19 @@ describe('TeamSimulator', () => {
   it('shall only allow 1 disguise crit until sleep reset', () => {
     const spy = vimic(RandomUtils, 'roll', () => true);
 
+    const disguisePokemon = {
+      ...commonMocks.mockPokemon(),
+      skill: BerryBurstDisguise,
+      // one help every ~12 hours, final x2 multiplication is to account for energy frequency
+      frequency: 60 * 60 * 12 * 2,
+      // 100% chance to activate skill per help
+      skillPercentage: 100
+    };
     const members: TeamMemberExt[] = [
       {
         pokemonWithIngredients: {
           ...mockPokemonWithIngredients,
-          pokemon: {
-            ...commonMocks.mockPokemon(),
-            skill: BerryBurstDisguise,
-            // one help every ~12 hours, final x2 multiplication is to account for energy frequency
-            frequency: 60 * 60 * 12 * 2,
-            // 100% chance to activate skill per help
-            skillPercentage: 100
-          }
+          pokemon: disguisePokemon
         },
         settings: {
           carrySize: 10,
@@ -342,52 +360,186 @@ describe('TeamSimulator', () => {
     spy.mockRestore();
   });
 
-  it('applies expert mode event modifiers when provided in settings', () => {
+  describe('expert mode event modifiers', () => {
     const settings: TeamSettingsExt = mocks.teamSettingsExt({
       includeCooking: false,
       island: commonMocks.islandInstance({
         expert: true,
-        berries: [berry.ORAN, berry.MAGO],
+        berries: [berry.ORAN],
         expertMode: {
           mainFavoriteBerry: berry.ORAN,
-          subFavoriteBerries: [berry.MAGO],
+          subFavoriteBerries: [berry.YACHE],
           randomBonus: 'skill'
         }
       })
     });
 
-    const member: TeamMemberExt = {
-      pokemonWithIngredients: {
-        pokemon: commonMocks.mockPokemon({
-          berry: berry.ORAN,
-          frequency: 1800,
-          skillPercentage: 0.2,
-          skill: ChargeStrengthS
-        }),
-        ingredientList: [commonMocks.mockIngredientSet()]
-      },
-      settings: {
-        carrySize: 10,
-        level: 60,
-        ribbon: 0,
-        nature: nature.BASHFUL,
-        skillLevel: 3,
-        subskills: new Set(),
-        sneakySnacking: false,
-        externalId: 'event-test'
-      }
+    const buildMember = (memberBerry: Berry): TeamMemberExt => {
+      const pokemon = commonMocks.mockPokemon({
+        berry: memberBerry,
+        frequency: 1800,
+        skillPercentage: 0.2,
+        skill: ChargeStrengthS,
+        specialty: 'skill'
+      });
+      return {
+        pokemonWithIngredients: {
+          pokemon,
+          ingredientList: [commonMocks.mockIngredientSet()]
+        },
+        settings: {
+          carrySize: 10,
+          level: 60,
+          ribbon: 0,
+          nature: nature.BASHFUL,
+          skillLevel: 3,
+          subskills: new Set(),
+          sneakySnacking: false,
+          externalId: 'event-test'
+        }
+      };
     };
 
-    const simulator = new TeamSimulator({ settings, members: [member], iterations: 1 });
+    const runSimpleResults = (memberBerry: Berry) => {
+      const simulator = new TeamSimulator({
+        settings,
+        members: [buildMember(memberBerry)],
+        iterations: 1
+      });
+      simulator.simulate();
+      return simulator.simpleResults()[0];
+    };
 
-    simulator.simulate();
+    it('applies expert mode frequency and skill level modifiers based on favored status', () => {
+      // member's ORAN is the main favorite: +1 skill level, 10% faster helps
+      const favored = runSimpleResults(berry.ORAN);
+      expect(favored.member.settings.skillLevel).toBe(4);
+      expect(favored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620); // 1800 * 0.9
 
-    const [result] = simulator.simpleResults();
+      // member's YACHE is the sub favorite: no effect on frequency or level
+      const subFavored = runSimpleResults(berry.YACHE);
+      expect(subFavored.member.settings.skillLevel).toBe(3);
+      expect(subFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1800);
 
-    expect(result.member.settings.skillLevel).toBe(4);
-    expect(result.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620);
-    expect(member.settings.skillLevel).toBe(3);
-    expect(member.pokemonWithIngredients.pokemon.frequency).toBe(1800);
+      // member's MAGO is not favored: no skill level bonus, 15% slower helps
+      const notFavored = runSimpleResults(berry.MAGO);
+      expect(notFavored.member.settings.skillLevel).toBe(3);
+      expect(notFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(2070); // 1800 * 1.15
+
+      expect(favored.totalHelps).toBeGreaterThan(notFavored.totalHelps);
+    });
+  });
+
+  describe('expert mode random bonus effects', () => {
+    const buildExpertModeSettings = (params: {
+      randomBonus: 'berry' | 'ingredient' | 'skill';
+      areaBonus?: number;
+    }): TeamSettingsExt =>
+      mocks.teamSettingsExt({
+        includeCooking: false,
+        island: commonMocks.islandInstance({
+          expert: true,
+          berries: [berry.BELUE],
+          areaBonus: params.areaBonus ?? 0,
+          expertMode: {
+            mainFavoriteBerry: berry.BELUE,
+            subFavoriteBerries: [],
+            randomBonus: params.randomBonus
+          }
+        })
+      });
+
+    const buildFavoredMember = (params: {
+      carrySize: number;
+      specialty: 'berry' | 'ingredient';
+      externalId: string;
+    }): TeamMemberExt => {
+      const pokemon = commonMocks.mockPokemon({
+        carrySize: params.carrySize,
+        frequency: 3600,
+        berry: berry.BELUE,
+        ingredient0: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+        ingredient30: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+        ingredient60: [{ amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }],
+        ingredientPercentage: 20,
+        skill: ChargeStrengthS,
+        skillPercentage: 20,
+        specialty: params.specialty
+      });
+      return {
+        pokemonWithIngredients: {
+          pokemon,
+          ingredientList: [
+            { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+            { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL },
+            { amount: 1, ingredient: ingredient.SLOWPOKE_TAIL }
+          ]
+        },
+        settings: {
+          carrySize: params.carrySize,
+          level: 60,
+          ribbon: 0,
+          nature: nature.BASHFUL,
+          skillLevel: 3,
+          subskills: new Set(),
+          externalId: params.externalId,
+          sneakySnacking: false
+        }
+      };
+    };
+
+    it('expert mode berry bonus raises favored berry strength above the base favored multiplier and compounds with area bonus', () => {
+      const member = buildFavoredMember({ carrySize: 10, specialty: 'berry', externalId: 'berry-bonus-test' });
+
+      const runTotals = (randomBonus: 'berry' | 'skill') => {
+        const simulator = new TeamSimulator({
+          settings: buildExpertModeSettings({ randomBonus, areaBonus: 50 }),
+          members: [member],
+          iterations: 1
+        });
+        simulator.simulate();
+        const res = simulator.results().members[0];
+        return res.strength.berries;
+      };
+
+      // 'skill' bonus does not modify strength, so it acts as a baseline that still
+      // applies the frequency/skill team mods so only the berry strength math differs.
+      const baseline = runTotals('skill');
+      const withBerry = runTotals('berry');
+
+      // baseline favored multiplier is the base favored multiplier, then the area bonus compounds on top
+      expect(baseline.breakdown.favored).toBeCloseTo(baseline.breakdown.base);
+      expect(baseline.total).toBeCloseTo(BASE_FAVORED_BERRY_MULTIPLIER * 1.5 * baseline.breakdown.base);
+
+      // with berry bonus the favored multiplier is the expert mode bonus multiplier and the area bonus compounds on top
+      expect(withBerry.breakdown.favored).toBeCloseTo(
+        (EXPERT_MODE_BERRY_BONUS_MULTIPLIER - BASE_FAVORED_BERRY_MULTIPLIER + 1) * withBerry.breakdown.base
+      );
+      expect(withBerry.breakdown.islandBonus).toBeCloseTo(
+        EXPERT_MODE_BERRY_BONUS_MULTIPLIER * 0.5 * withBerry.breakdown.base
+      );
+      expect(withBerry.total).toBeCloseTo(EXPERT_MODE_BERRY_BONUS_MULTIPLIER * 1.5 * withBerry.breakdown.base);
+    });
+
+    it('expert mode ingredient bonus increases ingredients produced for favored-berry mon', () => {
+      const member = buildFavoredMember({ carrySize: 20, specialty: 'ingredient', externalId: 'ing-bonus-test' });
+
+      const runIngredients = (randomBonus: 'ingredient' | 'skill') => {
+        const simulator = new TeamSimulator({
+          settings: buildExpertModeSettings({ randomBonus }),
+          members: [member],
+          iterations: 1
+        });
+        simulator.simulate();
+        const res = simulator.results().members[0];
+        return res.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0);
+      };
+
+      const baseline = runIngredients('skill');
+      const withIngredient = runIngredients('ingredient');
+
+      expect(withIngredient).toBeGreaterThan(baseline);
+    });
   });
 });
 

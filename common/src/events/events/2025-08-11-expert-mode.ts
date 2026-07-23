@@ -26,7 +26,7 @@ export const event = EventBuilder.create<ExpertModeSettings>()
     },
 
     'settings.skillLevel': (level) => {
-      if (member.pokemonWithIngredients.pokemon.berry.name === input.mainFavoriteBerry.name) {
+      if (isMainBerry(input, member)) {
         const maxLevel = member.pokemonWithIngredients.pokemon.skill.maxLevel;
         return Math.min(level + 1, maxLevel);
       }
@@ -41,13 +41,7 @@ export const event = EventBuilder.create<ExpertModeSettings>()
     }
   }))
 
-  .forStrength((input) => ({
-    'berries.breakdown.favored': (value) => {
-      if (input.randomBonus === 'berry') {
-        return value * 2.4;
-      }
-      return value;
-    }
-  }))
-
+  // The weekly 'berry' bonus (favored berries 2.4x instead of 2x) is applied in the
+  // backend StrengthCalculator, where it can compound with the area bonus and also
+  // cover berries produced by skills like Berry Burst.
   .build();

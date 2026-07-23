@@ -5,6 +5,8 @@ import type { Berry } from '../berry';
  */
 export type ExpertRandomBonusType = 'ingredient' | 'berry' | 'skill';
 
+export const MAX_SUB_FAVORITE_BERRIES = 2;
+
 export interface ExpertModeSettingsDTO {
   mainFavoriteBerry: string;
   subFavoriteBerries: string[];

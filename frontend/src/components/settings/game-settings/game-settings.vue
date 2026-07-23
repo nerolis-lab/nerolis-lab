@@ -10,9 +10,17 @@
       <SettingsCard title="Area Bonus" icon="mdi-map-marker">
         <v-row dense class="mx-2 flex-left">
           <div class="area-and-bonus" v-for="islandData in islandBonusData" :key="islandData.shortName">
-            <v-avatar size="54" class="mr-2 area-image">
-              <v-img :src="islandImage({ island: islandData.island })" />
-            </v-avatar>
+            <div class="badge-anchor mr-2">
+              <v-avatar size="54" class="area-image">
+                <v-img :src="islandImage({ island: islandData.island })" />
+              </v-avatar>
+              <span
+                v-if="islandData.island.expert"
+                class="expert-chip expert-badge text-small"
+                aria-label="expert badge"
+                >EX</span
+              >
+            </div>
 
             <div class="mr-2 area-name">{{ islandData.island.name }}</div>
 
@@ -95,6 +103,7 @@ import { islandImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import {
+  EXPERT_ISLANDS,
   ISLANDS,
   MAX_ISLAND_BONUS,
   MAX_POT_SIZE,
@@ -102,6 +111,7 @@ import {
   POT_GROWTH_HIGH,
   POT_GROWTH_LOW,
   POT_GROWTH_THRESHOLD,
+  type Area,
   type IslandShortName
 } from 'sleepapi-common'
 import { computed, reactive, ref } from 'vue'
@@ -115,14 +125,16 @@ const rules = {
   maxBonusRule: (value: number) => value <= MAX_ISLAND_BONUS || `Value must be ${MAX_ISLAND_BONUS} or less`
 }
 
+const allIslands: Area[] = [...ISLANDS, ...EXPERT_ISLANDS]
+
 const loadingStates = reactive(
-  Object.fromEntries(ISLANDS.map((i) => [i.shortName, false])) as Record<IslandShortName, boolean>
+  Object.fromEntries(allIslands.map((i) => [i.shortName, false])) as Record<IslandShortName, boolean>
 )
 
 const loadingPotSize = ref(false)
 
 const islandBonusData = computed(() => {
-  return ISLANDS.map((islandObj) => ({
+  return allIslands.map((islandObj) => ({
     island: islandObj,
     shortName: islandObj.shortName as IslandShortName
   }))

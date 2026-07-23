@@ -14,6 +14,16 @@ $typoOptions:
   color: #9e9e9e;
 }
 
+// Approximates typography-h6 from the guides/ typography system
+// (guides/.vitepress/theme/typography.scss); replace when that system
+// is implemented in the frontend
+.typography-h6 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+}
+
 .text-body {
   font-size: 16px !important;
   letter-spacing: 0.03em !important;

@@ -66,16 +66,16 @@ order: 20
 
 ## Islands
 
-| Term      | Definition                                               |
-| --------- | -------------------------------------------------------- |
-| GG        | :greengrass:&nbsp; Greengrass Isle                       |
-| CB        | :cyan:&nbsp; Cyan Beach                                  |
-| TH        | :taupe:&nbsp; Taupe Hollow                               |
-| SD/ST/SDT | :snowdrop:&nbsp; Snowdrop Tundra                         |
-| LL        | :lapis:&nbsp; Lapis Lakeside                             |
-| OGPP/PP   | :powerplant:&nbsp; Old Gold Power Plant                  |
-| AC        | :amber:&nbsp; Amber Canyon                               |
-| EX        | Expert Mode, i.e. GGEX for Greengrass Island Expert Mode |
+| Term      | Definition                                                                                |
+| --------- | ----------------------------------------------------------------------------------------- |
+| GG        | :greengrass:&nbsp; Greengrass Isle                                                        |
+| CB        | :cyan:&nbsp; Cyan Beach                                                                   |
+| TH        | :taupe:&nbsp; Taupe Hollow                                                                |
+| SD/ST/SDT | :snowdrop:&nbsp; Snowdrop Tundra                                                          |
+| LL        | :lapis:&nbsp; Lapis Lakeside                                                              |
+| OGPP/PP   | :powerplant:&nbsp; Old Gold Power Plant                                                   |
+| AC        | :amber:&nbsp; Amber Canyon                                                                |
+| EX        | Expert Mode, i.e. GGEX for Greengrass Island Expert Mode, CBEX for Cyan Beach Expert Mode |
 
 ## Items
 

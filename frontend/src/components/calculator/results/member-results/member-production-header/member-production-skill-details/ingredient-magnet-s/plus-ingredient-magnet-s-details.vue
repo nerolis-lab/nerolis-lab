@@ -3,7 +3,9 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="`Lv.${memberWithProduction.member.skillLevel}`"
+        :content="
+          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
+        "
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -12,7 +14,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Plus (Ingredient Magnet S) level ${memberWithProduction.member.skillLevel}`"
+          :alt="`Plus (Ingredient Magnet S) level ${memberWithProduction.production.skillLevel}`"
           title="Plus (Ingredient Magnet S)"
         ></v-img>
       </v-badge>
@@ -77,6 +79,7 @@
 <script lang="ts">
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
+import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils, compactNumber, ingredient, isPlusOrMinus } from 'sleepapi-common'
@@ -93,7 +96,7 @@ export default defineComponent({
   setup() {
     const teamStore = useTeamStore()
     const pokemonStore = usePokemonStore()
-    return { teamStore, pokemonStore, MathUtils, mainskillImage }
+    return { teamStore, skillLevelBadgeText, pokemonStore, MathUtils, mainskillImage }
   },
   computed: {
     skill() {
@@ -109,10 +112,10 @@ export default defineComponent({
     },
     combinedIngCountPerProc() {
       const magnetIngs = this.skill.activations.solo.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel
+        skillLevel: this.memberWithProduction.production.skillLevel
       })
       const aSlotIngs = this.skill.activations.paired.amount({
-        skillLevel: this.memberWithProduction.member.skillLevel,
+        skillLevel: this.memberWithProduction.production.skillLevel,
         ingredient: this.memberWithProduction.member.pokemon.ingredient0.at(0)?.ingredient
       })
       const teamMembers = this.teamStore.getCurrentTeam.members

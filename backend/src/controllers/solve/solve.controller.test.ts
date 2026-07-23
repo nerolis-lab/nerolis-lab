@@ -76,7 +76,11 @@ describe('solve.controller', () => {
       const result = enrichMemberSettings({ ...settings });
 
       expect(natureMock).toHaveBeenCalledWith(settings.nature);
-      expect(result).toEqual({ ...settings, nature: common.nature.BASHFUL, subskills: new Set() });
+      expect(result).toEqual({
+        ...settings,
+        nature: common.nature.BASHFUL,
+        subskills: new Set()
+      });
 
       natureMock.mockRestore();
     });

@@ -54,7 +54,6 @@ import {
   BerryBurst,
   BerryBurstDisguise,
   BerryBurstDracoMeteor,
-  calculatePityProcThreshold,
   ChargeEnergyS,
   ChargeEnergySMoonlight,
   ChargeStrengthM,
@@ -99,9 +98,6 @@ export class SkillState {
   memberState: MemberState;
   skillEffects: Map<Mainskill, SkillEffect>;
   rng: PreGeneratedRandom;
-
-  // quick access
-  private pityProcThreshold;
 
   // state
   private helpsSinceLastSkillProc = 0;
@@ -161,8 +157,6 @@ export class SkillState {
       [SkillCopyTransform, new SkillCopyTransformEffect()],
       [TastyChanceS, new TastyChanceSEffect()]
     ]);
-
-    this.pityProcThreshold = calculatePityProcThreshold(memberState.member.pokemonWithIngredients.pokemon);
   }
 
   // TODO: apparently returning early here makes the team sim insanely fast, so skill handling is slower than expected
@@ -170,7 +164,10 @@ export class SkillState {
     const activations: SkillActivation[] = [];
     this.helpsSinceLastSkillProc += 1;
 
-    if (this.helpsSinceLastSkillProc > this.pityProcThreshold || this.rng() < this.skillPercentage) {
+    if (
+      this.helpsSinceLastSkillProc > this.memberState.member.pokemonWithIngredients.pokemon.pityProcThreshold ||
+      this.rng() < this.skillPercentage
+    ) {
       this.todaysSkillProcs += 1;
       activations.push(this.activateSkill(this.skill));
     }

@@ -80,3 +80,30 @@
 .grayscale {
   filter: grayscale(100%);
 }
+
+// expert mode "EX" tag; add .expert-badge to overlay it on an image
+// inside a .badge-anchor wrapper
+.expert-chip {
+  flex: 0 0 auto;
+  background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-on-primary));
+  font-weight: 700 !important;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+}
+
+.expert-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.badge-anchor {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}

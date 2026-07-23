@@ -5,6 +5,7 @@ import type { AmountParams } from '../../../types/mainskill/mainskill';
 import { Mainskill } from '../../../types/mainskill/mainskill';
 import type { Pokemon } from '../../../types/pokemon/pokemon';
 import { createBerrySpecialist } from '../../../utils/pokemon-utils/pokemon-constructors';
+import { calculatePityProcThreshold } from '../../../utils/stat-utils/stat-utils';
 
 export const mockMainskill = new (class extends Mainskill {
   name = 'mock skill';
@@ -36,10 +37,14 @@ export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
     },
     skill: mockMainskill
   });
-  return {
+  const merged: Pokemon = {
     ...base,
     name: 'MOCKEMON',
     displayName: 'Mockemon',
     ...attrs
+  };
+  return {
+    ...merged,
+    pityProcThreshold: attrs?.pityProcThreshold ?? calculatePityProcThreshold(merged.specialty, merged.frequency)
   };
 }

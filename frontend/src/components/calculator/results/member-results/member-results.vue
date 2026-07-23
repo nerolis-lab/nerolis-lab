@@ -158,6 +158,12 @@
 
         <TeamImpact :production-advanced-stats="memberWithProduction.production.advanced" />
 
+        <IslandImpact
+          :member="memberWithProduction.member"
+          :island="teamStore.getCurrentTeam.island"
+          :effective-skill-level="memberWithProduction.production.skillLevel"
+        />
+
         <!-- <SkillBreakdown :pokemonProduction="memberWithProduction" /> -->
       </template>
     </v-window-item>
@@ -176,6 +182,7 @@
 
 <script lang="ts">
 import { generateIvData, generateIvTextPlugin, ivOptions } from '@/components/calculator/results/chart-data/iv-chart'
+import IslandImpact from '@/components/calculator/results/member-results/island-impact/island-impact.vue'
 import MemberProductionHeader from '@/components/calculator/results/member-results/member-production-header/member-production-header.vue'
 import MemberStats from '@/components/calculator/results/member-results/member-stats/member-stats.vue'
 import TeamImpact from '@/components/calculator/results/member-results/team-impact/team-impact.vue'
@@ -211,6 +218,7 @@ export default defineComponent({
     SpeechBubble,
     MemberProductionHeader,
     TeamImpact,
+    IslandImpact,
     MemberStats,
     SubskillMenu
   },

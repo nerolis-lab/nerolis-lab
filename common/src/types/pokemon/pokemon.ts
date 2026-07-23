@@ -35,6 +35,7 @@ export interface Pokemon {
   ingredient30: IngredientSet[];
   ingredient60: IngredientSet[];
   skill: Mainskill;
+  pityProcThreshold: number;
 }
 
 export type Pokedex = Pokemon[];
