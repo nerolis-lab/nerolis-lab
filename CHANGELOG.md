@@ -1,3 +1,10 @@
+# [2.58.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.3...v2.58.0) (2026-07-23)
+
+
+### Features
+
+* add ggex and cbex support ([14e9568](https://github.com/nerolis-lab/nerolis-lab/commit/14e95682fe50f531a9a7070e2a95040b7c1f4a0a))
+
 ## [2.57.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.2...v2.57.3) (2026-07-15)
 
 
