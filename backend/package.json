@@ -50,7 +50,7 @@
     "google-auth-library": "^10.9.0",
     "knex": "^3.3.0",
     "morgan": "~1.11.0",
-    "mysql2": "~3.22.6",
+    "mysql2": "~3.23.0",
     "seedrandom": "^3.0.5",
     "sleepapi-common": "file:../common",
     "swagger-ui-express": "^5.0.1",
