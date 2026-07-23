@@ -8,8 +8,10 @@ import { TeamSimulator } from '@src/services/simulation-service/team-simulator/t
 import { mocks } from '@src/vitest/index.js';
 import type { Berry, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
+  BASE_FAVORED_BERRY_MULTIPLIER,
   BerryBurstDisguise,
   ChargeStrengthS,
+  EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
   EnergyForEveryoneS,
   MathUtils,
   PINSIR,
@@ -415,6 +417,11 @@ describe('TeamSimulator', () => {
       expect(favored.member.settings.skillLevel).toBe(4);
       expect(favored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620); // 1800 * 0.9
 
+      // member's ORAN is the sub favorite: no effect on frequency or level
+      const subFavored = runSimpleResults(berry.ORAN);
+      expect(subFavored.member.settings.skillLevel).toBe(4);
+      expect(subFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1800);
+
       // member's ORAN is not favored: no skill level bonus, 15% slower helps
       const notFavored = runSimpleResults(berry.MAGO);
       expect(notFavored.member.settings.skillLevel).toBe(3);
@@ -482,7 +489,7 @@ describe('TeamSimulator', () => {
       };
     };
 
-    it('expert mode berry bonus raises favored berry strength from 2x to 2.4x and compounds with area bonus', () => {
+    it('expert mode berry bonus raises favored berry strength above the base favored multiplier and compounds with area bonus', () => {
       const member = buildFavoredMember({ carrySize: 10, specialty: 'berry', externalId: 'berry-bonus-test' });
 
       const runTotals = (randomBonus: 'berry' | 'skill') => {
@@ -501,14 +508,18 @@ describe('TeamSimulator', () => {
       const baseline = runTotals('skill');
       const withBerry = runTotals('berry');
 
-      // baseline favored multiplier is 2x, then the 50% area bonus compounds: total = base * 2 * 1.5
+      // baseline favored multiplier is the base favored multiplier, then the area bonus compounds on top
       expect(baseline.breakdown.favored).toBeCloseTo(baseline.breakdown.base);
-      expect(baseline.total).toBeCloseTo(2 * 1.5 * baseline.breakdown.base);
+      expect(baseline.total).toBeCloseTo(BASE_FAVORED_BERRY_MULTIPLIER * 1.5 * baseline.breakdown.base);
 
-      // with berry bonus the favored multiplier is 2.4x and the area bonus compounds on top
-      expect(withBerry.breakdown.favored).toBeCloseTo(1.4 * withBerry.breakdown.base);
-      expect(withBerry.breakdown.islandBonus).toBeCloseTo(2.4 * 0.5 * withBerry.breakdown.base);
-      expect(withBerry.total).toBeCloseTo(2.4 * 1.5 * withBerry.breakdown.base);
+      // with berry bonus the favored multiplier is the expert mode bonus multiplier and the area bonus compounds on top
+      expect(withBerry.breakdown.favored).toBeCloseTo(
+        (EXPERT_MODE_BERRY_BONUS_MULTIPLIER - BASE_FAVORED_BERRY_MULTIPLIER + 1) * withBerry.breakdown.base
+      );
+      expect(withBerry.breakdown.islandBonus).toBeCloseTo(
+        EXPERT_MODE_BERRY_BONUS_MULTIPLIER * 0.5 * withBerry.breakdown.base
+      );
+      expect(withBerry.total).toBeCloseTo(EXPERT_MODE_BERRY_BONUS_MULTIPLIER * 1.5 * withBerry.breakdown.base);
     });
 
     it('expert mode ingredient bonus increases ingredients produced for favored-berry mon', () => {

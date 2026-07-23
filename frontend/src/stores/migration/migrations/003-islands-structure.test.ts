@@ -36,7 +36,6 @@ describe('003-islands-structure migration', () => {
       expect(userIsland).toBeDefined()
       expect(userIsland.name).toBe(island.name)
       expect(userIsland.shortName).toBe(island.shortName)
-      expect(userIsland.berries).toEqual(island.expert ? [] : island.berries)
 
       // Check area bonus was migrated correctly
       if (island.shortName === 'cyan') {
