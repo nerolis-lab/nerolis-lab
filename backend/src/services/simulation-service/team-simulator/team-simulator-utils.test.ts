@@ -84,8 +84,7 @@ describe('calculateAverageProduce', () => {
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 2)),
         level: 29,
         externalId: 'optimal',
-        sneakySnacking: false,
-        pityProcThreshold: 78
+        sneakySnacking: false
       };
 
       const averageProduce60 = TeamSimulatorUtils.calculateAverageProduce({
@@ -106,8 +105,7 @@ describe('calculateAverageProduce', () => {
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 2)),
         level: 30,
         externalId: 'optimal',
-        sneakySnacking: false,
-        pityProcThreshold: 78
+        sneakySnacking: false
       };
 
       const averageProduce60 = TeamSimulatorUtils.calculateAverageProduce({
@@ -128,8 +126,7 @@ describe('calculateAverageProduce', () => {
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 3)),
         level: 60,
         externalId: 'optimal',
-        sneakySnacking: false,
-        pityProcThreshold: 78
+        sneakySnacking: false
       };
       // ing% = 1.54 * 1.2 * 0.266 = 0.49 = 49%
       // (2+5+7 / 3) = 4.7 ings per ing drop
@@ -150,8 +147,7 @@ describe('calculateAverageProduce', () => {
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name).slice(0, 4)),
         level: 75,
         externalId: 'optimal',
-        sneakySnacking: false,
-        pityProcThreshold: 78
+        sneakySnacking: false
       };
 
       const averageProduce60 = TeamSimulatorUtils.calculateAverageProduce({ ...member, settings });
@@ -169,8 +165,7 @@ describe('calculateAverageProduce', () => {
         subskills: new Set(optimalSettings.subskills.map((s) => s.subskill.name)),
         level: 100,
         externalId: 'optimal',
-        sneakySnacking: false,
-        pityProcThreshold: 78
+        sneakySnacking: false
       };
       // ing% = 1.54 * 1.2 * 0.266 = 0.49 = 49%
       // (2+5+7 / 3) = 4.7 ings per ing drop
@@ -221,10 +216,6 @@ describe('prepareMembers', () => {
     expect(prepared.pokemonWithIngredients.pokemon.skillPercentage).toBeCloseTo(0.25); // 0.2 * 1.25
     expect(original.pokemonWithIngredients.pokemon.frequency).toBe(1800);
     expect(original.settings.skillLevel).toBe(3);
-
-    // pity proc threshold is a static stat snapshotted at mon creation; the
-    // event's frequency modifier must not affect it
-    expect(prepared.settings.pityProcThreshold).toBe(original.settings.pityProcThreshold);
   });
 
   it('applies no frequency change for sub berry pokemon', () => {

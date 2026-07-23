@@ -55,8 +55,7 @@ const mockMembers: TeamMemberExt[] = [
       skillLevel: 6,
       subskills: new Set(),
       externalId: 'some id',
-      sneakySnacking: false,
-      pityProcThreshold: calculatePityProcThreshold(mockPokemonWithIngredients.pokemon)
+      sneakySnacking: false
     }
   }
 ];
@@ -112,8 +111,7 @@ describe('TeamSimulator', () => {
           skillLevel: 6,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
           externalId: 'some id',
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(PINSIR)
+          sneakySnacking: false
         }
       }
     ];
@@ -139,8 +137,7 @@ describe('TeamSimulator', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonWithIngredients.pokemon)
+        sneakySnacking: false
       }
     };
 
@@ -185,8 +182,7 @@ describe('TeamSimulator', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonWithIngredients.pokemon)
+        sneakySnacking: false
       }
     };
     const mockMemberSupportPokemon = {
@@ -207,8 +203,7 @@ describe('TeamSimulator', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockMemberSupportPokemon)
+        sneakySnacking: false
       }
     };
 
@@ -245,8 +240,7 @@ describe('TeamSimulator', () => {
         skillLevel: EnergyForEveryoneS.maxLevel,
         subskills: new Set([subskill.HELPING_SPEED_M.name]),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockMemberSupportPokemon)
+        sneakySnacking: false
       }
     };
 
@@ -278,7 +272,12 @@ describe('TeamSimulator', () => {
   it('shall give pity procs when threshold met', () => {
     const mockMember = {
       ...mockPokemonWithIngredients,
-      pokemon: { ...mockPokemonWithIngredients.pokemon, frequency: 3000, skillPercentage: 0 }
+      pokemon: {
+        ...mockPokemonWithIngredients.pokemon,
+        frequency: 3000,
+        skillPercentage: 0,
+        pityProcThreshold: calculatePityProcThreshold({ specialty: 'skill', frequency: 3000 })
+      }
     };
     const members: TeamMemberExt[] = [
       {
@@ -291,8 +290,7 @@ describe('TeamSimulator', () => {
           skillLevel: 6,
           subskills: new Set(),
           externalId: 'some id',
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(mockMember.pokemon)
+          sneakySnacking: false
         }
       }
     ];
@@ -305,7 +303,7 @@ describe('TeamSimulator', () => {
     const member = result.members[0];
 
     const helpsBeforeSS = member.advanced.dayHelps + member.advanced.nightHelpsBeforeSS;
-    const pityProcThreshold = calculatePityProcThreshold(mockMember.pokemon);
+    const pityProcThreshold = mockMember.pokemon.pityProcThreshold;
     const expectedPityProcs = Math.floor(helpsBeforeSS / pityProcThreshold);
 
     expect(helpsBeforeSS).toMatchInlineSnapshot(`49`);
@@ -340,8 +338,7 @@ describe('TeamSimulator', () => {
           skillLevel: 6,
           subskills: new Set(),
           externalId: 'some id',
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(disguisePokemon)
+          sneakySnacking: false
         }
       }
     ];
@@ -399,8 +396,7 @@ describe('TeamSimulator', () => {
           skillLevel: 3,
           subskills: new Set(),
           sneakySnacking: false,
-          externalId: 'event-test',
-          pityProcThreshold: calculatePityProcThreshold(pokemon)
+          externalId: 'event-test'
         }
       };
     };
@@ -435,7 +431,9 @@ describe('TeamSimulator', () => {
       const favored = runSimpleResults(berry.ORAN);
       const notFavored = runSimpleResults(berry.MAGO);
 
-      expect(favored.member.settings.pityProcThreshold).toBe(notFavored.member.settings.pityProcThreshold);
+      expect(favored.member.pokemonWithIngredients.pokemon.pityProcThreshold).toBe(
+        notFavored.member.pokemonWithIngredients.pokemon.pityProcThreshold
+      );
     });
   });
 
@@ -492,8 +490,7 @@ describe('TeamSimulator', () => {
           skillLevel: 3,
           subskills: new Set(),
           externalId: params.externalId,
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(pokemon)
+          sneakySnacking: false
         }
       };
     };

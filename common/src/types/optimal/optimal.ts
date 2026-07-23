@@ -1,5 +1,4 @@
 import { CarrySizeUtils } from '../../utils/carry-size-utils/carry-size-utils';
-import { calculatePityProcThreshold } from '../../utils/stat-utils/stat-utils';
 import type { SubskillInstanceExt } from '../instance/subskill-instance';
 import type { Nature } from '../nature/nature';
 import { ADAMANT, CAREFUL, QUIET } from '../nature/nature';
@@ -80,12 +79,11 @@ class OptimalImpl {
    */
   public toMemberSettings(params: {
     stats: Optimal;
-    pokemon: Pokemon;
     level: number;
     externalId: string;
     sneakySnacking: boolean;
   }): TeamMemberSettingsExt {
-    const { stats, pokemon, level, externalId, sneakySnacking } = params;
+    const { stats, level, externalId, sneakySnacking } = params;
 
     const subskills = new Set<string>();
     for (const subskill of stats.subskills) {
@@ -102,8 +100,7 @@ class OptimalImpl {
       subskills,
       level,
       externalId,
-      sneakySnacking,
-      pityProcThreshold: calculatePityProcThreshold(pokemon)
+      sneakySnacking
     };
   }
 }

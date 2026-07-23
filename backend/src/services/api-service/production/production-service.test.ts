@@ -8,7 +8,6 @@ import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.
 import type { TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BULBASAUR,
-  calculatePityProcThreshold,
   CHARMANDER,
   DEFAULT_ISLAND,
   emptyIngredientInventoryFloat,
@@ -95,8 +94,7 @@ describe('calculateTeam', () => {
           skillLevel: 6,
           subskills: new Set([subskill.INGREDIENT_FINDER_M.name]),
           externalId: 'some id',
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(PINSIR)
+          sneakySnacking: false
         }
       }
     ];
@@ -159,8 +157,7 @@ describe('calculateIv', () => {
           skillLevel: 4,
           subskills: new Set([subskill.HELPING_SPEED_S.name]),
           externalId: 'bulbasaur-1',
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(BULBASAUR)
+          sneakySnacking: false
         }
       }
     ];
@@ -179,8 +176,7 @@ describe('calculateIv', () => {
           skillLevel: 3,
           subskills: new Set([subskill.SKILL_TRIGGER_S.name]),
           externalId: 'charmander-variant',
-          sneakySnacking: false,
-          pityProcThreshold: calculatePityProcThreshold(CHARMANDER)
+          sneakySnacking: false
         }
       }
     ];

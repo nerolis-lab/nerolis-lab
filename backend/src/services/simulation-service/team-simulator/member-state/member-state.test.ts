@@ -9,7 +9,6 @@ import { mocks } from '@src/vitest/index.js';
 import type { IngredientSet, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   berry,
-  calculatePityProcThreshold,
   ChargeStrengthM,
   ChargeStrengthS,
   commonMocks,
@@ -53,8 +52,7 @@ const guaranteedSkillProcMember: TeamMemberExt = {
     skillLevel: 6,
     subskills: new Set(),
     externalId: 'some id',
-    sneakySnacking: false,
-    pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+    sneakySnacking: false
   }
 };
 
@@ -68,8 +66,7 @@ const member: TeamMemberExt = {
     skillLevel: 6,
     subskills: new Set(),
     externalId: 'some id',
-    sneakySnacking: false,
-    pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+    sneakySnacking: false
   }
 };
 
@@ -260,8 +257,7 @@ describe('startDay', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
 
@@ -283,8 +279,7 @@ describe('startDay', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
 
@@ -318,8 +313,7 @@ describe('startDay', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
     const teammate: TeamMemberExt = {
@@ -348,8 +342,7 @@ describe('startDay', () => {
         skillLevel: 6,
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name]),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
 
@@ -382,8 +375,7 @@ describe('recoverEnergy', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
 
@@ -467,8 +459,7 @@ describe('attemptDayHelp', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
 
@@ -563,8 +554,7 @@ describe('attemptDayHelp', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -622,8 +612,7 @@ describe('attemptNightHelp', () => {
         skillLevel: 6,
         subskills: new Set(),
         externalId: 'some id',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockPokemonSet.pokemon)
+        sneakySnacking: false
       }
     };
     const memberState = new MemberState({ member, settings, team: [member], cookingState });
@@ -713,8 +702,7 @@ describe('expert mode ingredient bonus', () => {
       skillLevel: 6,
       subskills: new Set(),
       externalId: 'expert-test',
-      sneakySnacking: false,
-      pityProcThreshold: 78 // berry/ingredient specialists use the flat threshold
+      sneakySnacking: false
     }
   });
 

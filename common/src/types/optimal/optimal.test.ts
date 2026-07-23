@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { calculatePityProcThreshold, CarrySizeUtils } from '../../utils';
+import { CarrySizeUtils } from '../../utils';
 import { mockPokemon } from '../../vitest/mocks';
 import { Mainskill } from '../mainskill';
 import { ADAMANT, CAREFUL, QUIET } from '../nature/nature';
@@ -125,7 +125,6 @@ describe('Optimal', () => {
 
       const memberSettings = Optimal.toMemberSettings({
         stats: optimalStats,
-        pokemon: mockedPokemon,
         level: 50,
         externalId: 'test-id',
         sneakySnacking: true
@@ -139,8 +138,7 @@ describe('Optimal', () => {
         subskills: new Set(optimalStats.subskills.slice(0, 3).map((subskill) => subskill.subskill.name)),
         level: 50,
         externalId: 'test-id',
-        sneakySnacking: true,
-        pityProcThreshold: calculatePityProcThreshold(mockedPokemon)
+        sneakySnacking: true
       });
     });
 
@@ -161,7 +159,6 @@ describe('Optimal', () => {
 
       const memberSettings = Optimal.toMemberSettings({
         stats: optimalStats,
-        pokemon: mockedPokemon,
         level: 70,
         externalId: 'test-id-2',
         sneakySnacking: false
@@ -175,8 +172,7 @@ describe('Optimal', () => {
         subskills: new Set(optimalStats.subskills.slice(0, 4).map((subskill) => subskill.subskill.name)),
         level: 70,
         externalId: 'test-id-2',
-        sneakySnacking: false,
-        pityProcThreshold: calculatePityProcThreshold(mockedPokemon)
+        sneakySnacking: false
       });
     });
   });

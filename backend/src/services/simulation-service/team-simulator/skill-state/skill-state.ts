@@ -165,7 +165,7 @@ export class SkillState {
     this.helpsSinceLastSkillProc += 1;
 
     if (
-      this.helpsSinceLastSkillProc > this.memberState.member.settings.pityProcThreshold ||
+      this.helpsSinceLastSkillProc > this.memberState.member.pokemonWithIngredients.pokemon.pityProcThreshold ||
       this.rng() < this.skillPercentage
     ) {
       this.todaysSkillProcs += 1;

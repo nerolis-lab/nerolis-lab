@@ -6,7 +6,6 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   IngredientIndexToIntAmount,
   IngredientSet,
-  Pokemon,
   Recipe,
   RecipeTeamSolution,
   SolveRecipeRequest,
@@ -20,7 +19,6 @@ import type {
   TeamMemberWithProduce
 } from 'sleepapi-common';
 import {
-  calculatePityProcThreshold,
   emptyIngredientInventoryFloat,
   flatToIngredientSet,
   getIngredient,
@@ -54,7 +52,7 @@ export default class SolveController {
             pokemon,
             ingredientList: flatToIngredientSet(member.pokemonWithIngredients.ingredients)
           },
-          settings: this.enrichMemberSettings(member.settings, pokemon)
+          settings: this.enrichMemberSettings(member.settings)
         };
       }) ?? [];
     const maxTeamSize = MAX_TEAM_SIZE; // default to this, but we might want to limit further in future
@@ -87,7 +85,7 @@ export default class SolveController {
     };
   }
 
-  private enrichMemberSettings(settings: TeamMemberSettings, pokemon: Pokemon): TeamMemberSettingsExt {
+  private enrichMemberSettings(settings: TeamMemberSettings): TeamMemberSettingsExt {
     const { level, carrySize, externalId, ribbon, skillLevel, sneakySnacking } = settings;
     const subskills = new Set(settings.subskills);
     const nature = getNature(settings.nature);
@@ -99,8 +97,7 @@ export default class SolveController {
       ribbon,
       skillLevel,
       subskills,
-      sneakySnacking,
-      pityProcThreshold: calculatePityProcThreshold(pokemon)
+      sneakySnacking
     };
   }
 

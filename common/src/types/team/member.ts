@@ -21,7 +21,6 @@ export interface TeamMemberSettingsExt {
   ribbon: number;
   externalId: string;
   sneakySnacking: boolean;
-  pityProcThreshold: number; // static stat not affected by later frequency modifiers
 }
 
 export interface TeamMember {

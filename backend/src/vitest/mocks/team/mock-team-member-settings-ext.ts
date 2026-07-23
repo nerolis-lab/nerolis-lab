@@ -25,7 +25,6 @@ export function teamMemberSettingsExt(attrs?: Partial<TeamMemberSettingsExt>): T
     skillLevel: 1,
     subskills: new Set(),
     sneakySnacking: false,
-    pityProcThreshold: 78,
     ...attrs
   };
 }
@@ -40,7 +39,6 @@ export function teamMemberSettingsResult(attrs?: Partial<TeamMemberSettingsResul
     skillLevel: 0,
     subskills: [],
     sneakySnacking: false,
-    pityProcThreshold: 78,
     ...attrs
   };
 }

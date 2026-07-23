@@ -44,11 +44,10 @@ export function calculateSkillPercentage(basePercentage: number, subskills: Set<
 
 export function calculateSkillPercentageWithPityProc(pokemon: Pokemon, subskills: Set<string>, nature: Nature) {
   const skillPercentWithoutPity = calculateSkillPercentage(pokemon.skillPercentage, subskills, nature);
-  const pityProcThreshold = calculatePityProcThreshold(pokemon);
-  return skillPercentWithoutPity / (1 - Math.pow(1 - skillPercentWithoutPity, pityProcThreshold + 1));
+  return skillPercentWithoutPity / (1 - Math.pow(1 - skillPercentWithoutPity, pokemon.pityProcThreshold + 1));
 }
 
-export function calculatePityProcThreshold(pokemon: Pokemon) {
+export function calculatePityProcThreshold(pokemon: Pick<Pokemon, 'specialty' | 'frequency'>) {
   return pokemon.specialty === 'skill' || pokemon.specialty === 'all' ? Math.floor(144000 / pokemon.frequency) : 78;
 }
 

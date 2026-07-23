@@ -69,19 +69,17 @@ describe('solve.controller', () => {
 
     it('should enrich member settings with valid inputs', () => {
       const settings = mocks.teamMemberSettings();
-      const pokemon = commonMocks.mockPokemon();
 
       const natureMock = vimic(common, 'getNature', () => common.nature.BASHFUL);
 
       const enrichMemberSettings = controller._testAccess().enrichMemberSettings;
-      const result = enrichMemberSettings({ ...settings }, pokemon);
+      const result = enrichMemberSettings({ ...settings });
 
       expect(natureMock).toHaveBeenCalledWith(settings.nature);
       expect(result).toEqual({
         ...settings,
         nature: common.nature.BASHFUL,
-        subskills: new Set(),
-        pityProcThreshold: common.calculatePityProcThreshold(pokemon)
+        subskills: new Set()
       });
 
       natureMock.mockRestore();
