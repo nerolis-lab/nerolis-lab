@@ -26,6 +26,7 @@ import {
 } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
+import { YACHE } from '../../../../../common/dist/types/berry/berries.js';
 
 const mockPokemonWithIngredients: PokemonWithIngredients = {
   pokemon: commonMocks.mockPokemon({
@@ -369,7 +370,7 @@ describe('TeamSimulator', () => {
           berries: [mainFavoriteBerry],
           expertMode: {
             mainFavoriteBerry,
-            subFavoriteBerries: [],
+            subFavoriteBerries: [YACHE],
             randomBonus: 'skill'
           }
         })
@@ -417,12 +418,12 @@ describe('TeamSimulator', () => {
       expect(favored.member.settings.skillLevel).toBe(4);
       expect(favored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1620); // 1800 * 0.9
 
-      // member's ORAN is the sub favorite: no effect on frequency or level
-      const subFavored = runSimpleResults(berry.ORAN);
+      // member's YACHE is the sub favorite: no effect on frequency or level
+      const subFavored = runSimpleResults(berry.YACHE);
       expect(subFavored.member.settings.skillLevel).toBe(4);
       expect(subFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1800);
 
-      // member's ORAN is not favored: no skill level bonus, 15% slower helps
+      // member's MAGO is not favored: no skill level bonus, 15% slower helps
       const notFavored = runSimpleResults(berry.MAGO);
       expect(notFavored.member.settings.skillLevel).toBe(3);
       expect(notFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(2070); // 1800 * 1.15
