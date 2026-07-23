@@ -36,7 +36,7 @@ function migrateUserStore(stores: StoreMap) {
         snowdrop: { ...SNOWDROP, areaBonus: stateV2.areaBonus.snowdrop ?? 0 },
         lapis: { ...LAPIS, areaBonus: stateV2.areaBonus.lapis ?? 0 },
         powerplant: { ...POWER_PLANT, areaBonus: stateV2.areaBonus.powerplant ?? 0 },
-        GGEX: { ...GREENGRASS_EXPERT, areaBonus: stateV2.areaBonus.GGEX ?? 0 }
+        GGEX: { ...GREENGRASS_EXPERT, areaBonus: stateV2.areaBonus.GGEX ?? 0, berries: [] }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any // Need as any since the userStore islands type might be different today
 
