@@ -19,21 +19,34 @@ function migrateUserStore(stores: StoreMap) {
     return
   }
 
-  const missingExpertIslands: Partial<Record<IslandShortName, IslandInstance>> = {}
+  // GGEX may be entirely missing or present but missing
+  // berries (migrated before the instance shape required it)
+  if (!userStore.islands.GGEX || userStore.islands.GGEX.berries === undefined) {
+    const ggexIsland: IslandInstance = {
+      ...GREENGRASS_EXPERT,
+      areaBonus: userStore.islands.GGEX?.areaBonus ?? 0,
+      berries: []
+    }
 
-  if (!userStore.islands.GGEX) {
-    missingExpertIslands.GGEX = { ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] }
-  }
-
-  if (!userStore.islands.CBEX) {
-    missingExpertIslands.CBEX = { ...CYAN_EXPERT, areaBonus: 0, berries: [] }
-  }
-
-  if (Object.keys(missingExpertIslands).length > 0) {
     userStore.$patch((state) => {
       state.islands = {
         ...state.islands,
-        ...missingExpertIslands
+        GGEX: ggexIsland
+      } as Record<IslandShortName, IslandInstance>
+    })
+  }
+
+  if (!userStore.islands.CBEX) {
+    const cbexIsland: IslandInstance = {
+      ...CYAN_EXPERT,
+      areaBonus: 0,
+      berries: []
+    }
+
+    userStore.$patch((state) => {
+      state.islands = {
+        ...state.islands,
+        CBEX: cbexIsland
       } as Record<IslandShortName, IslandInstance>
     })
   }
