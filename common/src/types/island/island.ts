@@ -2,7 +2,7 @@ import type { Berry } from '../berry/berry';
 import type { ExpertModeSettings, ExpertRandomBonusType } from '../expert-mode';
 
 export type IslandShortName =
-  'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant' | 'GGEX' | 'CBEX' | 'amber';
+  'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant' | 'amber' | 'GGEX' | 'CBEX';
 
 interface IslandBase {
   name: string;
@@ -20,7 +20,9 @@ export interface ExpertIsland extends IslandBase {
   base: Island;
 }
 
-// Discriminated union of base and expert islands. Narrow via the `expert` property.
+/**
+ * Discriminated union of base and expert islands. Narrow via the `expert` property.
+ */
 export type Area = Island | ExpertIsland;
 
 export type BaseIslandInstance = Island & {
@@ -34,7 +36,9 @@ export type ExpertIslandInstance = ExpertIsland & {
   expertMode?: ExpertModeSettings;
 };
 
-// Runtime island instance, either base or expert. Narrow via the `expert` property.
+/**
+ * Runtime island instance, either base or expert. Narrow via the `expert` property.
+ */
 export type IslandInstance = BaseIslandInstance | ExpertIslandInstance;
 
 /**

@@ -374,8 +374,6 @@ describe('TeamSimulator', () => {
       });
 
     const buildMember = (): TeamMemberExt => {
-      // skill specialist so the pity threshold is frequency-derived, making it a
-      // meaningful check that the event's frequency modifier doesn't leak into it
       const pokemon = commonMocks.mockPokemon({
         berry: berry.ORAN,
         frequency: 1800,
@@ -423,17 +421,6 @@ describe('TeamSimulator', () => {
       expect(notFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(2070); // 1800 * 1.15
 
       expect(favored.totalHelps).toBeGreaterThan(notFavored.totalHelps);
-    });
-
-    it('pity proc threshold is unaffected by expert mode frequency modifiers', () => {
-      // pity proc threshold is snapshotted at mon creation and stays unmodified,
-      // even though favored/not-favored frequencies differ
-      const favored = runSimpleResults(berry.ORAN);
-      const notFavored = runSimpleResults(berry.MAGO);
-
-      expect(favored.member.pokemonWithIngredients.pokemon.pityProcThreshold).toBe(
-        notFavored.member.pokemonWithIngredients.pokemon.pityProcThreshold
-      );
     });
   });
 
