@@ -45,6 +45,6 @@ export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   };
   return {
     ...merged,
-    pityProcThreshold: attrs?.pityProcThreshold ?? calculatePityProcThreshold(merged)
+    pityProcThreshold: attrs?.pityProcThreshold ?? calculatePityProcThreshold(merged.specialty, merged.frequency)
   };
 }

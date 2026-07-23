@@ -48,7 +48,7 @@ function createPokemon(params: {
     ingredient0,
     ingredient30,
     ingredient60,
-    pityProcThreshold: calculatePityProcThreshold({ specialty, frequency })
+    pityProcThreshold: calculatePityProcThreshold(specialty, frequency)
   };
 }
 
@@ -149,10 +149,7 @@ export function evolvedPokemon(
     displayName: pokemonNames[params.name],
     evolvesFrom: previousForm.name,
     evolvesInto: [],
-    pityProcThreshold: calculatePityProcThreshold({
-      specialty: params.specialty ?? previousForm.specialty,
-      frequency: params.frequency
-    })
+    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? previousForm.specialty, params.frequency)
   };
   previousForm.evolvesInto.push(evolvedMon.name);
   return evolvedMon;
@@ -175,10 +172,7 @@ export function preEvolvedPokemon(
     displayName: pokemonNames[params.name],
     evolvesFrom: undefined,
     evolvesInto: [nextForm.name],
-    pityProcThreshold: calculatePityProcThreshold({
-      specialty: params.specialty ?? nextForm.specialty,
-      frequency: params.frequency
-    })
+    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? nextForm.specialty, params.frequency)
   };
   nextForm.evolvesFrom = preEvolvedMon.name;
   return preEvolvedMon;

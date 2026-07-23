@@ -93,25 +93,25 @@ describe('calculateSkillPercentageWithPityProc', () => {
 
 describe('calculatePityProcThreshold', () => {
   it('shall calculate correct threshold for skill Pokemon', () => {
-    expect(calculatePityProcThreshold(GALLADE)).toBe(60);
-    expect(calculatePityProcThreshold(SYLVEON)).toBe(55);
-    expect(calculatePityProcThreshold(DEDENNE)).toBe(57);
-    expect(calculatePityProcThreshold(PIKACHU_HOLIDAY)).toBe(57);
-    expect(calculatePityProcThreshold(GLACEON)).toBe(45);
-    expect(calculatePityProcThreshold(LEAFEON)).toBe(48);
-    expect(calculatePityProcThreshold(TOGEKISS)).toBe(55);
-    expect(calculatePityProcThreshold(MAGNEZONE)).toBe(46);
-    expect(calculatePityProcThreshold(FLAREON)).toBe(53);
-    expect(calculatePityProcThreshold(RAIKOU)).toBe(68);
-    expect(calculatePityProcThreshold(DARKRAI)).toBe(49);
+    expect(calculatePityProcThreshold(GALLADE.specialty, GALLADE.frequency)).toBe(60);
+    expect(calculatePityProcThreshold(SYLVEON.specialty, SYLVEON.frequency)).toBe(55);
+    expect(calculatePityProcThreshold(DEDENNE.specialty, DEDENNE.frequency)).toBe(57);
+    expect(calculatePityProcThreshold(PIKACHU_HOLIDAY.specialty, PIKACHU_HOLIDAY.frequency)).toBe(57);
+    expect(calculatePityProcThreshold(GLACEON.specialty, GLACEON.frequency)).toBe(45);
+    expect(calculatePityProcThreshold(LEAFEON.specialty, LEAFEON.frequency)).toBe(48);
+    expect(calculatePityProcThreshold(TOGEKISS.specialty, TOGEKISS.frequency)).toBe(55);
+    expect(calculatePityProcThreshold(MAGNEZONE.specialty, MAGNEZONE.frequency)).toBe(46);
+    expect(calculatePityProcThreshold(FLAREON.specialty, FLAREON.frequency)).toBe(53);
+    expect(calculatePityProcThreshold(RAIKOU.specialty, RAIKOU.frequency)).toBe(68);
+    expect(calculatePityProcThreshold(DARKRAI.specialty, DARKRAI.frequency)).toBe(49);
   });
 
   it('shall calculate correct threshold for berry and ingredient pokemon', () => {
-    expect(calculatePityProcThreshold(RAICHU)).toBe(78);
-    expect(calculatePityProcThreshold(CATERPIE)).toBe(78);
-    expect(calculatePityProcThreshold(CHARIZARD)).toBe(78);
-    expect(calculatePityProcThreshold(DRAGONITE)).toBe(78);
-    expect(calculatePityProcThreshold(ABSOL)).toBe(78);
+    expect(calculatePityProcThreshold(RAICHU.specialty, RAICHU.frequency)).toBe(78);
+    expect(calculatePityProcThreshold(CATERPIE.specialty, CATERPIE.frequency)).toBe(78);
+    expect(calculatePityProcThreshold(CHARIZARD.specialty, CHARIZARD.frequency)).toBe(78);
+    expect(calculatePityProcThreshold(DRAGONITE.specialty, DRAGONITE.frequency)).toBe(78);
+    expect(calculatePityProcThreshold(ABSOL.specialty, ABSOL.frequency)).toBe(78);
   });
 });
 

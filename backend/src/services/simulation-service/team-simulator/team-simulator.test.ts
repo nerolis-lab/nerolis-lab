@@ -26,7 +26,6 @@ import {
 } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { describe, expect, it } from 'vitest';
-import { YACHE } from '../../../../../common/dist/types/berry/berries.js';
 
 const mockPokemonWithIngredients: PokemonWithIngredients = {
   pokemon: commonMocks.mockPokemon({
@@ -279,7 +278,7 @@ describe('TeamSimulator', () => {
         ...mockPokemonWithIngredients.pokemon,
         frequency: 3000,
         skillPercentage: 0,
-        pityProcThreshold: calculatePityProcThreshold({ specialty: 'skill', frequency: 3000 })
+        pityProcThreshold: calculatePityProcThreshold('skill', 3000)
       }
     };
     const members: TeamMemberExt[] = [
@@ -362,23 +361,22 @@ describe('TeamSimulator', () => {
   });
 
   describe('expert mode event modifiers', () => {
-    const buildSettings = (mainFavoriteBerry: Berry): TeamSettingsExt =>
-      mocks.teamSettingsExt({
-        includeCooking: false,
-        island: commonMocks.islandInstance({
-          expert: true,
-          berries: [mainFavoriteBerry],
-          expertMode: {
-            mainFavoriteBerry,
-            subFavoriteBerries: [YACHE],
-            randomBonus: 'skill'
-          }
-        })
-      });
+    const settings: TeamSettingsExt = mocks.teamSettingsExt({
+      includeCooking: false,
+      island: commonMocks.islandInstance({
+        expert: true,
+        berries: [berry.ORAN],
+        expertMode: {
+          mainFavoriteBerry: berry.ORAN,
+          subFavoriteBerries: [berry.YACHE],
+          randomBonus: 'skill'
+        }
+      })
+    });
 
-    const buildMember = (): TeamMemberExt => {
+    const buildMember = (memberBerry: Berry): TeamMemberExt => {
       const pokemon = commonMocks.mockPokemon({
-        berry: berry.ORAN,
+        berry: memberBerry,
         frequency: 1800,
         skillPercentage: 0.2,
         skill: ChargeStrengthS,
@@ -402,10 +400,10 @@ describe('TeamSimulator', () => {
       };
     };
 
-    const runSimpleResults = (mainFavoriteBerry: Berry) => {
+    const runSimpleResults = (memberBerry: Berry) => {
       const simulator = new TeamSimulator({
-        settings: buildSettings(mainFavoriteBerry),
-        members: [buildMember()],
+        settings,
+        members: [buildMember(memberBerry)],
         iterations: 1
       });
       simulator.simulate();
@@ -420,7 +418,7 @@ describe('TeamSimulator', () => {
 
       // member's YACHE is the sub favorite: no effect on frequency or level
       const subFavored = runSimpleResults(berry.YACHE);
-      expect(subFavored.member.settings.skillLevel).toBe(4);
+      expect(subFavored.member.settings.skillLevel).toBe(3);
       expect(subFavored.member.pokemonWithIngredients.pokemon.frequency).toBeCloseTo(1800);
 
       // member's MAGO is not favored: no skill level bonus, 15% slower helps
