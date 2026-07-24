@@ -6,28 +6,26 @@
         <span>Feedback</span>
         <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
       </a>
-      <a class="simple" href="https://github.com/nerolis-lab/nerolis-lab" target="_blank" rel="noopener noreferrer">
-        <GithubIcon class="icon"></GithubIcon>
-        <span>GitHub</span>
-        <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
-      </a>
       <a class="simple" href="https://discord.gg/ndzTXRHWzK" target="_blank" rel="noopener noreferrer">
         <DiscordIcon class="icon"></DiscordIcon>
         <span>Discord</span>
         <v-icon class="open-icon" icon="mdi-open-in-new" size="x-small"></v-icon>
       </a>
+      <router-link class="simple" to="/about">
+        <v-icon class="icon" icon="mdi-information-outline"></v-icon>
+        <span>About</span>
+      </router-link>
     </div>
   </v-footer>
 </template>
 
 <script lang="ts">
 import DiscordIcon from '@/components/icons/icon-discord.vue'
-import GithubIcon from '@/components/icons/icon-github.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'TheFooter',
-  components: { DiscordIcon, GithubIcon }
+  components: { DiscordIcon }
 })
 </script>
 
