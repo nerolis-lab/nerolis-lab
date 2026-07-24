@@ -8,7 +8,7 @@
           <v-card-subtitle class="subtitle">Thanks for coming over from Sleep API!</v-card-subtitle>
         </div>
       </div>
-      <v-card-text>
+      <v-card-text class="body">
         <p class="mb-3">
           Neroli's Lab is the successor to the Sleep API website. Here is a quick map of where things live:
         </p>
@@ -29,10 +29,6 @@
             <strong><router-link class="simple" to="/tier-lists/">Tier lists</router-link></strong
             >: just like in Sleep API.
           </li>
-          <li>
-            <strong><router-link class="simple" to="/guides/">Guides</router-link></strong>
-            : explanations of Pokémon Sleep mechanics.
-          </li>
         </ul>
         <p class="text-strength mb-3"><strong>You can optionally log in to save your teams and settings!</strong></p>
         <p class="mb-3">
@@ -51,6 +47,7 @@
           density="compact"
           color="primary"
           label="Don't show this welcome again"
+          class="hide-message"
         ></v-checkbox>
         <v-btn color="primary" variant="flat" @click="closeWelcome">Got it</v-btn>
       </v-card-actions>
@@ -165,6 +162,11 @@ watch(showDialog, (visible) => {
   @media (min-width: 500px) {
     font-size: 24px !important;
   }
+}
+
+.body,
+.hide-message {
+  font-family: 'Roboto', sans-serif;
 }
 
 .subtitle {
