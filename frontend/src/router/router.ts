@@ -19,6 +19,9 @@ export enum RouteName {
   Profile = 'Profile',
   // Friends = 'Friends',
 
+  Credits = 'Credits',
+  About = 'About',
+
   Admin = 'Admin',
 
   Discord = 'Discord',
@@ -38,6 +41,8 @@ const DishInfographicPage = () => import('@/pages/dish-infographic/dish-infograp
 const SettingsPage = () => import('@/pages/settings/settings-page.vue')
 const ProfilePage = () => import('@/pages/profile-page.vue')
 // const FriendsPage = () => import('@/pages/friends/friends-page.vue')
+const CreditsPage = () => import('@/pages/credits/credits-page.vue')
+const AboutPage = () => import('@/pages/about/about-page.vue')
 
 // Admin
 const AdminPage = () => import('@/pages/admin/admin.vue')
@@ -135,6 +140,16 @@ const router = createRouter({
     //   name: RouteName.Friends,
     //   component: FriendsPage
     // },
+    {
+      path: '/credits',
+      name: RouteName.Credits,
+      component: CreditsPage
+    },
+    {
+      path: '/about',
+      name: RouteName.About,
+      component: AboutPage
+    },
     {
       path: '/admin',
       name: RouteName.Admin,
