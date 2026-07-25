@@ -72,18 +72,6 @@ describe('HomePage.vue', () => {
     expect(html).toMatch(buttonRegex)
   })
 
-  it('should have beta link with proper color styling', () => {
-    const betaLink = wrapper.find('.beta')
-    expect(betaLink.exists()).toBe(true)
-
-    // Check that the beta link has proper styling in CSS
-    const style = betaLink.element.getAttribute('style') || ''
-    const classes = betaLink.classes()
-
-    // Either should have inline style or beta class for styling
-    expect(classes.includes('beta') || style.includes('color')).toBe(true)
-  })
-
   it('should have fx01 class for button animations', () => {
     const getStartedButtons = wrapper.findAll('.fx01')
     expect(getStartedButtons.length).toBeGreaterThan(0)

@@ -1,3 +1,18 @@
+## [2.59.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.0...v2.59.1) (2026-07-25)
+
+
+### Bug Fixes
+
+* correct Cooking Power-Up S description text ([2284938](https://github.com/nerolis-lab/nerolis-lab/commit/228493847e6a14a74dda3c6a4fc4aeffbe1c7292))
+
+# [2.59.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.58.0...v2.59.0) (2026-07-24)
+
+
+### Features
+
+* add About and Credits pages ([a77b29b](https://github.com/nerolis-lab/nerolis-lab/commit/a77b29bf8401d236f2ef365a189c75f45314e2b4))
+* add welcome message for Sleep API users, add Sleep API EOS ([d249a75](https://github.com/nerolis-lab/nerolis-lab/commit/d249a752e6e32d9c3621f16aba0b8dcdc4e9c6dd))
+
 # [2.58.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.57.3...v2.58.0) (2026-07-23)
 
 
