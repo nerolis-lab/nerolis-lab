@@ -34,7 +34,7 @@
     "@tsconfig/node20": "^20.1.9",
     "@types/html2canvas": "^1.0.0",
     "@types/jsdom": "^21.1.7",
-    "@types/node": "^20.19.43",
+    "@types/node": "^24.13.3",
     "@vitejs/plugin-vue": "^6.0.8",
     "@vitest/coverage-v8": "^4.1.10",
     "@vue/test-utils": "^2.4.11",
