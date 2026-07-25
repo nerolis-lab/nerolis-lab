@@ -32,7 +32,7 @@ beforeEach(() => {
   intersectionCallback = null
 
   // Override the global IntersectionObserver with our testable version
-  global.IntersectionObserver = vi.fn().mockImplementation((callback) => {
+  global.IntersectionObserver = vi.fn().mockImplementation(function (callback) {
     intersectionCallback = callback
     return {
       observe: mockObserve,
