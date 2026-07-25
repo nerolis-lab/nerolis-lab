@@ -1,3 +1,10 @@
+## [2.59.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.0...v2.59.1) (2026-07-25)
+
+
+### Bug Fixes
+
+* correct Cooking Power-Up S description text ([2284938](https://github.com/nerolis-lab/nerolis-lab/commit/228493847e6a14a74dda3c6a4fc4aeffbe1c7292))
+
 # [2.59.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.58.0...v2.59.0) (2026-07-24)
 
 
