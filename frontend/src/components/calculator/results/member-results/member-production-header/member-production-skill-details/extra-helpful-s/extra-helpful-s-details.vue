@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
-import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
+import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils, compactNumber } from 'sleepapi-common'

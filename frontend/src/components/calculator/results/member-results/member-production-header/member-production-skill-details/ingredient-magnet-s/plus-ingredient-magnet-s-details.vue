@@ -79,7 +79,7 @@
 <script lang="ts">
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
+import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { MathUtils, compactNumber, ingredient, isPlusOrMinus } from 'sleepapi-common'
