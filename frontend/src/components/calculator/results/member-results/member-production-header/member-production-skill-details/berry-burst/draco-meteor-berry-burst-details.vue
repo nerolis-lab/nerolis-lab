@@ -80,7 +80,7 @@
 <script lang="ts">
 import { berryImage, mainskillImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
-import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
+import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
 import { BerryBurstDracoMeteor, compactNumber, MathUtils, uniqueMembersWithBerry } from 'sleepapi-common'
