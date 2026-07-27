@@ -14,7 +14,7 @@ on:
       node-version:
         required: false
         type: string
-        default: '22'
+        default: '24'
         description: 'Node.js version to use'
       needs-common-build:
         required: false

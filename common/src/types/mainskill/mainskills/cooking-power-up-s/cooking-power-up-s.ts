@@ -7,7 +7,7 @@ export const CookingPowerUpS = new (class extends Mainskill {
   potSizeAmounts = [7, 10, 12, 17, 22, 27, 31];
   image = 'pot';
   description = (params: AmountParams) =>
-    `Gives your pot room for ${this.potSizeAmounts[params.skillLevel - 1]} more ingredients next time you cook.`;
+    `Increases the quantity of Cooking items you get by ${this.potSizeAmounts[params.skillLevel - 1]}.`;
   activations: ActivationsType = {
     potSize: {
       unit: 'pot size',

@@ -5,7 +5,7 @@ describe('CookingPowerUpS', () => {
   it('should have correct basic properties', () => {
     expect(CookingPowerUpS.name).toBe('Cooking Power-Up S');
     expect(CookingPowerUpS.description({ skillLevel: 1 })).toBe(
-      'Gives your pot room for 7 more ingredients next time you cook.'
+      'Increases the quantity of Cooking items you get by 7.'
     );
     expect(CookingPowerUpS.RP).toEqual([880, 1251, 1726, 2383, 3290, 4546, 5843]);
     expect(CookingPowerUpS.maxLevel).toBe(7);
