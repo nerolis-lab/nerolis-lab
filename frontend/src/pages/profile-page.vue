@@ -42,7 +42,7 @@
 
           <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center">
-              <span class="text-center font-weight-bold"> {{ t('profilepage.userID') }}: </span>
+              <span class="text-center font-weight-bold"> {{ t('profilepage.userId') }}: </span>
             </v-col>
             <v-col cols="auto" class="flex-center">
               <span class="text-center">{{ userStore.externalId }}</span>
@@ -55,14 +55,14 @@
             </v-col>
             <v-col cols="auto" class="flex-center">
               <span :class="['text-center', userStore.supporterSince ? 'text-supporter' : 'text-grey']">{{
-                userStore.supporterSince ? 'Active' : 'Inactive'
+                userStore.supporterSince ? t('profilepage.active') : t('profilepage.inactive')
               }}</span>
             </v-col>
           </v-row>
 
           <v-row v-if="userStore.supporterSince" dense class="flex-center">
             <v-col cols="auto" class="flex-center">
-              <span class="text-center font-weight-bold">Supporter since: </span>
+              <span class="text-center font-weight-bold">{{ t('profilepage.supporterSince') }}: </span>
             </v-col>
             <v-col cols="auto" class="flex-center">
               <span class="text-center text-supporter">{{ supporterSince }}</span>
@@ -76,7 +76,9 @@
       <v-col cols="12">
         <div class="d-flex align-center justify-center">
           <v-icon class="mr-2" :color="userStore.roleData.color">mdi-star</v-icon>
-          <span :class="['font-weight-bold', `text-${userStore.roleData.color}`]">Thank you for your support!</span>
+          <span :class="['font-weight-bold', `text-${userStore.roleData.color}`]">{{
+            t('profilepage.thankYouForSupport')
+          }}</span>
         </div>
       </v-col>
     </v-row>

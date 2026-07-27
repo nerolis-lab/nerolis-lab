@@ -27,20 +27,37 @@
 
       <v-btn color="secondary" variant="elevated" prepend-icon="mdi-delete-sweep" @click="clear"> Clear Cache </v-btn>
     </SettingsCard>
+
+    <SettingsCard :title="t('common.language.title')" icon="mdi-translate">
+      <v-select
+        :model-value="languageStore.currentLanguage"
+        :items="languageStore.availableLanguages"
+        item-title="nativeName"
+        item-value="code"
+        variant="outlined"
+        density="comfortable"
+        hide-details
+        @update:model-value="languageStore.changeLanguage"
+      />
+    </SettingsCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import { UserService } from '@/services/user/user-service'
+import { useLanguageStore } from '@/stores/language-store'
 import { clearCacheKeepLogin } from '@/stores/store-service'
 import { useUserStore } from '@/stores/user-store'
 import { useVersionStore } from '@/stores/version-store/version-store'
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SettingsCard from '../settings-card.vue'
 
 import { success, error } from '@/components/snackbar/snackbar.vue'
+const { t } = useI18n()
 const versionStore = useVersionStore()
 const userStore = useUserStore()
+const languageStore = useLanguageStore()
 
 const useRandomPokemonNames = computed({
   get: () => userStore.randomizeNicknames,

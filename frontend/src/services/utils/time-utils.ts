@@ -1,3 +1,4 @@
+import { i18n } from '@/i18n'
 import { MathUtils, sleepDurationMinutesBetweenBedAndWake, sleepScoreFromBedAndWake, type Time } from 'sleepapi-common'
 
 class TimeUtilsImpl {
@@ -44,13 +45,7 @@ class TimeUtilsImpl {
   }
 
   public extractDate(isoString: string): string {
-    const date = new Date(isoString)
-    const userLocale = navigator.language || 'en-US'
-    return new Intl.DateTimeFormat(userLocale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }).format(date)
+    return i18n.global.d(new Date(isoString), 'long')
   }
 
   public sleepScore(params: { bedtime: string; wakeup: string }) {

@@ -1,11 +1,10 @@
 import { darkTheme } from '@/assets/theme'
+import { i18n } from '@/i18n'
 import router from '@/router/router'
 import { config } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
 import ResizeObserver from 'resize-observer-polyfill'
-import { locales, type Translation } from 'sleepapi-common'
 import { beforeEach } from 'vitest'
-import { createI18n } from 'vue-i18n'
 import 'vitest-canvas-mock'
 import { defineComponent, h } from 'vue'
 import { createVuetify } from 'vuetify'
@@ -22,14 +21,6 @@ const vuetify = createVuetify({
   },
   components: { ...components },
   directives
-})
-
-const i18n = createI18n<[Translation], 'en'>({
-  legacy: false,
-  locale: 'en',
-  fallbackLocale: 'en',
-  messages: locales,
-  globalInjection: true
 })
 
 config.global.plugins.push(vuetify, router, i18n)
@@ -97,6 +88,7 @@ global.cancelAnimationFrame = vi.fn()
 
 beforeEach(() => {
   setActivePinia(createPinia())
+  i18n.global.locale.value = 'en'
 })
 
 afterEach(() => {

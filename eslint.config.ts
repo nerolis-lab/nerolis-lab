@@ -2,6 +2,7 @@
 
 import typescriptEslint from 'typescript-eslint';
 
+import vueI18n from '@intlify/eslint-plugin-vue-i18n';
 import js from '@eslint/js';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -70,8 +71,36 @@ export default typescriptEslint.config(
     extends: [
       ...pluginVueA11y.configs['flat/recommended'],
       ...vue.configs['flat/recommended'],
-      ...vuetify.configs['flat/recommended']
-    ]
+      ...vuetify.configs['flat/recommended'],
+      ...vueI18n.configs.recommended
+    ],
+    // vue-i18n typed t() only gives IDE autocomplete for translation keys,
+    // it does not reject an invalid/typo'd key at compile time (the
+    // underlying overload accepts any string so it can also support
+    // dynamic keys) - this rule is what actually fails CI on a bad key.
+    // NOTE: this currently only fires for t() calls in .ts files. This
+    // block's extends already pulls in eslint-plugin-vue etc, but
+    // typescript-eslint's config() helper re-scopes each extended config's
+    // own `files` (e.g. vue's ['*.vue', '**/*.vue']) to this block's
+    // broader `files: ['**/frontend/**']` instead of unioning them, which
+    // means nothing in the final config array declares an explicit *.vue
+    // pattern - so ESLint's directory-walk extension auto-discovery never
+    // picks up .vue at all, and *no* rule from any of these extends (not
+    // just this one) currently runs against .vue files via `eslint .`.
+    // That's a pre-existing, repo-wide gap unrelated to i18n - fixing it
+    // means giving this block (or a sibling one) explicit
+    // `**/frontend/**/*.vue` + `**/frontend/**/*.ts` files, which would
+    // also surface every already-broken vue/vuetify/a11y rule against
+    // every .vue file at once. Deliberately left out of this PR's scope.
+    rules: {
+      '@intlify/vue-i18n/no-missing-keys': 'error'
+    },
+    settings: {
+      'vue-i18n': {
+        localeDir: './frontend/src/i18n/locales/*.json',
+        messageSyntaxVersion: '^11.0.0'
+      }
+    }
   },
 
   // backend-specific rules
@@ -241,6 +270,15 @@ export default typescriptEslint.config(
     files: ['**/logger/logger.ts'],
     rules: {
       'no-var': 'off'
+    }
+  },
+
+  // module augmentation interfaces are inherently "empty" - the members
+  // come from declaration merging with vue-i18n's own interface
+  {
+    files: ['**/i18n/schema.d.ts'],
+    rules: {
+      '@typescript-eslint/no-empty-object-type': 'off'
     }
   }
 );

@@ -271,6 +271,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import Divider from '@/components/custom-components/divider/divider.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
@@ -299,6 +300,10 @@ export default defineComponent({
   name: 'CookingResults',
   components: {
     Divider
+  },
+  setup() {
+    const { n } = useI18n()
+    return { n }
   },
   data() {
     return {
@@ -332,20 +337,14 @@ export default defineComponent({
         (this.currentRecipeTypeResult?.weeklyStrength ?? 0) *
           this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(strength)
+      return this.n(strength, 'integer')
     },
     sundayStrength() {
       const strength = Math.floor(
         (this.currentRecipeTypeResult?.sundayStrength ?? 0) *
           this.userStore.islandBonus(this.teamStore.getCurrentTeam.island.shortName)
       )
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(strength)
+      return this.n(strength, 'integer')
     },
     weekdayStrength() {
       const weeklyStrength = Math.floor(
@@ -358,10 +357,7 @@ export default defineComponent({
       )
 
       const strength = Math.floor(weeklyStrength - sundayStrength)
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(strength)
+      return this.n(strength, 'integer')
     },
     recipesCooked(): CookedRecipeResultDetails[] {
       const recipes = this.currentRecipeTypeResult?.cookedRecipes ?? []

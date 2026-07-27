@@ -25,7 +25,7 @@
         </v-list-item>
         <v-list-item
           :prepend-icon="item.icon"
-          :title="item.label"
+          :title="t(`nav.${item.id}`)"
           :to="item.spa ? item.path : undefined"
           :href="item.spa ? undefined : item.path"
         />
@@ -41,6 +41,7 @@ import InboxMenu from '@/components/inbox/inbox-menu.vue'
 import { useUserStore } from '@/stores/user-store'
 import { Roles, siteNavItemsForFrontend } from 'sleepapi-common'
 import { computed, defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'TheNavBar',
@@ -50,9 +51,10 @@ export default defineComponent({
     InboxMenu
   },
   setup() {
+    const { t } = useI18n()
     const userStore = useUserStore()
     const drawerItems = computed(() => siteNavItemsForFrontend(userStore.role === Roles.Admin))
-    return { drawerItems, loggedIn: userStore.loggedIn }
+    return { t, drawerItems, loggedIn: userStore.loggedIn }
   },
   data: () => ({
     drawer: false

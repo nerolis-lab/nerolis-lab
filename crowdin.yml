@@ -1,0 +1,6 @@
+# Foundation only: maps source/translation JSON for Crowdin's file-based sync.
+# No project ID/token or CI sync job is wired up yet - that's a follow-up
+# once a Crowdin project actually exists for this repo.
+files:
+  - source: /frontend/src/i18n/locales/en.json
+    translation: /frontend/src/i18n/locales/%two_letters_code%.json

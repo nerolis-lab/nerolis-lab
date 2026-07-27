@@ -13,9 +13,9 @@ import { darkTheme } from '@/assets/theme'
 import router from '@/router/router'
 
 import { registerChartJS } from '@/components/custom-components/charts/register-charts'
+import { i18n } from '@/i18n'
 import { migrateSite } from '@/stores/store-service'
-import { locales, type Translation } from 'sleepapi-common'
-import { createI18n } from 'vue-i18n'
+import { useLanguageStore } from '@/stores/language-store'
 
 async function initializeApp() {
   const pinia = createPinia()
@@ -37,20 +37,14 @@ async function initializeApp() {
   })
 
   app.use(pinia)
+  useLanguageStore().initializeLanguage()
+
   try {
     await migrateSite()
   } catch (error) {
     logger.error('Migration failed during startup. Application might be in an inconsistent state. ' + error)
   }
   registerChartJS()
-
-  const i18n = createI18n<[Translation], 'en'>({
-    legacy: false,
-    locale: 'en',
-    fallbackLocale: 'en',
-    messages: locales,
-    globalInjection: true
-  })
 
   app.use(vuetify)
   app.use(i18n)
