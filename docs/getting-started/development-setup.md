@@ -8,7 +8,7 @@ Before you begin, ensure you have the following installed:
 
 ### Required Tools
 
-1. **Node.js** (v20 or higher)
+1. **Node.js** (v24 or higher)
 
    - We recommend using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm) for easy version management. We have a dedicated .nvmrc to align our node versions. _On Windows it is recommended to use nvm inside WSL (Windows Subsystem for Linux), but other alternatives like nvm-windows exist._
 
