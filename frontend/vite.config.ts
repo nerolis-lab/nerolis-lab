@@ -178,8 +178,10 @@ export default defineConfig(({ command }) => ({
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          faker: ['@faker-js/faker']
+        manualChunks: (id) => {
+          if (id.includes('@faker-js/faker')) {
+            return 'faker'
+          }
         }
       }
     }
