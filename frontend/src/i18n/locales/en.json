@@ -1,0 +1,72 @@
+{
+  "common": {
+    "app": {
+      "name": "Neroli's Lab",
+      "tagline": "Sleep Team Optimizer"
+    },
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "add": "Add",
+      "remove": "Remove",
+      "search": "Search",
+      "filter": "Filter",
+      "reset": "Reset",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next"
+    },
+    "status": {
+      "loading": "Loading...",
+      "saving": "Saving...",
+      "success": "Success",
+      "error": "Error",
+      "warning": "Warning"
+    },
+    "language": {
+      "title": "Language"
+    }
+  },
+  "homepage": {
+    "title": "Neroli's Lab",
+    "subtitle": "Helping you overthink sleep tracking.",
+    "description": "Optimize your strategies with our simulations.",
+    "getStarted": "Get started",
+    "features": {
+      "calculator": {
+        "title": "Calculator",
+        "description": "Calculate your team's or Pokémon's production with our realistic Sleep API-powered simulations."
+      },
+      "compare": {
+        "title": "Compare",
+        "description": "Compare your Pokémon to each other before deciding on your investments."
+      },
+      "tierlists": {
+        "title": "Tier lists",
+        "description": "Cooking tier lists based on millions of simulated recipe solutions."
+      }
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "calculator": "Calculator",
+    "compare": "Compare",
+    "tierlist": "Tier lists",
+    "recipes": "Recipes",
+    "settings": "Settings",
+    "admin": "Admin"
+  },
+  "profilepage": {
+    "profile": "Profile",
+    "aboutMe": "About Me",
+    "details": "Details",
+    "userId": "User ID",
+    "supportersStatus": "Supporter Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "supporterSince": "Supporter since",
+    "thankYouForSupport": "Thank you for your support!"
+  }
+}

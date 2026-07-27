@@ -1,5 +1,6 @@
 import * as snackbar from '@/components/snackbar/snackbar.vue'
 import { UserService } from '@/services/user/user-service'
+import { useLanguageStore } from '@/stores/language-store'
 import { clearCacheKeepLogin } from '@/stores/store-service'
 import { useUserStore } from '@/stores/user-store'
 import { useVersionStore } from '@/stores/version-store/version-store'
@@ -44,11 +45,12 @@ describe('SiteSettings', () => {
     expect(wrapper.find('.site-settings-container').exists()).toBe(true)
 
     const cards = wrapper.findAllComponents({ name: 'SettingsCard' })
-    expect(cards).toHaveLength(3)
+    expect(cards).toHaveLength(4)
 
     expect(cards[0].props('title')).toBe('Version Information')
     expect(cards[1].props('title')).toBe('Pokémon Name Generation')
     expect(cards[2].props('title')).toBe('Cache Settings')
+    expect(cards[3].props('title')).toBe('Language')
   })
 
   it('displays version information', () => {
@@ -126,5 +128,24 @@ describe('SiteSettings', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Failed to update randomizeNicknames setting:', mockError)
 
     consoleSpy.mockRestore()
+  })
+
+  it('displays the language selector defaulting to the current language', () => {
+    const languageCard = wrapper.findAllComponents({ name: 'SettingsCard' })[3]
+    const select = languageCard.findComponent({ name: 'VSelect' })
+
+    expect(select.exists()).toBe(true)
+    expect(select.props('modelValue')).toBe('en')
+  })
+
+  it('changes the language when a new option is selected', async () => {
+    const languageStore = useLanguageStore()
+
+    const languageCard = wrapper.findAllComponents({ name: 'SettingsCard' })[3]
+    const select = languageCard.findComponent({ name: 'VSelect' })
+
+    await select.vm.$emit('update:modelValue', 'ja')
+
+    expect(languageStore.currentLanguage).toBe('ja')
   })
 })

@@ -1,3 +1,4 @@
+import vueI18n from '@intlify/unplugin-vue-i18n/vite'
 import vue from '@vitejs/plugin-vue'
 import fs from 'fs-extra'
 import { fileURLToPath, URL } from 'node:url'
@@ -45,6 +46,9 @@ export default defineConfig(({ command }) => ({
   plugins: [
     vue(),
     vuetify(),
+    vueI18n({
+      include: fileURLToPath(new URL('./src/i18n/locales/**', import.meta.url))
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       manifest,

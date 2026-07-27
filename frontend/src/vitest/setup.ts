@@ -1,4 +1,5 @@
 import { darkTheme } from '@/assets/theme'
+import { i18n } from '@/i18n'
 import router from '@/router/router'
 import { config } from '@vue/test-utils'
 import { createPinia, setActivePinia } from 'pinia'
@@ -22,7 +23,7 @@ const vuetify = createVuetify({
   directives
 })
 
-config.global.plugins.push(vuetify, router)
+config.global.plugins.push(vuetify, router, i18n)
 
 // Stub VImg component to avoid "window is not defined" error
 const VImgStub = defineComponent({
@@ -87,6 +88,7 @@ global.cancelAnimationFrame = vi.fn()
 
 beforeEach(() => {
   setActivePinia(createPinia())
+  i18n.global.locale.value = 'en'
 })
 
 afterEach(() => {

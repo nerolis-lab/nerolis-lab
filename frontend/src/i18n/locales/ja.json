@@ -1,0 +1,67 @@
+{
+  "common": {
+    "app": {
+      "name": "ネロリ's ラボ",
+      "tagline": "睡眠チーム最適化ツール"
+    },
+    "actions": {
+      "save": "保存",
+      "cancel": "キャンセル",
+      "delete": "削除",
+      "edit": "編集",
+      "add": "追加",
+      "remove": "削除",
+      "search": "検索",
+      "filter": "フィルター",
+      "reset": "リセット",
+      "close": "閉じる",
+      "back": "戻る",
+      "next": "次へ"
+    },
+    "status": {
+      "loading": "読み込み中...",
+      "saving": "保存中...",
+      "success": "成功",
+      "error": "エラー",
+      "warning": "警告"
+    },
+    "language": {
+      "title": "言語"
+    }
+  },
+  "homepage": {
+    "title": "ネロリ's ラボ",
+    "subtitle": "私たちと一緒に、ポケモンスリープをもっと楽しみませんか？",
+    "description": "シミュレーションを使って更なるゲーム体験を！",
+    "getStarted": "スタート",
+    "features": {
+      "calculator": {
+        "title": "チームシミュ",
+        "description": "Sleep APIを活用して、ポケモンたちがどれくらいエナジーを獲得するのかシミュレーションしてみましょう"
+      },
+      "compare": {
+        "title": "個体値比較",
+        "description": "ポケモンごとに個体値を設定して、どれくらいのおてつだいをしてくれるのか比較してみましょう"
+      },
+      "tierlists": {
+        "title": "ティアリスト",
+        "description": "何百万ものシミュレートされたレシピ解法に基づく、食材の組み合わせティアリスト"
+      }
+    }
+  },
+  "nav": {
+    "home": "ホーム",
+    "calculator": "チーム編成シミュ",
+    "compare": "個体値比較",
+    "tierlist": "ティアリスト",
+    "recipes": "レシピ",
+    "settings": "設定"
+  },
+  "profilepage": {
+    "profile": "プロフィール",
+    "aboutMe": "個人設定",
+    "details": "詳細情報",
+    "userId": "ユーザーID",
+    "supportersStatus": "サポーターステータス"
+  }
+}

@@ -13,7 +13,9 @@ import { darkTheme } from '@/assets/theme'
 import router from '@/router/router'
 
 import { registerChartJS } from '@/components/custom-components/charts/register-charts'
+import { i18n } from '@/i18n'
 import { migrateSite } from '@/stores/store-service'
+import { useLanguageStore } from '@/stores/language-store'
 
 async function initializeApp() {
   const pinia = createPinia()
@@ -35,6 +37,8 @@ async function initializeApp() {
   })
 
   app.use(pinia)
+  useLanguageStore().initializeLanguage()
+
   try {
     await migrateSite()
   } catch (error) {
@@ -43,6 +47,7 @@ async function initializeApp() {
   registerChartJS()
 
   app.use(vuetify)
+  app.use(i18n)
   app.use(router)
 
   app.mount('#app')

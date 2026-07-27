@@ -161,6 +161,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import StackedBar from '@/components/custom-components/stacked-bar.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
@@ -178,8 +179,9 @@ export default defineComponent({
     const pokemonStore = usePokemonStore()
     const userStore = useUserStore()
     const { isMobile } = useBreakpoint()
+    const { n } = useI18n()
 
-    return { teamStore, pokemonStore, userStore, isMobile, weeklyFactor: timeWindowFactor('WEEK') }
+    return { teamStore, pokemonStore, userStore, isMobile, n, weeklyFactor: timeWindowFactor('WEEK') }
   },
   computed: {
     currentRecipeTypeResult(): RecipeTypeResult | undefined {
@@ -230,34 +232,19 @@ export default defineComponent({
       return Math.floor(this.cookingStrength + this.berryStrength + this.skillStrength + this.stockpiledBerryStrength)
     },
     cookingStrengthString() {
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(this.cookingStrength)
+      return this.n(this.cookingStrength, 'integer')
     },
     berryStrengthString() {
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(this.berryStrength)
+      return this.n(this.berryStrength, 'integer')
     },
     skillStrengthString() {
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(this.skillStrength)
+      return this.n(this.skillStrength, 'integer')
     },
     stockpiledBerryStrengthString() {
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(this.stockpiledBerryStrength)
+      return this.n(this.stockpiledBerryStrength, 'integer')
     },
     totalStrengthString() {
-      const userLocale = navigator.language || 'en-US'
-      return new Intl.NumberFormat(userLocale, {
-        maximumFractionDigits: 0
-      }).format(this.totalStrength)
+      return this.n(this.totalStrength, 'integer')
     },
     cookingPercentage() {
       const pct = MathUtils.floor((this.cookingStrength / this.totalStrength) * 100, 1)

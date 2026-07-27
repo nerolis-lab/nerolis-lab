@@ -10,6 +10,6 @@ describe('DateUtils', () => {
 
   it('should handle invalid date string', () => {
     const dateString = 'invalid-date'
-    expect(() => DateUtils.formatDate(dateString)).toThrow(RangeError)
+    expect(() => DateUtils.formatDate(dateString)).toThrow(/invalid Date/i)
   })
 })
