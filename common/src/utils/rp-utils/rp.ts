@@ -119,7 +119,7 @@ export class RP {
   }
 
   get berryFactor() {
-    const berriesPerDrop = calculateNrOfBerriesPerDrop(this.pokemon.specialty, this.subskills);
+    const berriesPerDrop = calculateNrOfBerriesPerDrop(this.pokemon, this.subskills);
     const berryValue =
       berriesPerDrop *
       Math.max(

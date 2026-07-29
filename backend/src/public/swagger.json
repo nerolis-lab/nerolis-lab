@@ -624,6 +624,10 @@
 							"application/json": {
 								"schema": {
 									"properties": {
+										"pityProcThreshold": {
+											"type": "number",
+											"format": "double"
+										},
 										"ingredient60": {
 											"items": {
 												"$ref": "#/components/schemas/IngredientSet"
@@ -727,6 +731,7 @@
 										}
 									},
 									"required": [
+										"pityProcThreshold",
 										"ingredient60",
 										"ingredient30",
 										"ingredient0",

@@ -17,7 +17,14 @@ import {
 } from '../../types/subskill/subskills';
 import { MathUtils } from '../../utils/math-utils';
 
-export function hasSpecialty(specialty: PokemonSpecialty, expected: PokemonSpecialty): boolean {
+export function hasSpecialty(mon: Pokemon, expected: PokemonSpecialty): boolean {
+  return mon.specialty === expected || mon.specialty === 'all';
+}
+
+/**
+ * @see `hasSpecialty` if you have access to a `Pokemon` object.
+ */
+export function matchesSpecialty(specialty: PokemonSpecialty, expected: PokemonSpecialty): boolean {
   return specialty === expected || specialty === 'all';
 }
 
@@ -52,7 +59,7 @@ export function calculateSkillPercentageWithPityProc(pokemon: Pokemon, subskills
 }
 
 export function calculatePityProcThreshold(specialty: PokemonSpecialty, frequency: number) {
-  return hasSpecialty(specialty, 'skill') ? Math.floor(144000 / frequency) : 78;
+  return matchesSpecialty(specialty, 'skill') ? Math.floor(144000 / frequency) : 78;
 }
 
 export function extractTriggerSubskills(subskills: Set<string>) {
@@ -66,8 +73,8 @@ export function countErbUsers(erb: number, subskills: Set<string>) {
   return Math.max(Math.min(erb + subskillErb, MAX_TEAM_SIZE), 0);
 }
 
-export function calculateNrOfBerriesPerDrop(specialty: PokemonSpecialty, subskills: Set<string>) {
-  let result = hasSpecialty(specialty, 'berry') ? 2 : 1;
+export function calculateNrOfBerriesPerDrop(mon: Pokemon, subskills: Set<string>) {
+  let result = hasSpecialty(mon, 'berry') ? 2 : 1;
   if (subskills.has(BERRY_FINDING_S.name)) {
     result += 1;
   }

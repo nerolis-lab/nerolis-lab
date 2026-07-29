@@ -50,6 +50,7 @@ import {
   BASE_FAVORED_BERRY_MULTIPLIER,
   capitalize,
   EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
+  hasSpecialty,
   type IslandInstance,
   type PokemonInstanceExt
 } from 'sleepapi-common'
@@ -178,7 +179,7 @@ const effects = computed<IslandEffect[]>(() => {
 
     if (isFavored.value) {
       if (expertMode.value.randomBonus === 'ingredient') {
-        const ingredientSpecialist = props.member.pokemon.specialty === 'ingredient'
+        const ingredientSpecialist = hasSpecialty(props.member.pokemon, 'ingredient')
         result.push(ingredientSpecialist ? expertIngredientSpecialtyBonus : expertIngredientBonus)
       } else if (expertMode.value.randomBonus === 'berry') {
         result.push(expertBerryBonus)

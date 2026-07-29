@@ -30,6 +30,7 @@ import {
   ChargeEnergySMoonlight,
   emptyProduce,
   EnergizingCheerS,
+  hasSpecialty,
   MathUtils,
   RandomUtils
 } from 'sleepapi-common';
@@ -123,7 +124,7 @@ export function randomizedSimulation(params: {
         }
       }
       skillProcsNight += 1;
-      if (skillProcsNight === 2 || (pokemon.specialty !== 'skill' && pokemon.specialty !== 'all')) {
+      if (skillProcsNight === 2 || !hasSpecialty(pokemon, 'skill')) {
         break;
       }
     }

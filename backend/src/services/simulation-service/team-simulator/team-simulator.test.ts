@@ -6,7 +6,7 @@ import type {
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import { TeamSimulator } from '@src/services/simulation-service/team-simulator/team-simulator.js';
 import { mocks } from '@src/vitest/index.js';
-import type { Berry, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
+import type { Berry, PokemonSpecialty, PokemonWithIngredients, TeamMemberExt, TeamSettingsExt } from 'sleepapi-common';
 import {
   BASE_FAVORED_BERRY_MULTIPLIER,
   BerryBurstDisguise,
@@ -451,7 +451,7 @@ describe('TeamSimulator', () => {
 
     const buildFavoredMember = (params: {
       carrySize: number;
-      specialty: 'berry' | 'ingredient';
+      specialty: PokemonSpecialty;
       externalId: string;
     }): TeamMemberExt => {
       const pokemon = commonMocks.mockPokemon({

@@ -120,7 +120,7 @@ export function setupAndRunProductionSimulation(params: {
 
   const mealTimes = getDefaultMealTimes(daySleepInfo.period).sorted;
 
-  const berriesPerDrop = calculateNrOfBerriesPerDrop(pokemonSet.pokemon.specialty, subskills);
+  const berriesPerDrop = calculateNrOfBerriesPerDrop(pokemonSet.pokemon, subskills);
   const sneakySnackBerries: BerrySet[] = [
     {
       amount: berriesPerDrop,
@@ -305,7 +305,7 @@ export function generateSkillActivations(params: {
     oddsOfNightSkillProc = calculateAverageNumberOfSkillProcsForHelps({
       skillPercentage,
       helps: nightHelpsBeforeSS,
-      pokemonSpecialty: pokemonWithAverageProduce.pokemon.specialty
+      pokemon: pokemonWithAverageProduce.pokemon
     });
     nrOfDayHelps = dayHelps;
   }

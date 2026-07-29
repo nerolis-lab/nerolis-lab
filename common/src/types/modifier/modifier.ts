@@ -113,16 +113,16 @@ export type ExternalCondition<TValue = unknown> = {
  * Uses distributive conditional types to handle union types correctly
  *
  * @example
- * // Modifier that reduces frequency by 10% only for berry specialists
+ * // Modifier that reduces frequency by 10% only for not-fully-evolved Pokemon
  * const modifier: Modifier<Pokemon> = {
  *   type: 'Pokemon',
  *   path: 'frequency',
  *   operation: '*',
  *   value: 0.9,
  *   condition: {
- *     path: 'specialty',
- *     operation: '=',
- *     value: 'berry'
+ *     path: 'remainingEvolutions',
+ *     operation: '>',
+ *     value: '0'
  *   }
  * };
  */

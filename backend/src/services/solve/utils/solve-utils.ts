@@ -35,6 +35,7 @@ import {
   CookingAssistSBulkUp,
   CookingPowerUpS,
   getAllIngredientLists,
+  hasSpecialty,
   HelperBoost,
   ingredient,
   INGREDIENT_SUPPORT_MAINSKILLS,
@@ -199,7 +200,7 @@ export function pokedexToMembers(params: { pokedex: Pokedex; level: number; camp
     ];
     const pokemonWithIngredients: PokemonWithIngredients = { pokemon: pkmn, ingredientList: AAA };
 
-    const isSupportSkillMon = pkmn.specialty === 'skill' && INGREDIENT_SUPPORT_MAINSKILLS_SET.has(pkmn.skill.name);
+    const isSupportSkillMon = hasSpecialty(pkmn, 'skill') && INGREDIENT_SUPPORT_MAINSKILLS_SET.has(pkmn.skill.name);
     const optimalSettings: Optimal = isSupportSkillMon
       ? Optimal.skill(pkmn, 4, pkmn.skill.maxLevel)
       : Optimal.ingredient(pkmn, 4, pkmn.skill.maxLevel);
