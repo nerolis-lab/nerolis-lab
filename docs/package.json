@@ -12,11 +12,11 @@
     "test-watch": "vitest --watch"
   },
   "devDependencies": {
-    "@types/node": "^22.20.1",
+    "@types/node": "^24.13.3",
     "globby": "^16.2.2",
     "sass-embedded": "^1.100.0",
     "typescript": "^6.0.3",
     "vitepress": "^1.6.4",
-    "vitest": "^3.2.7"
+    "vitest": "^4.1.10"
   }
 }

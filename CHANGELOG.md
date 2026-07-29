@@ -1,3 +1,20 @@
+## [2.59.8](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.7...v2.59.8) (2026-07-29)
+
+## [2.59.7](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.6...v2.59.7) (2026-07-27)
+
+
+### Bug Fixes
+
+* **dsm range:** typo in effect file ([5678842](https://github.com/nerolis-lab/nerolis-lab/commit/5678842bbb2398789170cc1411558cd46131c398))
+
+## [2.59.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.5...v2.59.6) (2026-07-27)
+
+## [2.59.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.4...v2.59.5) (2026-07-27)
+
+## [2.59.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.3...v2.59.4) (2026-07-27)
+
+## [2.59.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.2...v2.59.3) (2026-07-27)
+
 ## [2.59.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.1...v2.59.2) (2026-07-26)
 
 ## [2.59.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.0...v2.59.1) (2026-07-25)
