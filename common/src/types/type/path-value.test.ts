@@ -1,4 +1,5 @@
 import { describe, it } from 'vitest';
+import type { PokemonSpecialty } from '../pokemon';
 import type { PathValue } from './path-value';
 
 describe('PathValue type utility', () => {
@@ -118,7 +119,7 @@ describe('PathValue type utility', () => {
     interface SimplePokemon {
       name: string;
       frequency: number;
-      specialty: 'berry' | 'ingredient' | 'skill';
+      specialty: PokemonSpecialty;
       berry: {
         name: string;
         power: number;

@@ -75,7 +75,7 @@ class TeamSimulatorUtilsImpl {
       { amount: 1, berry: member.pokemonWithIngredients.pokemon.berry, level: member.settings.level }
     ]);
     const berriesPerDrop = calculateNrOfBerriesPerDrop(
-      member.pokemonWithIngredients.pokemon.specialty,
+      member.pokemonWithIngredients.pokemon,
       member.settings.subskills
     );
 

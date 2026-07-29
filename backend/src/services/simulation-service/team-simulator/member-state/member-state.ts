@@ -42,6 +42,7 @@ import {
   emptyIngredientInventoryFloat,
   emptyIngredientInventoryInt,
   flatToIngredientSet,
+  hasSpecialty,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
   multiplyProduce,
@@ -234,7 +235,7 @@ export class MemberState {
       }
     ]);
     const berriesPerDrop = calculateNrOfBerriesPerDrop(
-      member.pokemonWithIngredients.pokemon.specialty,
+      member.pokemonWithIngredients.pokemon,
       member.settings.subskills
     );
 
@@ -847,7 +848,7 @@ export class MemberState {
 
     // Expert mode ingredient modifier grants +1 ingredient per help for favored berries;
     // ingredient specialists additionally roll for a further +1 at runtime.
-    this.expertIngredientSpecialistBonus = pokemon.specialty === 'ingredient';
+    this.expertIngredientSpecialistBonus = hasSpecialty(pokemon, 'ingredient');
     this.level0IngredientAmount += 1;
     if (this.level30IngredientAmount !== undefined) {
       this.level30IngredientAmount += 1;

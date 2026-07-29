@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { PokemonSpecialty } from '../pokemon';
 import type { PathKeys } from './type-paths';
 
 describe('PathKeys', () => {
@@ -326,7 +327,7 @@ describe('PathKeys', () => {
       interface TestPokemon {
         name: string;
         frequency: number;
-        specialty: 'berry' | 'ingredient' | 'skill';
+        specialty: PokemonSpecialty;
         berry: {
           name: string;
           power: number;

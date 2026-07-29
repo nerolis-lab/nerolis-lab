@@ -1,5 +1,6 @@
 import type { PokemonProduce } from '@src/domain/combination/produce.js';
-import type { PokemonSpecialty, SkillActivation } from 'sleepapi-common';
+import type { Pokemon } from 'sleepapi-common';
+import { hasSpecialty, type SkillActivation } from 'sleepapi-common';
 import { createSkillEvent } from './activation/skill-activation.js';
 
 export function calculateSkillProcs(nrOfHelps: number, skillPercentage: number) {
@@ -9,15 +10,15 @@ export function calculateSkillProcs(nrOfHelps: number, skillPercentage: number) 
 export function calculateAverageNumberOfSkillProcsForHelps(params: {
   skillPercentage: number;
   helps: number;
-  pokemonSpecialty: PokemonSpecialty;
+  pokemon: Pokemon;
 }): number {
-  const { skillPercentage, helps, pokemonSpecialty } = params;
+  const { skillPercentage, helps, pokemon } = params;
 
   // Calculate chance of zero procs
   const chanceOfZeroProcs = Math.pow(1 - skillPercentage, helps);
 
   // Skill specialists can bank 2 procs
-  if (pokemonSpecialty !== 'skill') {
+  if (!hasSpecialty(pokemon, 'skill')) {
     return 1 - chanceOfZeroProcs;
   } else {
     const chanceOfOneProc = Math.pow(1 - skillPercentage, helps - 1) * skillPercentage * helps;

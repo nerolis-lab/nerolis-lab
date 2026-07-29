@@ -146,24 +146,28 @@ describe('extractTriggerSubskills', () => {
 });
 
 describe('calculateNrOfBerriesPerDrop', () => {
+  const berrySpecialist = mockPokemon({ specialty: 'berry' });
+  const ingredientSpecialist = mockPokemon({ specialty: 'ingredient' });
+  const skillSpecialist = mockPokemon({ specialty: 'skill' });
+  const allSpecialist = mockPokemon({ specialty: 'all' });
   it('shall give 2 berries for berry specialty', () => {
-    expect(calculateNrOfBerriesPerDrop('berry', new Set())).toBe(2);
+    expect(calculateNrOfBerriesPerDrop(berrySpecialist, new Set())).toBe(2);
   });
 
   it('shall give 3 berries for berry specialty with BFS', () => {
-    expect(calculateNrOfBerriesPerDrop('berry', new Set([BERRY_FINDING_S.name]))).toBe(3);
+    expect(calculateNrOfBerriesPerDrop(berrySpecialist, new Set([BERRY_FINDING_S.name]))).toBe(3);
   });
 
   it('shall give 3 berries for all specialty with BFS', () => {
-    expect(calculateNrOfBerriesPerDrop('all', new Set([BERRY_FINDING_S.name]))).toBe(3);
+    expect(calculateNrOfBerriesPerDrop(allSpecialist, new Set([BERRY_FINDING_S.name]))).toBe(3);
   });
 
   it('shall give 1 berry for ingredient specialty', () => {
-    expect(calculateNrOfBerriesPerDrop('ingredient', new Set())).toBe(1);
+    expect(calculateNrOfBerriesPerDrop(ingredientSpecialist, new Set())).toBe(1);
   });
 
   it('shall give 2 berries for skill specialty with BFS', () => {
-    expect(calculateNrOfBerriesPerDrop('skill', new Set([BERRY_FINDING_S.name]))).toBe(2);
+    expect(calculateNrOfBerriesPerDrop(skillSpecialist, new Set([BERRY_FINDING_S.name]))).toBe(2);
   });
 });
 
