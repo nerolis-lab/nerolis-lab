@@ -4,7 +4,7 @@ import type { GenderRatio } from '../../types/gender';
 import type { Ingredient, IngredientSet } from '../../types/ingredient';
 import type { Mainskill } from '../../types/mainskill';
 import type { Pokemon, PokemonSpecialty } from '../../types/pokemon';
-import { calculatePityProcThreshold } from '../stat-utils/stat-utils';
+import { calculatePityProcThreshold, hasSpecialty } from '../stat-utils/stat-utils';
 import { evolvesFrom, evolvesInto } from './evolution-utils';
 
 export type IngredientDefinition = {
@@ -186,7 +186,7 @@ export function getIngredientSet(
 ): IngredientSet {
   const baseStrength = ingredientA.value;
   const levelFactor = level === 0 ? 1 : level === 30 ? 2.25 : 3.6;
-  const specialtyFactor = specialty === 'ingredient' || specialty === 'all' ? 2 : 1;
+  const specialtyFactor = hasSpecialty(specialty, 'ingredient') ? 2 : 1;
   return {
     amount: Math.round((baseStrength * levelFactor * specialtyFactor) / ingredientDrop.value),
     ingredient: ingredientDrop

@@ -154,6 +154,7 @@ import { useUserStore } from '@/stores/user-store'
 import {
   capitalize,
   COMPLETE_POKEDEX,
+  hasSpecialty,
   type Pokemon,
   type PokemonInstanceExt,
   type PokemonSpecialty
@@ -286,7 +287,8 @@ const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
   }
 
   const specialtyFilter = (p: PokemonWithPath) =>
-    selectedSpecialties.value.length === 0 || selectedSpecialties.value.some((s) => p.pokemon.specialty === s)
+    selectedSpecialties.value.length === 0 ||
+    selectedSpecialties.value.some((s) => hasSpecialty(p.pokemon.specialty, s))
   const finalStageFilter = (p: PokemonWithPath) =>
     !finalStageOnly.value || pokemonSearchStore.showPokebox || p.pokemon.remainingEvolutions === 0
 
