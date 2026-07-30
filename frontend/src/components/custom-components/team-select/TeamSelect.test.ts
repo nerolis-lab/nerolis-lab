@@ -1,5 +1,5 @@
+import IslandIcon from '@/components/custom-components/island-icon.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import * as imageUtils from '@/services/utils/image-utils'
 import { TimeUtils } from '@/services/utils/time-utils'
 import type { TeamInstance } from '@/types/member/instanced'
 import { mocks } from '@/vitest'
@@ -184,13 +184,14 @@ describe('TeamSelect.vue', () => {
   })
 
   describe('Visual Elements', () => {
-    it('shows island image when showIsland is true', () => {
-      // Mock the breakpoint to ensure we're not on mobile
-      const mockUseBreakpoint = vi.mocked(useBreakpoint)
-      mockUseBreakpoint.mockReturnValue({
+    beforeEach(() => {
+      // Ensure we're not on mobile for these tests
+      vi.mocked(useBreakpoint).mockReturnValue({
         isMobile: ref(false)
       } as ReturnType<typeof useBreakpoint>)
+    })
 
+    it('passes the selected team island to IslandIcon when showIsland is true', () => {
       wrapper = mount(TeamSelect, {
         props: {
           modelValue: 0,
@@ -200,19 +201,10 @@ describe('TeamSelect.vue', () => {
         }
       })
 
-      expect(imageUtils.islandImage).toHaveBeenCalledWith({
-        island: mockTeams[0].island,
-        background: false
-      })
+      expect(wrapper.findComponent(IslandIcon).props('island')).toStrictEqual(mockTeams[0].island)
     })
 
     it('shows camp image when showCamp is true', () => {
-      // Mock the breakpoint to ensure we're not on mobile
-      const mockUseBreakpoint = vi.mocked(useBreakpoint)
-      mockUseBreakpoint.mockReturnValue({
-        isMobile: ref(false)
-      } as ReturnType<typeof useBreakpoint>)
-
       wrapper = mount(TeamSelect, {
         props: {
           modelValue: 0,
@@ -228,12 +220,6 @@ describe('TeamSelect.vue', () => {
     })
 
     it('applies camp-disabled class when camp is false', () => {
-      // Mock the breakpoint to ensure we're not on mobile
-      const mockUseBreakpoint = vi.mocked(useBreakpoint)
-      mockUseBreakpoint.mockReturnValue({
-        isMobile: ref(false)
-      } as ReturnType<typeof useBreakpoint>)
-
       wrapper = mount(TeamSelect, {
         props: {
           modelValue: 1, // Team Beta has camp: false
@@ -250,12 +236,6 @@ describe('TeamSelect.vue', () => {
 
     it('shows sleep score when showSleepScore is true', () => {
       const mockSleepScore = vi.spyOn(TimeUtils, 'sleepScore').mockReturnValue(85)
-
-      // Mock the breakpoint to ensure we're not on mobile
-      const mockUseBreakpoint = vi.mocked(useBreakpoint)
-      mockUseBreakpoint.mockReturnValue({
-        isMobile: ref(false)
-      } as ReturnType<typeof useBreakpoint>)
 
       wrapper = mount(TeamSelect, {
         props: {

@@ -81,29 +81,28 @@
   filter: grayscale(100%);
 }
 
-// expert mode "EX" tag; add .expert-badge to overlay it on an image
-// inside a .badge-anchor wrapper
-.expert-chip {
+// "EX" tag; see island-icon.vue for the .badge-overlay/.badge-anchor corner placement
+span.expert-chip.text-small {
   flex: 0 0 auto;
   background: rgb(var(--v-theme-primary));
   color: rgb(var(--v-theme-on-primary));
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   line-height: 1;
   padding: 2px 4px;
   border-radius: 4px;
   letter-spacing: 0.05em;
+  text-shadow: none;
 }
 
-.expert-badge {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  pointer-events: none;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-}
-
-.badge-anchor {
-  position: relative;
-  display: inline-block;
-  line-height: 0;
+// same tag style as .expert-chip, for a setting that's been changed from its default
+span.custom-chip.text-small {
+  flex: 0 0 auto;
+  background: rgb(var(--v-theme-berry));
+  color: rgb(var(--v-theme-background));
+  font-weight: 600 !important;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  text-shadow: none;
 }

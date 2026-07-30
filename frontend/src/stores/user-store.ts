@@ -102,6 +102,11 @@ export const useUserStore = defineStore('user', {
         this.auth = serverData.auth
       }
     },
+    // remembers this island variant's berries/favorites/bonus for next time it's selected
+    setIslandSettings(island: IslandInstance) {
+      const areaBonus = this.islands[island.shortName]?.areaBonus ?? 0
+      this.islands[island.shortName] = { ...island, areaBonus }
+    },
     setUserSettings(userSettings: UserSettingsResponse) {
       this.name = userSettings.name
       this.avatar = userSettings.avatar

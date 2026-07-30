@@ -1,8 +1,10 @@
+import IslandIcon from '@/components/custom-components/island-icon.vue'
 import IslandSelect from '@/components/map/island-select.vue'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
   berry,
+  capitalize,
   CYAN,
   CYAN_EXPERT,
   DEFAULT_ISLAND,
@@ -39,6 +41,15 @@ describe('IslandSelect', () => {
 
     await button.trigger('click')
     expect(wrapper.vm.menu).toBe(true)
+  })
+
+  it('renders the activator IslandIcon with the currently selected island', async () => {
+    expect(wrapper.findComponent(IslandIcon).props('island')).toStrictEqual(DEFAULT_ISLAND)
+
+    wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.findComponent(IslandIcon).props('island')).toStrictEqual({ ...CYAN, areaBonus: 0 })
   })
 
   it('selects cyan berries when Cyan button is clicked', async () => {
@@ -182,6 +193,62 @@ describe('IslandSelect', () => {
     expect(wrapper.vm.island.shortName).toBe(CYAN.shortName)
   })
 
+  describe('Custom berries override', () => {
+    it('resets a fixed-berry island back to its default berries', () => {
+      wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
+      wrapper.vm.clear()
+      expect(wrapper.vm.hasCustomBerries(wrapper.vm.island)).toBe(true)
+
+      wrapper.vm.resetToDefaultBerries()
+
+      expect(wrapper.vm.hasCustomBerries(wrapper.vm.island)).toBe(false)
+      expect(wrapper.vm.island.berries.map((b: { name: string }) => b.name).sort()).toEqual(
+        CYAN.berries.map((b) => b.name).sort()
+      )
+    })
+
+    it('shows the Custom badge on the card of the island being edited before saving', async () => {
+      wrapper.vm.menu = true
+      wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
+      await wrapper.vm.$nextTick()
+
+      const cyanCard = document.querySelector('button[aria-label="Cyan Beach"]') as HTMLElement
+      expect(cyanCard.querySelector('[aria-label="custom berries in use"]')).toBeNull()
+
+      wrapper.vm.clear()
+      await wrapper.vm.$nextTick()
+
+      expect(cyanCard.querySelector('[aria-label="custom berries in use"]')).not.toBeNull()
+
+      wrapper.vm.resetToDefaultBerries()
+      await wrapper.vm.$nextTick()
+
+      expect(cyanCard.querySelector('[aria-label="custom berries in use"]')).toBeNull()
+    })
+
+    it('shows a Custom badge and reset button in the UI once berries diverge', async () => {
+      wrapper.vm.menu = true
+      wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
+      await wrapper.vm.$nextTick()
+
+      expect(document.querySelector('button[aria-label="reset to default berries"]')).toBeNull()
+
+      wrapper.vm.clear()
+      await wrapper.vm.$nextTick()
+
+      const resetButton = document.querySelector('button[aria-label="reset to default berries"]') as HTMLElement
+      expect(resetButton).not.toBeNull()
+
+      resetButton.click()
+      await wrapper.vm.$nextTick()
+
+      expect(document.querySelector('button[aria-label="reset to default berries"]')).toBeNull()
+      expect(wrapper.vm.island.berries.map((b: { name: string }) => b.name).sort()).toEqual(
+        CYAN.berries.map((b) => b.name).sort()
+      )
+    })
+  })
+
   describe('Expert Mode', () => {
     const sortedBerries = berry.BERRIES.slice().sort((a, b) => a.name.localeCompare(b.name))
 
@@ -191,6 +258,53 @@ describe('IslandSelect', () => {
         props: { previousIsland: expertIsland }
       })
     }
+
+    it('keeps main first when switching between two different expert islands, even with overlapping picks', async () => {
+      const [berryA, berryB, berryC, berryD] = sortedBerries
+
+      // GGEX: main=A, subs=[B, C]
+      const ggex: IslandInstance = {
+        ...GREENGRASS_EXPERT,
+        areaBonus: 0,
+        berries: [berryA, berryB, berryC],
+        expertMode: {
+          mainFavoriteBerry: berryA,
+          subFavoriteBerries: [berryB, berryC],
+          randomBonus: 'ingredient' as const
+        }
+      }
+      const expertWrapper = mount(IslandSelect, { props: { previousIsland: ggex } })
+      expertWrapper.vm.menu = true
+      await expertWrapper.vm.$nextTick()
+
+      expect(Array.from(document.querySelectorAll('.pick-name')).map((n) => n.textContent)).toEqual(
+        [berryA, berryB, berryC].map((b) => capitalize(b.name))
+      )
+
+      // CBEX: main=D, subs=[B, ...] - B deliberately overlaps with GGEX's subs
+      const cbex: IslandInstance = {
+        ...CYAN_EXPERT,
+        areaBonus: 0,
+        berries: [berryD, berryB],
+        expertMode: { mainFavoriteBerry: berryD, subFavoriteBerries: [berryB], randomBonus: 'ingredient' as const }
+      }
+      expertWrapper.vm.selectIsland(cbex)
+      await expertWrapper.vm.$nextTick()
+
+      expect(Array.from(document.querySelectorAll('.pick-name')).map((n) => n.textContent)).toEqual(
+        [berryD, berryB].map((b) => capitalize(b.name))
+      )
+
+      // back to GGEX - A should be first again, not pushed to the middle by leftover picker state
+      expertWrapper.vm.selectIsland(ggex)
+      await expertWrapper.vm.$nextTick()
+
+      expect(Array.from(document.querySelectorAll('.pick-name')).map((n) => n.textContent)).toEqual(
+        [berryA, berryB, berryC].map((b) => capitalize(b.name))
+      )
+
+      expertWrapper.unmount()
+    })
 
     it('exposes both base and expert islands as selectable', () => {
       const shortNames = wrapper.vm.selectableIslands.map((i) => i.shortName)
@@ -300,6 +414,26 @@ describe('IslandSelect', () => {
       expect(wrapper.emitted('update-island')).toBeFalsy()
     })
 
+    it('keeps unsaved picks when switching away and back within the same dialog session', () => {
+      const expertWrapper = mountWithExpertIsland()
+      const main = sortedBerries[0]
+      const sub = sortedBerries[1]
+      expertWrapper.vm.selectMainFavoriteBerry(main.name)
+      expertWrapper.vm.selectSubFavoriteBerries([sub.name])
+      expertWrapper.vm.selectRandomBonus('berry')
+
+      expertWrapper.vm.selectIsland({ ...GREENGRASS, areaBonus: 0 })
+      expect(expertWrapper.vm.isExpertIsland).toBe(false)
+
+      expertWrapper.vm.selectIsland({ ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] })
+
+      expect(expertWrapper.vm.isExpertIsland).toBe(true)
+      expect(expertWrapper.vm.mainFavoriteBerry).toBe(main.name)
+      expect(expertWrapper.vm.subFavoriteBerries).toEqual([sub.name])
+      expect(expertWrapper.vm.randomBonus).toBe('berry')
+      expertWrapper.unmount()
+    })
+
     it('keeps the current picks when the already-selected island is clicked again', () => {
       const expertWrapper = mountWithExpertIsland()
       const main = sortedBerries[4]
@@ -346,6 +480,28 @@ describe('IslandSelect', () => {
       expect(expertWrapper.vm.island.expertMode).toBeUndefined()
       expect(expertWrapper.vm.randomBonus).toBe('ingredient')
       expertWrapper.unmount()
+    })
+
+    it('remembers saved picks for an island across separate dialog sessions', async () => {
+      const firstWrapper = mountWithExpertIsland()
+      const main = sortedBerries[0]
+      const sub = sortedBerries[1]
+
+      firstWrapper.vm.selectMainFavoriteBerry(main.name)
+      firstWrapper.vm.selectSubFavoriteBerries([sub.name])
+      firstWrapper.vm.selectRandomBonus('berry')
+      firstWrapper.vm.saveBerries()
+      firstWrapper.unmount()
+
+      // fresh dialog instance, selecting GGEX via its card like a real click would
+      const secondWrapper = mount(IslandSelect, { props: { previousIsland: { ...CYAN, areaBonus: 0 } } })
+      const ggexCard = secondWrapper.vm.selectableIslands.find((i) => i.shortName === GREENGRASS_EXPERT.shortName)
+      secondWrapper.vm.selectIsland(ggexCard!)
+
+      expect(secondWrapper.vm.mainFavoriteBerry).toBe(main.name)
+      expect(secondWrapper.vm.subFavoriteBerries).toEqual([sub.name])
+      expect(secondWrapper.vm.randomBonus).toBe('berry')
+      secondWrapper.unmount()
     })
 
     it('save emits an island whose berries include the main and sub favorites', () => {

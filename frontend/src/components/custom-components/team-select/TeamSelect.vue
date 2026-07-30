@@ -15,12 +15,7 @@
           <template v-if="showFullDetails && !isMobile">
             <span>{{ selectedTeam.name }}</span>
             <v-divider vertical class="mx-4" />
-            <v-img
-              v-if="showIsland"
-              width="36"
-              height="36"
-              :src="islandImage({ island: selectedTeam.island, background: false })"
-            />
+            <IslandIcon v-if="showIsland" :island="selectedTeam.island" :size="36" />
             <v-img
               v-if="showCamp"
               src="/images/misc/camp.png"
@@ -108,8 +103,9 @@
 </template>
 
 <script setup lang="ts">
+import IslandIcon from '@/components/custom-components/island-icon.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
-import { avatarImage, islandImage } from '@/services/utils/image-utils'
+import { avatarImage } from '@/services/utils/image-utils'
 import { TimeUtils } from '@/services/utils/time-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
