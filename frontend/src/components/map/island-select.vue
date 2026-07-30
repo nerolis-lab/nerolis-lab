@@ -74,7 +74,7 @@
           </v-btn>
         </section>
 
-        <v-row dense class="pa-2">
+        <v-row dense class="py-2">
           <v-col cols="12">
             <span>Set your area bonus: </span>
             <a class="settings-link btn-link" href="/settings">Settings</a>
@@ -285,8 +285,9 @@ const island = ref<IslandInstance>(initIsland(props.previousIsland))
 
 const islandBerryNames = computed(() => island.value.berries.map((b) => b.name))
 
-// swap in the live draft for whichever card matches the island being edited
-const getCardIsland = (i: IslandInstance): IslandInstance => (i.shortName === island.value.shortName ? island.value : i)
+// swap in the live draft (active edit or a pending switch-away draft) for whichever card it belongs to
+const getCardIsland = (i: IslandInstance): IslandInstance =>
+  i.shortName === island.value.shortName ? island.value : (draftsByIsland.value[i.shortName] ?? i)
 
 const selectableIslands = computed<IslandInstance[]>(() => [...userStore.baseIslands, ...userStore.expertIslands])
 
@@ -360,6 +361,8 @@ const saveBerries = () => {
     const expertMode = ensureExpertMode()
     island.value.berries = [expertMode.mainFavoriteBerry, ...expertMode.subFavoriteBerries]
   }
+  // persist every island touched this session, not just the one currently displayed
+  Object.values(draftsByIsland.value).forEach((draft) => userStore.setIslandSettings(draft))
   userStore.setIslandSettings(island.value)
   menu.value = false
   emit('update-island', island.value)
