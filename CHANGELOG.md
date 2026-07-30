@@ -1,3 +1,11 @@
+## [2.59.9](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.8...v2.59.9) (2026-07-29)
+
+
+### Bug Fixes
+
+* apply area bonus to charge strength per-proc display ([0034ff9](https://github.com/nerolis-lab/nerolis-lab/commit/0034ff95d156a7c965078339dea33d04f8a72758))
+* include all-specialists in every specialty filter chip ([a72f73f](https://github.com/nerolis-lab/nerolis-lab/commit/a72f73f5a39b77dd2f4dfc0a23875f4a139bf620))
+
 ## [2.59.8](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.7...v2.59.8) (2026-07-29)
 
 ## [2.59.7](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.6...v2.59.7) (2026-07-27)

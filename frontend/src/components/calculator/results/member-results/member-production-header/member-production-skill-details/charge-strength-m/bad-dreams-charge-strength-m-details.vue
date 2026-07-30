@@ -33,7 +33,7 @@
         </div>
         <div class="flex-left">
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
-            >x{{ skillValuePerProc }}</span
+            >x{{ localizeNumber(skillValuePerProc) }}</span
           >
           <v-img src="/images/unit/strength.png" height="20" width="20" alt="strength" title="strength"></v-img>
         </div>
@@ -59,10 +59,10 @@
 
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
-import { skillLevelBadgeText } from '@/services/utils/skill-level-utils'
+import { applyAreaBonus, skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { compactNumber } from 'sleepapi-common'
+import { compactNumber, localizeNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -74,11 +74,14 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, skillLevelBadgeText, mainskillImage, compactNumber }
+    return { teamStore, skillLevelBadgeText, mainskillImage, compactNumber, localizeNumber }
   },
   computed: {
     skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.production.skillLevel)
+      const rawAmount = this.memberWithProduction.member.pokemon.skill.amount(
+        this.memberWithProduction.production.skillLevel
+      )
+      return applyAreaBonus(rawAmount, this.teamStore.getCurrentTeam.island.areaBonus)
     },
     totalSkillValue() {
       return compactNumber(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor, 'floor')

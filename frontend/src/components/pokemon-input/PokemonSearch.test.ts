@@ -4,7 +4,7 @@ import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonSearchStore } from '@/stores/pokemon-search-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { BULBASAUR, COMPLETE_POKEDEX, ingredient } from 'sleepapi-common'
+import { BULBASAUR, COMPLETE_POKEDEX, DARKRAI, ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -333,6 +333,30 @@ describe('PokemonSearch', () => {
         expect(store.finalStageOnly).toBe(false)
       }
     })
+  })
+
+  describe('Specialty Filtering', () => {
+    const findAvatarSrcs = (w: VueWrapper<InstanceType<typeof PokemonSearch>>) =>
+      w
+        .findAll('.v-avatar img')
+        .map((img) => img.attributes('src') || '')
+        .map((src) => src.toLowerCase())
+
+    it.each(['berry', 'ingredient', 'skill'])(
+      'includes all-specialists like Darkrai when filtering by %s',
+      async (specialty) => {
+        const localWrapper = mount(PokemonSearch)
+
+        const chip = localWrapper.findAll('.v-chip').find((c) => c.text().toLowerCase() === specialty)
+        expect(chip).toBeDefined()
+
+        await chip!.trigger('click')
+        await nextTick()
+
+        const srcs = findAvatarSrcs(localWrapper)
+        expect(srcs.some((src) => src.includes(DARKRAI.name.toLowerCase()))).toBe(true)
+      }
+    )
   })
 
   describe('Exact Ingredient Matching', () => {
