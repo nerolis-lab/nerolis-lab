@@ -1,4 +1,4 @@
-import type { Area, BaseIslandInstance, IslandShortName } from '../../types';
+import type { Area, BaseIslandInstance, IslandInstance, IslandShortName } from '../../types';
 import { EXPERT_ISLANDS, GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
 
 export const DEFAULT_ISLAND: BaseIslandInstance = { ...GREENGRASS, areaBonus: 0 };
@@ -32,4 +32,21 @@ export function getIsland(nameOrBerries: IslandShortName | Berry[]): Area {
   }
 
   return GREENGRASS;
+}
+
+export function defaultIslandBerries(shortName: IslandShortName): Berry[] {
+  const island = getIsland(shortName);
+  return island.expert ? [] : island.berries;
+}
+
+// Greengrass has no fixed default berries, so it's never "customized"
+export function hasCustomBerries(island: IslandInstance): boolean {
+  if (island.expert) return false;
+  const defaults = defaultIslandBerries(island.shortName);
+  if (defaults.length === 0) return false;
+  const defaultNames = defaults.map((b) => b.name).sort();
+  const currentNames = island.berries.map((b) => b.name).sort();
+  return (
+    defaultNames.length !== currentNames.length || defaultNames.some((name, index) => name !== currentNames[index])
+  );
 }

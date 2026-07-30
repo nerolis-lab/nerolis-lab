@@ -10,17 +10,12 @@
       <SettingsCard title="Area Bonus" icon="mdi-map-marker">
         <v-row dense class="mx-2 flex-left">
           <div class="area-and-bonus" v-for="islandData in islandBonusData" :key="islandData.shortName">
-            <div class="badge-anchor mr-2">
-              <v-avatar size="54" class="area-image">
-                <v-img :src="islandImage({ island: islandData.island })" />
-              </v-avatar>
-              <span
-                v-if="islandData.island.expert"
-                class="expert-chip expert-badge text-small"
-                aria-label="expert badge"
-                >EX</span
-              >
-            </div>
+            <IslandIcon
+              :island="userStore.islands[islandData.shortName]"
+              :size="54"
+              :show-aria-label="false"
+              class="mr-2"
+            />
 
             <div class="mr-2 area-name">{{ islandData.island.name }}</div>
 
@@ -96,10 +91,10 @@
 </template>
 
 <script setup lang="ts">
+import IslandIcon from '@/components/custom-components/island-icon.vue'
 import NumberInput from '@/components/custom-components/input/number-input/number-input.vue'
 import SettingsCard from '@/components/settings/settings-card.vue'
 import { UserService } from '@/services/user/user-service'
-import { islandImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
 import {

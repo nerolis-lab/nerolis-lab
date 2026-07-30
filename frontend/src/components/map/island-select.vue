@@ -2,10 +2,7 @@
   <v-dialog v-model="menu" max-width="560px" class="flex-center">
     <template #activator="{ props }">
       <v-btn icon color="transparent" elevation="0" v-bind="props">
-        <div class="badge-anchor">
-          <v-img height="48" width="48" :src="islandImage({ island, background: false })" alt="island icon" />
-          <span v-if="isExpertIsland" class="expert-chip expert-badge text-small" aria-label="expert mode">EX</span>
-        </div>
+        <IslandIcon :island="island" :size="48" />
       </v-btn>
     </template>
 
@@ -43,6 +40,13 @@
                 <div class="flex-wrap title-row">
                   <span class="text-body island-name grow min-w-0">{{ filterIslandName(i.name) }}</span>
                   <span v-if="i.expert" class="expert-chip text-small">EX</span>
+                  <span
+                    v-if="hasCustomBerries(getCardIsland(i))"
+                    class="custom-chip text-small"
+                    aria-label="custom berries in use"
+                  >
+                    Custom
+                  </span>
                 </div>
                 <span class="text-small island-bonus">{{ areaBonus(i) }}% area bonus</span>
               </div>
@@ -56,6 +60,13 @@
                 <div class="flex-wrap title-row">
                   <span class="text-body island-name grow min-w-0">{{ filterIslandName(i.name) }}</span>
                   <span v-if="i.expert" class="expert-chip text-small">EX</span>
+                  <span
+                    v-if="hasCustomBerries(getCardIsland(i))"
+                    class="custom-chip text-small"
+                    aria-label="custom berries in use"
+                  >
+                    Custom
+                  </span>
                 </div>
                 <span class="text-small island-bonus">{{ areaBonus(i) }}% area bonus</span>
               </div>
@@ -72,9 +83,23 @@
 
         <template v-if="!isExpertIsland">
           <v-row dense>
-            <v-col cols="12" class="flex-between berry-actions">
-              <span class="berry-hint text-small">Selected berries</span>
-              <div class="flex-right berry-actions">
+            <v-col cols="12" class="flex-between flex-wrap berry-actions">
+              <div class="flex-left berry-header">
+                <span class="berry-hint text-small">Selected berries</span>
+                <span v-if="hasCustomBerries(island)" class="custom-chip text-small" aria-label="custom berries in use">
+                  Custom
+                </span>
+              </div>
+              <div class="flex-right flex-wrap berry-actions">
+                <v-btn
+                  v-if="hasCustomBerries(island)"
+                  color="secondary"
+                  size="small"
+                  aria-label="reset to default berries"
+                  @click="resetToDefaultBerries()"
+                >
+                  Default
+                </v-btn>
                 <v-btn color="secondary" size="small" aria-label="select all berries" @click="selectAll()">All</v-btn>
                 <v-btn color="error-3" size="small" aria-label="clear berries" @click="clear()">Clear</v-btn>
               </div>
@@ -96,6 +121,7 @@
             <v-col cols="12">
               <div class="typography-h6 mb-1">Favorite berries</div>
               <FavoriteBerryPicker
+                :key="island.shortName"
                 :berries="berries"
                 :main="mainFavoriteBerry"
                 :subs="subFavoriteBerries"
@@ -160,6 +186,7 @@
 </template>
 
 <script setup lang="ts">
+import IslandIcon from '@/components/custom-components/island-icon.vue'
 import BerryGrid from '@/components/map/berry-favorites/berry-grid.vue'
 import FavoriteBerryPicker from '@/components/map/berry-favorites/favorite-berry-picker.vue'
 import { islandImage } from '@/services/utils/image-utils'
@@ -167,8 +194,10 @@ import { useUserStore } from '@/stores/user-store'
 import {
   BASE_FAVORED_BERRY_MULTIPLIER,
   berry,
+  defaultIslandBerries,
   EXPERT_ISLANDS,
   EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
+  hasCustomBerries,
   ISLANDS,
   MAX_SUB_FAVORITE_BERRIES,
   type Berry,
@@ -256,6 +285,9 @@ const island = ref<IslandInstance>(initIsland(props.previousIsland))
 
 const islandBerryNames = computed(() => island.value.berries.map((b) => b.name))
 
+// swap in the live draft for whichever card matches the island being edited
+const getCardIsland = (i: IslandInstance): IslandInstance => (i.shortName === island.value.shortName ? island.value : i)
+
 const selectableIslands = computed<IslandInstance[]>(() => [...userStore.baseIslands, ...userStore.expertIslands])
 
 const isExpertIsland = computed(() => island.value.expert === true)
@@ -286,7 +318,11 @@ const selectedBonusOption = computed(
   () => RANDOM_BONUS_OPTIONS.find((option) => option.value === randomBonus.value) ?? RANDOM_BONUS_OPTIONS[0]
 )
 
+// unsaved edits per island, cleared when the dialog resets
+const draftsByIsland = ref<Record<string, IslandInstance>>({})
+
 const resetToIsland = (source: IslandInstance) => {
+  draftsByIsland.value = {}
   island.value = initIsland(source)
   expertToggle.value = source.expert === true
   syncDraft(island.value)
@@ -324,6 +360,7 @@ const saveBerries = () => {
     const expertMode = ensureExpertMode()
     island.value.berries = [expertMode.mainFavoriteBerry, ...expertMode.subFavoriteBerries]
   }
+  userStore.setIslandSettings(island.value)
   menu.value = false
   emit('update-island', island.value)
 }
@@ -346,6 +383,10 @@ const selectAll = () => {
   island.value.berries = berries.value
 }
 
+const resetToDefaultBerries = () => {
+  island.value.berries = defaultIslandBerries(island.value.shortName)
+}
+
 const findBaseIsland = (shortName: string): IslandInstance | undefined =>
   userStore.baseIslands.find((i) => i.shortName === shortName)
 
@@ -356,7 +397,8 @@ const findFirstExpertIsland = (): IslandInstance | undefined => userStore.expert
 
 const selectIsland = (newIsland: IslandInstance) => {
   if (newIsland.shortName === island.value.shortName) return
-  island.value = initIsland(newIsland)
+  draftsByIsland.value[island.value.shortName] = island.value
+  island.value = initIsland(draftsByIsland.value[newIsland.shortName] ?? newIsland)
   expertToggle.value = island.value.expert === true
   syncDraft(island.value)
 }
@@ -437,6 +479,8 @@ defineExpose({
   selectAll,
   selectIsland,
   onExpertToggle,
+  hasCustomBerries,
+  resetToDefaultBerries,
   selectMainFavoriteBerry,
   selectSubFavoriteBerries,
   selectRandomBonus
@@ -647,6 +691,10 @@ $mobile-layout-breakpoint: 400px;
 .berry-hint {
   opacity: 0.7;
   padding-left: 2px;
+}
+
+.berry-header {
+  gap: 8px;
 }
 
 .bonus-caption {

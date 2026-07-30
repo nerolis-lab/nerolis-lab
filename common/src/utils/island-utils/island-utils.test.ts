@@ -1,5 +1,5 @@
-import { CYAN, GREENGRASS, ISLANDS } from '../../types';
-import { getIsland } from './island-utils';
+import { CYAN, GREENGRASS, GREENGRASS_EXPERT, ISLANDS } from '../../types';
+import { defaultIslandBerries, getIsland, hasCustomBerries } from './island-utils';
 
 describe('getIsland', () => {
   it('should return GREENGRASS when favoredBerries is null/undefined', () => {
@@ -28,5 +28,37 @@ describe('getIsland', () => {
       const shuffledBerries = [...island.berries].reverse();
       expect(getIsland(shuffledBerries)).toBe(island);
     }
+  });
+});
+
+describe('defaultIslandBerries', () => {
+  it('returns the fixed berries for a base island', () => {
+    expect(defaultIslandBerries(CYAN.shortName)).toEqual(CYAN.berries);
+  });
+
+  it('returns an empty array for Greengrass', () => {
+    expect(defaultIslandBerries(GREENGRASS.shortName)).toEqual([]);
+  });
+
+  it('returns an empty array for an expert island shortName', () => {
+    expect(defaultIslandBerries(GREENGRASS_EXPERT.shortName)).toEqual([]);
+  });
+});
+
+describe('hasCustomBerries', () => {
+  it('is false when a base island matches its default berries', () => {
+    expect(hasCustomBerries({ ...CYAN, areaBonus: 0 })).toBe(false);
+  });
+
+  it('is true when a base island differs from its default berries', () => {
+    expect(hasCustomBerries({ ...CYAN, areaBonus: 0, berries: [] })).toBe(true);
+  });
+
+  it('is false for Greengrass regardless of berries, since it has no fixed default', () => {
+    expect(hasCustomBerries({ ...GREENGRASS, areaBonus: 0, berries: [CYAN.berries[0]] })).toBe(false);
+  });
+
+  it('is false for expert islands', () => {
+    expect(hasCustomBerries({ ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] })).toBe(false);
   });
 });
