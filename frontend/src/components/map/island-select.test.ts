@@ -1,5 +1,6 @@
 import IslandIcon from '@/components/custom-components/island-icon.vue'
 import IslandSelect from '@/components/map/island-select.vue'
+import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
 import {
@@ -231,21 +232,65 @@ describe('IslandSelect', () => {
       wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0 })
       await wrapper.vm.$nextTick()
 
+      const berryHeader = document.querySelector('.berry-header') as HTMLElement
+      expect(berryHeader.querySelector('[aria-label="custom berries in use"]')).toBeNull()
       expect(document.querySelector('button[aria-label="reset to default berries"]')).toBeNull()
 
       wrapper.vm.clear()
       await wrapper.vm.$nextTick()
 
+      expect(berryHeader.querySelector('[aria-label="custom berries in use"]')).not.toBeNull()
       const resetButton = document.querySelector('button[aria-label="reset to default berries"]') as HTMLElement
       expect(resetButton).not.toBeNull()
 
       resetButton.click()
       await wrapper.vm.$nextTick()
 
+      expect(berryHeader.querySelector('[aria-label="custom berries in use"]')).toBeNull()
       expect(document.querySelector('button[aria-label="reset to default berries"]')).toBeNull()
       expect(wrapper.vm.island.berries.map((b: { name: string }) => b.name).sort()).toEqual(
         CYAN.berries.map((b) => b.name).sort()
       )
+    })
+
+    it('keeps another card in sync with its draft after switching away from it, before saving', async () => {
+      // simulate Cyan already having custom berries saved from a previous session
+      const userStore = useUserStore()
+      userStore.setIslandSettings({ ...CYAN, areaBonus: 0, berries: [] })
+
+      wrapper.vm.menu = true
+      wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0, berries: [] })
+      await wrapper.vm.$nextTick()
+      expect(wrapper.vm.hasCustomBerries(wrapper.vm.island)).toBe(true)
+
+      wrapper.vm.resetToDefaultBerries()
+      await wrapper.vm.$nextTick()
+
+      wrapper.vm.selectIsland({ ...TAUPE, areaBonus: 0 })
+      await wrapper.vm.$nextTick()
+
+      const cyanCard = document.querySelector('button[aria-label="Cyan Beach"]') as HTMLElement
+      expect(cyanCard.querySelector('[aria-label="custom berries in use"]')).toBeNull()
+    })
+
+    it('persists every island touched this session when saving, not just the active one', async () => {
+      const userStore = useUserStore()
+      userStore.setIslandSettings({ ...CYAN, areaBonus: 0, berries: [] })
+
+      wrapper.vm.menu = true
+      wrapper.vm.selectIsland({ ...CYAN, areaBonus: 0, berries: [] })
+      await wrapper.vm.$nextTick()
+
+      wrapper.vm.resetToDefaultBerries()
+      wrapper.vm.selectIsland({ ...TAUPE, areaBonus: 0 })
+      await wrapper.vm.$nextTick()
+
+      wrapper.vm.saveBerries()
+
+      const freshWrapper = mount(IslandSelect, { props: { previousIsland: { ...TAUPE, areaBonus: 0 } } })
+      const cyanCard = freshWrapper.vm.selectableIslands.find((i) => i.shortName === CYAN.shortName)
+      expect(freshWrapper.vm.hasCustomBerries(cyanCard!)).toBe(false)
+      freshWrapper.unmount()
     })
   })
 
