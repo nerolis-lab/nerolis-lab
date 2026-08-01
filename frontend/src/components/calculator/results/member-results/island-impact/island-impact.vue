@@ -52,7 +52,7 @@ import {
   EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
   hasSpecialty,
   type IslandInstance,
-  type PokemonInstanceExt
+  type PokemonInstance
 } from 'sleepapi-common'
 import { computed } from 'vue'
 
@@ -64,7 +64,7 @@ interface IslandEffect {
 }
 
 const props = defineProps<{
-  member: PokemonInstanceExt
+  member: PokemonInstance
   island: IslandInstance
   effectiveSkillLevel: number
 }>()
