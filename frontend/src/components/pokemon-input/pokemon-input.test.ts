@@ -13,7 +13,7 @@ import {
   SNEASEL,
   subskill,
   WEAVILE,
-  type PokemonInstanceExt
+  type PokemonInstance
 } from 'sleepapi-common'
 import { vimic } from 'vimic'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -22,7 +22,7 @@ describe('PokemonInput', () => {
   let wrapper: VueWrapper<InstanceType<typeof PokemonInput>>
   console.error = vi.fn()
 
-  const preExistingMon: PokemonInstanceExt = mocks.createMockPokemon()
+  const preExistingMon: PokemonInstance = mocks.createMockPokemon()
 
   beforeEach(() => {
     wrapper = mount(PokemonInput, {
