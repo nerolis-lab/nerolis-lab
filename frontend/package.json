@@ -20,7 +20,7 @@
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
     "@mdi/font": "^7.4.47",
-    "axios": "^1.18.1",
+    "axios": "^1.19.0",
     "axios-mock-adapter": "^2.1.0",
     "chart.js": "^4.5.1",
     "modern-screenshot": "^4.7.0",
