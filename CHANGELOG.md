@@ -1,3 +1,10 @@
+## [2.59.10](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.9...v2.59.10) (2026-08-02)
+
+
+### Bug Fixes
+
+* always use `hasSpecialty` rather than `===` ([4884c0e](https://github.com/nerolis-lab/nerolis-lab/commit/4884c0efd577447c0c538a376ff4cfa555986ae1))
+
 ## [2.59.9](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.8...v2.59.9) (2026-07-29)
 
 
