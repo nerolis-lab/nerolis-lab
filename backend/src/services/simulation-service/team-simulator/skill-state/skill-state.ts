@@ -44,6 +44,7 @@ import { SkillCopyEffect } from '@src/services/simulation-service/team-simulator
 import { SkillCopyMimicEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy/skill-copy-mimic-effect.js';
 import { SkillCopyTransformEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/skill-copy/skill-copy-transform-effect.js';
 import { TastyChanceSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/tasty-chance-s/tasty-chance-s-effect.js';
+import { VersatileSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/versatile/versatile-effect.js';
 import type {
   SkillActivation,
   TeamActivationValue
@@ -91,6 +92,7 @@ import {
   SkillCopyMimic,
   SkillCopyTransform,
   TastyChanceS,
+  Versatile,
   ZeroAmount
 } from 'sleepapi-common';
 
@@ -155,7 +157,8 @@ export class SkillState {
       [SkillCopy, new SkillCopyEffect()],
       [SkillCopyMimic, new SkillCopyMimicEffect()],
       [SkillCopyTransform, new SkillCopyTransformEffect()],
-      [TastyChanceS, new TastyChanceSEffect()]
+      [TastyChanceS, new TastyChanceSEffect()],
+      [Versatile, new VersatileSEffect()]
     ]);
   }
 

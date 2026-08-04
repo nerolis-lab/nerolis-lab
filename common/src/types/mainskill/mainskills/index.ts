@@ -14,3 +14,4 @@ export * from './ingredient-magnet-s';
 export * from './metronome';
 export * from './skill-copy';
 export * from './tasty-chance-s';
+export * from './versatile';
