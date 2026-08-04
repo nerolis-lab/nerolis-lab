@@ -1,4 +1,4 @@
-import { CYAN, GREENGRASS, GREENGRASS_EXPERT, ISLANDS } from '../../types';
+import { berry, CYAN, GREENGRASS, GREENGRASS_EXPERT, ISLANDS } from '../../types';
 import { defaultIslandBerries, getIsland, hasCustomBerries } from './island-utils';
 
 describe('getIsland', () => {
@@ -52,9 +52,11 @@ describe('hasCustomBerries', () => {
 
   it('is true when a base island differs from its default berries', () => {
     expect(hasCustomBerries({ ...CYAN, areaBonus: 0, berries: [] })).toBe(true);
+    expect(hasCustomBerries({ ...CYAN, areaBonus: 0, berries: [...CYAN.berries, berry.BELUE] })).toBe(true);
   });
 
   it('is false for Greengrass regardless of berries, since it has no fixed default', () => {
+    expect(hasCustomBerries({ ...GREENGRASS, areaBonus: 0, berries: [] })).toBe(false);
     expect(hasCustomBerries({ ...GREENGRASS, areaBonus: 0, berries: [CYAN.berries[0]] })).toBe(false);
   });
 
