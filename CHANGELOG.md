@@ -1,3 +1,11 @@
+## [2.59.12](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.11...v2.59.12) (2026-08-04)
+
+
+### Bug Fixes
+
+* persist per-island berry settings and surface custom overrides ([5b089c3](https://github.com/nerolis-lab/nerolis-lab/commit/5b089c34a7f9e6919886a5e2056762b1305e8e9c))
+* persist per-island berry settings and surface custom overrides ([18ab9d7](https://github.com/nerolis-lab/nerolis-lab/commit/18ab9d75dfd81cb107a474b8af9dbd1b3ff412ac))
+
 ## [2.59.11](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.10...v2.59.11) (2026-08-02)
 
 ## [2.59.10](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.9...v2.59.10) (2026-08-02)
