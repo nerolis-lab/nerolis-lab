@@ -124,6 +124,7 @@ export default {
   MEOWSCARADA: 'Meowscarada',
   MEOWTH: 'Meowth',
   METAPOD: 'Metapod',
+  MEW: 'Mew',
   MIME_JR: 'Mime Jr.',
   MIMIKYU: 'Mimikyu',
   MINUN: 'Minun',

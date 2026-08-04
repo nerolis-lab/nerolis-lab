@@ -1,20 +1,70 @@
 import { createAllSpecialist } from '../../utils/pokemon-utils/pokemon-constructors';
 import { toSeconds } from '../../utils/time-utils/frequency-utils';
-import { WIKI } from '../berry/berries';
+import { MAGO, WIKI } from '../berry/berries';
 import { GENDER_UNKNOWN } from '../gender';
 import {
   BEAN_SAUSAGE,
   FANCY_APPLE,
+  FANCY_EGG,
   FIERY_HERB,
+  GLOSSY_AVOCADO,
   GREENGRASS_CORN,
   GREENGRASS_SOYBEANS,
   HONEY,
+  LARGE_LEEK,
   LOCKED_INGREDIENT,
   MOOMOO_MILK,
-  ROUSING_COFFEE
+  PURE_OIL,
+  ROUSING_COFFEE,
+  SLOWPOKE_TAIL
 } from '../ingredient/ingredients';
-import { ChargeStrengthMBadDreams } from '../mainskill/mainskills/charge-strength-m/charge-strength-m-bad-dreams';
+import { ChargeStrengthMBadDreams, Versatile } from '../mainskill';
 import type { Pokemon } from './pokemon';
+
+export const MEW: Pokemon = createAllSpecialist({
+  name: 'MEW',
+  pokedexNumber: 151,
+  frequency: toSeconds(0, 48, 20),
+  ingredientPercentage: 20, // suspicious, but makes RP formula work
+  skillPercentage: 4, // fake, but makes RP formula work
+  berry: MAGO,
+  genders: GENDER_UNKNOWN,
+  carrySize: 26,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    ingredient0: [
+      { amount: 2, ingredient: LARGE_LEEK },
+      { amount: 2, ingredient: FANCY_EGG },
+      { amount: 2, ingredient: FIERY_HERB },
+      { amount: 2, ingredient: BEAN_SAUSAGE },
+      { amount: 2, ingredient: PURE_OIL },
+      { amount: 2, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 2, ingredient: GLOSSY_AVOCADO }
+    ],
+    ingredient30: [
+      { amount: 3, ingredient: LARGE_LEEK },
+      { amount: 4, ingredient: FANCY_EGG },
+      { amount: 4, ingredient: FIERY_HERB },
+      { amount: 4, ingredient: BEAN_SAUSAGE },
+      { amount: 4, ingredient: PURE_OIL },
+      { amount: 5, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 3, ingredient: GLOSSY_AVOCADO }
+    ],
+    ingredient60: [
+      { amount: 0, ingredient: LOCKED_INGREDIENT },
+      { amount: 4, ingredient: LARGE_LEEK },
+      { amount: 6, ingredient: FANCY_EGG },
+      { amount: 5, ingredient: FIERY_HERB },
+      { amount: 7, ingredient: BEAN_SAUSAGE },
+      { amount: 6, ingredient: PURE_OIL },
+      { amount: 2, ingredient: SLOWPOKE_TAIL },
+      { amount: 7, ingredient: GREENGRASS_SOYBEANS },
+      { amount: 4, ingredient: GLOSSY_AVOCADO }
+    ]
+  },
+  skill: Versatile
+});
 
 export const DARKRAI: Pokemon = createAllSpecialist({
   name: 'DARKRAI',
@@ -64,6 +114,6 @@ export const DARKRAI: Pokemon = createAllSpecialist({
   skill: ChargeStrengthMBadDreams
 });
 
-export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [DARKRAI];
+export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [MEW, DARKRAI];
 export const INFERIOR_ALL_SPECIALISTS: Pokemon[] = [];
 export const ALL_ALL_SPECIALISTS: Pokemon[] = [...OPTIMAL_ALL_SPECIALISTS, ...INFERIOR_ALL_SPECIALISTS];
