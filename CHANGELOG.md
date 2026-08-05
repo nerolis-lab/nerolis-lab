@@ -1,3 +1,10 @@
+# [2.60.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.13...v2.60.0) (2026-08-05)
+
+
+### Features
+
+* add Mew with placeholder Versatile skill ([42af707](https://github.com/nerolis-lab/nerolis-lab/commit/42af7079db9311afa855f589be2df5e9318e6fc6))
+
 ## [2.59.13](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.12...v2.59.13) (2026-08-04)
 
 ## [2.59.12](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.11...v2.59.12) (2026-08-04)
