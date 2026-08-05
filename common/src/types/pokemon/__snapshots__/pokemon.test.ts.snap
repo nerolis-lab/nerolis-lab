@@ -19070,19 +19070,19 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
     {
       "amount": 2,
       "ingredient": {
-        "longName": "Large Leek",
-        "name": "Leek",
-        "taxedValue": 100.1,
-        "value": 185,
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
       },
     },
     {
       "amount": 2,
       "ingredient": {
-        "longName": "Fancy Egg",
-        "name": "Egg",
-        "taxedValue": 38.7,
-        "value": 115,
+        "longName": "Large Leek",
+        "name": "Leek",
+        "taxedValue": 100.1,
+        "value": 185,
       },
     },
     {
@@ -19133,6 +19133,15 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
   ],
   "ingredient30": [
     {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
       "amount": 3,
       "ingredient": {
         "longName": "Large Leek",
@@ -19148,15 +19157,6 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
         "name": "Egg",
         "taxedValue": 38.7,
         "value": 115,
-      },
-    },
-    {
-      "amount": 4,
-      "ingredient": {
-        "longName": "Fiery Herb",
-        "name": "Herb",
-        "taxedValue": 49.4,
-        "value": 130,
       },
     },
     {
