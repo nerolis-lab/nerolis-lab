@@ -34,8 +34,8 @@ export const MEW: Pokemon = createAllSpecialist({
   remainingEvolutions: 0,
   ingredients: {
     ingredient0: [
-      { amount: 2, ingredient: LARGE_LEEK },
       { amount: 2, ingredient: FANCY_EGG },
+      { amount: 2, ingredient: LARGE_LEEK },
       { amount: 2, ingredient: FIERY_HERB },
       { amount: 2, ingredient: BEAN_SAUSAGE },
       { amount: 2, ingredient: PURE_OIL },
@@ -43,9 +43,9 @@ export const MEW: Pokemon = createAllSpecialist({
       { amount: 2, ingredient: GLOSSY_AVOCADO }
     ],
     ingredient30: [
+      { amount: 4, ingredient: FIERY_HERB },
       { amount: 3, ingredient: LARGE_LEEK },
       { amount: 4, ingredient: FANCY_EGG },
-      { amount: 4, ingredient: FIERY_HERB },
       { amount: 4, ingredient: BEAN_SAUSAGE },
       { amount: 4, ingredient: PURE_OIL },
       { amount: 5, ingredient: GREENGRASS_SOYBEANS },
