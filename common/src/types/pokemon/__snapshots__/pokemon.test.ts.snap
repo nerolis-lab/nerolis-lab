@@ -8454,6 +8454,7 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
   "pokedexNumber": 491,
   "previousEvolutions": 0,
   "remainingEvolutions": 0,
+  "shinyLocked": true,
   "skill": {
     "RP": [
       2400,
@@ -19330,6 +19331,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
   "pokedexNumber": 151,
   "previousEvolutions": 0,
   "remainingEvolutions": 0,
+  "shinyLocked": true,
   "skill": {
     "RP": [
       1,
