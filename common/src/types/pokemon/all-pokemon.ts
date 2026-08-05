@@ -63,7 +63,8 @@ export const MEW: Pokemon = createAllSpecialist({
       { amount: 4, ingredient: GLOSSY_AVOCADO }
     ]
   },
-  skill: Versatile
+  skill: Versatile,
+  shinyLocked: true
 });
 
 export const DARKRAI: Pokemon = createAllSpecialist({
@@ -111,7 +112,8 @@ export const DARKRAI: Pokemon = createAllSpecialist({
       { amount: 4, ingredient: ROUSING_COFFEE }
     ]
   },
-  skill: ChargeStrengthMBadDreams
+  skill: ChargeStrengthMBadDreams,
+  shinyLocked: true
 });
 
 export const OPTIMAL_ALL_SPECIALISTS: Pokemon[] = [MEW, DARKRAI];

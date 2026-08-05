@@ -23,7 +23,16 @@
     </div>
 
     <v-sheet color="surface" width="100%" :height="85" location="top left" position="absolute" style="margin-top: 50px">
-      <v-btn icon color="surface" elevation="0" style="right: 4px; position: absolute" size="40" @click="toggleShiny">
+      <v-btn
+        id="shinyButton"
+        v-if="!pokemonInstance.pokemon.shinyLocked"
+        icon
+        color="surface"
+        elevation="0"
+        style="right: 4px; position: absolute"
+        size="40"
+        @click="toggleShiny"
+      >
         <v-icon v-if="pokemonInstance.shiny" color="strength" size="24">mdi-creation</v-icon>
         <v-icon v-else size="24">mdi-creation-outline</v-icon>
       </v-btn>
@@ -238,6 +247,9 @@ export default defineComponent({
       }
     },
     toggleShiny() {
+      if (this.pokemonInstance.pokemon.shinyLocked) {
+        return
+      }
       this.pokemonInstance.shiny = !this.pokemonInstance.shiny
     },
     updateGender(gender: PokemonGender) {
