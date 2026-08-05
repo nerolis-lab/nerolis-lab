@@ -8,11 +8,11 @@ export const Versatile = new (class extends Mainskill {
   candyAmount = 1;
   bonusCandyAmount = [0, 0, 0, 0, 0, 1, 2, 3];
   bonusCandyChance = 0.3;
-  image = 'ingredients';
+  image = 'versatile';
   description = (params: AmountParams) => {
     const bonusCandyAmount = this.bonusCandyAmount[params.skillLevel - 1];
     const totalCandyAmount = bonusCandyAmount > 0 ? `either 1 or ${1 + bonusCandyAmount} candies` : '1 candy';
-    return `Gets ${totalCandyAmount} for one Pokémon on your team. Other effects are not yet implemented in Neroli's Lab.`;
+    return `Gets ${totalCandyAmount} for one Pokémon on your team. This skill is not yet implemented due to unknown rates.`;
   };
 
   targeting: MainskillTargeting = {

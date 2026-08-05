@@ -19316,7 +19316,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
     "bonusCandyChance": 0.3,
     "candyAmount": 1,
     "description": [Function],
-    "image": "ingredients",
+    "image": "versatile",
     "modifierName": "Present",
     "name": "Versatile",
     "targeting": {
