@@ -1,3 +1,10 @@
+## [2.60.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.60.0...v2.60.1) (2026-08-05)
+
+
+### Bug Fixes
+
+* restore Mew's egg/herb/blank default ingredients ([b5213b0](https://github.com/nerolis-lab/nerolis-lab/commit/b5213b0ae9b9a2ecdeac273ff3db0f11df03dda6))
+
 # [2.60.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.59.13...v2.60.0) (2026-08-05)
 
 
