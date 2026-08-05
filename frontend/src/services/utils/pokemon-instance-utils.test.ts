@@ -2,6 +2,7 @@ import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { mocks } from '@/vitest'
 import {
   CarrySizeUtils,
+  DARKRAI,
   ingredient,
   nature,
   PIKACHU,
@@ -300,6 +301,28 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
     if (CarrySizeUtils.baseCarrySize(PIKACHU) !== CarrySizeUtils.baseCarrySize(RAICHU)) {
       expect(result.carrySize).not.toBe(existingInstance.carrySize)
     }
+  })
+
+  it('should force shiny to false when the new Pokemon species is shiny-locked', () => {
+    const existingInstance: PokemonInstanceExt = mocks.createMockPokemon({
+      pokemon: PIKACHU,
+      shiny: true
+    })
+
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(DARKRAI, existingInstance)
+
+    expect(result.shiny).toBe(false)
+  })
+
+  it('should preserve shiny when the new Pokemon species is not shiny-locked', () => {
+    const existingInstance: PokemonInstanceExt = mocks.createMockPokemon({
+      pokemon: PIKACHU,
+      shiny: true
+    })
+
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(RAICHU, existingInstance)
+
+    expect(result.shiny).toBe(true)
   })
 
   it('should generate new gender for new Pokemon species', () => {

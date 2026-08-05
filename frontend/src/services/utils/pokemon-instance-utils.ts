@@ -58,6 +58,7 @@ class PokemonInstanceUtilsImpl {
     const instance = {
       ...existingInstance,
       pokemon: newPokemon,
+      shiny: newPokemon.shinyLocked ? false : existingInstance.shiny,
       ingredients: [
         { ...newPokemon.ingredient0[0], level: 0 },
         { ...newPokemon.ingredient30[0], level: 30 },

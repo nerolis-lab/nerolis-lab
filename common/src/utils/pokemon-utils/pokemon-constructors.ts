@@ -35,6 +35,7 @@ function createPokemon(params: {
   remainingEvolutions: number;
   ingredients: IngredientSpecification;
   skill: Mainskill;
+  shinyLocked?: boolean;
 }): Pokemon {
   const { ingredients, ...otherParams } = params;
   const { name, specialty, frequency } = otherParams;
@@ -65,6 +66,7 @@ export function createAllSpecialist(params: {
   remainingEvolutions: number;
   ingredients: IngredientSpecification;
   skill: Mainskill;
+  shinyLocked?: boolean;
 }): Pokemon {
   return createPokemon({
     ...params,
@@ -85,6 +87,7 @@ export function createBerrySpecialist(params: {
   remainingEvolutions: number;
   ingredients: IngredientSpecification;
   skill: Mainskill;
+  shinyLocked?: boolean;
 }): Pokemon {
   return createPokemon({
     ...params,
@@ -105,6 +108,7 @@ export function createIngredientSpecialist(params: {
   remainingEvolutions: number;
   ingredients: IngredientSpecification;
   skill: Mainskill;
+  shinyLocked?: boolean;
 }): Pokemon {
   return createPokemon({
     ...params,
@@ -125,6 +129,7 @@ export function createSkillSpecialist(params: {
   remainingEvolutions: number;
   ingredients: IngredientSpecification;
   skill: Mainskill;
+  shinyLocked?: boolean;
 }): Pokemon {
   return createPokemon({
     ...params,

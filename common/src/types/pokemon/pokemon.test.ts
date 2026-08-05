@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import pokemonNames from '../../locales/en/pokemonNames';
+import { DARKRAI } from './all-pokemon';
 import type { Pokemon } from './pokemon';
 import { COMPLETE_POKEDEX } from './pokemon';
 
@@ -27,6 +28,18 @@ describe('previousEvolutions', () => {
   it('shall not exceed 2', () => {
     COMPLETE_POKEDEX.forEach((pokemon: Pokemon) => {
       expect(pokemon.previousEvolutions).toBeLessThanOrEqual(2);
+    });
+  });
+});
+
+describe('shinyLocked', () => {
+  it('shall be true for Darkrai', () => {
+    expect(DARKRAI.shinyLocked).toBe(true);
+  });
+
+  it('shall be undefined for pokemon that are not shiny-locked', () => {
+    COMPLETE_POKEDEX.filter((pokemon) => pokemon.name !== DARKRAI.name).forEach((pokemon: Pokemon) => {
+      expect(pokemon.shinyLocked).toBeUndefined();
     });
   });
 });
