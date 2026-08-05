@@ -129,6 +129,7 @@ exports[`getPokemonNames > shall return all lapis pokemon 1`] = `
   "KIRLIA",
   "WYNAUT",
   "RIOLU",
+  "MEW",
 ]
 `;
 
@@ -373,6 +374,7 @@ exports[`getPokemonNames > shall return all pokemon by default 1`] = `
   "TOXEL",
   "PAWMI",
   "PAWMO",
+  "MEW",
   "DARKRAI",
 ]
 `;
@@ -584,6 +586,7 @@ exports[`getPokemonNames > shall return all pokemon for multiple islands 1`] = `
   "SANDSHREW",
   "PAWMI",
   "PAWMO",
+  "MEW",
   "DARKRAI",
 ]
 `;

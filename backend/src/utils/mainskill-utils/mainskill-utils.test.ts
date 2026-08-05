@@ -49,6 +49,7 @@ describe('getMainskillNames', () => {
         "Transform (Skill Copy)",
         "Metronome",
         "Tasty Chance S",
+        "Versatile",
       ]
     `);
   });
