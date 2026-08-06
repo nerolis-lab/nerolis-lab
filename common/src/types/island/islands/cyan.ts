@@ -1,3 +1,4 @@
+import { cyanExpertMode } from '../../../events';
 import { ORAN, PAMTRE, PECHA } from '../../berry/berries';
 import type { ExpertIsland, Island } from '../island';
 import { createExpertIsland } from '../island';
@@ -9,6 +10,4 @@ export const CYAN: Island = {
   expert: false
 };
 
-export const CYAN_EXPERT: ExpertIsland = createExpertIsland(CYAN, {
-  shortName: 'CBEX'
-});
+export const CYAN_EXPERT: ExpertIsland = createExpertIsland(CYAN, 'CBEX', cyanExpertMode);

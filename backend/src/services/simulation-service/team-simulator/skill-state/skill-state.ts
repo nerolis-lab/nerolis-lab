@@ -16,6 +16,7 @@ import { CookingAssistSBulkUpEffect } from '@src/services/simulation-service/tea
 import { CookingAssistSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-assist-s/cooking-assist-s-effect.js';
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s/cooking-power-up-s-effect.js';
 import { CookingPowerUpSMinusEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s/cooking-power-up-s-minus-effect.js';
+import { DreamShardMagnetSAuraSphereEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s/dream-shard-magnet-s-aura-sphere-effect.js';
 import { DreamShardMagnetSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s/dream-shard-magnet-s-effect.js';
 import { DreamShardMagnetSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/dream-shard-magnet-s/dream-shard-magnet-s-range-effect.js';
 import { EnergizingCheerSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/energizing-cheer-s/energizing-cheer-s-effect.js';
@@ -68,6 +69,7 @@ import {
   CookingPowerUpSMinus,
   defaultZero,
   DreamShardMagnetS,
+  DreamShardMagnetSAuraSphere,
   DreamShardMagnetSRange,
   EnergizingCheerS,
   EnergizingCheerSHealPulse,
@@ -135,6 +137,7 @@ export class SkillState {
       [CookingPowerUpS, new CookingPowerUpSEffect()],
       [CookingPowerUpSMinus, new CookingPowerUpSMinusEffect()],
       [DreamShardMagnetS, new DreamShardMagnetSEffect()],
+      [DreamShardMagnetSAuraSphere, new DreamShardMagnetSAuraSphereEffect()],
       [DreamShardMagnetSRange, new DreamShardMagnetSRangeEffect()],
       [EnergizingCheerS, new EnergizingCheerSEffect()],
       [EnergizingCheerSHealPulse, new EnergizingCheerSHealPulseEffect()],

@@ -10,19 +10,26 @@ function isFavoredBerry(input: ExpertModeSettings, member: TeamMemberExt) {
   return input.mainFavoriteBerry.name === berryName || input.subFavoriteBerries.some((b) => b.name === berryName);
 }
 
-export const event = EventBuilder.create<ExpertModeSettings>()
-  .name('Expert Mode Event')
+export const cyanExpertMode = EventBuilder.create<ExpertModeSettings>()
+  .name('Cyan Expert Mode Event')
   .description('Dynamic event based on input parameters')
 
   .forTeam((input, member) => ({
     'pokemonWithIngredients.pokemon.frequency': (freq) => {
       if (isMainBerry(input, member)) {
-        return freq * 0.9;
+        return freq * 0.8;
       }
       if (isFavoredBerry(input, member)) {
         return freq;
       }
-      return freq * 1.15;
+      return freq * 1.35;
+    },
+
+    'pokemonWithIngredients.pokemon.carrySize': (carry) => {
+      if (isMainBerry(input, member)) {
+        return carry + 5;
+      }
+      return carry;
     },
 
     'settings.skillLevel': (level) => {

@@ -28,7 +28,10 @@ describe('solve.controller', () => {
         includeCooking: false,
         stockpiledIngredients: common.emptyIngredientInventoryFloat(),
         potSize: common.MAX_POT_SIZE,
-        island: settings.island
+        island: {
+          ...settings.island,
+          name: common.GREENGRASS.name
+        }
       });
     });
 
@@ -48,7 +51,7 @@ describe('solve.controller', () => {
       const enrichSolveSettings = controller._testAccess().enrichSolveSettings;
       const result = enrichSolveSettings(settings);
 
-      expect(result.island).toBe(settings.island);
+      expect(result.island).toStrictEqual({ ...settings.island, name: common.GREENGRASS_EXPERT.name });
     });
 
     it('should throw BadRequestError for invalid sleep duration', () => {

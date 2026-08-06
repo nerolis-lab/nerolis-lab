@@ -1,5 +1,5 @@
 import type { Berry } from '../berry/berry';
-import type { ExpertModeSettings, ExpertRandomBonusType } from '../expert-mode';
+import type { ExpertModeBonuses, ExpertModeSettings, ExpertRandomBonusType } from '../expert-mode';
 
 export type IslandShortName =
   'greengrass' | 'cyan' | 'taupe' | 'snowdrop' | 'lapis' | 'powerplant' | 'amber' | 'GGEX' | 'CBEX';
@@ -18,6 +18,7 @@ export interface Island extends IslandBase {
 export interface ExpertIsland extends IslandBase {
   expert: true;
   base: Island;
+  bonuses: ExpertModeBonuses;
 }
 
 /**
@@ -41,17 +42,21 @@ export type ExpertIslandInstance = ExpertIsland & {
  */
 export type IslandInstance = BaseIslandInstance | ExpertIslandInstance;
 
+export type IslandInstanceDto = IslandBase & {
+  areaBonus: number;
+  berries: Berry[];
+  expertMode?: ExpertModeSettings;
+};
+
 /**
  * Factory for expert island definitions. Derives `name` from the base island as
- * `${base.name} (Expert Mode)` unless an override is supplied.
+ * `${base.name} (Expert Mode)`.
  */
-export function createExpertIsland(
-  base: Island,
-  overrides: { name?: string; shortName: IslandShortName }
-): ExpertIsland {
+export function createExpertIsland(base: Island, shortName: IslandShortName, bonuses: ExpertModeBonuses): ExpertIsland {
   return {
     name: `${base.name} (Expert Mode)`,
-    ...overrides,
+    shortName,
+    bonuses,
     expert: true,
     base
   };

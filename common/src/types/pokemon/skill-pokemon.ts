@@ -66,6 +66,7 @@ import {
   CookingPowerUpS,
   CookingPowerUpSMinus,
   DreamShardMagnetS,
+  DreamShardMagnetSAuraSphere,
   DreamShardMagnetSRange,
   EnergizingCheerS,
   EnergizingCheerSHealPulse,
@@ -999,7 +1000,8 @@ export const LUCARIO: Pokemon = evolvedPokemon(RIOLU, {
   frequency: toSeconds(0, 43, 20),
   ingredientPercentage: 15.0,
   skillPercentage: 5.1,
-  carrySize: 14
+  carrySize: 14,
+  skill: DreamShardMagnetSAuraSphere
 });
 
 export const MAGNEZONE: Pokemon = evolvedPokemon(MAGNETON, {

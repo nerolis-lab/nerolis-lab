@@ -1,3 +1,4 @@
+import type { FunctionalEvent } from '../../events';
 import type { Berry } from '../berry';
 
 /**
@@ -6,6 +7,8 @@ import type { Berry } from '../berry';
 export type ExpertRandomBonusType = 'ingredient' | 'berry' | 'skill';
 
 export const MAX_SUB_FAVORITE_BERRIES = 2;
+
+export type ExpertModeBonuses = (input: ExpertModeSettings) => FunctionalEvent;
 
 export interface ExpertModeSettingsDTO {
   mainFavoriteBerry: string;

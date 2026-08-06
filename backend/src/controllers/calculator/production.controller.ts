@@ -23,6 +23,8 @@ import type {
   IngredientIndexToFloatAmount,
   IngredientInstance,
   IngredientSet,
+  IslandInstance,
+  IslandInstanceDto,
   Pokemon,
   PokemonInstanceIdentity,
   RecipeFlat,
@@ -39,6 +41,7 @@ import {
   EnergyForEveryoneS,
   flatToIngredientSet,
   getIngredient,
+  getIsland,
   getNature,
   getPokemon,
   HelperBoost,
@@ -180,8 +183,25 @@ export default class ProductionController {
       includeCooking,
       stockpiledIngredients,
       potSize,
-      island: settings.island
+      island: this.#parseIsland(settings.island)
     };
+  }
+
+  #parseIsland(islandInstance: IslandInstanceDto): IslandInstance {
+    const island = getIsland(islandInstance.shortName);
+    if (island.expert) {
+      return {
+        ...island,
+        areaBonus: islandInstance.areaBonus,
+        berries: islandInstance.berries,
+        expertMode: islandInstance.expertMode
+      };
+    } else {
+      return {
+        ...island,
+        areaBonus: islandInstance.areaBonus
+      };
+    }
   }
 
   #parseTeamMembers(members: PokemonInstanceIdentity[], camp: boolean) {
