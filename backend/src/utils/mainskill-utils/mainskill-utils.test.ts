@@ -27,6 +27,7 @@ describe('getMainskillNames', () => {
         "Minus (Cooking Power-Up S)",
         "Dream Shard Magnet S",
         "Dream Shard Magnet S Range",
+        "Aura Sphere (Dream Shard Magnet S)",
         "Energizing Cheer S",
         "Heal Pulse (Energizing Cheer S)",
         "Nuzzle (Energizing Cheer S)",

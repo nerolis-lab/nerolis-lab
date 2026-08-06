@@ -224,7 +224,7 @@ export const CLEFABLE: Pokemon = evolvedPokemon(CLEFAIRY, {
   pokedexNumber: 36,
   frequency: toSeconds(0, 46, 40),
   ingredientPercentage: 16.8,
-  skillPercentage: 3.6,
+  skillPercentage: 4,
   carrySize: 24
 });
 

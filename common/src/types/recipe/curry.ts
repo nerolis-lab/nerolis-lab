@@ -269,6 +269,30 @@ export const OVERGROW_AVOCADO_GRATIN = createCurry({
   bonus: 78
 });
 
+export const GREENGRASS_CURRY_BUN = createCurry({
+  name: 'GREENGRASS_CURRY_BUN',
+  displayName: 'Greengrass Curry Bun',
+  ingredients: [
+    { amount: 20, ingredient: WARMING_GINGER },
+    { amount: 20, ingredient: FIERY_HERB },
+    { amount: 8, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 15, ingredient: PURE_OIL }
+  ],
+  bonus: 48
+});
+
+export const BOUNCE_CURRY_UDON = createCurry({
+  name: 'BOUNCE_CURRY_UDON',
+  displayName: '"Bounce" Curry Udon',
+  ingredients: [
+    { amount: 39, ingredient: WARMING_GINGER },
+    { amount: 31, ingredient: TASTY_MUSHROOM },
+    { amount: 22, ingredient: FIERY_HERB },
+    { amount: 20, ingredient: BEAN_SAUSAGE }
+  ],
+  bonus: 78
+});
+
 export const CURRIES: Recipe[] = [
   FANCY_APPLE_CURRY,
   SIMPLE_CHOWDER,
@@ -292,7 +316,9 @@ export const CURRIES: Recipe[] = [
   HIDDEN_POWER_PERK_UP_STEW,
   CUT_SUKIYAKI_CURRY,
   ROLE_PLAY_PUMPKABOO_STEW,
-  OVERGROW_AVOCADO_GRATIN
+  OVERGROW_AVOCADO_GRATIN,
+  GREENGRASS_CURRY_BUN,
+  BOUNCE_CURRY_UDON
 ];
 
 export const MIXED_CURRY_FLAT: RecipeFlat = recipesToFlat(MIXED_CURRY);

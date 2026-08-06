@@ -1,3 +1,4 @@
+import { greengrassExpertMode } from '../../../events';
 import type { ExpertIsland, Island } from '../island';
 import { createExpertIsland } from '../island';
 
@@ -8,6 +9,4 @@ export const GREENGRASS: Island = {
   expert: false
 };
 
-export const GREENGRASS_EXPERT: ExpertIsland = createExpertIsland(GREENGRASS, {
-  shortName: 'GGEX'
-});
+export const GREENGRASS_EXPERT: ExpertIsland = createExpertIsland(GREENGRASS, 'GGEX', greengrassExpertMode);

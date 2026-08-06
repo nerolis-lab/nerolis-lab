@@ -1,4 +1,4 @@
-import { BELUE, BLUK, GREPA } from '../../../types/berry/berries';
+import { greengrassExpertMode } from '../../../events';
 import type {
   Berry,
   ExpertIsland,
@@ -9,6 +9,7 @@ import type {
   TeamAreaDTO
 } from '../../../types';
 import { GREENGRASS } from '../../../types';
+import { BELUE, BLUK, GREPA } from '../../../types/berry/berries';
 
 export function island(attrs?: Partial<Island>): Island {
   return {
@@ -25,6 +26,7 @@ export function expertIsland(attrs?: Partial<ExpertIsland>): ExpertIsland {
     name: 'Mock Island (Expert Mode)',
     shortName: 'GGEX',
     base: GREENGRASS,
+    bonuses: greengrassExpertMode,
     ...attrs,
     expert: true
   };

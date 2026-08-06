@@ -6,6 +6,8 @@ import { TimeUtils } from '@src/utils/time-utils/time-utils.js';
 import type {
   IngredientIndexToIntAmount,
   IngredientSet,
+  IslandInstance,
+  IslandInstanceDto,
   Recipe,
   RecipeTeamSolution,
   SolveRecipeRequest,
@@ -22,6 +24,7 @@ import {
   emptyIngredientInventoryFloat,
   flatToIngredientSet,
   getIngredient,
+  getIsland,
   getNature,
   getPokemon,
   ingredientSetToIntFlat,
@@ -81,8 +84,25 @@ export default class SolveController {
       includeCooking: false,
       stockpiledIngredients: emptyIngredientInventoryFloat(),
       potSize: MAX_POT_SIZE, // doesn't matter since we're solving a specific recipe
-      island: settings.island
+      island: this.parseIsland(settings.island)
     };
+  }
+
+  private parseIsland(islandInstance: IslandInstanceDto): IslandInstance {
+    const island = getIsland(islandInstance.shortName);
+    if (island.expert) {
+      return {
+        ...island,
+        areaBonus: islandInstance.areaBonus,
+        berries: islandInstance.berries,
+        expertMode: islandInstance.expertMode
+      };
+    } else {
+      return {
+        ...island,
+        areaBonus: islandInstance.areaBonus
+      };
+    }
   }
 
   private enrichMemberSettings(settings: TeamMemberSettings): TeamMemberSettingsExt {

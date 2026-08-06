@@ -1,5 +1,5 @@
 import type { IngredientIndexToFloatAmount, IngredientSet, IngredientSetSimple } from '../ingredient/ingredient';
-import type { IslandInstance } from '../island';
+import type { IslandInstance, IslandInstanceDto } from '../island';
 import type { Time } from '../time/time';
 import type { TeamMemberWithProduce } from './member';
 import type { CalculateTeamResponse } from './team-calculate';
@@ -8,7 +8,7 @@ export interface TeamSettings {
   camp: boolean;
   bedtime: string;
   wakeup: string;
-  island: IslandInstance;
+  island: IslandInstanceDto;
   stockpiledIngredients?: IngredientSetSimple[];
 }
 export interface TeamSettingsExt {

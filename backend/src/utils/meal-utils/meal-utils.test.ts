@@ -78,6 +78,8 @@ describe('getMealsForFilter', () => {
         "CUT_SUKIYAKI_CURRY",
         "ROLE_PLAY_PUMPKABOO_STEW",
         "OVERGROW_AVOCADO_GRATIN",
+        "GREENGRASS_CURRY_BUN",
+        "BOUNCE_CURRY_UDON",
         "CALM_MIND_FRUIT_SALAD",
         "CROSS_CHOP_SALAD",
         "GREENGRASS_SALAD",
