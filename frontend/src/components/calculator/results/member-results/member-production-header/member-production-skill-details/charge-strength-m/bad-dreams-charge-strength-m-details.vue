@@ -3,9 +3,7 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="
-          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
-        "
+        :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -14,7 +12,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Bad Dreams (Charge Strength M) level ${memberWithProduction.production.skillLevel}`"
+          :alt="`Bad Dreams (Charge Strength M) level ${effectiveSkillLevel}`"
           title="Bad Dreams (Charge Strength M)"
         ></v-img>
       </v-badge>
@@ -33,9 +31,19 @@
         </div>
         <div class="flex-left">
           <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
-            >x{{ localizeNumber(skillValuePerProc) }}</span
+            >x{{ localizeNumber(strengthPerProc) }}</span
           >
           <v-img src="/images/unit/strength.png" height="20" width="20" alt="strength" title="strength"></v-img>
+        </div>
+        <div class="flex-left">
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center"
+            >x{{ energyLossPerProc }}
+          </span>
+          <v-img src="/images/unit/energy.png" height="20" width="20" alt="energy" title="energy"></v-img>
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center"
+            >x{{ numNonDarkTeamMembers }}
+          </span>
+          <v-img src="/images/misc/human.png" height="20" width="20" alt="teammates" title="teammates"></v-img>
         </div>
       </div>
     </v-col>
@@ -45,12 +53,10 @@
         <v-img src="/images/misc/strength.png" height="20" width="20" alt="strength" title="strength"></v-img>
         <span class="font-weight-medium text-no-wrap text-center ml-1"> {{ totalSkillValue }} total</span>
       </div>
-    </v-col>
-    <v-col cols="auto" class="flex-center flex-column">
       <div class="flex-center">
         <v-img src="/images/unit/energy.png" height="20" width="20" alt="energy" title="energy"></v-img>
         <span class="font-weight-medium text-error-3 text-no-wrap text-center ml-1">
-          {{ totalEnergyDegraded }}% total</span
+          {{ totalEnergyDegraded }} total</span
         >
       </div>
     </v-col>
@@ -60,28 +66,44 @@
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
 import { applyAreaBonus, skillLevelBadgeText } from '@/services/utils/skill-display-utils'
+import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { MemberProductionExt } from '@/types/member/instanced'
-import { compactNumber, localizeNumber } from 'sleepapi-common'
+import type { MemberWithProduction } from '@/types/member/instanced'
+import { ChargeStrengthMBadDreams, compactNumber, localizeNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
   props: {
     memberWithProduction: {
-      type: Object as PropType<MemberProductionExt>,
+      type: Object as PropType<MemberWithProduction>,
       required: true
     }
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, skillLevelBadgeText, mainskillImage, compactNumber, localizeNumber }
+    const pokemonStore = usePokemonStore()
+    return { teamStore, pokemonStore, skillLevelBadgeText, mainskillImage, compactNumber, localizeNumber }
   },
   computed: {
-    skillValuePerProc() {
-      const rawAmount = this.memberWithProduction.member.pokemon.skill.amount(
-        this.memberWithProduction.production.skillLevel
-      )
+    effectiveSkillLevel() {
+      return this.memberWithProduction.production.skillLevel
+    },
+    baseSkillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
+    strengthPerProc() {
+      const rawAmount = ChargeStrengthMBadDreams.activations.strength.amount({ skillLevel: this.effectiveSkillLevel })
       return applyAreaBonus(rawAmount, this.teamStore.getCurrentTeam.island.areaBonus)
+    },
+    energyLossPerProc() {
+      return ChargeStrengthMBadDreams.energyReduction
+    },
+    numNonDarkTeamMembers() {
+      const nonDarkTeamMembers = this.teamStore.getCurrentTeam.members
+        .filter(Boolean)
+        .map((member) => this.pokemonStore.getPokemon(member!)!.pokemon)
+        .filter((mon) => mon.berry.type !== this.memberWithProduction.member.pokemon.berry.type)
+      return nonDarkTeamMembers.length
     },
     totalSkillValue() {
       return compactNumber(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor, 'floor')

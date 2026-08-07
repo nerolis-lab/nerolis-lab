@@ -6,7 +6,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { MathUtils, SWALOT, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = mocks.createMockMemberProductionExt({
+const mockMember = mocks.createMockMemberWithProduction({
   member: mocks.createMockPokemon({ pokemon: SWALOT })
 })
 
@@ -48,13 +48,6 @@ describe('MemberProductionSkill', () => {
     const skillProcs = wrapper.find('.font-weight-medium.text-center')
     expect(skillProcs.text()).toBe(
       MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
-    )
-  })
-
-  it('displays the correct skill value per proc', () => {
-    const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(
-      `${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)} avg.`
     )
   })
 

@@ -3,9 +3,7 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="
-          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
-        "
+        :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -14,7 +12,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Ingredient Draw S (Hyper Cutter) level ${memberWithProduction.production.skillLevel}`"
+          :alt="`Ingredient Draw S (Hyper Cutter) level ${effectiveSkillLevel}`"
           title="Ingredient Draw S (Hyper Cutter)"
         ></v-img>
       </v-badge>
@@ -68,7 +66,7 @@
 import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { MemberProductionExt } from '@/types/member/instanced'
+import type { MemberWithProduction } from '@/types/member/instanced'
 import { IngredientDrawSHyperCutter, MathUtils } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
@@ -76,7 +74,7 @@ export default defineComponent({
   name: 'IngredientDrawSHyperCutterDetails',
   props: {
     memberWithProduction: {
-      type: Object as PropType<MemberProductionExt>,
+      type: Object as PropType<MemberWithProduction>,
       required: true
     }
   },
@@ -85,15 +83,17 @@ export default defineComponent({
     return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage }
   },
   computed: {
+    effectiveSkillLevel() {
+      return this.memberWithProduction.production.skillLevel
+    },
+    baseSkillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
     skillValuePerNormalProc() {
-      return IngredientDrawSHyperCutter.activations.ingredients.amount({
-        skillLevel: this.memberWithProduction.production.skillLevel
-      })
+      return IngredientDrawSHyperCutter.activations.ingredients.amount({ skillLevel: this.effectiveSkillLevel })
     },
     skillValuePerCritProc() {
-      return IngredientDrawSHyperCutter.activations.ingredients.critAmount!({
-        skillLevel: this.memberWithProduction.production.skillLevel
-      })
+      return IngredientDrawSHyperCutter.activations.ingredients.critAmount!({ skillLevel: this.effectiveSkillLevel })
     },
     preparedIngredients() {
       return this.memberWithProduction.production.produceFromSkill.ingredients.map((ing) => ({

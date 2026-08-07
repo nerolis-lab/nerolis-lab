@@ -3,9 +3,7 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="
-          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
-        "
+        :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -14,7 +12,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Bulk Up (Cooking Assist S) level ${memberWithProduction.production.skillLevel}`"
+          :alt="`Bulk Up (Cooking Assist S) level ${effectiveSkillLevel}`"
           title="Bulk Up (Cooking Assist S)"
         ></v-img>
       </v-badge>
@@ -87,7 +85,7 @@
 import { mainskillImage } from '@/services/utils/image-utils'
 import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { MemberProductionExt } from '@/types/member/instanced'
+import type { MemberWithProduction } from '@/types/member/instanced'
 import { CookingAssistSBulkUp, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
@@ -95,7 +93,7 @@ export default defineComponent({
   name: 'CookingAssistSBulkUpDetails',
   props: {
     memberWithProduction: {
-      type: Object as PropType<MemberProductionExt>,
+      type: Object as PropType<MemberWithProduction>,
       required: true
     }
   },
@@ -104,15 +102,17 @@ export default defineComponent({
     return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage }
   },
   computed: {
+    effectiveSkillLevel() {
+      return this.memberWithProduction.production.skillLevel
+    },
+    baseSkillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
     ingredientValuePerProc() {
-      return CookingAssistSBulkUp.activations.ingredients.amount({
-        skillLevel: this.memberWithProduction.production.skillLevel
-      })
+      return CookingAssistSBulkUp.activations.ingredients.amount({ skillLevel: this.effectiveSkillLevel })
     },
     critValuePerProc() {
-      return CookingAssistSBulkUp.activations.critChance.amount({
-        skillLevel: this.memberWithProduction.production.skillLevel
-      })
+      return CookingAssistSBulkUp.activations.critChance.amount({ skillLevel: this.effectiveSkillLevel })
     },
     totalIngredientValue() {
       return compactNumber(

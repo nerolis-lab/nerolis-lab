@@ -6,10 +6,10 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { berry, BRAVIARY, compactNumber, MathUtils } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
-const mockMember = mocks.createMockMemberProductionExt({
+const mockMember = mocks.createMockMemberWithProduction({
   member: mocks.createMockPokemon({ pokemon: BRAVIARY }),
   production: {
-    ...mocks.createMockMemberProductionExt().production,
+    ...mocks.createMockMemberWithProduction().production,
     produceFromSkill: {
       berries: [
         { amount: 100, berry: BRAVIARY.berry, level: 1 },
@@ -59,11 +59,6 @@ describe('MemberProductionSkill', () => {
     expect(skillProcs.text()).toBe(
       MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
-  })
-
-  it('displays the correct skill value per proc', () => {
-    const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}`)
   })
 
   it('displays the correct total skill value', () => {

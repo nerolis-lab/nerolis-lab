@@ -3,9 +3,7 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="
-          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
-        "
+        :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -14,7 +12,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Ingredient Magnet S level ${memberWithProduction.production.skillLevel}`"
+          :alt="`Ingredient Magnet S level ${effectiveSkillLevel}`"
           title="Ingredient Magnet S"
         ></v-img>
       </v-badge>
@@ -68,15 +66,15 @@
 import { mainskillImage } from '@/services/utils/image-utils'
 import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { MemberProductionExt } from '@/types/member/instanced'
-import { compactNumber, ingredient } from 'sleepapi-common'
+import type { MemberWithProduction } from '@/types/member/instanced'
+import { compactNumber, ingredient, IngredientMagnetS } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
   name: 'IngredientMagnetSDetails',
   props: {
     memberWithProduction: {
-      type: Object as PropType<MemberProductionExt>,
+      type: Object as PropType<MemberWithProduction>,
       required: true
     }
   },
@@ -85,8 +83,14 @@ export default defineComponent({
     return { teamStore, skillLevelBadgeText, mainskillImage, compactNumber }
   },
   computed: {
+    effectiveSkillLevel() {
+      return this.memberWithProduction.production.skillLevel
+    },
+    baseSkillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
     skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.production.skillLevel)
+      return IngredientMagnetS.activations.ingredients.amount({ skillLevel: this.effectiveSkillLevel })
     },
     totalSkillValue() {
       return compactNumber(this.memberWithProduction.production.skillAmount * this.timeWindowFactor)

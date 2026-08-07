@@ -11,11 +11,11 @@ import type {
   SolveRecipeRequest,
   SolveRecipeResponse,
   SolveSettings,
-  SolveSettingsExt,
+  SolveSettingsDto,
   SurplusIngredients,
-  TeamMemberExt,
+  TeamMember,
   TeamMemberSettings,
-  TeamMemberSettingsExt,
+  TeamMemberSettingsDto,
   TeamMemberWithProduce
 } from 'sleepapi-common';
 import {
@@ -39,12 +39,12 @@ export default class SolveController {
     return this.resultToResponse(result, name);
   }
 
-  public solveIngredient(name: string, settings: SolveSettings) {
+  public solveIngredient(name: string, settings: SolveSettingsDto) {
     return SolveService.solveIngredient(getIngredient(name), this.enrichSolveSettings(settings));
   }
 
   private parseInput(input: SolveRecipeRequest): SolveRecipeInput {
-    const includedMembers: TeamMemberExt[] =
+    const includedMembers: TeamMember[] =
       input.includedMembers?.map((member) => {
         const pokemon = getPokemon(member.pokemonWithIngredients.pokemon);
         return {
@@ -63,7 +63,7 @@ export default class SolveController {
     };
   }
 
-  private enrichSolveSettings(settings: SolveSettings): SolveSettingsExt {
+  private enrichSolveSettings(settings: SolveSettingsDto): SolveSettings {
     const { camp, level } = settings;
     const bedtime = parseTime(settings.bedtime);
     const wakeup = parseTime(settings.wakeup);
@@ -85,7 +85,7 @@ export default class SolveController {
     };
   }
 
-  private enrichMemberSettings(settings: TeamMemberSettings): TeamMemberSettingsExt {
+  private enrichMemberSettings(settings: TeamMemberSettingsDto): TeamMemberSettings {
     const { level, carrySize, externalId, ribbon, skillLevel, sneakySnacking } = settings;
     const subskills = new Set(settings.subskills);
     const nature = getNature(settings.nature);

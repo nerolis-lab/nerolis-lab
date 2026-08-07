@@ -21,15 +21,15 @@ import type {
   CalculateIvRequest,
   CalculateTeamRequest,
   IngredientIndexToFloatAmount,
-  IngredientInstance,
+  IngredientInstanceDto,
   IngredientSet,
   Pokemon,
   PokemonInstanceIdentity,
   RecipeFlat,
   SingleProductionRequest,
-  TeamMemberExt,
+  TeamMember,
   TeamSettings,
-  TeamSettingsExt
+  TeamSettingsDto
 } from 'sleepapi-common';
 import {
   calculateRecipeValue,
@@ -136,10 +136,10 @@ export default class ProductionController {
   }
 
   async #parseSettings(params: {
-    settings: TeamSettings;
+    settings: TeamSettingsDto;
     includeCooking: boolean;
     maybeUser?: DBUser;
-  }): Promise<TeamSettingsExt> {
+  }): Promise<TeamSettings> {
     const { settings, includeCooking, maybeUser } = params;
 
     const camp = queryAsBoolean(settings.camp);
@@ -185,7 +185,7 @@ export default class ProductionController {
   }
 
   #parseTeamMembers(members: PokemonInstanceIdentity[], camp: boolean) {
-    const parsedMembers: TeamMemberExt[] = [];
+    const parsedMembers: TeamMember[] = [];
     for (const member of members) {
       const pokemon = getPokemon(member.pokemon);
       const subskills = new Set(
@@ -221,7 +221,11 @@ export default class ProductionController {
     return parsedMembers;
   }
 
-  #getIngredientSet(params: { pokemon: Pokemon; level: number; ingredients: IngredientInstance[] }): IngredientSet[] {
+  #getIngredientSet(params: {
+    pokemon: Pokemon;
+    level: number;
+    ingredients: IngredientInstanceDto[];
+  }): IngredientSet[] {
     const { ingredients, level } = params;
     const result: IngredientSet[] = [];
 

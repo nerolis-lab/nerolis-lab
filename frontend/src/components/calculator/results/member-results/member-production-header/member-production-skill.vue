@@ -13,7 +13,7 @@
 <script lang="ts">
 import { mainskillImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
-import type { MemberProductionExt } from '@/types/member/instanced'
+import type { MemberWithProduction } from '@/types/member/instanced'
 import { MathUtils, ModifiedMainskill } from 'sleepapi-common'
 import { defineAsyncComponent, defineComponent, type PropType } from 'vue'
 
@@ -21,7 +21,7 @@ export default defineComponent({
   name: 'MemberProductionSkill',
   props: {
     memberWithProduction: {
-      type: Object as PropType<MemberProductionExt>,
+      type: Object as PropType<MemberWithProduction>,
       required: true
     }
   },
@@ -32,14 +32,9 @@ export default defineComponent({
   computed: {
     skillComponent() {
       const skill = this.memberWithProduction.member.pokemon.skill
-      const skillName = this.normalize(skill.name)
+      const skillName = this.normalize(skill.frontendComponentName ?? skill.name)
 
-      // Remove `-range` from variable Dream Shard Magnet and Charge Strength skills.
-      // Perhaps a future refactor will make `baseSkill` a field for all Mainskills,
-      // and then the variable skills won't need this hack.
-      const baseSkillName = (
-        skill.isModified ? this.normalize((skill as ModifiedMainskill).baseSkill.name) : skillName
-      ).replace('-range', '')
+      const baseSkillName = this.normalize(skill.isModified ? (skill as ModifiedMainskill).baseSkill.name : skill.name)
 
       // Dynamically import the component based on the skill name
       return defineAsyncComponent(

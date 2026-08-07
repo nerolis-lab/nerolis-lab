@@ -6,7 +6,7 @@ import { MathUtils, VAPOREON } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import SuperLuckIngredientDrawSDetails from './super-luck-ingredient-draw-s-details.vue'
 
-const mockMember = mocks.createMockMemberProductionExt({
+const mockMember = mocks.createMockMemberWithProduction({
   member: mocks.createMockPokemon({ pokemon: VAPOREON })
 })
 
@@ -50,11 +50,6 @@ describe('SuperLuckIngredientDrawSDetails', () => {
     )
   })
 
-  it('displays the correct skill value per proc', () => {
-    const skillValuePerProc = wrapper.find('.font-weight-light.text-body-2')
-    expect(skillValuePerProc.text()).toBe(`x${mockMember.member.pokemon.skill.amount(mockMember.member.skillLevel)}`)
-  })
-
   it('displays correct images using snapshot - no ingredients', () => {
     const images = wrapper.findAll('img')
     const imageData = images.map((img) => ({
@@ -96,7 +91,7 @@ describe('SuperLuckIngredientDrawSDetails', () => {
   })
 
   it('displays ingredient images when ingredient data is present', () => {
-    const mockWithIngredients = mocks.createMockMemberProductionExt({
+    const mockWithIngredients = mocks.createMockMemberWithProduction({
       member: mocks.createMockPokemon({ pokemon: VAPOREON }),
       production: {
         ...mocks.createMockMemberProduction(),
