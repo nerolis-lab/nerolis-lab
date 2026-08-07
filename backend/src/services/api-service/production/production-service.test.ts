@@ -1,10 +1,5 @@
-import {
-  calculateIv,
-  calculatePokemonProduction,
-  calculateTeam
-} from '@src/services/api-service/production/production-service.js';
+import { calculateIv, calculateTeam } from '@src/services/api-service/production/production-service.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
-import { MOCKED_OPTIMAL_PRODUCTION_STATS } from '@src/utils/test-utils/defaults.js';
 import type { TeamMember, TeamSettings } from 'sleepapi-common';
 import {
   BULBASAUR,
@@ -19,50 +14,6 @@ import {
   subskill
 } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
-
-describe('calculatePokemonProduction', () => {
-  it('should calculate production for PINSIR with given details', () => {
-    const result = calculatePokemonProduction(
-      PINSIR,
-      MOCKED_OPTIMAL_PRODUCTION_STATS,
-      [ingredient.HONEY.name, ingredient.FANCY_APPLE.name, ingredient.BEAN_SAUSAGE.name],
-      false,
-      1
-    );
-
-    expect(result).toHaveProperty('filters');
-    expect(result).toHaveProperty('production');
-    expect(result).toHaveProperty('log');
-    expect(result).toHaveProperty('summary');
-    expect(result.neutralProduction).toBeUndefined;
-    expect(result.optimalIngredientProduction).toBeUndefined;
-    expect(result.optimalBerryProduction).toBeUndefined;
-    expect(result.optimalSkillProduction).toBeUndefined;
-
-    expect(result.filters).toEqual(MOCKED_OPTIMAL_PRODUCTION_STATS);
-  });
-
-  it('should calculate production for PINSIR with production analysis', () => {
-    const result = calculatePokemonProduction(
-      PINSIR,
-      MOCKED_OPTIMAL_PRODUCTION_STATS,
-      [ingredient.HONEY.name, ingredient.FANCY_APPLE.name, ingredient.BEAN_SAUSAGE.name],
-      true,
-      1
-    );
-
-    expect(result).toHaveProperty('filters');
-    expect(result).toHaveProperty('production');
-    expect(result).toHaveProperty('log');
-    expect(result).toHaveProperty('summary');
-    expect(result).toHaveProperty('neutralProduction');
-    expect(result).toHaveProperty('optimalIngredientProduction');
-    expect(result).toHaveProperty('optimalBerryProduction');
-    expect(result).toHaveProperty('optimalSkillProduction');
-
-    expect(result.filters).toEqual(MOCKED_OPTIMAL_PRODUCTION_STATS);
-  });
-});
 
 describe('calculateTeam', () => {
   it('shall calculate production with uneven sleep times', () => {
