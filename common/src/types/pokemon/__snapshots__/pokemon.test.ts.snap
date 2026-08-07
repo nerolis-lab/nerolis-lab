@@ -107,6 +107,7 @@ exports[`COMPLETE_POKEDEX > shall not change ABOMASNOW unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -241,6 +242,7 @@ exports[`COMPLETE_POKEDEX > shall not change ABSOL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -364,6 +366,7 @@ exports[`COMPLETE_POKEDEX > shall not change AGGRON unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -478,6 +481,7 @@ exports[`COMPLETE_POKEDEX > shall not change ALTARIA unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -576,6 +580,7 @@ exports[`COMPLETE_POKEDEX > shall not change AMPHAROS unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -699,6 +704,7 @@ exports[`COMPLETE_POKEDEX > shall not change ARBOK unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -806,6 +812,7 @@ exports[`COMPLETE_POKEDEX > shall not change ARCANINE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -935,6 +942,7 @@ exports[`COMPLETE_POKEDEX > shall not change ARON unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -1044,6 +1052,7 @@ exports[`COMPLETE_POKEDEX > shall not change BAGON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -1168,6 +1177,7 @@ exports[`COMPLETE_POKEDEX > shall not change BANETTE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -1312,6 +1322,7 @@ exports[`COMPLETE_POKEDEX > shall not change BAYLEEF unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -1455,6 +1466,7 @@ exports[`COMPLETE_POKEDEX > shall not change BELLSPROUT unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -1570,6 +1582,7 @@ exports[`COMPLETE_POKEDEX > shall not change BEWEAR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -1704,6 +1717,7 @@ exports[`COMPLETE_POKEDEX > shall not change BLASTOISE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -1827,6 +1841,7 @@ exports[`COMPLETE_POKEDEX > shall not change BLAZIKEN unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -1941,6 +1956,7 @@ exports[`COMPLETE_POKEDEX > shall not change BLISSEY unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -2050,6 +2066,7 @@ exports[`COMPLETE_POKEDEX > shall not change BONSLY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -2166,6 +2183,7 @@ exports[`COMPLETE_POKEDEX > shall not change BRAVIARY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -2291,6 +2309,7 @@ exports[`COMPLETE_POKEDEX > shall not change BULBASAUR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -2407,6 +2426,7 @@ exports[`COMPLETE_POKEDEX > shall not change BUTTERFREE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -2525,6 +2545,7 @@ exports[`COMPLETE_POKEDEX > shall not change CATERPIE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -2648,6 +2669,7 @@ exports[`COMPLETE_POKEDEX > shall not change CETITAN unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -2764,6 +2786,7 @@ exports[`COMPLETE_POKEDEX > shall not change CETODDLE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -2880,6 +2903,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHANSEY unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -2987,6 +3011,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHARIZARD unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -3105,6 +3130,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHARJABUG unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -3223,6 +3249,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHARMANDER unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -3341,6 +3368,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHARMELEON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -3467,6 +3495,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHIKORITA unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -3603,6 +3632,7 @@ exports[`COMPLETE_POKEDEX > shall not change CHIMCHAR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -3755,6 +3785,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -3777,6 +3808,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -3829,6 +3861,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -3843,6 +3876,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -3872,6 +3906,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -3901,6 +3936,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -3930,6 +3966,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -3979,6 +4016,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "ingredients",
           "ingredientAmounts": [
             6,
@@ -4001,6 +4039,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           14,
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "fullDescription": [Function],
         "image": "ingredients",
         "ingredient": {
@@ -4077,6 +4116,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -4091,6 +4131,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -4136,6 +4177,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -4158,6 +4200,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -4179,6 +4222,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -4217,6 +4261,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -4231,6 +4276,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -4276,6 +4322,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -4298,6 +4345,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -4319,6 +4367,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Mimic",
       },
@@ -4379,6 +4428,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -4393,6 +4443,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -4438,6 +4489,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -4460,6 +4512,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -4481,6 +4534,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -4519,6 +4573,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -4533,6 +4588,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -4578,6 +4634,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -4600,6 +4657,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -4621,11 +4679,13 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Transform",
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "metronome",
     "name": "Metronome",
   },
@@ -4764,6 +4824,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -4786,6 +4847,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -4838,6 +4900,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -4852,6 +4915,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -4881,6 +4945,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -4910,6 +4975,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -4939,6 +5005,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -4988,6 +5055,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "ingredients",
           "ingredientAmounts": [
             6,
@@ -5010,6 +5078,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           14,
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "fullDescription": [Function],
         "image": "ingredients",
         "ingredient": {
@@ -5086,6 +5155,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -5100,6 +5170,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -5145,6 +5216,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -5167,6 +5239,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -5188,6 +5261,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -5226,6 +5300,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -5240,6 +5315,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -5285,6 +5361,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -5307,6 +5384,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -5328,6 +5406,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Mimic",
       },
@@ -5388,6 +5467,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -5402,6 +5482,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -5447,6 +5528,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -5469,6 +5551,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -5490,6 +5573,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -5528,6 +5612,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -5542,6 +5627,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -5587,6 +5673,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -5609,6 +5696,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -5630,11 +5718,13 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Transform",
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "metronome",
     "name": "Metronome",
   },
@@ -5773,6 +5863,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -5795,6 +5886,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -5847,6 +5939,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -5861,6 +5954,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -5890,6 +5984,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -5919,6 +6014,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -5948,6 +6044,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -5997,6 +6094,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "ingredients",
           "ingredientAmounts": [
             6,
@@ -6019,6 +6117,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           14,
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "fullDescription": [Function],
         "image": "ingredients",
         "ingredient": {
@@ -6095,6 +6194,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -6109,6 +6209,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -6154,6 +6255,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -6176,6 +6278,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -6197,6 +6300,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -6235,6 +6339,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -6249,6 +6354,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -6294,6 +6400,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -6316,6 +6423,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -6337,6 +6445,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Mimic",
       },
@@ -6397,6 +6506,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -6411,6 +6521,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -6456,6 +6567,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -6478,6 +6590,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -6499,6 +6612,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -6537,6 +6651,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -6551,6 +6666,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -6596,6 +6712,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -6618,6 +6735,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -6639,11 +6757,13 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Transform",
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "metronome",
     "name": "Metronome",
   },
@@ -6758,6 +6878,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLODSIRE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -6874,6 +6995,7 @@ exports[`COMPLETE_POKEDEX > shall not change COMBUSKEN unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -6988,6 +7110,7 @@ exports[`COMPLETE_POKEDEX > shall not change COMFEY unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -7106,6 +7229,7 @@ exports[`COMPLETE_POKEDEX > shall not change CRAMORANT unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -7243,6 +7367,7 @@ exports[`COMPLETE_POKEDEX > shall not change CRESSELIA unexpectedly 1`] = `
         15,
         18.1,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energy For Everyone S",
     },
@@ -7255,6 +7380,7 @@ exports[`COMPLETE_POKEDEX > shall not change CRESSELIA unexpectedly 1`] = `
       9,
       11,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "modifierName": "Lunar Blessing",
     "selfBerries": {
@@ -7439,6 +7565,7 @@ exports[`COMPLETE_POKEDEX > shall not change CROAGUNK unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -7564,6 +7691,7 @@ exports[`COMPLETE_POKEDEX > shall not change CROCALOR unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -7672,6 +7800,7 @@ exports[`COMPLETE_POKEDEX > shall not change CROCONAW unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -7806,6 +7935,7 @@ exports[`COMPLETE_POKEDEX > shall not change CRUSTLE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -7922,6 +8052,7 @@ exports[`COMPLETE_POKEDEX > shall not change CUBONE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -8031,6 +8162,7 @@ exports[`COMPLETE_POKEDEX > shall not change CUTIEFLY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -8157,6 +8289,7 @@ exports[`COMPLETE_POKEDEX > shall not change CYNDAQUIL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -8487,6 +8620,7 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "strength",
       "name": "Charge Strength M",
       "strengthAmounts": [
@@ -8501,6 +8635,7 @@ exports[`COMPLETE_POKEDEX > shall not change DARKRAI unexpectedly 1`] = `
     },
     "description": [Function],
     "energyReduction": 12,
+    "frontendComponentName": undefined,
     "image": "strength",
     "modifierName": "Bad Dreams",
     "strengthAmounts": [
@@ -8624,6 +8759,7 @@ exports[`COMPLETE_POKEDEX > shall not change DEDENNE unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -8751,6 +8887,7 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -8766,6 +8903,7 @@ exports[`COMPLETE_POKEDEX > shall not change DELIBIRD unexpectedly 1`] = `
     "candyAmount": 4,
     "candyChance": 0.3333333333333333,
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       4,
@@ -8888,6 +9026,7 @@ exports[`COMPLETE_POKEDEX > shall not change DIGLETT unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -9044,6 +9183,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "strength",
             "name": "Charge Strength M",
             "strengthAmounts": [
@@ -9058,6 +9198,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           },
           "description": [Function],
           "energyReduction": 12,
+          "frontendComponentName": undefined,
           "image": "strength",
           "modifierName": "Bad Dreams",
           "strengthAmounts": [
@@ -9103,6 +9244,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "name": "Berry Burst",
             "selfBerryAmounts": [
@@ -9125,6 +9267,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
           "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "modifierName": "Disguise",
           "selfBerryAmounts": [
@@ -9146,6 +9289,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         },
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "copy",
       "name": "Skill Copy",
     },
@@ -9184,6 +9328,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -9198,6 +9343,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -9243,6 +9389,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -9265,6 +9412,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -9286,6 +9434,7 @@ exports[`COMPLETE_POKEDEX > shall not change DITTO unexpectedly 1`] = `
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "copy",
     "modifierName": "Transform",
   },
@@ -9400,6 +9549,7 @@ exports[`COMPLETE_POKEDEX > shall not change DODRIO unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -9516,6 +9666,7 @@ exports[`COMPLETE_POKEDEX > shall not change DODUO unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -9632,6 +9783,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRAGONAIR unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -9746,6 +9898,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRAGONITE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -9860,6 +10013,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRAMPA unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -9976,6 +10130,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRATINI unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -10108,6 +10263,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "strength",
       "name": "Charge Strength S",
       "strengthAmounts": [
@@ -10122,6 +10278,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFBLIM unexpectedly 1`] = `
     },
     "critChance": 0.2674,
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "stockpile_strength",
     "modifierName": "Stockpile",
     "spitUpAmounts": {
@@ -10349,6 +10506,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "strength",
       "name": "Charge Strength S",
       "strengthAmounts": [
@@ -10363,6 +10521,7 @@ exports[`COMPLETE_POKEDEX > shall not change DRIFLOON unexpectedly 1`] = `
     },
     "critChance": 0.2674,
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "stockpile_strength",
     "modifierName": "Stockpile",
     "spitUpAmounts": {
@@ -10563,6 +10722,7 @@ exports[`COMPLETE_POKEDEX > shall not change DUGTRIO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -10681,6 +10841,7 @@ exports[`COMPLETE_POKEDEX > shall not change DWEBBLE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -10806,6 +10967,7 @@ exports[`COMPLETE_POKEDEX > shall not change EEVEE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -10922,6 +11084,7 @@ exports[`COMPLETE_POKEDEX > shall not change EEVEE_HALLOWEEN unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -11039,6 +11202,7 @@ exports[`COMPLETE_POKEDEX > shall not change EEVEE_HOLIDAY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "shards",
     "name": "Dream Shard Magnet S",
     "shardAmounts": [
@@ -11165,6 +11329,7 @@ exports[`COMPLETE_POKEDEX > shall not change EKANS unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -11272,6 +11437,7 @@ exports[`COMPLETE_POKEDEX > shall not change EMPOLEON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -11399,6 +11565,7 @@ exports[`COMPLETE_POKEDEX > shall not change ENTEI unexpectedly 1`] = `
       5,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "helps",
     "name": "Helper Boost",
     "uniqueBoostTable": {
@@ -11548,6 +11715,7 @@ exports[`COMPLETE_POKEDEX > shall not change ESPEON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -11664,6 +11832,7 @@ exports[`COMPLETE_POKEDEX > shall not change FARFETCHD unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -11779,6 +11948,7 @@ exports[`COMPLETE_POKEDEX > shall not change FERALIGATR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -11906,6 +12076,7 @@ exports[`COMPLETE_POKEDEX > shall not change FLAAFFY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -12022,6 +12193,7 @@ exports[`COMPLETE_POKEDEX > shall not change FLAREON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -12140,6 +12312,7 @@ exports[`COMPLETE_POKEDEX > shall not change FLORAGATO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -12256,6 +12429,7 @@ exports[`COMPLETE_POKEDEX > shall not change FLYGON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -12381,6 +12555,7 @@ exports[`COMPLETE_POKEDEX > shall not change FUECOCO unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -12488,6 +12663,7 @@ exports[`COMPLETE_POKEDEX > shall not change GALLADE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -12615,6 +12791,7 @@ exports[`COMPLETE_POKEDEX > shall not change GARDEVOIR unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -12732,6 +12909,7 @@ exports[`COMPLETE_POKEDEX > shall not change GASTLY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -12874,6 +13052,7 @@ exports[`COMPLETE_POKEDEX > shall not change GENGAR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -13018,6 +13197,7 @@ exports[`COMPLETE_POKEDEX > shall not change GEODUDE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -13152,6 +13332,7 @@ exports[`COMPLETE_POKEDEX > shall not change GLACEON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -13276,6 +13457,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOLDUCK unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -13418,6 +13600,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOLEM unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -13552,6 +13735,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_JUMBO unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -13668,6 +13852,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_LARGE unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -13784,6 +13969,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_MEDIUM unexpectedly 1`] =
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -13900,6 +14086,7 @@ exports[`COMPLETE_POKEDEX > shall not change GOURGEIST_SMALL unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -14026,6 +14213,7 @@ exports[`COMPLETE_POKEDEX > shall not change GRAVELER unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -14169,6 +14357,7 @@ exports[`COMPLETE_POKEDEX > shall not change GROTLE unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -14278,6 +14467,7 @@ exports[`COMPLETE_POKEDEX > shall not change GROVYLE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -14403,6 +14593,7 @@ exports[`COMPLETE_POKEDEX > shall not change GROWLITHE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -14525,6 +14716,7 @@ exports[`COMPLETE_POKEDEX > shall not change GRUBBIN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -14652,8 +14844,9 @@ exports[`COMPLETE_POKEDEX > shall not change GULPIN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Dream Shard Magnet S Range",
     "image": "shards",
-    "name": "Dream Shard Magnet S Range",
+    "name": "Dream Shard Magnet S",
     "shardAmountsHigh": [
       480,
       680,
@@ -14798,6 +14991,7 @@ exports[`COMPLETE_POKEDEX > shall not change HAPPINY unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -14915,6 +15109,7 @@ exports[`COMPLETE_POKEDEX > shall not change HAUNTER unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -15069,6 +15264,7 @@ exports[`COMPLETE_POKEDEX > shall not change HERACROSS unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -15091,6 +15287,7 @@ exports[`COMPLETE_POKEDEX > shall not change HERACROSS unexpectedly 1`] = `
       5,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -15294,6 +15491,7 @@ exports[`COMPLETE_POKEDEX > shall not change HONCHKROW unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredient_draw",
       "ingredientAmounts": [
         5,
@@ -15325,6 +15523,7 @@ exports[`COMPLETE_POKEDEX > shall not change HONCHKROW unexpectedly 1`] = `
       2800,
       4000,
     ],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -15441,6 +15640,7 @@ exports[`COMPLETE_POKEDEX > shall not change HOUNDOOM unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -15559,6 +15759,7 @@ exports[`COMPLETE_POKEDEX > shall not change HOUNDOUR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -15684,6 +15885,7 @@ exports[`COMPLETE_POKEDEX > shall not change IGGLYBUFF unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -15791,6 +15993,7 @@ exports[`COMPLETE_POKEDEX > shall not change INFERNAPE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -15916,6 +16119,7 @@ exports[`COMPLETE_POKEDEX > shall not change IVYSAUR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -16041,6 +16245,7 @@ exports[`COMPLETE_POKEDEX > shall not change JIGGLYPUFF unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -16148,6 +16353,7 @@ exports[`COMPLETE_POKEDEX > shall not change JOLTEON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -16268,6 +16474,7 @@ exports[`COMPLETE_POKEDEX > shall not change KANGASKHAN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -16394,6 +16601,7 @@ exports[`COMPLETE_POKEDEX > shall not change KIRLIA unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -16510,6 +16718,7 @@ exports[`COMPLETE_POKEDEX > shall not change LAIRON unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -16626,6 +16835,7 @@ exports[`COMPLETE_POKEDEX > shall not change LARVITAR unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -16763,6 +16973,7 @@ exports[`COMPLETE_POKEDEX > shall not change LATIAS unexpectedly 1`] = `
         33,
         44,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energizing Cheer S",
       "targeting": {
@@ -16779,6 +16990,7 @@ exports[`COMPLETE_POKEDEX > shall not change LATIAS unexpectedly 1`] = `
       17,
       22,
     ],
+    "frontendComponentName": undefined,
     "helpsAmounts": [
       1,
       2,
@@ -16927,6 +17139,7 @@ exports[`COMPLETE_POKEDEX > shall not change LATIOS unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "berries",
       "name": "Berry Burst",
       "selfBerryAmounts": [
@@ -16947,6 +17160,7 @@ exports[`COMPLETE_POKEDEX > shall not change LATIOS unexpectedly 1`] = `
       ],
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "latiasBerriesAmounts": [
       2,
@@ -17153,6 +17367,7 @@ exports[`COMPLETE_POKEDEX > shall not change LEAFEON unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -17265,6 +17480,7 @@ exports[`COMPLETE_POKEDEX > shall not change LUCARIO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "shards",
     "name": "Dream Shard Magnet S",
     "shardAmounts": [
@@ -17384,6 +17600,7 @@ exports[`COMPLETE_POKEDEX > shall not change LUXIO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -17500,6 +17717,7 @@ exports[`COMPLETE_POKEDEX > shall not change LUXRAY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -17609,6 +17827,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAGNEMITE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -17718,6 +17937,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAGNETON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -17825,6 +18045,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAGNEZONE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -17951,6 +18172,7 @@ exports[`COMPLETE_POKEDEX > shall not change MANKEY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -18078,6 +18300,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAREEP unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -18192,6 +18415,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAROWAK unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -18308,6 +18532,7 @@ exports[`COMPLETE_POKEDEX > shall not change MARSHTOMP unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -18524,6 +18749,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAWILE unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredient_draw",
       "ingredientAmounts": [
         5,
@@ -18546,6 +18772,7 @@ exports[`COMPLETE_POKEDEX > shall not change MAWILE unexpectedly 1`] = `
       36,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -18670,6 +18897,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEGANIUM unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -18804,6 +19032,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEOWSCARADA unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -18914,6 +19143,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEOWTH unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "shards",
     "name": "Dream Shard Magnet S",
     "shardAmounts": [
@@ -19033,6 +19263,7 @@ exports[`COMPLETE_POKEDEX > shall not change METAPOD unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -19316,6 +19547,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
     "bonusCandyChance": 0.3,
     "candyAmount": 1,
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "versatile",
     "modifierName": "Present",
     "name": "Versatile",
@@ -19470,6 +19702,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "strength",
             "name": "Charge Strength M",
             "strengthAmounts": [
@@ -19484,6 +19717,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           },
           "description": [Function],
           "energyReduction": 12,
+          "frontendComponentName": undefined,
           "image": "strength",
           "modifierName": "Bad Dreams",
           "strengthAmounts": [
@@ -19529,6 +19763,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "name": "Berry Burst",
             "selfBerryAmounts": [
@@ -19551,6 +19786,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
           "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "modifierName": "Disguise",
           "selfBerryAmounts": [
@@ -19572,6 +19808,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         },
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "copy",
       "name": "Skill Copy",
     },
@@ -19610,6 +19847,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -19624,6 +19862,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -19669,6 +19908,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -19691,6 +19931,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -19712,6 +19953,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "copy",
     "modifierName": "Mimic",
   },
@@ -19835,6 +20077,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "berries",
       "name": "Berry Burst",
       "selfBerryAmounts": [
@@ -19857,6 +20100,7 @@ exports[`COMPLETE_POKEDEX > shall not change MIMIKYU unexpectedly 1`] = `
     "critChance": 0.185,
     "critMultiplier": 3,
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "modifierName": "Disguise",
     "selfBerryAmounts": [
@@ -20000,6 +20244,7 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "pot",
       "name": "Cooking Power-Up S",
       "potSizeAmounts": [
@@ -20022,6 +20267,7 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
       30,
       35,
     ],
+    "frontendComponentName": undefined,
     "fullDescription": [Function],
     "image": "pot",
     "modifierName": "Minus",
@@ -20145,6 +20391,7 @@ exports[`COMPLETE_POKEDEX > shall not change MONFERNO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -20308,6 +20555,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "strength",
             "name": "Charge Strength M",
             "strengthAmounts": [
@@ -20322,6 +20570,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           },
           "description": [Function],
           "energyReduction": 12,
+          "frontendComponentName": undefined,
           "image": "strength",
           "modifierName": "Bad Dreams",
           "strengthAmounts": [
@@ -20367,6 +20616,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "name": "Berry Burst",
             "selfBerryAmounts": [
@@ -20389,6 +20639,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
           "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "modifierName": "Disguise",
           "selfBerryAmounts": [
@@ -20410,6 +20661,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         },
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "copy",
       "name": "Skill Copy",
     },
@@ -20448,6 +20700,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -20462,6 +20715,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -20507,6 +20761,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -20529,6 +20784,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -20550,6 +20806,7 @@ exports[`COMPLETE_POKEDEX > shall not change MR_MIME unexpectedly 1`] = `
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "copy",
     "modifierName": "Mimic",
   },
@@ -20666,6 +20923,7 @@ exports[`COMPLETE_POKEDEX > shall not change MUDKIP unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -20784,8 +21042,9 @@ exports[`COMPLETE_POKEDEX > shall not change MUNNA unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Dream Shard Magnet S Range",
     "image": "shards",
-    "name": "Dream Shard Magnet S Range",
+    "name": "Dream Shard Magnet S",
     "shardAmountsHigh": [
       480,
       680,
@@ -21010,6 +21269,7 @@ exports[`COMPLETE_POKEDEX > shall not change MURKROW unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredient_draw",
       "ingredientAmounts": [
         5,
@@ -21041,6 +21301,7 @@ exports[`COMPLETE_POKEDEX > shall not change MURKROW unexpectedly 1`] = `
       2800,
       4000,
     ],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -21166,8 +21427,9 @@ exports[`COMPLETE_POKEDEX > shall not change MUSHARNA unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Dream Shard Magnet S Range",
     "image": "shards",
-    "name": "Dream Shard Magnet S Range",
+    "name": "Dream Shard Magnet S",
     "shardAmountsHigh": [
       480,
       680,
@@ -21305,6 +21567,7 @@ exports[`COMPLETE_POKEDEX > shall not change NATU unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -21428,6 +21691,7 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -21539,6 +21803,7 @@ exports[`COMPLETE_POKEDEX > shall not change NINETALES_ALOLAN unexpectedly 1`] =
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -21661,6 +21926,7 @@ exports[`COMPLETE_POKEDEX > shall not change NOIBAT unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -21777,6 +22043,7 @@ exports[`COMPLETE_POKEDEX > shall not change NOIVERN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -21895,6 +22162,7 @@ exports[`COMPLETE_POKEDEX > shall not change ONIX unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -22020,6 +22288,7 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMI unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -22136,6 +22405,7 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMO unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -22250,6 +22520,7 @@ exports[`COMPLETE_POKEDEX > shall not change PAWMOT unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -22349,6 +22620,7 @@ exports[`COMPLETE_POKEDEX > shall not change PERSIAN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "shards",
     "name": "Dream Shard Magnet S",
     "shardAmounts": [
@@ -22468,6 +22740,7 @@ exports[`COMPLETE_POKEDEX > shall not change PICHU unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -22586,6 +22859,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -22710,6 +22984,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HALLOWEEN unexpectedly 1`] 
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -22845,6 +23120,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HOLIDAY unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "shards",
     "name": "Dream Shard Magnet S",
     "shardAmounts": [
@@ -22962,6 +23238,7 @@ exports[`COMPLETE_POKEDEX > shall not change PINSIR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -23080,6 +23357,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIPLUP unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -23220,6 +23498,7 @@ exports[`COMPLETE_POKEDEX > shall not change PLUSLE unexpectedly 1`] = `
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -23242,6 +23521,7 @@ exports[`COMPLETE_POKEDEX > shall not change PLUSLE unexpectedly 1`] = `
       12,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "fullDescription": [Function],
     "image": "ingredients",
     "ingredient": {
@@ -23373,6 +23653,7 @@ exports[`COMPLETE_POKEDEX > shall not change PRIMEAPE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -23509,6 +23790,7 @@ exports[`COMPLETE_POKEDEX > shall not change PRINPLUP unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -23639,6 +23921,7 @@ exports[`COMPLETE_POKEDEX > shall not change PSYDUCK unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -23775,6 +24058,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_JUMBO unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -23893,6 +24177,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_LARGE unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -24011,6 +24296,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_MEDIUM unexpectedly 1`] =
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -24129,6 +24415,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUMPKABOO_SMALL unexpectedly 1`] = 
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -24254,6 +24541,7 @@ exports[`COMPLETE_POKEDEX > shall not change PUPITAR unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -24368,6 +24656,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAGSIRE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -24475,6 +24764,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAQUAVAL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -24593,6 +24883,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAXLY unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -24711,6 +25002,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUAXWELL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -24837,6 +25129,7 @@ exports[`COMPLETE_POKEDEX > shall not change QUILAVA unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -24971,6 +25264,7 @@ exports[`COMPLETE_POKEDEX > shall not change RAICHU unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -25094,6 +25388,7 @@ exports[`COMPLETE_POKEDEX > shall not change RAIKOU unexpectedly 1`] = `
       5,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "helps",
     "name": "Helper Boost",
     "uniqueBoostTable": {
@@ -25252,6 +25547,7 @@ exports[`COMPLETE_POKEDEX > shall not change RALTS unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -25366,6 +25662,7 @@ exports[`COMPLETE_POKEDEX > shall not change RATICATE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -25482,6 +25779,7 @@ exports[`COMPLETE_POKEDEX > shall not change RATTATA unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -25589,6 +25887,7 @@ exports[`COMPLETE_POKEDEX > shall not change RIBOMBEE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -25708,6 +26007,7 @@ exports[`COMPLETE_POKEDEX > shall not change RIOLU unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "shards",
     "name": "Dream Shard Magnet S",
     "shardAmounts": [
@@ -25827,6 +26127,7 @@ exports[`COMPLETE_POKEDEX > shall not change RUFFLET unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -25959,8 +26260,9 @@ exports[`COMPLETE_POKEDEX > shall not change SABLEYE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Dream Shard Magnet S Range",
     "image": "shards",
-    "name": "Dream Shard Magnet S Range",
+    "name": "Dream Shard Magnet S",
     "shardAmountsHigh": [
       480,
       680,
@@ -26096,6 +26398,7 @@ exports[`COMPLETE_POKEDEX > shall not change SALAMENCE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -26214,6 +26517,7 @@ exports[`COMPLETE_POKEDEX > shall not change SANDSHREW unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -26330,6 +26634,7 @@ exports[`COMPLETE_POKEDEX > shall not change SANDSLASH unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredient_draw",
     "ingredientAmounts": [
       5,
@@ -26446,6 +26751,7 @@ exports[`COMPLETE_POKEDEX > shall not change SCEPTILE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -26571,6 +26877,7 @@ exports[`COMPLETE_POKEDEX > shall not change SEALEO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -26689,6 +26996,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHELGON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -26807,6 +27115,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHINX unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -26949,6 +27258,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
         15,
         18.1,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energy For Everyone S",
     },
@@ -26961,6 +27271,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHUCKLE unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "juiceAmount": 1,
     "juicePercent": 0.185,
@@ -27080,6 +27391,7 @@ exports[`COMPLETE_POKEDEX > shall not change SHUPPET unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -27221,6 +27533,7 @@ exports[`COMPLETE_POKEDEX > shall not change SKELEDIRGE unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -27328,6 +27641,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLAKING unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -27446,6 +27760,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLAKOTH unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -27569,6 +27884,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWBRO unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -27687,6 +28003,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWKING unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -27808,6 +28125,7 @@ exports[`COMPLETE_POKEDEX > shall not change SLOWPOKE unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -27928,6 +28246,7 @@ exports[`COMPLETE_POKEDEX > shall not change SNEASEL unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -28045,6 +28364,7 @@ exports[`COMPLETE_POKEDEX > shall not change SNOVER unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -28181,6 +28501,7 @@ exports[`COMPLETE_POKEDEX > shall not change SPHEAL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -28304,6 +28625,7 @@ exports[`COMPLETE_POKEDEX > shall not change SPHEAL_HOLIDAY unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -28411,6 +28733,7 @@ exports[`COMPLETE_POKEDEX > shall not change SPIRITOMB unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -28533,6 +28856,7 @@ exports[`COMPLETE_POKEDEX > shall not change SPRIGATITO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -28651,6 +28975,7 @@ exports[`COMPLETE_POKEDEX > shall not change SQUIRTLE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -28767,6 +29092,7 @@ exports[`COMPLETE_POKEDEX > shall not change STEELIX unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -28893,6 +29219,7 @@ exports[`COMPLETE_POKEDEX > shall not change STUFFUL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -29027,6 +29354,7 @@ exports[`COMPLETE_POKEDEX > shall not change SUDOWOODO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength M",
     "strengthAmounts": [
@@ -29150,6 +29478,7 @@ exports[`COMPLETE_POKEDEX > shall not change SUICUNE unexpectedly 1`] = `
       5,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "helps",
     "name": "Helper Boost",
     "uniqueBoostTable": {
@@ -29308,6 +29637,7 @@ exports[`COMPLETE_POKEDEX > shall not change SWABLU unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -29424,8 +29754,9 @@ exports[`COMPLETE_POKEDEX > shall not change SWALOT unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Dream Shard Magnet S Range",
     "image": "shards",
-    "name": "Dream Shard Magnet S Range",
+    "name": "Dream Shard Magnet S",
     "shardAmountsHigh": [
       480,
       680,
@@ -29568,6 +29899,7 @@ exports[`COMPLETE_POKEDEX > shall not change SWAMPERT unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -29682,6 +30014,7 @@ exports[`COMPLETE_POKEDEX > shall not change SYLVEON unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -29815,6 +30148,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
         33,
         44,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energizing Cheer S",
       "targeting": {
@@ -29831,6 +30165,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEDEMARU unexpectedly 1`] = `
       27,
       35,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "modifierName": "Nuzzle",
     "skillHelpsAmounts": [
@@ -29979,6 +30314,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -30001,6 +30337,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -30053,6 +30390,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -30067,6 +30405,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -30096,6 +30435,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -30125,6 +30465,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -30154,6 +30495,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -30203,6 +30545,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "ingredients",
           "ingredientAmounts": [
             6,
@@ -30225,6 +30568,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           14,
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "fullDescription": [Function],
         "image": "ingredients",
         "ingredient": {
@@ -30301,6 +30645,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -30315,6 +30660,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -30360,6 +30706,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -30382,6 +30729,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -30403,6 +30751,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -30441,6 +30790,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -30455,6 +30805,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -30500,6 +30851,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -30522,6 +30874,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -30543,6 +30896,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Mimic",
       },
@@ -30603,6 +30957,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -30617,6 +30972,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -30662,6 +31018,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -30684,6 +31041,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -30705,6 +31063,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -30743,6 +31102,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -30757,6 +31117,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -30802,6 +31163,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -30824,6 +31186,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -30845,11 +31208,13 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Transform",
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "metronome",
     "name": "Metronome",
   },
@@ -30988,6 +31353,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -31010,6 +31376,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -31062,6 +31429,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -31076,6 +31444,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -31105,6 +31474,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -31134,6 +31504,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -31163,6 +31534,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -31212,6 +31584,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "ingredients",
           "ingredientAmounts": [
             6,
@@ -31234,6 +31607,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           14,
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "fullDescription": [Function],
         "image": "ingredients",
         "ingredient": {
@@ -31310,6 +31684,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -31324,6 +31699,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -31369,6 +31745,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -31391,6 +31768,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -31412,6 +31790,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -31450,6 +31829,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -31464,6 +31844,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -31509,6 +31890,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -31531,6 +31913,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -31552,6 +31935,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Mimic",
       },
@@ -31612,6 +31996,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -31626,6 +32011,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -31671,6 +32057,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -31693,6 +32080,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -31714,6 +32102,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -31752,6 +32141,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -31766,6 +32156,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -31811,6 +32202,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -31833,6 +32225,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -31854,11 +32247,13 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Transform",
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "metronome",
     "name": "Metronome",
   },
@@ -31997,6 +32392,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "name": "Berry Burst",
           "selfBerryAmounts": [
@@ -32019,6 +32415,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         "critChance": 0.185,
         "critMultiplier": 3,
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "modifierName": "Disguise",
         "selfBerryAmounts": [
@@ -32071,6 +32468,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "strength",
           "name": "Charge Strength M",
           "strengthAmounts": [
@@ -32085,6 +32483,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         },
         "description": [Function],
         "energyReduction": 12,
+        "frontendComponentName": undefined,
         "image": "strength",
         "modifierName": "Bad Dreams",
         "strengthAmounts": [
@@ -32114,6 +32513,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -32143,6 +32543,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -32172,6 +32573,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -32221,6 +32623,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
           },
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "ingredients",
           "ingredientAmounts": [
             6,
@@ -32243,6 +32646,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           14,
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "fullDescription": [Function],
         "image": "ingredients",
         "ingredient": {
@@ -32319,6 +32723,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -32333,6 +32738,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -32378,6 +32784,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -32400,6 +32807,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -32421,6 +32829,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -32459,6 +32868,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -32473,6 +32883,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -32518,6 +32929,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -32540,6 +32952,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -32561,6 +32974,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Mimic",
       },
@@ -32621,6 +33035,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "strength",
                 "name": "Charge Strength M",
                 "strengthAmounts": [
@@ -32635,6 +33050,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               },
               "description": [Function],
               "energyReduction": 12,
+              "frontendComponentName": undefined,
               "image": "strength",
               "modifierName": "Bad Dreams",
               "strengthAmounts": [
@@ -32680,6 +33096,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                   },
                 },
                 "description": [Function],
+                "frontendComponentName": undefined,
                 "image": "berries",
                 "name": "Berry Burst",
                 "selfBerryAmounts": [
@@ -32702,6 +33119,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
               "critChance": 0.185,
               "critMultiplier": 3,
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "modifierName": "Disguise",
               "selfBerryAmounts": [
@@ -32723,6 +33141,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
           ],
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "copy",
           "name": "Skill Copy",
         },
@@ -32761,6 +33180,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "strength",
               "name": "Charge Strength M",
               "strengthAmounts": [
@@ -32775,6 +33195,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             },
             "description": [Function],
             "energyReduction": 12,
+            "frontendComponentName": undefined,
             "image": "strength",
             "modifierName": "Bad Dreams",
             "strengthAmounts": [
@@ -32820,6 +33241,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
                 },
               },
               "description": [Function],
+              "frontendComponentName": undefined,
               "image": "berries",
               "name": "Berry Burst",
               "selfBerryAmounts": [
@@ -32842,6 +33264,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
             "critChance": 0.185,
             "critMultiplier": 3,
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "modifierName": "Disguise",
             "selfBerryAmounts": [
@@ -32863,11 +33286,13 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           },
         ],
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "copy",
         "modifierName": "Transform",
       },
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "metronome",
     "name": "Metronome",
   },
@@ -32984,6 +33409,7 @@ exports[`COMPLETE_POKEDEX > shall not change TORCHIC unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -33098,6 +33524,7 @@ exports[`COMPLETE_POKEDEX > shall not change TORTERRA unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -33206,6 +33633,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOTODILE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -33343,6 +33771,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXEL unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -33450,6 +33879,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXICROAK unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -33586,6 +34016,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_AMPED unexpectedly 1`] =
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -33608,6 +34039,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_AMPED unexpectedly 1`] =
       14,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "fullDescription": [Function],
     "image": "ingredients",
     "ingredient": {
@@ -33751,6 +34183,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_LOW_KEY unexpectedly 1`]
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "pot",
       "name": "Cooking Power-Up S",
       "potSizeAmounts": [
@@ -33773,6 +34206,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOXTRICITY_LOW_KEY unexpectedly 1`]
       30,
       35,
     ],
+    "frontendComponentName": undefined,
     "fullDescription": [Function],
     "image": "pot",
     "modifierName": "Minus",
@@ -33896,6 +34330,7 @@ exports[`COMPLETE_POKEDEX > shall not change TRAPINCH unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -34014,6 +34449,7 @@ exports[`COMPLETE_POKEDEX > shall not change TREECKO unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "berries",
     "name": "Berry Burst",
     "selfBerryAmounts": [
@@ -34146,6 +34582,7 @@ exports[`COMPLETE_POKEDEX > shall not change TURTWIG unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -34261,6 +34698,7 @@ exports[`COMPLETE_POKEDEX > shall not change TYPHLOSION unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": "Charge Strength S Range",
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmountsHigh": [
@@ -34402,6 +34840,7 @@ exports[`COMPLETE_POKEDEX > shall not change TYRANITAR unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -34509,6 +34948,7 @@ exports[`COMPLETE_POKEDEX > shall not change TYRANTRUM unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -34627,6 +35067,7 @@ exports[`COMPLETE_POKEDEX > shall not change TYRUNT unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "pot",
     "name": "Cooking Power-Up S",
     "potSizeAmounts": [
@@ -34766,6 +35207,7 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
         33.6,
         43.4,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Charge Energy S",
     },
@@ -34787,6 +35229,7 @@ exports[`COMPLETE_POKEDEX > shall not change UMBREON unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "modifierName": "Moonlight",
     "targeting": {
@@ -34898,6 +35341,7 @@ exports[`COMPLETE_POKEDEX > shall not change VAPOREON unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -35014,6 +35458,7 @@ exports[`COMPLETE_POKEDEX > shall not change VENUSAUR unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -35132,6 +35577,7 @@ exports[`COMPLETE_POKEDEX > shall not change VIBRAVA unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -35255,6 +35701,7 @@ exports[`COMPLETE_POKEDEX > shall not change VICTREEBEL unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -35364,6 +35811,7 @@ exports[`COMPLETE_POKEDEX > shall not change VIGOROTH unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -35480,6 +35928,7 @@ exports[`COMPLETE_POKEDEX > shall not change VIKAVOLT unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "strength",
     "name": "Charge Strength S",
     "strengthAmounts": [
@@ -35605,6 +36054,7 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -35718,6 +36168,7 @@ exports[`COMPLETE_POKEDEX > shall not change VULPIX_ALOLAN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "helpAmounts": [
       6,
       7,
@@ -35838,6 +36289,7 @@ exports[`COMPLETE_POKEDEX > shall not change WALREIN unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -35956,6 +36408,7 @@ exports[`COMPLETE_POKEDEX > shall not change WARTORTLE unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,
@@ -36079,6 +36532,7 @@ exports[`COMPLETE_POKEDEX > shall not change WEAVILE unexpectedly 1`] = `
       10,
     ],
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "chance",
     "name": "Tasty Chance S",
   },
@@ -36195,6 +36649,7 @@ exports[`COMPLETE_POKEDEX > shall not change WEEPINBELL unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -36309,6 +36764,7 @@ exports[`COMPLETE_POKEDEX > shall not change WIGGLYTUFF unexpectedly 1`] = `
       15,
       18.1,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energy For Everyone S",
   },
@@ -36423,6 +36879,7 @@ exports[`COMPLETE_POKEDEX > shall not change WOBBUFFET unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -36543,6 +37000,7 @@ exports[`COMPLETE_POKEDEX > shall not change WOOPER unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -36659,6 +37117,7 @@ exports[`COMPLETE_POKEDEX > shall not change WOOPER_PALDEAN unexpectedly 1`] = `
       33.6,
       43.4,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Charge Energy S",
   },
@@ -36775,6 +37234,7 @@ exports[`COMPLETE_POKEDEX > shall not change WYNAUT unexpectedly 1`] = `
       33,
       44,
     ],
+    "frontendComponentName": undefined,
     "image": "energy",
     "name": "Energizing Cheer S",
     "targeting": {
@@ -36886,6 +37346,7 @@ exports[`COMPLETE_POKEDEX > shall not change XATU unexpectedly 1`] = `
       },
     },
     "description": [Function],
+    "frontendComponentName": undefined,
     "image": "ingredients",
     "ingredientAmounts": [
       6,

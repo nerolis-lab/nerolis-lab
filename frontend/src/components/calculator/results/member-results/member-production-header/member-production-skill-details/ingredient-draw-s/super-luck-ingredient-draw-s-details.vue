@@ -3,9 +3,7 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="
-          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
-        "
+        :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -14,7 +12,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Ingredient Draw S (Super Luck) level ${memberWithProduction.production.skillLevel}`"
+          :alt="`Ingredient Draw S (Super Luck) level ${effectiveSkillLevel}`"
           title="Ingredient Draw S (Super Luck)"
         ></v-img>
       </v-badge>
@@ -77,7 +75,7 @@ import { ingredientImage, mainskillImage } from '@/services/utils/image-utils'
 import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { MathUtils, compactNumber } from 'sleepapi-common'
+import { IngredientDrawSSuperLuck, MathUtils, compactNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -93,8 +91,17 @@ export default defineComponent({
     return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage }
   },
   computed: {
+    effectiveSkillLevel() {
+      return this.memberWithProduction.production.skillLevel
+    },
+    baseSkillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
+    /**
+     * @todo Show average ingredient count and also average shard count per proc, rather than only the ingredient count for ingredient drops.
+     */
     skillValuePerProc() {
-      return this.memberWithProduction.member.pokemon.skill.amount(this.memberWithProduction.production.skillLevel)
+      return IngredientDrawSSuperLuck.activations.ingredients.amount({ skillLevel: this.effectiveSkillLevel })
     },
     preparedIngredients() {
       return this.memberWithProduction.production.produceFromSkill.ingredients.map((ing) => ({

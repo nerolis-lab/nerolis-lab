@@ -37,6 +37,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "berries",
       "name": "Berry Burst",
       "selfBerryAmounts": [
@@ -99,6 +100,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "berries",
         "name": "Berry Burst",
         "selfBerryAmounts": [
@@ -119,6 +121,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         ],
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "berries",
       "latiasBerriesAmounts": [
         2,
@@ -243,6 +246,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         33.6,
         43.4,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Charge Energy S",
     },
@@ -291,6 +295,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           33.6,
           43.4,
         ],
+        "frontendComponentName": undefined,
         "image": "energy",
         "name": "Charge Energy S",
       },
@@ -312,6 +317,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         33.6,
         43.4,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "modifierName": "Moonlight",
       "targeting": {
@@ -341,6 +347,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "strength",
       "name": "Charge Strength M",
       "strengthAmounts": [
@@ -375,6 +382,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "strength",
       "name": "Charge Strength S",
       "strengthAmounts": [
@@ -417,6 +425,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": "Charge Strength S Range",
       "image": "strength",
       "name": "Charge Strength S",
       "strengthAmountsHigh": [
@@ -494,6 +503,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "strength",
         "name": "Charge Strength S",
         "strengthAmounts": [
@@ -508,6 +518,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       },
       "critChance": 0.2674,
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "stockpile_strength",
       "modifierName": "Stockpile",
       "spitUpAmounts": {
@@ -802,6 +813,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -1032,6 +1044,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredients",
         "ingredientAmounts": [
           6,
@@ -1054,6 +1067,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         5,
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -1088,6 +1102,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "pot",
       "name": "Cooking Power-Up S",
       "potSizeAmounts": [
@@ -1142,6 +1157,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "pot",
         "name": "Cooking Power-Up S",
         "potSizeAmounts": [
@@ -1164,6 +1180,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         30,
         35,
       ],
+      "frontendComponentName": undefined,
       "fullDescription": [Function],
       "image": "pot",
       "modifierName": "Minus",
@@ -1204,6 +1221,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "shards",
       "name": "Dream Shard Magnet S",
       "shardAmounts": [
@@ -1248,8 +1266,9 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": "Dream Shard Magnet S Range",
       "image": "shards",
-      "name": "Dream Shard Magnet S Range",
+      "name": "Dream Shard Magnet S",
       "shardAmountsHigh": [
         480,
         680,
@@ -1310,6 +1329,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         33,
         44,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energizing Cheer S",
       "targeting": {
@@ -1369,6 +1389,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           33,
           44,
         ],
+        "frontendComponentName": undefined,
         "image": "energy",
         "name": "Energizing Cheer S",
         "targeting": {
@@ -1385,6 +1406,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         17,
         22,
       ],
+      "frontendComponentName": undefined,
       "helpsAmounts": [
         1,
         2,
@@ -1456,6 +1478,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           33,
           44,
         ],
+        "frontendComponentName": undefined,
         "image": "energy",
         "name": "Energizing Cheer S",
         "targeting": {
@@ -1472,6 +1495,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         27,
         35,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "modifierName": "Nuzzle",
       "skillHelpsAmounts": [
@@ -1516,6 +1540,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         15,
         18.1,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energy For Everyone S",
     },
@@ -1567,6 +1592,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           15,
           18.1,
         ],
+        "frontendComponentName": undefined,
         "image": "energy",
         "name": "Energy For Everyone S",
       },
@@ -1579,6 +1605,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         15,
         18.1,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "juiceAmount": 1,
       "juicePercent": 0.185,
@@ -1636,6 +1663,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           15,
           18.1,
         ],
+        "frontendComponentName": undefined,
         "image": "energy",
         "name": "Energy For Everyone S",
       },
@@ -1648,6 +1676,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         9,
         11,
       ],
+      "frontendComponentName": undefined,
       "image": "energy",
       "modifierName": "Lunar Blessing",
       "selfBerries": {
@@ -1781,6 +1810,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "helpAmounts": [
         6,
         7,
@@ -1850,6 +1880,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         5,
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "helps",
       "name": "Helper Boost",
       "uniqueBoostTable": {
@@ -2026,6 +2057,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -2048,6 +2080,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         36,
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredient_draw",
       "ingredientAmounts": [
         5,
@@ -2169,6 +2202,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredient_draw",
         "ingredientAmounts": [
           5,
@@ -2200,6 +2234,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2800,
         4000,
       ],
+      "frontendComponentName": undefined,
       "image": "ingredient_draw",
       "ingredientAmounts": [
         5,
@@ -2410,6 +2445,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       },
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         6,
@@ -2464,6 +2500,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         "description": [Function],
+        "frontendComponentName": undefined,
         "image": "ingredients",
         "ingredientAmounts": [
           6,
@@ -2479,6 +2516,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "candyAmount": 4,
       "candyChance": 0.3333333333333333,
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "ingredients",
       "ingredientAmounts": [
         4,
@@ -2546,6 +2584,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "strength",
             "name": "Charge Strength M",
             "strengthAmounts": [
@@ -2560,6 +2599,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
           "description": [Function],
           "energyReduction": 12,
+          "frontendComponentName": undefined,
           "image": "strength",
           "modifierName": "Bad Dreams",
           "strengthAmounts": [
@@ -2605,6 +2645,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               },
             },
             "description": [Function],
+            "frontendComponentName": undefined,
             "image": "berries",
             "name": "Berry Burst",
             "selfBerryAmounts": [
@@ -2627,6 +2668,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           "critChance": 0.185,
           "critMultiplier": 3,
           "description": [Function],
+          "frontendComponentName": undefined,
           "image": "berries",
           "modifierName": "Disguise",
           "selfBerryAmounts": [
@@ -2648,6 +2690,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "copy",
       "name": "Skill Copy",
     },
@@ -2680,6 +2723,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         10,
       ],
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "chance",
       "name": "Tasty Chance S",
     },
@@ -2719,6 +2763,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "bonusCandyChance": 0.3,
       "candyAmount": 1,
       "description": [Function],
+      "frontendComponentName": undefined,
       "image": "versatile",
       "modifierName": "Present",
       "name": "Versatile",
