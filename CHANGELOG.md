@@ -1,3 +1,10 @@
+# [2.61.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.60.1...v2.61.0) (2026-08-07)
+
+
+### Features
+
+* updates for Sleep v3.7.0 ([c5f5d4c](https://github.com/nerolis-lab/nerolis-lab/commit/c5f5d4c1c07440920bd7dcf020b6077f64f2b500))
+
 ## [2.60.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.60.0...v2.60.1) (2026-08-05)
 
 
