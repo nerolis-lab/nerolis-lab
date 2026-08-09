@@ -57,7 +57,7 @@
     "vite-plugin-vuetify": "^2.1.3",
     "vitest": "^4.1.10",
     "vitest-canvas-mock": "^0.3.3",
-    "vue-tsc": "^2.2.12",
+    "vue-tsc": "^3.3.9",
     "vuetify": "^3.12.10"
   },
   "optionalDependencies": {
