@@ -112,4 +112,21 @@ describe('IslandImpact', () => {
     expect(wrapper.text()).toContain('15% slower helps')
     expect(wrapper.text()).not.toContain('ingredient per help')
   })
+
+  it('shows Cyan Beach expert mode bonuses for the main favorite berry', async () => {
+    await wrapper.setProps({
+      island: commonMocks.expertIslandInstance({ shortName: 'CBEX', expertMode: commonMocks.expertModeSettings() })
+    })
+    expect(wrapper.text()).toContain('20% faster helps')
+    expect(wrapper.text()).toContain('+5 carry size')
+  })
+
+  it('shows the Cyan Beach help speed penalty for non-favored berries', async () => {
+    await wrapper.setProps({
+      member: notFavoredMember(),
+      island: commonMocks.expertIslandInstance({ shortName: 'CBEX', expertMode: commonMocks.expertModeSettings() })
+    })
+    expect(wrapper.text()).toContain('35% slower helps')
+    expect(wrapper.text()).not.toContain('carry size')
+  })
 })
