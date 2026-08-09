@@ -17,8 +17,9 @@
       <span class="text-berry text-no-wrap">{{ statusLabel }}</span>
       <div class="effect-list">
         <div v-for="effect in effects" :key="effect.text" class="flex-left">
-          <v-img class="mr-1" :src="effect.image" alt="" height="28" width="28" />
-          <span class="text-no-wrap">
+          <v-icon v-if="effect.icon" size="28">{{ effect.icon }}</v-icon>
+          <v-img v-else :src="effect.image" alt="" height="28" width="28" />
+          <span class="pl-1">
             <span :class="[effect.valueClass, 'text-no-wrap']">{{ effect.value }}</span> {{ effect.text }}
           </span>
         </div>
@@ -46,22 +47,18 @@
 <script setup lang="ts">
 import { berryImage } from '@/services/utils/image-utils'
 import { useUserStore } from '@/stores/user-store'
-import {
-  BASE_FAVORED_BERRY_MULTIPLIER,
-  capitalize,
-  EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
-  hasSpecialty,
-  type IslandInstance,
-  type PokemonInstanceExt
-} from 'sleepapi-common'
+import { capitalize, hasSpecialty, type IslandInstance, type PokemonInstanceExt } from 'sleepapi-common'
 import { computed } from 'vue'
-
-interface IslandEffect {
-  image: string
-  value: string
-  valueClass: string
-  text: string
-}
+import {
+  baseFavoriteBerryEffect,
+  EXPERT_ISLAND_EFFECTS,
+  expertBerryBonus,
+  expertIngredientBonus,
+  expertIngredientSpecialtyBonus,
+  expertMainFavoriteSkillLevel,
+  expertSkillChanceBonus,
+  type IslandEffect
+} from './island-effects'
 
 const props = defineProps<{
   member: PokemonInstanceExt
@@ -72,6 +69,8 @@ const props = defineProps<{
 const userStore = useUserStore()
 
 const expertMode = computed(() => (props.island.expert ? props.island.expertMode : undefined))
+
+const expertEffects = computed(() => (expertMode.value ? EXPERT_ISLAND_EFFECTS[props.island.shortName] : undefined))
 
 const memberBerry = computed(() => props.member.pokemon.berry)
 
@@ -106,75 +105,19 @@ const statusLabel = computed(() => {
   return `${berryName} is not favored`
 })
 
-const baseFavoriteBerryEffect: IslandEffect = {
-  image: '/images/berries/berries.png',
-  value: `${BASE_FAVORED_BERRY_MULTIPLIER}x`,
-  valueClass: 'text-berry',
-  text: 'berry power'
-}
-
-const expertMainFavoriteFasterHelps: IslandEffect = {
-  image: '/images/mainskill/helps.png',
-  value: '10%',
-  valueClass: 'text-help',
-  text: 'faster helps'
-}
-
-const expertMainFavoriteSkillLevel: IslandEffect = {
-  image: '/images/misc/skillproc.png',
-  value: '+1',
-  valueClass: 'text-skill',
-  text: 'main skill level'
-}
-
-const expertUnfavoredSlowerHelps: IslandEffect = {
-  image: '/images/mainskill/helps.png',
-  value: '15%',
-  valueClass: 'text-help',
-  text: 'slower helps'
-}
-
-const expertIngredientBonus: IslandEffect = {
-  image: '/images/ingredient/ingredients.png',
-  value: '+1',
-  valueClass: 'text-ingredient',
-  text: 'ingredient per ingredient help'
-}
-
-const expertIngredientSpecialtyBonus: IslandEffect = {
-  image: '/images/ingredient/ingredients.png',
-  value: '+1-2',
-  valueClass: 'text-ingredient',
-  text: 'ingredients per ingredient help'
-}
-
-const expertBerryBonus: IslandEffect = {
-  image: '/images/berries/berries.png',
-  value: `${EXPERT_MODE_BERRY_BONUS_MULTIPLIER}x`,
-  valueClass: 'text-berry',
-  text: 'favored berry power'
-}
-
-const expertSkillChanceBonus: IslandEffect = {
-  image: '/images/misc/skillproc.png',
-  value: '1.25x',
-  valueClass: 'text-skill',
-  text: 'main skill chance'
-}
-
 const effects = computed<IslandEffect[]>(() => {
   const result: IslandEffect[] = []
 
   if (isBaseFavorite.value) {
     result.push(baseFavoriteBerryEffect)
-  } else if (expertMode.value) {
+  } else if (expertMode.value && expertEffects.value) {
     if (isMainFavorite.value) {
-      result.push(expertMainFavoriteFasterHelps)
       if (props.effectiveSkillLevel > props.member.skillLevel) {
         result.push(expertMainFavoriteSkillLevel)
       }
+      result.push(...expertEffects.value.mainFavoriteExtraEffects)
     } else if (!isFavored.value) {
-      result.push(expertUnfavoredSlowerHelps)
+      result.push(...expertEffects.value.unfavoredExtraEffects)
     }
 
     if (isFavored.value) {
