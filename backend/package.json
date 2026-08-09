@@ -47,7 +47,7 @@
     "discord-oauth2": "^2.12.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "google-auth-library": "^10.9.0",
+    "google-auth-library": "^11.0.0",
     "knex": "^3.3.0",
     "morgan": "~1.11.0",
     "mysql2": "~3.23.2",
