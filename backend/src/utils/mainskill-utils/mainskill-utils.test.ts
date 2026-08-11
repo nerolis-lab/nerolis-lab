@@ -1,61 +1,7 @@
-import {
-  convertActivationsToApiFormat,
-  getMainskill,
-  getMainskillNames
-} from '@src/utils/mainskill-utils/mainskill-utils.js';
+import { convertActivationsToApiFormat, getMainskill } from '@src/utils/mainskill-utils/mainskill-utils.js';
 import type { Mainskill, MainskillActivation } from 'sleepapi-common';
 import { MAINSKILLS } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
-
-describe('getMainskillNames', () => {
-  it('shall get all mainskill names', () => {
-    expect(getMainskillNames()).toMatchInlineSnapshot(`
-      [
-        "Berry Burst",
-        "Disguise (Berry Burst)",
-        "Draco Meteor (Berry Burst)",
-        "Charge Energy S",
-        "Moonlight (Charge Energy S)",
-        "Charge Strength M",
-        "Bad Dreams (Charge Strength M)",
-        "Charge Strength S",
-        "Charge Strength S",
-        "Stockpile (Charge Strength S)",
-        "Cooking Assist S",
-        "Bulk Up (Cooking Assist S)",
-        "Cooking Power-Up S",
-        "Minus (Cooking Power-Up S)",
-        "Dream Shard Magnet S",
-        "Dream Shard Magnet S Range",
-        "Aura Sphere (Dream Shard Magnet S)",
-        "Energizing Cheer S",
-        "Heal Pulse (Energizing Cheer S)",
-        "Nuzzle (Energizing Cheer S)",
-        "Energy For Everyone S",
-        "Berry Juice (Energy For Everyone S)",
-        "Lunar Blessing (Energy For Everyone S)",
-        "Extra Helpful S",
-        "Helper Boost",
-        "Ingredient Draw S",
-        "Ingredient Draw S",
-        "Ingredient Draw S",
-        "Ingredient Draw S",
-        "Hyper Cutter (Ingredient Draw S)",
-        "Super Luck (Ingredient Draw S)",
-        "Ingredient Magnet S",
-        "Plus (Ingredient Magnet S)",
-        "Plus (Ingredient Magnet S)",
-        "Present (Ingredient Magnet S)",
-        "Skill Copy",
-        "Mimic (Skill Copy)",
-        "Transform (Skill Copy)",
-        "Metronome",
-        "Tasty Chance S",
-        "Versatile",
-      ]
-    `);
-  });
-});
 
 describe('getMainskill', () => {
   it.each(MAINSKILLS.map((ms) => [ms.name, ms]))('finds mainskill %s', (name: string, ms: Mainskill) => {
