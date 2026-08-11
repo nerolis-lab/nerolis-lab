@@ -1,9 +1,6 @@
-import {
-  convertActivationsToApiFormat,
-  getMainskill,
-  getMainskillNames
-} from '@src/utils/mainskill-utils/mainskill-utils.js';
+import { convertActivationsToApiFormat, getMainskill } from '@src/utils/mainskill-utils/mainskill-utils.js';
 import tsoa from '@tsoa/runtime';
+import { MAINSKILLS } from 'sleepapi-common';
 const { Controller, Path, Get, Route, Tags } = tsoa;
 
 @Route('api/mainskill')
@@ -27,6 +24,6 @@ export default class MainskillController extends Controller {
 
   @Get('/')
   public async getMainskills(): Promise<string[]> {
-    return getMainskillNames();
+    return MAINSKILLS.map((ms) => ms.name);
   }
 }
