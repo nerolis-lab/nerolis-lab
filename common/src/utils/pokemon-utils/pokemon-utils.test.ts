@@ -1,23 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { PINSIR } from '../../types/pokemon';
 import { mockIngredient, mockIngredientSet, mockPokemon } from '../../vitest/mocks';
-import { getPokemon, hashPokemonWithIngredients } from './pokemon-utils';
-
-describe('getPokemon', () => {
-  it('shall return PINSIR for pinSIr name', () => {
-    expect(getPokemon('pinSIr')).toBe(PINSIR);
-  });
-
-  it("shall throw if Pokémon can't be found", () => {
-    expect(() => getPokemon('missing')).toThrow(Error);
-  });
-});
+import { hashPokemonWithIngredients } from './pokemon-utils';
 
 describe('hashPokemonWithIngredients', () => {
   it('shall return a string', () => {
     expect(
       hashPokemonWithIngredients({
-        pokemon: mockPokemon({ name: 'Timmy' }),
+        pokemon: mockPokemon({ name: 'SNEASEL' }),
         ingredientList: [mockIngredientSet({ ingredient: mockIngredient({ name: 'fruitas' }) })]
       })
     ).toBe('Timmy:fruitas');
@@ -26,7 +15,7 @@ describe('hashPokemonWithIngredients', () => {
   it('shall return a string with multiple ingredients', () => {
     expect(
       hashPokemonWithIngredients({
-        pokemon: mockPokemon({ name: 'Timmy' }),
+        pokemon: mockPokemon({ name: 'SNEASEL' }),
         ingredientList: [
           mockIngredientSet({ ingredient: mockIngredient({ name: 'fruitas' }) }),
           mockIngredientSet({ ingredient: mockIngredient({ name: 'fruitas' }) })

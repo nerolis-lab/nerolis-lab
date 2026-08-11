@@ -3,7 +3,7 @@ import type { Berry } from '../../types/berry';
 import type { GenderRatio } from '../../types/gender';
 import type { Ingredient, IngredientSet } from '../../types/ingredient';
 import type { Mainskill } from '../../types/mainskill';
-import type { Pokemon, PokemonSpecialty } from '../../types/pokemon';
+import { addToPokedex, type Pokemon, type PokemonName, type PokemonSpecialty } from '../../types/pokemon';
 import { calculatePityProcThreshold, matchesSpecialty } from '../stat-utils/stat-utils';
 import { evolvesFrom, evolvesInto } from './evolution-utils';
 
@@ -22,7 +22,7 @@ export type IngredientSetDefinition = {
 export type IngredientSpecification = IngredientDefinition | IngredientSetDefinition;
 
 function createPokemon(params: {
-  name: keyof typeof pokemonNames;
+  name: PokemonName;
   pokedexNumber: number;
   specialty: PokemonSpecialty;
   frequency: number;
@@ -40,7 +40,7 @@ function createPokemon(params: {
   const { ingredients, ...otherParams } = params;
   const { name, specialty, frequency } = otherParams;
   const { ingredient0, ingredient30, ingredient60 } = getIngredientSets(ingredients, specialty);
-  return {
+  const mon = {
     ...otherParams,
     displayName: pokemonNames[name],
     // evolution fields get populated when constructing other mons in the evolution line
@@ -51,10 +51,12 @@ function createPokemon(params: {
     ingredient60,
     pityProcThreshold: calculatePityProcThreshold(specialty, frequency)
   };
+  addToPokedex(name, mon);
+  return mon;
 }
 
 export function createAllSpecialist(params: {
-  name: keyof typeof pokemonNames;
+  name: PokemonName;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -75,7 +77,7 @@ export function createAllSpecialist(params: {
 }
 
 export function createBerrySpecialist(params: {
-  name: keyof typeof pokemonNames;
+  name: PokemonName;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -96,7 +98,7 @@ export function createBerrySpecialist(params: {
 }
 
 export function createIngredientSpecialist(params: {
-  name: keyof typeof pokemonNames;
+  name: PokemonName;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -117,7 +119,7 @@ export function createIngredientSpecialist(params: {
 }
 
 export function createSkillSpecialist(params: {
-  name: keyof typeof pokemonNames;
+  name: PokemonName;
   pokedexNumber: number;
   frequency: number;
   ingredientPercentage: number;
@@ -140,7 +142,7 @@ export function createSkillSpecialist(params: {
 export function evolvedPokemon(
   previousForm: Pokemon,
   params: Partial<Pokemon> & {
-    name: keyof typeof pokemonNames;
+    name: PokemonName;
     pokedexNumber: number;
     frequency: number;
     ingredientPercentage: number;
@@ -157,13 +159,15 @@ export function evolvedPokemon(
     pityProcThreshold: calculatePityProcThreshold(params.specialty ?? previousForm.specialty, params.frequency)
   };
   previousForm.evolvesInto.push(evolvedMon.name);
+  addToPokedex(previousForm.name, previousForm);
+  addToPokedex(params.name, evolvedMon);
   return evolvedMon;
 }
 
 export function preEvolvedPokemon(
   nextForm: Pokemon,
   params: Partial<Pokemon> & {
-    name: keyof typeof pokemonNames;
+    name: PokemonName;
     pokedexNumber: number;
     frequency: number;
     ingredientPercentage: number;
@@ -180,6 +184,8 @@ export function preEvolvedPokemon(
     pityProcThreshold: calculatePityProcThreshold(params.specialty ?? nextForm.specialty, params.frequency)
   };
   nextForm.evolvesFrom = preEvolvedMon.name;
+  addToPokedex(nextForm.name, nextForm);
+  addToPokedex(params.name, preEvolvedMon);
   return preEvolvedMon;
 }
 

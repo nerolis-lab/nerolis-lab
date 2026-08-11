@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import pokemonNames from '../../locales/en/pokemonNames';
-import type { Pokemon } from './pokemon';
-import { COMPLETE_POKEDEX } from './pokemon';
+import { COMPLETE_POKEDEX } from './pokedex';
+import type { Pokemon, PokemonName } from './pokemon';
 
 describe('remainingEvolutions', () => {
   it('shall never be negative', () => {
@@ -39,11 +39,11 @@ describe('COMPLETE_POKEDEX', () => {
 
     it(`shall include matching evolution references for ${pokemon.name}`, () => {
       if (pokemon.evolvesFrom !== undefined) {
-        const previousForm = COMPLETE_POKEDEX.find((mon: Pokemon) => mon.name === pokemon.evolvesFrom);
+        const previousForm = COMPLETE_POKEDEX.get(pokemon.evolvesFrom);
         expect(previousForm?.evolvesInto).toContain(pokemon.name);
       }
-      pokemon.evolvesInto.forEach((evolvedFormName: string) => {
-        const evolvedForm = COMPLETE_POKEDEX.find((mon: Pokemon) => mon.name === evolvedFormName);
+      pokemon.evolvesInto.forEach((evolvedFormName: PokemonName) => {
+        const evolvedForm = COMPLETE_POKEDEX.get(evolvedFormName);
         expect(evolvedForm?.evolvesFrom).toBe(pokemon.name);
       });
     });

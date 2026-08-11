@@ -1,4 +1,3 @@
-import type { Pokemon } from '../../../types';
 import { COMPLETE_POKEDEX } from '../../../types';
 import { INGREDIENTS } from '../../../types/ingredient/ingredients';
 import { NATURES } from '../../../types/nature';
@@ -48,8 +47,10 @@ export function pokemonWithTiering(attrs?: Partial<PokemonWithTiering>): Pokemon
 export function multiplePokemonWithTiering(count: number = 4): PokemonWithTiering[] {
   const results: PokemonWithTiering[] = [];
 
-  for (let i = 0; i < count; i++) {
-    const pokemon: Pokemon = COMPLETE_POKEDEX[i % COMPLETE_POKEDEX.length];
+  let i = 0;
+  for (const pokemon of COMPLETE_POKEDEX.values()) {
+    if (++i > count) break;
+
     const ingredient = INGREDIENTS[i % INGREDIENTS.length];
     const nature = NATURES[i % NATURES.length];
     const tier = TIERS[Math.floor(i / 2) % TIERS.length]; // Distribute across tiers

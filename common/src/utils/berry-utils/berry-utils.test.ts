@@ -145,16 +145,16 @@ describe('uniqueMembersWithBerry', () => {
   });
 
   it('shall count unique members', () => {
-    const member1 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 1' });
-    const member2 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 2' });
-    const member3 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 3' });
+    const member1 = commonMocks.mockPokemon({ berry: BELUE, name: 'SNEASEL' });
+    const member2 = commonMocks.mockPokemon({ berry: BELUE, name: 'WEAVILE' });
+    const member3 = commonMocks.mockPokemon({ berry: BELUE, name: 'PIKACHU' });
     expect(uniqueMembersWithBerry({ berry: BELUE, members: [member1, member2, member3] })).toBe(3);
   });
 
   it('shall ignore any duplicates', () => {
-    const member1 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 1' });
-    const member2 = commonMocks.mockPokemon({ berry: ORAN, name: 'Member 2' });
-    const member3 = commonMocks.mockPokemon({ berry: BELUE, name: 'Member 3' });
+    const member1 = commonMocks.mockPokemon({ berry: BELUE, name: 'SNEASEL' });
+    const member2 = commonMocks.mockPokemon({ berry: ORAN, name: 'WEAVILE' });
+    const member3 = commonMocks.mockPokemon({ berry: BELUE, name: 'PIKACHU' });
     expect(uniqueMembersWithBerry({ berry: BELUE, members: [member1, member2, member3, member1, member2] })).toBe(2);
   });
 });

@@ -39,7 +39,6 @@ export function mockPokemon(attrs?: Partial<Pokemon>): Pokemon {
   });
   const merged: Pokemon = {
     ...base,
-    name: 'MOCKEMON',
     displayName: 'Mockemon',
     ...attrs
   };
