@@ -14950,6 +14950,122 @@ exports[`COMPLETE_POKEDEX > shall not change HAUNTER unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change HAWLUCHA unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PAMTRE",
+    "type": "flying",
+    "value": 24,
+  },
+  "carrySize": 21,
+  "displayName": "Hawlucha",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2400,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fiery Herb",
+        "name": "Herb",
+        "taxedValue": 49.4,
+        "value": 130,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.2,
+  "name": "HAWLUCHA",
+  "pityProcThreshold": 60,
+  "pokedexNumber": 701,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4846,
+      5843,
+    ],
+    "activations": {
+      "ingredients": {
+        "amount": [Function],
+        "unit": "ingredients",
+      },
+    },
+    "description": [Function],
+    "image": "ingredient_draw",
+    "ingredientAmounts": [
+      5,
+      6,
+      8,
+      11,
+      13,
+      16,
+      18,
+    ],
+    "name": "Ingredient Draw S",
+  },
+  "skillPercentage": 5.2,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change HERACROSS unexpectedly 1`] = `
 {
   "berry": {

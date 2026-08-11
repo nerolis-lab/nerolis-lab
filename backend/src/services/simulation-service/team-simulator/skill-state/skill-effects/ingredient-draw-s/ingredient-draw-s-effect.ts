@@ -5,8 +5,10 @@ import type { Mainskill } from 'sleepapi-common';
 import {
   CUTIEFLY,
   DWEBBLE,
+  HAWLUCHA,
   IngredientDrawSCutiefly,
   IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
   IngredientDrawSSandshrew,
   ingredientSetToFloatFlat,
   SANDSHREW,
@@ -51,6 +53,11 @@ export class IngredientDrawSSandshrewEffect extends IngredientDrawSEffect {
 export class IngredientDrawSDwebbleEffect extends IngredientDrawSEffect {
   skill = IngredientDrawSDwebble;
   ingredientOptions = DWEBBLE.ingredient60.map((ingSet) => ingSet.ingredient);
+}
+
+export class IngredientDrawSHawluchaEffect extends IngredientDrawSEffect {
+  skill = IngredientDrawSHawlucha;
+  ingredientOptions = HAWLUCHA.ingredient60.map((ingSet) => ingSet.ingredient);
 }
 
 export class IngredientDrawSCutieflyEffect extends IngredientDrawSEffect {

@@ -93,6 +93,7 @@ export default {
   GULPIN: 'Gulpin',
   HAPPINY: 'Happiny',
   HAUNTER: 'Haunter',
+  HAWLUCHA: 'Hawlucha',
   HERACROSS: 'Heracross',
   HONCHKROW: 'Honchkrow',
   HOUNDOOM: 'Houndoom',

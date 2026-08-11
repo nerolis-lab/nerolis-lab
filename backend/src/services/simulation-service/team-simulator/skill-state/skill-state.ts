@@ -30,6 +30,7 @@ import { HelperBoostEffect } from '@src/services/simulation-service/team-simulat
 import {
   IngredientDrawSCutieflyEffect,
   IngredientDrawSDwebbleEffect,
+  IngredientDrawSHawluchaEffect,
   IngredientDrawSSandshrewEffect
 } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-effect.js';
 import { IngredientDrawSHyperCutterEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/ingredient-draw-s/ingredient-draw-s-hyper-cutter-effect.js';
@@ -81,6 +82,7 @@ import {
   HelperBoost,
   IngredientDrawSCutiefly,
   IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
   IngredientDrawSHyperCutter,
   IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
@@ -153,6 +155,7 @@ export class SkillState {
       [IngredientMagnetSPresent, new IngredientMagnetSPresentEffect()],
       [IngredientDrawSCutiefly, new IngredientDrawSCutieflyEffect()],
       [IngredientDrawSDwebble, new IngredientDrawSDwebbleEffect()],
+      [IngredientDrawSHawlucha, new IngredientDrawSHawluchaEffect()],
       [IngredientDrawSSandshrew, new IngredientDrawSSandshrewEffect()],
       [IngredientDrawSHyperCutter, new IngredientDrawSHyperCutterEffect()],
       [IngredientDrawSSuperLuck, new IngredientDrawSSuperLuckEffect()],
