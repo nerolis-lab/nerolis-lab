@@ -77,6 +77,7 @@ import {
   ExtraHelpfulS,
   HelperBoost,
   IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
   IngredientDrawSSandshrew,
   IngredientDrawSSuperLuck,
   IngredientMagnetS,
@@ -1142,6 +1143,25 @@ export const SYLVEON: Pokemon = evolvedPokemon(EEVEE, {
   skill: EnergyForEveryoneS
 });
 
+export const HAWLUCHA: Pokemon = createSkillSpecialist({
+  name: 'HAWLUCHA',
+  pokedexNumber: 701,
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 19.2,
+  skillPercentage: 5.2,
+  berry: PAMTRE,
+  genders: BALANCED_GENDER,
+  carrySize: 21,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: FIERY_HERB,
+    b: WARMING_GINGER,
+    c: BEAN_SAUSAGE
+  },
+  skill: IngredientDrawSHawlucha
+});
+
 export const DEDENNE: Pokemon = createSkillSpecialist({
   name: 'DEDENNE',
   pokedexNumber: 702,
@@ -1348,6 +1368,7 @@ export const OPTIMAL_SKILL_SPECIALISTS: Pokemon[] = [
   SANDSLASH,
   BRAVIARY,
   SYLVEON,
+  HAWLUCHA,
   DEDENNE,
   TOGEDEMARU,
   MIMIKYU,

@@ -18,4 +18,5 @@ abstract class IngredientDrawS extends Mainskill {
 
 export const IngredientDrawSSandshrew = new (class extends IngredientDrawS {})();
 export const IngredientDrawSDwebble = new (class extends IngredientDrawS {})();
+export const IngredientDrawSHawlucha = new (class extends IngredientDrawS {})();
 export const IngredientDrawSCutiefly = new (class extends IngredientDrawS {})();

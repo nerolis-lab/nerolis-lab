@@ -39,6 +39,7 @@ describe('getMainskillNames', () => {
         "Ingredient Draw S",
         "Ingredient Draw S",
         "Ingredient Draw S",
+        "Ingredient Draw S",
         "Hyper Cutter (Ingredient Draw S)",
         "Super Luck (Ingredient Draw S)",
         "Ingredient Magnet S",
