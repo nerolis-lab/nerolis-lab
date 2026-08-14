@@ -1,3 +1,10 @@
+## [2.62.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.62.0...v2.62.1) (2026-08-14)
+
+
+### Bug Fixes
+
+* correct CBEX island impact readout ([1fe2e8d](https://github.com/nerolis-lab/nerolis-lab/commit/1fe2e8d62dee88d20ff67758f8e856a3819f95a6))
+
 # [2.62.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.61.2...v2.62.0) (2026-08-14)
 
 
