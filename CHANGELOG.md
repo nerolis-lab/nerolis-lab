@@ -1,3 +1,10 @@
+# [2.62.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.61.2...v2.62.0) (2026-08-14)
+
+
+### Features
+
+* add Hawlucha ([2bc560a](https://github.com/nerolis-lab/nerolis-lab/commit/2bc560a50f78f7c5c6d115f1d529ead1505cb588))
+
 ## [2.61.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.61.1...v2.61.2) (2026-08-09)
 
 ## [2.61.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.61.0...v2.61.1) (2026-08-09)
