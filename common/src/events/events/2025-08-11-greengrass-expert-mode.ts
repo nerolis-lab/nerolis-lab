@@ -1,4 +1,11 @@
-import type { ExpertModeSettings, TeamMember } from '../../types';
+import {
+  EXPERT_MODE_MAIN_SKILL_LEVEL_BONUS,
+  EXPERT_MODE_SKILL_PERCENT_BONUS,
+  GGEX_MAIN_FREQUENCY_BUFF,
+  GGEX_OFF_FREQUENCY_NERF
+} from '../../types/constants';
+import type { ExpertModeSettings } from '../../types/expert-mode/expert-mode';
+import type { TeamMember } from '../../types/team/member';
 import { EventBuilder } from '../builders/event-builder';
 
 function isMainBerry(input: ExpertModeSettings, member: TeamMember) {
@@ -17,25 +24,25 @@ export const greengrassExpertMode = EventBuilder.create<ExpertModeSettings>()
   .forTeam((input, member) => ({
     'pokemonWithIngredients.pokemon.frequency': (freq) => {
       if (isMainBerry(input, member)) {
-        return freq * 0.9;
+        return freq * (1 - GGEX_MAIN_FREQUENCY_BUFF / 100);
       }
       if (isFavoredBerry(input, member)) {
         return freq;
       }
-      return freq * 1.15;
+      return freq * (1 + GGEX_OFF_FREQUENCY_NERF / 100);
     },
 
     'settings.skillLevel': (level) => {
       if (isMainBerry(input, member)) {
         const maxLevel = member.pokemonWithIngredients.pokemon.skill.maxLevel;
-        return Math.min(level + 1, maxLevel);
+        return Math.min(level + EXPERT_MODE_MAIN_SKILL_LEVEL_BONUS, maxLevel);
       }
       return level;
     },
 
     'pokemonWithIngredients.pokemon.skillPercentage': (percentage) => {
       if (isFavoredBerry(input, member) && input.randomBonus === 'skill') {
-        return percentage * 1.25;
+        return percentage * (1 + EXPERT_MODE_SKILL_PERCENT_BONUS / 100);
       }
       return percentage;
     }
