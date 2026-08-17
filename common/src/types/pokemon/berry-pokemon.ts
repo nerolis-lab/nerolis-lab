@@ -24,7 +24,7 @@ import {
   WIKI,
   YACHE
 } from '../berry/berries';
-import { BALANCED_GENDER, SEVEN_EIGHTHS_MALE, THREE_FOURTHS_FEMALE } from '../gender';
+import { BALANCED_GENDER, FEMALE_ONLY, MALE_ONLY, SEVEN_EIGHTHS_MALE, THREE_FOURTHS_FEMALE } from '../gender';
 import {
   BEAN_SAUSAGE,
   FANCY_APPLE,
@@ -189,6 +189,26 @@ export const PIKACHU_HALLOWEEN: Pokemon = createBerrySpecialist({
     c: FANCY_EGG
   },
   skill: ChargeStrengthSRange
+});
+
+export const PIKACHU_CAPTAIN: Pokemon = createBerrySpecialist({
+  name: 'PIKACHU_CAPTAIN',
+  pokedexNumber: 25,
+  frequency: toSeconds(0, 41, 40),
+  ingredientPercentage: 17.5,
+  skillPercentage: 1.8,
+  berry: GREPA,
+  genders: MALE_ONLY, // event mon is different from base mon
+  carrySize: 21,
+  previousEvolutions: 0,
+  remainingEvolutions: 0,
+  ingredients: {
+    a: FANCY_APPLE,
+    b: WARMING_GINGER,
+    c: FANCY_EGG
+  },
+  skill: IngredientMagnetS,
+  shinyLocked: true
 });
 
 export const RAICHU: Pokemon = evolvedPokemon(PIKACHU, {
@@ -966,12 +986,49 @@ export const TYRANTRUM: Pokemon = evolvedPokemon(TYRUNT, {
   skillPercentage: 2.9,
   carrySize: 23
 });
+export const TINKATINK: Pokemon = createBerrySpecialist({
+  name: 'TINKATINK',
+  pokedexNumber: 957,
+  frequency: toSeconds(1, 15, 0),
+  ingredientPercentage: 20.2,
+  skillPercentage: 1.6,
+  berry: PECHA,
+  genders: FEMALE_ONLY,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 2,
+  ingredients: {
+    a: SNOOZY_TOMATO,
+    b: SOOTHING_CACAO,
+    c: SOFT_POTATO
+  },
+  skill: ChargeStrengthM
+});
+
+export const TINKATUFF: Pokemon = evolvedPokemon(TINKATINK, {
+  name: 'TINKATUFF',
+  pokedexNumber: 958,
+  frequency: toSeconds(0, 55, 0),
+  ingredientPercentage: 18.6,
+  skillPercentage: 1.8,
+  carrySize: 16
+});
+
+export const TINKATON: Pokemon = evolvedPokemon(TINKATUFF, {
+  name: 'TINKATON',
+  pokedexNumber: 959,
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 18.5,
+  skillPercentage: 2.0,
+  carrySize: 20
+});
 
 export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   BUTTERFREE,
   RATICATE,
   ARBOK,
   PIKACHU_HALLOWEEN,
+  PIKACHU_CAPTAIN,
   RAICHU,
   CLEFABLE,
   NINETALES,
@@ -997,7 +1054,8 @@ export const OPTIMAL_BERRY_SPECIALISTS: Pokemon[] = [
   EMPOLEON,
   WEAVILE,
   MUSHARNA,
-  TYRANTRUM
+  TYRANTRUM,
+  TINKATON
 ];
 
 export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
@@ -1038,7 +1096,9 @@ export const INFERIOR_BERRY_SPECIALISTS: Pokemon[] = [
   PIPLUP,
   PRINPLUP,
   MUNNA,
-  TYRUNT
+  TYRUNT,
+  TINKATINK,
+  TINKATUFF
 ];
 
 export const ALL_BERRY_SPECIALISTS: Pokemon[] = [...OPTIMAL_BERRY_SPECIALISTS, ...INFERIOR_BERRY_SPECIALISTS];
