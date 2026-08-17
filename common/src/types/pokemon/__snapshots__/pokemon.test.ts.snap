@@ -22766,6 +22766,123 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change PIKACHU_CAPTAIN unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "GREPA",
+    "type": "electric",
+    "value": 25,
+  },
+  "carrySize": 21,
+  "displayName": "Pikachu (Captain)",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2500,
+  "genders": {
+    "female": 0,
+    "male": 1,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Fancy Apple",
+        "name": "Apple",
+        "taxedValue": 23.7,
+        "value": 90,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Warming Ginger",
+        "name": "Ginger",
+        "taxedValue": 34.7,
+        "value": 109,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredientPercentage": 17.5,
+  "name": "PIKACHU_CAPTAIN",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 25,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "shinyLocked": true,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "ingredients": {
+        "amount": [Function],
+        "unit": "ingredients",
+      },
+    },
+    "description": [Function],
+    "image": "ingredients",
+    "ingredientAmounts": [
+      6,
+      8,
+      11,
+      14,
+      17,
+      21,
+      24,
+    ],
+    "name": "Ingredient Magnet S",
+  },
+  "skillPercentage": 1.8,
+  "specialty": "berry",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HALLOWEEN unexpectedly 1`] = `
 {
   "berry": {
@@ -29850,6 +29967,358 @@ exports[`COMPLETE_POKEDEX > shall not change SYLVEON unexpectedly 1`] = `
   },
   "skillPercentage": 4,
   "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TINKATINK unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 12,
+  "displayName": "Tinkatink",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "TINKATUFF",
+  ],
+  "frequency": 4540,
+  "genders": {
+    "female": 1,
+    "male": 0,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.2,
+  "name": "TINKATINK",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 957,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 2,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6252,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "image": "strength",
+    "name": "Charge Strength M",
+    "strengthAmounts": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6858,
+    ],
+  },
+  "skillPercentage": 1.6,
+  "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TINKATON unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 20,
+  "displayName": "Tinkaton",
+  "evolvesFrom": "TINKATUFF",
+  "evolvesInto": [],
+  "frequency": 2400,
+  "genders": {
+    "female": 1,
+    "male": 0,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 18.5,
+  "name": "TINKATON",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 959,
+  "previousEvolutions": 2,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6252,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "image": "strength",
+    "name": "Charge Strength M",
+    "strengthAmounts": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6858,
+    ],
+  },
+  "skillPercentage": 2,
+  "specialty": "berry",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change TINKATUFF unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 16,
+  "displayName": "Tinkatuff",
+  "evolvesFrom": "TINKATINK",
+  "evolvesInto": [
+    "TINKATON",
+  ],
+  "frequency": 3300,
+  "genders": {
+    "female": 1,
+    "male": 0,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredientPercentage": 18.6,
+  "name": "TINKATUFF",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 958,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6252,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "image": "strength",
+    "name": "Charge Strength M",
+    "strengthAmounts": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      6858,
+    ],
+  },
+  "skillPercentage": 1.8,
+  "specialty": "berry",
 }
 `;
 

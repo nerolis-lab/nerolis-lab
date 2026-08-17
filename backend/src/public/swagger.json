@@ -624,6 +624,9 @@
 							"application/json": {
 								"schema": {
 									"properties": {
+										"shinyLocked": {
+											"type": "boolean"
+										},
 										"pityProcThreshold": {
 											"type": "number",
 											"format": "double"
