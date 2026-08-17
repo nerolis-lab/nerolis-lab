@@ -1,13 +1,13 @@
 import { existsSync } from 'fs'
 import path from 'path'
-import { COMPLETE_POKEDEX } from 'sleepapi-common'
+import { COMPLETE_POKEDEX, type Pokedex } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
 
-function checkMissingImages(imageTypeSuffix: string, folderPath: string): string[] {
+function checkMissingImages(pokedex: Pokedex, imageTypeSuffix: string, folderPath: string): string[] {
   const imagesFolderPath = path.join(__dirname, folderPath)
   const missingImages: string[] = []
 
-  COMPLETE_POKEDEX.forEach((poke) => {
+  pokedex.forEach((poke) => {
     const imageName = `${poke.name.toLowerCase()}${imageTypeSuffix}.png`
     const imagePath = path.join(imagesFolderPath, imageName)
 
@@ -19,34 +19,36 @@ function checkMissingImages(imageTypeSuffix: string, folderPath: string): string
   return missingImages
 }
 
+const shinyPokedex = COMPLETE_POKEDEX.filter((mon) => !mon.shinyLocked)
+
 describe('Pokémon images check', () => {
   it('should have a standard image for each Pokémon in the COMPLETE_POKEDEX', () => {
-    const missingImages = checkMissingImages('', '../../public/images/pokemon')
+    const missingImages = checkMissingImages(COMPLETE_POKEDEX, '', '../../public/images/pokemon')
     expect(missingImages).toEqual([])
   })
 
   it('should have a shiny image for each Pokémon in the COMPLETE_POKEDEX', () => {
-    const missingImages = checkMissingImages('_shiny', '../../public/images/pokemon')
+    const missingImages = checkMissingImages(shinyPokedex, '_shiny', '../../public/images/pokemon')
     expect(missingImages).toEqual([])
   })
 
   it('should have a portrait image for each Pokémon in the COMPLETE_POKEDEX', () => {
-    const missingImages = checkMissingImages('', '../../public/images/avatar/portrait')
+    const missingImages = checkMissingImages(COMPLETE_POKEDEX, '', '../../public/images/avatar/portrait')
     expect(missingImages).toEqual([])
   })
 
   it('should have a shiny portrait image for each Pokémon in the COMPLETE_POKEDEX', () => {
-    const missingImages = checkMissingImages('_shiny', '../../public/images/avatar/portrait')
+    const missingImages = checkMissingImages(shinyPokedex, '_shiny', '../../public/images/avatar/portrait')
     expect(missingImages).toEqual([])
   })
 
   it('should have a happy portrait image for each Pokémon in the COMPLETE_POKEDEX', () => {
-    const missingImages = checkMissingImages('_happy', '../../public/images/avatar/happy')
+    const missingImages = checkMissingImages(COMPLETE_POKEDEX, '_happy', '../../public/images/avatar/happy')
     expect(missingImages).toEqual([])
   })
 
   it('should have a happy shiny portrait image for each Pokémon in the COMPLETE_POKEDEX', () => {
-    const missingImages = checkMissingImages('_happy_shiny', '../../public/images/avatar/happy')
+    const missingImages = checkMissingImages(shinyPokedex, '_happy_shiny', '../../public/images/avatar/happy')
     expect(missingImages).toEqual([])
   })
 })

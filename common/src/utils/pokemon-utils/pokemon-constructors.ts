@@ -154,7 +154,8 @@ export function evolvedPokemon(
     displayName: pokemonNames[params.name],
     evolvesFrom: previousForm.name,
     evolvesInto: [],
-    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? previousForm.specialty, params.frequency)
+    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? previousForm.specialty, params.frequency),
+    shinyLocked: previousForm.shinyLocked
   };
   previousForm.evolvesInto.push(evolvedMon.name);
   return evolvedMon;
@@ -177,7 +178,8 @@ export function preEvolvedPokemon(
     displayName: pokemonNames[params.name],
     evolvesFrom: undefined,
     evolvesInto: [nextForm.name],
-    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? nextForm.specialty, params.frequency)
+    pityProcThreshold: calculatePityProcThreshold(params.specialty ?? nextForm.specialty, params.frequency),
+    shinyLocked: nextForm.shinyLocked
   };
   nextForm.evolvesFrom = preEvolvedMon.name;
   return preEvolvedMon;
