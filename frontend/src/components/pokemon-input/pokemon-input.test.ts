@@ -7,7 +7,6 @@ import { mount } from '@vue/test-utils'
 import {
   CarrySizeUtils,
   commonMocks,
-  DARKRAI,
   nature,
   RandomUtils,
   SNEASEL,
@@ -112,7 +111,7 @@ describe('PokemonInput', () => {
   })
 
   it('hides the shiny toggle for shiny-locked pokemon', () => {
-    wrapper.vm.updatePokemon(mocks.createMockPokemon({ pokemon: DARKRAI }))
+    wrapper.vm.updatePokemon(mocks.createMockPokemon({ pokemon: commonMocks.mockPokemon({ shinyLocked: true }) }))
     expect(wrapper.vm.pokemonInstance.pokemon.shinyLocked).toBe(true)
     return wrapper.vm.$nextTick().then(() => {
       expect(wrapper.find('#shinyButton').exists()).toBe(false)
@@ -120,7 +119,9 @@ describe('PokemonInput', () => {
   })
 
   it('does not toggle shiny for shiny-locked pokemon', () => {
-    wrapper.vm.updatePokemon(mocks.createMockPokemon({ pokemon: DARKRAI, shiny: false }))
+    wrapper.vm.updatePokemon(
+      mocks.createMockPokemon({ pokemon: commonMocks.mockPokemon({ shinyLocked: true }), shiny: false })
+    )
     wrapper.vm.toggleShiny()
     expect(wrapper.vm.pokemonInstance.shiny).toBe(false)
   })

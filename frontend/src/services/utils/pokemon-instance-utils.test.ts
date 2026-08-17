@@ -2,7 +2,7 @@ import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { mocks } from '@/vitest'
 import {
   CarrySizeUtils,
-  DARKRAI,
+  commonMocks,
   ingredient,
   nature,
   PIKACHU,
@@ -309,7 +309,10 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
       shiny: true
     })
 
-    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(DARKRAI, existingInstance)
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(
+      commonMocks.mockPokemon({ shinyLocked: true }),
+      existingInstance
+    )
 
     expect(result.shiny).toBe(false)
   })
