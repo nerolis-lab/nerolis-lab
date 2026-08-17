@@ -42,8 +42,9 @@ describe('HomePage.vue', () => {
         enabled: true
       },
       {
-        title: 'Tier lists',
-        description: 'Cooking tier lists based on millions of simulated recipe solutions.',
+        title: 'Coming soon!',
+        description:
+          "Stay tuned for more features coming soon! If you'd like to contribute, click to get in touch with us; we can use all skillsets!",
         enabled: true
       }
     ]
