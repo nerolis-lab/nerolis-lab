@@ -1,3 +1,10 @@
+# [2.63.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.62.1...v2.63.0) (2026-08-17)
+
+
+### Features
+
+* hide shiny toggle for shiny-locked pokemon like darkrai ([97cc5f1](https://github.com/nerolis-lab/nerolis-lab/commit/97cc5f12687e1eb7f0bfd942fa2c5b3f6d009b1a))
+
 ## [2.62.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.62.0...v2.62.1) (2026-08-14)
 
 
