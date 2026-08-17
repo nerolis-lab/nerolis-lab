@@ -117,17 +117,18 @@ export default defineComponent({
       {
         description: 'Compare your Pokémon to each other before deciding on your investments.',
         title: 'Compare',
-        src: '/images/misc/doctor2.png',
+        src: '/images/misc/doctor3.png',
         icon: 'mdi-compare-horizontal',
         to: '/compare',
         enabled: true
       },
       {
-        description: 'Cooking tier lists based on millions of simulated recipe solutions.',
-        title: 'Tier lists',
-        src: '/images/misc/doctor3.png',
-        icon: 'mdi-chart-line',
-        to: '/tierlist',
+        description:
+          "Stay tuned for more features coming soon! If you'd like to contribute, click to get in touch with us; we can use all skillsets!",
+        title: 'Coming soon!',
+        src: '/images/misc/doctor2.png',
+        icon: 'mdi-clock-time-eight-outline',
+        to: '/about',
         enabled: true
       }
     ]
