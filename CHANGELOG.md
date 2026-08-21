@@ -1,3 +1,10 @@
+# [2.64.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.63.0...v2.64.0) (2026-08-21)
+
+
+### Features
+
+* add Tinkaton and Captain Pikachu ([76fd5a7](https://github.com/nerolis-lab/nerolis-lab/commit/76fd5a7b1b3d38e2340952dede4a685e723bd472))
+
 # [2.63.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.62.1...v2.63.0) (2026-08-17)
 
 
