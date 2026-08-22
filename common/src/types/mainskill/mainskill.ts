@@ -69,7 +69,7 @@ export abstract class Mainskill {
     return this.RP[level - 1];
   }
 
-  hasUnit(unit: string): boolean {
+  hasUnit(unit: MainskillUnit): boolean {
     return Object.values(this.activations).some((activation) => activation.unit === unit);
   }
 
