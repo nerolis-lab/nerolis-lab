@@ -3,9 +3,7 @@
     <v-col cols="auto" class="flex-center flex-nowrap mx-4">
       <v-badge
         id="skillLevelBadge"
-        :content="
-          skillLevelBadgeText(memberWithProduction.production.skillLevel, memberWithProduction.member.skillLevel)
-        "
+        :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
         location="bottom center"
         color="subskillWhite"
         rounded="pill"
@@ -14,7 +12,7 @@
           :src="mainskillImage(memberWithProduction.member.pokemon)"
           height="40px"
           width="40px"
-          :alt="`Charge Strength M level ${memberWithProduction.production.skillLevel}`"
+          :alt="`Charge Strength M level ${effectiveSkillLevel}`"
           title="Charge Strength M"
         ></v-img>
       </v-badge>
@@ -54,7 +52,7 @@ import { mainskillImage } from '@/services/utils/image-utils'
 import { applyAreaBonus, skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { compactNumber, localizeNumber } from 'sleepapi-common'
+import { ChargeStrengthM, compactNumber, localizeNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -69,10 +67,14 @@ export default defineComponent({
     return { teamStore, skillLevelBadgeText, mainskillImage, compactNumber, localizeNumber }
   },
   computed: {
+    effectiveSkillLevel() {
+      return this.memberWithProduction.production.skillLevel
+    },
+    baseSkillLevel() {
+      return this.memberWithProduction.member.skillLevel
+    },
     skillValuePerProc() {
-      const rawAmount = this.memberWithProduction.member.pokemon.skill.amount(
-        this.memberWithProduction.production.skillLevel
-      )
+      const rawAmount = ChargeStrengthM.activations.strength.amount({ skillLevel: this.effectiveSkillLevel })
       return applyAreaBonus(rawAmount, this.teamStore.getCurrentTeam.island.areaBonus)
     },
     totalSkillValue() {
