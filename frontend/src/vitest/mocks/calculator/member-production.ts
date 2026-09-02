@@ -82,7 +82,6 @@ export function createMockMemberProduction(
       averageHelps: 0,
       skillCrits: 0,
       maxFrequency: 0,
-      skillRegularValue: 0,
       totalHelps: 0,
       dayPeriod: {
         averageEnergy: 0,
@@ -98,7 +97,6 @@ export function createMockMemberProduction(
       nightHelps: 0,
       nightHelpsBeforeSS: 0,
       nightHelpsAfterSS: 0,
-      skillCritValue: 0,
       wastedEnergy: 0,
       morningProcs: 0,
       carrySize: 0,
