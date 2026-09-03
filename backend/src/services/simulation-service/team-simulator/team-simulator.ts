@@ -197,7 +197,8 @@ export class TeamSimulator {
   }
 
   private attemptCooking(currentMinutesSincePeriodStart: number) {
-    if (this.cookingState?.hasMealPlan()) {
+    const sunday = this.run % 7 === 0;
+    if (this.cookingState?.hasMealPlan(sunday)) {
       for (const mealWindow of this.mealWindowsMinutesSinceStart) {
         if (this.cookingState.isMealCompleted(mealWindow.meal) || currentMinutesSincePeriodStart < mealWindow.start) {
           continue;
@@ -212,7 +213,7 @@ export class TeamSimulator {
         const cooked = this.cookingState.cookPlannedMeal({
           meal: mealWindow.meal,
           finalAttempt,
-          sunday: this.run % 7 === 0
+          sunday
         });
         if (cooked) {
           this.cookingState.recordMealCookTime(mealWindow.meal, currentMinutesSincePeriodStart);
@@ -230,7 +231,7 @@ export class TeamSimulator {
         member.recoverMeal();
       }
       // mod 7 for if Sunday
-      this.cookingState?.cook(this.run % 7 === 0);
+      this.cookingState?.cook(sunday);
       const meal = this.mealWindowsMinutesSinceStart[this.cookedMealsCounter]?.meal;
       if (meal) {
         this.cookingState?.recordMealCookTime(meal, currentMinutesSincePeriodStart);
