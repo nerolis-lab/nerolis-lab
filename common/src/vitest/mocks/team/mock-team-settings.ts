@@ -1,3 +1,4 @@
+import { defaultMealPlan } from '../../../types/team/meal-plan';
 import type { TeamSettings, TeamSettingsDto } from '../../../types/team/team';
 import { mockIngredientSetFloatIndexed } from '../ingredient/mock-ingredient-set';
 import { islandInstance } from '../island';
@@ -9,6 +10,8 @@ export function teamSettingsDto(attrs?: Partial<TeamSettingsDto>): TeamSettingsD
     bedtime: '21:30',
     wakeup: '06:00',
     stockpiledIngredients: [],
+    recipeType: 'curry',
+    mealPlan: defaultMealPlan(),
     island: islandInstance(),
     ...attrs
   };
@@ -23,6 +26,8 @@ export function teamSettings(attrs?: Partial<TeamSettings>): TeamSettings {
     stockpiledIngredients: mockIngredientSetFloatIndexed(),
     potSize: 15,
     island: islandInstance(),
+    recipeType: 'curry',
+    mealPlan: defaultMealPlan(),
     ...attrs
   };
 }
