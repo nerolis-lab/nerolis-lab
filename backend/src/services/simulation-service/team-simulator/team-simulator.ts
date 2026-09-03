@@ -69,10 +69,11 @@ export class TeamSimulator {
 
     this.cookingState = cookingState;
 
-    const { nightStartMinutes, mealTimeMinutesSinceStart, mealWindowsMinutesSinceStart } = TeamSimulatorUtils.setupSimulationTimes({
-      settings,
-      cookingState: this.cookingState
-    });
+    const { nightStartMinutes, mealTimeMinutesSinceStart, mealWindowsMinutesSinceStart } =
+      TeamSimulatorUtils.setupSimulationTimes({
+        settings,
+        cookingState: this.cookingState
+      });
     this.nightStartMinutes = nightStartMinutes;
     this.mealTimeMinutesSinceStart = mealTimeMinutesSinceStart;
     this.mealWindowsMinutesSinceStart = mealWindowsMinutesSinceStart;
