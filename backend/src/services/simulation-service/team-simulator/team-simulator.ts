@@ -124,6 +124,7 @@ export class TeamSimulator {
     this.memberStates.forEach((memberState, _, allMembers) => {
       memberState.otherMembers = allMembers.filter((other) => other.id !== memberState.id);
     });
+    this.updateActiveMembers(0);
   }
 
   public simulate() {
