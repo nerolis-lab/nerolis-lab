@@ -30,6 +30,7 @@ import {
   type RecipeType,
   type TeamAreaDTO,
   type TeamScheduleShift,
+  type TeamScheduleType,
   type TeamSettingsDto
 } from 'sleepapi-common'
 
@@ -446,6 +447,9 @@ export const useTeamStore = defineStore('team', {
         return explicit.slice().sort((a, b) => minutesSinceWakeup(a.startTime) - minutesSinceWakeup(b.startTime))
       }
       return primaryId ? [{ slotIndex, externalId: primaryId, startTime: this.getCurrentTeam.wakeup }] : []
+    },
+    getScheduleType(slotIndex: number): TeamScheduleType {
+      return this.getSchedule(slotIndex)[0]?.type ?? 'time'
     },
     async setSchedule(slotIndex: number, shifts: TeamScheduleShift[]) {
       this.getCurrentTeam.schedule = [
