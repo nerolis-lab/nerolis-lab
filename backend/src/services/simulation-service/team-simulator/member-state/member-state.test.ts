@@ -92,6 +92,41 @@ const settings: TeamSettings = {
 const cookingState: CookingState = new CookingState(settings, defaultUserRecipes(), createPreGeneratedRandom());
 
 describe('results', () => {
+  it('recalculates helping speed when its active team changes', () => {
+    const helpingMember: TeamMember = {
+      ...member,
+      settings: { ...member.settings, externalId: 'helper', subskills: new Set([subskill.HELPING_BONUS.name]) }
+    };
+    const memberState = new MemberState({
+      member,
+      settings,
+      team: [member, helpingMember],
+      cookingState,
+      berryZoneState: new BerryZoneState()
+    });
+    const withHelpingBonus = memberState.results(1).advanced.maxFrequency;
+
+    memberState.setTeam([member]);
+
+    expect(memberState.results(1).advanced.maxFrequency).toBeGreaterThan(withHelpingBonus);
+  });
+
+  it('does not catch up helps missed while rotated out', () => {
+    const memberState = new MemberState({
+      member,
+      settings,
+      team: [member],
+      cookingState,
+      berryZoneState: new BerryZoneState()
+    });
+    memberState.wakeUp();
+    memberState.resetHelpTimer(900);
+
+    memberState.attemptDayHelp(900);
+
+    expect(memberState.results(1).produceTotal.ingredients).toEqual([]);
+  });
+
   it('should return correct results after multiple iterations', () => {
     const memberState = new MemberState({
       berryZoneState: new BerryZoneState(),
