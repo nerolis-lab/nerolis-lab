@@ -933,7 +933,7 @@ describe('getCurrentMembersWithProduction', () => {
     teamStore.teams = mockTeams
 
     const result = teamStore.getCurrentMembersWithProduction
-    expect(result).toHaveLength(5)
+    expect(result).toHaveLength(mockTeams[0].production?.members.length ?? 0)
     expect(result[0]).toEqual({
       member: mockPokemon,
       production: mockTeams[0].production?.members[0],
@@ -966,7 +966,7 @@ describe('getCurrentMembersWithProduction', () => {
     teamStore.teams = createMockTeams()
 
     const result = teamStore.getCurrentMembersWithProduction
-    expect(result).toHaveLength(5)
+    expect(result).toHaveLength(teamStore.getCurrentTeam.production?.members.length ?? 0)
     result.forEach((res) => expect(res).toBeUndefined())
   })
 })
