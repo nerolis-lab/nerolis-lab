@@ -10,7 +10,7 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import MockAdapter from 'axios-mock-adapter'
-import { commonMocks, subskill, type TeamScheduleType } from 'sleepapi-common'
+import { RAICHU, MEWTWO, commonMocks, subskill, type TeamScheduleType } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -46,6 +46,57 @@ describe('TeamScheduleDialog', () => {
     useDialogStore().openSchedule(0)
     await flushPromises()
   }
+
+  it('offers Psychic berry-zone rotation for Mewtwo and saves valid targets on blur', async () => {
+    const store = usePokemonStore()
+    const team = useTeamStore().getCurrentTeam
+    store.upsertLocalPokemon({ ...store.getPokemon(team.members[0]!)!, pokemon: MEWTWO })
+    useDialogStore().openSchedule(0)
+    await flushPromises()
+    const selector = wrapper.findComponent({ name: 'VSelect' })
+    expect(selector.props('items')).toContainEqual({
+      title: 'Berry zone',
+      value: 'berry-zone',
+      disabled: false
+    })
+    selector.vm.$emit('update:modelValue', 'berry-zone')
+    await flushPromises()
+    expect(
+      wrapper
+        .findAllComponents({ name: 'VTextField' })
+        .find((field) => field.props('id') === 'rotationTarget')!
+        .props('label')
+    ).toBe('Psychic berry strength bonus %')
+    expect(document.body.textContent).toContain('Rotate after the Psychic berry strength bonus reaches the target.')
+    expect(targetInput().element.value).toBe('24')
+    await targetInput().setValue('25')
+    await targetInput().trigger('blur')
+    await flushPromises()
+    expect(team.schedule![0].berryZoneTarget).toBe(24)
+    await targetInput().setValue('12')
+    await targetInput().trigger('blur')
+    await flushPromises()
+    expect(team.schedule![0].berryZoneTarget).toBe(12)
+    expect(useDialogStore().scheduleDialog).toBe(true)
+  })
+
+  it('derives the berry-zone target label from the primary Pokemon', async () => {
+    const store = usePokemonStore()
+    const team = useTeamStore().getCurrentTeam
+    store.upsertLocalPokemon({ ...store.getPokemon(team.members[0]!)!, pokemon: RAICHU })
+    team.schedule = [
+      { slotIndex: 0, externalId: team.members[0]!, startTime: team.wakeup, type: 'berry-zone', berryZoneTarget: 24 }
+    ]
+    useDialogStore().openSchedule(0)
+    await flushPromises()
+    expect(
+      wrapper
+        .findAllComponents({ name: 'VTextField' })
+        .find((field) => field.props('id') === 'rotationTarget')!
+        .props('label')
+    ).toBe('Electric berry strength bonus %')
+    expect(document.body.textContent).toContain('Rotate after the Electric berry strength bonus reaches the target.')
+  })
 
   function targetInput() {
     return wrapper

@@ -10,6 +10,7 @@ import type { Berry, PokemonSpecialty, PokemonWithIngredients, TeamMember, TeamS
 import {
   BASE_FAVORED_BERRY_MULTIPLIER,
   BerryBurstDisguise,
+  MEWTWO,
   ChargeStrengthS,
   EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
   EnergyForEveryoneS,
@@ -66,6 +67,44 @@ const mockMembers: TeamMember[] = [
 ];
 
 describe('TeamSimulator', () => {
+  it('rotates at the berry-zone target without cooking and keeps the replacement until the next site', () => {
+    const members = ['mewtwo', 'replacement'].map((externalId) => ({
+      ...mockMembers[0],
+      settings: { ...mockMembers[0].settings, externalId, skillLevel: 6 },
+      pokemonWithIngredients: {
+        ...mockPokemonWithIngredients,
+        pokemon:
+          externalId === 'mewtwo'
+            ? { ...MEWTWO, skillPercentage: 100, ingredientPercentage: 0 }
+            : { ...mockPokemonWithIngredients.pokemon, berry: berry.MAGO, ingredientPercentage: 0 }
+      }
+    }));
+    const settings = mocks.teamSettingsExt({
+      includeCooking: false,
+      schedule: [
+        { slotIndex: 0, externalId: 'mewtwo', startTime: '06:00', type: 'berry-zone', berryZoneTarget: 24 },
+        { slotIndex: 0, externalId: 'replacement', startTime: '06:05', type: 'berry-zone' }
+      ]
+    });
+    const simulator = new TeamSimulator({ settings, members, iterations: 8 });
+    const switches = vi.spyOn(simulator as any, 'setActiveMembers');
+    simulator.simulate();
+    expect(switches.mock.calls.map(([active]: any) => active.map((member: any) => member.id))).toEqual([
+      ['replacement']
+    ]);
+    expect(simulator['berryZoneState'].bonusPercentage(berry.MAGO)).toBe(24);
+    const replacement = simulator.results().members.find((member) => member.externalId === 'replacement')!;
+    expect(replacement.strength.berries.total).toBeGreaterThan(0);
+    switches.mockClear();
+    for (let day = 2; day <= 7; day++) simulator.simulate();
+    expect(switches).not.toHaveBeenCalled();
+    simulator.simulate();
+    expect(switches.mock.calls.map(([active]: any) => active.map((member: any) => member.id))).toEqual([
+      ['mewtwo'],
+      ['replacement']
+    ]);
+  });
+
   it('returns the same Pokemon to work for a later time shift', () => {
     const members = ['original', 'partner'].map((externalId) => ({
       ...mockMembers[0],

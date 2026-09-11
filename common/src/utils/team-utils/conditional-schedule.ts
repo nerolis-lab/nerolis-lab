@@ -1,8 +1,11 @@
+import type { Pokemon } from '../../types/pokemon/pokemon';
+import { capitalize } from '../string-utils/string-utils';
 import {
   CookingAssistSBulkUp,
   CookingPowerUpS,
   CookingPowerUpSMinus,
   TastyChanceS,
+  Psystrike,
   type Mainskill
 } from '../../types/mainskill';
 import type { TeamScheduleShift, TeamScheduleType } from '../../types/team/team';
@@ -11,9 +14,9 @@ export type ConditionalScheduleType = Exclude<TeamScheduleType, 'time'>;
 
 interface ConditionalScheduleDefinition {
   title: string;
-  description: string;
-  targetLabel: string;
-  targetField: 'tastyChanceTarget' | 'potSizeTarget';
+  description: string | ((pokemon?: Pokemon) => string);
+  targetLabel: string | ((pokemon?: Pokemon) => string);
+  targetField: 'tastyChanceTarget' | 'potSizeTarget' | 'berryZoneTarget';
   defaultTarget: number;
   maximumTarget?: number;
   inputmode: 'decimal' | 'numeric';
@@ -27,6 +30,19 @@ interface ConditionalScheduleDefinition {
  * Backend bonus readers are separately exhaustive over ConditionalScheduleType.
  */
 export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, ConditionalScheduleDefinition> = {
+  'berry-zone': {
+    title: 'Berry zone',
+    description: (pokemon) =>
+      `Rotate after the ${pokemon ? capitalize(pokemon.berry.type) + ' ' : ''}berry strength bonus reaches the target. The zone lasts until moving sites.`,
+    targetLabel: (pokemon) => `${pokemon ? capitalize(pokemon.berry.type) + ' ' : ''}berry strength bonus %`,
+    targetField: 'berryZoneTarget',
+    defaultTarget: Psystrike.maximumBonus,
+    maximumTarget: Psystrike.maximumBonus,
+    inputmode: 'decimal',
+    eligibleSkills: [Psystrike],
+    requiresCooking: false,
+    validateTarget: (target) => (target > Psystrike.maximumBonus ? 'Enter a bonus of 24% or less.' : '')
+  },
   'tasty-chance': {
     title: 'Extra tasty chance',
     description: 'Rotate after accumulated Extra Tasty chance reaches the target.',
