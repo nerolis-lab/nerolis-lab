@@ -23,7 +23,7 @@ describe('CookingState', () => {
     'uses the same pot capacity for cooking and rotation with camp=$camp, sunday=$sunday',
     ({ camp, sunday, expected }) => {
       const cooking = new CookingState(
-        mocks.teamSettingsExt({ potSize: 100, camp }),
+        mocks.teamSettings({ potSize: 100, camp }),
         defaultUserRecipes(),
         createPreGeneratedRandom()
       );
