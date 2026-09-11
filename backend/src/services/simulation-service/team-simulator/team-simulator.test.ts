@@ -71,7 +71,7 @@ describe('TeamSimulator', () => {
       ...mockMembers[0],
       settings: { ...mockMembers[0].settings, externalId }
     }));
-    const settings = mocks.teamSettingsExt({
+    const settings = mocks.teamSettings({
       schedule: [
         { slotIndex: 0, externalId: 'original', startTime: '06:00' },
         { slotIndex: 0, externalId: 'partner', startTime: '12:00' },
@@ -137,7 +137,7 @@ describe('TeamSimulator', () => {
   it('uses Sunday pot capacity for rotation and returns to weekday capacity on Monday', () => {
     const primary = { ...mockMembers[0], settings: { ...mockMembers[0].settings, externalId: 'primary' } };
     const partner = { ...primary, settings: { ...primary.settings, externalId: 'partner' } };
-    const settings: TeamSettingsExt = {
+    const settings: TeamSettings = {
       ...mockSettings,
       camp: false,
       potSize: 100,
