@@ -60,13 +60,13 @@
         </v-row>
         <template v-if="conditionalDefinition">
           <p class="text-body-2 mt-4">
-            {{ conditionalDefinition.description }}
+            {{ targetDescription }}
           </p>
           <v-text-field
             id="rotationTarget"
             hide-details="auto"
             v-model="conditionTarget"
-            :label="conditionalDefinition.targetLabel"
+            :label="targetLabel"
             :inputmode="conditionalDefinition.inputmode"
             :error-messages="targetError"
             :loading="saving"
@@ -183,6 +183,14 @@ const targetError = computed(() => validateScheduleTarget(scheduleType.value, Nu
 const primaryPokemon = computed(() => {
   const externalId = slotIndex.value === null ? undefined : teamStore.getCurrentTeam.members[slotIndex.value]
   return externalId ? pokemonFor(externalId) : undefined
+})
+const targetDescription = computed(() => {
+  const description = conditionalDefinition.value?.description
+  return typeof description === 'function' ? description(primaryPokemon.value?.pokemon) : description
+})
+const targetLabel = computed(() => {
+  const label = conditionalDefinition.value?.targetLabel
+  return typeof label === 'function' ? label(primaryPokemon.value?.pokemon) : label
 })
 const scheduleTypes = computed(() => [
   { title: 'Time', value: 'time', disabled: false },
