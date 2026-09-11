@@ -464,7 +464,7 @@ describe('startDay', () => {
   });
 
   it('shall recover five percent of sleep in the box without team erb', () => {
-    const member: TeamMemberExt = {
+    const member: TeamMember = {
       pokemonWithIngredients: mockPokemonSet,
       settings: {
         carrySize: 10,
@@ -477,7 +477,7 @@ describe('startDay', () => {
         sneakySnacking: false
       }
     };
-    const erbTeammate: TeamMemberExt = {
+    const erbTeammate: TeamMember = {
       ...member,
       settings: {
         ...member.settings,
@@ -487,7 +487,13 @@ describe('startDay', () => {
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member, erbTeammate], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member, erbTeammate],
+      cookingState
+    });
 
     memberState.wakeUp('box');
 

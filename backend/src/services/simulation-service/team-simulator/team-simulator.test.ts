@@ -90,15 +90,15 @@ describe('TeamSimulator', () => {
   });
 
   it('shall retain energy and frequency samples for inactive scheduled members', () => {
-    const primary: TeamMemberExt = {
+    const primary: TeamMember = {
       ...mockMembers[0],
       settings: { ...mockMembers[0].settings, externalId: 'primary' }
     };
-    const inactive: TeamMemberExt = {
+    const inactive: TeamMember = {
       ...mockMembers[0],
       settings: { ...mockMembers[0].settings, externalId: 'inactive' }
     };
-    const settings: TeamSettingsExt = {
+    const settings: TeamSettings = {
       ...mockSettings,
       schedule: [{ slotIndex: 0, externalId: primary.settings.externalId, startTime: '06:00' }]
     };
@@ -112,11 +112,11 @@ describe('TeamSimulator', () => {
   });
 
   it('shall use the pre-wake roster for sleep recovery and erb', () => {
-    const previous: TeamMemberExt = {
+    const previous: TeamMember = {
       ...mockMembers[0],
       settings: { ...mockMembers[0].settings, externalId: 'previous', nature: nature.MILD }
     };
-    const incoming: TeamMemberExt = {
+    const incoming: TeamMember = {
       ...mockMembers[0],
       settings: {
         ...mockMembers[0].settings,
@@ -125,7 +125,7 @@ describe('TeamSimulator', () => {
         subskills: new Set([subskill.ENERGY_RECOVERY_BONUS.name])
       }
     };
-    const settings: TeamSettingsExt = {
+    const settings: TeamSettings = {
       ...mockSettings,
       schedule: [
         { slotIndex: 0, externalId: previous.settings.externalId, startTime: '05:55' },
