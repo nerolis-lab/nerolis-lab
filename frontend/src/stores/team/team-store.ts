@@ -96,7 +96,10 @@ export const useTeamStore = defineStore('team', {
     },
     getCurrentMember: (state: TeamState) => {
       const currentTeam = state.teams[state.currentIndex]
-      return currentTeam.members.at(currentTeam.memberIndex)
+      const ids = [...currentTeam.members, ...(currentTeam.schedule ?? []).map((shift) => shift.externalId)]
+      return currentTeam.selectedMemberId && ids.includes(currentTeam.selectedMemberId)
+        ? currentTeam.selectedMemberId
+        : (currentTeam.members.at(currentTeam.memberIndex) ?? ids.find(Boolean))
     },
     getMemberIvLoading: (state: TeamState) => (externalId: string) => {
       const currentTeam = state.teams[state.currentIndex]
@@ -345,6 +348,20 @@ export const useTeamStore = defineStore('team', {
           logger.error('Error updating teams')
         }
       }
+    },
+    selectMember(externalId: string) {
+      this.getCurrentTeam.selectedMemberId = externalId
+      const slotIndex = this.getCurrentTeam.members.indexOf(externalId)
+      if (slotIndex >= 0) this.getCurrentTeam.memberIndex = slotIndex
+    },
+    async updateMemberById(updatedMember: PokemonInstance) {
+      const slotIndex = this.getCurrentTeam.members.indexOf(updatedMember.externalId)
+      if (slotIndex >= 0) return this.updateTeamMember(updatedMember, slotIndex)
+      if (!(this.getCurrentTeam.schedule ?? []).some((shift) => shift.externalId === updatedMember.externalId)) return
+      usePokemonStore().upsertLocalPokemon(updatedMember)
+      await this.updateTeam()
+      this.resetCurrentTeamIvs()
+      await this.calculateProduction(this.currentIndex)
     },
     async updateTeamMember(updatedMember: PokemonInstance, memberIndex: number, calculateProduction = true) {
       this.loadingMembers[memberIndex] = true

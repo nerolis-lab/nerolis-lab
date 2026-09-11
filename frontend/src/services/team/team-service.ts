@@ -75,7 +75,7 @@ class TeamServiceImpl {
         teams.push(emptyTeam)
       } else {
         for (const scheduledMember of serverTeam.scheduledMembers ?? []) {
-          pokemonStore.upsertLocalPokemon(PokemonInstanceUtils.toPokemonInstanceExt(scheduledMember))
+          pokemonStore.upsertLocalPokemon(PokemonInstanceUtils.toPokemonInstance(scheduledMember))
         }
         const members: (string | undefined)[] = []
         for (let memberIndex = 0; memberIndex < MAX_TEAM_SIZE; memberIndex++) {
@@ -112,6 +112,9 @@ class TeamServiceImpl {
         const instancedTeam: TeamInstance = {
           index: serverTeam.index,
           memberIndex: teamStore.teams[serverTeam.index]?.memberIndex ?? 0,
+          ...(teamStore.teams[serverTeam.index]?.selectedMemberId
+            ? { selectedMemberId: teamStore.teams[serverTeam.index].selectedMemberId }
+            : {}),
           name: serverTeam.name,
           camp: serverTeam.camp,
           bedtime: serverTeam.bedtime,

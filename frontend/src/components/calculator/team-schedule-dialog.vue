@@ -131,7 +131,7 @@ import {
   CookingPowerUpSMinus,
   TastyChanceS,
   subskill,
-  type PokemonInstanceExt,
+  type PokemonInstance,
   type TeamScheduleShift,
   type TeamScheduleType
 } from 'sleepapi-common'
@@ -337,7 +337,7 @@ const openTimePicker = (shift: TeamScheduleShift) => {
   updatedTime.value = shift.startTime
   timePicker.value = true
 }
-const savePokemon = (updated: PokemonInstanceExt) =>
+const savePokemon = (updated: PokemonInstance) =>
   runSave(async () => {
     pokemonStore.upsertLocalPokemon(updated)
     const inSchedule = teamStore.getCurrentTeam.schedule?.some((shift) => shift.externalId === updated.externalId)
