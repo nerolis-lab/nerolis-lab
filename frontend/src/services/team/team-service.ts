@@ -189,7 +189,10 @@ class TeamServiceImpl {
     const currentTeam = teamStore.getCurrentTeam
 
     const members: PokemonInstance[] = []
-    for (const memberId of currentTeam.members) {
+    for (const memberId of new Set([
+      ...currentTeam.members,
+      ...(currentTeam.schedule ?? []).map((shift) => shift.externalId)
+    ])) {
       if (memberId && memberId !== teamStore.getCurrentMember) {
         const member = pokemonStore.getPokemon(memberId)
         member && members.push(member)
@@ -202,7 +205,7 @@ class TeamServiceImpl {
       wakeup: currentTeam.wakeup,
       stockpiledIngredients: currentTeam.stockpiledIngredients,
       island: currentTeam.island,
-      schedule: currentTeam.schedule ?? []
+      schedule: currentTeam.schedule?.length ? teamStore.getCalculationSchedule() : []
     }
 
     const berrySetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({
@@ -226,6 +229,10 @@ class TeamServiceImpl {
     )
 
     const response = await serverAxios.post<CalculateIvResponse>('/calculator/iv', {
+      replacedMemberId: currentMember.externalId,
+      ...(settings.schedule?.some((shift) => shift.type && shift.type !== 'time')
+        ? { referenceMember: PokemonInstanceUtils.toPokemonInstanceIdentity(currentMember) }
+        : {}),
       members: parsedMembers,
       variants: [berrySetup, ingredientSetup, skillSetup],
       settings
@@ -241,6 +248,7 @@ class TeamServiceImpl {
     }
 
     return {
+      ...(response.data.reference ? { reference: response.data.reference } : {}),
       optimalBerry: berryProduction,
       optimalIngredient: ingredientProduction,
       optimalSkill: skillProduction
