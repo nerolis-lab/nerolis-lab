@@ -97,6 +97,9 @@ import {
   ZeroAmount
 } from 'sleepapi-common';
 
+import { PsystrikeEffect } from './skill-effects/berry-zone/psystrike-effect.js';
+import { Psystrike } from 'sleepapi-common';
+
 export class SkillState {
   memberState: MemberState;
   skillEffects: Map<Mainskill, SkillEffect>;
@@ -119,6 +122,7 @@ export class SkillState {
     this.rng = rng;
 
     this.skillEffects = new Map<Mainskill, SkillEffect>([
+      [Psystrike, new PsystrikeEffect()],
       [BerryBurst, new BerryBurstEffect()],
       [BerryBurstDisguise, new BerryBurstDisguiseEffect()],
       [BerryBurstDracoMeteor, new BerryBurstDracoMeteorEffect()],
