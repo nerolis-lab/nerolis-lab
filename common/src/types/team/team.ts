@@ -4,7 +4,7 @@ import type { Time } from '../time/time';
 import type { TeamMemberWithProduce } from './member';
 import type { CalculateTeamResponse } from './team-calculate';
 
-export type TeamScheduleType = 'time' | 'tasty-chance' | 'pot-size';
+export type TeamScheduleType = 'time' | 'tasty-chance' | 'pot-size' | 'berry-zone';
 
 /**
  * A recurring entry for one of the five visible team slots. Entries are
@@ -18,6 +18,7 @@ export interface TeamScheduleShift {
   type?: TeamScheduleType;
   tastyChanceTarget?: number;
   potSizeTarget?: number;
+  berryZoneTarget?: number;
 }
 
 export interface TeamSettingsDto {

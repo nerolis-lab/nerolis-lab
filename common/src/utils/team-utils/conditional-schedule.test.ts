@@ -16,6 +16,15 @@ const shift: TeamScheduleShift = {
 };
 
 describe('conditional schedule targets', () => {
+  it('supports a capped Psychic berry-zone target and clears it when changing type', () => {
+    const zone = withScheduleTarget(shift, 'berry-zone', 24);
+    expect(getScheduleTarget(zone)).toBe(24);
+    expect(zone.tastyChanceTarget).toBeUndefined();
+    expect(withScheduleTarget(zone, 'time').berryZoneTarget).toBeUndefined();
+    expect(validateScheduleTarget('berry-zone', 24)).toBe('');
+    expect(validateScheduleTarget('berry-zone', 24.1)).not.toBe('');
+    expect(validateScheduleTarget('berry-zone', 0)).not.toBe('');
+  });
   it('keeps legacy time schedules separate from conditional schedules', () => {
     expect(isConditionalSchedule(undefined)).toBe(false);
     expect(isConditionalSchedule('time')).toBe(false);
