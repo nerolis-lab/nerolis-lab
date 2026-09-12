@@ -29,11 +29,18 @@
             title="skill activations"
           ></v-img>
         </div>
-        <div class="flex-left">
-          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
-            >{{ minShardsPerProc }}-{{ maxShardsPerProc }}</span
+        <div>
+          <span class="font-weight-light text-body-2 font-italic"
+            >{{ localizeNumber(minShardsPerProc) }}-{{ localizeNumber(maxShardsPerProc) }}</span
           >
-          <v-img src="/images/unit/shard.png" height="20" width="20" alt="dream shards" title="dream shards"></v-img>
+          <v-img
+            class="shard-icon ml-1"
+            src="/images/unit/shard.png"
+            height="20"
+            width="20"
+            alt="dream shards"
+            title="dream shards"
+          ></v-img>
         </div>
       </div>
     </v-col>
@@ -52,7 +59,7 @@ import { mainskillImage } from '@/services/utils/image-utils'
 import { skillLevelBadgeText } from '@/services/utils/skill-display-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberProductionExt } from '@/types/member/instanced'
-import { DreamShardMagnetSRange, MathUtils, compactNumber } from 'sleepapi-common'
+import { DreamShardMagnetSRange, MathUtils, compactNumber, localizeNumber } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -64,7 +71,7 @@ export default defineComponent({
   },
   setup() {
     const teamStore = useTeamStore()
-    return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage }
+    return { teamStore, skillLevelBadgeText, MathUtils, mainskillImage, localizeNumber }
   },
   computed: {
     effectiveSkillLevel() {
@@ -88,3 +95,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped lang="scss">
+.shard-icon {
+  display: inline-flex;
+  vertical-align: text-bottom;
+}
+</style>

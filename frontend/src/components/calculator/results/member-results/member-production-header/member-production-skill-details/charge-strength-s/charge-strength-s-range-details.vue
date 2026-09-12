@@ -29,11 +29,18 @@
             title="skill activations"
           ></v-img>
         </div>
-        <div class="flex-left">
-          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center"
+        <div>
+          <span class="font-weight-light text-body-2 font-italic"
             >{{ localizeNumber(minStrengthPerProc) }}-{{ localizeNumber(maxStrengthPerProc) }}</span
           >
-          <v-img src="/images/unit/strength.png" height="20" width="20" alt="strength" title="strength"></v-img>
+          <v-img
+            class="strength-icon ml-1"
+            src="/images/unit/strength.png"
+            height="20"
+            width="20"
+            alt="strength"
+            title="strength"
+          ></v-img>
         </div>
       </div>
     </v-col>
@@ -90,3 +97,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped lang="scss">
+.strength-icon {
+  display: inline-flex;
+  vertical-align: text-bottom;
+}
+</style>
