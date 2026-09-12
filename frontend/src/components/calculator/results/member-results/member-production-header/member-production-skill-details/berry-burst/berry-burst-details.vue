@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters class="flex-center pb-1">
-    <v-col cols="auto" class="flex-center flex-nowrap mx-4">
+    <v-col cols="auto" class="flex-center flex-nowrap mx-2">
       <v-badge
         id="skillLevelBadge"
         :content="skillLevelBadgeText(effectiveSkillLevel, baseSkillLevel)"
