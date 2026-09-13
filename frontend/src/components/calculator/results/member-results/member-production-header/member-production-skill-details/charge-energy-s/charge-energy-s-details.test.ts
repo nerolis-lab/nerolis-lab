@@ -1,13 +1,24 @@
 import MemberProductionSkill from '@/components/calculator/results/member-results/member-production-header/member-production-skill.vue'
 import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
+import { createMockMemberProduction, createMockSkillValue } from '@/vitest/mocks'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { MathUtils, VICTREEBEL } from 'sleepapi-common'
+import { ChargeEnergyS, commonMocks, compactNumber, MathUtils } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
+const mockSelfEnergyAmount = 50
+const mockPokemonInstance = mocks.createMockPokemon({ pokemon: commonMocks.mockPokemon({ skill: ChargeEnergyS }) })
 const mockMember = mocks.createMockMemberWithProduction({
-  member: mocks.createMockPokemon({ pokemon: VICTREEBEL })
+  member: mockPokemonInstance,
+  production: createMockMemberProduction(
+    {
+      skillValue: createMockSkillValue({
+        energy: { amountToSelf: mockSelfEnergyAmount, amountToTeam: 0 }
+      })
+    },
+    mockPokemonInstance
+  )
 })
 
 describe('MemberProductionSkill', () => {
@@ -49,5 +60,10 @@ describe('MemberProductionSkill', () => {
     expect(skillProcs.text()).toBe(
       MathUtils.round(mockMember.production.skillProcs * timeWindowFactor('24H'), 1).toString()
     )
+  })
+
+  it('displays the correct total energy amount', () => {
+    const totalSkillValue = wrapper.find('[data-testid="energy-total"]')
+    expect(totalSkillValue.text()).toContain(compactNumber(mockSelfEnergyAmount))
   })
 })
