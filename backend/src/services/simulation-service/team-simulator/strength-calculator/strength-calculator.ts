@@ -55,7 +55,7 @@ export class StrengthCalculator {
         : 1;
       const power = berryPowerForLevel(producedBerry.berry, producedBerry.level);
 
-      const baseStrength = producedBerry.amount * power;
+      const baseStrength = producedBerry.amount * power * (1 + (producedBerry.berryZoneBonus ?? 0) / 100);
       const favoredStrength = baseStrength * (favoredMultiplier - 1);
       const islandBonusStrength = (baseStrength + favoredStrength) * (areaBonus / 100);
 

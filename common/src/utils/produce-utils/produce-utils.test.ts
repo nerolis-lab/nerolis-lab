@@ -48,3 +48,12 @@ describe('multiplyProduce', () => {
     });
   });
 });
+
+it('preserves average zone strength when averaging production', () => {
+  const produce: Produce = {
+    berries: [{ berry: berry.ORAN, level: 30, amount: 100, berryZoneBonus: 12 }],
+    ingredients: []
+  };
+  expect(multiplyProduce(produce, 1 / 5).berries).toEqual([{ ...produce.berries[0], amount: 20 }]);
+  expect(produce.berries[0].amount).toBe(100);
+});

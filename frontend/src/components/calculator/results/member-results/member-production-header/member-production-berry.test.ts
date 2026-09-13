@@ -72,4 +72,24 @@ describe('MemberProductionBerry', () => {
     )
     expect(strengthSpan?.text()).toBe(`${currentBerryStrength}`)
   })
+  it('shows the zone percentage between the berry count and strength', async () => {
+    await wrapper.setProps({
+      memberWithProduction: {
+        ...mockMember,
+        production: {
+          ...mockMember.production,
+          produceWithoutSkill: {
+            ...mockMember.production.produceWithoutSkill,
+            berries: [{ ...mockMember.production.produceWithoutSkill.berries[0], berryZoneBonus: 12 }]
+          }
+        }
+      }
+    })
+    const labels = wrapper.findAll('span.font-weight-medium')
+    expect(labels[0].text()).toBe(`x${20 * useTeamStore().timeWindowFactor}`)
+    expect(labels[1].text()).toBe('+12% (Berry Zone)')
+    expect(labels[2].text()).toBe(
+      compactNumber(mockMember.production.strength.berries.total * useTeamStore().timeWindowFactor, 'floor')
+    )
+  })
 })
