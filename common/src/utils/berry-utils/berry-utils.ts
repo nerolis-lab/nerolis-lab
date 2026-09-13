@@ -46,12 +46,12 @@ export function berryPowerForLevel(berry: Berry, level: number): number {
 
 // TODO: remove in Sleep api 2?
 export function multiplyBerries(berries: BerrySet[], multiplyAmount: number): BerrySet[] {
-  return berries.map(({ amount, berry, level }) => ({ amount: amount * multiplyAmount, berry, level }));
+  return berries.map((set) => ({ ...set, amount: set.amount * multiplyAmount }));
 }
 
 // TODO: remove in Sleep api 2?
 export function roundBerries(berries: BerrySet[], precision: number): BerrySet[] {
-  return berries.map(({ amount, berry, level }) => ({ amount: MathUtils.round(amount, precision), berry, level }));
+  return berries.map((set) => ({ ...set, amount: MathUtils.round(set.amount, precision) }));
 }
 
 // TODO: remove in Sleep api 2?
@@ -77,4 +77,17 @@ export function uniqueMembersWithBerry(params: { berry: Berry; members: Pokemon[
     { count: 0, names: new Set<string>() }
   );
   return count;
+}
+
+/** Merge matching berry types and levels without changing their total strength or count. */
+export function mergeBerrySets(first: BerrySet, second: BerrySet): BerrySet {
+  const amount = first.amount + second.amount;
+  const result: BerrySet = { ...first, amount };
+  if (first.berryZoneBonus !== undefined || second.berryZoneBonus !== undefined) {
+    result.berryZoneBonus =
+      amount > 0
+        ? (first.amount * (first.berryZoneBonus ?? 0) + second.amount * (second.berryZoneBonus ?? 0)) / amount
+        : 0;
+  }
+  return result;
 }

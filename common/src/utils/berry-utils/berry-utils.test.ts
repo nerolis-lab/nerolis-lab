@@ -158,3 +158,9 @@ describe('uniqueMembersWithBerry', () => {
     expect(uniqueMembersWithBerry({ berry: BELUE, members: [member1, member2, member3, member1, member2] })).toBe(2);
   });
 });
+
+it('preserves berry-zone bonuses when scaling and rounding berries', () => {
+  const berries = [{ berry: ORAN, level: 30, amount: 10.25, berryZoneBonus: 12 }];
+  expect(multiplyBerries(berries, 2)).toEqual([{ ...berries[0], amount: 20.5 }]);
+  expect(roundBerries(berries, 1)).toEqual([{ ...berries[0], amount: 10.3 }]);
+});

@@ -859,7 +859,10 @@ describe('berry-zone strength accounting', () => {
       }
       const original = baseline.results(1);
       const actual = boosted.results(1);
-      expect(actual.produceTotal).toEqual(original.produceTotal);
+      expect(actual.produceTotal.ingredients).toEqual(original.produceTotal.ingredients);
+      expect(actual.produceTotal.berries.map(({ berry, level, amount }) => ({ berry, level, amount }))).toEqual(
+        original.produceTotal.berries
+      );
       expect(actual.strength.berries.total).toBeCloseTo(original.strength.berries.total * 1.12);
       expect(actual.strength.skill.total).toBeCloseTo(original.strength.skill.total * 1.12);
     }
@@ -894,7 +897,10 @@ describe('berry-zone strength accounting', () => {
       }
       const original = baseline.results(1);
       const actual = boosted.results(1);
-      expect(actual.produceTotal).toEqual(original.produceTotal);
+      expect(actual.produceTotal.ingredients).toEqual(original.produceTotal.ingredients);
+      expect(actual.produceTotal.berries.map(({ berry, level, amount }) => ({ berry, level, amount }))).toEqual(
+        original.produceTotal.berries
+      );
       expect(actual.strength.berries.total).toBeCloseTo(
         original.strength.berries.total * (producedBerry === berry.MAGO ? 1.12 : 1)
       );
