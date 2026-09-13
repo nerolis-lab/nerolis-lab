@@ -5,6 +5,7 @@ import type { SkillEffect } from '@src/services/simulation-service/team-simulato
 import { BerryBurstDisguiseEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-disguise-effect.js';
 import { BerryBurstDracoMeteorEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-draco-meteor-effect.js';
 import { BerryBurstEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-burst/berry-burst-effect.js';
+import { BerryZonePsystrikeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/berry-zone/berry-zone-psystrike-effect.js';
 import { ChargeEnergySEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-effect.js';
 import { ChargeEnergySMoonlightEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-energy-s/charge-energy-s-moonlight-effect.js';
 import { ChargeStrengthMBadDreamsEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-m/charge-strength-m-bad-dreams-effect.js';
@@ -57,6 +58,7 @@ import {
   BerryBurst,
   BerryBurstDisguise,
   BerryBurstDracoMeteor,
+  BerryZonePsystrike,
   ChargeEnergyS,
   ChargeEnergySMoonlight,
   ChargeStrengthM,
@@ -127,6 +129,7 @@ export class SkillState {
       [BerryBurst, new BerryBurstEffect()],
       [BerryBurstDisguise, new BerryBurstDisguiseEffect()],
       [BerryBurstDracoMeteor, new BerryBurstDracoMeteorEffect()],
+      [BerryZonePsystrike, new BerryZonePsystrikeEffect()],
       [ChargeEnergyS, new ChargeEnergySEffect()],
       [ChargeEnergySMoonlight, new ChargeEnergySMoonlightEffect()],
       [ChargeStrengthM, new ChargeStrengthMEffect()],

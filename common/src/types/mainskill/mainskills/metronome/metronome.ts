@@ -1,6 +1,7 @@
 import type { ActivationsType, AmountParams } from '../../mainskill';
 import { Mainskill, MAINSKILLS } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
+import { BerryZonePsystrike } from '../berry-zone';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
 import { IngredientDrawSCutiefly, IngredientDrawSDwebble, IngredientDrawSSandshrew } from '../ingredient-draw-s';
 import { IngredientMagnetSPlusToxtricity } from '../ingredient-magnet-s';
@@ -17,10 +18,11 @@ export const Metronome = new (class extends Mainskill {
   readonly blockedSkills: Mainskill[] = [
     this,
     BerryBurstDisguise,
+    BerryZonePsystrike, // Keep the prototype out of random skill rolls until availability is confirmed.
     ChargeStrengthMBadDreams,
-    IngredientDrawSSandshrew,
-    IngredientDrawSDwebble,
     IngredientDrawSCutiefly,
+    IngredientDrawSDwebble,
+    IngredientDrawSSandshrew,
     IngredientMagnetSPlusToxtricity,
     SkillCopyMimic,
     SkillCopyTransform

@@ -1,6 +1,7 @@
 export const mainskillUnits = [
   'energy',
   'berries',
+  'berry zone',
   'ingredients',
   'helps',
   'skill helps',

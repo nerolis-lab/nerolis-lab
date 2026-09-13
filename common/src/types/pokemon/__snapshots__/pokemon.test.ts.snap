@@ -3850,6 +3850,47 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
       },
       {
         "RP": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+        "activations": {
+          "berryZone": {
+            "amount": [Function],
+            "unit": "berry zone",
+          },
+          "strength": {
+            "amount": [Function],
+            "unit": "strength",
+          },
+        },
+        "berryZoneAmounts": [
+          0.6,
+          0.8,
+          1,
+          1.2,
+          1.6,
+          2,
+        ],
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "psystrike",
+        "maximumBonus": 24,
+        "name": "Psystrike (Berry Zone)",
+        "strengthAmounts": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+      },
+      {
+        "RP": [
           2400,
           3313,
           4643,
@@ -4885,6 +4926,47 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
           3,
           4,
           5,
+        ],
+      },
+      {
+        "RP": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+        "activations": {
+          "berryZone": {
+            "amount": [Function],
+            "unit": "berry zone",
+          },
+          "strength": {
+            "amount": [Function],
+            "unit": "strength",
+          },
+        },
+        "berryZoneAmounts": [
+          0.6,
+          0.8,
+          1,
+          1.2,
+          1.6,
+          2,
+        ],
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "psystrike",
+        "maximumBonus": 24,
+        "name": "Psystrike (Berry Zone)",
+        "strengthAmounts": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
         ],
       },
       {
@@ -5925,6 +6007,47 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
           3,
           4,
           5,
+        ],
+      },
+      {
+        "RP": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+        "activations": {
+          "berryZone": {
+            "amount": [Function],
+            "unit": "berry zone",
+          },
+          "strength": {
+            "amount": [Function],
+            "unit": "strength",
+          },
+        },
+        "berryZoneAmounts": [
+          0.6,
+          0.8,
+          1,
+          1.2,
+          1.6,
+          2,
+        ],
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "psystrike",
+        "maximumBonus": 24,
+        "name": "Psystrike (Berry Zone)",
+        "strengthAmounts": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
         ],
       },
       {
@@ -19798,6 +19921,134 @@ exports[`COMPLETE_POKEDEX > shall not change MEW unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change MEWTWO unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "MAGO",
+    "type": "psychic",
+    "value": 26,
+  },
+  "carrySize": 24,
+  "displayName": "Mewtwo",
+  "evolvesFrom": undefined,
+  "evolvesInto": [],
+  "frequency": 2700,
+  "genders": {
+    "female": 0,
+    "male": 0,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Moomoo Milk",
+        "name": "Milk",
+        "taxedValue": 28.1,
+        "value": 98,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soothing Cacao",
+        "name": "Cacao",
+        "taxedValue": 66.7,
+        "value": 151,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Bean Sausage",
+        "name": "Sausage",
+        "taxedValue": 31,
+        "value": 103,
+      },
+    },
+  ],
+  "ingredientPercentage": 20,
+  "name": "MEWTWO",
+  "pityProcThreshold": 53,
+  "pokedexNumber": 150,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 0,
+  "skill": {
+    "RP": [
+      1408,
+      2002,
+      2762,
+      3813,
+      5264,
+      7274,
+    ],
+    "activations": {
+      "berryZone": {
+        "amount": [Function],
+        "unit": "berry zone",
+      },
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "berryZoneAmounts": [
+      0.6,
+      0.8,
+      1,
+      1.2,
+      1.6,
+      2,
+    ],
+    "description": [Function],
+    "frontendComponentName": undefined,
+    "image": "psystrike",
+    "maximumBonus": 24,
+    "name": "Psystrike (Berry Zone)",
+    "strengthAmounts": [
+      1408,
+      2002,
+      2762,
+      3813,
+      5264,
+      7274,
+    ],
+  },
+  "skillPercentage": 5,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change MIME_JR unexpectedly 1`] = `
 {
   "berry": {
@@ -31105,6 +31356,47 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
       },
       {
         "RP": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+        "activations": {
+          "berryZone": {
+            "amount": [Function],
+            "unit": "berry zone",
+          },
+          "strength": {
+            "amount": [Function],
+            "unit": "strength",
+          },
+        },
+        "berryZoneAmounts": [
+          0.6,
+          0.8,
+          1,
+          1.2,
+          1.6,
+          2,
+        ],
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "psystrike",
+        "maximumBonus": 24,
+        "name": "Psystrike (Berry Zone)",
+        "strengthAmounts": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+      },
+      {
+        "RP": [
           2400,
           3313,
           4643,
@@ -32140,6 +32432,47 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
           3,
           4,
           5,
+        ],
+      },
+      {
+        "RP": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+        "activations": {
+          "berryZone": {
+            "amount": [Function],
+            "unit": "berry zone",
+          },
+          "strength": {
+            "amount": [Function],
+            "unit": "strength",
+          },
+        },
+        "berryZoneAmounts": [
+          0.6,
+          0.8,
+          1,
+          1.2,
+          1.6,
+          2,
+        ],
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "psystrike",
+        "maximumBonus": 24,
+        "name": "Psystrike (Berry Zone)",
+        "strengthAmounts": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
         ],
       },
       {
@@ -33180,6 +33513,47 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
           3,
           4,
           5,
+        ],
+      },
+      {
+        "RP": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
+        ],
+        "activations": {
+          "berryZone": {
+            "amount": [Function],
+            "unit": "berry zone",
+          },
+          "strength": {
+            "amount": [Function],
+            "unit": "strength",
+          },
+        },
+        "berryZoneAmounts": [
+          0.6,
+          0.8,
+          1,
+          1.2,
+          1.6,
+          2,
+        ],
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "psystrike",
+        "maximumBonus": 24,
+        "name": "Psystrike (Berry Zone)",
+        "strengthAmounts": [
+          1408,
+          2002,
+          2762,
+          3813,
+          5264,
+          7274,
         ],
       },
       {
