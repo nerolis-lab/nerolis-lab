@@ -8,12 +8,25 @@ import {
   ingredientSetToIntFlat,
   mainskillUnits,
   type MemberProduction,
-  type MemberSkillValue
+  type MemberSkillValue,
+  type PokemonInstance
 } from 'sleepapi-common'
 
-export function createMockMemberProduction(attrs?: Partial<MemberProduction>): MemberProduction {
-  const mockPokemon = createMockPokemon()
+export function createMockMemberWithProduction(attrs?: Partial<MemberWithProduction>): MemberWithProduction {
+  const member = attrs?.member ?? createMockPokemon()
 
+  return {
+    member,
+    production: createMockMemberProduction({ skillLevel: member.skillLevel }, member),
+    iv: createMockMemberIv(),
+    ...attrs
+  }
+}
+
+export function createMockMemberProduction(
+  attrs?: Partial<MemberProduction>,
+  mockPokemon: PokemonInstance = createMockPokemon()
+): MemberProduction {
   return {
     externalId: mockPokemon.externalId,
     pokemonWithIngredients: {
@@ -62,9 +75,7 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
         }
       ]
     },
-    skillValue: Object.fromEntries(
-      mainskillUnits.map((key) => [key, { amountToSelf: 0, amountToTeam: 0 }])
-    ) as MemberSkillValue,
+    skillValue: createMockSkillValue(),
     skillLevel: mockPokemon.skillLevel,
     skillProcs: 5,
     advanced: {
@@ -115,14 +126,12 @@ export function createMockMemberProduction(attrs?: Partial<MemberProduction>): M
   }
 }
 
-export function createMockMemberWithProduction(attrs?: Partial<MemberWithProduction>): MemberWithProduction {
-  const mockPokemon = createMockPokemon()
-  const member = attrs?.member ?? mockPokemon
-
+export function createMockSkillValue(attrs?: Partial<MemberSkillValue>): MemberSkillValue {
+  const skillValue = Object.fromEntries(
+    mainskillUnits.map((unit) => [unit, { amountToSelf: 0, amountToTeam: 0 }])
+  ) as MemberSkillValue
   return {
-    member,
-    production: createMockMemberProduction({ skillLevel: member.skillLevel }),
-    iv: createMockMemberIv(),
+    ...skillValue,
     ...attrs
   }
 }
