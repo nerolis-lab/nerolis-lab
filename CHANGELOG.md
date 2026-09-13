@@ -1,3 +1,10 @@
+# [2.65.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.64.3...v2.65.0) (2026-09-13)
+
+
+### Features
+
+* **compare:** separate skill units ([9eb87f0](https://github.com/nerolis-lab/nerolis-lab/commit/9eb87f0a3a1684d702a1a694c84c5580d38d2be3))
+
 ## [2.64.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.64.2...v2.64.3) (2026-09-13)
 
 
