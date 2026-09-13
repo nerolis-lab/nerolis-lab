@@ -178,7 +178,7 @@ export class TeamSimulator {
 
   private startDay() {
     this.run++;
-    // Each simulated week represents a fresh site, even with cooking disabled.
+    // Reset berry zones each simulated week, even with cooking disabled.
     if (this.run % 7 === 1) this.berryZoneState.reset();
     if (this.cookingState && this.run % 7 === 1) {
       this.cookingState?.startNewWeek();

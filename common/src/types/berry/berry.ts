@@ -7,6 +7,8 @@ export interface BerrySet {
   amount: number;
   berry: Berry;
   level: number;
+  /** Average berry-zone strength bonus in percentage points, weighted by berry count. */
+  berryZoneBonus?: number;
 }
 export interface BerrySetSimple {
   amount: number;
