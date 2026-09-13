@@ -1,3 +1,12 @@
+## [2.64.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.64.2...v2.64.3) (2026-09-13)
+
+
+### Bug Fixes
+
+* **berry burst:** reduce margins for details ([376a878](https://github.com/nerolis-lab/nerolis-lab/commit/376a878d317fe8bbe602547e1a4abae163637f0d))
+* put range on display for range skills ([efa1170](https://github.com/nerolis-lab/nerolis-lab/commit/efa1170794635a7f0436b352a45721a9654ec605))
+* **range skills:** wrap per-proc text on small screens ([d747955](https://github.com/nerolis-lab/nerolis-lab/commit/d7479550f0d48122a96582ef703e9883de001ead))
+
 ## [2.64.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.64.1...v2.64.2) (2026-09-10)
 
 ## [2.64.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.64.0...v2.64.1) (2026-09-09)
