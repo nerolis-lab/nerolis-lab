@@ -38,6 +38,7 @@ interface CookedRecipe extends UserRecipeFlat {
 type IngredientsMissing = Record<number, { count: number; totalAmountMissing: number }>;
 interface SkippedRecipe extends UserRecipeFlat {
   totalCount: number;
+  plannedFailures: number;
   potMissing: { count: number; totalAmountMissing: number };
   ingredientMissing: IngredientsMissing;
 }
@@ -59,6 +60,8 @@ export class CookingState {
   private weekdayReservedIngredientIndexes = new Set<number>();
   private sundayReservedIngredients: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
   private completedMeals = new Set<MealSlot>();
+  private plannedAttempts = new Map<string, number>();
+  private failedPlannedRecipes = new Map<string, SkippedRecipe>();
 
   private userCurries: UserRecipeFlat[];
   private userSalads: UserRecipeFlat[];
@@ -143,6 +146,7 @@ export class CookingState {
     if (choice.kind === 'recipe' && !finalAttempt) {
       const recipe = this.recipesForType(this.recipeType).find((candidate) => candidate.name === choice.recipe);
       if (recipe && this.cookExactRecipe(recipe, sunday, true, true)) {
+        this.plannedAttempts.set(recipe.name, (this.plannedAttempts.get(recipe.name) ?? 0) + 1);
         if (sunday) this.releaseSundayReservation(recipe);
         this.completedMeals.add(meal);
         return true;
@@ -154,12 +158,16 @@ export class CookingState {
 
     this.completedMeals.add(meal);
     if (choice.kind === 'recipe') {
+      this.plannedAttempts.set(choice.recipe, (this.plannedAttempts.get(choice.recipe) ?? 0) + 1);
       const selectedRecipe = this.recipesForType(this.recipeType).find((candidate) => candidate.name === choice.recipe);
       if (selectedRecipe && this.cookExactRecipe(selectedRecipe, sunday, true, true)) {
         if (sunday) this.releaseSundayReservation(selectedRecipe);
         return true;
       }
-      if (selectedRecipe && sunday) this.releaseSundayReservation(selectedRecipe);
+      if (selectedRecipe) {
+        this.recordPlannedFailure(selectedRecipe, sunday);
+        if (sunday) this.releaseSundayReservation(selectedRecipe);
+      }
     }
 
     return this.cookBestUnreservedRecipe(sunday);
@@ -358,6 +366,7 @@ export class CookingState {
         const newEntry: SkippedRecipe = {
           ...recipe,
           totalCount: 0,
+          plannedFailures: 0,
           potMissing: { count: 0, totalAmountMissing: 0 },
           ingredientMissing
         };
@@ -432,6 +441,25 @@ export class CookingState {
     const fillerTotal = includeFillers ? this.fillPot({ currentPotSize, inventory, stockpile, recipe }) : 0;
     this.recordPlannedCook({ recipe, sunday, currentPotSize, fillerTotal, isPlannedRecipe, cooked });
     return true;
+  }
+
+  private recordPlannedFailure(recipe: UserRecipeFlat, sunday: boolean) {
+    const entry = this.getOrInitSkippedRecipe(recipe, this.failedPlannedRecipes);
+    entry.totalCount++;
+    entry.plannedFailures++;
+    const missingPotSize = recipe.nrOfIngredients - this.currentPotSize(sunday);
+    if (missingPotSize > 0) {
+      entry.potMissing.count++;
+      entry.potMissing.totalAmountMissing += missingPotSize;
+    }
+    const { inventory, stockpile } = this.cookingDataForType(this.recipeType);
+    recipe.ingredients.forEach((required, index) => {
+      const missing = required - inventory[index] - stockpile[index];
+      if (missing > 0) {
+        entry.ingredientMissing[index].count++;
+        entry.ingredientMissing[index].totalAmountMissing += missing;
+      }
+    });
   }
 
   private cookBestUnreservedRecipe(sunday: boolean): boolean {
@@ -554,17 +582,29 @@ export class CookingState {
       curry: {
         weeklyStrength: this.cookedCurries.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks,
         sundayStrength: this.cookedCurries.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks,
-        cookedRecipes: this.groupAndCountCookedRecipes(this.cookedCurries, this.skippedCurries)
+        cookedRecipes: this.groupAndCountCookedRecipes(
+          this.cookedCurries,
+          this.skippedCurries,
+          this.recipeType === 'curry'
+        )
       },
       salad: {
         weeklyStrength: this.cookedSalads.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks,
         sundayStrength: this.cookedSalads.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks,
-        cookedRecipes: this.groupAndCountCookedRecipes(this.cookedSalads, this.skippedSalads)
+        cookedRecipes: this.groupAndCountCookedRecipes(
+          this.cookedSalads,
+          this.skippedSalads,
+          this.recipeType === 'salad'
+        )
       },
       dessert: {
         weeklyStrength: this.cookedDesserts.reduce((sum, cur) => sum + cur.strength, 0) / nrOfWeeks,
         sundayStrength: this.cookedDesserts.reduce((sum, cur) => sum + (cur.sunday ? cur.strength : 0), 0) / nrOfWeeks,
-        cookedRecipes: this.groupAndCountCookedRecipes(this.cookedDesserts, this.skippedDesserts)
+        cookedRecipes: this.groupAndCountCookedRecipes(
+          this.cookedDesserts,
+          this.skippedDesserts,
+          this.recipeType === 'dessert'
+        )
       },
       critInfo: {
         averageCritMultiplierPerCook:
@@ -595,7 +635,8 @@ export class CookingState {
 
   private groupAndCountCookedRecipes(
     cookedRecipes: CookedRecipe[],
-    skippedRecipesGrouped: Map<string, SkippedRecipe>
+    skippedRecipesGrouped: Map<string, SkippedRecipe>,
+    includePlanned: boolean
   ): CookedRecipeResult[] {
     const recipeCounts = new Map<
       string,
@@ -623,9 +664,28 @@ export class CookingState {
       }
     }
 
+    // Keep planned recipes visible even when every attempt failed.
+    for (const [name, recipe] of this.failedPlannedRecipes) {
+      if (includePlanned && !recipeCounts.has(name)) {
+        recipeCounts.set(name, { recipe, count: 0, sunday: 0, fillerValue: 0, plannedCount: 0 });
+      }
+    }
+
     const cookedRecipeResults: CookedRecipeResult[] = [];
     for (const [, cookedRecipe] of recipeCounts) {
-      const skippedRecipe = skippedRecipesGrouped.get(cookedRecipe.recipe.name);
+      const plannedAttempts = includePlanned ? (this.plannedAttempts.get(cookedRecipe.recipe.name) ?? 0) : 0;
+      const plannedFailure = includePlanned ? this.failedPlannedRecipes.get(cookedRecipe.recipe.name) : undefined;
+      const skippedRecipe = this.getOrInitSkippedRecipe(cookedRecipe.recipe, new Map());
+      for (const source of [skippedRecipesGrouped.get(cookedRecipe.recipe.name), plannedFailure]) {
+        if (!source) continue;
+        skippedRecipe.totalCount += source.totalCount;
+        skippedRecipe.potMissing.count += source.potMissing.count;
+        skippedRecipe.potMissing.totalAmountMissing += source.potMissing.totalAmountMissing;
+        for (const [index, missing] of Object.entries(source.ingredientMissing)) {
+          skippedRecipe.ingredientMissing[+index].count += missing.count;
+          skippedRecipe.ingredientMissing[+index].totalAmountMissing += missing.totalAmountMissing;
+        }
+      }
 
       const ingredientLimited = [];
       if (skippedRecipe) {
@@ -654,7 +714,9 @@ export class CookingState {
             : 0
         },
         ingredientLimited,
-        averageFillerValue: cookedRecipe.fillerValue / cookedRecipe.count,
+        plannedAttempts,
+        plannedFailures: plannedFailure?.plannedFailures ?? 0,
+        averageFillerValue: cookedRecipe.count > 0 ? cookedRecipe.fillerValue / cookedRecipe.count : 0,
         isPlannedRecipe: cookedRecipe.plannedCount > 0
       });
     }

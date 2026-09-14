@@ -4,7 +4,7 @@ import { mocks } from '@/vitest'
 import { mockCookingResult } from '@/vitest/mocks/calculator/mock-cooking-result'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { curry, ingredient } from 'sleepapi-common'
+import { curry, defaultMealPlan, ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -19,6 +19,70 @@ describe('CookingResults', () => {
     if (wrapper) {
       wrapper.unmount()
     }
+  })
+
+  it('shows failed planned recipes and shortages without claiming a better recipe was cooked', async () => {
+    const store = useTeamStore()
+    store.getCurrentTeam.mealPlan = {
+      ...defaultMealPlan(),
+      breakfast: { kind: 'recipe', recipe: curry.MILD_HONEY_CURRY.name }
+    }
+    const production = mocks.createMockTeamProduction()
+    production.team.cooking!.curry.cookedRecipes.push({
+      recipe: curry.MILD_HONEY_CURRY,
+      level: 1,
+      count: 0,
+      sunday: 0,
+      totalSkipped: 1,
+      plannedAttempts: 1,
+      plannedFailures: 1,
+      potLimited: { count: 0, averageMissing: 0 },
+      ingredientLimited: [{ ingredientName: 'Honey', count: 1, averageMissing: 4 }]
+    })
+    store.getCurrentTeam.production = production
+    await nextTick()
+    expect(wrapper.text()).toContain('Honey')
+    expect(wrapper.text()).toContain('Average missing: 4')
+    expect(wrapper.text().replace(/\s+/g, ' ')).toContain('Attempts: 1 (100%)')
+    expect(wrapper.text().replace(/\s+/g, ' ')).toContain('Failed: 1 (100%)')
+    expect(wrapper.text()).not.toContain('Better recipe was cooked')
+  })
+
+  it('uses all weekly cooks as the denominator for Sunday-only plans', async () => {
+    const store = useTeamStore()
+    store.getCurrentTeam.mealPlan = {
+      ...defaultMealPlan(),
+      sunday: { ...defaultMealPlan(), breakfast: { kind: 'recipe', recipe: curry.MILD_HONEY_CURRY.name } }
+    }
+    const production = mocks.createMockTeamProduction()
+    production.team.cooking!.curry.cookedRecipes = [
+      {
+        recipe: curry.MILD_HONEY_CURRY,
+        level: 1,
+        count: 2,
+        sunday: 2,
+        plannedAttempts: 3,
+        plannedFailures: 1,
+        totalSkipped: 1,
+        potLimited: { count: 0, averageMissing: 0 },
+        ingredientLimited: [{ ingredientName: 'Honey', count: 1, averageMissing: 4 }]
+      },
+      {
+        recipe: curry.MIXED_CURRY,
+        level: 1,
+        count: 19,
+        sunday: 1,
+        totalSkipped: 0,
+        potLimited: { count: 0, averageMissing: 0 },
+        ingredientLimited: []
+      }
+    ]
+    store.getCurrentTeam.production = production
+    await nextTick()
+    const text = wrapper.text().replace(/\s+/g, ' ')
+    expect(text).toContain('Attempts: 3 (14.29%)')
+    expect(text).toContain('Succeeded: 2 (9.52%)')
+    expect(text).toContain('Failed: 1 (4.76%)')
   })
 
   it('renders correctly with initial data', async () => {
