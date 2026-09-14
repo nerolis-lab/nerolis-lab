@@ -9,7 +9,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const baseProduction = mocks.createMockMemberWithProduction().production
 const mockMember = mocks.createMockMemberWithProduction({
-  member: mocks.createMockPokemon({ pokemon: GENGAR }),
+  member: mocks.createMockPokemon({ pokemon: GENGAR, level: 1 }),
   production: {
     ...baseProduction,
     produceWithoutSkill: {
