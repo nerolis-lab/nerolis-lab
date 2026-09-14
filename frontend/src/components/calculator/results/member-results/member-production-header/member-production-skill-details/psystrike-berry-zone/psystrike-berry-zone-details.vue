@@ -97,8 +97,13 @@ export default defineComponent({
       return compactNumber(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor, 'floor')
     },
     totalBerryZoneBonus() {
-      const value = this.memberWithProduction.production.skillValue['berry zone']
-      return (((value?.amountToSelf ?? 0) + (value?.amountToTeam ?? 0)) * this.timeWindowFactor).toFixed(1)
+      const berryZoneSkillValue = this.memberWithProduction.production.skillValue['berry zone'] ?? {
+        amountToSelf: 0,
+        amountToTeam: 0
+      }
+      return compactNumber(
+        (berryZoneSkillValue.amountToSelf + berryZoneSkillValue.amountToTeam) * this.timeWindowFactor
+      )
     },
     timeWindowFactor() {
       return this.teamStore.timeWindowFactor
