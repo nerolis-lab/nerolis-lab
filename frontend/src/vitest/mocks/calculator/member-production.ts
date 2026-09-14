@@ -60,7 +60,7 @@ export function createMockMemberProduction(
       berries: [
         {
           amount: 10,
-          berry: berry.BELUE,
+          berry: mockPokemon.pokemon.berry,
           level: mockPokemon.level
         }
       ],

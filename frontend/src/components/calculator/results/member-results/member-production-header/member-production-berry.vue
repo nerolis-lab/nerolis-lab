@@ -46,9 +46,7 @@ export default defineComponent({
   computed: {
     mergedBerries() {
       const { member, production } = this.memberWithProduction
-      const sets = production.produceWithoutSkill.berries
-      const first = sets.at(0)
-      return mergeBerrySets(sets, first?.berry ?? member.pokemon.berry, first?.level ?? member.level)
+      return mergeBerrySets(production.produceWithoutSkill.berries, member.pokemon.berry, member.level)
     },
     berryCountLabel() {
       const amount = this.mergedBerries.amount
