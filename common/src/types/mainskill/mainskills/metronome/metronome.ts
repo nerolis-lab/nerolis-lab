@@ -8,6 +8,18 @@ import { IngredientMagnetSPlusToxtricity } from '../ingredient-magnet-s';
 import { SkillCopyMimic } from '../skill-copy/skill-copy_mimic';
 import { SkillCopyTransform } from '../skill-copy/skill-copy_transform';
 
+const otherBlockedSkills: Mainskill[] = [
+  BerryBurstDisguise,
+  BerryZonePsystrike, // Unconfirmed
+  ChargeStrengthMBadDreams,
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
+  IngredientDrawSSandshrew,
+  IngredientMagnetSPlusToxtricity,
+  SkillCopyMimic,
+  SkillCopyTransform
+];
+
 export const Metronome = new (class extends Mainskill {
   name = 'Metronome';
   RP = [880, 1251, 1726, 2383, 3290, 4546, 5843];
@@ -15,22 +27,13 @@ export const Metronome = new (class extends Mainskill {
   activations: ActivationsType = {};
   image = 'metronome';
 
-  readonly blockedSkills: Mainskill[] = [
-    this,
-    BerryBurstDisguise,
-    BerryZonePsystrike, // Unconfirmed
-    ChargeStrengthMBadDreams,
-    IngredientDrawSCutiefly,
-    IngredientDrawSDwebble,
-    IngredientDrawSSandshrew,
-    IngredientMagnetSPlusToxtricity,
-    SkillCopyMimic,
-    SkillCopyTransform
-  ];
+  blockedSkillNames: string[] = [this, ...otherBlockedSkills].map((skill) => skill.name);
 
   get metronomeSkills(): Mainskill[] {
     return MAINSKILLS.filter((skill) => {
-      return !this.blockedSkills.some((blockedSkill) => skill.is(blockedSkill));
+      return !MetronomeBlockedSkills.some((blockedSkill) => skill.is(blockedSkill));
     });
   }
 })(true);
+
+export const MetronomeBlockedSkills = [Metronome, ...otherBlockedSkills];
