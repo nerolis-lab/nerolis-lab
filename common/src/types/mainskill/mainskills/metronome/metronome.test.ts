@@ -28,7 +28,7 @@ describe('Metronome', () => {
 
     // None of the blocked skills should appear in metronome skills
     metronomeSkills.forEach((skill) => {
-      expect(blockedSkillNames).not.toContain(skill.name);
+      expect(blockedSkillNames).not.toContain(skill.uniqueName);
     });
   });
 
