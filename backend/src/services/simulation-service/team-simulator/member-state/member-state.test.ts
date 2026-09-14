@@ -1,5 +1,5 @@
-import { BerryZoneState } from '@src/services/simulation-service/team-simulator/berry-zone-state.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
+import { BerryZoneState } from '@src/services/simulation-service/team-simulator/berry-zone-state.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
 import { MemberState } from '@src/services/simulation-service/team-simulator/member-state/member-state.js';
@@ -489,7 +489,7 @@ describe('recoverEnergy', () => {
 });
 
 describe('addHelpsFromSkill', () => {
-  it('shall add 1 average produce help', () => {
+  it('shall add 2 average produce helps', () => {
     const memberState = new MemberState({
       berryZoneState: new BerryZoneState(),
       member,
@@ -497,7 +497,7 @@ describe('addHelpsFromSkill', () => {
       team: [member],
       cookingState
     });
-    memberState.addHelpsFromSkill({ regular: 1, crit: 1 }, memberState);
+    memberState.addHelpsFromSkill(2, memberState);
     memberState.collectInventory();
 
     expect(memberState.results(1)).toMatchSnapshot();
@@ -511,7 +511,7 @@ describe('addHelpsFromSkill', () => {
       team: [member],
       cookingState
     });
-    memberState.addHelpsFromSkill({ regular: 0, crit: 0 }, memberState);
+    memberState.addHelpsFromSkill(0, memberState);
     memberState.collectInventory();
 
     expect(memberState.results(1)).toMatchSnapshot();
@@ -525,7 +525,7 @@ describe('addHelpsFromSkill', () => {
       team: [sneakySnackingMember],
       cookingState
     });
-    memberState.addHelpsFromSkill({ regular: 10, crit: 0 }, memberState);
+    memberState.addHelpsFromSkill(10, memberState);
     memberState.collectInventory();
 
     expect(memberState.results(1).produceTotal.ingredients.length).toBeGreaterThan(0);
