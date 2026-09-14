@@ -1,3 +1,10 @@
+# [2.66.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.65.2...v2.66.0) (2026-09-14)
+
+
+### Features
+
+* add images for berry zone ([6f054c7](https://github.com/nerolis-lab/nerolis-lab/commit/6f054c7600548d7a907c1635dac3bd0bd9612de7))
+
 ## [2.65.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.65.1...v2.65.2) (2026-09-14)
 
 ## [2.65.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.65.0...v2.65.1) (2026-09-14)
