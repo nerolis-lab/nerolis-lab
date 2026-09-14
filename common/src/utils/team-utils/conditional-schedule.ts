@@ -5,7 +5,7 @@ import {
   CookingPowerUpS,
   CookingPowerUpSMinus,
   TastyChanceS,
-  Psystrike,
+  BerryZonePsystrike,
   type Mainskill
 } from '../../types/mainskill';
 import type { TeamScheduleShift, TeamScheduleType } from '../../types/team/team';
@@ -36,12 +36,12 @@ export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, Con
       `Rotate after the ${pokemon ? capitalize(pokemon.berry.type) + ' ' : ''}berry strength bonus reaches the target. The zone lasts until moving sites.`,
     targetLabel: (pokemon) => `${pokemon ? capitalize(pokemon.berry.type) + ' ' : ''}berry strength bonus %`,
     targetField: 'berryZoneTarget',
-    defaultTarget: Psystrike.maximumBonus,
-    maximumTarget: Psystrike.maximumBonus,
+    defaultTarget: BerryZonePsystrike.maximumBonus,
+    maximumTarget: BerryZonePsystrike.maximumBonus,
     inputmode: 'decimal',
-    eligibleSkills: [Psystrike],
+    eligibleSkills: [BerryZonePsystrike],
     requiresCooking: false,
-    validateTarget: (target) => (target > Psystrike.maximumBonus ? 'Enter a bonus of 24% or less.' : '')
+    validateTarget: (target) => (target > BerryZonePsystrike.maximumBonus ? 'Enter a bonus of 24% or less.' : '')
   },
   'tasty-chance': {
     title: 'Extra tasty chance',
