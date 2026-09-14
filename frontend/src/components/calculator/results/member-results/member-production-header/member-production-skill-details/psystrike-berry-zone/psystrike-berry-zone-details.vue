@@ -35,6 +35,12 @@
           >
           <v-img src="/images/unit/strength.png" height="20" width="20" alt="strength" title="strength"></v-img>
         </div>
+        <div class="flex-left" data-testid="berry-zone-per-proc">
+          <span class="font-weight-light text-body-2 text-no-wrap font-italic text-center mr-1"
+            >+{{ berryZonePerProc }}%</span
+          >
+          <v-img :src="berryImage(berry.MAGO)" height="20" width="20" alt="Mago Berry" title="Berry Zone"></v-img>
+        </div>
       </div>
     </v-col>
 
@@ -83,6 +89,9 @@ export default defineComponent({
     strengthPerProc() {
       const rawAmount = BerryZonePsystrike.activations.strength.amount({ skillLevel: this.effectiveSkillLevel })
       return applyAreaBonus(rawAmount, this.teamStore.getCurrentTeam.island.areaBonus)
+    },
+    berryZonePerProc() {
+      return BerryZonePsystrike.activations.berryZone.amount({ skillLevel: this.effectiveSkillLevel })
     },
     totalStrength() {
       return compactNumber(this.memberWithProduction.production.strength.skill.total * this.timeWindowFactor, 'floor')
