@@ -374,7 +374,6 @@ export const FLAREON: Pokemon = evolvedPokemon(EEVEE, {
   skill: CookingPowerUpS
 });
 
-// Prototype only: speed, rates, ingredients, and specialty are provisional.
 export const MEWTWO: Pokemon = createSkillSpecialist({
   name: 'MEWTWO',
   pokedexNumber: 150,
