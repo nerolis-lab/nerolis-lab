@@ -18,7 +18,7 @@ export const Metronome = new (class extends Mainskill {
   readonly blockedSkills: Mainskill[] = [
     this,
     BerryBurstDisguise,
-    BerryZonePsystrike, // Keep the prototype out of random skill rolls until availability is confirmed.
+    BerryZonePsystrike, // Unconfirmed
     ChargeStrengthMBadDreams,
     IngredientDrawSCutiefly,
     IngredientDrawSDwebble,
