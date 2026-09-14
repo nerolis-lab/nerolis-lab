@@ -3850,12 +3850,12 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
       },
       {
         "RP": [
-          1408,
-          2002,
-          2762,
-          3813,
-          5264,
-          7274,
+          2450,
+          3383,
+          4733,
+          6551,
+          8994,
+          12028,
         ],
         "activations": {
           "berryZone": {
@@ -4930,12 +4930,12 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
       },
       {
         "RP": [
-          1408,
-          2002,
-          2762,
-          3813,
-          5264,
-          7274,
+          2450,
+          3383,
+          4733,
+          6551,
+          8994,
+          12028,
         ],
         "activations": {
           "berryZone": {
@@ -6011,12 +6011,12 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
       },
       {
         "RP": [
-          1408,
-          2002,
-          2762,
-          3813,
-          5264,
-          7274,
+          2450,
+          3383,
+          4733,
+          6551,
+          8994,
+          12028,
         ],
         "activations": {
           "berryZone": {
@@ -20005,12 +20005,12 @@ exports[`COMPLETE_POKEDEX > shall not change MEWTWO unexpectedly 1`] = `
   "remainingEvolutions": 0,
   "skill": {
     "RP": [
-      1408,
-      2002,
-      2762,
-      3813,
-      5264,
-      7274,
+      2450,
+      3383,
+      4733,
+      6551,
+      8994,
+      12028,
     ],
     "activations": {
       "berryZone": {
@@ -31356,12 +31356,12 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
       },
       {
         "RP": [
-          1408,
-          2002,
-          2762,
-          3813,
-          5264,
-          7274,
+          2450,
+          3383,
+          4733,
+          6551,
+          8994,
+          12028,
         ],
         "activations": {
           "berryZone": {
@@ -32436,12 +32436,12 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
       },
       {
         "RP": [
-          1408,
-          2002,
-          2762,
-          3813,
-          5264,
-          7274,
+          2450,
+          3383,
+          4733,
+          6551,
+          8994,
+          12028,
         ],
         "activations": {
           "berryZone": {
@@ -33517,12 +33517,12 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
       },
       {
         "RP": [
-          1408,
-          2002,
-          2762,
-          3813,
-          5264,
-          7274,
+          2450,
+          3383,
+          4733,
+          6551,
+          8994,
+          12028,
         ],
         "activations": {
           "berryZone": {
