@@ -126,6 +126,7 @@ describe('simulator', () => {
               "frontendComponentName": undefined,
               "image": "energy",
               "name": "Charge Energy S",
+              "uniqueNameOverride": undefined,
             },
           },
         ],

@@ -3,11 +3,11 @@
 exports[`activateMetronome > shall use the correct metronomeFactor for each skill activation 1`] = `
 [
   {
-    "adjustedAmount": 1.6,
+    "adjustedAmount": 1.5,
     "adjustedProduce": {
       "berries": [
         {
-          "amount": 1.6,
+          "amount": 1.5,
           "berry": {
             "name": "LUM",
             "type": "bug",
@@ -18,7 +18,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "ingredients": [],
     },
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -56,11 +56,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         4,
         5,
       ],
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 1.2800000000000002,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 1.2000000000000002,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -119,6 +120,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           4,
           5,
         ],
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "frontendComponentName": undefined,
@@ -216,11 +218,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           5,
         ],
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 1.1573333333333333,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 1.085,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -249,11 +252,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "frontendComponentName": undefined,
       "image": "energy",
       "name": "Charge Energy S",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 3.4373333333333336,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 3.365,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -298,6 +302,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "frontendComponentName": undefined,
         "image": "energy",
         "name": "Charge Energy S",
+        "uniqueNameOverride": undefined,
       },
       "critAmounts": [
         6.3,
@@ -324,11 +329,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0.5,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 121.22666666666667,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 113.65,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -359,11 +365,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         4546,
         6858,
       ],
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 55.09333333333334,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 51.650000000000006,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -394,11 +401,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2066,
         3212,
       ],
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 68.86666666666666,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 64.5625,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -455,11 +463,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2582.5,
         4015,
       ],
+      "uniqueNameOverride": "Charge Strength S Range",
     },
   },
   {
-    "adjustedAmount": 82.64000000000001,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 77.47500000000001,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -515,6 +524,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           2066,
           3212,
         ],
+        "uniqueNameOverride": undefined,
       },
       "critChance": 0.2674,
       "description": [Function],
@@ -614,15 +624,16 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           90940,
         ],
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.56,
+    "adjustedAmount": 0.525,
     "adjustedProduce": {
       "berries": [],
       "ingredients": [
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fancy Apple",
             "name": "Apple",
@@ -631,7 +642,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Moomoo Milk",
             "name": "Milk",
@@ -640,7 +651,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Greengrass Soybeans",
             "name": "Soybean",
@@ -649,7 +660,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Honey",
             "name": "Honey",
@@ -658,7 +669,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -667,7 +678,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Warming Ginger",
             "name": "Ginger",
@@ -676,7 +687,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Snoozy Tomato",
             "name": "Tomato",
@@ -685,7 +696,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fancy Egg",
             "name": "Egg",
@@ -694,7 +705,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Pure Oil",
             "name": "Oil",
@@ -703,7 +714,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Soft Potato",
             "name": "Potato",
@@ -712,7 +723,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fiery Herb",
             "name": "Herb",
@@ -721,7 +732,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Greengrass Corn",
             "name": "Corn",
@@ -730,7 +741,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Soothing Cacao",
             "name": "Cacao",
@@ -739,7 +750,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Rousing Coffee",
             "name": "Coffee",
@@ -748,7 +759,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Glossy Avocado",
             "name": "Avocado",
@@ -757,7 +768,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Tasty Mushroom",
             "name": "Mushroom",
@@ -766,7 +777,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Large Leek",
             "name": "Leek",
@@ -775,7 +786,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Plump Pumpkin",
             "name": "Pumpkin",
@@ -784,7 +795,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Slowpoke Tail",
             "name": "Tail",
@@ -794,7 +805,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -825,15 +836,16 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         24,
       ],
       "name": "Cooking Assist S",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.56,
+    "adjustedAmount": 0.525,
     "adjustedProduce": {
       "berries": [],
       "ingredients": [
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fancy Apple",
             "name": "Apple",
@@ -842,7 +854,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Moomoo Milk",
             "name": "Milk",
@@ -851,7 +863,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Greengrass Soybeans",
             "name": "Soybean",
@@ -860,7 +872,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Honey",
             "name": "Honey",
@@ -869,7 +881,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -878,7 +890,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Warming Ginger",
             "name": "Ginger",
@@ -887,7 +899,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Snoozy Tomato",
             "name": "Tomato",
@@ -896,7 +908,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fancy Egg",
             "name": "Egg",
@@ -905,7 +917,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Pure Oil",
             "name": "Oil",
@@ -914,7 +926,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Soft Potato",
             "name": "Potato",
@@ -923,7 +935,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fiery Herb",
             "name": "Herb",
@@ -932,7 +944,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Greengrass Corn",
             "name": "Corn",
@@ -941,7 +953,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Soothing Cacao",
             "name": "Cacao",
@@ -950,7 +962,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Rousing Coffee",
             "name": "Coffee",
@@ -959,7 +971,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Glossy Avocado",
             "name": "Avocado",
@@ -968,7 +980,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Tasty Mushroom",
             "name": "Mushroom",
@@ -977,7 +989,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Large Leek",
             "name": "Leek",
@@ -986,7 +998,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Plump Pumpkin",
             "name": "Pumpkin",
@@ -995,7 +1007,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Slowpoke Tail",
             "name": "Tail",
@@ -1005,7 +1017,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1056,6 +1068,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           24,
         ],
         "name": "Cooking Assist S",
+        "uniqueNameOverride": undefined,
       },
       "chanceAmounts": [
         1,
@@ -1079,11 +1092,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         24,
       ],
       "modifierName": "Bulk Up",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.7200000000000001,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.675,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1114,11 +1128,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         27,
         31,
       ],
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.5333333333333333,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.5,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1169,6 +1184,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           27,
           31,
         ],
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1197,11 +1213,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0.5,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 33.6,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 31.5,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1234,11 +1251,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         1800,
         2500,
       ],
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 42,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 39.375,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1299,11 +1317,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         2250,
         2875,
       ],
+      "uniqueNameOverride": "Dream Shard Magnet S Range",
     },
   },
   {
-    "adjustedAmount": 33.6,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 31.5,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1357,6 +1376,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           1800,
           2500,
         ],
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "frontendComponentName": undefined,
@@ -1382,11 +1402,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         1501,
         2042,
       ],
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.2346666666666667,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.22000000000000003,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1419,11 +1440,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0.5,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.5866666666666667,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.55,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1479,6 +1501,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           "chanceToTargetLowestMembers": 0.5,
           "numMonsTargeted": 1,
         },
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1512,11 +1535,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0,
         "numMonsTargeted": 2,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.9333333333333333,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.875,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1568,6 +1592,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           "chanceToTargetLowestMembers": 0.5,
           "numMonsTargeted": 1,
         },
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1593,11 +1618,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0.5,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.48266666666666674,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.45250000000000007,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1626,11 +1652,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "frontendComponentName": undefined,
       "image": "energy",
       "name": "Energy For Everyone S",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.48266666666666674,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.45250000000000007,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1678,6 +1705,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "frontendComponentName": undefined,
         "image": "energy",
         "name": "Energy For Everyone S",
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1693,11 +1721,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "juiceAmount": 1,
       "juicePercent": 0.185,
       "modifierName": "Berry Juice",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.29333333333333333,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.275,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1749,6 +1778,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "frontendComponentName": undefined,
         "image": "energy",
         "name": "Energy For Everyone S",
+        "uniqueNameOverride": undefined,
       },
       "description": [Function],
       "energyAmounts": [
@@ -1846,14 +1876,15 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           9,
         ],
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.05866666666666667,
+    "adjustedAmount": 0.05500000000000001,
     "adjustedProduce": {
       "berries": [
         {
-          "amount": 0.5866666666666667,
+          "amount": 0.55,
           "berry": {
             "name": "BELUE",
             "type": "steel",
@@ -1864,7 +1895,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "ingredients": [
         {
-          "amount": 1.1733333333333333,
+          "amount": 1.1,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -1874,7 +1905,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -1909,14 +1940,15 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.13333333333333333,
+    "adjustedAmount": 0.125,
     "adjustedProduce": {
       "berries": [
         {
-          "amount": 1.3333333333333333,
+          "amount": 1.25,
           "berry": {
             "name": "BELUE",
             "type": "steel",
@@ -1927,7 +1959,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       ],
       "ingredients": [
         {
-          "amount": 2.6666666666666665,
+          "amount": 2.5,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -1937,7 +1969,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -2008,11 +2040,48 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           6,
         ],
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.4266666666666667,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.4,
+    "fractionOfProc": 0.025,
+    "nrOfHelpsToActivate": 2,
+    "skill": {
+      "RP": [
+        880,
+        1251,
+        1726,
+        2383,
+        3290,
+        4846,
+        5843,
+      ],
+      "activations": {
+        "ingredients": {
+          "amount": [Function],
+          "unit": "ingredients",
+        },
+      },
+      "description": [Function],
+      "frontendComponentName": undefined,
+      "image": "ingredient_draw",
+      "ingredientAmounts": [
+        5,
+        6,
+        8,
+        11,
+        13,
+        16,
+        18,
+      ],
+      "name": "Ingredient Draw S",
+      "uniqueNameOverride": "Ingredient Draw S - Hawlucha",
+    },
+  },
+  {
+    "adjustedAmount": 0.4,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": IngredientDrawSHyperCutterImpl {
       "HyperCutterProbabilities": {
@@ -2152,6 +2221,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           18,
         ],
         "name": "Ingredient Draw S",
+        "uniqueNameOverride": "Ingredient Draw S - Sandshrew",
       },
       "critIngredientAmounts": [
         10,
@@ -2175,11 +2245,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         18,
       ],
       "modifierName": "Hyper Cutter",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.4266666666666667,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.4,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": IngredientDrawSSuperLuckImpl {
       "RP": [
@@ -2297,6 +2368,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           18,
         ],
         "name": "Ingredient Draw S",
+        "uniqueNameOverride": "Ingredient Draw S - Sandshrew",
       },
       "critDreamShardAmounts": [
         2500,
@@ -2329,15 +2401,16 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         18,
       ],
       "modifierName": "Super Luck",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.56,
+    "adjustedAmount": 0.525,
     "adjustedProduce": {
       "berries": [],
       "ingredients": [
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fancy Apple",
             "name": "Apple",
@@ -2346,7 +2419,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Moomoo Milk",
             "name": "Milk",
@@ -2355,7 +2428,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Greengrass Soybeans",
             "name": "Soybean",
@@ -2364,7 +2437,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Honey",
             "name": "Honey",
@@ -2373,7 +2446,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Bean Sausage",
             "name": "Sausage",
@@ -2382,7 +2455,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Warming Ginger",
             "name": "Ginger",
@@ -2391,7 +2464,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Snoozy Tomato",
             "name": "Tomato",
@@ -2400,7 +2473,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fancy Egg",
             "name": "Egg",
@@ -2409,7 +2482,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Pure Oil",
             "name": "Oil",
@@ -2418,7 +2491,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Soft Potato",
             "name": "Potato",
@@ -2427,7 +2500,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Fiery Herb",
             "name": "Herb",
@@ -2436,7 +2509,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Greengrass Corn",
             "name": "Corn",
@@ -2445,7 +2518,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Soothing Cacao",
             "name": "Cacao",
@@ -2454,7 +2527,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Rousing Coffee",
             "name": "Coffee",
@@ -2463,7 +2536,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Glossy Avocado",
             "name": "Avocado",
@@ -2472,7 +2545,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Tasty Mushroom",
             "name": "Mushroom",
@@ -2481,7 +2554,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Large Leek",
             "name": "Leek",
@@ -2490,7 +2563,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Plump Pumpkin",
             "name": "Pumpkin",
@@ -2499,7 +2572,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           },
         },
         {
-          "amount": 0.02947368421052632,
+          "amount": 0.027631578947368424,
           "ingredient": {
             "longName": "Slowpoke Tail",
             "name": "Tail",
@@ -2509,7 +2582,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         },
       ],
     },
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -2540,11 +2613,99 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         24,
       ],
       "name": "Ingredient Magnet S",
+      "uniqueNameOverride": undefined,
     },
   },
   {
     "adjustedAmount": 0.4,
-    "fractionOfProc": 0.02666666666666667,
+    "fractionOfProc": 0.025,
+    "nrOfHelpsToActivate": 2,
+    "skill": {
+      "RP": [
+        880,
+        1251,
+        1726,
+        2383,
+        3290,
+        4546,
+        5843,
+      ],
+      "activations": {
+        "paired": {
+          "amount": [Function],
+          "unit": "ingredients",
+        },
+        "solo": {
+          "amount": [Function],
+          "unit": "ingredients",
+        },
+      },
+      "baseSkill": {
+        "RP": [
+          880,
+          1251,
+          1726,
+          2383,
+          3290,
+          4546,
+          5843,
+        ],
+        "activations": {
+          "ingredients": {
+            "amount": [Function],
+            "unit": "ingredients",
+          },
+        },
+        "description": [Function],
+        "frontendComponentName": undefined,
+        "image": "ingredients",
+        "ingredientAmounts": [
+          6,
+          8,
+          11,
+          14,
+          17,
+          21,
+          24,
+        ],
+        "name": "Ingredient Magnet S",
+        "uniqueNameOverride": undefined,
+      },
+      "bonusIngredientAmounts": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+      ],
+      "description": [Function],
+      "frontendComponentName": undefined,
+      "fullDescription": [Function],
+      "image": "ingredients",
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+      "ingredientAmounts": [
+        5,
+        7,
+        9,
+        11,
+        13,
+        16,
+        18,
+      ],
+      "modifierName": "Plus",
+      "uniqueNameOverride": "Plus (Ingredient Magnet) S - Plusle",
+    },
+  },
+  {
+    "adjustedAmount": 0.375,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -2595,6 +2756,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
           24,
         ],
         "name": "Ingredient Magnet S",
+        "uniqueNameOverride": undefined,
       },
       "candyAmount": 4,
       "candyChance": 0.3333333333333333,
@@ -2615,11 +2777,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.16000000000000003,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.15000000000000002,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -2686,6 +2849,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               4,
               5,
             ],
+            "uniqueNameOverride": undefined,
           },
           "critChance": 0.185,
           "critMultiplier": 3,
@@ -2709,6 +2873,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             4,
             5,
           ],
+          "uniqueNameOverride": undefined,
         },
         {
           "RP": [
@@ -2750,6 +2915,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             5264,
             7274,
           ],
+          "uniqueNameOverride": undefined,
         },
         {
           "RP": [
@@ -2796,6 +2962,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
               4546,
               6858,
             ],
+            "uniqueNameOverride": undefined,
           },
           "description": [Function],
           "energyReduction": 12,
@@ -2811,17 +2978,19 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
             13638,
             18515,
           ],
+          "uniqueNameOverride": undefined,
         },
       ],
       "description": [Function],
       "frontendComponentName": undefined,
       "image": "copy",
       "name": "Skill Copy",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.26666666666666666,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.25,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -2850,11 +3019,12 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
       "frontendComponentName": undefined,
       "image": "chance",
       "name": "Tasty Chance S",
+      "uniqueNameOverride": undefined,
     },
   },
   {
-    "adjustedAmount": 0.02666666666666667,
-    "fractionOfProc": 0.02666666666666667,
+    "adjustedAmount": 0.025,
+    "fractionOfProc": 0.025,
     "nrOfHelpsToActivate": 2,
     "skill": {
       "RP": [
@@ -2895,6 +3065,7 @@ exports[`activateMetronome > shall use the correct metronomeFactor for each skil
         "chanceToTargetLowestMembers": 0,
         "numMonsTargeted": 1,
       },
+      "uniqueNameOverride": undefined,
     },
   },
 ]
