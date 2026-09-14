@@ -3,7 +3,12 @@ import { Mainskill, MAINSKILLS } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
 import { BerryZonePsystrike } from '../berry-zone';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
-import { IngredientDrawSCutiefly, IngredientDrawSDwebble, IngredientDrawSSandshrew } from '../ingredient-draw-s';
+import {
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
+  IngredientDrawSSandshrew
+} from '../ingredient-draw-s';
 import { IngredientMagnetSPlusToxtricity } from '../ingredient-magnet-s';
 import { SkillCopyMimic } from '../skill-copy/skill-copy_mimic';
 import { SkillCopyTransform } from '../skill-copy/skill-copy_transform';
@@ -14,6 +19,7 @@ const otherBlockedSkills: Mainskill[] = [
   ChargeStrengthMBadDreams,
   IngredientDrawSCutiefly,
   IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
   IngredientDrawSSandshrew,
   IngredientMagnetSPlusToxtricity,
   SkillCopyMimic,
