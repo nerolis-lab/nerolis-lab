@@ -135,7 +135,10 @@ export default defineComponent({
           member: member.name,
           pokemonName: memberPokemon.name,
           shiny: member.shiny,
-          berries: MathUtils.round((memberBerry?.amount ?? 0) * factor, 1),
+          berries: MathUtils.round(
+            memberProduction.produceWithoutSkill.berries.reduce((sum, set) => sum + set.amount, 0) * factor,
+            1
+          ),
           berryName: memberBerry?.berry.name ?? member.pokemon.berry.name,
           ingredients: memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) * factor,
           ingredientList: this.splitIngredientMagnetIngredients(memberProduction.produceTotal.ingredients),

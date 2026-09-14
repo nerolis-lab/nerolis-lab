@@ -1094,8 +1094,15 @@ describe('berry-zone strength accounting', () => {
       const original = baseline.results(1);
       const actual = boosted.results(1);
       expect(actual.produceTotal.ingredients).toEqual(original.produceTotal.ingredients);
-      expect(actual.produceTotal.berries.map(({ berry, level, amount }) => ({ berry, level, amount }))).toEqual(
-        original.produceTotal.berries
+      expect(actual.produceTotal.berries.reduce((sum, set) => sum + set.amount, 0)).toBe(
+        original.produceTotal.berries.reduce((sum, set) => sum + set.amount, 0)
+      );
+      expect(actual.produceWithoutSkill.berries.map((set) => set.berryZoneBonus ?? 0)).toEqual(
+        producedBerry === berry.MAGO ? [0, 24] : [0]
+      );
+      const averaged = boosted.results(2);
+      expect(averaged.produceWithoutSkill.berries).toEqual(
+        actual.produceWithoutSkill.berries.map((set) => ({ ...set, amount: set.amount / 2 }))
       );
       expect(actual.strength.berries.total).toBeCloseTo(
         original.strength.berries.total * (producedBerry === berry.MAGO ? 1.12 : 1)

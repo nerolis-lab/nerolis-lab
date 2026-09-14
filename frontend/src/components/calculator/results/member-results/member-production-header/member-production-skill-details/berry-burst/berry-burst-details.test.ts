@@ -7,12 +7,13 @@ import { berry, BRAVIARY, compactNumber, MathUtils } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberWithProduction({
-  member: mocks.createMockPokemon({ pokemon: BRAVIARY }),
+  member: mocks.createMockPokemon({ pokemon: BRAVIARY, level: 1 }),
   production: {
     ...mocks.createMockMemberWithProduction().production,
     produceFromSkill: {
       berries: [
-        { amount: 100, berry: BRAVIARY.berry, level: 1 },
+        { amount: 70, berry: BRAVIARY.berry, level: 1 },
+        { amount: 30, berry: BRAVIARY.berry, level: 1, berryZoneBonus: 24 },
         { amount: 20, berry: berry.BELUE, level: 1 }
       ],
       ingredients: []
@@ -64,10 +65,7 @@ describe('MemberProductionSkill', () => {
   it('displays the correct total skill value', () => {
     const totalSkillValue = wrapper.findAll('.font-weight-medium.text-no-wrap.text-center')
     const factor = timeWindowFactor('24H')
-    const selfAmount =
-      mockMember.production.produceFromSkill.berries.find(
-        (b) => b.berry.name === BRAVIARY.berry.name && b.level === mockMember.member.level
-      )?.amount ?? 0
+    const selfAmount = 100
     const teamAmount = mockMember.production.produceFromSkill.berries.reduce((sum, cur) => {
       return sum + (cur.berry.name === BRAVIARY.berry.name && cur.level === mockMember.member.level ? 0 : cur.amount)
     }, 0)

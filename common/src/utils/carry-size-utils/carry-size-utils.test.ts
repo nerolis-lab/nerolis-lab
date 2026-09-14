@@ -235,7 +235,7 @@ describe('base and max carry size', () => {
 });
 
 describe('berry-zone inventory', () => {
-  it('weights zone bonuses by real counts while keeping levels separate and inputs unchanged', () => {
+  it('keeps different bonuses and levels separate without changing inputs', () => {
     const original: Produce = { berries: [{ berry: BELUE, level: 30, amount: 10 }], ingredients: [] };
     const added: Produce = {
       berries: [
@@ -245,10 +245,14 @@ describe('berry-zone inventory', () => {
       ingredients: []
     };
     const result = CarrySizeUtils.addToInventory(original, added);
-    expect(result.berries).toEqual([{ berry: BELUE, level: 30, amount: 40, berryZoneBonus: 15 }, added.berries[1]]);
+    expect(result.berries).toEqual([...original.berries, ...added.berries]);
     expect(CarrySizeUtils.countInventory(result)).toBe(45);
     expect(original.berries[0]).toEqual({ berry: BELUE, level: 30, amount: 10 });
     expect(added.berries[0].berryZoneBonus).toBe(20);
-    expect(CarrySizeUtils.addToInventory(added, original).berries).toEqual(result.berries);
+    expect(CarrySizeUtils.addToInventory(result, added).berries).toEqual([
+      original.berries[0],
+      { ...added.berries[0], amount: 60 },
+      { ...added.berries[1], amount: 10 }
+    ]);
   });
 });

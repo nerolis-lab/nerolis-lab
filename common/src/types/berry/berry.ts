@@ -7,7 +7,7 @@ export interface BerrySet {
   amount: number;
   berry: Berry;
   level: number;
-  /** Average berry-zone strength bonus in percentage points, weighted by berry count. */
+  /** Berry-zone strength bonus in percentage points. Simulation sets retain the bonus at production. */
   berryZoneBonus?: number;
 }
 // TODO: Synchronize BerrySetSimple with BerrySet, including berryZoneBonus for stockpiled berries.

@@ -471,10 +471,10 @@ export default defineComponent({
       const { current, optimalBerry, optimalIngredient, optimalSkill } = params
       return {
         berry: this.calculatePercentageOfOptimal({
-          current: current.produceTotal.berries.at(0)?.amount ?? 0,
-          optimalBerry: optimalBerry.produceTotal.berries.at(0)?.amount ?? 0,
-          optimalIng: optimalIngredient.produceTotal.berries.at(0)?.amount ?? 0,
-          optimalSkill: optimalSkill.produceTotal.berries.at(0)?.amount ?? 0
+          current: current.produceTotal.berries.reduce((sum, set) => sum + set.amount, 0),
+          optimalBerry: optimalBerry.produceTotal.berries.reduce((sum, set) => sum + set.amount, 0),
+          optimalIng: optimalIngredient.produceTotal.berries.reduce((sum, set) => sum + set.amount, 0),
+          optimalSkill: optimalSkill.produceTotal.berries.reduce((sum, set) => sum + set.amount, 0)
         }),
         ingredient: this.calculatePercentageOfOptimal({
           current: current.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0),

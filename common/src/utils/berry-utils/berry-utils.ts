@@ -79,15 +79,20 @@ export function uniqueMembersWithBerry(params: { berry: Berry; members: Pokemon[
   return count;
 }
 
-/** Merge matching berry types and levels without changing their total strength or count. */
-export function mergeBerrySets(first: BerrySet, second: BerrySet): BerrySet {
-  const amount = first.amount + second.amount;
-  const result: BerrySet = { ...first, amount };
-  if (first.berryZoneBonus !== undefined || second.berryZoneBonus !== undefined) {
-    result.berryZoneBonus =
-      amount > 0
-        ? (first.amount * (first.berryZoneBonus ?? 0) + second.amount * (second.berryZoneBonus ?? 0)) / amount
-        : 0;
+/** Combine berries for display, preserving their total strength with a count-weighted zone bonus. */
+export function mergeBerrySets(sets: BerrySet[], berry: Berry, level: number): BerrySet {
+  const result: BerrySet = { berry, level, amount: 0 };
+  let weightedBonus = 0;
+  for (const set of sets) {
+    if (set.berry.name !== berry.name || set.level !== level) {
+      throw new Error('Cannot merge berries with different types or levels');
+    }
+    result.amount += set.amount;
+    weightedBonus += set.amount * (set.berryZoneBonus ?? 0);
+    if (set.berryZoneBonus !== undefined) result.berryZoneBonus = 0;
+  }
+  if (result.berryZoneBonus !== undefined && result.amount > 0) {
+    result.berryZoneBonus = weightedBonus / result.amount;
   }
   return result;
 }

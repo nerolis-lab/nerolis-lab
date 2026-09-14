@@ -95,6 +95,23 @@ describe('CompareOverview', () => {
     expect(members[0].skillProcs).toBe(MathUtils.round(mockMemberProduction.skillProcs, 1))
   })
 
+  it('counts every berry zone group in the overview', async () => {
+    const comparisonStore = useComparisonStore()
+    const baseBerry = mockMemberProduction.produceWithoutSkill.berries[0]
+    comparisonStore.addMember({
+      ...mockMemberProduction,
+      produceWithoutSkill: {
+        ...mockMemberProduction.produceWithoutSkill,
+        berries: [
+          { ...baseBerry, amount: 10 },
+          { ...baseBerry, amount: 30, berryZoneBonus: 24 }
+        ]
+      }
+    })
+    await nextTick()
+    expect(wrapper.vm.members[0].berries).toBe(40)
+  })
+
   it('displays ingredient images correctly', async () => {
     const comparisonStore = useComparisonStore()
     comparisonStore.addMember(mockMemberProduction)
