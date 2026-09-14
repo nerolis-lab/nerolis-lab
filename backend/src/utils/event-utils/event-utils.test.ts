@@ -104,6 +104,7 @@ describe('getExtraHelpfulEvents', () => {
                 "chanceToTargetLowestMembers": 0,
                 "numMonsTargeted": 1,
               },
+              "uniqueNameOverride": undefined,
             },
           },
           "time": {
@@ -176,6 +177,7 @@ describe('getExtraHelpfulEvents', () => {
                 "chanceToTargetLowestMembers": 0,
                 "numMonsTargeted": 1,
               },
+              "uniqueNameOverride": undefined,
             },
           },
           "time": {
@@ -302,6 +304,7 @@ describe('getHelperBoostEvents', () => {
                   6,
                 ],
               },
+              "uniqueNameOverride": undefined,
             },
           },
           "time": {
@@ -410,6 +413,7 @@ describe('getHelperBoostEvents', () => {
                   6,
                 ],
               },
+              "uniqueNameOverride": undefined,
             },
           },
           "time": {

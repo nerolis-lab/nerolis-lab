@@ -27,7 +27,7 @@ export const Metronome = new (class extends Mainskill {
   activations: ActivationsType = {};
   image = 'metronome';
 
-  blockedSkillNames: string[] = [this, ...otherBlockedSkills].map((skill) => skill.name);
+  blockedSkillNames: string[] = [this, ...otherBlockedSkills].map((skill) => skill.uniqueName);
 
   get metronomeSkills(): Mainskill[] {
     return MAINSKILLS.filter((skill) => {
