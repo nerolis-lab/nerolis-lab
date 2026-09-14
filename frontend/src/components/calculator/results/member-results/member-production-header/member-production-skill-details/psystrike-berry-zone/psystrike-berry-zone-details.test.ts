@@ -2,7 +2,7 @@ import MemberProductionSkill from '@/components/calculator/results/member-result
 import { useTeamStore } from '@/stores/team/team-store'
 import { mocks } from '@/vitest'
 import { flushPromises, mount, type VueWrapper } from '@vue/test-utils'
-import { MEWTWO, compactNumber } from 'sleepapi-common'
+import { BerryZonePsystrike, MEWTWO, compactNumber } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const production = mocks.createMockMemberProduction()
@@ -40,6 +40,15 @@ describe('PsystrikeBerryZoneDetails', () => {
   it('shows daily adjusted strength and zone percentage from their separate production values', () => {
     expect(wrapper.text()).toContain(`${compactNumber(4321, 'floor')} total`)
     expect(wrapper.get('[data-testid="berry-zone-total"]').text()).toBe('1.8% Berry Zone')
+  })
+
+  it('shows the effective-level zone bonus per activation independently of the time window', async () => {
+    const expected = `+${BerryZonePsystrike.activations.berryZone.amount({ skillLevel: member.production.skillLevel })}%`
+    expect(wrapper.get('[data-testid="berry-zone-per-proc"]').text()).toBe(expected)
+    expect(wrapper.get('[data-testid="berry-zone-per-proc"] img').attributes('alt')).toBe('Mago Berry')
+    useTeamStore().timeWindow = '8H'
+    await flushPromises()
+    expect(wrapper.get('[data-testid="berry-zone-per-proc"]').text()).toBe(expected)
   })
 
   it('scales both values for the selected eight-hour period', async () => {
