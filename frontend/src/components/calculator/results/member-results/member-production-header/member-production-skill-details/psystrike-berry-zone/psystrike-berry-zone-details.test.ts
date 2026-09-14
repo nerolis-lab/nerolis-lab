@@ -33,7 +33,7 @@ describe('PsystrikeBerryZoneDetails', () => {
 
   it('loads Psystrike details with the new icon and skill level badge', () => {
     expect(wrapper.findComponent({ name: 'PsystrikeBerryZoneDetails' }).exists()).toBe(true)
-    expect(wrapper.find('img').attributes('src')).toBe('/images/mainskill/psystrike.png')
+    expect(wrapper.find('img').attributes('src')).toBe('/images/mainskill/berryzone.png')
     expect(wrapper.find('#skillLevelBadge').text()).toBe('Lv.3*')
   })
 

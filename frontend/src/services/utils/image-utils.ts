@@ -15,7 +15,7 @@ export function mainskillUnitImage(unit: MainskillUnit) {
     case 'berries':
       return '/images/unit/berry.png'
     case 'berry zone':
-      return '/images/mainskill/psystrike.png'
+      return '/images/unit/berryzone.png'
     case 'candy':
       return '/images/misc/candy.png'
     case 'crit chance':

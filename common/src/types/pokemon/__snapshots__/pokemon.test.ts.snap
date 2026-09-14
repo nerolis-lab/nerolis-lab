@@ -3877,7 +3877,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFABLE unexpectedly 1`] = `
         ],
         "description": [Function],
         "frontendComponentName": undefined,
-        "image": "psystrike",
+        "image": "berryzone",
         "maximumBonus": 24,
         "name": "Psystrike (Berry Zone)",
         "strengthAmounts": [
@@ -4957,7 +4957,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFAIRY unexpectedly 1`] = `
         ],
         "description": [Function],
         "frontendComponentName": undefined,
-        "image": "psystrike",
+        "image": "berryzone",
         "maximumBonus": 24,
         "name": "Psystrike (Berry Zone)",
         "strengthAmounts": [
@@ -6038,7 +6038,7 @@ exports[`COMPLETE_POKEDEX > shall not change CLEFFA unexpectedly 1`] = `
         ],
         "description": [Function],
         "frontendComponentName": undefined,
-        "image": "psystrike",
+        "image": "berryzone",
         "maximumBonus": 24,
         "name": "Psystrike (Berry Zone)",
         "strengthAmounts": [
@@ -20032,7 +20032,7 @@ exports[`COMPLETE_POKEDEX > shall not change MEWTWO unexpectedly 1`] = `
     ],
     "description": [Function],
     "frontendComponentName": undefined,
-    "image": "psystrike",
+    "image": "berryzone",
     "maximumBonus": 24,
     "name": "Psystrike (Berry Zone)",
     "strengthAmounts": [
@@ -31383,7 +31383,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEKISS unexpectedly 1`] = `
         ],
         "description": [Function],
         "frontendComponentName": undefined,
-        "image": "psystrike",
+        "image": "berryzone",
         "maximumBonus": 24,
         "name": "Psystrike (Berry Zone)",
         "strengthAmounts": [
@@ -32463,7 +32463,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGEPI unexpectedly 1`] = `
         ],
         "description": [Function],
         "frontendComponentName": undefined,
-        "image": "psystrike",
+        "image": "berryzone",
         "maximumBonus": 24,
         "name": "Psystrike (Berry Zone)",
         "strengthAmounts": [
@@ -33544,7 +33544,7 @@ exports[`COMPLETE_POKEDEX > shall not change TOGETIC unexpectedly 1`] = `
         ],
         "description": [Function],
         "frontendComponentName": undefined,
-        "image": "psystrike",
+        "image": "berryzone",
         "maximumBonus": 24,
         "name": "Psystrike (Berry Zone)",
         "strengthAmounts": [
