@@ -115,6 +115,8 @@ export interface CookedRecipeResult {
   ingredientLimited: { ingredientName: string; count: number; averageMissing: number }[];
   averageFillerValue?: number;
   isPlannedRecipe?: boolean;
+  plannedAttempts?: number;
+  plannedFailures?: number;
 }
 
 export interface RecipeTypeResult {
