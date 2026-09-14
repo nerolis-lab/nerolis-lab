@@ -2,8 +2,7 @@ import { Mainskill, type ActivationsType, type AmountParams } from '../../mainsk
 
 export const BerryZonePsystrike = new (class extends Mainskill {
   name = 'Psystrike (Berry Zone)';
-  // Placeholder RP values; replace when verified RP data is available.
-  RP = [1408, 2002, 2762, 3813, 5264, 7274];
+  RP = [2450, 3383, 4733, 6551, 8994, 12028];
   strengthAmounts = [1408, 2002, 2762, 3813, 5264, 7274];
   berryZoneAmounts = [0.6, 0.8, 1, 1.2, 1.6, 2];
   maximumBonus = 24;
