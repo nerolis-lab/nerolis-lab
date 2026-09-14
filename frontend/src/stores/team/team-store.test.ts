@@ -28,53 +28,7 @@ describe('Team Store', () => {
 
   it('should have expected default state', () => {
     const teamStore = useTeamStore()
-    expect(teamStore.$state).toMatchInlineSnapshot(`
-      {
-        "currentIndex": 0,
-        "domainVersion": 0,
-        "loadingMembers": [
-          false,
-          false,
-          false,
-          false,
-          false,
-        ],
-        "loadingTeams": false,
-        "maxAvailableTeams": 10,
-        "tab": "overview",
-        "teams": [
-          {
-            "bedtime": "21:30",
-            "camp": false,
-            "index": 0,
-            "island": {
-              "areaBonus": 0,
-              "berries": [],
-              "expert": false,
-              "name": "Greengrass Isle",
-              "shortName": "greengrass",
-            },
-            "memberIndex": 0,
-            "memberIvs": {},
-            "members": [
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-            ],
-            "name": "Team 1",
-            "production": undefined,
-            "recipeType": "curry",
-            "stockpiledBerries": [],
-            "stockpiledIngredients": [],
-            "version": 0,
-            "wakeup": "06:00",
-          },
-        ],
-        "timeWindow": "24H",
-      }
-    `)
+    expect(teamStore.$state).toMatchSnapshot()
   })
 
   it('should populate teams correctly when user is logged in', async () => {
@@ -125,53 +79,7 @@ describe('Team Store', () => {
 
     teamStore.$reset()
 
-    expect(teamStore.$state).toMatchInlineSnapshot(`
-      {
-        "currentIndex": 0,
-        "domainVersion": 0,
-        "loadingMembers": [
-          false,
-          false,
-          false,
-          false,
-          false,
-        ],
-        "loadingTeams": false,
-        "maxAvailableTeams": 10,
-        "tab": "overview",
-        "teams": [
-          {
-            "bedtime": "21:30",
-            "camp": false,
-            "index": 0,
-            "island": {
-              "areaBonus": 0,
-              "berries": [],
-              "expert": false,
-              "name": "Greengrass Isle",
-              "shortName": "greengrass",
-            },
-            "memberIndex": 0,
-            "memberIvs": {},
-            "members": [
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-            ],
-            "name": "Team 1",
-            "production": undefined,
-            "recipeType": "curry",
-            "stockpiledBerries": [],
-            "stockpiledIngredients": [],
-            "version": 0,
-            "wakeup": "06:00",
-          },
-        ],
-        "timeWindow": "24H",
-      }
-    `)
+    expect(teamStore.$state).toMatchSnapshot()
   })
 
   it('should increment currentIndex correctly on next()', () => {
@@ -330,36 +238,7 @@ describe('Team Store', () => {
     teamStore.deleteTeam()
 
     expect(teamStore.teams[0]).toEqual(team1)
-    expect(teamStore.getCurrentTeam).toMatchInlineSnapshot(`
-      {
-        "bedtime": "21:30",
-        "camp": false,
-        "index": 1,
-        "island": {
-          "areaBonus": 0,
-          "berries": [],
-          "expert": false,
-          "name": "Greengrass Isle",
-          "shortName": "greengrass",
-        },
-        "memberIndex": 0,
-        "memberIvs": {},
-        "members": [
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-        ],
-        "name": "Helper team 2",
-        "production": undefined,
-        "recipeType": "curry",
-        "stockpiledBerries": [],
-        "stockpiledIngredients": [],
-        "version": 0,
-        "wakeup": "06:00",
-      }
-    `)
+    expect(teamStore.getCurrentTeam).toMatchSnapshot()
   })
 
   it('deleteTeam shall call server to delete team if user logged in', () => {
@@ -564,15 +443,7 @@ describe('updateTeamMember', () => {
 
     expect(teamStore.calculateProduction).toHaveBeenCalled()
     expect(pokemonStore.upsertLocalPokemon).toHaveBeenCalled()
-    expect(teamStore.getCurrentTeam.members).toMatchInlineSnapshot(`
-      [
-        undefined,
-        undefined,
-        "external-id",
-        undefined,
-        undefined,
-      ]
-    `)
+    expect(teamStore.getCurrentTeam.members).toMatchSnapshot()
   })
 
   it('shall reset the iv', async () => {
