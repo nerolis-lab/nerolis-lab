@@ -1,3 +1,4 @@
+import { BerryZoneState } from '@src/services/simulation-service/team-simulator/berry-zone-state.js';
 import { calculateFrequencyWithEnergy } from '@src/services/calculator/help/help-calculator.js';
 import { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import { defaultUserRecipes } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-utils.js';
@@ -92,7 +93,13 @@ const cookingState: CookingState = new CookingState(settings, defaultUserRecipes
 
 describe('results', () => {
   it('should return correct results after multiple iterations', () => {
-    const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member: guaranteedSkillProcMember,
+      settings,
+      team: [member],
+      cookingState
+    });
     for (let i = 0; i < 100; i++) {
       memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
       memberState.collectInventory();
@@ -105,7 +112,13 @@ describe('results', () => {
   });
 
   it('should return zero results if no helps or skills are added', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     const results = memberState.results(10);
 
     expect(results.produceTotal.berries.length).toBe(0);
@@ -115,6 +128,7 @@ describe('results', () => {
 
   it('should return only berries for a sneaky snacker', () => {
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: sneakySnackingMember,
       settings,
       team: [sneakySnackingMember],
@@ -132,7 +146,13 @@ describe('results', () => {
 
 describe('simpleResults', () => {
   it('should return correct simple results', () => {
-    const memberState = new MemberState({ member: guaranteedSkillProcMember, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member: guaranteedSkillProcMember,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.attemptDayHelp(10000000); // guarantee a help and skill roll
     memberState.collectInventory();
     const simpleResults = memberState.simpleResults(10);
@@ -142,7 +162,13 @@ describe('simpleResults', () => {
   });
 
   it('should return zero simple results if no helps or skills are added', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
 
     const simpleResults = memberState.simpleResults(10);
 
@@ -152,6 +178,7 @@ describe('simpleResults', () => {
 
   it('should return zero skill procs for a sneaky snacker', () => {
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: sneakySnackingMember,
       settings,
       team: [sneakySnackingMember],
@@ -172,6 +199,7 @@ describe('ivResults', () => {
 
     // this member has 2 berries per drop and 10 apples per drop, 50% ing% gives average of 1 berry and 5 apples
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: {
         ...guaranteedSkillProcMember,
         pokemonWithIngredients: {
@@ -207,7 +235,13 @@ describe('ivResults', () => {
   });
 
   it('should return zero iv results if no helps or skills are added', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     const ivResults = memberState.ivResults(10);
 
     expect(ivResults.produceTotal.berries.length).toBe(0);
@@ -217,7 +251,13 @@ describe('ivResults', () => {
 });
 
 describe('MemberState init', () => {
-  const memberState = new MemberState({ member, settings, team: [member], cookingState });
+  const memberState = new MemberState({
+    berryZoneState: new BerryZoneState(),
+    member,
+    settings,
+    team: [member],
+    cookingState
+  });
 
   it('shall return expected team size', () => {
     expect(memberState.teamSize).toBe(1);
@@ -238,7 +278,13 @@ describe('MemberState init', () => {
 
 describe('startDay', () => {
   it('shall recover full sleep', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -260,7 +306,13 @@ describe('startDay', () => {
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -284,7 +336,13 @@ describe('startDay', () => {
 
     const settings: TeamSettings = mocks.teamSettings({ bedtime: parseTime('23:30') });
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -292,7 +350,13 @@ describe('startDay', () => {
   });
 
   it('shall recover max up to 100 if member has residual energy from day before', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(50, memberState);
     expect(memberState.energy).toBe(50);
@@ -323,7 +387,13 @@ describe('startDay', () => {
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member, teammate], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member, teammate],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -345,7 +415,13 @@ describe('startDay', () => {
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.wakeUp();
     memberState.collectInventory();
@@ -355,7 +431,13 @@ describe('startDay', () => {
 
 describe('recoverEnergy', () => {
   it('shall recover energy from e4e', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(18, memberState);
     expect(memberState.energy).toBe(18);
@@ -378,14 +460,26 @@ describe('recoverEnergy', () => {
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(50, memberState);
     expect(memberState.energy).toBe(44);
   });
 
   it('shall recover max 150 energy', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(200, memberState);
     expect(memberState.energy).toBe(150);
@@ -396,7 +490,13 @@ describe('recoverEnergy', () => {
 
 describe('addHelpsFromSkill', () => {
   it('shall add 1 average produce help', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.addHelpsFromSkill({ regular: 1, crit: 1 }, memberState);
     memberState.collectInventory();
 
@@ -404,7 +504,13 @@ describe('addHelpsFromSkill', () => {
   });
 
   it('shall not add produce if adding 0 helps', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.addHelpsFromSkill({ regular: 0, crit: 0 }, memberState);
     memberState.collectInventory();
 
@@ -413,6 +519,7 @@ describe('addHelpsFromSkill', () => {
 
   it('shall add ingredients for a sneaky snacker', () => {
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: sneakySnackingMember,
       settings,
       team: [sneakySnackingMember],
@@ -428,14 +535,26 @@ describe('addHelpsFromSkill', () => {
 
 describe('recoverMeal', () => {
   it('shall recover energy from cooking', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverMeal();
     expect(memberState.energy).toBe(9);
   });
 
   it('shall recover no energy from cooking at 150 energy', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(150, memberState);
     expect(memberState.energy).toBe(150);
@@ -462,7 +581,13 @@ describe('attemptDayHelp', () => {
       }
     };
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(0);
@@ -474,7 +599,13 @@ describe('attemptDayHelp', () => {
   it('shall not perform a help if time has not passed scheduled help time', () => {
     const settings: TeamSettings = mocks.teamSettings({ bedtime: parseTime('23:30') });
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(-1);
@@ -486,7 +617,13 @@ describe('attemptDayHelp', () => {
   it('shall schedule the next help', () => {
     const settings: TeamSettings = mocks.teamSettings();
 
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptDayHelp(0);
@@ -513,6 +650,7 @@ describe('attemptDayHelp', () => {
 
   it('shall attempt and proc skill', () => {
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: guaranteedSkillProcMember,
       settings,
       team: [guaranteedSkillProcMember],
@@ -527,6 +665,7 @@ describe('attemptDayHelp', () => {
 
   it('shall not proc skill for a sneaky snacker', () => {
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: sneakySnackingMember,
       settings,
       team: [sneakySnackingMember],
@@ -556,7 +695,13 @@ describe('attemptDayHelp', () => {
         sneakySnacking: false
       }
     };
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     // fill inv
@@ -568,7 +713,13 @@ describe('attemptDayHelp', () => {
 
 describe('attemptNightHelp', () => {
   it('shall not perform night help if the time has not passed scheduled time', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(-1);
@@ -578,7 +729,13 @@ describe('attemptNightHelp', () => {
   });
 
   it('shall add 1 night help', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(0);
@@ -588,7 +745,13 @@ describe('attemptNightHelp', () => {
 
   it('shall add any excess helps to sneaky snacking, and shall not roll skill proc on those', () => {
     const noCarryMember: TeamMember = { ...member, settings: { ...member.settings, carrySize: 0 } };
-    const memberState = new MemberState({ member: noCarryMember, settings, team: [noCarryMember], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member: noCarryMember,
+      settings,
+      team: [noCarryMember],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(0);
@@ -614,7 +777,13 @@ describe('attemptNightHelp', () => {
         sneakySnacking: false
       }
     };
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     memberState.wakeUp();
     memberState.collectInventory();
     memberState.attemptNightHelp(0);
@@ -626,7 +795,13 @@ describe('attemptNightHelp', () => {
 
 describe('degradeEnergy', () => {
   it('shall degrade energy by 1', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(100, memberState);
     memberState.degradeEnergy();
@@ -634,7 +809,13 @@ describe('degradeEnergy', () => {
   });
 
   it('shall degrade by less than 1 if less than 1 energy left total', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.recoverEnergy(0.1, memberState);
     memberState.degradeEnergy();
@@ -642,7 +823,13 @@ describe('degradeEnergy', () => {
   });
 
   it('shall not degrade if energy at 0', () => {
-    const memberState = new MemberState({ member, settings, team: [member], cookingState });
+    const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
+      member,
+      settings,
+      team: [member],
+      cookingState
+    });
     expect(memberState.energy).toBe(0);
     memberState.degradeEnergy();
     expect(memberState.energy).toBe(0);
@@ -716,6 +903,7 @@ describe('expert mode ingredient bonus', () => {
   it('grants +1 ingredient per help to non-specialist with the main favored berry', () => {
     const m = ingredientFavoredMember({ specialty: 'berry' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings: withExpertMode('ingredient'),
       team: [m],
@@ -733,6 +921,7 @@ describe('expert mode ingredient bonus', () => {
   it('grants +1 ingredient per help when the pokemon berry matches a sub favored berry', () => {
     const m = ingredientFavoredMember({ specialty: 'berry' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings: withExpertMode('ingredient', berry.CHERI, [berry.BELUE]),
       team: [m],
@@ -748,6 +937,7 @@ describe('expert mode ingredient bonus', () => {
   it('grants an additional +1 to ingredient specialists when the runtime roll succeeds', () => {
     const m = ingredientFavoredMember({ specialty: 'ingredient' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings: withExpertMode('ingredient'),
       team: [m],
@@ -764,6 +954,7 @@ describe('expert mode ingredient bonus', () => {
   it('only applies the flat +1 to ingredient specialists when the runtime roll fails', () => {
     const m = ingredientFavoredMember({ specialty: 'ingredient' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings: withExpertMode('ingredient'),
       team: [m],
@@ -779,6 +970,7 @@ describe('expert mode ingredient bonus', () => {
   it('leaves ingredient amounts untouched for a non-favored berry', () => {
     const m = ingredientFavoredMember({ berry: berry.LEPPA, specialty: 'ingredient' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings: withExpertMode('ingredient', berry.BELUE, [berry.CHERI]),
       team: [m],
@@ -794,6 +986,7 @@ describe('expert mode ingredient bonus', () => {
   it('leaves ingredient amounts untouched when randomBonus is not ingredient', () => {
     const m = ingredientFavoredMember({ specialty: 'ingredient' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings: withExpertMode('berry'),
       team: [m],
@@ -809,6 +1002,7 @@ describe('expert mode ingredient bonus', () => {
   it('leaves ingredient amounts untouched when expert mode is not configured on the island', () => {
     const m = ingredientFavoredMember({ specialty: 'ingredient' });
     const memberState = new MemberState({
+      berryZoneState: new BerryZoneState(),
       member: m,
       settings, // no expertMode on island
       team: [m],
@@ -828,6 +1022,7 @@ describe('berry-zone strength accounting', () => {
     (producedBerry) => {
       const makeMember = () => {
         const state = new MemberState({
+          berryZoneState: new BerryZoneState(),
           member: {
             ...member,
             pokemonWithIngredients: {
@@ -873,6 +1068,7 @@ describe('berry-zone strength accounting', () => {
     (producedBerry) => {
       const makeMember = () => {
         const state = new MemberState({
+          berryZoneState: new BerryZoneState(),
           member: {
             ...member,
             pokemonWithIngredients: {
