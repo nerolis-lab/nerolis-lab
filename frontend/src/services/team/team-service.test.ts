@@ -634,7 +634,7 @@ describe('calculateIv', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         stockpiledIngredients: [],
-        island,
+        island: JSON.parse(JSON.stringify(island)),
         schedule: []
       }
     })
