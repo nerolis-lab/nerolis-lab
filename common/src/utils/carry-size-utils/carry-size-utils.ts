@@ -1,4 +1,3 @@
-import { mergeBerrySets } from '../berry-utils/berry-utils';
 import type { Pokemon } from '../../types/pokemon';
 import type { Produce } from '../../types/production';
 import { calculateRibbonCarrySize, calculateSubskillCarrySize } from '../stat-utils/stat-utils';
@@ -13,11 +12,17 @@ class CarrySizeUtilsImpl {
     produce.berries.forEach((produceBerrySet) => {
       if (produceBerrySet.amount > 0) {
         const index = newInventory.berries.findIndex(
-          (item) => item.berry.name === produceBerrySet.berry.name && item.level === produceBerrySet.level
+          (item) =>
+            item.berry.name === produceBerrySet.berry.name &&
+            item.level === produceBerrySet.level &&
+            (item.berryZoneBonus ?? 0) === (produceBerrySet.berryZoneBonus ?? 0)
         );
 
         if (index !== -1) {
-          newInventory.berries[index] = mergeBerrySets(newInventory.berries[index], produceBerrySet);
+          newInventory.berries[index] = {
+            ...newInventory.berries[index],
+            amount: newInventory.berries[index].amount + produceBerrySet.amount
+          };
         } else {
           newInventory.berries.push({ ...produceBerrySet });
         }

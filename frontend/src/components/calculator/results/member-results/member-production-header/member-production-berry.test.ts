@@ -72,7 +72,7 @@ describe('MemberProductionBerry', () => {
     )
     expect(strengthSpan?.text()).toBe(`${currentBerryStrength}`)
   })
-  it('shows the zone percentage between the berry count and strength', async () => {
+  it('combines berry groups for the count and average zone percentage', async () => {
     await wrapper.setProps({
       memberWithProduction: {
         ...mockMember,
@@ -80,14 +80,17 @@ describe('MemberProductionBerry', () => {
           ...mockMember.production,
           produceWithoutSkill: {
             ...mockMember.production.produceWithoutSkill,
-            berries: [{ ...mockMember.production.produceWithoutSkill.berries[0], berryZoneBonus: 12 }]
+            berries: [
+              { ...mockMember.production.produceWithoutSkill.berries[0], amount: 10 },
+              { ...mockMember.production.produceWithoutSkill.berries[0], amount: 30, berryZoneBonus: 20 }
+            ]
           }
         }
       }
     })
     const labels = wrapper.findAll('span.font-weight-medium')
-    expect(labels[0].text()).toBe(`x${20 * useTeamStore().timeWindowFactor}`)
-    expect(labels[1].text()).toBe('+12% (Berry Zone)')
+    expect(labels[0].text()).toBe(`x${40 * useTeamStore().timeWindowFactor}`)
+    expect(labels[1].text()).toBe('+15% (Berry Zone)')
     expect(labels[2].text()).toBe(
       compactNumber(mockMember.production.strength.berries.total * useTeamStore().timeWindowFactor, 'floor')
     )

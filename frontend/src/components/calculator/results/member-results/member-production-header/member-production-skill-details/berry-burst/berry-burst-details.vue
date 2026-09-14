@@ -115,12 +115,13 @@ export default defineComponent({
       return BerryBurst.activations.berries.teamAmount!({ skillLevel: this.effectiveSkillLevel })
     },
     skillValueSelf() {
-      const amount =
-        this.memberWithProduction.production.produceFromSkill.berries.find(
+      const amount = this.memberWithProduction.production.produceFromSkill.berries
+        .filter(
           (b) =>
             b.berry.name === this.memberWithProduction.member.pokemon.berry.name &&
             b.level === this.memberWithProduction.member.level
-        )?.amount ?? 0
+        )
+        .reduce((sum, set) => sum + set.amount, 0)
       return compactNumber(amount * this.timeWindowFactor)
     },
     skillValueTeam() {

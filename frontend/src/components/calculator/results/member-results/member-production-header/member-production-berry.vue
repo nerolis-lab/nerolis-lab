@@ -27,7 +27,7 @@ import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { berryImage } from '@/services/utils/image-utils'
 import { useTeamStore } from '@/stores/team/team-store'
 import type { MemberWithProduction } from '@/types/member/instanced'
-import { MathUtils, compactNumber } from 'sleepapi-common'
+import { MathUtils, compactNumber, mergeBerrySets } from 'sleepapi-common'
 import { defineComponent, type PropType } from 'vue'
 
 export default defineComponent({
@@ -44,15 +44,21 @@ export default defineComponent({
     return { teamStore, MathUtils, berryImage, isMobile }
   },
   computed: {
+    mergedBerries() {
+      const { member, production } = this.memberWithProduction
+      const sets = production.produceWithoutSkill.berries
+      const first = sets.at(0)
+      return mergeBerrySets(sets, first?.berry ?? member.pokemon.berry, first?.level ?? member.level)
+    },
     berryCountLabel() {
-      const amount = this.memberWithProduction.production.produceWithoutSkill.berries.at(0)?.amount ?? 0
+      const amount = this.mergedBerries.amount
       return `x${MathUtils.round(amount * this.timeWindowFactor, 1)}`
     },
     currentBerryStrength() {
       return compactNumber(this.memberWithProduction.production.strength.berries.total * this.timeWindowFactor, 'floor')
     },
     averageZoneBonus() {
-      return this.memberWithProduction.production.produceWithoutSkill.berries.at(0)?.berryZoneBonus ?? 0
+      return this.mergedBerries.berryZoneBonus ?? 0
     },
     timeWindowFactor() {
       return this.teamStore.timeWindowFactor

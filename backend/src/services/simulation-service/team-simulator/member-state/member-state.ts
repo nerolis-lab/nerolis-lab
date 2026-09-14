@@ -45,7 +45,7 @@ import {
   hasSpecialty,
   ingredientSetToFloatFlat,
   ingredientSetToIntFlat,
-  mergeBerrySets,
+  multiplyBerries,
   multiplyProduce,
   subskill
 } from 'sleepapi-common';
@@ -79,7 +79,7 @@ export class MemberState {
   private carriedAmount = 0;
   private totalAverageHelps = 0;
   private totalSneakySnackHelps = 0;
-  private totalBerryProduction: BerrySet;
+  private totalBerryProduction: BerrySet[] = [];
   private totalIngredientProduction: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
   private voidIngredients: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
   private voidIngredientsDay: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
@@ -166,11 +166,6 @@ export class MemberState {
 
     this.rng = rng || createPreGeneratedRandom();
     this.berryZoneState = berryZoneState;
-    this.totalBerryProduction = {
-      berry: member.pokemonWithIngredients.pokemon.berry,
-      level: member.settings.level,
-      amount: 0
-    };
 
     // Initialize the daily production arrays with the total number of days we'll simulate
     // Each iteration is one day
@@ -512,11 +507,7 @@ export class MemberState {
     const totalDropAmount = berryAmount + ingredient0Amount + ingredient30Amount + ingredient60Amount;
 
     if (ingredientId === undefined) {
-      this.totalBerryProduction = mergeBerrySets(
-        this.totalBerryProduction,
-        this.berryZoneState.applyBonus({ berry: this.berry, level: this.level, amount: totalDropAmount })
-      );
-      this.berryProductionPerDay[this.currentDay] += totalDropAmount;
+      this.addBerryProduction(totalDropAmount);
     } else {
       let dropAmount = totalDropAmount;
       if (useInventoryLimit) {
@@ -551,6 +542,17 @@ export class MemberState {
     return this.skillState.attemptSkill();
   }
 
+  private addBerryProduction(amount: number) {
+    if (amount <= 0) return;
+    const set = this.berryZoneState.applyBonus({ berry: this.berry, level: this.level, amount });
+    const existing = this.totalBerryProduction.find(
+      (produced) => (produced.berryZoneBonus ?? 0) === (set.berryZoneBonus ?? 0)
+    );
+    if (existing) existing.amount += amount;
+    else this.totalBerryProduction.push(set);
+    this.berryProductionPerDay[this.currentDay] += amount;
+  }
+
   public attemptSneakySnackingHelp(period: HelpPeriod) {
     this.totalAverageHelps += 1;
     this.totalSneakySnackHelps += 1;
@@ -561,11 +563,7 @@ export class MemberState {
     }
 
     // Berry drop
-    this.totalBerryProduction = mergeBerrySets(
-      this.totalBerryProduction,
-      this.berryZoneState.applyBonus({ berry: this.berry, level: this.level, amount: this.berryDropAmount })
-    );
-    this.berryProductionPerDay[this.currentDay] += this.berryDropAmount;
+    this.addBerryProduction(this.berryDropAmount);
 
     // Track spilled ingredients
     const { ingredient0Amount, ingredient30Amount, ingredient60Amount, ingredientId } =
@@ -612,11 +610,7 @@ export class MemberState {
 
     if (ingredientId === undefined) {
       // Berry drop
-      this.totalBerryProduction = mergeBerrySets(
-        this.totalBerryProduction,
-        this.berryZoneState.applyBonus({ berry: this.berry, level: this.level, amount: dropAmount })
-      );
-      this.berryProductionPerDay[this.currentDay] += dropAmount;
+      this.addBerryProduction(dropAmount);
     } else {
       // Ingredient drop
       this.totalIngredientProduction[ingredientId] += dropAmount;
@@ -675,12 +669,7 @@ export class MemberState {
 
     // Calculate total help produce based on tracked help counts
     const totalHelpProduce: Produce = {
-      berries: [
-        {
-          ...this.totalBerryProduction,
-          amount: this.totalBerryProduction.amount / iterations
-        }
-      ],
+      berries: multiplyBerries(this.totalBerryProduction, 1 / iterations),
       ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
     const produceTotal = CarrySizeUtils.addToInventory(totalSkillProduce, totalHelpProduce);
@@ -784,12 +773,7 @@ export class MemberState {
     const totalSkillProduce: Produce = multiplyProduce(this.skillProduce, 1 / iterations);
 
     const totalHelpProduce: Produce = {
-      berries: [
-        {
-          ...this.totalBerryProduction,
-          amount: this.totalBerryProduction.amount / iterations
-        }
-      ],
+      berries: multiplyBerries(this.totalBerryProduction, 1 / iterations),
       ingredients: flatToIngredientSet(this.totalIngredientProduction.map((value) => value / iterations))
     };
 

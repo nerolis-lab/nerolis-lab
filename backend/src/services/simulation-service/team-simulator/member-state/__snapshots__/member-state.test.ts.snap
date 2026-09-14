@@ -228,17 +228,7 @@ exports[`addHelpsFromSkill > shall not add produce if adding 0 helps 1`] = `
     "ingredients": [],
   },
   "produceWithoutSkill": {
-    "berries": [
-      {
-        "amount": 0,
-        "berry": {
-          "name": "BELUE",
-          "type": "steel",
-          "value": 33,
-        },
-        "level": 60,
-      },
-    ],
+    "berries": [],
     "ingredients": [],
   },
   "skillLevel": 6,
@@ -355,17 +345,7 @@ exports[`attemptDayHelp > shall not perform a help if time has not passed schedu
     "ingredients": [],
   },
   "produceWithoutSkill": {
-    "berries": [
-      {
-        "amount": 0,
-        "berry": {
-          "name": "BELUE",
-          "type": "steel",
-          "value": 33,
-        },
-        "level": 60,
-      },
-    ],
+    "berries": [],
     "ingredients": [],
   },
   "skillLevel": 6,

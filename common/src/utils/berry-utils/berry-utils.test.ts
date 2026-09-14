@@ -9,6 +9,7 @@ import {
   flatToBerrySet,
   getBerry,
   multiplyBerries,
+  mergeBerrySets,
   prettifyBerries,
   roundBerries,
   uniqueMembersWithBerry
@@ -163,4 +164,44 @@ it('preserves berry-zone bonuses when scaling and rounding berries', () => {
   const berries = [{ berry: ORAN, level: 30, amount: 10.25, berryZoneBonus: 12 }];
   expect(multiplyBerries(berries, 2)).toEqual([{ ...berries[0], amount: 20.5 }]);
   expect(roundBerries(berries, 1)).toEqual([{ ...berries[0], amount: 10.3 }]);
+});
+
+describe('mergeBerrySets', () => {
+  it('weights multiple bonuses by count without changing the input', () => {
+    const sets = [
+      { berry: ORAN, level: 30, amount: 10 },
+      { berry: ORAN, level: 30, amount: 20, berryZoneBonus: 12 },
+      { berry: ORAN, level: 30, amount: 30, berryZoneBonus: 24 }
+    ];
+    const original = structuredClone(sets);
+    expect(mergeBerrySets(sets, ORAN, 30)).toEqual({
+      berry: ORAN,
+      level: 30,
+      amount: 60,
+      berryZoneBonus: 16
+    });
+    expect(sets).toEqual(original);
+  });
+
+  it('returns zero berries for an empty array', () => {
+    expect(mergeBerrySets([], ORAN, 30)).toEqual({ berry: ORAN, level: 30, amount: 0 });
+  });
+
+  it('handles zero counts without dividing by zero', () => {
+    expect(mergeBerrySets([{ berry: ORAN, level: 30, amount: 0, berryZoneBonus: 24 }], ORAN, 30)).toEqual({
+      berry: ORAN,
+      level: 30,
+      amount: 0,
+      berryZoneBonus: 0
+    });
+  });
+
+  it.each([
+    { berry: BELUE, level: 30, amount: 10 },
+    { berry: ORAN, level: 60, amount: 10 }
+  ])('rejects a mismatched berry or level', (set) => {
+    expect(() => mergeBerrySets([{ berry: ORAN, level: 30, amount: 5 }, set], ORAN, 30)).toThrow(
+      'Cannot merge berries with different types or levels'
+    );
+  });
 });
