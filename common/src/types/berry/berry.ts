@@ -10,6 +10,7 @@ export interface BerrySet {
   /** Average berry-zone strength bonus in percentage points, weighted by berry count. */
   berryZoneBonus?: number;
 }
+// TODO: Synchronize BerrySetSimple with BerrySet, including berryZoneBonus for stockpiled berries.
 export interface BerrySetSimple {
   amount: number;
   name: string;
