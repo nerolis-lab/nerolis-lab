@@ -1,3 +1,24 @@
+# [2.67.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.66.1...v2.67.0) (2026-09-14)
+
+
+### Features
+
+* **calculator:** added TODO for berrySet type sync ([f96ce64](https://github.com/nerolis-lab/nerolis-lab/commit/f96ce64726b6965442f383c99dd56350475840a8))
+* **calculator:** align berry zone total formatting ([f5f67ca](https://github.com/nerolis-lab/nerolis-lab/commit/f5f67ca250cdf028c9966049741b83e52f5fc043))
+* **calculator:** mewtwo stats are no longer provisional ([a8d2f2f](https://github.com/nerolis-lab/nerolis-lab/commit/a8d2f2f4cb1dc073f9546de555fc8f8dbbf3654a))
+* **calculator:** preserve exact berry zone bonuses until display ([5fa6a93](https://github.com/nerolis-lab/nerolis-lab/commit/5fa6a93f193397090648fab743d38e66f3c5f6b6))
+* **calculator:** refined berry zone display ([b5baf60](https://github.com/nerolis-lab/nerolis-lab/commit/b5baf60727b6ed33ee0891e147a90f01a52df364))
+* **calculator:** renamed skillValuePerProc to strengthPerProc ([c7b7d36](https://github.com/nerolis-lab/nerolis-lab/commit/c7b7d36687079970e57bf4fa7dddd27252fad5ec))
+* **calculator:** required shared berry zone state in MemberState ([0121878](https://github.com/nerolis-lab/nerolis-lab/commit/0121878bab2dbcd17e68bf427182fa03872fef7a))
+* **calculator:** show psystrike berry zone bonus per trigger ([73444b9](https://github.com/nerolis-lab/nerolis-lab/commit/73444b9913bb32bf07dd2639e126147befa2b213))
+* **calculator:** touched up TODO ([0f62050](https://github.com/nerolis-lab/nerolis-lab/commit/0f62050e80f534b4e61c0ca93b62086052b5b11f))
+* **calculator:** updated Mewtwo stats and ingredients ([4be06ed](https://github.com/nerolis-lab/nerolis-lab/commit/4be06eda941cf52a8d3cd6758f3ee4d0c05cbbef))
+* **calculator:** updated psystrike RP values ([47c3d54](https://github.com/nerolis-lab/nerolis-lab/commit/47c3d544debf991e2396c32e21f2925e64d4d995))
+* **calculator:** use member metadata when merging berries ([09651a3](https://github.com/nerolis-lab/nerolis-lab/commit/09651a35c0d5f0e427c9ec3eadb81ceb1d5c9bfc))
+* **calculator:** used new psystrike icons ([5d171d6](https://github.com/nerolis-lab/nerolis-lab/commit/5d171d64fa40c24dfcb80a2281e76c7cbc3ede83))
+* **compare:** added temporary psystrike icon to compare data ([4b6ec8f](https://github.com/nerolis-lab/nerolis-lab/commit/4b6ec8f6f3d4fe5fd01f97f7c9abf3fcf39ee065))
+* **pokemon:** add prototype Mewtwo and Psystrike ([1b76dba](https://github.com/nerolis-lab/nerolis-lab/commit/1b76dbafb0e33abe4117c527eab061eb21d14a9f))
+
 ## [2.66.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.66.0...v2.66.1) (2026-09-14)
 
 # [2.66.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.65.2...v2.66.0) (2026-09-14)
