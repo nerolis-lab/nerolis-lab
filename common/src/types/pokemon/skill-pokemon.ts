@@ -378,18 +378,18 @@ export const FLAREON: Pokemon = evolvedPokemon(EEVEE, {
 export const MEWTWO: Pokemon = createSkillSpecialist({
   name: 'MEWTWO',
   pokedexNumber: 150,
-  frequency: toSeconds(0, 45, 0),
-  ingredientPercentage: 20,
-  skillPercentage: 5,
+  frequency: toSeconds(0, 38, 20),
+  ingredientPercentage: 16.0,
+  skillPercentage: 2.9,
   berry: MAGO,
   genders: GENDER_UNKNOWN,
   carrySize: 24,
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
-    a: MOOMOO_MILK,
-    b: SOOTHING_CACAO,
-    c: BEAN_SAUSAGE
+    a: GREENGRASS_SOYBEANS,
+    b: GREENGRASS_CORN,
+    c: SOFT_POTATO
   },
   skill: BerryZonePsystrike
 });
