@@ -22,4 +22,4 @@ export const SkillCopy = new (class extends Mainskill {
       return !this.blockedSkills.some((blockedSkill) => skill.is(blockedSkill));
     });
   }
-})(true);
+})(true, true);

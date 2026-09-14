@@ -16,7 +16,7 @@ const TestMainskill = new (class extends Mainskill {
       amount: (params: AmountParams) => params.skillLevel * 10
     }
   };
-})();
+})(false, true);
 
 const TestModifiedMainskill = new (class extends ModifiedMainskill {
   baseSkill = TestMainskill;
@@ -31,7 +31,7 @@ const TestModifiedMainskill = new (class extends ModifiedMainskill {
       critAmount: (params: AmountParams) => params.skillLevel * 20
     }
   };
-})(true);
+})(false, true);
 
 describe('Mainskill', () => {
   describe('Generic Mainskill behavior', () => {
@@ -187,17 +187,29 @@ describe('Mainskill', () => {
   });
 
   describe('Global skill arrays', () => {
-    it('should include skills in MAINSKILLS array', () => {
-      expect(MAINSKILLS).toContain(TestMainskill);
-      expect(MAINSKILLS).toContain(ChargeEnergySMoonlight);
-      expect(MAINSKILLS).toContain(Metronome);
-      expect(MAINSKILLS.length).toBeGreaterThan(0);
+    const uniqueNames = MAINSKILLS.map((skill) => skill.uniqueName).sort();
+    const ingSkillNames = INGREDIENT_SUPPORT_MAINSKILLS.map((skill) => skill.uniqueName).sort();
+
+    it('should contain no duplicate `uniqueName`s', () => {
+      for (let i = 0; i < uniqueNames.length - 1; ++i) {
+        expect(uniqueNames[i]).not.toEqual(uniqueNames[i + 1]);
+      }
     });
 
-    it('should include ingredient support skills in INGREDIENT_SUPPORT_MAINSKILLS array', () => {
-      expect(INGREDIENT_SUPPORT_MAINSKILLS).toContain(ChargeEnergySMoonlight);
-      expect(INGREDIENT_SUPPORT_MAINSKILLS).toContain(Metronome);
-      // Note: Skills that benefit team ingredients are passed true to constructor
+    it('should include all skills in MAINSKILLS array', () => {
+      expect(uniqueNames).toMatchSnapshot();
+    });
+
+    // Note: Skills that benefit team ingredients are passed true to constructor
+    it('should include skills in INGREDIENT_SUPPORT_MAINSKILLS array that influence ing production of other mons', () => {
+      expect(ingSkillNames).toMatchSnapshot();
+    });
+
+    it("should exclude skills from INGREDIENT_SUPPORT_MAINSKILLS array that don't influence ing production of other mons", () => {
+      const nonIngSkillNames = uniqueNames.filter(
+        (skillName) => !ingSkillNames.find((ingSkillName) => skillName === ingSkillName)
+      );
+      expect(nonIngSkillNames).toMatchSnapshot();
     });
   });
 
@@ -326,8 +338,7 @@ describe('Additional validation tests', () => {
       // Check that the modified skill's name includes both modifier and base skill name
       expect(modifiedSkill.name).toMatch(new RegExp(`${modifiedSkill.modifierName}.*${modifiedSkill.baseSkill.name}`));
 
-      // Check that base skill exists in MAINSKILLS
-      expect(MAINSKILLS).toContain(modifiedSkill.baseSkill);
+      // Base skill might not exist in MAINSKILLS, such as Skill Copy
     });
   });
 });
