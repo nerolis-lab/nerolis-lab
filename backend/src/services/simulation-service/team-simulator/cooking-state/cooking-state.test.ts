@@ -214,11 +214,78 @@ describe('CookingState', () => {
     );
     expect(result.dessert.cookedRecipes[0].averageFillerValue).toBe(5 * ingredient.SLOWPOKE_TAIL.value);
     expect(result.dessert.cookedRecipes[0].isPlannedRecipe).toBe(true);
+    expect(result.dessert.cookedRecipes[0].plannedAttempts).toBe(1);
+    expect(result.dessert.cookedRecipes[0].plannedFailures).toBe(0);
+  });
+
+  it('records all shortages once at the deadline, including a recipe that never cooks', () => {
+    const recipe = dessert.LUCKY_CHANT_APPLE_PIE;
+    const state = new CookingState(
+      mocks.teamSettings({
+        potSize: 1,
+        recipeType: 'dessert',
+        stockpiledIngredients: ingredientSetToFloatFlat([{ ...recipe.ingredients[0], amount: 1 }]),
+        mealPlan: {
+          breakfast: { kind: 'recipe', recipe: recipe.name },
+          lunch: { kind: 'none' },
+          dinner: { kind: 'none' }
+        }
+      }),
+      defaultUserRecipes(),
+      noCritRandom()
+    );
+    state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: false, sunday: false });
+    expect(state.results(1).dessert.cookedRecipes).toEqual([]);
+    state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: true, sunday: false });
+    state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: true, sunday: false });
+    const result = state.results(1).dessert.cookedRecipes.find((entry) => entry.recipe.name === recipe.name)!;
+    expect(result.count).toBe(0);
+    expect(result.plannedAttempts).toBe(1);
+    expect(result.plannedFailures).toBe(1);
+    expect(result.totalSkipped).toBe(1);
+    expect(result.averageFillerValue).toBe(0);
+    expect(result.potLimited).toEqual({ count: 1, averageMissing: recipe.nrOfIngredients - 1 });
+    expect(result.ingredientLimited).toEqual(
+      expect.arrayContaining(
+        recipe.ingredients.map((entry, index) => ({
+          ingredientName: entry.ingredient.name,
+          count: 1,
+          averageMissing: entry.amount - (index === 0 ? 1 : 0)
+        }))
+      )
+    );
+  });
+
+  it('combines automatic weekday skips with failed Sunday planned attempts', () => {
+    const recipe = dessert.CRAFT_SODA_POP;
+    const state = new CookingState(
+      mocks.teamSettings({
+        potSize: 100,
+        recipeType: 'dessert',
+        mealPlan: {
+          ...defaultMealPlan(),
+          sunday: {
+            breakfast: { kind: 'recipe', recipe: recipe.name },
+            lunch: { kind: 'best' },
+            dinner: { kind: 'best' }
+          }
+        }
+      }),
+      defaultUserRecipes(),
+      noCritRandom()
+    );
+    state.cook(false);
+    state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: true, sunday: true });
+    const result = state.results(7).dessert.cookedRecipes.find((entry) => entry.recipe.name === recipe.name)!;
+    expect(result.plannedAttempts).toBe(1);
+    expect(result.plannedFailures).toBe(1);
+    expect(result.totalSkipped).toBe(2);
+    expect(result.ingredientLimited).toEqual([{ ingredientName: ingredient.HONEY.name, count: 2, averageMissing: 9 }]);
   });
 
   it('shall use the Sunday meal plan only on Sunday', () => {
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({
+      mocks.teamSettings({
         recipeType: 'dessert',
         mealPlan: {
           ...defaultMealPlan(),
@@ -237,9 +304,77 @@ describe('CookingState', () => {
     expect(cookingState.hasMealPlan(true)).toBe(true);
   });
 
+  it.each([false, true])(
+    'cooks the same planned recipe all week despite Sunday reservations (deadline: %s)',
+    (finalAttempt) => {
+      const recipe = dessert.FANCY_APPLE_JUICE;
+      const dailyPlan = {
+        breakfast: { kind: 'recipe' as const, recipe: recipe.name },
+        lunch: { kind: 'recipe' as const, recipe: recipe.name },
+        dinner: { kind: 'recipe' as const, recipe: recipe.name }
+      };
+      const state = new CookingState(
+        mocks.teamSettings({
+          recipeType: 'dessert',
+          mealPlan: { ...dailyPlan, sunday: { ...dailyPlan } }
+        }),
+        defaultUserRecipes(),
+        noCritRandom()
+      );
+
+      for (let day = 0; day < 7; day++) {
+        state.startNewDay();
+        for (const meal of ['breakfast', 'lunch', 'dinner'] as const) {
+          // Only enough for this meal, never enough to cover Sunday's three meals too.
+          state.addIngredients(ingredientSetToFloatFlat(recipe.ingredients));
+          expect(state.cookPlannedMeal({ meal, finalAttempt, sunday: day === 6 })).toBe(true);
+        }
+      }
+
+      const results = state.results(7).dessert.cookedRecipes;
+      expect(results).toHaveLength(1);
+      expect(results[0]).toMatchObject({
+        recipe: { name: recipe.name },
+        count: 21,
+        sunday: 3,
+        plannedAttempts: 21,
+        plannedFailures: 0,
+        totalSkipped: 0
+      });
+    }
+  );
+
+  it('protects Sunday ingredients from fallback when there is no surplus', () => {
+    const recipe = dessert.FANCY_APPLE_JUICE;
+    const state = new CookingState(
+      mocks.teamSettings({
+        recipeType: 'dessert',
+        mealPlan: {
+          ...defaultMealPlan(),
+          sunday: {
+            breakfast: { kind: 'recipe', recipe: recipe.name },
+            lunch: { kind: 'best' },
+            dinner: { kind: 'best' }
+          }
+        }
+      }),
+      defaultUserRecipes(),
+      noCritRandom()
+    );
+    state.addIngredients(ingredientSetToFloatFlat(recipe.ingredients));
+    state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: true, sunday: false });
+    expect(state.results(1).dessert.cookedRecipes[0].recipe.name).toBe(dessert.MIXED_JUICE.name);
+    state.startNewDay();
+    expect(state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: false, sunday: true })).toBe(true);
+    expect(state.results(7).dessert.cookedRecipes.find((entry) => entry.recipe.name === recipe.name)).toMatchObject({
+      count: 1,
+      plannedFailures: 0
+    });
+  });
+
   it('shall allow weekday Best Recipe meals to use only Sunday ingredient surplus', () => {
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({
+      mocks.teamSettings({
         recipeType: 'dessert',
         mealPlan: {
           ...defaultMealPlan(),
@@ -261,7 +396,7 @@ describe('CookingState', () => {
 
   it('shall not spend ingredients reserved by weekday planned meals on Best Recipe meals', () => {
     const cookingState = new CookingState(
-      mocks.teamSettingsExt({
+      mocks.teamSettings({
         recipeType: 'dessert',
         mealPlan: {
           breakfast: { kind: 'best' },
