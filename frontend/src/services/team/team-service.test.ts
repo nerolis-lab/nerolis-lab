@@ -571,7 +571,8 @@ describe('calculateIv', () => {
     const otherMember = mocks.createMockPokemon({ externalId: 'member2' })
 
     teamStore.teams = createMockTeams(1, {
-      members: [currentMember.externalId, otherMember.externalId]
+      members: [currentMember.externalId, otherMember.externalId],
+      island
     })
 
     pokemonStore.upsertLocalPokemon(currentMember)
@@ -633,7 +634,7 @@ describe('calculateIv', () => {
         bedtime: '21:30',
         wakeup: '06:00',
         stockpiledIngredients: [],
-        island: mocks.islandInstance(),
+        island,
         schedule: []
       }
     })
