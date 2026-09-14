@@ -50,7 +50,7 @@ import {
   subskill
 } from 'sleepapi-common';
 
-import { BerryZoneState } from '../berry-zone-state.js';
+import type { BerryZoneState } from '../berry-zone-state.js';
 import { StrengthCalculator } from '../strength-calculator/strength-calculator.js';
 
 export type HelpPeriod = 'day' | 'night';
@@ -158,14 +158,14 @@ export class MemberState {
     team: TeamMember[];
     settings: TeamSettings;
     cookingState: CookingState | undefined;
-    berryZoneState?: BerryZoneState;
+    berryZoneState: BerryZoneState;
     iterations?: number;
     rng?: PreGeneratedRandom;
   }) {
-    const { member, team, settings, cookingState, iterations = 1, rng } = params;
+    const { member, team, settings, cookingState, berryZoneState, iterations = 1, rng } = params;
 
     this.rng = rng || createPreGeneratedRandom();
-    this.berryZoneState = params.berryZoneState ?? new BerryZoneState();
+    this.berryZoneState = berryZoneState;
     this.totalBerryProduction = {
       berry: member.pokemonWithIngredients.pokemon.berry,
       level: member.settings.level,
