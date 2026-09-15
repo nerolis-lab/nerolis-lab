@@ -93,7 +93,7 @@ The sidebar is generated at build time from the **`content/`** tree. Folders bec
 
 Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoComponent />`).
 
-Pages can also import a component locally in a Markdown `<script setup>` block. The Raptor BFS index uses this approach under `content/tier-lists/`, keeping its registration independent of other tier-list components. Its portraits are bundled from the frontend's source assets, so they work when viewing the guides directly on port 5173.
+Page-specific components can be imported in a Markdown `<script setup>` block without global theme registration. For example, `content/tier-lists/raptor-bfs-index.md` imports its chart locally. The chart bundles portraits from the frontend's source assets so the guides can serve them independently of the frontend server.
 
 Component interaction tests use `tests/setup/vue.ts` with the `jsdom` environment; calculation and sidebar tests run in Node.
 
