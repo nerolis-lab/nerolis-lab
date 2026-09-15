@@ -1,3 +1,10 @@
+# [2.68.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.67.0...v2.68.0) (2026-09-15)
+
+
+### Features
+
+* credit NL on dish infographic ([5d49f84](https://github.com/nerolis-lab/nerolis-lab/commit/5d49f848e74c6fdfddad2fc1600b69b4faacb8b4))
+
 # [2.67.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.66.1...v2.67.0) (2026-09-14)
 
 
