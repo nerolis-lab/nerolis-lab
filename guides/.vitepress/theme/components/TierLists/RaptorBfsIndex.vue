@@ -31,7 +31,7 @@
 
     <h2 id="bfs-chart-title" class="chart-title text-h5 pa-4">Raptor BFS Value Index</h2>
     <div class="chart-container" role="region" aria-labelledby="bfs-chart-title">
-      <table class="index-chart" aria-labelledby="bfs-chart-title">
+      <table ref="chartTable" class="index-chart" aria-labelledby="bfs-chart-title">
         <colgroup>
           <col class="range-column" />
           <col />
@@ -85,6 +85,7 @@ import { bfsPokemonPortrait } from '../../utils/bfs-index-portraits';
 import { computed, ref } from 'vue';
 import { bfsExportFilename, createBfsIndexPng } from '../../utils/bfs-index-export';
 
+const chartTable = ref<HTMLTableElement | null>(null);
 const includeUnevolved = ref(false);
 const ingredientFinderM = defineModel<boolean>('ingredientFinderM', { default: true });
 const searchQuery = ref<string | null>('');
@@ -125,7 +126,8 @@ async function exportPng() {
     rows: filteredRows.value,
     includeUnevolved: includeUnevolved.value,
     ingredientFinderM: ingredientFinderM.value,
-    search: searchQuery.value ?? ''
+    search: searchQuery.value ?? '',
+    headerBackground: getComputedStyle(chartTable.value!.tHead!.rows[0].cells[0]).backgroundColor
   };
   try {
     const blob = await createBfsIndexPng(snapshot);

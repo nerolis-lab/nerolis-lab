@@ -6,12 +6,13 @@ export interface BfsExportSnapshot {
   includeUnevolved: boolean;
   ingredientFinderM: boolean;
   search: string;
+  headerBackground?: string;
 }
 
 const portraitSize = 80;
 const entryHeight = 100;
 const rangeWidth = 160;
-const baseHeaderHeight = 88;
+const baseHeaderHeight = 112;
 const footerHeight = 60;
 
 export function bfsExportFilename(snapshot: BfsExportSnapshot): string {
@@ -83,18 +84,27 @@ export async function createBfsIndexPng(snapshot: BfsExportSnapshot): Promise<Bl
     ctx.fillStyle = color;
     ctx.fillRect(x, y, w, h);
   };
-  const text = (value: string, x: number, y: number, size: number, color = '#fff', maxWidth = width - 40) => {
+  const text = (
+    value: string,
+    x: number,
+    y: number,
+    size: number,
+    color = '#fff',
+    maxWidth = width - 40,
+    align: CanvasTextAlign = 'center'
+  ) => {
     ctx.fillStyle = color;
     ctx.font = `${size}px Arial, sans-serif`;
-    ctx.textAlign = 'center';
+    ctx.textAlign = align;
     ctx.textBaseline = 'middle';
     ctx.fillText(value, x, y, maxWidth);
   };
   fill('#171717', 0, 0, width, height);
-  text('Raptor Berry Finding S Index', width / 2, 32, 30);
-  parameters.forEach((line, index) => text(line, width / 2, 68 + index * 26, 18));
+  text('Raptor Berry Finding S Index', width / 2, 36, 30);
+  parameters.forEach((line, index) => text(line, width / 2, 80 + index * 26, 18));
+  fill(snapshot.headerBackground || '#171717', 0, headerHeight - 36, width, 36);
   text('Index range', rangeWidth / 2, headerHeight - 18, 18);
-  text('Pokémon · highest to lowest', rangeWidth + (width - rangeWidth) / 2, headerHeight - 18, 18);
+  text('Pokémon · highest to lowest', rangeWidth + 8, headerHeight - 18, 18, '#fff', width - rangeWidth - 16, 'left');
   let y = headerHeight;
   rows.forEach((row, rowIndex) => {
     const rowHeight = Math.max(1, Math.ceil(row.entries.length / columns)) * entryHeight;
