@@ -80,9 +80,10 @@
 </template>
 
 <script setup lang="ts">
-import { buildBfsIndexRows, formatBfsIndex } from '../../../lib/bfs-index-service';
+import { buildBfsIndexRows, formatBfsIndex, rangeColor } from '../../../lib/bfs-index-service';
 import { bfsPokemonPortrait } from '../../utils/bfs-index-portraits';
 import { computed, ref } from 'vue';
+import { bfsExportFilename, createBfsIndexPng } from '../../utils/bfs-index-export';
 
 const includeUnevolved = ref(false);
 const ingredientFinderM = defineModel<boolean>('ingredientFinderM', { default: true });
@@ -113,11 +114,38 @@ function normalizeSearch(value: string): string {
     .toLowerCase();
 }
 
-function rangeColor(min: number): string {
-  // Purple at the top, through green, to red at the bottom, matching the reference chart.
-  const hue = Math.max(0, Math.min(260, ((min - 4.5) / 5.5) * 260));
-  return `hsl(${hue} 45% 28%)`;
+const exporting = ref(false);
+const exportError = ref('');
+
+async function exportPng() {
+  if (exporting.value || filteredRows.value.length === 0) return;
+  exporting.value = true;
+  exportError.value = '';
+  const snapshot = {
+    rows: filteredRows.value,
+    includeUnevolved: includeUnevolved.value,
+    ingredientFinderM: ingredientFinderM.value,
+    search: searchQuery.value ?? ''
+  };
+  try {
+    const blob = await createBfsIndexPng(snapshot);
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = bfsExportFilename(snapshot);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    // Give the browser time to start the download before releasing its URL.
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+  } catch {
+    exportError.value = 'Could not export the chart. Please try again.';
+  } finally {
+    exporting.value = false;
+  }
 }
+
+defineExpose({ exportPng, exporting, exportError, canExport: computed(() => filteredRows.value.length > 0) });
 </script>
 
 <style scoped lang="scss">
