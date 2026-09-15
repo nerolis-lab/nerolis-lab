@@ -42,8 +42,10 @@
       <div class="credits">
         <span class="credits-line">original by</span>
         <span class="credits-line">Anti</span>
-        <span class="credits-line">maintained by</span>
+        <span class="credits-line">updated by</span>
         <span class="credits-line">tindo</span>
+        <span class="credits-line">maintained by</span>
+        <span class="credits-line">Neroli's Lab</span>
       </div>
     </div>
   </div>
