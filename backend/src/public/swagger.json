@@ -392,6 +392,9 @@
 										"frontendComponentName": {
 											"type": "string"
 										},
+										"uniqueNameOverride": {
+											"type": "string"
+										},
 										"name": {
 											"type": "string"
 										},
@@ -718,6 +721,9 @@
 													"type": "string"
 												},
 												"frontendComponentName": {
+													"type": "string"
+												},
+												"uniqueNameOverride": {
 													"type": "string"
 												},
 												"name": {
