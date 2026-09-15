@@ -58,9 +58,10 @@ onMounted(() => {
           class="author-avatar"
           size="40"
           variant="outlined"
-          :image="author.url"
           :style="{ zIndex: authorsWithAvatars.length - index }"
-        />
+        >
+          <img :src="author.url" alt="" width="40" height="40" />
+        </v-avatar>
       </div>
       <p class="author-names">by {{ authorByline }}</p>
     </div>
@@ -95,6 +96,13 @@ onMounted(() => {
   border-color: var(--color-neutral-700);
   border-width: 2px;
   box-shadow: 0 0 10px rgba(var(--color-neutral-700), 0.6);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+  }
 
   &:not(:first-child) {
     margin-left: -10px;

@@ -1,11 +1,5 @@
 <template>
-  <v-container class="bfs-index-page">
-    <h1 class="text-h4 mb-3">Berry Finding S Index</h1>
-    <p class="mb-4">
-      How much each Pokémon benefits from Berry Finding S, based on
-      <a :href="BFS_INDEX_SOURCE" target="_blank" rel="noopener noreferrer">u/VelocityRaptor22’s original BFS index</a>.
-    </p>
-
+  <div class="bfs-index-page vp-raw">
     <div class="d-flex flex-wrap ga-4 mb-4">
       <v-switch
         v-model="includeUnevolved"
@@ -57,13 +51,7 @@
               <ol class="pokemon-list">
                 <li v-for="(entry, index) in row.entries" :key="entry.pokemon.name" class="pokemon-entry">
                   <img
-                    :src="
-                      avatarImage({
-                        pokemonName: entry.pokemon.name,
-                        shiny: false,
-                        happy: false
-                      })
-                    "
+                    :src="bfsPokemonPortrait(entry.pokemon.name)"
                     :alt="entry.pokemon.displayName"
                     :title="`${entry.pokemon.displayName} · ${entry.pokemon.specialty} · ${formatBfsIndex(entry.score)}`"
                     width="72"
@@ -71,7 +59,7 @@
                     loading="lazy"
                   />
                   <v-card
-                    class="pokemon-score text-center text-x-small rounded-0"
+                    class="pokemon-score text-center rounded-0"
                     :color="index % 2 === 0 ? 'white' : 'grey-lighten-2'"
                     variant="flat"
                     :aria-label="`${entry.pokemon.displayName}: ${formatBfsIndex(entry.score)}`"
@@ -88,66 +76,47 @@
         </tbody>
       </table>
     </div>
-
-    <v-card class="mt-5 pa-4" variant="tonal">
-      <h2 class="text-h6 mb-2">How the index is calculated</h2>
-      <p class="mb-3">Skill and “All” specialists: <code>(864 / f) × (1 − i) × b</code></p>
-      <p>
-        Ingredient specialists:
-        <code>{{ ingredientFinderM ? '(864 / f) × (1 − 1.36 × i) × b' : '(864 / f) × (1 − i) × b' }}</code>
-      </p>
-      <p class="mt-3">
-        <code>864</code> is the number of seconds in a day (86,400) divided by 100 to keep index scores compact.<br />
-        <code>f</code> is base helping frequency in seconds.<br />
-        <code>i</code> is base ingredient rate as a fraction.<br />
-        <code>b</code> is base berry strength.
-      </p>
-      <p class="mt-3">
-        Formula and chart concept by
-        <a :href="BFS_INDEX_SOURCE" target="_blank" rel="noopener noreferrer">u/VelocityRaptor22</a>.
-      </p>
-    </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { BFS_INDEX_SOURCE, buildBfsIndexRows, formatBfsIndex } from '@/services/bfs-index-service'
-import { avatarImage } from '@/services/utils/image-utils'
-import { computed, ref } from 'vue'
+import { buildBfsIndexRows, formatBfsIndex } from '../../../lib/bfs-index-service';
+import { bfsPokemonPortrait } from '../../utils/bfs-index-portraits';
+import { computed, ref } from 'vue';
 
-const includeUnevolved = ref(false)
-const ingredientFinderM = ref(true)
-const searchQuery = ref<string | null>('')
+const includeUnevolved = ref(false);
+const ingredientFinderM = defineModel<boolean>('ingredientFinderM', { default: true });
+const searchQuery = ref<string | null>('');
 const rows = computed(() =>
   buildBfsIndexRows(undefined, {
     includeUnevolved: includeUnevolved.value,
     ingredientFinderM: ingredientFinderM.value
   })
-)
+);
 const filteredRows = computed(() => {
-  const query = normalizeSearch(searchQuery.value ?? '').trim()
-  if (!query) return rows.value
+  const query = normalizeSearch(searchQuery.value ?? '').trim();
+  if (!query) return rows.value;
 
   return rows.value
     .map((row) => ({
       ...row,
       entries: row.entries.filter((entry) => normalizeSearch(entry.pokemon.displayName).includes(query))
     }))
-    .filter((row) => row.entries.length > 0)
-})
+    .filter((row) => row.entries.length > 0);
+});
 
 function normalizeSearch(value: string): string {
   return value
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[.'’]/g, '')
-    .toLowerCase()
+    .toLowerCase();
 }
 
 function rangeColor(min: number): string {
   // Purple at the top, through green, to red at the bottom, matching the reference chart.
-  const hue = Math.max(0, Math.min(260, ((min - 4.5) / 5.5) * 260))
-  return `hsl(${hue} 45% 28%)`
+  const hue = Math.max(0, Math.min(260, ((min - 4.5) / 5.5) * 260));
+  return `hsl(${hue} 45% 28%)`;
 }
 </script>
 
@@ -155,6 +124,7 @@ function rangeColor(min: number): string {
 .bfs-index-page {
   width: 100%;
   max-width: 1280px;
+  min-width: 0;
 }
 
 .chart-container {
@@ -170,6 +140,8 @@ function rangeColor(min: number): string {
 }
 
 .index-chart {
+  display: table;
+  margin: 0;
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
@@ -212,6 +184,7 @@ function rangeColor(min: number): string {
 .range-label {
   padding: 10px;
   font-size: 0.85rem;
+  text-align: center;
   white-space: nowrap;
 }
 
@@ -225,13 +198,16 @@ function rangeColor(min: number): string {
   gap: 0;
 }
 
-.pokemon-entry {
+.pokemon-list > .pokemon-entry {
   flex: 0 0 min(72px, 100%);
+  // Override VitePress's prose spacing on consecutive list items.
+  margin: 0;
 
   img {
     display: block;
     width: 100%;
     height: 72px;
+    margin: 0;
     object-fit: cover;
   }
 }
@@ -239,6 +215,9 @@ function rangeColor(min: number): string {
 .pokemon-score {
   width: 100%;
   height: 16px;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
   line-height: 16px;
   color: #111;
   font-variant-numeric: tabular-nums;
