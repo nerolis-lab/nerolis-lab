@@ -13,7 +13,9 @@ const imageUrl = computed(() => getAvatarUrlForAuthorName(props.author));
 <template>
   <section class="about-author">
     <div class="heading">
-      <v-avatar v-if="imageUrl" :image="imageUrl" class="avatar" size="40" variant="outlined" aria-hidden="true" />
+      <v-avatar v-if="imageUrl" class="avatar" size="40" variant="outlined" aria-hidden="true">
+        <img :src="imageUrl" alt="" width="40" height="40" />
+      </v-avatar>
       <h3>
         {{ title }}
       </h3>
@@ -44,6 +46,13 @@ const imageUrl = computed(() => getAvatarUrlForAuthorName(props.author));
   border-color: var(--color-neutral-700);
   border-width: 2px;
   box-shadow: 0 0 10px rgba(var(--color-neutral-700), 0.6);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+  }
 }
 
 h3 {

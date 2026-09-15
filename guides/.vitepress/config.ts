@@ -39,7 +39,7 @@ export default defineConfig({
       options: {
         miniSearch: {
           _splitIntoSections: splitIntoSectionsForLocalSearch
-        }
+        } as DefaultTheme.LocalSearchOptions['miniSearch'] // Runtime hook covered by the upstream-invariants tests.
       }
     },
     outline: {
@@ -80,6 +80,8 @@ export default defineConfig({
       }
     },
     server: {
+      // The wiki bundles shared Pokémon portraits from the sibling frontend package.
+      fs: { allow: [resolve(guidesRoot, '..')] },
       port: 5173,
       strictPort: true
     },
