@@ -75,7 +75,7 @@ describe('BFS index', () => {
     expect(entries.every((entry) => Number.isFinite(entry.score))).toBe(true);
   });
 
-  it('uses exact half-point boundaries before rounding and sorts descending within each row', () => {
+  it('assigns half-point ranges using full-precision scores and sorts each range descending', () => {
     const atScore = (name: string, score: number) =>
       pokemon({ name, ingredientPercentage: 0, frequency: 864, berry: { name: 'Test', type: 'normal', value: score } });
     const input = [atScore('Low', 6.9999), atScore('Boundary', 7), atScore('High', 7.4999), atScore('Top', 8)];

@@ -230,7 +230,7 @@ defineExpose({ exportPng, exporting, exportError, canExport: computed(() => filt
 
 .pokemon-list > .pokemon-entry {
   flex: 0 0 min(72px, 100%);
-  // Override VitePress's prose spacing on consecutive list items.
+  // Keep portraits aligned by removing VitePress's margin on consecutive list items.
   margin: 0;
 
   img {

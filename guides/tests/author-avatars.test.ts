@@ -15,8 +15,8 @@ vi.mock('vitepress', () => ({
   useRoute: () => ({ path: '/guides/tier-lists/raptor-bfs-index' })
 }));
 
-describe('static author avatars', () => {
-  it('includes both local images in the initial HTML, in author order', async () => {
+describe('server-rendered author avatars', () => {
+  it('renders avatar images in frontmatter author order during server rendering', async () => {
     const app = createSSRApp(GuidesDocHeading);
     app.use(createVuetify({ components: { VAvatar } }));
     const html = await renderToString(app);
@@ -28,7 +28,7 @@ describe('static author avatars', () => {
     ]);
   });
 
-  it('includes the local image in an AboutAuthor block without client-side loading', async () => {
+  it('renders the author avatar image in AboutAuthor during server rendering', async () => {
     const app = createSSRApp(AboutAuthor, { author: 'CowTools', title: 'About CowTools' });
     app.use(createVuetify({ components: { VAvatar } }));
     const html = await renderToString(app);

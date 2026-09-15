@@ -39,7 +39,7 @@ export default defineConfig({
       options: {
         miniSearch: {
           _splitIntoSections: splitIntoSectionsForLocalSearch
-        } as DefaultTheme.LocalSearchOptions['miniSearch'] // Runtime hook covered by the upstream-invariants tests.
+        } as DefaultTheme.LocalSearchOptions['miniSearch'] // VitePress supports this hook at runtime but omits it from its public types.
       }
     },
     outline: {
