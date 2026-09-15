@@ -52,3 +52,9 @@ export function buildBfsIndexRows(
   }
   return rows;
 }
+
+export function rangeColor(min: number): string {
+  // Purple at the top, through green, to red at the bottom.
+  const hue = Math.max(0, Math.min(260, ((min - 4.5) / 5.5) * 260));
+  return `hsl(${hue} 45% 28%)`;
+}

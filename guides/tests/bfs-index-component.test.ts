@@ -4,9 +4,82 @@ import BfsIndexPage from '../.vitepress/theme/components/TierLists/RaptorBfsInde
 import { buildBfsIndexRows, formatBfsIndex } from '../.vitepress/lib/bfs-index-service';
 import { COMPLETE_POKEDEX } from 'sleepapi-common';
 import { flushPromises, mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { createBfsIndexPng } from '../.vitepress/theme/utils/bfs-index-export';
+
+vi.mock('../.vitepress/theme/utils/bfs-index-export', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../.vitepress/theme/utils/bfs-index-export')>()),
+  createBfsIndexPng: vi.fn()
+}));
 
 describe('Berry Finding S Index page', () => {
+  it('downloads the generated PNG and prevents overlapping exports', async () => {
+    const wrapper = mount(BfsIndexPage);
+    const blob = new Blob(['png'], { type: 'image/png' });
+    let finish!: (blob: Blob) => void;
+    vi.mocked(createBfsIndexPng)
+      .mockClear()
+      .mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          })
+      );
+    const createUrl = vi.fn(() => 'blob:bfs-chart');
+    const revokeUrl = vi.fn();
+    vi.stubGlobal('URL', { createObjectURL: createUrl, revokeObjectURL: revokeUrl });
+    const click = vi.spyOn(HTMLAnchorElement.prototype, 'click').mockImplementation(function (this: HTMLAnchorElement) {
+      expect(this.download).toBe('raptor-berry-finding-s-index.png');
+      expect(this.href).toBe('blob:bfs-chart');
+      expect(this.isConnected).toBe(true);
+    });
+    vi.useFakeTimers();
+    try {
+      const exposed = wrapper.vm as unknown as { exportPng: () => Promise<void>; exporting: boolean };
+      const pending = exposed.exportPng();
+      expect(exposed.exporting).toBe(true);
+      await exposed.exportPng();
+      expect(createBfsIndexPng).toHaveBeenCalledTimes(1);
+      finish(blob);
+      await pending;
+      expect(createUrl).toHaveBeenCalledWith(blob);
+      expect(click).toHaveBeenCalledOnce();
+      expect(exposed.exporting).toBe(false);
+      vi.runAllTimers();
+      expect(revokeUrl).toHaveBeenCalledWith('blob:bfs-chart');
+    } finally {
+      vi.useRealTimers();
+      vi.unstubAllGlobals();
+      click.mockRestore();
+      wrapper.unmount();
+    }
+  });
+
+  it('exports a snapshot of the active filters and recovers from an export failure', async () => {
+    const wrapper = mount(BfsIndexPage);
+    await wrapper.get('[data-testid="include-unevolved"] input').setValue(true);
+    await wrapper.get('[data-testid="ingredient-finder-m"] input').setValue(false);
+    await wrapper.get('[data-testid="pokemon-search"] input').setValue('bulbasaur');
+    vi.mocked(createBfsIndexPng).mockRejectedValueOnce(new Error('Image failed'));
+    const exposed = wrapper.vm as unknown as {
+      exportPng: () => Promise<void>;
+      exporting: boolean;
+      exportError: string;
+    };
+    await exposed.exportPng();
+    expect(createBfsIndexPng).toHaveBeenLastCalledWith({
+      includeUnevolved: true,
+      ingredientFinderM: false,
+      search: 'bulbasaur',
+      rows: buildBfsIndexRows(undefined, { includeUnevolved: true, ingredientFinderM: false })
+        .map((row) => ({ ...row, entries: row.entries.filter((entry) => entry.pokemon.displayName === 'Bulbasaur') }))
+        .filter((row) => row.entries.length > 0)
+    });
+    expect(exposed.exporting).toBe(false);
+    expect(exposed.exportError).toContain('Please try again');
+    wrapper.unmount();
+  });
+
   it('filters while typing, retains score order, and restores the chart when cleared', async () => {
     const wrapper = mount(BfsIndexPage);
     const search = wrapper.get('[data-testid="pokemon-search"] input');

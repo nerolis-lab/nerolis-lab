@@ -9,11 +9,12 @@ import { ref } from 'vue'
 import RaptorBfsIndex from '../../.vitepress/theme/components/TierLists/RaptorBfsIndex.vue'
 
 const ingredientFinderM = ref(true)
+const chart = ref(null)
 </script>
 
 How much each Pokémon benefits from Berry Finding S, based on [u/VelocityRaptor22’s original BFS index](https://www.reddit.com/r/PokemonSleep/comments/1m9nnh3/bfs_value_on_nonberry_mons_numerically_indexed/).
 
-<RaptorBfsIndex v-model:ingredient-finder-m="ingredientFinderM" />
+<RaptorBfsIndex ref="chart" v-model:ingredient-finder-m="ingredientFinderM" />
 
 ## How the index is calculated
 
@@ -29,3 +30,14 @@ Ingredient specialists are assumed to have the Ingredient Finding M subskill by 
 `b` is base berry strength.
 
 Formula and chart concept by [u/VelocityRaptor22](https://www.reddit.com/r/PokemonSleep/comments/1m9nnh3/bfs_value_on_nonberry_mons_numerically_indexed/).
+
+<div class="vp-raw">
+  <v-btn
+    color="primary"
+    prepend-icon="mdi-download"
+    :loading="chart?.exporting"
+    :disabled="!chart?.canExport"
+    @click="chart?.exportPng()"
+  >Save chart as PNG</v-btn>
+  <p v-if="chart?.exportError" role="alert">{{ chart.exportError }}</p>
+</div>
