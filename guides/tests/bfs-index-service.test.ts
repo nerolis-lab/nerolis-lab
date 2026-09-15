@@ -1,17 +1,16 @@
 import { buildBfsIndexRows, calculateBfsIndex, formatBfsIndex } from '../.vitepress/lib/bfs-index-service';
-import { COMPLETE_POKEDEX, type Pokemon } from 'sleepapi-common';
+import { COMPLETE_POKEDEX, commonMocks, type Pokemon } from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 function pokemon(overrides: Partial<Pokemon> = {}): Pokemon {
-  return {
-    ...COMPLETE_POKEDEX[0],
+  return commonMocks.mockPokemon({
     specialty: 'skill',
     remainingEvolutions: 0,
     frequency: 3000,
     ingredientPercentage: 20,
     berry: { name: 'Test', type: 'normal', value: 30 },
     ...overrides
-  };
+  });
 }
 
 describe('BFS index', () => {
@@ -62,7 +61,8 @@ describe('BFS index', () => {
   });
 
   it('matches the published Sceptile benchmark', () => {
-    const sceptile = COMPLETE_POKEDEX.find((entry) => entry.name === 'SCEPTILE')!;
+    // Published benchmark inputs stay fixed even if the live species receives a balance update.
+    const sceptile = pokemon({ frequency: 2300, ingredientPercentage: 10.7 });
     expect(calculateBfsIndex(sceptile)).toBeCloseTo(10.06, 2);
   });
 

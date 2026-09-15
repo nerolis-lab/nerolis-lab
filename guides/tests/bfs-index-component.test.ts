@@ -6,9 +6,10 @@ import { COMPLETE_POKEDEX } from 'sleepapi-common';
 import { flushPromises, mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
 import { createBfsIndexPng } from '../.vitepress/theme/utils/bfs-index-export';
+import type * as BfsIndexExport from '../.vitepress/theme/utils/bfs-index-export';
 
 vi.mock('../.vitepress/theme/utils/bfs-index-export', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('../.vitepress/theme/utils/bfs-index-export')>()),
+  ...(await importOriginal<typeof BfsIndexExport>()),
   createBfsIndexPng: vi.fn()
 }));
 
@@ -71,6 +72,7 @@ describe('Berry Finding S Index page', () => {
       includeUnevolved: true,
       ingredientFinderM: false,
       search: 'bulbasaur',
+      headerBackground: getComputedStyle(wrapper.get('thead th').element).backgroundColor,
       rows: buildBfsIndexRows(undefined, { includeUnevolved: true, ingredientFinderM: false })
         .map((row) => ({ ...row, entries: row.entries.filter((entry) => entry.pokemon.displayName === 'Bulbasaur') }))
         .filter((row) => row.entries.length > 0)
