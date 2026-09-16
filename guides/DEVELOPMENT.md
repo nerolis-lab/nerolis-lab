@@ -41,6 +41,8 @@ Open the URL VitePress prints (default **http://localhost:5173/guides/** with th
 
 ## Theme (SCSS)
 
+Use the JavaScript `sass` package for styles. The native Dart executable bundled with `sass-embedded` cannot run on an unconfigured NixOS system and can crash the dev server with `write EPIPE`.
+
 - **Colors:** `.vitepress/theme/tokens.scss` - CSS custom properties (`--color-*`, `--vp-c-*`).
 - **Typography:** `.vitepress/theme/typography.scss` - type scale and content rules.
 - **Layout / shell:** `.vitepress/theme/style.scss` - imports tokens + typography, slim nav, VitePress overrides.
@@ -90,6 +92,10 @@ After bumping `vitepress`, smoke-test the navigation and search experience on de
 The sidebar is generated at build time from the **`content/`** tree. Folders become nested groups. YAML front matter supports **`title`** (nav label), **`fullTitle`** (page H1), **`author`** (comma-separated list of names), and **`order`** (lower numbers sort earlier; ties use link order). Section folders may use **`index.md`** for the landing page and group title.
 
 Optional Vue components can be registered in `.vitepress/theme/index.ts` and used in Markdown (for example `<GuideDemoComponent />`).
+
+Page-specific components can be imported in a Markdown `<script setup>` block without global theme registration. For example, `content/tier-lists/raptor-bfs-index.md` imports its chart locally. The chart bundles portraits from the frontend's source assets so the guides can serve them independently of the frontend server.
+
+Component interaction tests use `tests/setup/vue.ts` with the `jsdom` environment; calculation and sidebar tests run in Node.
 
 ## Full-site navigation
 

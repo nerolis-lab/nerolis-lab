@@ -79,6 +79,10 @@ const router = createRouter({
       component: RecipesPage
     },
     {
+      path: '/bfs-index',
+      redirect: '/guides/tier-lists/raptor-bfs-index'
+    },
+    {
       path: '/dish-infographic',
       name: 'DishInfographic',
       component: DishInfographicPage
