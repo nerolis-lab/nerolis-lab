@@ -232,6 +232,7 @@ describe('scheduleSkillEvents', () => {
             4546,
             6858,
           ],
+          "uniqueNameOverride": undefined,
         },
       }
     `); // Nightly proc
@@ -269,6 +270,7 @@ describe('scheduleSkillEvents', () => {
             4546,
             6858,
           ],
+          "uniqueNameOverride": undefined,
         },
       }
     `); // Final partial proc, no helps during the day

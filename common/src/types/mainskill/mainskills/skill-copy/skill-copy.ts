@@ -1,6 +1,7 @@
 import type { ActivationsType, AmountParams } from '../../mainskill';
 import { Mainskill, MAINSKILLS } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
+import { BerryZonePsystrike } from '../berry-zone';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
 
 // TODO: skill doesn't exist yet, values are guessed
@@ -14,11 +15,11 @@ export const SkillCopy = new (class extends Mainskill {
 
   activations: ActivationsType = {};
 
-  readonly blockedSkills: Mainskill[] = [this, ChargeStrengthMBadDreams, BerryBurstDisguise];
+  readonly blockedSkills: Mainskill[] = [this, BerryBurstDisguise, BerryZonePsystrike, ChargeStrengthMBadDreams];
 
   get copySkills(): Mainskill[] {
     return MAINSKILLS.filter((skill) => {
       return !this.blockedSkills.some((blockedSkill) => skill.is(blockedSkill));
     });
   }
-})(true);
+})(true, true);

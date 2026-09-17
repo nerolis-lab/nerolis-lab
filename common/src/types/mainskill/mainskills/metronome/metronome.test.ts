@@ -24,11 +24,11 @@ describe('Metronome', () => {
 
   it('should block certain skills from metronome selection', () => {
     const metronomeSkills = Metronome.metronomeSkills;
-    const blockedSkills = Metronome.blockedSkills;
+    const blockedSkillNames = Metronome.blockedSkillNames;
 
     // None of the blocked skills should appear in metronome skills
-    blockedSkills.forEach((blockedSkill) => {
-      expect(metronomeSkills).not.toContain(blockedSkill);
+    metronomeSkills.forEach((skill) => {
+      expect(blockedSkillNames).not.toContain(skill.uniqueName);
     });
   });
 

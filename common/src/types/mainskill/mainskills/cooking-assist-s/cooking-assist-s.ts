@@ -14,4 +14,4 @@ export const CookingAssistS = new (class extends Mainskill {
       amount: this.leveledAmount(this.ingredientAmounts)
     }
   };
-})(true);
+})(false, true);
