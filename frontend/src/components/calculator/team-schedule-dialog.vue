@@ -14,7 +14,6 @@
           hide-details
           item-title="title"
           item-value="value"
-          :item-props="scheduleTypeItemProps"
           :items="scheduleTypes"
           label="Rotate by"
           :disabled="saving || shifts.length === 0"
@@ -192,15 +191,13 @@ const targetLabel = computed(() => {
   const label = conditionalDefinition.value?.targetLabel
   return typeof label === 'function' ? label(primaryPokemon.value?.pokemon) : label
 })
-const scheduleTypes = computed(() => [
-  { title: 'Time', value: 'time', disabled: false },
+const scheduleTypes = [
+  { title: 'Time', value: 'time' },
   ...Object.entries(conditionalScheduleDefinitions).map(([value, definition]) => ({
     title: definition.title,
-    value,
-    disabled: !(primaryPokemon.value?.pokemon.skill.is(...definition.eligibleSkills) ?? false)
+    value
   }))
-])
-const scheduleTypeItemProps = (item: { disabled: boolean }) => ({ disabled: item.disabled })
+]
 const shiftMenu = computed({
   get: () => selectedShift.value !== null,
   set: (open) => !open && (selectedShift.value = null)
@@ -257,7 +254,6 @@ const persistSchedule = (next: TeamScheduleShift[]) => {
 const changeScheduleType = async (type: TeamScheduleType) => {
   if (saving.value) return
   const definition = getConditionalScheduleDefinition(type)
-  if (definition && !primaryPokemon.value?.pokemon.skill.is(...definition.eligibleSkills)) return
   const currentShifts = scheduleShifts.value
   scheduleType.value = type
   const next = (limitedToTwo.value ? currentShifts.slice(0, 2) : currentShifts).map((shift, index) =>
