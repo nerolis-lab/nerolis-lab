@@ -236,34 +236,44 @@ describe('scheduled IVs', () => {
     ).toThrow('Target-based IV calculations require the original member');
   });
 
-  it('returns reference production from the same working windows as an identical variant', () => {
-    const referenceMember = mocks.teamMember({
-      pokemonWithIngredients: { pokemon: CHARMANDER, ingredientList: [{ ingredient: ingredient.HONEY, amount: 2 }] }
-    });
-    const id = referenceMember.settings.externalId;
-    const variant = { ...referenceMember, settings: { ...referenceMember.settings, externalId: 'variant' } };
-    const partner = { ...referenceMember, settings: { ...referenceMember.settings, externalId: 'partner' } };
-    const result = calculateIv(
-      {
-        settings: mocks.teamSettings({
-          includeCooking: true,
-          schedule: [
-            { slotIndex: 0, externalId: id, startTime: '06:00', type: 'pot-size', potSizeTarget: 200 },
-            { slotIndex: 0, externalId: 'partner', startTime: '06:05', type: 'pot-size' }
-          ]
-        }),
-        members: [partner],
-        variants: [variant],
-        replacedMemberId: id,
-        referenceMember
-      },
-      8
-    );
-    expect(result.reference).toBeDefined();
-    expect(result.reference!.produceTotal).toEqual(result.variants[0].produceTotal);
-    expect(result.reference!.skillProcs).toEqual(result.variants[0].skillProcs);
-    expect(result.reference!.produceTotal.berries.reduce((sum, berry) => sum + berry.amount, 0)).toBeGreaterThan(0);
-  });
+  it.each(['pot-size', 'ingredients'] as const)(
+    'returns reference production from the same %s working windows as an identical variant',
+    (type) => {
+      const referenceMember = mocks.teamMember({
+        pokemonWithIngredients: { pokemon: CHARMANDER, ingredientList: [{ ingredient: ingredient.HONEY, amount: 2 }] }
+      });
+      const id = referenceMember.settings.externalId;
+      const variant = { ...referenceMember, settings: { ...referenceMember.settings, externalId: 'variant' } };
+      const partner = { ...referenceMember, settings: { ...referenceMember.settings, externalId: 'partner' } };
+      const result = calculateIv(
+        {
+          settings: mocks.teamSettings({
+            includeCooking: true,
+            schedule: [
+              {
+                slotIndex: 0,
+                externalId: id,
+                startTime: '06:00',
+                type,
+                potSizeTarget: 200,
+                ingredientThresholds: [{ name: ingredient.HONEY.name, minimum: 2, maximum: 10 }]
+              },
+              { slotIndex: 0, externalId: 'partner', startTime: '06:05', type }
+            ]
+          }),
+          members: [partner],
+          variants: [variant],
+          replacedMemberId: id,
+          referenceMember
+        },
+        8
+      );
+      expect(result.reference).toBeDefined();
+      expect(result.reference!.produceTotal).toEqual(result.variants[0].produceTotal);
+      expect(result.reference!.skillProcs).toEqual(result.variants[0].skillProcs);
+      expect(result.reference!.produceTotal.berries.reduce((sum, berry) => sum + berry.amount, 0)).toBeGreaterThan(0);
+    }
+  );
 
   it('runs cooking during conditional IV simulations so meal bonuses can reset', () => {
     const original = mocks.teamMember({

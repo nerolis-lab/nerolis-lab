@@ -16,6 +16,7 @@
 
 import { BerryZoneState } from './berry-zone-state.js';
 import { scheduleTargetReached } from './conditional-schedule.js';
+import { advanceIngredientSchedule } from './ingredient-schedule.js';
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
 import {
   type HelpPeriod,
@@ -60,6 +61,7 @@ export class TeamSimulator {
   private scheduledMembersBySlot = new Map<number, Array<{ externalId: string; startMinutes: number }>>();
   private scheduledShiftTickOffsets = new Set<number>();
   private conditionalSchedulesBySlot = new Map<number, TeamScheduleShift[]>();
+  private hasIngredientSchedule = false;
   private conditionalScheduleIndexBySlot = new Map<number, number>();
   private rotationTrace?: { record?: RotationTrace; replay?: RotationTrace };
 
@@ -82,6 +84,7 @@ export class TeamSimulator {
     this.rng = rng || createPreGeneratedRandom();
     this.settings = settings;
     for (const shift of settings.schedule ?? []) {
+      if (shift.type === 'ingredients') this.hasIngredientSchedule = true;
       if (isConditionalSchedule(shift.type)) {
         const slot = this.conditionalSchedulesBySlot.get(shift.slotIndex) ?? [];
         slot.push(shift);
@@ -477,6 +480,10 @@ export class TeamSimulator {
 
   /** Evaluated after a tick has resolved, so rotation never suppresses that tick's drops or skills. */
   private advanceConditionalSchedules(minutesSinceWakeup: number): boolean {
+    // Transfer produced ingredients before checking thresholds, not only at meals.
+    if (this.cookingState && this.hasIngredientSchedule) {
+      for (const member of this.activeMemberStates) member.updateIngredientBag();
+    }
     if (this.rotationTrace?.replay) {
       const indices = this.rotationTrace.replay.get(minutesSinceWakeup);
       if (!indices) return false;
@@ -488,6 +495,17 @@ export class TeamSimulator {
       if (shifts.length < 2) continue;
       const index = this.conditionalScheduleIndexBySlot.get(slotIndex) ?? 0;
       const primary = shifts[0];
+      if (primary.type === 'ingredients') {
+        if (!this.cookingState) continue;
+        const next = advanceIngredientSchedule(shifts, (name) =>
+          this.cookingState!.ingredientAmount(name, this.settings.recipeType ?? 'curry')
+        );
+        if (next !== index) {
+          this.conditionalScheduleIndexBySlot.set(slotIndex, next);
+          changed = true;
+        }
+        continue;
+      }
       const targetReached = this.conditionReached(primary);
       if (index === 0 && targetReached) {
         this.conditionalScheduleIndexBySlot.set(slotIndex, 1);

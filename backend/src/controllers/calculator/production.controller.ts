@@ -37,6 +37,7 @@ import {
   calculateRecipeValue,
   getConditionalScheduleDefinition,
   isConditionalSchedule,
+  validateIngredientSchedule,
   CarrySizeUtils,
   curry,
   dessert,
@@ -77,7 +78,9 @@ export default class ProductionController {
   async #parseIvInput(body: CalculateIvRequest, maybeUser?: DBUser) {
     const { members, variants } = body;
     const includeCooking =
-      body.settings.schedule?.some((shift) => getConditionalScheduleDefinition(shift.type)?.requiresCooking) ?? false;
+      body.settings.schedule?.some(
+        (shift) => shift.type === 'ingredients' || getConditionalScheduleDefinition(shift.type)?.requiresCooking
+      ) ?? false;
     const settings = await this.#parseSettings({ settings: body.settings, includeCooking, maybeUser });
     if (
       settings.schedule?.length &&
@@ -166,6 +169,11 @@ export default class ProductionController {
     maybeUser?: DBUser;
   }): Promise<TeamSettings> {
     const { settings, includeCooking, maybeUser } = params;
+    const scheduleError = validateIngredientSchedule(settings.schedule ?? []);
+    if (scheduleError) throw new BadRequestError(scheduleError);
+    if (settings.recipeType !== undefined && !['curry', 'salad', 'dessert'].includes(settings.recipeType)) {
+      throw new BadRequestError('Unknown meal type');
+    }
 
     const camp = queryAsBoolean(settings.camp);
 
@@ -206,7 +214,8 @@ export default class ProductionController {
       stockpiledIngredients,
       potSize,
       island: this.#parseIsland(settings.island),
-      schedule: settings.schedule ?? []
+      schedule: settings.schedule ?? [],
+      recipeType: settings.recipeType ?? 'curry'
     };
   }
 

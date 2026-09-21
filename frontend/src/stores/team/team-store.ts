@@ -432,6 +432,7 @@ export const useTeamStore = defineStore('team', {
         }
       }
       const settings: TeamSettingsDto = {
+        recipeType: this.teams[teamIndex].recipeType,
         camp: this.teams[teamIndex].camp,
         bedtime: this.teams[teamIndex].bedtime,
         wakeup: this.teams[teamIndex].wakeup,
@@ -559,9 +560,14 @@ export const useTeamStore = defineStore('team', {
       this.resetCurrentTeamIvs() // reset after production is available
     },
     async updateRecipeType(recipeType: RecipeType) {
+      const changed = this.getCurrentTeam.recipeType !== recipeType
       this.getCurrentTeam.recipeType = recipeType
 
-      this.updateTeam()
+      await this.updateTeam()
+      if (changed && this.getCurrentTeam.schedule?.some((shift) => shift.type === 'ingredients')) {
+        await this.calculateProduction(this.currentIndex)
+        this.resetCurrentTeamIvs()
+      }
     },
     async updateIsland(island: IslandInstance) {
       this.getCurrentTeam.island = island

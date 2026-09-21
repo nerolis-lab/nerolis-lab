@@ -676,6 +676,25 @@ describe('updateIsland', () => {
 })
 
 describe('updateRecipeType', () => {
+  it('recalculates ingredient rotations using the new team meal type and clears cached IVs', async () => {
+    const teamStore = useTeamStore()
+    const pokemon = mocks.createMockPokemon()
+    usePokemonStore().upsertLocalPokemon(pokemon)
+    teamStore.teams = createMockTeams(1, {
+      recipeType: 'curry',
+      members: [pokemon.externalId],
+      memberIvs: { [pokemon.externalId]: { berry: 50, ingredient: 50, skill: 50 } },
+      schedule: [{ slotIndex: 0, externalId: pokemon.externalId, startTime: '06:00', type: 'ingredients' }]
+    })
+    await teamStore.updateRecipeType('salad')
+    expect(TeamService.calculateProduction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        settings: expect.objectContaining({ recipeType: 'salad' })
+      })
+    )
+    expect(teamStore.getCurrentTeam.memberIvs).toEqual({})
+  })
+
   it('updateRecipeType shall update the recipe type and call server', async () => {
     const teamStore = useTeamStore()
 

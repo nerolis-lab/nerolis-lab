@@ -2,7 +2,7 @@ import {
   getScheduleTarget,
   getConditionalScheduleDefinition,
   isConditionalSchedule,
-  type ConditionalScheduleType,
+  type BonusScheduleType,
   type Berry,
   type TeamScheduleShift
 } from 'sleepapi-common';
@@ -19,7 +19,7 @@ interface RotationBonusContext {
 
 // Each bonus supplies its own reader. A future non-cooking bonus can extend this
 // context without being gated on the existence of cookingState.
-const bonusReaders: Record<ConditionalScheduleType, (context: RotationBonusContext) => number | undefined> = {
+const bonusReaders: Record<BonusScheduleType, (context: RotationBonusContext) => number | undefined> = {
   'berry-zone': ({ berryZoneState, primaryBerry }) =>
     primaryBerry ? berryZoneState?.bonusPercentage(primaryBerry) : undefined,
   'tasty-chance': ({ cookingState }) => cookingState?.extraTastyChancePercentage(),
@@ -27,7 +27,7 @@ const bonusReaders: Record<ConditionalScheduleType, (context: RotationBonusConte
 };
 
 export function scheduleTargetReached(shift: TeamScheduleShift, context: RotationBonusContext): boolean {
-  if (!isConditionalSchedule(shift.type)) return false;
+  if (!isConditionalSchedule(shift.type) || shift.type === 'ingredients') return false;
   const target = getScheduleTarget(shift);
   const bonus = bonusReaders[shift.type](context);
   return (

@@ -202,6 +202,7 @@ class TeamServiceImpl {
     }
 
     const settings: TeamSettingsDto = {
+      recipeType: currentTeam.recipeType,
       camp: currentTeam.camp,
       bedtime: currentTeam.bedtime,
       wakeup: currentTeam.wakeup,

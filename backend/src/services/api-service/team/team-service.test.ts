@@ -16,7 +16,7 @@ import {
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { mocks } from '@src/vitest/index.js';
 import type { UpsertTeamMemberRequest } from 'sleepapi-common';
-import { getPokemon, Roles, uuid } from 'sleepapi-common';
+import { getPokemon, ingredient, Roles, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -1131,6 +1131,25 @@ describe('scheduled member persistence', () => {
     island: mocks.islandDTO(),
     schedule: [{ slotIndex: 0, externalId, startTime: '12:00' }],
     scheduledMembers: [member]
+  });
+
+  it('round-trips ingredient thresholds and the alternate in schedule order', async () => {
+    const schedule = [
+      {
+        slotIndex: 0,
+        externalId,
+        startTime: '06:00',
+        type: 'ingredients' as const,
+        ingredientThresholds: [
+          { name: ingredient.FANCY_APPLE.name, minimum: 10, maximum: 30 },
+          { name: ingredient.HONEY.name, minimum: 5, maximum: 20 }
+        ]
+      },
+      { slotIndex: 0, externalId, startTime: '06:05', type: 'ingredients' as const, ingredientThresholds: [] }
+    ];
+    await upsertTeamMeta({ index: 0, user, request: { ...request(), schedule } });
+    const response = await getTeams(user);
+    expect(response.teams[0].schedule).toEqual(schedule);
   });
 
   it('loads an unsaved scheduled Pokemon and its edits without occupying a primary slot', async () => {

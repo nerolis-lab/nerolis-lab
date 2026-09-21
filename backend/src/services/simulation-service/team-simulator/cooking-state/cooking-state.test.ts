@@ -14,6 +14,34 @@ import {
 import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
+  it('reads the chosen ingredient bag including stockpile and meal consumption', () => {
+    const ingredients = ingredientSetToFloatFlat([{ ingredient: ingredient.FANCY_APPLE, amount: 3 }]);
+    const recipe = {
+      name: 'mock-recipe',
+      displayName: 'Mock recipe',
+      type: 'curry' as const,
+      ingredients,
+      nrOfIngredients: 3,
+      value: 1,
+      valueMax: 1,
+      bonus: 0,
+      level: 1
+    };
+    const cooking = new CookingState(
+      mocks.teamSettings({
+        stockpiledIngredients: ingredientSetToFloatFlat([{ ingredient: ingredient.FANCY_APPLE, amount: 5 }])
+      }),
+      { curries: [recipe], salads: [], desserts: [] },
+      createPreGeneratedRandom()
+    );
+    cooking.addIngredients(ingredientSetToFloatFlat([{ ingredient: ingredient.FANCY_APPLE, amount: 2 }]));
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'curry')).toBe(7);
+    cooking.cook(false);
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'curry')).toBe(4);
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'salad')).toBe(7);
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'dessert')).toBe(7);
+  });
+
   it.each([
     { camp: false, sunday: false, expected: 120 },
     { camp: true, sunday: false, expected: 180 },

@@ -23,6 +23,9 @@
           :inert="saving"
           class="schedule-row flex-nowrap"
           :class="{ 'schedule-row-timed': scheduleType === 'time' }"
+          :style="
+            scheduleType === 'ingredients' ? { paddingBottom: `${60 + ingredientRequirementRows * 28}px` } : undefined
+          "
           dense
         >
           <v-col
@@ -50,6 +53,29 @@
               @click="openTimePicker(shift)"
               >{{ shift.startTime }}</v-btn
             >
+            <div v-if="scheduleType === 'ingredients'" class="schedule-ingredient-details">
+              <v-btn
+                class="w-100"
+                color="primary"
+                :disabled="saving"
+                :aria-label="`Edit ingredient requirements for ${pokemon?.name ?? 'Pokemon'}`"
+                @click="ingredientShift = shift"
+                >{{ shift.ingredientThresholds?.length ? 'Ingredients' : 'Alternate' }}</v-btn
+              >
+              <ul class="schedule-ingredient-requirements mt-2">
+                <li v-for="threshold in shift.ingredientThresholds" :key="threshold.name">
+                  <span>{{ threshold.minimum }} &lt;=</span>
+                  <img
+                    :src="ingredientImage(threshold.name)"
+                    :alt="getIngredient(threshold.name).longName"
+                    :title="getIngredient(threshold.name).longName"
+                    width="24"
+                    height="24"
+                  />
+                  <span>&lt; {{ threshold.maximum }}</span>
+                </li>
+              </ul>
+            </div>
           </v-col>
           <v-col v-if="!limitedToTwo || shifts.length < 2" class="schedule-tile schedule-add-slot" cols="auto">
             <v-card class="schedule-add-card w-100 fill-height frosted-glass d-flex align-center" @click="addPokemon">
@@ -57,6 +83,12 @@
             </v-card>
           </v-col>
         </v-row>
+        <template v-if="scheduleType === 'ingredients'">
+          <p class="text-body-2 mt-4 mb-4">
+            Meet all minimums first, then all maximums, with priority from left to right in each phase. Once every
+            maximum is met, use the alternate at the end of the list, or the first member if no alternate is set.
+          </p>
+        </template>
         <template v-if="conditionalDefinition">
           <p class="text-body-2 mt-4">
             {{ targetDescription }}
@@ -85,6 +117,20 @@
   <v-dialog v-model="shiftMenu" max-width="360px">
     <v-card v-if="selectedShift" title="Scheduled Pokémon">
       <v-list>
+        <template v-if="scheduleType === 'ingredients'">
+          <v-list-item
+            title="Move earlier"
+            prepend-icon="mdi-arrow-left"
+            :disabled="saving || !canMoveSelected(-1)"
+            @click="moveSelected(-1)"
+          />
+          <v-list-item
+            title="Move later"
+            prepend-icon="mdi-arrow-right"
+            :disabled="saving || !canMoveSelected(1)"
+            @click="moveSelected(1)"
+          />
+        </template>
         <v-list-item prepend-icon="mdi-pencil" :disabled="saving" title="Edit" @click="editPokemon" />
         <v-list-item
           id="schedule-pokebox-button"
@@ -112,12 +158,28 @@
       >
     </v-card>
   </v-dialog>
+  <v-dialog
+    :model-value="!!ingredientShift"
+    max-width="560px"
+    @update:model-value="!$event && (ingredientShift = null)"
+  >
+    <IngredientRotationEditor
+      v-if="ingredientShift"
+      :initial="ingredientShift.ingredientThresholds ?? []"
+      :alternate-exists="
+        scheduleShifts.some((shift) => shift !== ingredientShift && !shift.ingredientThresholds?.length)
+      "
+      @cancel="ingredientShift = null"
+      @save="saveIngredientThresholds"
+    />
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
 import { UserService } from '@/services/user/user-service'
 import PokemonSlotDisplay from '@/components/custom-components/pokemon-slot-display.vue'
-import { pokemonImage } from '@/services/utils/image-utils'
+import IngredientRotationEditor from './ingredient-rotation-editor.vue'
+import { ingredientImage, pokemonImage } from '@/services/utils/image-utils'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -128,6 +190,11 @@ import {
   getScheduleTarget,
   withScheduleTarget,
   validateScheduleTarget,
+  ingredient,
+  getIngredient,
+  orderIngredientSchedule,
+  validateIngredientThresholds,
+  type ScheduleIngredientThreshold,
   subskill,
   type PokemonInstance,
   type TeamScheduleShift,
@@ -141,6 +208,7 @@ const pokemonStore = usePokemonStore()
 const userStore = useUserStore()
 const selectedShift = ref<TeamScheduleShift | null>(null)
 const timeShift = ref<TeamScheduleShift | null>(null)
+const ingredientShift = ref<TeamScheduleShift | null>(null)
 const timePicker = ref(false)
 const updatedTime = ref<string | null>(null)
 const conditionTarget = ref('1')
@@ -161,6 +229,9 @@ const shifts = computed(() => {
   return scheduleShifts.value.slice().sort((a, b) => sinceWakeup(a.startTime) - sinceWakeup(b.startTime))
 })
 const scheduleType = ref<TeamScheduleType>('time')
+const ingredientRequirementRows = computed(() =>
+  Math.max(0, ...shifts.value.map((shift) => shift.ingredientThresholds?.length ?? 0))
+)
 const scheduleTiles = computed(() =>
   shifts.value.map((shift) => {
     const pokemon = pokemonFor(shift.externalId)
@@ -193,6 +264,7 @@ const targetLabel = computed(() => {
 })
 const scheduleTypes = [
   { title: 'Time', value: 'time' },
+  { title: 'Ingredients', value: 'ingredients' },
   ...Object.entries(conditionalScheduleDefinitions).map(([value, definition]) => ({
     title: definition.title,
     value
@@ -208,6 +280,7 @@ watch(
   ([open]) => {
     selectedShift.value = null
     timeShift.value = null
+    ingredientShift.value = null
     timePicker.value = false
     if (!open || slotIndex.value === null) {
       scheduleShifts.value = []
@@ -254,7 +327,7 @@ const persistSchedule = (next: TeamScheduleShift[]) => {
 const changeScheduleType = async (type: TeamScheduleType) => {
   if (saving.value) return
   const definition = getConditionalScheduleDefinition(type)
-  const currentShifts = scheduleShifts.value
+  const currentShifts = shifts.value
   scheduleType.value = type
   const next = (limitedToTwo.value ? currentShifts.slice(0, 2) : currentShifts).map((shift, index) =>
     withScheduleTarget(
@@ -268,6 +341,54 @@ const changeScheduleType = async (type: TeamScheduleType) => {
   conditionTarget.value = String(
     (next[0] && getScheduleTarget(next[0])) ?? conditionalDefinition.value?.defaultTarget ?? 1
   )
+  await persistSchedule(
+    type === 'ingredients'
+      ? orderIngredientSchedule(
+          next.map((shift) => ({
+            ...shift,
+            ingredientThresholds: shift.ingredientThresholds ?? defaultIngredientThresholds(shift.externalId)
+          }))
+        )
+      : next
+  )
+}
+const defaultIngredientThresholds = (externalId: string): ScheduleIngredientThreshold[] => [
+  {
+    name: pokemonFor(externalId)?.ingredients[0]?.ingredient.name ?? ingredient.INGREDIENTS[0].name,
+    minimum: 1,
+    maximum: 10
+  }
+]
+const saveIngredientThresholds = async (thresholds: ScheduleIngredientThreshold[]) => {
+  if (saving.value || !ingredientShift.value || validateIngredientThresholds(thresholds)) return
+  if (
+    !thresholds.length &&
+    scheduleShifts.value.some((shift) => shift !== ingredientShift.value && !shift.ingredientThresholds?.length)
+  )
+    return
+  const updated = scheduleShifts.value.map((shift) =>
+    shift === ingredientShift.value ? { ...shift, ingredientThresholds: thresholds } : shift
+  )
+  if (!scheduleShifts.value.includes(ingredientShift.value)) {
+    updated.push({ ...ingredientShift.value, ingredientThresholds: thresholds })
+  }
+  ingredientShift.value = null
+  await persistSchedule(orderIngredientSchedule(updated))
+}
+const canMoveSelected = (direction: number) => {
+  const index = selectedShift.value ? scheduleShifts.value.indexOf(selectedShift.value) : -1
+  return (
+    index >= 0 &&
+    !!selectedShift.value?.ingredientThresholds?.length &&
+    !!scheduleShifts.value[index + direction]?.ingredientThresholds?.length
+  )
+}
+const moveSelected = async (direction: number) => {
+  if (saving.value || !canMoveSelected(direction)) return
+  const next = scheduleShifts.value.slice()
+  const index = next.indexOf(selectedShift.value!)
+  ;[next[index], next[index + direction]] = [next[index + direction], next[index]]
+  selectedShift.value = null
   await persistSchedule(next)
 }
 const closeSchedule = async () => {
@@ -289,7 +410,13 @@ const addPokemon = () => {
   dialogStore.openPokemonSearch(async (pokemon) => {
     if (slotIndex.value === null || saving.value) return
     pokemonStore.upsertLocalPokemon(pokemon)
-    const latest = shifts.value.at(-1)?.startTime ?? teamStore.getCurrentTeam.wakeup
+    const latest =
+      scheduleType.value === 'ingredients'
+        ? scheduleShifts.value.reduce(
+            (latest, shift) => (shift.startTime > latest ? shift.startTime : latest),
+            teamStore.getCurrentTeam.wakeup
+          )
+        : (shifts.value.at(-1)?.startTime ?? teamStore.getCurrentTeam.wakeup)
     const [hour, minute] = latest.split(':').map(Number)
     const nextMinutes = (hour * 60 + minute + 5) % 1440
     const added: TeamScheduleShift = {
@@ -297,6 +424,11 @@ const addPokemon = () => {
       externalId: pokemon.externalId,
       startTime: `${String(Math.floor(nextMinutes / 60)).padStart(2, '0')}:${String(nextMinutes % 60).padStart(2, '0')}`,
       type: scheduleType.value
+    }
+    if (scheduleType.value === 'ingredients') {
+      added.ingredientThresholds = []
+      ingredientShift.value = added
+      return
     }
     await persistSchedule([...scheduleShifts.value, added])
   })
@@ -384,6 +516,25 @@ const togglePokebox = async () => {
   max-width: 18%;
   max-height: 25dvh;
   aspect-ratio: 6 / 10;
+}
+.schedule-ingredient-details {
+  position: absolute;
+  top: 100%;
+  left: 4px;
+  width: calc(100% - 8px);
+  margin-top: 8px;
+}
+.schedule-ingredient-requirements {
+  list-style: none;
+  padding: 0;
+}
+.schedule-ingredient-requirements li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 28px;
+  white-space: nowrap;
 }
 .schedule-add-slot {
   flex-basis: 20%;

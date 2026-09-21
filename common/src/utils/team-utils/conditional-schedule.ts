@@ -4,6 +4,7 @@ import { BerryZonePsystrike } from '../../types/mainskill';
 import type { TeamScheduleShift, TeamScheduleType } from '../../types/team/team';
 
 export type ConditionalScheduleType = Exclude<TeamScheduleType, 'time'>;
+export type BonusScheduleType = Exclude<ConditionalScheduleType, 'ingredients'>;
 
 interface ConditionalScheduleDefinition {
   title: string;
@@ -19,9 +20,9 @@ interface ConditionalScheduleDefinition {
 
 /** Type-specific rules for the two-member, accumulate-then-return rotation policy.
  * Keep persisted target keys here so existing schedules do not need a migration.
- * Backend bonus readers are separately exhaustive over ConditionalScheduleType.
+ * Backend bonus readers are separately exhaustive over BonusScheduleType.
  */
-export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, ConditionalScheduleDefinition> = {
+export const conditionalScheduleDefinitions: Record<BonusScheduleType, ConditionalScheduleDefinition> = {
   'berry-zone': {
     title: 'Berry zone',
     description: (pokemon) =>
@@ -58,11 +59,11 @@ export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, Con
 };
 
 export function isConditionalSchedule(type: TeamScheduleType | undefined): type is ConditionalScheduleType {
-  return type !== undefined && Object.hasOwn(conditionalScheduleDefinitions, type);
+  return type === 'ingredients' || (type !== undefined && Object.hasOwn(conditionalScheduleDefinitions, type));
 }
 
 export function getConditionalScheduleDefinition(type: TeamScheduleType | undefined) {
-  return isConditionalSchedule(type) ? conditionalScheduleDefinitions[type] : undefined;
+  return type !== 'ingredients' && isConditionalSchedule(type) ? conditionalScheduleDefinitions[type] : undefined;
 }
 
 export function getScheduleTarget(shift: TeamScheduleShift): number | undefined {
@@ -76,6 +77,9 @@ export function withScheduleTarget(
   target?: number
 ): TeamScheduleShift {
   const next = { ...shift, type };
+  if (type !== 'ingredients') {
+    delete next.ingredientThresholds;
+  }
   for (const definition of Object.values(conditionalScheduleDefinitions)) delete next[definition.targetField];
   const definition = getConditionalScheduleDefinition(type);
   if (definition && target !== undefined) next[definition.targetField] = target;

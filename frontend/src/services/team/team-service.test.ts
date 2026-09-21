@@ -658,6 +658,7 @@ describe('calculateIv', () => {
           berries: island.berries,
           ...(island.expertMode ? { expertMode: island.expertMode } : {})
         },
+        recipeType: 'curry',
         schedule: []
       }
     })

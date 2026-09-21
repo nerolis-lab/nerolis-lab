@@ -1,10 +1,17 @@
 import type { IngredientIndexToFloatAmount, IngredientSet, IngredientSetSimple } from '../ingredient/ingredient';
 import type { IslandInstance, IslandInstanceDto } from '../island';
 import type { Time } from '../time/time';
+import type { RecipeType } from '../recipe/recipe';
 import type { TeamMemberWithProduce } from './member';
 import type { CalculateTeamResponse } from './team-calculate';
 
-export type TeamScheduleType = 'time' | 'tasty-chance' | 'pot-size' | 'berry-zone';
+export type TeamScheduleType = 'time' | 'tasty-chance' | 'pot-size' | 'berry-zone' | 'ingredients';
+
+export interface ScheduleIngredientThreshold {
+  name: string;
+  minimum: number;
+  maximum: number;
+}
 
 /**
  * A recurring entry for one of the five visible team slots. Entries are
@@ -19,9 +26,11 @@ export interface TeamScheduleShift {
   tastyChanceTarget?: number;
   potSizeTarget?: number;
   berryZoneTarget?: number;
+  ingredientThresholds?: ScheduleIngredientThreshold[];
 }
 
 export interface TeamSettingsDto {
+  recipeType?: RecipeType;
   camp: boolean;
   bedtime: string;
   wakeup: string;
@@ -30,6 +39,7 @@ export interface TeamSettingsDto {
   schedule?: TeamScheduleShift[];
 }
 export interface TeamSettings {
+  recipeType?: RecipeType;
   camp: boolean;
   bedtime: Time;
   wakeup: Time;

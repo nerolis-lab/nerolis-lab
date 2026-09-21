@@ -1,5 +1,6 @@
 import PokemonSlotDisplay from '@/components/custom-components/pokemon-slot-display.vue'
 import TeamScheduleDialog from '@/components/calculator/team-schedule-dialog.vue'
+import IngredientRotationEditor from '@/components/calculator/ingredient-rotation-editor.vue'
 import serverAxios from '@/router/server-axios'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -10,7 +11,7 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import MockAdapter from 'axios-mock-adapter'
-import { RAICHU, MEWTWO, commonMocks, subskill, type TeamScheduleType } from 'sleepapi-common'
+import { RAICHU, MEWTWO, commonMocks, subskill, ingredient, type TeamScheduleType } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -79,7 +80,7 @@ describe('TeamScheduleDialog', () => {
     expect(useDialogStore().scheduleDialog).toBe(true)
   })
 
-  it.each(['time', 'berry-zone', 'tasty-chance', 'pot-size'] as const)(
+  it.each(['time', 'berry-zone', 'tasty-chance', 'pot-size', 'ingredients'] as const)(
     'allows a Pokemon without a relevant skill to select and persist a %s rotation',
     async (type) => {
       const team = useTeamStore().getCurrentTeam
@@ -87,6 +88,7 @@ describe('TeamScheduleDialog', () => {
       const selector = wrapper.findComponent({ name: 'VSelect' })
       expect(selector.props('items')).toEqual([
         { title: 'Time', value: 'time' },
+        { title: 'Ingredients', value: 'ingredients' },
         { title: 'Berry zone', value: 'berry-zone' },
         { title: 'Extra tasty chance', value: 'tasty-chance' },
         { title: 'Pot size', value: 'pot-size' }
@@ -101,6 +103,104 @@ describe('TeamScheduleDialog', () => {
       expect(selector.props('modelValue')).toBe(type)
     }
   )
+
+  it('opens an empty ingredient editor for a new member and saves only after confirmation', async () => {
+    await open('time')
+    wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'ingredients')
+    await flushPromises()
+    await wrapper
+      .findAllComponents({ name: 'VCard' })
+      .find((card) => card.classes().includes('schedule-add-card'))!
+      .trigger('click')
+    useDialogStore().handlePokemonSelected(mocks.createMockPokemon({ externalId: 'alternate' }))
+    await flushPromises()
+    const editor = wrapper.findComponent(IngredientRotationEditor)
+    expect(editor.props('initial')).toEqual([])
+    expect(editor.props('alternateExists')).toBe(false)
+    expect(useTeamStore().getCurrentTeam.schedule).toHaveLength(1)
+    expect(server.history.post).toHaveLength(1)
+    editor.vm.$emit('save', [])
+    await flushPromises()
+    expect(useTeamStore().getCurrentTeam.schedule!.at(-1)).toMatchObject({
+      externalId: 'alternate',
+      type: 'ingredients',
+      ingredientThresholds: []
+    })
+    expect(wrapper.findComponent(IngredientRotationEditor).exists()).toBe(false)
+    expect(JSON.parse(server.history.post.at(-1)!.data).settings.schedule.at(-1).ingredientThresholds).toEqual([])
+  })
+
+  it('expands ingredient schedules, persists thresholds, and keeps the alternate last', async () => {
+    useUserStore().setInitialLoginData(commonMocks.loginResponse())
+    server.onPut('team/meta/0').reply(200, { version: 1 })
+    await open('time')
+    wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'ingredients')
+    await flushPromises()
+    const team = useTeamStore().getCurrentTeam
+    const originalId = team.members[0]!
+    const editRequirements = async (index: number) => {
+      await wrapper
+        .findAllComponents({ name: 'VBtn' })
+        .filter((button) => button.attributes('aria-label')?.startsWith('Edit ingredient requirements'))
+        [index].trigger('click')
+      await flushPromises()
+      return wrapper.findComponent(IngredientRotationEditor)
+    }
+    let editor = await editRequirements(0)
+    editor.vm.$emit('save', [])
+    await flushPromises()
+    for (const externalId of ['producer-1', 'producer-2', 'producer-3']) {
+      await wrapper
+        .findAllComponents({ name: 'VCard' })
+        .find((card) => card.classes().includes('schedule-add-card'))!
+        .trigger('click')
+      useDialogStore().handlePokemonSelected(mocks.createMockPokemon({ externalId }))
+      await flushPromises()
+      const newMemberEditor = wrapper.findComponent(IngredientRotationEditor)
+      expect(newMemberEditor.props('initial')).toEqual([])
+      expect(newMemberEditor.props('alternateExists')).toBe(true)
+      newMemberEditor.vm.$emit('save', [{ name: ingredient.FANCY_APPLE.name, minimum: 1, maximum: 10 }])
+      await flushPromises()
+    }
+    expect(team.schedule!.map((shift) => shift.externalId)).toEqual([
+      'producer-1',
+      'producer-2',
+      'producer-3',
+      originalId
+    ])
+    editor = await editRequirements(0)
+    const thresholds = [
+      { name: ingredient.FANCY_APPLE.name, minimum: 10, maximum: 40 },
+      { name: ingredient.HONEY.name, minimum: 5, maximum: 20 }
+    ]
+    editor.vm.$emit('save', thresholds)
+    await flushPromises()
+    expect(team.schedule![0].ingredientThresholds).toEqual(thresholds)
+    const saved = JSON.parse(server.history.put.at(-1)!.data).schedule
+    expect(saved).toEqual(team.schedule)
+    await actionButton()
+    useDialogStore().openSchedule(0)
+    await flushPromises()
+    expect(wrapper.findAllComponents(PokemonSlotDisplay)).toHaveLength(4)
+    editor = await editRequirements(0)
+    expect(editor.props('initial')).toEqual(thresholds)
+    expect(editor.props('alternateExists')).toBe(true)
+    editor.vm.$emit('cancel')
+    await flushPromises()
+    wrapper.findAllComponents(PokemonSlotDisplay)[0].vm.$emit('click')
+    await flushPromises()
+    await wrapper
+      .findAllComponents({ name: 'VListItem' })
+      .find((item) => item.props('title') === 'Move later')!
+      .trigger('click')
+    await flushPromises()
+    expect(team.schedule!.map((shift) => shift.externalId)).toEqual([
+      'producer-2',
+      'producer-1',
+      'producer-3',
+      originalId
+    ])
+  })
 
   it('derives the berry-zone target label from the primary Pokemon', async () => {
     const store = usePokemonStore()

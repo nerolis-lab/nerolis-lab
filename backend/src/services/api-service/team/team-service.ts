@@ -1,4 +1,5 @@
 import { PokemonDAO } from '@src/database/dao/pokemon/pokemon-dao.js';
+import { BadRequestError } from '@src/domain/error/api/api-error.js';
 import { TeamAreaDAO } from '@src/database/dao/team/team-area/team-area-dao.js';
 import { TeamScheduleMemberDAO } from '@src/database/dao/team/team-schedule-member/team-schedule-member-dao.js';
 import { TeamMemberDAO } from '@src/database/dao/team/team-member/team-member-dao.js';
@@ -12,6 +13,7 @@ import type { IslandShortName, UpsertTeamMetaRequest } from 'sleepapi-common';
 import {
   CarrySizeUtils,
   getPokemon,
+  validateIngredientSchedule,
   type GetTeamsResponse,
   type UpsertTeamMemberRequest,
   type UpsertTeamMemberResponse,
@@ -24,6 +26,8 @@ export async function upsertTeamMeta(params: {
   user: DBUser;
 }): Promise<UpsertTeamMetaResponse> {
   const { index, request, user } = params;
+  const scheduleError = validateIngredientSchedule(request.schedule ?? []);
+  if (scheduleError) throw new BadRequestError(scheduleError);
 
   const { islandName, favoredBerries, expertModifier, mainFavoriteBerry, subFavoriteBerries } = request.island;
 

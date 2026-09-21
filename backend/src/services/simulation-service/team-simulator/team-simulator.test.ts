@@ -68,6 +68,65 @@ const mockMembers: TeamMember[] = [
 ];
 
 describe('TeamSimulator', () => {
+  it.each(['curry', 'salad', 'dessert'] as const)(
+    'meets ingredient minimums before maximums using the team %s bag, then selects the alternate',
+    (recipeType) => {
+      const members = ['first', 'second', 'alternate'].map((externalId) => {
+        const producedIngredient = externalId === 'second' ? ingredient.HONEY : ingredient.FANCY_APPLE;
+        const ingredientList = [{ ingredient: producedIngredient, amount: 1 }];
+        return {
+          ...mockMembers[0],
+          settings: { ...mockMembers[0].settings, externalId },
+          pokemonWithIngredients: {
+            ingredientList,
+            pokemon: commonMocks.mockPokemon({
+              ...mockPokemonWithIngredients.pokemon,
+              ingredient0: ingredientList,
+              ingredient30: ingredientList,
+              ingredient60: ingredientList,
+              ingredientPercentage: externalId === 'alternate' ? 0 : 100,
+              skillPercentage: 0
+            })
+          }
+        };
+      });
+      const settings = mocks.teamSettings({
+        recipeType,
+        includeCooking: true,
+        schedule: members.map((member, index) => ({
+          slotIndex: 0,
+          externalId: member.settings.externalId,
+          startTime: `06:${String(index * 5).padStart(2, '0')}`,
+          type: 'ingredients',
+          ingredientThresholds:
+            index === 2
+              ? []
+              : [
+                  {
+                    name: member.pokemonWithIngredients.ingredientList[0].ingredient.name,
+                    minimum: 2,
+                    maximum: 4
+                  }
+                ]
+        }))
+      });
+      const cooking = new CookingState(settings, { curries: [], salads: [], desserts: [] }, createPreGeneratedRandom());
+      const bagReader = vi.spyOn(cooking, 'ingredientAmount');
+      const simulator = new TeamSimulator({ settings, members, cookingState: cooking, iterations: 1 });
+      const switches = vi.spyOn(simulator as any, 'setActiveMembers');
+      simulator.simulate();
+      expect(switches.mock.calls.map(([active]: any) => active.map((member: any) => member.id))).toEqual([
+        ['second'],
+        ['first'],
+        ['second'],
+        ['alternate']
+      ]);
+      expect(bagReader.mock.calls.every(([, type]) => type === recipeType)).toBe(true);
+      expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, recipeType)).toBe(4);
+      expect(cooking.ingredientAmount(ingredient.HONEY.name, recipeType)).toBe(4);
+    }
+  );
+
   it('rotates a zone contributor and a non-contributor together at the shared berry-zone target', () => {
     const members = ['contributor', 'non-contributor', 'replacement-0', 'replacement-1'].map((externalId) => ({
       ...mockMembers[0],
