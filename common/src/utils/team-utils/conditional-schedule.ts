@@ -1,13 +1,6 @@
 import type { Pokemon } from '../../types/pokemon/pokemon';
 import { capitalize } from '../string-utils/string-utils';
-import {
-  CookingAssistSBulkUp,
-  CookingPowerUpS,
-  CookingPowerUpSMinus,
-  TastyChanceS,
-  BerryZonePsystrike,
-  type Mainskill
-} from '../../types/mainskill';
+import { BerryZonePsystrike } from '../../types/mainskill';
 import type { TeamScheduleShift, TeamScheduleType } from '../../types/team/team';
 
 export type ConditionalScheduleType = Exclude<TeamScheduleType, 'time'>;
@@ -20,7 +13,6 @@ interface ConditionalScheduleDefinition {
   defaultTarget: number;
   maximumTarget?: number;
   inputmode: 'decimal' | 'numeric';
-  eligibleSkills: Mainskill[];
   requiresCooking: boolean;
   validateTarget: (target: number) => string;
 }
@@ -39,7 +31,6 @@ export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, Con
     defaultTarget: BerryZonePsystrike.maximumBonus,
     maximumTarget: BerryZonePsystrike.maximumBonus,
     inputmode: 'decimal',
-    eligibleSkills: [BerryZonePsystrike],
     requiresCooking: false,
     validateTarget: (target) => (target > BerryZonePsystrike.maximumBonus ? 'Enter a bonus of 24% or less.' : '')
   },
@@ -51,7 +42,6 @@ export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, Con
     defaultTarget: 30,
     maximumTarget: 70,
     inputmode: 'decimal',
-    eligibleSkills: [TastyChanceS, CookingAssistSBulkUp],
     requiresCooking: true,
     validateTarget: (target) => (target > 70 ? 'Enter a chance of 70% or less.' : '')
   },
@@ -62,7 +52,6 @@ export const conditionalScheduleDefinitions: Record<ConditionalScheduleType, Con
     targetField: 'potSizeTarget',
     defaultTarget: 1,
     inputmode: 'numeric',
-    eligibleSkills: [CookingPowerUpS, CookingPowerUpSMinus],
     requiresCooking: true,
     validateTarget: (target) => (Number.isSafeInteger(target) ? '' : 'Enter a whole number for pot size.')
   }

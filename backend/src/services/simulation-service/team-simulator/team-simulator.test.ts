@@ -11,6 +11,7 @@ import {
   BASE_FAVORED_BERRY_MULTIPLIER,
   BerryBurstDisguise,
   MEWTWO,
+  BerryZonePsystrike,
   ChargeStrengthS,
   EXPERT_MODE_BERRY_BONUS_MULTIPLIER,
   EnergyForEveryoneS,
@@ -67,6 +68,39 @@ const mockMembers: TeamMember[] = [
 ];
 
 describe('TeamSimulator', () => {
+  it('rotates a zone contributor and a non-contributor together at the shared berry-zone target', () => {
+    const members = ['contributor', 'non-contributor', 'replacement-0', 'replacement-1'].map((externalId) => ({
+      ...mockMembers[0],
+      settings: { ...mockMembers[0].settings, externalId, skillLevel: 6 },
+      pokemonWithIngredients: {
+        ...mockPokemonWithIngredients,
+        pokemon: commonMocks.mockPokemon({
+          ...mockPokemonWithIngredients.pokemon,
+          berry: berry.MAGO,
+          skill: externalId === 'contributor' ? BerryZonePsystrike : ChargeStrengthS,
+          ingredientPercentage: 0
+        })
+      }
+    }));
+    const settings = mocks.teamSettings({
+      includeCooking: false,
+      schedule: [
+        { slotIndex: 0, externalId: 'contributor', startTime: '06:00', type: 'berry-zone', berryZoneTarget: 24 },
+        { slotIndex: 0, externalId: 'replacement-0', startTime: '06:05', type: 'berry-zone' },
+        { slotIndex: 1, externalId: 'non-contributor', startTime: '06:00', type: 'berry-zone', berryZoneTarget: 24 },
+        { slotIndex: 1, externalId: 'replacement-1', startTime: '06:05', type: 'berry-zone' }
+      ]
+    });
+    const simulator = new TeamSimulator({ settings, members, iterations: 1 });
+    expect(simulator['activeMemberStates'].map((member) => member.id)).toEqual(['contributor', 'non-contributor']);
+    const switches = vi.spyOn(simulator as any, 'setActiveMembers');
+    simulator.simulate();
+    expect(simulator['berryZoneState'].bonusPercentage(berry.MAGO)).toBe(24);
+    expect(switches.mock.calls.map(([active]: any) => active.map((member: any) => member.id))).toEqual([
+      ['replacement-0', 'replacement-1']
+    ]);
+  });
+
   it('rotates at the berry-zone target without cooking and keeps the replacement until the next site', () => {
     const members = ['mewtwo', 'replacement'].map((externalId) => ({
       ...mockMembers[0],

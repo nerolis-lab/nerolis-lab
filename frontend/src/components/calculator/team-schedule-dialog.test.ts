@@ -56,8 +56,7 @@ describe('TeamScheduleDialog', () => {
     const selector = wrapper.findComponent({ name: 'VSelect' })
     expect(selector.props('items')).toContainEqual({
       title: 'Berry zone',
-      value: 'berry-zone',
-      disabled: false
+      value: 'berry-zone'
     })
     selector.vm.$emit('update:modelValue', 'berry-zone')
     await flushPromises()
@@ -79,6 +78,29 @@ describe('TeamScheduleDialog', () => {
     expect(team.schedule![0].berryZoneTarget).toBe(12)
     expect(useDialogStore().scheduleDialog).toBe(true)
   })
+
+  it.each(['time', 'berry-zone', 'tasty-chance', 'pot-size'] as const)(
+    'allows a Pokemon without a relevant skill to select and persist a %s rotation',
+    async (type) => {
+      const team = useTeamStore().getCurrentTeam
+      await open(type === 'time' ? 'pot-size' : 'time')
+      const selector = wrapper.findComponent({ name: 'VSelect' })
+      expect(selector.props('items')).toEqual([
+        { title: 'Time', value: 'time' },
+        { title: 'Berry zone', value: 'berry-zone' },
+        { title: 'Extra tasty chance', value: 'tasty-chance' },
+        { title: 'Pot size', value: 'pot-size' }
+      ])
+      selector.vm.$emit('update:modelValue', type)
+      await flushPromises()
+      expect(team.schedule![0].type).toBe(type)
+      expect(JSON.parse(server.history.post[0].data).settings.schedule[0].type).toBe(type)
+      await actionButton()
+      useDialogStore().openSchedule(0)
+      await flushPromises()
+      expect(selector.props('modelValue')).toBe(type)
+    }
+  )
 
   it('derives the berry-zone target label from the primary Pokemon', async () => {
     const store = usePokemonStore()
