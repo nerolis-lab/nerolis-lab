@@ -1,3 +1,10 @@
+# [2.69.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.68.0...v2.69.0) (2026-09-27)
+
+
+### Features
+
+* remove tierlist ([a6d76b4](https://github.com/nerolis-lab/nerolis-lab/commit/a6d76b4ed7a277b00f80598ded697bf188711d37))
+
 # [2.68.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.67.0...v2.68.0) (2026-09-15)
 
 
