@@ -1,3 +1,25 @@
+# [2.70.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.69.1...v2.70.0) (2026-09-28)
+
+
+### Features
+
+* **calculator:** added frontend migration for island thresholds ([4a46a87](https://github.com/nerolis-lab/nerolis-lab/commit/4a46a875f3f086a4a24f1b5134ad7b38559c564e))
+* **calculator:** aligned rank display tests with strengthSpan tests ([477c736](https://github.com/nerolis-lab/nerolis-lab/commit/477c73682cdc0d23502b9574c489ec63a22280f4))
+* **calculator:** don't send island threshold in all server requests ([42ac65e](https://github.com/nerolis-lab/nerolis-lab/commit/42ac65e9c43b0a3915401db3d520338b4ccdfd01))
+* **calculator:** fixed lint ([8e9e7a7](https://github.com/nerolis-lab/nerolis-lab/commit/8e9e7a7559b57555f9b9a4e776882cc17eac2f84))
+* **calculator:** moved rank thresholds into area configurations ([8d1ac5c](https://github.com/nerolis-lab/nerolis-lab/commit/8d1ac5c837fc06236e1926f919f8b310129980a8))
+* **calculator:** moved team store snapshots to external files ([894d831](https://github.com/nerolis-lab/nerolis-lab/commit/894d8310b34450eba5b8c36967e160dcfd952197))
+* **calculator:** moved toIslandDto to team-service.ts ([117ea49](https://github.com/nerolis-lab/nerolis-lab/commit/117ea49b37e5600a6cf07ba8d6161dd80d9a72ff))
+* **calculator:** projected rank UI touchup ([bd6e6a4](https://github.com/nerolis-lab/nerolis-lab/commit/bd6e6a477888c55d23446d89e634b45ca2bf6e8b))
+* **calculator:** projected snorlax rating ([829d923](https://github.com/nerolis-lab/nerolis-lab/commit/829d923989747b4465dbd9cd53138cbb489c0337))
+* **calculator:** removed redundant migration in threshold test ([2b0689c](https://github.com/nerolis-lab/nerolis-lab/commit/2b0689c8fefbe9f74a93fd4b7ae9e77454604dd7))
+* **calculator:** renamed rankForProjectedStrength to rankForStrength ([c5be657](https://github.com/nerolis-lab/nerolis-lab/commit/c5be65704d5a94188bf2e182ecfa8c9ceddb620d))
+* **calculator:** replaced island rank fallback with saved rank info ([dc90cff](https://github.com/nerolis-lab/nerolis-lab/commit/dc90cff7d1050a33c07d6353b4af868260d69f83))
+* **calculator:** simplified rank calculation ([d872685](https://github.com/nerolis-lab/nerolis-lab/commit/d8726858c0838c78189ea74d58b8864cfaa2ea35))
+* **calculator:** updated ball icon alt text and title text ([d50749d](https://github.com/nerolis-lab/nerolis-lab/commit/d50749d1ecf3ee91fc54f82ae762a5fa13d2ac89))
+* **calculator:** updated rank icons to png ([44f6a94](https://github.com/nerolis-lab/nerolis-lab/commit/44f6a942844045b55f41d85c46a97d972a448f56))
+* **calculator:** updated rank test to a middle rank ([cd6b2d0](https://github.com/nerolis-lab/nerolis-lab/commit/cd6b2d0d04dd67f0d3638e32ee1e8e353078901e))
+
 ## [2.69.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.69.0...v2.69.1) (2026-09-28)
 
 
