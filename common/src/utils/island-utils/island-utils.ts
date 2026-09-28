@@ -1,4 +1,4 @@
-import type { Area, BaseIslandInstance, IslandInstance, IslandShortName } from '../../types';
+import type { Area, BaseIslandInstance, IslandInstance, IslandInstanceDto, IslandShortName } from '../../types';
 import { EXPERT_ISLANDS, GREENGRASS, ISLANDS, type Berry, type Island } from '../../types';
 
 export const DEFAULT_ISLAND: BaseIslandInstance = { ...GREENGRASS, areaBonus: 0 };
@@ -49,4 +49,9 @@ export function hasCustomBerries(island: IslandInstance): boolean {
   return (
     defaultNames.length !== currentNames.length || defaultNames.some((name, index) => name !== currentNames[index])
   );
+}
+
+export function islandInstanceToDto(island: IslandInstanceDto): IslandInstanceDto {
+  const { name, shortName, areaBonus, berries, expertMode } = island;
+  return { name, shortName, areaBonus, berries, expertMode };
 }

@@ -1,5 +1,5 @@
 import { berry, CYAN, GREENGRASS, GREENGRASS_EXPERT, ISLANDS } from '../../types';
-import { defaultIslandBerries, getIsland, hasCustomBerries } from './island-utils';
+import { defaultIslandBerries, getIsland, hasCustomBerries, islandInstanceToDto } from './island-utils';
 
 describe('getIsland', () => {
   it('should return GREENGRASS when favoredBerries is null/undefined', () => {
@@ -62,5 +62,19 @@ describe('hasCustomBerries', () => {
 
   it('is false for expert islands', () => {
     expect(hasCustomBerries({ ...GREENGRASS_EXPERT, areaBonus: 0, berries: [] })).toBe(false);
+  });
+});
+
+describe('islandInstanceToDto', () => {
+  it('removes definition-only fields', () => {
+    const island = { ...CYAN, areaBonus: 20 };
+
+    expect(islandInstanceToDto(island)).toEqual({
+      name: island.name,
+      shortName: island.shortName,
+      areaBonus: island.areaBonus,
+      berries: island.berries,
+      expertMode: undefined
+    });
   });
 });
