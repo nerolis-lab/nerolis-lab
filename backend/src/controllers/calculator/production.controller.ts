@@ -199,7 +199,8 @@ export default class ProductionController {
     } else {
       return {
         ...island,
-        areaBonus: islandInstance.areaBonus
+        areaBonus: islandInstance.areaBonus,
+        berries: islandInstance.berries
       };
     }
   }
