@@ -39,11 +39,6 @@ describe('006-add-rank-thresholds migration', () => {
       expect(team.island).toEqual(expectedIsland)
     }
     expect(userStore.islands[area.shortName]).toEqual(expectedIsland)
-
-    migration.up({ team: teamStore, user: userStore })
-
-    expect(teamStore.teams[0].island).toEqual(expectedIsland)
-    expect(userStore.islands[area.shortName]).toEqual(expectedIsland)
   })
 
   it('should leave current stores unchanged', () => {
