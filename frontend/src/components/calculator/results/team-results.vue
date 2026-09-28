@@ -3,7 +3,7 @@
     <v-col cols="12">
       <v-card class="bg-transparent rounded-t-0">
         <v-container>
-          <v-row class="flex-center">
+          <v-row dense class="flex-center weekly-strength-row">
             <v-col cols="auto" class="flex-center">
               <span class="text-h5">Weekly </span>
               <span id="weeklyStrength" class="text-h4 ml-2 text-strength font-weight-medium">
@@ -11,12 +11,18 @@
               >
               <v-img src="/images/misc/strength.png" class="ml-2" width="30" height="30" contain />
             </v-col>
-          </v-row>
 
-          <v-row dense class="flex-center">
             <v-col cols="auto" class="flex-center projected-rank">
-              <v-img :src="rankBallImage" :alt="rankBallName" :title="rankBallName" width="36" height="36" contain />
-              <span class="text-h6 text-no-wrap font-weight-medium ml-2">{{ projectedRank }}</span>
+              <v-img
+                :src="rankBallImage"
+                :alt="rankBallName"
+                :title="rankBallName"
+                class="rank-icon"
+                width="32"
+                height="32"
+                contain
+              />
+              <span class="text-h6 text-no-wrap font-weight-regular ml-2">{{ projectedRank }}</span>
             </v-col>
           </v-row>
 
@@ -374,7 +380,15 @@ export default defineComponent({
   transform: translate(20px, -25px);
 }
 
+.weekly-strength-row {
+  column-gap: 24px;
+}
+
 .projected-rank {
   min-width: 140px;
+}
+
+.rank-icon {
+  flex: none;
 }
 </style>
