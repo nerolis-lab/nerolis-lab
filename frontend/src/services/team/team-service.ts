@@ -21,7 +21,6 @@ import {
   type GetTeamsResponse,
   type IngredientSet,
   type IslandInstance,
-  type IslandInstanceDto,
   type PokemonInstance,
   type PokemonInstanceIdentity,
   type TeamAreaDTO,
