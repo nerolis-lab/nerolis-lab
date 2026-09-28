@@ -1,3 +1,10 @@
+## [2.69.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.69.0...v2.69.1) (2026-09-28)
+
+
+### Bug Fixes
+
+* parse custom berries for all areas ([631f657](https://github.com/nerolis-lab/nerolis-lab/commit/631f657a8a6462cffbac80ba0f1a16626572e180))
+
 # [2.69.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.68.0...v2.69.0) (2026-09-27)
 
 
