@@ -49,9 +49,19 @@
 
           <Divider />
 
+          <MealPlan @select-meal="openMealPlanSelection" />
+
+          <MealPlanDialog
+            v-model="isMealPlanSelectionOpen"
+            :meal="selectedMealPlanSlot"
+            @select="updateMealPlanSelection"
+          />
+
+          <Divider />
+
           <v-row v-if="mealTimes" class="flex-center" dense>
             <v-col cols="12" class="flex-center">
-              <span class="text-h6 text-center"> Daily meal times </span>
+              <span class="text-h6 text-center"> Average meal times </span>
             </v-col>
             <v-col v-for="meal in ['breakfast', 'lunch', 'dinner']" cols="12" class="meal-time">
               <v-img
@@ -107,7 +117,7 @@
               <v-divider />
             </v-col>
             <v-col cols="12" class="flex-center py-3">
-              <span class="text-h6 text-center"> Split of recipes cooked </span>
+              <span class="text-h6 text-center"> Cooking results </span>
             </v-col>
           </v-row>
 
@@ -167,7 +177,7 @@
                 <v-divider />
               </v-col>
 
-              <v-col cols="3" class="flex-center"> Recipe </v-col>
+              <v-col cols="3" class="flex-left recipe-row-label"> Recipe </v-col>
               <v-col
                 v-for="(ingredient, i) in cookedRecipe.recipe.ingredients"
                 :key="i"
@@ -184,7 +194,20 @@
                 {{ ingredient.amount }}
               </v-col>
 
-              <template v-if="totalCooks - (cookedRecipe.count + cookedRecipe.totalSkipped) > 0">
+              <template v-if="cookedRecipe.isPlannedRecipe">
+                <v-col cols="12" class="py-0">
+                  <v-divider />
+                </v-col>
+                <v-col cols="3" class="flex-left text-body-1 recipe-row-label"> Average Filler </v-col>
+                <v-col cols="8" class="filler-value-row text-body-1">
+                  <span class="filler-value-group">
+                    <v-img src="/images/misc/strength.png" contain width="22" height="22" class="mr-1" />
+                    {{ round(cookedRecipe.averageFillerValue ?? 0) }}
+                  </span>
+                </v-col>
+              </template>
+
+              <template v-if="!hasFixedMealPlan && totalCooks - (cookedRecipe.count + cookedRecipe.totalSkipped) > 0">
                 <v-col cols="10">
                   <v-divider />
                 </v-col>
@@ -204,14 +227,14 @@
               <v-col cols="12" class="flex-column flex-center text-center">
                 <span class="text-h6">
                   Attempts:
-                  {{ cookedRecipe.count + cookedRecipe.totalSkipped }}
-                  ({{ round(((cookedRecipe.count + cookedRecipe.totalSkipped) / totalCooks) * 100) }}%)
+                  {{ recipeAttempts(cookedRecipe) }}
+                  ({{ round((recipeAttempts(cookedRecipe) / recipeAttemptDenominator()) * 100) }}%)
                 </span>
                 <span>
                   Succeeded:
                   <span class="text-success text-h6">
-                    {{ cookedRecipe.count }}
-                    ({{ round((cookedRecipe.count / totalCooks) * 100) }}%)
+                    {{ recipeSuccesses(cookedRecipe) }}
+                    ({{ round((recipeSuccesses(cookedRecipe) / recipeAttemptDenominator()) * 100) }}%)
                   </span>
                 </span>
               </v-col>
@@ -225,7 +248,7 @@
                     Failed:
                     <span class="text-primary">
                       {{ cookedRecipe.totalSkipped }}
-                      ({{ round((cookedRecipe.totalSkipped / totalCooks) * 100) }}%)
+                      ({{ round((cookedRecipe.totalSkipped / recipeAttemptDenominator()) * 100) }}%)
                     </span>
                   </span>
                 </v-col>
@@ -238,7 +261,7 @@
                       {{ cookedRecipe.potLimited.count }}
                       ({{ round((cookedRecipe.potLimited.count / cookedRecipe.totalSkipped) * 100) }})%
                     </span>
-                    <span>Amount: {{ round(cookedRecipe.potLimited.averageMissing) }}</span>
+                    <span>Average pot slots missing: {{ round(cookedRecipe.potLimited.averageMissing) }}</span>
                   </v-col>
                   <v-col
                     v-for="(ingredientSet, innerIndex) in cookedRecipe.ingredientLimited.filter((ing) => ing.count > 0)"
@@ -257,7 +280,8 @@
                         round((ingredientSet.count / cookedRecipe.totalSkipped) * 100)
                       }})%</span
                     >
-                    <span>Amount: {{ round(ingredientSet.averageMissing) }}</span>
+                    <span>{{ ingredientSet.ingredientName }}</span>
+                    <span>Average missing: {{ round(ingredientSet.averageMissing) }}</span>
                   </v-col>
                 </v-row>
               </template>
@@ -273,6 +297,8 @@
 import { defineComponent } from 'vue'
 
 import Divider from '@/components/custom-components/divider/divider.vue'
+import MealPlan from '@/components/calculator/results/meal-plan.vue'
+import MealPlanDialog from '@/components/calculator/results/meal-plan-dialog.vue'
 import { ingredientImage } from '@/services/utils/image-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -281,10 +307,14 @@ import {
   MathUtils,
   capitalize,
   combineSameIngredientsInDrop,
+  defaultDailyMealPlan,
+  defaultMealPlan,
   getIsland,
   ingredient,
   prettifyTime,
   type CookedRecipeResult,
+  type MealPlanChoice,
+  type MealSlot,
   type RecipeTypeResult,
   type Time
 } from 'sleepapi-common'
@@ -298,17 +328,28 @@ export interface CookedRecipeResultDetails extends CookedRecipeResult {
 export default defineComponent({
   name: 'CookingResults',
   components: {
-    Divider
+    Divider,
+    MealPlan,
+    MealPlanDialog
   },
   data() {
     return {
       teamStore: useTeamStore(),
       pokemonStore: usePokemonStore(),
       userStore: useUserStore(),
-      showDetailsState: [] as boolean[]
+      showDetailsState: [] as boolean[],
+      isMealPlanSelectionOpen: false,
+      selectedMealPlanSlot: undefined as MealSlot | undefined,
+      selectedMealPlanDay: 'weekday' as 'weekday' | 'sunday'
     }
   },
   computed: {
+    hasFixedMealPlan(): boolean {
+      const plan = this.teamStore.getCurrentTeam.mealPlan ?? defaultMealPlan()
+      return [plan.breakfast, plan.lunch, plan.dinner, ...Object.values(plan.sunday ?? {})].some(
+        (choice) => choice.kind !== 'best'
+      )
+    },
     currentRecipeTypeResult(): RecipeTypeResult | undefined {
       const team = this.teamStore.getCurrentTeam
       if (team.recipeType === 'curry') {
@@ -365,7 +406,10 @@ export default defineComponent({
     },
     recipesCooked(): CookedRecipeResultDetails[] {
       const recipes = this.currentRecipeTypeResult?.cookedRecipes ?? []
-      const total = recipes.reduce((sum, cur) => sum + cur.count, 0)
+      const total = Math.max(
+        recipes.reduce((sum, cur) => sum + cur.count, 0),
+        1
+      )
 
       return recipes
         .sort((a, b) => b.count - a.count)
@@ -374,7 +418,7 @@ export default defineComponent({
           const fullWeekPercentage = MathUtils.round((cookedRecipe.count / total) * 100, 2)
 
           if (this.showDetailsState[index] === undefined) {
-            this.showDetailsState[index] = false
+            this.showDetailsState[index] = (cookedRecipe.plannedFailures ?? 0) > 0
           }
 
           return {
@@ -430,6 +474,36 @@ export default defineComponent({
     }
   },
   methods: {
+    recipeAttempts(recipe: CookedRecipeResult) {
+      return recipe.count + recipe.totalSkipped
+    },
+    recipeSuccesses(recipe: CookedRecipeResult) {
+      return recipe.count
+    },
+    recipeAttemptDenominator() {
+      return Math.max(this.totalCooks, 1)
+    },
+    openMealPlanSelection(params: { day: 'weekday' | 'sunday'; meal: MealSlot }) {
+      this.selectedMealPlanSlot = params.meal
+      this.selectedMealPlanDay = params.day
+      this.isMealPlanSelectionOpen = true
+    },
+    async updateMealPlanSelection(choice: MealPlanChoice) {
+      if (!this.selectedMealPlanSlot) {
+        return
+      }
+
+      const currentMealPlan = this.teamStore.getCurrentTeam.mealPlan ?? defaultMealPlan()
+      const mealPlan =
+        this.selectedMealPlanDay === 'sunday'
+          ? {
+              ...currentMealPlan,
+              sunday: { ...(currentMealPlan.sunday ?? defaultDailyMealPlan()), [this.selectedMealPlanSlot]: choice }
+            }
+          : { ...currentMealPlan, [this.selectedMealPlanSlot]: choice }
+      await this.teamStore.updateMealPlan(mealPlan)
+      this.selectedMealPlanSlot = undefined
+    },
     toggleDetails(index: number) {
       this.showDetailsState[index] = !this.showDetailsState[index]
     },
@@ -453,6 +527,21 @@ export default defineComponent({
 .expansion-panel {
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
+}
+
+.recipe-row-label,
+.filler-value-row {
+  min-height: 48px;
+}
+
+.filler-value-row,
+.filler-value-group {
+  display: flex;
+  align-items: center;
+}
+
+.filler-value-row {
+  justify-content: center;
 }
 
 .expansion-panel:hover {
