@@ -206,7 +206,7 @@ class TeamServiceImpl {
       bedtime: currentTeam.bedtime,
       wakeup: currentTeam.wakeup,
       stockpiledIngredients: currentTeam.stockpiledIngredients,
-      island: islandInstanceToDto(currentTeam.island)
+      island: islandInstanceToDto(currentTeam.island),
       schedule: currentTeam.schedule?.length ? teamStore.getCalculationSchedule() : []
     }
 
