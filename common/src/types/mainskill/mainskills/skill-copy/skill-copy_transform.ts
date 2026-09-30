@@ -1,6 +1,7 @@
 import type { ActivationsType, AmountParams, Mainskill } from '../../mainskill';
 import { MAINSKILLS, ModifiedMainskill } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
+import { BerryZonePsystrike } from '../berry-zone';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
 import { SkillCopy } from './skill-copy';
 
@@ -15,7 +16,7 @@ export const SkillCopyTransform = new (class extends ModifiedMainskill {
 
   activations: ActivationsType = {};
 
-  readonly blockedSkills: Mainskill[] = [this, ChargeStrengthMBadDreams, BerryBurstDisguise];
+  readonly blockedSkills: Mainskill[] = [this, BerryBurstDisguise, BerryZonePsystrike, ChargeStrengthMBadDreams];
 
   get copySkills(): Mainskill[] {
     return MAINSKILLS.filter((skill) => {

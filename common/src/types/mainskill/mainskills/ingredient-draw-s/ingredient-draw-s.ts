@@ -16,7 +16,15 @@ abstract class IngredientDrawS extends Mainskill {
   };
 }
 
-export const IngredientDrawSSandshrew = new (class extends IngredientDrawS {})();
-export const IngredientDrawSDwebble = new (class extends IngredientDrawS {})();
-export const IngredientDrawSHawlucha = new (class extends IngredientDrawS {})();
-export const IngredientDrawSCutiefly = new (class extends IngredientDrawS {})();
+export const IngredientDrawSSandshrew = new (class extends IngredientDrawS {
+  uniqueNameOverride = 'Ingredient Draw S - Sandshrew';
+})();
+export const IngredientDrawSDwebble = new (class extends IngredientDrawS {
+  uniqueNameOverride = 'Ingredient Draw S - Dwebble';
+})();
+export const IngredientDrawSHawlucha = new (class extends IngredientDrawS {
+  uniqueNameOverride = 'Ingredient Draw S - Hawlucha';
+})();
+export const IngredientDrawSCutiefly = new (class extends IngredientDrawS {
+  uniqueNameOverride = 'Ingredient Draw S - Cutiefly';
+})();
