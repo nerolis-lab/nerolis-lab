@@ -1,3 +1,4 @@
+import { isConditionalSchedule } from 'sleepapi-common'
 import serverAxios from '@/router/server-axios'
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
@@ -69,11 +70,15 @@ class TeamServiceImpl {
           stockpiledIngredients: [],
           version: 0,
           members: new Array(MAX_TEAM_SIZE).fill(undefined),
+          schedule: [],
           memberIvs: {},
           production: undefined
         }
         teams.push(emptyTeam)
       } else {
+        for (const scheduledMember of serverTeam.scheduledMembers ?? []) {
+          pokemonStore.upsertLocalPokemon(PokemonInstanceUtils.toPokemonInstance(scheduledMember))
+        }
         const members: (string | undefined)[] = []
         for (let memberIndex = 0; memberIndex < MAX_TEAM_SIZE; memberIndex++) {
           const serverMember = serverTeam.members.find((member) => member.memberIndex === memberIndex)
@@ -109,6 +114,9 @@ class TeamServiceImpl {
         const instancedTeam: TeamInstance = {
           index: serverTeam.index,
           memberIndex: teamStore.teams[serverTeam.index]?.memberIndex ?? 0,
+          ...(teamStore.teams[serverTeam.index]?.selectedMemberId
+            ? { selectedMemberId: teamStore.teams[serverTeam.index].selectedMemberId }
+            : {}),
           name: serverTeam.name,
           camp: serverTeam.camp,
           bedtime: serverTeam.bedtime,
@@ -119,6 +127,7 @@ class TeamServiceImpl {
           stockpiledIngredients: serverTeam.stockpiledIngredients ?? [],
           version: serverTeam.version,
           members,
+          schedule: serverTeam.schedule ?? [],
           memberIvs: {},
           production: undefined
         }
@@ -182,7 +191,10 @@ class TeamServiceImpl {
     const currentTeam = teamStore.getCurrentTeam
 
     const members: PokemonInstance[] = []
-    for (const memberId of currentTeam.members) {
+    for (const memberId of new Set([
+      ...currentTeam.members,
+      ...(currentTeam.schedule ?? []).map((shift) => shift.externalId)
+    ])) {
       if (memberId && memberId !== teamStore.getCurrentMember) {
         const member = pokemonStore.getPokemon(memberId)
         member && members.push(member)
@@ -194,7 +206,8 @@ class TeamServiceImpl {
       bedtime: currentTeam.bedtime,
       wakeup: currentTeam.wakeup,
       stockpiledIngredients: currentTeam.stockpiledIngredients,
-      island: islandInstanceToDto(currentTeam.island)
+      island: islandInstanceToDto(currentTeam.island),
+      schedule: currentTeam.schedule?.length ? teamStore.getCalculationSchedule() : []
     }
 
     const berrySetup: PokemonInstanceIdentity = PokemonInstanceUtils.toPokemonInstanceIdentity({
@@ -218,6 +231,10 @@ class TeamServiceImpl {
     )
 
     const response = await serverAxios.post<CalculateIvResponse>('/calculator/iv', {
+      replacedMemberId: currentMember.externalId,
+      ...(settings.schedule?.some((shift) => isConditionalSchedule(shift.type))
+        ? { referenceMember: PokemonInstanceUtils.toPokemonInstanceIdentity(currentMember) }
+        : {}),
       members: parsedMembers,
       variants: [berrySetup, ingredientSetup, skillSetup],
       settings
@@ -233,6 +250,7 @@ class TeamServiceImpl {
     }
 
     return {
+      ...(response.data.reference ? { reference: response.data.reference } : {}),
       optimalBerry: berryProduction,
       optimalIngredient: ingredientProduction,
       optimalSkill: skillProduction
