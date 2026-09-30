@@ -657,7 +657,7 @@ describe('calculateIv', () => {
           areaBonus: island.areaBonus,
           berries: island.berries,
           ...(island.expertMode ? { expertMode: island.expertMode } : {})
-        }
+        },
         schedule: []
       }
     })
