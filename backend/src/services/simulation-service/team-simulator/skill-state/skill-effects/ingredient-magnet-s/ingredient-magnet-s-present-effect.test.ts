@@ -24,8 +24,8 @@ describe('IngredientMagnetSPresentEffect', () => {
     vimic(skillState, 'skillAmount', () => ingMagnetAmount);
     vimic(skillState.memberState.cookingState!, 'addIngredients');
     vimic(skillState, 'rng', () => 0); // Roll succeeds (0 < 0.5)
-    const magnetIngredients: IngredientSet[] = ingredient.INGREDIENTS.map((ing) => ({
-      amount: ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS,
+    const magnetIngredients: IngredientSet[] = ingredient.INGREDIENTS.slice(0, 3).map((ing, index) => ({
+      amount: index < 2 ? 17 : 16,
       ingredient: ing
     }));
     const magnetIngredientsFloat = ingredientSetToFloatFlat(magnetIngredients);

@@ -60,8 +60,8 @@
                     :src="ingredientImage(ingredient.name)"
                     height="24"
                     width="24"
-                    :alt="ingredient.name"
-                    :title="ingredient.name"
+                    :alt="ingredient.name === 'magnet' ? 'Other ingredients' : ingredient.name"
+                    :title="ingredient.name === 'magnet' ? 'Other ingredients' : ingredient.name"
                     data-testid="ingredient-image"
                   ></v-img>
                   <div class="text-center">
@@ -96,11 +96,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import { processSignificantIngredientsForDisplay } from '@/services/utils/ingredient-display-utils'
 import { pokemonImage } from '@/services/utils/image-utils'
 import { useComparisonStore } from '@/stores/comparison-store/comparison-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import type { DataTableHeader } from '@/types/vuetify/table/table-header'
-import { MathUtils, ingredient, type IngredientSet } from 'sleepapi-common'
+import { MathUtils, ingredient, type IngredientSet, type MemberProduction } from 'sleepapi-common'
 
 export default defineComponent({
   name: 'CompareOverview',
@@ -141,7 +142,10 @@ export default defineComponent({
           ),
           berryName: memberBerry?.berry.name ?? member.pokemon.berry.name,
           ingredients: memberProduction.produceTotal.ingredients.reduce((sum, cur) => sum + cur.amount, 0) * factor,
-          ingredientList: this.splitIngredientMagnetIngredients(memberProduction.produceTotal.ingredients),
+          ingredientList: this.splitIngredientMagnetIngredients(
+            memberProduction.produceTotal.ingredients,
+            memberProduction.advanced
+          ),
           skillProcs: MathUtils.round(memberProduction.skillProcs * factor, 1)
         })
       }
@@ -156,7 +160,14 @@ export default defineComponent({
     }
   },
   methods: {
-    splitIngredientMagnetIngredients(ingredients: IngredientSet[]) {
+    splitIngredientMagnetIngredients(ingredients: IngredientSet[], advanced?: MemberProduction['advanced']) {
+      const significantNames = Object.keys(advanced?.ingredientDistributions ?? {})
+      if (significantNames.length > 0) {
+        return processSignificantIngredientsForDisplay(ingredients, significantNames).map(({ name, amount }) => ({
+          name,
+          amount: MathUtils.round(amount * this.comparisonStore.timeWindowFactor, 1)
+        }))
+      }
       if (ingredients.length >= ingredient.INGREDIENTS.length) {
         const ingMagnetAmount = ingredients.reduce(
           (min, cur) => (cur.amount < min ? cur.amount : min),
