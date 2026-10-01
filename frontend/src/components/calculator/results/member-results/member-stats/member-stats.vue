@@ -49,6 +49,7 @@
     </v-col>
 
     <SkillDistribution :pokemonProduction="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
+    <IngredientDistribution :pokemon-production="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
 
     <v-row dense :class="[{ 'flex-wrap': isMobile }]">
       <!-- Day period -->
@@ -92,6 +93,7 @@
 </template>
 
 <script lang="ts">
+import IngredientDistribution from './ingredient-distribution.vue'
 import SkillDistribution from '@/components/calculator/results/member-results/member-stats/skill-distribution.vue'
 import { useBreakpoint } from '@/composables/use-breakpoint/use-breakpoint'
 import { ingredientImage } from '@/services/utils/image-utils'
@@ -105,7 +107,8 @@ import { computed, defineComponent, ref, type PropType } from 'vue'
 export default defineComponent({
   name: 'MemberStats',
   components: {
-    SkillDistribution
+    SkillDistribution,
+    IngredientDistribution
   },
   props: {
     pokemonProduction: {
