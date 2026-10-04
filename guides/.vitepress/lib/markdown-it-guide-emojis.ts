@@ -1,7 +1,8 @@
-import type MarkdownIt from 'markdown-it';
-import Token from 'markdown-it/lib/token.mjs';
+import MarkdownIt, { type MarkdownIt as MarkdownItInstance, type Token } from 'markdown-it';
 import type { GuideEmojiEntry } from './guide-emojis';
 import { buildGuideEmojiReplacerRegex } from './guide-emojis';
+
+const TokenCtor = MarkdownIt.Token;
 
 function escapeHtmlAttr(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -12,14 +13,14 @@ function replaceAt<T>(items: T[], index: number, replacements: T[]): T[] {
 }
 
 function markdownTextToken(content: string, level: number): Token {
-  const token = new Token('text', '', 0);
+  const token = new TokenCtor('text', '', 0);
   token.content = content;
   token.level = level;
   return token;
 }
 
 function guideEmojiHtmlToken(shortcodeName: string, level: number): Token {
-  const token = new Token('html_inline', '', 0);
+  const token = new TokenCtor('html_inline', '', 0);
   token.content = `<GuideEmoji name="${escapeHtmlAttr(shortcodeName)}" />`;
   token.level = level;
   return token;
@@ -84,7 +85,7 @@ function rewriteInlineChildrenWithGuideEmojis(
   }
 }
 
-type MarkdownItCore = Pick<MarkdownIt, 'core'>;
+type MarkdownItCore = Pick<MarkdownItInstance, 'core'>;
 
 export function markdownItGuideEmojis(
   md: MarkdownItCore,
