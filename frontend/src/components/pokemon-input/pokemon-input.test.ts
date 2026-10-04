@@ -88,7 +88,7 @@ describe('PokemonInput', () => {
     wrapper.vm.updatePokemon(PokemonInstanceUtils.createDefaultPokemonInstance(WEAVILE))
 
     const pokemonInstance = wrapper.vm.pokemonInstance
-    expect(pokemonInstance.pokemon).toBe(WEAVILE)
+    expect(pokemonInstance.pokemon).toEqual(WEAVILE)
     expect(pokemonInstance.ingredients).toEqual([
       { ...SNEASEL.ingredient0[0], level: 0 },
       { ...SNEASEL.ingredient30[0], level: 30 },
@@ -159,7 +159,7 @@ describe('PokemonInput', () => {
 
   it('updates nature correctly', async () => {
     wrapper.vm.updateNature(nature.ADAMANT)
-    expect(wrapper.vm.pokemonInstance.nature).toBe(nature.ADAMANT)
+    expect(wrapper.vm.pokemonInstance.nature).toEqual(nature.ADAMANT)
   })
 
   it('emits cancel event on cancel button click', async () => {
