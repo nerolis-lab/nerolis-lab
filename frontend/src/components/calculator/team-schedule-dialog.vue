@@ -173,9 +173,7 @@
       <v-card-text class="text-body-2">
         <p class="mb-3">Pokémon rotate as ingredient supplies change during the simulation.</p>
         <ol class="pl-4">
-          <li class="mb-2">
-            <strong>Minimums:</strong> Pokémon rotate in to keep ingredients above their minimums.
-          </li>
+          <li class="mb-2"><strong>Minimums:</strong> Pokémon rotate in to keep ingredients above their minimums.</li>
           <li class="mb-2">
             <strong>Maximums:</strong> Once all minimums are met, Pokémon rotate in until their ingredients reach their
             maximums.
