@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import IngredientDistribution from './ingredient-distribution.vue'
 import { mocks } from '@/vitest'
 
@@ -69,6 +69,41 @@ describe('IngredientDistribution', () => {
     expect(wrapper.find('[role="tooltip"]').text()).toContain('Herb')
     expect(wrapper.find('[role="tooltip"]').classes()).toContain('visible')
     wrapper.unmount()
+  })
+  it('fits the chart to its container and reduces tick density on narrow screens', async () => {
+    let resize!: ResizeObserverCallback
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(callback: ResizeObserverCallback) {
+          resize = callback
+        }
+        observe() {}
+        disconnect() {}
+      }
+    )
+    const wrapper = createWrapper({ Egg: { 100: 100 } })
+    try {
+      await wrapper.vm.$nextTick()
+      const resizeTo = async (width: number) => {
+        resize([{ contentRect: { width } } as ResizeObserverEntry], {} as ResizeObserver)
+        await wrapper.vm.$nextTick()
+      }
+      await resizeTo(660)
+      const wideTickCount = wrapper.findAll('svg text').length
+      await resizeTo(300)
+      expect(wrapper.find('svg').attributes('viewBox')).toBe('0 0 300 275')
+      expect(wrapper.findAll('svg text').length).toBeLessThan(wideTickCount)
+      // The high-output marker remains visible even in a narrow chart.
+      const markerX = Number(wrapper.find('svg image').attributes('x'))
+      expect(markerX).toBeGreaterThan(0)
+      expect(markerX + 20).toBeLessThanOrEqual(300)
+      await resizeTo(660)
+      expect(wrapper.findAll('svg text')).toHaveLength(wideTickCount)
+    } finally {
+      wrapper.unmount()
+      vi.unstubAllGlobals()
+    }
   })
   it('defaults to the three highest averages and restores that selection on every opening', async () => {
     const wrapper = createWrapper({

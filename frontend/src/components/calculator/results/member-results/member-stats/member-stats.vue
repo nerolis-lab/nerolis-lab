@@ -48,8 +48,10 @@
       </div>
     </v-col>
 
-    <SkillDistribution :pokemonProduction="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
-    <IngredientDistribution :pokemon-production="pokemonProduction" :class="['my-auto', { 'mx-auto': isMobile }]" />
+    <v-col class="d-flex flex-wrap ga-2 pl-2 pt-3 pb-5" :class="{ 'justify-center': isMobile }">
+      <SkillDistribution :pokemonProduction="pokemonProduction" />
+      <IngredientDistribution :pokemon-production="pokemonProduction" />
+    </v-col>
 
     <v-row dense :class="[{ 'flex-wrap': isMobile }]">
       <!-- Day period -->

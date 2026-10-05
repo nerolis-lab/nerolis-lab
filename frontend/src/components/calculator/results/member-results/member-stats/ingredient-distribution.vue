@@ -1,27 +1,25 @@
 <template>
-  <v-row class="px-2">
-    <v-col class="flex-left">
-      <v-dialog v-model="show" :close-on-content-click="false" max-width="1000">
-        <template #activator="{ props: activatorProps }">
-          <v-btn v-bind="activatorProps" append-icon="mdi-chart-bell-curve">Ingredient distribution</v-btn>
-        </template>
-        <v-card class="pa-4">
-          <h2 class="text-h6">{{ pokemonProduction.member.name }}’s daily ingredients</h2>
-          <p class="text-body-2 mt-1 mb-3">
-            Ingredient output includes production and skills, including help received from teammates.
-          </p>
-          <v-btn-toggle
-            v-model="mode"
-            mandatory
-            divided
-            density="compact"
-            class="mb-3 flex-shrink-0"
-            aria-label="Distribution statistics"
-          >
-            <v-btn value="Average">Average</v-btn>
-            <v-btn value="Median">Median</v-btn>
-          </v-btn-toggle>
-          <div v-if="distributions.length" class="distribution-layout">
+  <div class="flex-left">
+    <v-dialog v-model="show" :close-on-content-click="false" max-width="1000">
+      <template #activator="{ props: activatorProps }">
+        <v-btn v-bind="activatorProps" append-icon="mdi-chart-bell-curve">Ingredient distribution</v-btn>
+      </template>
+      <v-card class="pa-2 pa-sm-4">
+        <h2 class="text-h6">{{ pokemonProduction.member.name }}’s daily ingredients</h2>
+        <p class="text-body-2 mt-1 mb-3">Includes production, skills, and teammate help.</p>
+        <v-btn-toggle
+          v-model="mode"
+          mandatory
+          divided
+          density="compact"
+          class="mb-3 flex-shrink-0"
+          aria-label="Distribution statistics"
+        >
+          <v-btn value="Average">Average</v-btn>
+          <v-btn value="Median">Median</v-btn>
+        </v-btn-toggle>
+        <div v-if="distributions.length" class="distribution-layout" :style="{ '--chart-height': `${bottom + 55}px` }">
+          <div class="ingredient-selector">
             <div class="ingredient-options" aria-label="Displayed ingredients">
               <v-checkbox
                 v-for="distribution in distributions"
@@ -38,123 +36,112 @@
                 </template>
               </v-checkbox>
             </div>
-            <div ref="graphContainer" class="graph-container">
-              <div class="graph-scroll" @scroll="layoutVersion++">
-                <svg
-                  ref="chartElement"
-                  :viewBox="`0 0 ${chartWidth} ${bottom + 55}`"
-                  :style="{ minWidth: `${minimumChartWidth}px` }"
-                  role="group"
-                  aria-label="Daily ingredient output distributions"
-                >
-                  <g v-for="tick in 5" :key="tick">
-                    <line
-                      :x1="left"
-                      :x2="right"
-                      :y1="top + ((tick - 1) * plotHeight) / 4"
-                      :y2="top + ((tick - 1) * plotHeight) / 4"
-                      stroke="currentColor"
-                      opacity="0.12"
-                    />
-                  </g>
-                  <line :x1="left" :x2="right" :y1="bottom" :y2="bottom" stroke="currentColor" />
-                  <g v-for="tick in ticks" :key="`x-${tick}`">
-                    <line
-                      :x1="xPosition(tick)"
-                      :x2="xPosition(tick)"
-                      :y1="bottom"
-                      :y2="bottom + 5"
-                      stroke="currentColor"
-                    />
-                    <text :x="xPosition(tick)" :y="bottom + 20" text-anchor="middle" fill="currentColor" font-size="12">
-                      {{ tick }}
-                    </text>
-                  </g>
-                  <text :x="chartWidth / 2" :y="bottom + 45" text-anchor="middle" fill="currentColor" font-size="12">
-                    Ingredients per day
-                  </text>
+          </div>
+          <div ref="graphContainer" class="graph-container">
+            <div class="graph-scroll" @scroll="layoutVersion++">
+              <svg
+                ref="chartElement"
+                :viewBox="`0 0 ${chartWidth} ${bottom + 55}`"
+                role="group"
+                aria-label="Daily ingredient output distributions"
+              >
+                <g v-for="tick in 5" :key="tick">
+                  <line
+                    :x1="left"
+                    :x2="right"
+                    :y1="top + ((tick - 1) * plotHeight) / 4"
+                    :y2="top + ((tick - 1) * plotHeight) / 4"
+                    stroke="currentColor"
+                    opacity="0.12"
+                  />
                   <text
-                    x="18"
-                    :y="top + 140"
-                    :transform="`rotate(-90 18 ${top + 140})`"
-                    text-anchor="middle"
+                    :x="left - 8"
+                    :y="top + ((tick - 1) * plotHeight) / 4"
+                    text-anchor="end"
+                    dominant-baseline="middle"
                     fill="currentColor"
                     font-size="12"
                   >
-                    Probability density
+                    {{ Number(((maxDensity * (5 - tick) * 100) / 4).toPrecision(2)) }}%
                   </text>
-                  <path
-                    v-for="curve in curves"
-                    :key="curve.distribution.name"
-                    :d="curve.path"
-                    :fill="`${ingredientColor(curve.distribution.name)}33`"
-                    :stroke="ingredientColor(curve.distribution.name)"
-                    stroke-width="1"
-                    tabindex="0"
-                    role="button"
-                    :aria-label="tooltipLines(curve.distribution).join(', ')"
-                    @click="hovered = curve.distribution.name"
-                    @keydown.enter="hovered = curve.distribution.name"
-                    @keydown.space.prevent="hovered = curve.distribution.name"
-                    @keydown.esc="hovered = undefined"
-                    @mouseenter="hovered = curve.distribution.name"
-                    @mouseleave="hovered = undefined"
-                    @focus="hovered = curve.distribution.name"
-                    @blur="hovered = undefined"
+                </g>
+                <line :x1="left" :x2="right" :y1="bottom" :y2="bottom" stroke="currentColor" />
+                <g v-for="tick in ticks" :key="`x-${tick}`">
+                  <line
+                    :x1="xPosition(tick)"
+                    :x2="xPosition(tick)"
+                    :y1="bottom"
+                    :y2="bottom + 5"
+                    stroke="currentColor"
                   />
-                  <g v-for="(curve, index) in curves" :key="`marker-${curve.distribution.name}`" pointer-events="none">
-                    <line
-                      :x1="xPosition(curve.distribution[mode === 'Average' ? 'average' : 'median'])"
-                      :x2="xPosition(curve.distribution[mode === 'Average' ? 'average' : 'median'])"
-                      :y1="top"
-                      :y2="bottom"
-                      :stroke="ingredientColor(curve.distribution.name)"
-                      stroke-width="2"
-                      stroke-dasharray="5 5"
-                    />
-                    <g
-                      :transform="`translate(${Math.min(right - 40, Math.max(90, xPosition(curve.distribution[mode === 'Average' ? 'average' : 'median'])))}, ${18 + index * 20})`"
-                    >
-                      <text
-                        x="-6"
-                        y="0"
-                        text-anchor="end"
-                        :fill="ingredientColor(curve.distribution.name)"
-                        font-size="12"
-                      >
-                        {{ mode }}
-                      </text>
-                      <image :href="ingredientImage(curve.distribution.name)" x="0" y="-15" width="20" height="20" />
-                    </g>
-                  </g>
-                </svg>
-              </div>
-              <div
-                v-if="tooltipDistribution"
-                class="distribution-tooltip"
-                :class="{ visible: hoveredDistribution }"
-                :aria-hidden="!hoveredDistribution"
-                role="tooltip"
-                :style="tooltipPosition"
-              >
-                <div v-for="line in tooltipLines(tooltipDistribution!)" :key="line">{{ line }}</div>
-              </div>
-              <p v-if="!selected.length" class="text-body-2">Select an ingredient to display its distribution.</p>
+                  <text :x="xPosition(tick)" :y="bottom + 20" text-anchor="middle" fill="currentColor" font-size="12">
+                    {{ tick }}
+                  </text>
+                </g>
+                <text :x="chartWidth / 2" :y="bottom + 45" text-anchor="middle" fill="currentColor" font-size="12">
+                  Ingredients per day
+                </text>
+                <path
+                  v-for="curve in curves"
+                  :key="curve.distribution.name"
+                  :d="curve.path"
+                  :fill="`${ingredientColor(curve.distribution.name)}33`"
+                  :stroke="ingredientColor(curve.distribution.name)"
+                  stroke-width="1"
+                  tabindex="0"
+                  role="button"
+                  :aria-label="tooltipLines(curve.distribution).join(', ')"
+                  @click="hovered = curve.distribution.name"
+                  @keydown.enter="hovered = curve.distribution.name"
+                  @keydown.space.prevent="hovered = curve.distribution.name"
+                  @keydown.esc="hovered = undefined"
+                  @mouseenter="hovered = curve.distribution.name"
+                  @mouseleave="hovered = undefined"
+                  @focus="hovered = curve.distribution.name"
+                  @blur="hovered = undefined"
+                />
+                <g v-for="curve in curves" :key="`marker-${curve.distribution.name}`" pointer-events="none">
+                  <line
+                    :x1="xPosition(curve.distribution[mode === 'Average' ? 'average' : 'median'])"
+                    :x2="xPosition(curve.distribution[mode === 'Average' ? 'average' : 'median'])"
+                    :y1="top"
+                    :y2="bottom"
+                    :stroke="ingredientColor(curve.distribution.name)"
+                    stroke-width="2"
+                    stroke-dasharray="5 5"
+                  />
+                  <image
+                    :href="ingredientImage(curve.distribution.name)"
+                    :x="xPosition(curve.distribution[mode === 'Average' ? 'average' : 'median']) - 10"
+                    :y="top - 26"
+                    width="20"
+                    height="20"
+                  />
+                </g>
+              </svg>
             </div>
+            <div
+              v-if="tooltipDistribution"
+              class="distribution-tooltip"
+              :class="{ visible: hoveredDistribution }"
+              :aria-hidden="!hoveredDistribution"
+              role="tooltip"
+              :style="tooltipPosition"
+            >
+              <div v-for="line in tooltipLines(tooltipDistribution!)" :key="line">{{ line }}</div>
+            </div>
+            <p v-if="!selected.length" class="text-body-2">Select an ingredient to display its distribution.</p>
           </div>
-          <p v-else class="my-4">No ingredient distribution data. Calculate this team to see its distributions.</p>
-          <div v-if="otherAverage !== undefined" class="d-flex align-center mt-3 text-body-2">
-            <img :src="ingredientImage('magnet')" width="28" height="28" alt="Other ingredients" class="mr-2" />
-            Other ingredients: {{ format(otherAverage) }} per day on average
-          </div>
-          <p class="text-caption mt-3">
-            Curves smooth the simulated daily results. Statistics use those results directly.
-          </p>
-          <v-btn color="secondary" class="mt-3 align-self-start" @click="show = false">Close</v-btn>
-        </v-card>
-      </v-dialog>
-    </v-col>
-  </v-row>
+        </div>
+        <p v-else class="my-4">No ingredient distribution data. Calculate this team to see its distributions.</p>
+        <div v-if="otherAverage !== undefined" class="d-flex align-center mt-3 text-body-2">
+          <img :src="ingredientImage('magnet')" width="28" height="28" alt="Other ingredients" class="mr-2" />
+          Other ingredients: {{ format(otherAverage) }} per day on average
+        </div>
+        <v-btn color="secondary" class="mt-3 align-self-sm-start" @click="show = false">Close</v-btn>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -178,13 +165,15 @@ const lastHovered = ref<string>()
 const chartElement = ref<SVGSVGElement>()
 const graphContainer = ref<HTMLDivElement>()
 const layoutVersion = ref(0)
+const chartWidth = ref(660)
 let resizeObserver: ResizeObserver | undefined
 watch(
-  chartElement,
+  graphContainer,
   (element) => {
     resizeObserver?.disconnect()
     if (element) {
-      resizeObserver = new ResizeObserver(() => {
+      resizeObserver = new ResizeObserver(([entry]) => {
+        if (entry.contentRect.width > 0) chartWidth.value = entry.contentRect.width
         layoutVersion.value++
       })
       resizeObserver.observe(element)
@@ -209,20 +198,26 @@ function resetIngredientSelection() {
 watch(distributions, resetIngredientSelection, { immediate: true })
 const otherAverage = computed(() => props.pokemonProduction.production.advanced?.nonSignificantIngredientAverage)
 const upperBound = computed(() => ingredientUpperBound(distributions.value))
-const ticks = computed(() => Array.from({ length: upperBound.value / 10 + 1 }, (_, index) => index * 10))
-const minimumChartWidth = computed(() => Math.max(390, ticks.value.length * 28 + 68))
-const chartWidth = computed(() => Math.max(660, minimumChartWidth.value))
+const ticks = computed(() => {
+  const intervals = Math.max(1, Math.floor(plotWidth.value / 45))
+  const step = Math.max(10, Math.ceil(upperBound.value / intervals / 10) * 10)
+  return Array.from({ length: Math.floor(upperBound.value / step) + 1 }, (_, index) => index * step)
+})
 const left = 48
 const right = computed(() => chartWidth.value - 20)
 const plotWidth = computed(() => right.value - left)
-const top = computed(() => Math.max(40, selected.value.length * 20 + 12))
-const plotHeight = 280
-const bottom = computed(() => top.value + plotHeight)
+const top = 40
+const plotHeight = computed(() => Math.min(280, Math.max(180, chartWidth.value * 0.55)))
+const bottom = computed(() => top + plotHeight.value)
 const xPosition = (value: number) => left + (value / upperBound.value) * plotWidth.value
 const sampled = computed(() =>
   distributions.value.map((distribution) => ({ distribution, points: ingredientCurve(distribution, upperBound.value) }))
 )
-const maxDensity = computed(() => Math.max(0.01, ...sampled.value.flatMap(({ points }) => points.map(({ y }) => y))))
+const maxDensity = computed(() => {
+  const peak = Math.max(0.01, ...sampled.value.flatMap(({ points }) => points.map(({ y }) => y)))
+  const step = 10 ** Math.floor(Math.log10(peak))
+  return Math.ceil(peak / step) * step
+})
 const curves = computed(() =>
   sampled.value
     .filter(({ distribution }) => selected.value.includes(distribution.name))
@@ -231,7 +226,9 @@ const curves = computed(() =>
       points,
       path:
         `M ${left} ${bottom.value} ` +
-        points.map(({ x, y }) => `L ${xPosition(x)} ${bottom.value - (y / maxDensity.value) * plotHeight}`).join(' ') +
+        points
+          .map(({ x, y }) => `L ${xPosition(x)} ${bottom.value - (y / maxDensity.value) * plotHeight.value}`)
+          .join(' ') +
         ` L ${right.value} ${bottom.value} Z`
     }))
 )
@@ -262,7 +259,7 @@ const tooltipPosition = computed(() => {
   const scale = (svgBounds?.width || chartWidth.value) / chartWidth.value
   return {
     left: `${(svgBounds?.left ?? 0) - (containerBounds?.left ?? 0) + xPosition(centralValue) * scale + 12}px`,
-    top: `${(bottom.value - (density / maxDensity.value) * plotHeight) * scale}px`
+    top: `${(bottom.value - (density / maxDensity.value) * plotHeight.value) * scale}px`
   }
 })
 const format = (value: number) => Number(value.toFixed(1)).toLocaleString()
@@ -270,16 +267,15 @@ function tooltipLines(distribution: IngredientDistribution) {
   if (mode.value === 'Median')
     return [
       distribution.name,
-      `Median: ${format(distribution.median)}`,
       `1st quartile: ${format(distribution.firstQuartile)}`,
+      `Median: ${format(distribution.median)}`,
       `3rd quartile: ${format(distribution.thirdQuartile)}`
     ]
   return [
     distribution.name,
-    `Average: ${format(distribution.average)}`,
-    ...[-2, -1, 1, 2].map(
+    ...[-2, -1, 0, 1, 2].map(
       (deviation) =>
-        `${deviation > 0 ? '+' : ''}${deviation} stddev: ${format(distribution.average + deviation * distribution.standardDeviation)}`
+        `${deviation === 0 ? 'Average' : `${deviation > 0 ? '+' : ''}${deviation} stddev`}: ${format(distribution.average + deviation * distribution.standardDeviation)}`
     )
   ]
 }
@@ -290,10 +286,16 @@ function tooltipLines(distribution: IngredientDistribution) {
   display: flex;
   gap: 16px;
 }
+.ingredient-selector {
+  flex: 0 0 180px;
+  min-width: 0;
+}
 .ingredient-options {
-  flex: 0 0 140px;
-  max-height: 450px;
+  max-height: var(--chart-height);
   overflow-y: auto;
+}
+.ingredient-options :deep(.v-label) {
+  white-space: nowrap;
 }
 .graph-container {
   position: relative;
@@ -352,14 +354,34 @@ function tooltipLines(distribution: IngredientDistribution) {
 }
 @media (max-width: 600px) {
   .distribution-layout {
-    gap: 4px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ingredient-selector {
+    flex: 0 0 auto;
   }
   .ingredient-options {
-    flex-basis: 110px;
+    display: flex;
+    flex-direction: column;
+    /* Reveal half of the fourth row to indicate more ingredients below. */
+    max-height: 140px;
   }
-
-  .graph-container svg {
-    min-width: 390px;
+  .ingredient-options :deep(.v-checkbox) {
+    flex: 0 0 40px;
+  }
+  .distribution-tooltip {
+    position: static;
+    transform: none;
+    display: none;
+    margin-top: 8px;
+    white-space: normal;
+    transition: none;
+  }
+  .distribution-tooltip.visible {
+    display: block;
+  }
+  .distribution-tooltip::before {
+    display: none;
   }
 }
 </style>
