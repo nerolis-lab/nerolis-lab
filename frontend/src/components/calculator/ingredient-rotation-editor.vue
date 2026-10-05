@@ -1,7 +1,7 @@
 <template>
-  <v-card title="Ingredient requirements">
+  <v-card class="rotation-dialog" title="Ingredient requirements">
     <v-card-text>
-      <div v-if="thresholds.length" class="ingredient-requirement-grid mb-2 text-body-2">
+      <div v-if="thresholds.length" class="ingredient-requirement-grid mb-2 rotation-description">
         <span>Minimum</span>
         <span class="maximum-heading">Maximum</span>
       </div>
@@ -12,6 +12,7 @@
       >
         <v-text-field
           v-model.number="threshold.minimum"
+          class="rotation-field"
           :aria-label="`Minimum ${getIngredient(threshold.name).longName}`"
           type="number"
           min="0"
@@ -22,9 +23,7 @@
           variant="outlined"
           density="compact"
           @focus="highlightText"
-        >
-          <template #append-inner><v-icon>mdi-pencil</v-icon></template>
-        </v-text-field>
+        />
         <img
           :src="ingredientImage(threshold.name)"
           :alt="getIngredient(threshold.name).longName"
@@ -34,6 +33,7 @@
         />
         <v-text-field
           v-model.number="threshold.maximum"
+          class="rotation-field"
           :aria-label="`Maximum ${getIngredient(threshold.name).longName}`"
           type="number"
           min="1"
@@ -44,9 +44,7 @@
           variant="outlined"
           density="compact"
           @focus="highlightText"
-        >
-          <template #append-inner><v-icon>mdi-pencil</v-icon></template>
-        </v-text-field>
+        />
         <v-btn
           icon="mdi-close-circle"
           variant="text"
@@ -118,10 +116,11 @@ const updateIngredients = (ingredients: Ingredient[]) => {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@use '@/assets/rotation-dialog';
 .ingredient-requirement-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr) 40px;
+  grid-template-columns: minmax(0, 1fr) 32px minmax(0, 1fr) 40px;
   align-items: center;
   gap: 6px;
 }

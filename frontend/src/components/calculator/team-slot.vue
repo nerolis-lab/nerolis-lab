@@ -19,9 +19,8 @@
             {{ pokemonInstance.name }}
           </div>
           <v-img :src="imageUrl" class="pokemon-image" style="left: 10%" />
-          <v-icon v-if="hasSchedule" class="schedule-clock" color="primary" size="22">mdi-clock-outline</v-icon>
-
-          <div style="position: absolute; bottom: 0%; width: 100%">
+          <div class="schedule-footer">
+            <v-icon v-if="hasSchedule" class="schedule-clock" color="primary" size="22">mdi-clock-outline</v-icon>
             <v-card class="text-center text-x-small rounded-t-0" color="subskillGold" location="bottom center">
               {{ subskillBadge }}
             </v-card>
@@ -299,6 +298,18 @@ export default defineComponent({
   left: 50%;
   width: 50%;
   white-space: nowrap;
+}
+.schedule-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.schedule-footer .schedule-clock {
+  position: static;
+  align-self: flex-end;
+  margin: 4px;
 }
 .schedule-clock {
   position: absolute;

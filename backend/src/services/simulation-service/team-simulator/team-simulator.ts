@@ -523,7 +523,6 @@ export class TeamSimulator {
     return scheduleTargetReached(shift, {
       cookingState: this.cookingState,
       berryZoneState: this.berryZoneState,
-      primaryBerry: this.memberStatesWithoutFillers.find((member) => member.id === shift.externalId)?.berry,
       sunday: this.run > 0 && this.run % 7 === 0
     });
   }

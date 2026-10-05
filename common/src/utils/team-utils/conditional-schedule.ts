@@ -1,4 +1,4 @@
-import type { Pokemon } from '../../types/pokemon/pokemon';
+import type { Berry } from '../../types/berry/berry';
 import { capitalize } from '../string-utils/string-utils';
 import { BerryZonePsystrike } from '../../types/mainskill';
 import type { TeamScheduleShift, TeamScheduleType } from '../../types/team/team';
@@ -8,8 +8,8 @@ export type BonusScheduleType = Exclude<ConditionalScheduleType, 'ingredients'>;
 
 interface ConditionalScheduleDefinition {
   title: string;
-  description: string | ((pokemon?: Pokemon) => string);
-  targetLabel: string | ((pokemon?: Pokemon) => string);
+  description: string | ((berry?: Berry) => string);
+  targetLabel: string;
   targetField: 'tastyChanceTarget' | 'potSizeTarget' | 'berryZoneTarget';
   defaultTarget: number;
   maximumTarget?: number;
@@ -25,9 +25,9 @@ interface ConditionalScheduleDefinition {
 export const conditionalScheduleDefinitions: Record<BonusScheduleType, ConditionalScheduleDefinition> = {
   'berry-zone': {
     title: 'Berry zone',
-    description: (pokemon) =>
-      `Rotate after the ${pokemon ? capitalize(pokemon.berry.type) + ' ' : ''}berry strength bonus reaches the target. The zone lasts until moving sites.`,
-    targetLabel: (pokemon) => `${pokemon ? capitalize(pokemon.berry.type) + ' ' : ''}berry strength bonus %`,
+    description: (berry) =>
+      `Rotate after the ${berry ? capitalize(berry.type) + ' ' : ''}berry strength bonus reaches the target. The zone lasts until moving sites.`,
+    targetLabel: 'Bonus %',
     targetField: 'berryZoneTarget',
     defaultTarget: BerryZonePsystrike.maximumBonus,
     maximumTarget: BerryZonePsystrike.maximumBonus,
@@ -77,6 +77,7 @@ export function withScheduleTarget(
   target?: number
 ): TeamScheduleShift {
   const next = { ...shift, type };
+  if (type !== 'berry-zone' || target === undefined) delete next.berryZoneBerry;
   if (type !== 'ingredients') {
     delete next.ingredientThresholds;
   }

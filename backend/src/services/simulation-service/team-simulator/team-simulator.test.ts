@@ -135,7 +135,7 @@ describe('TeamSimulator', () => {
         ...mockPokemonWithIngredients,
         pokemon: commonMocks.mockPokemon({
           ...mockPokemonWithIngredients.pokemon,
-          berry: berry.MAGO,
+          berry: externalId === 'contributor' ? berry.MAGO : berry.DURIN,
           skill: externalId === 'contributor' ? BerryZonePsystrike : ChargeStrengthS,
           ingredientPercentage: 0
         })
@@ -144,9 +144,23 @@ describe('TeamSimulator', () => {
     const settings = mocks.teamSettings({
       includeCooking: false,
       schedule: [
-        { slotIndex: 0, externalId: 'contributor', startTime: '06:00', type: 'berry-zone', berryZoneTarget: 24 },
+        {
+          slotIndex: 0,
+          externalId: 'contributor',
+          startTime: '06:00',
+          type: 'berry-zone',
+          berryZoneBerry: berry.MAGO.name,
+          berryZoneTarget: 24
+        },
         { slotIndex: 0, externalId: 'replacement-0', startTime: '06:05', type: 'berry-zone' },
-        { slotIndex: 1, externalId: 'non-contributor', startTime: '06:00', type: 'berry-zone', berryZoneTarget: 24 },
+        {
+          slotIndex: 1,
+          externalId: 'non-contributor',
+          startTime: '06:00',
+          type: 'berry-zone',
+          berryZoneBerry: berry.MAGO.name,
+          berryZoneTarget: 24
+        },
         { slotIndex: 1, externalId: 'replacement-1', startTime: '06:05', type: 'berry-zone' }
       ]
     });
@@ -175,7 +189,14 @@ describe('TeamSimulator', () => {
     const settings = mocks.teamSettings({
       includeCooking: false,
       schedule: [
-        { slotIndex: 0, externalId: 'mewtwo', startTime: '06:00', type: 'berry-zone', berryZoneTarget: 24 },
+        {
+          slotIndex: 0,
+          externalId: 'mewtwo',
+          startTime: '06:00',
+          type: 'berry-zone',
+          berryZoneBerry: berry.MAGO.name,
+          berryZoneTarget: 24
+        },
         { slotIndex: 0, externalId: 'replacement', startTime: '06:05', type: 'berry-zone' }
       ]
     });

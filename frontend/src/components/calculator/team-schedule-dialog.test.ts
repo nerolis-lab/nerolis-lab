@@ -12,7 +12,7 @@ import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
 import MockAdapter from 'axios-mock-adapter'
-import { RAICHU, MEWTWO, commonMocks, subskill, ingredient, type TeamScheduleType } from 'sleepapi-common'
+import { VENUSAUR, MEWTWO, berry, commonMocks, subskill, ingredient, type TeamScheduleType } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -53,13 +53,31 @@ describe('TeamScheduleDialog', () => {
     return wrapper.findComponent({ ref: 'ingredientExplainerDialog' })
   }
 
+  it('defaults a new pot target to the configured pot size plus 31 and preserves edits', async () => {
+    useUserStore().potSize = 69
+    await open('time')
+    wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'pot-size')
+    await flushPromises()
+    expect(targetInput().element.value).toBe('100')
+    expect(useTeamStore().getCurrentTeam.schedule![0].potSizeTarget).toBe(100)
+    await targetInput().setValue('150')
+    await targetInput().trigger('blur')
+    await flushPromises()
+    await actionButton()
+    useUserStore().potSize = 81
+    useDialogStore().openSchedule(0)
+    await flushPromises()
+    expect(targetInput().element.value).toBe('150')
+    expect(useTeamStore().getCurrentTeam.schedule![0].potSizeTarget).toBe(150)
+  })
+
   it('shows the ingredient explainer when selecting ingredient rotation, until acknowledged', async () => {
     await open('time')
     wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'ingredients')
     await flushPromises()
     expect(ingredientExplainer().props('modelValue')).toBe(true)
 
-    await actionButton('Got it')
+    await actionButton('Got it!')
     expect(useScheduleStore().ingredientExplainerAcknowledged).toBe(true)
     expect(ingredientExplainer().props('modelValue')).toBe(false)
 
@@ -106,7 +124,7 @@ describe('TeamScheduleDialog', () => {
         .findAllComponents({ name: 'VTextField' })
         .find((field) => field.props('id') === 'rotationTarget')!
         .props('label')
-    ).toBe('Psychic berry strength bonus %')
+    ).toBe('Bonus %')
     expect(document.body.textContent).toContain('Rotate after the Psychic berry strength bonus reaches the target.')
     expect(targetInput().element.value).toBe('24')
     await targetInput().setValue('25')
@@ -242,22 +260,66 @@ describe('TeamScheduleDialog', () => {
     ])
   })
 
-  it('derives the berry-zone target label from the primary Pokemon', async () => {
+  it('persists a Psychic zone selection for Venusaur independently of its own berry', async () => {
     const store = usePokemonStore()
     const team = useTeamStore().getCurrentTeam
-    store.upsertLocalPokemon({ ...store.getPokemon(team.members[0]!)!, pokemon: RAICHU })
+    store.upsertLocalPokemon({ ...store.getPokemon(team.members[0]!)!, pokemon: VENUSAUR })
+    await open('time')
+    wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'berry-zone')
+    await flushPromises()
+    const selector = () =>
+      wrapper.findAllComponents({ name: 'VSelect' }).find((field) => field.props('id') === 'rotationBerry')!
+    expect(selector().props('modelValue')).toBe(VENUSAUR.berry.name)
+    expect(selector().props('items')).toContainEqual(
+      expect.objectContaining({ title: 'Psychic', value: berry.MAGO.name })
+    )
+    selector().vm.$emit('update:modelValue', berry.MAGO.name)
+    await flushPromises()
+    await targetInput().setValue('12')
+    await targetInput().trigger('blur')
+    await flushPromises()
+    expect(team.schedule![0]).toMatchObject({ berryZoneBerry: berry.MAGO.name, berryZoneTarget: 12 })
+    expect(JSON.parse(server.history.post.at(-1)!.data).settings.schedule[0].berryZoneBerry).toBe(berry.MAGO.name)
+    expect(document.body.textContent).toContain('Rotate after the Psychic berry strength bonus reaches the target.')
+    await actionButton()
+    useDialogStore().openSchedule(0)
+    await flushPromises()
+    expect(selector().props('modelValue')).toBe(berry.MAGO.name)
+    wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'time')
+    await flushPromises()
+    expect(team.schedule![0].berryZoneBerry).toBeUndefined()
+  })
+
+  it('keeps the selected zone when removing the first rotation member', async () => {
+    const team = useTeamStore().getCurrentTeam
+    const replacement = mocks.createMockPokemon({ externalId: 'replacement', pokemon: VENUSAUR })
+    usePokemonStore().upsertLocalPokemon(replacement)
     team.schedule = [
-      { slotIndex: 0, externalId: team.members[0]!, startTime: team.wakeup, type: 'berry-zone', berryZoneTarget: 24 }
+      {
+        slotIndex: 0,
+        externalId: team.members[0]!,
+        startTime: team.wakeup,
+        type: 'berry-zone',
+        berryZoneTarget: 12,
+        berryZoneBerry: berry.MAGO.name
+      },
+      { slotIndex: 0, externalId: replacement.externalId, startTime: '12:00', type: 'berry-zone' }
     ]
     useDialogStore().openSchedule(0)
     await flushPromises()
-    expect(
-      wrapper
-        .findAllComponents({ name: 'VTextField' })
-        .find((field) => field.props('id') === 'rotationTarget')!
-        .props('label')
-    ).toBe('Electric berry strength bonus %')
-    expect(document.body.textContent).toContain('Rotate after the Electric berry strength bonus reaches the target.')
+    wrapper.findAllComponents(PokemonSlotDisplay)[0].vm.$emit('click')
+    await flushPromises()
+    const remove = wrapper
+      .findAllComponents({ name: 'VListItem' })
+      .find((item) => item.props('title') === 'Remove from schedule')!
+    await remove.trigger('click')
+    await flushPromises()
+    expect(team.schedule).toHaveLength(1)
+    expect(team.schedule![0]).toMatchObject({
+      externalId: replacement.externalId,
+      berryZoneTarget: 12,
+      berryZoneBerry: berry.MAGO.name
+    })
   })
 
   function targetInput() {

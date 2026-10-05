@@ -18,19 +18,20 @@ const cookingState = {
 } as unknown as CookingState;
 
 describe('rotation bonus readers', () => {
-  it('uses the primary member’s berry zone without mixing bonuses from other types', () => {
+  it('uses the selected berry zone without mixing bonuses from other types', () => {
     const berryZoneState = new BerryZoneState();
     const shift: TeamScheduleShift = {
       slotIndex: 0,
       externalId: 'electric',
       startTime: '06:00',
       type: 'berry-zone',
+      berryZoneBerry: berry.GREPA.name,
       berryZoneTarget: 12
     };
     berryZoneState.addBonus(berry.MAGO, 24, 24);
-    expect(scheduleTargetReached(shift, { berryZoneState, primaryBerry: berry.GREPA, sunday: false })).toBe(false);
+    expect(scheduleTargetReached(shift, { berryZoneState, sunday: false })).toBe(false);
     berryZoneState.addBonus(berry.GREPA, 12, 24);
-    expect(scheduleTargetReached(shift, { berryZoneState, primaryBerry: berry.GREPA, sunday: false })).toBe(true);
+    expect(scheduleTargetReached(shift, { berryZoneState, sunday: false })).toBe(true);
     expect(berryZoneState.bonusPercentage(berry.MAGO)).toBe(24);
     berryZoneState.reset();
     expect(berryZoneState.bonusPercentage(berry.MAGO)).toBe(0);
@@ -38,11 +39,16 @@ describe('rotation bonus readers', () => {
   });
   it('reads berry-zone targets without cooking state', () => {
     const berryZoneState = new BerryZoneState();
-    const zone: TeamScheduleShift = { ...shift, type: 'berry-zone', berryZoneTarget: 24 };
+    const zone: TeamScheduleShift = {
+      ...shift,
+      type: 'berry-zone',
+      berryZoneBerry: berry.MAGO.name,
+      berryZoneTarget: 24
+    };
     berryZoneState.addBonus(berry.MAGO, 20, 24);
-    expect(scheduleTargetReached(zone, { berryZoneState, primaryBerry: berry.MAGO, sunday: false })).toBe(false);
+    expect(scheduleTargetReached(zone, { berryZoneState, sunday: false })).toBe(false);
     berryZoneState.addBonus(berry.MAGO, 20, 24);
-    expect(scheduleTargetReached(zone, { berryZoneState, primaryBerry: berry.MAGO, sunday: false })).toBe(true);
+    expect(scheduleTargetReached(zone, { berryZoneState, sunday: false })).toBe(true);
   });
   it('switches at the target and returns when the bonus falls below it', () => {
     expect(scheduleTargetReached(shift, { cookingState, sunday: false })).toBe(true);

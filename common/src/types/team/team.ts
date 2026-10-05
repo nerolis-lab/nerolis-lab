@@ -26,6 +26,7 @@ export interface TeamScheduleShift {
   tastyChanceTarget?: number;
   potSizeTarget?: number;
   berryZoneTarget?: number;
+  berryZoneBerry?: string;
   ingredientThresholds?: ScheduleIngredientThreshold[];
 }
 
