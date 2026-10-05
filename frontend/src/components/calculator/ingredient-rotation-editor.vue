@@ -1,10 +1,6 @@
 <template>
   <v-card title="Ingredient requirements">
     <v-card-text>
-      <p class="mb-4">
-        Members below a minimum rotate in first. Once all minimums are met, members replenish to their maximums. Leave
-        this list empty to use this member as the alternate.
-      </p>
       <div v-if="thresholds.length" class="ingredient-requirement-grid mb-2 text-body-2">
         <span>Minimum</span>
         <span class="maximum-heading">Maximum</span>
@@ -59,6 +55,7 @@
           @click="thresholds.splice(index, 1)"
         />
       </div>
+      <p v-if="!thresholds.length && !error" role="status" class="text-white font-weight-bold mb-3">None (Alternate)</p>
       <IngredientSelection
         :pre-selected-ingredients="thresholds.map((threshold) => getIngredient(threshold.name))"
         @update-ingredients="updateIngredients"

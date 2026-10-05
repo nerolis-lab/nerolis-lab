@@ -83,12 +83,6 @@
             </v-card>
           </v-col>
         </v-row>
-        <template v-if="scheduleType === 'ingredients'">
-          <p class="text-body-2 mt-4 mb-4">
-            Meet all minimums first, then all maximums, with priority from left to right in each phase. Once every
-            maximum is met, use the alternate at the end of the list, or the first member if no alternate is set.
-          </p>
-        </template>
         <template v-if="conditionalDefinition">
           <p class="text-body-2 mt-4">
             {{ targetDescription }}
@@ -173,6 +167,34 @@
       @save="saveIngredientThresholds"
     />
   </v-dialog>
+  <v-dialog ref="ingredientExplainerDialog" v-model="showIngredientExplainer" max-width="440px">
+    <v-card class="pa-4">
+      <v-card-title class="text-h6">Ingredient rotation</v-card-title>
+      <v-card-text class="text-body-2">
+        <p class="mb-3">Pokémon rotate as ingredient supplies change during the simulation.</p>
+        <ol class="pl-4">
+          <li class="mb-2">
+            <strong>Minimums:</strong> Pokémon rotate in to keep ingredients above their minimums.
+          </li>
+          <li class="mb-2">
+            <strong>Maximums:</strong> Once all minimums are met, Pokémon rotate in until their ingredients reach their
+            maximums.
+          </li>
+          <li class="mb-2">
+            <strong>Alternates:</strong> A Pokémon with no ingredient targets waits at the end of the schedule and is
+            rotated in when all maximums are met. Without an alternate, the first Pokémon stays in.
+          </li>
+          <li>
+            <strong>Priority:</strong> Ingredient targets are prioritized from left to right, with minimums always met
+            first.
+          </li>
+        </ol>
+      </v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn color="primary" @click="acknowledgeIngredientExplainer">Got it</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup lang="ts">
@@ -184,6 +206,7 @@ import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
+import { useScheduleStore } from '@/stores/schedule-store'
 import {
   conditionalScheduleDefinitions,
   getConditionalScheduleDefinition,
@@ -206,6 +229,12 @@ const dialogStore = useDialogStore()
 const teamStore = useTeamStore()
 const pokemonStore = usePokemonStore()
 const userStore = useUserStore()
+const scheduleStore = useScheduleStore()
+const showIngredientExplainer = ref(false)
+const acknowledgeIngredientExplainer = () => {
+  scheduleStore.ingredientExplainerAcknowledged = true
+  showIngredientExplainer.value = false
+}
 const selectedShift = ref<TeamScheduleShift | null>(null)
 const timeShift = ref<TeamScheduleShift | null>(null)
 const ingredientShift = ref<TeamScheduleShift | null>(null)
@@ -292,6 +321,14 @@ watch(
     conditionTarget.value = String(
       (next[0] && getScheduleTarget(next[0])) ?? conditionalDefinition.value?.defaultTarget ?? 1
     )
+  },
+  { immediate: true }
+)
+
+watch(
+  [() => dialogStore.scheduleDialog, scheduleType],
+  ([open, type]) => {
+    showIngredientExplainer.value = open && type === 'ingredients' && !scheduleStore.ingredientExplainerAcknowledged
   },
   { immediate: true }
 )

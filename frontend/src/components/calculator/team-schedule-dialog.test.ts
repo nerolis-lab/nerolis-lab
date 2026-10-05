@@ -6,6 +6,7 @@ import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
 import { useUserStore } from '@/stores/user-store'
+import { useScheduleStore } from '@/stores/schedule-store'
 import { mocks } from '@/vitest'
 import { createMockTeams } from '@/vitest/mocks/calculator/team-instance'
 import type { VueWrapper } from '@vue/test-utils'
@@ -47,6 +48,45 @@ describe('TeamScheduleDialog', () => {
     useDialogStore().openSchedule(0)
     await flushPromises()
   }
+
+  function ingredientExplainer() {
+    return wrapper.findComponent({ ref: 'ingredientExplainerDialog' })
+  }
+
+  it('shows the ingredient explainer when selecting ingredient rotation, until acknowledged', async () => {
+    await open('time')
+    wrapper.findComponent({ name: 'VSelect' }).vm.$emit('update:modelValue', 'ingredients')
+    await flushPromises()
+    expect(ingredientExplainer().props('modelValue')).toBe(true)
+
+    await actionButton('Got it')
+    expect(useScheduleStore().ingredientExplainerAcknowledged).toBe(true)
+    expect(ingredientExplainer().props('modelValue')).toBe(false)
+
+    await actionButton()
+    await open('ingredients')
+    expect(ingredientExplainer().props('modelValue')).toBe(false)
+  })
+
+  it('shows the ingredient explainer again if dismissed without acknowledgement', async () => {
+    await open('ingredients')
+    expect(ingredientExplainer().props('modelValue')).toBe(true)
+    ingredientExplainer().vm.$emit('update:modelValue', false)
+    await nextTick()
+    expect(useScheduleStore().ingredientExplainerAcknowledged).toBe(false)
+
+    await actionButton()
+    await open('ingredients')
+    expect(ingredientExplainer().props('modelValue')).toBe(true)
+  })
+
+  it('does not show the ingredient explainer when already acknowledged', async () => {
+    useScheduleStore().ingredientExplainerAcknowledged = true
+    await open('ingredients')
+    expect(wrapper.findAllComponents({ name: 'VDialog' }).filter((dialog) => dialog.props('modelValue'))).toHaveLength(
+      1
+    )
+  })
 
   it('offers Psychic berry-zone rotation for Mewtwo and saves valid targets on blur', async () => {
     const store = usePokemonStore()
