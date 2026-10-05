@@ -493,6 +493,124 @@ exports[`COMPLETE_POKEDEX > shall not change ALTARIA unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change AMOONGUSS unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "CHESTO",
+    "type": "poison",
+    "value": 32,
+  },
+  "carrySize": 14,
+  "displayName": "Amoonguss",
+  "evolvesFrom": "FOONGUS",
+  "evolvesInto": [],
+  "frequency": 3500,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 10,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 11,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredientPercentage": 20.4,
+  "name": "AMOONGUSS",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 591,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "shinyLocked": undefined,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      2842,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "frontendComponentName": undefined,
+    "image": "strength",
+    "name": "Charge Strength S",
+    "strengthAmounts": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      3212,
+    ],
+  },
+  "skillPercentage": 4.7,
+  "specialty": "ingredient",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change AMPHAROS unexpectedly 1`] = `
 {
   "berry": {
@@ -12605,6 +12723,125 @@ exports[`COMPLETE_POKEDEX > shall not change FLYGON unexpectedly 1`] = `
     ],
   },
   "skillPercentage": 3.9,
+  "specialty": "ingredient",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change FOONGUS unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "CHESTO",
+    "type": "poison",
+    "value": 32,
+  },
+  "carrySize": 12,
+  "displayName": "Foongus",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "AMOONGUSS",
+  ],
+  "frequency": 5700,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Tasty Mushroom",
+        "name": "Mushroom",
+        "taxedValue": 81.5,
+        "value": 167,
+      },
+    },
+    {
+      "amount": 10,
+      "ingredient": {
+        "longName": "Fancy Egg",
+        "name": "Egg",
+        "taxedValue": 38.7,
+        "value": 115,
+      },
+    },
+    {
+      "amount": 11,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredientPercentage": 17.4,
+  "name": "FOONGUS",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 590,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      2842,
+    ],
+    "activations": {
+      "strength": {
+        "amount": [Function],
+        "unit": "strength",
+      },
+    },
+    "description": [Function],
+    "frontendComponentName": undefined,
+    "image": "strength",
+    "name": "Charge Strength S",
+    "strengthAmounts": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+      3212,
+    ],
+  },
+  "skillPercentage": 3.5,
   "specialty": "ingredient",
 }
 `;
