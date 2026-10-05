@@ -817,6 +817,34 @@ export const ABOMASNOW: Pokemon = evolvedPokemon(SNOVER, {
   carrySize: 21
 });
 
+export const FOONGUS: Pokemon = createIngredientSpecialist({
+  name: 'FOONGUS',
+  pokedexNumber: 590,
+  frequency: toSeconds(1, 35, 0),
+  ingredientPercentage: 17.4,
+  skillPercentage: 3.5,
+  berry: CHESTO,
+  genders: BALANCED_GENDER,
+  carrySize: 12,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: TASTY_MUSHROOM,
+    b: FANCY_EGG,
+    c: SNOOZY_TOMATO
+  },
+  skill: ChargeStrengthS
+});
+
+export const AMOONGUSS: Pokemon = evolvedPokemon(FOONGUS, {
+  name: 'AMOONGUSS',
+  pokedexNumber: 591,
+  frequency: toSeconds(0, 58, 20),
+  ingredientPercentage: 20.4,
+  skillPercentage: 4.7,
+  carrySize: 14
+});
+
 const pumpkabooSharedStats = {
   pokedexNumber: 710,
   ingredientPercentage: 12.0,
@@ -1273,6 +1301,8 @@ export const INFERIOR_INGREDIENT_SPECIALISTS: Pokemon[] = [
   SPIRITOMB,
   CROAGUNK,
   SNOVER,
+  FOONGUS,
+  AMOONGUSS,
   PUMPKABOO_SMALL,
   PUMPKABOO_MEDIUM,
   PUMPKABOO_LARGE,
