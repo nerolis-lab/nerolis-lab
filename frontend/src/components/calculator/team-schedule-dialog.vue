@@ -189,7 +189,7 @@
         </ol>
       </v-card-text>
       <v-card-actions class="justify-end">
-        <v-btn color="primary" @click="acknowledgeIngredientExplainer">Got it</v-btn>
+        <v-btn color="primary" @click="acknowledgeIngredientExplainer">Got it!</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
