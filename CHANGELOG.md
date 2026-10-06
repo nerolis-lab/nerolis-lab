@@ -1,3 +1,10 @@
+# [2.71.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.3...v2.71.0) (2026-10-06)
+
+
+### Features
+
+* add foongus and amoonguss ([8525bbb](https://github.com/nerolis-lab/nerolis-lab/commit/8525bbb67b9e022b99c022d61bf36eec09d56773))
+
 ## [2.70.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.2...v2.70.3) (2026-10-04)
 
 ## [2.70.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.1...v2.70.2) (2026-10-04)
