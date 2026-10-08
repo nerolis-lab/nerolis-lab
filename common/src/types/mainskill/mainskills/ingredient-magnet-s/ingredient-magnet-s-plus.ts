@@ -38,6 +38,7 @@ abstract class IngredientMagnetSPlus extends ModifiedMainskill {
 }
 
 export const IngredientMagnetSPlusPlusle = new (class extends IngredientMagnetSPlus {
+  uniqueNameOverride = 'Plus (Ingredient Magnet) S - Plusle';
   ingredient = ROUSING_COFFEE;
   bonusIngredientAmounts = [6, 7, 8, 9, 10, 11, 12];
 
@@ -54,6 +55,7 @@ export const IngredientMagnetSPlusPlusle = new (class extends IngredientMagnetSP
 })(true);
 
 export const IngredientMagnetSPlusToxtricity = new (class extends IngredientMagnetSPlus {
+  uniqueNameOverride = 'Plus (Ingredient Magnet) S - Toxtricity';
   ingredient = MOOMOO_MILK;
   bonusIngredientAmounts = [6, 7, 9, 10, 12, 13, 14];
 

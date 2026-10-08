@@ -33,6 +33,7 @@ export interface ModifiedSkillConfig {
 
 export abstract class Mainskill {
   public abstract readonly name: string;
+  public readonly uniqueNameOverride?: string;
   public readonly frontendComponentName?: string;
   public abstract readonly description: DescriptionFunction;
   public abstract readonly image: string;
@@ -87,14 +88,20 @@ export abstract class Mainskill {
     return this instanceof ModifiedMainskill;
   }
 
+  get uniqueName(): string {
+    return this.uniqueNameOverride ?? this.name;
+  }
+
   is(...other: Mainskill[]): boolean {
-    return other.some((o) => this.name === o.name);
+    return other.some((o) => this.uniqueName === o.uniqueName);
   }
 
   // TEST: missing tests
   isOrModifies(...skills: Mainskill[]): boolean {
     return skills.some(
-      (skill) => this.name === skill.name || (this instanceof ModifiedMainskill && this.baseSkill.name === skill.name)
+      (skill) =>
+        this.uniqueName === skill.uniqueName ||
+        (this instanceof ModifiedMainskill && this.baseSkill.uniqueName === skill.uniqueName)
     );
   }
 }

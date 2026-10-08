@@ -3,10 +3,28 @@ import { Mainskill, MAINSKILLS } from '../../mainskill';
 import { BerryBurstDisguise } from '../berry-burst/berry-burst-disguise';
 import { BerryZonePsystrike } from '../berry-zone';
 import { ChargeStrengthMBadDreams } from '../charge-strength-m/charge-strength-m-bad-dreams';
-import { IngredientDrawSCutiefly, IngredientDrawSDwebble, IngredientDrawSSandshrew } from '../ingredient-draw-s';
+import {
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
+  IngredientDrawSSandshrew
+} from '../ingredient-draw-s';
 import { IngredientMagnetSPlusToxtricity } from '../ingredient-magnet-s';
 import { SkillCopyMimic } from '../skill-copy/skill-copy_mimic';
 import { SkillCopyTransform } from '../skill-copy/skill-copy_transform';
+
+const otherBlockedSkills: Mainskill[] = [
+  BerryBurstDisguise,
+  BerryZonePsystrike, // Unconfirmed
+  ChargeStrengthMBadDreams,
+  IngredientDrawSCutiefly,
+  IngredientDrawSDwebble,
+  IngredientDrawSHawlucha,
+  IngredientDrawSSandshrew,
+  IngredientMagnetSPlusToxtricity,
+  SkillCopyMimic,
+  SkillCopyTransform
+];
 
 export const Metronome = new (class extends Mainskill {
   name = 'Metronome';
@@ -15,22 +33,13 @@ export const Metronome = new (class extends Mainskill {
   activations: ActivationsType = {};
   image = 'metronome';
 
-  readonly blockedSkills: Mainskill[] = [
-    this,
-    BerryBurstDisguise,
-    BerryZonePsystrike, // Keep the prototype out of random skill rolls until availability is confirmed.
-    ChargeStrengthMBadDreams,
-    IngredientDrawSCutiefly,
-    IngredientDrawSDwebble,
-    IngredientDrawSSandshrew,
-    IngredientMagnetSPlusToxtricity,
-    SkillCopyMimic,
-    SkillCopyTransform
-  ];
+  blockedSkillNames: string[] = [this, ...otherBlockedSkills].map((skill) => skill.uniqueName);
 
   get metronomeSkills(): Mainskill[] {
     return MAINSKILLS.filter((skill) => {
-      return !this.blockedSkills.some((blockedSkill) => skill.is(blockedSkill));
+      return !MetronomeBlockedSkills.some((blockedSkill) => skill.is(blockedSkill));
     });
   }
 })(true);
+
+export const MetronomeBlockedSkills = [Metronome, ...otherBlockedSkills];
