@@ -1,3 +1,10 @@
+## [2.71.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.0...v2.71.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* import markdown-it token from package root ([ef50944](https://github.com/nerolis-lab/nerolis-lab/commit/ef5094464c3a9aae361a4e84f88c72ea4e819ba7))
+
 # [2.71.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.3...v2.71.0) (2026-10-06)
 
 
