@@ -39,16 +39,16 @@ Each day you can receive candies from each of your friends, you can get a minimu
 
 You get a popup that says you've grown closer with your friend and you receive a reward based on level.
 
-Level 1 - 1x Handy Candy S  
-Level 2 - 1x Ingredient Ticket S  
-Level 3 - 1x Linking Cord  
-Level 4 - 2x Ingredient Ticket S  
-Level 5 - 2x Handy Candy S
+- **Level 1**: 1x Handy Candy S
+- **Level 2**: 1x Ingredient Ticket S
+- **Level 3**: 1x Linking Cord
+- **Level 4**: 2x Ingredient Ticket S
+- **Level 5**: 2x Handy Candy S
 
 Having level 5 friends is better than restarting friendships. Special events often have currencies that have an increased chance of being received if you have a high friendship level. Additionally, high friendship level friends have an increased chance to send two candies instead of one. Level 1 is about 10% and level 5 is 30%.
 
 ## 😭 Where can I find more friends?
 
-In the [Pokémon Sleep Discord server](https://discord.gg/pokemonsleep)'s #route-01-friend-codes or #friend-codes for if you just want to drop your code and collect a bunch of codes with no hassle. You might also consider joining the #anti-wobuffet-association channel if you want like minded players that don't auto pick.
+In the [Pokémon Sleep Discord server](https://discord.gg/pokemonsleep)'s #route-01-friend-codes or #friend-codes for if you just want to drop your code and collect a bunch of codes with no hassle. You might also consider joining the #anti-wobuffet-association channel, Indigo League, or Mathcord Sleep Sprints if you want like minded players that don't auto pick.
 
 Good luck with your Pokémon sleep friendships!

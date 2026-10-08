@@ -23,8 +23,8 @@ Neroli's Lab Team develops and maintains the open-source Neroli's Lab web app: c
 Neroli's Aides are volunteers from the Pokémon Sleep Discord's Trainer's School. They answer questions in the Route 01 help channels, share what they've learned, and write or co-author many of the player-focused guides here.
 </AboutAuthor>
 
-<AboutAuthor author="Tooz" title="Community Editors">
-Tooz is an editor for this project; we credit them for keeping guides organized and helping turn drafts or Discord posts into something we're happy to ship. We welcome other community editors and contributors!
+<AboutAuthor author="Community Editors" title="Community Editors">
+Community editors help keep guides organized and turn drafts or Discord posts into something we're happy to ship. We welcome other community editors and contributors!
 </AboutAuthor>
 
 ## Contributing

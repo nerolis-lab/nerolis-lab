@@ -15,7 +15,7 @@ The goal of this guide is to help you navigate the early game, dispel some of th
 
 ### Berry Specialists
 
-Berry mons are strong early-game contributors and a _top priority_ to befriend. Your early game should be focused on increasing the Friendship Level (FL) of meta-relavent Berry mons to 10. FL10 **guarantees** the Level 10 subskill slot will be a gold skill. This is advantageous since the gold subskill Berry Finding S (BFS) will then have a 1/7 chance of appearing in this slot!
+Berry mons are strong early-game contributors and a _top priority_ to befriend. Your early game should be focused on increasing the Friendship Level (FL) of meta-relevant Berry mons to 10. FL10 **guarantees** the Level 10 subskill slot will be a gold skill. This is advantageous since the gold subskill Berry Finding S (BFS) will then have a 1/7 chance of appearing in this slot!
 
 If you’re wondering which Berry mons to focus on, we recommend Pichu, Totodile, Cyndaquil, Chikorita, Spheal, Torchic, and Mudkip as they’re not only relatively common encounters on Greengrass Isle (GG), but also some of the best Berry mons for their respective islands. Note that this is not an exhaustive list; a full Berry mon meta analysis will be linked here once it has been ported to the site.
 
@@ -25,11 +25,11 @@ Sometimes you get unlucky with your morning spawns and you don’t encounter any
 
 ### Skill Specialists
 
-Skill mons require **significantly** more resources to reach viability—requiring 3-5 Main Skill Seeds (MSS). While temporary Skill mons _can_ be beneficial in the short term, the resources (especially MSS) used to raise them will delay your long-term progress. **This is particularly impactful for F2P players**. Additionally, because Skill mons need to maintain viability throughout your late-game progression, Skill mons are evaluted with higher subskill standards compared to their Berry and Ingredient mon counterparts.
+Skill mons require **significantly** more resources to reach viability—requiring 3-5 Main Skill Seeds (MSS). While temporary Skill mons _can_ be beneficial in the short term, the resources (especially MSS) used to raise them will delay your long-term progress. **This is particularly impactful for F2P players**. Additionally, because Skill mons need to maintain viability throughout your late-game progression, Skill mons are evaluated with higher subskill standards compared to their Berry and Ingredient mon counterparts.
 
 That being said, we're not saying to "NEVER run Skill mons in the early stages." From a resource standpoint, we're just discouraging early-game players from actively hunting for Skill Mons as your Biscuit resources are better allocated towards hunting Berry and Ingredient mons. Though, if you _happen_ to find a Skill mon with long-term potential, it may be beneficial to invest in it.
 
-The single most important/impactful Skill to invest in is **Energy For Everyone (E4E)**. This allows your Pokémon to recover energy throughout the day which is disproportionately impactful from the mid game onwards. We do **NOT** recommend running temporary or univested E4E mons. The meta-defining E4E mons worth befriending are Gardevoir (Ralts), Pawmot (Pawmi), and Shuckle.
+The single most important/impactful Skill to invest in is **Energy For Everyone (E4E)**. This allows your Pokémon to recover energy throughout the day which is disproportionately impactful from the mid game onwards. We do **NOT** recommend running temporary or uninvested E4E mons. The meta-defining E4E mons worth befriending are Gardevoir (Ralts), Pawmot (Pawmi), and Shuckle.
 
 Outside of E4E, here are a couple of optional Main Skills worth considering in your early game:
 
@@ -41,7 +41,7 @@ Outside of E4E, here are a couple of optional Main Skills worth considering in y
   - Heracross
   - Eevee (Vaporeon)
 
-This is not an exhaustive list; a full Skill mon meta analysis will be linked here once it has been ported to the site.
+This is not an exhaustive list; see [Meta Skill Specialists](../pokemon-evaluation/meta-skill) for a full Skill mon meta analysis.
 
 Of note, _Premium Pass players_ have access to _1-2 MSS monthly_ compared to **F2P players** who have access to 1 MSS every **SECOND** month, on average (based on our recommended Sleep Point spending plan—your mileage may vary). Premium players can be more generous with their MSS and can consider building multiple of the aforementioned Skill mons while F2P may struggle with the resources required to invest in one. Regardless of Premium or F2P status, _we recommend taking your time_ to hunt for ones that are good enough to be permanent additions to your team **BEFORE** spending the MSS.
 

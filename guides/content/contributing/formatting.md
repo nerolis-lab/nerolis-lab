@@ -1,6 +1,6 @@
 ---
 title: Formatting
-fullTitle: Markdown and page formatting
+fullTitle: Markdown and Page Formatting
 author: Tindo
 order: 70
 ---
