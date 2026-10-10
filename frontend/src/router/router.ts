@@ -34,6 +34,7 @@ export enum RouteName {
 const CalculatorPage = () => import('@/pages/calculator-page.vue')
 const ComparisonPage = () => import('@/pages/compare/comparison-page.vue')
 const RecipesPage = () => import('@/pages/recipe/recipes-page.vue')
+const BfsInfographicPage = () => import('@/pages/bfs-infographic/bfs-infographic-page.vue')
 const DishInfographicPage = () => import('@/pages/dish-infographic/dish-infographic-page.vue')
 
 // User
@@ -76,6 +77,11 @@ const router = createRouter({
       path: '/recipes',
       name: RouteName.Recipes,
       component: RecipesPage
+    },
+    {
+      path: '/bfs-infographic',
+      name: 'Raptor BFS Index',
+      component: BfsInfographicPage
     },
     {
       path: '/dish-infographic',
