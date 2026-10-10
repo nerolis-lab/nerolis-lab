@@ -20,7 +20,7 @@
         <v-checkbox
           v-model="fallbackToBest"
           class="meal-plan-fallback mb-2"
-          label="Cook the best recipe available if the planned recipe isn't complete."
+          label="Cook stronger recipes if the planned recipe isn't ready."
           density="compact"
           hide-details
           @update:model-value="updateFallback"
@@ -259,6 +259,7 @@ function recipeSearchScore(recipe: Recipe, query: string): number | undefined {
 
 .meal-plan-dialog {
   .meal-plan-fallback :deep(.v-label) {
+    padding-inline-start: 4px;
     white-space: normal;
     opacity: 1;
   }
