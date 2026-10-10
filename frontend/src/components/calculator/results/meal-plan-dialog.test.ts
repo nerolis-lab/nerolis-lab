@@ -27,8 +27,33 @@ describe('meal plan recipe selection', () => {
     const cards = wrapper.findComponent(RecipeTableMobile)
     const recipe = cards.props('recipes')[0]
     await cards.find('.recipe-card').trigger('click')
-    expect(wrapper.emitted('select')).toEqual([[{ kind: 'recipe', recipe: recipe.name }]])
+    expect(wrapper.emitted('select')).toEqual([[{ kind: 'recipe', recipe: recipe.name, fallbackToBest: true }]])
     expect(wrapper.emitted('update:modelValue')).toEqual([[false]])
+  })
+
+  it('saves the fallback preference without closing and restores each meal preference', async () => {
+    const recipe = wrapper.findComponent(RecipeTableMobile).props('recipes')[0]
+    const choice = { kind: 'recipe' as const, recipe: recipe.name }
+    await wrapper.setProps({ choice })
+    const checkbox = wrapper.findComponent({ name: 'VCheckbox' }).find('input[type="checkbox"]')
+    expect((checkbox.element as HTMLInputElement).checked).toBe(true)
+    await checkbox.setValue(false)
+    expect(wrapper.emitted('update:choice')).toEqual([[{ ...choice, fallbackToBest: false }]])
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+    await wrapper.setProps({ choice: { ...choice, fallbackToBest: false }, modelValue: false })
+    await wrapper.setProps({ modelValue: true })
+    expect((checkbox.element as HTMLInputElement).checked).toBe(false)
+    await wrapper.setProps({ meal: 'lunch', choice })
+    expect((checkbox.element as HTMLInputElement).checked).toBe(true)
+  })
+
+  it('includes an unchecked preference when selecting a new recipe', async () => {
+    await wrapper.findComponent({ name: 'VCheckbox' }).find('input[type="checkbox"]').setValue(false)
+    const cards = wrapper.findComponent(RecipeTableMobile)
+    await cards.find('.recipe-card').trigger('click')
+    expect(wrapper.emitted('select')).toEqual([
+      [{ kind: 'recipe', recipe: cards.props('recipes')[0].name, fallbackToBest: false }]
+    ])
   })
 
   it('saves recipe levels and updates strength without selecting a meal', async () => {

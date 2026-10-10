@@ -170,6 +170,8 @@ export class CookingState {
       }
     }
 
+    if (choice.kind === 'recipe' && choice.fallbackToBest === false) return false;
+
     return this.cookBestUnreservedRecipe(sunday);
   }
 

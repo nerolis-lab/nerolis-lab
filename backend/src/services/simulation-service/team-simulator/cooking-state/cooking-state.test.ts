@@ -413,6 +413,49 @@ describe('CookingState', () => {
     expect(cookingState.results(1).dessert.cookedRecipes[0].recipe.name).toBe(dessert.MIXED_JUICE.name);
   });
 
+  it.each([false, true])('preserves ingredients and bonuses when fallback is disabled (Sunday: %s)', (sunday) => {
+    const dailyPlan = {
+      breakfast: { kind: 'recipe' as const, recipe: dessert.LUCKY_CHANT_APPLE_PIE.name, fallbackToBest: false },
+      lunch: { kind: 'best' as const },
+      dinner: { kind: 'best' as const }
+    };
+    const state = new CookingState(
+      mocks.teamSettings({ recipeType: 'dessert', mealPlan: { ...dailyPlan, sunday: { ...dailyPlan } } }),
+      defaultUserRecipes(),
+      noCritRandom()
+    );
+    state.addIngredients(ingredientSetToFloatFlat([{ amount: 16, ingredient: ingredient.FANCY_APPLE }]));
+    state.addPotSize(31);
+    state.addCritBonus(0.1);
+    const inventory = state['currentDessertInventory'].slice();
+    expect(state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: false, sunday })).toBe(false);
+    expect(state.isMealCompleted('breakfast')).toBe(false);
+    expect(state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: true, sunday })).toBe(false);
+    expect(state.isMealCompleted('breakfast')).toBe(true);
+    expect(state['currentDessertInventory']).toEqual(inventory);
+    expect(state['bonusPotSize']).toBe(31);
+    expect(state['bonusCritChance']).toBe(0.1);
+    expect(state.cookPlannedMeal({ meal: 'lunch', finalAttempt: true, sunday })).toBe(true);
+    expect(state['bonusPotSize']).toBe(0);
+  });
+
+  it('cooks a complete planned recipe even when fallback is disabled', () => {
+    const recipe = dessert.WARM_MOOMOO_MILK;
+    const state = new CookingState(
+      mocks.teamSettings({
+        recipeType: 'dessert',
+        mealPlan: {
+          ...defaultMealPlan(),
+          breakfast: { kind: 'recipe', recipe: recipe.name, fallbackToBest: false }
+        }
+      }),
+      defaultUserRecipes(),
+      noCritRandom()
+    );
+    state.addIngredients(ingredientSetToFloatFlat(recipe.ingredients));
+    expect(state.cookPlannedMeal({ meal: 'breakfast', finalAttempt: false, sunday: false })).toBe(true);
+  });
+
   it('shall skip None meals without consuming a pot-size bonus', () => {
     const cookingState = new CookingState(
       mocks.teamSettings({

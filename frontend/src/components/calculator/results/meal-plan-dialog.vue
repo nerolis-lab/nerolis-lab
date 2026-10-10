@@ -17,6 +17,15 @@
           </v-col>
         </v-row>
 
+        <v-checkbox
+          v-model="fallbackToBest"
+          class="meal-plan-fallback mb-2"
+          label="Cook the best recipe available if the planned recipe isn't complete."
+          density="compact"
+          hide-details
+          @update:model-value="updateFallback"
+        />
+
         <v-list class="bg-transparent pa-0">
           <v-list-item
             class="meal-plan-option bg-secondary rounded-lg mb-2 elevation-0"
@@ -87,20 +96,30 @@ import {
   type MealSlot,
   type Recipe
 } from 'sleepapi-common'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const props = defineProps<{
   modelValue: boolean
   meal?: MealSlot
+  choice?: MealPlanChoice
 }>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
   select: [choice: MealPlanChoice]
+  'update:choice': [choice: MealPlanChoice]
 }>()
 
 const teamStore = useTeamStore()
 const userStore = useUserStore()
+const fallbackToBest = ref(true)
+watch(
+  () => [props.modelValue, props.choice] as const,
+  () => {
+    fallbackToBest.value = props.choice?.kind === 'recipe' ? props.choice.fallbackToBest !== false : true
+  },
+  { immediate: true }
+)
 const searchQuery = ref('')
 const selectedSort = ref('value')
 const sortAscending = ref(false)
@@ -158,8 +177,14 @@ onMounted(async () => {
 })
 
 function selectChoice(choice: MealPlanChoice) {
-  emit('select', choice)
+  emit('select', choice.kind === 'recipe' ? { ...choice, fallbackToBest: fallbackToBest.value } : choice)
   isOpen.value = false
+}
+
+function updateFallback() {
+  if (props.choice?.kind === 'recipe') {
+    emit('update:choice', { ...props.choice, fallbackToBest: fallbackToBest.value })
+  }
 }
 
 function updateRecipeLevel(recipe: UserRecipe, level: number) {
@@ -233,6 +258,11 @@ function recipeSearchScore(recipe: Recipe, query: string): number | undefined {
 }
 
 .meal-plan-dialog {
+  .meal-plan-fallback :deep(.v-label) {
+    white-space: normal;
+    opacity: 1;
+  }
+
   .meal-plan-option,
   :deep(.recipe-card) {
     border-radius: 8px !important;

@@ -54,6 +54,8 @@
           <MealPlanDialog
             v-model="isMealPlanSelectionOpen"
             :meal="selectedMealPlanSlot"
+            :choice="selectedMealPlanChoice"
+            @update:choice="updateMealPlanSelection"
             @select="updateMealPlanSelection"
           />
 
@@ -344,6 +346,12 @@ export default defineComponent({
     }
   },
   computed: {
+    selectedMealPlanChoice(): MealPlanChoice | undefined {
+      if (!this.selectedMealPlanSlot) return undefined
+      const plan = this.teamStore.getCurrentTeam.mealPlan ?? defaultMealPlan()
+      const dailyPlan = this.selectedMealPlanDay === 'sunday' ? (plan.sunday ?? defaultDailyMealPlan()) : plan
+      return dailyPlan[this.selectedMealPlanSlot]
+    },
     hasFixedMealPlan(): boolean {
       const plan = this.teamStore.getCurrentTeam.mealPlan ?? defaultMealPlan()
       return [plan.breakfast, plan.lunch, plan.dinner, ...Object.values(plan.sunday ?? {})].some(
@@ -502,7 +510,6 @@ export default defineComponent({
             }
           : { ...currentMealPlan, [this.selectedMealPlanSlot]: choice }
       await this.teamStore.updateMealPlan(mealPlan)
-      this.selectedMealPlanSlot = undefined
     },
     toggleDetails(index: number) {
       this.showDetailsState[index] = !this.showDetailsState[index]

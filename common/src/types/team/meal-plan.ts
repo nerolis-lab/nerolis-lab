@@ -6,6 +6,7 @@ export type MealPlanChoice =
   | {
       kind: 'recipe';
       recipe: string;
+      fallbackToBest?: boolean;
     };
 
 export type DailyMealPlan = Record<MealSlot, MealPlanChoice>;
