@@ -80,8 +80,6 @@ export default defineConfig({
       }
     },
     server: {
-      // The wiki bundles shared Pokémon portraits from the sibling frontend package.
-      fs: { allow: [resolve(guidesRoot, '..')] },
       port: 5173,
       strictPort: true
     },

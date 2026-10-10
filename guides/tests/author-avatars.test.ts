@@ -10,9 +10,9 @@ import { getAvatarUrlForAuthorName } from '../.vitepress/theme/utils/format-util
 
 vi.mock('vitepress', () => ({
   useData: () => ({
-    frontmatter: { value: { fullTitle: 'Raptor Berry Finding S Index', author: 'VelocityRaptor22, CowTools' } }
+    frontmatter: { value: { fullTitle: 'Example guide', author: 'Tindo, Tooz' } }
   }),
-  useRoute: () => ({ path: '/guides/tier-lists/raptor-bfs-index' })
+  useRoute: () => ({ path: '/guides/' })
 }));
 
 describe('server-rendered author avatars', () => {
@@ -21,18 +21,18 @@ describe('server-rendered author avatars', () => {
     app.use(createVuetify({ components: { VAvatar } }));
     const html = await renderToString(app);
     const document = new DOMParser().parseFromString(html, 'text/html');
-    expect(document.querySelector('.author-names')?.textContent).toBe('by VelocityRaptor22 and CowTools');
+    expect(document.querySelector('.author-names')?.textContent).toBe('by Tindo and Tooz');
     expect([...document.querySelectorAll('.author-avatar img')].map((img) => img.getAttribute('src'))).toEqual([
-      getAvatarUrlForAuthorName('VelocityRaptor22'),
-      getAvatarUrlForAuthorName('CowTools')
+      getAvatarUrlForAuthorName('Tindo'),
+      getAvatarUrlForAuthorName('Tooz')
     ]);
   });
 
   it('renders the author avatar image in AboutAuthor during server rendering', async () => {
-    const app = createSSRApp(AboutAuthor, { author: 'CowTools', title: 'About CowTools' });
+    const app = createSSRApp(AboutAuthor, { author: 'Tooz', title: 'About Tooz' });
     app.use(createVuetify({ components: { VAvatar } }));
     const html = await renderToString(app);
     const document = new DOMParser().parseFromString(html, 'text/html');
-    expect(document.querySelector('.avatar img')?.getAttribute('src')).toBe(getAvatarUrlForAuthorName('CowTools'));
+    expect(document.querySelector('.avatar img')?.getAttribute('src')).toBe(getAvatarUrlForAuthorName('Tooz'));
   });
 });
