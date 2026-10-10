@@ -27,6 +27,7 @@
           variant="tonal"
           :color="teamStore.getCurrentTeam.recipeType"
           :aria-label="`select ${day} ${meal} recipe`"
+          :title="recipeFor(meal, day)?.displayName"
           @click="$emit('select-meal', { day, meal })"
         >
           <span class="meal-plan-tile-content">
@@ -139,7 +140,8 @@ export default defineComponent({
 
 .meal-plan-tile {
   box-sizing: border-box;
-  height: clamp(230px, 74cqw, 340px);
+  height: auto;
+  aspect-ratio: 1;
   min-width: 0;
   overflow: hidden;
   padding: 0;
@@ -160,7 +162,7 @@ export default defineComponent({
   height: 100%;
   justify-items: center;
   min-height: 0;
-  padding: clamp(8px, 3cqw, 16px) clamp(8px, 3cqw, 16px) clamp(12px, 5cqw, 24px);
+  padding: clamp(4px, 3cqw, 16px);
   width: 100%;
 }
 
@@ -172,10 +174,12 @@ export default defineComponent({
 .meal-plan-image-frame {
   align-self: center;
   display: block;
-  height: clamp(96px, 20vw, 144px);
+  height: 100%;
+  aspect-ratio: 1;
   max-height: 100%;
   position: relative;
-  width: clamp(96px, 20vw, 144px);
+  width: auto;
+  max-width: 100%;
 }
 
 .meal-plan-image {
@@ -200,35 +204,50 @@ export default defineComponent({
   align-self: end;
   display: flex;
   flex-direction: column;
-  font-size: clamp(0.75rem, 6cqw, 1rem) !important;
-  gap: clamp(4px, 3cqw, 8px);
+  font-size: clamp(0.6875rem, 6cqw, 1rem) !important;
+  line-height: 1.15;
+  gap: clamp(2px, 2cqw, 8px);
   justify-content: flex-start;
-  min-height: clamp(52px, 14cqw, 64px);
   max-width: 100%;
-  position: relative;
-  bottom: clamp(16px, 6cqw, 32px);
   width: 100%;
 }
 
+.meal-plan-selection :deep(.text-body-1) {
+  font-size: inherit !important;
+}
+
 .meal-plan-selection-name {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
   overflow-wrap: anywhere;
   white-space: normal;
 }
 
 .meal-plan-stats {
   display: flex;
-  gap: clamp(6px, 5cqw, 14px);
+  gap: clamp(3px, 3cqw, 14px);
 }
 
 .meal-plan-stat {
   align-items: center;
   display: flex;
-  font-size: clamp(0.75rem, 5cqw, 0.9rem);
+  font-size: clamp(0.625rem, 5cqw, 0.9rem);
   gap: clamp(2px, 2cqw, 4px);
 }
 
 .meal-plan-stat-icon {
-  height: clamp(16px, 8cqw, 22px);
-  width: clamp(16px, 8cqw, 22px);
+  height: clamp(12px, 8cqw, 22px);
+  width: clamp(12px, 8cqw, 22px);
+}
+@container (min-width: 160px) {
+  .meal-plan-tile {
+    aspect-ratio: 4 / 3;
+  }
+
+  .meal-plan-selection-name {
+    display: -webkit-box;
+  }
 }
 </style>
