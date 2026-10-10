@@ -29,7 +29,7 @@
     "@types/eslint-config-prettier": "^6.11.3",
     "@typescript-eslint/eslint-plugin": "^8.64.0",
     "@typescript-eslint/parser": "^8.64.0",
-    "concurrently": "^9.2.4",
+    "concurrently": "^9.2.5",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "eslint": "^9.39.5",
     "eslint-config-prettier": "^9.1.2",
