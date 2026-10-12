@@ -233,6 +233,7 @@ export class SetCover {
         }
         teams.push([member]); // add new team with only this one member
       } else if (spotsLeftInTeam !== 0) {
+        remainingRecipeWithSpotsLeft[ingredient.TOTAL_NUMBER_OF_INGREDIENTS] = spotsLeftInTeam;
         // the recipe is not solved and there is room left in the team
         const subTeams = this.solve(remainingRecipeWithSpotsLeft, remainingIngredientIndices);
 
