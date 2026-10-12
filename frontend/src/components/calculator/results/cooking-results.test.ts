@@ -98,6 +98,33 @@ describe('CookingResults', () => {
     expect(secondProgress?.text()).toContain('33.33%')
   })
 
+  it('uses the team union of significant ingredients and retains their full Magnet contributions', async () => {
+    const advanced = mocks.createMockMemberProduction().advanced
+    useTeamStore().getCurrentTeam.production = mocks.createMockTeamProduction({
+      members: [
+        mocks.createMockMemberProduction({ advanced: { ...advanced, ingredientDistributions: { Egg: { 12: 100 } } } }),
+        mocks.createMockMemberProduction({
+          advanced: { ...advanced, ingredientDistributions: { Avocado: { 6: 100 } } }
+        })
+      ],
+      team: {
+        berries: [],
+        ingredients: [
+          { ingredient: ingredient.FANCY_EGG, amount: 12 },
+          { ingredient: ingredient.GLOSSY_AVOCADO, amount: 6 },
+          { ingredient: ingredient.MOOMOO_MILK, amount: 7 },
+          { ingredient: ingredient.WARMING_GINGER, amount: 2 }
+        ]
+      }
+    })
+    await nextTick()
+    expect(wrapper.vm.teamIngredients).toEqual([
+      { amount: 12, image: '/images/ingredient/egg.png' },
+      { amount: 9, image: '/images/ingredient/ingredients.png' },
+      { amount: 6, image: '/images/ingredient/avocado.png' }
+    ])
+  })
+
   it('renders daily team ingredients section correctly', async () => {
     const teamStore = useTeamStore()
     teamStore.getCurrentTeam.production = mocks.createMockTeamProduction({

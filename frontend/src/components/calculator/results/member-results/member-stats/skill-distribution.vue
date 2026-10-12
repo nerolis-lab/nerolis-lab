@@ -1,28 +1,26 @@
 <template>
-  <v-row class="px-2">
+  <div class="flex-left">
     <!-- Skill distribution -->
-    <v-col class="flex-left">
-      <v-dialog v-model="showSkillDistribution" :close-on-content-click="false" max-width="500">
-        <template #activator="{ props }">
-          <v-btn v-bind="props" append-icon="mdi-chart-bar"> Skill distribution </v-btn>
-        </template>
+    <v-dialog v-model="showSkillDistribution" :close-on-content-click="false" max-width="500">
+      <template #activator="{ props }">
+        <v-btn v-bind="props" append-icon="mdi-chart-bar"> Skill distribution </v-btn>
+      </template>
 
-        <v-card class="pa-2" id="chartDialog">
-          <div class="text-body-2 font-weight-light pb-6">
-            <span class="font-weight-medium">{{ pokemonProduction.member.name }}</span> averages
-            <span class="text-strength font-weight-medium">{{ averageSkillProcsPerDay }}</span> skill procs per day.
-            Most often, <span class="font-weight-medium">{{ pokemonProduction.member.name }}</span> gets
-            <span class="text-primary font-weight-medium">{{ mostCommonProcsPerDay.procs }}</span> procs, occurring
-            <span class="text-primary font-weight-medium">{{ mostCommonProcsPerDay.percentage }}%</span> of the time.
-          </div>
+      <v-card class="pa-2" id="chartDialog">
+        <div class="text-body-2 font-weight-light pb-6">
+          <span class="font-weight-medium">{{ pokemonProduction.member.name }}</span> averages
+          <span class="text-strength font-weight-medium">{{ averageSkillProcsPerDay }}</span> skill procs per day. Most
+          often, <span class="font-weight-medium">{{ pokemonProduction.member.name }}</span> gets
+          <span class="text-primary font-weight-medium">{{ mostCommonProcsPerDay.procs }}</span> procs, occurring
+          <span class="text-primary font-weight-medium">{{ mostCommonProcsPerDay.percentage }}%</span> of the time.
+        </div>
 
-          <BarChart class="mb-3" :chartData="chartData" :chartOptions="chartOptions" :chart-plugins="chartPlugins" />
+        <BarChart class="mb-3" :chartData="chartData" :chartOptions="chartOptions" :chart-plugins="chartPlugins" />
 
-          <v-btn color="secondary" @click="showSkillDistribution = false"> Close </v-btn>
-        </v-card>
-      </v-dialog>
-    </v-col>
-  </v-row>
+        <v-btn color="secondary" @click="showSkillDistribution = false"> Close </v-btn>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script lang="ts">
