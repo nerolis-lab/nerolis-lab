@@ -10,12 +10,21 @@ import {
   Ribbon,
   RP,
   uuid,
+  type IngredientSet,
   type Pokemon,
   type PokemonInstance,
   type PokemonInstanceIdentity,
   type PokemonInstanceWithMeta,
   type PokemonInstanceWithoutRP
 } from 'sleepapi-common'
+
+const keepGenderIfAllowed = (newPokemon: Pokemon, gender: PokemonInstance['gender']) =>
+  gender && newPokemon.genders[gender] > 0 ? gender : getRandomGender(newPokemon)
+
+const carryOverIngredient = (options: IngredientSet[], level: 0 | 30 | 60, previous: IngredientSet) => {
+  const matching = options.find((option) => option.ingredient.name === previous.ingredient.name)
+  return { ...(matching ?? options[0]), level }
+}
 
 class PokemonInstanceUtilsImpl {
   public createDefaultPokemonInstance(pokemon: Pokemon, attrs?: Partial<PokemonInstance>): PokemonInstance {
@@ -59,14 +68,14 @@ class PokemonInstanceUtilsImpl {
       ...existingInstance,
       pokemon: newPokemon,
       shiny: newPokemon.shinyLocked ? false : existingInstance.shiny,
+      gender: keepGenderIfAllowed(newPokemon, existingInstance.gender),
       ingredients: [
-        { ...newPokemon.ingredient0[0], level: 0 },
-        { ...newPokemon.ingredient30[0], level: 30 },
-        { ...newPokemon.ingredient60[0], level: 60 }
+        carryOverIngredient(newPokemon.ingredient0, 0, existingInstance.ingredients[0]),
+        carryOverIngredient(newPokemon.ingredient30, 30, existingInstance.ingredients[1]),
+        carryOverIngredient(newPokemon.ingredient60, 60, existingInstance.ingredients[2])
       ],
       skillLevel: Math.min(existingInstance.skillLevel, newPokemon.skill.maxLevel),
-      carrySize: CarrySizeUtils.baseCarrySize(newPokemon),
-      gender: getRandomGender(newPokemon)
+      carrySize: CarrySizeUtils.baseCarrySize(newPokemon)
     }
 
     const rp = new RP(instance).calc()
