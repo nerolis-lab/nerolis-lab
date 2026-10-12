@@ -1,3 +1,27 @@
+## [2.71.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.5...v2.71.6) (2026-10-12)
+
+## [2.71.5](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.4...v2.71.5) (2026-10-10)
+
+## [2.71.4](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.3...v2.71.4) (2026-10-10)
+
+## [2.71.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.2...v2.71.3) (2026-10-10)
+
+## [2.71.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.1...v2.71.2) (2026-10-08)
+
+## [2.71.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.0...v2.71.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* import markdown-it token from package root ([ef50944](https://github.com/nerolis-lab/nerolis-lab/commit/ef5094464c3a9aae361a4e84f88c72ea4e819ba7))
+
+# [2.71.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.3...v2.71.0) (2026-10-06)
+
+
+### Features
+
+* add foongus and amoonguss ([8525bbb](https://github.com/nerolis-lab/nerolis-lab/commit/8525bbb67b9e022b99c022d61bf36eec09d56773))
+
 ## [2.70.3](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.2...v2.70.3) (2026-10-04)
 
 ## [2.70.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.70.1...v2.70.2) (2026-10-04)

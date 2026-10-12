@@ -49,6 +49,12 @@ Having level 5 friends is better than restarting friendships. Special events oft
 
 ## 😭 Where can I find more friends?
 
-In the [Pokémon Sleep Discord server](https://discord.gg/pokemonsleep)'s #route-01-friend-codes or #friend-codes for if you just want to drop your code and collect a bunch of codes with no hassle. You might also consider joining the #anti-wobuffet-association channel, Indigo League, or Mathcord Sleep Sprints if you want like minded players that don't auto pick.
+In the [Pokémon Sleep Discord server](https://discord.gg/pokemonsleep)'s #route-01-friend-codes or #friend-codes for if you just want to drop your code and collect a bunch of codes with no hassle.
+
+You might also consider joining:
+
+- Indigo League, in the #indigo-league-sleep-sprint channel, for a beginner-focused candy-sending community
+- AWA, in the #anti-wobuffet-association channel, for a group of players who optimize for picking meta-relevant candies to send and receive, skewing slightly more mid- to late-game
+- Mathcord Sleep Sprint, in the Pokémon Sleep Mathcord Discord, for a stricter, community-voted, and usually late-game focused candy-sending community
 
 Good luck with your Pokémon sleep friendships!
