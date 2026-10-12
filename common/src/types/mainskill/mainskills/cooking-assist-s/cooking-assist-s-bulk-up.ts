@@ -22,4 +22,4 @@ export const CookingAssistSBulkUp = new (class extends ModifiedMainskill {
       amount: this.leveledAmount(this.chanceAmounts)
     }
   };
-})(true);
+})();

@@ -22,4 +22,4 @@ export const DreamShardMagnetSAuraSphere = new (class extends ModifiedMainskill 
       amount: this.leveledAmount(this.strengthAmounts)
     }
   };
-})(true);
+})();

@@ -50,6 +50,7 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               6858,
             ],
+            "uniqueNameOverride": undefined,
           },
         },
         {
@@ -85,6 +86,7 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               6858,
             ],
+            "uniqueNameOverride": undefined,
           },
         },
         {
@@ -120,6 +122,7 @@ describe('setupAndRunProductionSimulation', () => {
               4546,
               6858,
             ],
+            "uniqueNameOverride": undefined,
           },
         },
       ]
@@ -215,6 +218,7 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 6858,
               ],
+              "uniqueNameOverride": undefined,
             },
           },
           {
@@ -250,6 +254,7 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 6858,
               ],
+              "uniqueNameOverride": undefined,
             },
           },
           {
@@ -285,6 +290,7 @@ describe('setupAndRunProductionSimulation', () => {
                 4546,
                 6858,
               ],
+              "uniqueNameOverride": undefined,
             },
           },
         ],

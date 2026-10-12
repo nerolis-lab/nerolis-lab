@@ -18,4 +18,4 @@ export const ChargeStrengthMBadDreams = new (class extends ModifiedMainskill {
       amount: this.leveledAmount(this.strengthAmounts)
     }
   };
-})();
+})(true);
