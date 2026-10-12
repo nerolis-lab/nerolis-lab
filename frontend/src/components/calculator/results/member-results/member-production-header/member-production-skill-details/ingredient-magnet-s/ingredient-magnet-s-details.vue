@@ -93,7 +93,7 @@ export default defineComponent({
       return IngredientMagnetS.activations.ingredients.amount({ skillLevel: this.effectiveSkillLevel })
     },
     totalIngredientsNumber() {
-      return this.memberWithProduction.production.skillValue['ingredients']?.amountToSelf * this.timeWindowFactor
+      return (this.memberWithProduction.production.skillValue['ingredients']?.amountToSelf ?? 0) * this.timeWindowFactor
     },
     totalIngredients() {
       return compactNumber(this.totalIngredientsNumber)

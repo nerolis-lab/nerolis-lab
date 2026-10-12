@@ -14,6 +14,52 @@ import {
 import { describe, expect, it } from 'vitest';
 
 describe('CookingState', () => {
+  it('reads the chosen ingredient bag including stockpile and meal consumption', () => {
+    const ingredients = ingredientSetToFloatFlat([{ ingredient: ingredient.FANCY_APPLE, amount: 3 }]);
+    const recipe = {
+      name: 'mock-recipe',
+      displayName: 'Mock recipe',
+      type: 'curry' as const,
+      ingredients,
+      nrOfIngredients: 3,
+      value: 1,
+      valueMax: 1,
+      bonus: 0,
+      level: 1
+    };
+    const cooking = new CookingState(
+      mocks.teamSettings({
+        stockpiledIngredients: ingredientSetToFloatFlat([{ ingredient: ingredient.FANCY_APPLE, amount: 5 }])
+      }),
+      { curries: [recipe], salads: [], desserts: [] },
+      createPreGeneratedRandom()
+    );
+    cooking.addIngredients(ingredientSetToFloatFlat([{ ingredient: ingredient.FANCY_APPLE, amount: 2 }]));
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'curry')).toBe(7);
+    cooking.cook(false);
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'curry')).toBe(4);
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'salad')).toBe(7);
+    expect(cooking.ingredientAmount(ingredient.FANCY_APPLE.name, 'dessert')).toBe(7);
+  });
+
+  it.each([
+    { camp: false, sunday: false, expected: 120 },
+    { camp: true, sunday: false, expected: 180 },
+    { camp: false, sunday: true, expected: 220 },
+    { camp: true, sunday: true, expected: 330 }
+  ])(
+    'uses the same pot capacity for cooking and rotation with camp=$camp, sunday=$sunday',
+    ({ camp, sunday, expected }) => {
+      const cooking = new CookingState(
+        mocks.teamSettings({ potSize: 100, camp }),
+        defaultUserRecipes(),
+        createPreGeneratedRandom()
+      );
+      cooking.addPotSize(20);
+      expect(cooking.currentPotSize(sunday)).toBe(expected);
+    }
+  );
+
   it('shall include provided meal times in results', () => {
     const cookingState = new CookingState(
       mocks.teamSettings({ camp: true }),
