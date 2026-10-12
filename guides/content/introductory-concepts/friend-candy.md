@@ -54,7 +54,7 @@ In the [Pokémon Sleep Discord server](https://discord.gg/pokemonsleep)'s #route
 You might also consider joining:
 
 - Indigo League, in the #indigo-league-sleep-sprint channel, for a beginner-focused candy-sending community
-- AWA, in the #anti-wobuffet-association channel, for a group of players who optimize for picking meta-relevant candies to send and receive, skewing slightly more mid- to late-game
+- AWA, in the #anti-wobuffet-association channel, for a group of players who optimize for picking meta-relevant candies to send and receive, skewing slightly more mid to late game
 - Mathcord Sleep Sprint, in the Pokémon Sleep Mathcord Discord, for a stricter, community-voted, and usually late-game focused candy-sending community
 
 Good luck with your Pokémon sleep friendships!
