@@ -13,6 +13,7 @@ import { ChargeStrengthMEffect } from '@src/services/simulation-service/team-sim
 import { ChargeStrengthSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s/charge-strength-s-effect.js';
 import { ChargeStrengthSRangeEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s/charge-strength-s-range-effect.js';
 import { ChargeStrengthSStockpileEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/charge-strength-s/charge-strength-s-stockpile-effect.js';
+import { CookingAdvanceSMysticalFireEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-advance-s/cooking-advance-s-mystical-fire-effect.js';
 import { CookingAssistSBulkUpEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-assist-s/cooking-assist-s-bulk-up-effect.js';
 import { CookingAssistSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-assist-s/cooking-assist-s-effect.js';
 import { CookingPowerUpSEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effects/cooking-power-up-s/cooking-power-up-s-effect.js';
@@ -63,6 +64,7 @@ import {
   ChargeStrengthS,
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
+  CookingAdvanceSMysticalFire,
   CookingAssistS,
   CookingAssistSBulkUp,
   CookingPowerUpS,
@@ -132,6 +134,7 @@ export class SkillState {
       [ChargeStrengthS, new ChargeStrengthSEffect()],
       [ChargeStrengthSRange, new ChargeStrengthSRangeEffect()],
       [ChargeStrengthSStockpile, new ChargeStrengthSStockpileEffect()],
+      [CookingAdvanceSMysticalFire, new CookingAdvanceSMysticalFireEffect()],
       [CookingAssistS, new CookingAssistSEffect()],
       [CookingAssistSBulkUp, new CookingAssistSBulkUpEffect()],
       [CookingPowerUpS, new CookingPowerUpSEffect()],
