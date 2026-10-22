@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       sha: ${{ steps.get-sha.outputs.sha }}
+      node-version: ${{ steps.get-node-version.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,6 +42,14 @@ jobs:
             echo "Latest commit SHA: $LATEST_SHA"
             echo "sha=$LATEST_SHA" >> $GITHUB_OUTPUT
           fi
+
+      - name: Get Node version
+        id: get-node-version
+        run: |
+          git fetch --depth 1 origin ${{ steps.get-sha.outputs.sha }}
+          NODE_VERSION=$(git show ${{ steps.get-sha.outputs.sha }}:.nvmrc)
+          echo "Node version from .nvmrc: $NODE_VERSION"
+          echo "version=$NODE_VERSION" >> $GITHUB_OUTPUT
 
   common:
     name: Build Common
@@ -166,9 +175,8 @@ jobs:
             [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
 
             cd ${{ vars.DEPLOY_DIR }}
-            nvm install
-            nvm use
-            
+            nvm install ${{ needs.determine-sha.outputs.node-version }}
+
             # Install common dependencies first
             echo "Installing common dependencies..."
             cd ${{ vars.DEPLOY_DIR }}/common
@@ -249,11 +257,13 @@ jobs:
             export NVM_DIR="\$HOME/.nvm"
             [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"
                         
-            # Use the Node version specified in .nvmrc
+            # Use the Node version specified in the repo's .nvmrc
             cd ${{ vars.DEPLOY_DIR }}
-            nvm install
-            nvm use
-            
+            nvm install ${{ needs.determine-sha.outputs.node-version }}
+
+            # A freshly installed Node version has no global packages
+            command -v pm2 > /dev/null || npm install -g pm2
+
             # Set environment variables for PM2
             export NODE_ENV="${{ vars.NODE_ENV }}"
             export PORT="${{ vars.PORT }}"
@@ -284,13 +294,22 @@ jobs:
                 --time
             fi
             
-            # Verify process is online
-            if pm2 list | grep -q "${{ vars.APP_NAME }}.*online"; then
+            # Verify the backend serves requests, pm2 can report "online" for a process that never spawned
+            HEALTHY=0
+            for attempt in \$(seq 1 30); do
+              if curl -fs http://localhost:${{ vars.PORT || '3000' }}/api/health | grep -q '"healthy"'; then
+                HEALTHY=1
+                break
+              fi
+              sleep 2
+            done
+
+            if [ "\$HEALTHY" = "1" ]; then
               echo "✓ ${{ vars.APP_NAME }} deployed successfully"
               pm2 save
             else
-              echo "✗ ${{ vars.APP_NAME }} failed to deploy"
-              pm2 logs ${{ vars.APP_NAME }} --lines 20
+              echo "✗ ${{ vars.APP_NAME }} failed health check"
+              pm2 logs ${{ vars.APP_NAME }} --lines 20 --nostream
               exit 1
             fi
             
