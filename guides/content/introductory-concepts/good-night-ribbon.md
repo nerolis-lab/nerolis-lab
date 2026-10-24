@@ -13,7 +13,7 @@ Good-Night Ribbons are earned and upgraded by hitting milestones for sleep time 
 The ribbon will be at the top right of the Pokémon's summary screen and "Sleeping Time Shared" is at the bottom of the summary screen. These ribbons are specific to a Pokémon and not shared by the species.
 
 ![Summary Screen](./images/summary-ribbon.png)
-![Sleeping Time Shared Summary Screen](./images/summary-sleep-time.png)
+![Sleeping Time Shared Summary Screen](./images/summary-sleep-time.jpg)
 
 > [!NOTE]
 > "Sleeping Time Shared" includes both time spent on the active team during a sleep session and manually entered sleep sessions. It counts the total length of a sleep session (including the time taken to fall asleep), up to 13 hrs/day. Time spent on Munchlax's Nap Island does not count towards sleep time shared.
@@ -65,6 +65,7 @@ If you have a favorite Pokémon that is NFE, the ribbon can at least make their 
 ## Smiling Profile Icon
 
 The 1k ribbon also unlocks a special smiling profile icon in a gold frame with a 1k ribbon on it.
+
 |Normal Icon/Frame|1k Ribbon Icon/Frame|
 |:-:|:-:|
 |![Spheal Icon](./images/spheal-pfp.png)|![Spheal 1k Ribbon Icon](./images/spheal-pfp-1k.png)|
