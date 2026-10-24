@@ -12,7 +12,7 @@ Good-Night Ribbons are earned and upgraded by hitting milestones for sleep time 
 
 The ribbon will be at the top right of the Pokémon's summary screen and "Sleeping Time Shared" is at the bottom of the summary screen. These ribbons are specific to a Pokémon and not shared by the species.
 
-**IMAGE**
+![Summary Screen](./images/summary-ribbon.png)
 
 > [!NOTE]
 > "Sleeping Time Shared" includes both time spent on the active team during a sleep session and manually entered sleep sessions. It counts the total length of a sleep session (including the time taken to fall asleep), up to 13 hrs/day. Time spent on Munchlax's Nap Island does not count towards sleep time shared.
