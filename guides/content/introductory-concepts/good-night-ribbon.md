@@ -13,6 +13,7 @@ Good-Night Ribbons are earned and upgraded by hitting milestones for sleep time 
 The ribbon will be at the top right of the Pokémon's summary screen and "Sleeping Time Shared" is at the bottom of the summary screen. These ribbons are specific to a Pokémon and not shared by the species.
 
 ![Summary Screen](./images/summary-ribbon.png)
+![Sleeping Time Shared Summary Screen](./images/summary-sleep-time.png)
 
 > [!NOTE]
 > "Sleeping Time Shared" includes both time spent on the active team during a sleep session and manually entered sleep sessions. It counts the total length of a sleep session (including the time taken to fall asleep), up to 13 hrs/day. Time spent on Munchlax's Nap Island does not count towards sleep time shared.
@@ -49,13 +50,13 @@ Any speed boost provided by a ribbon will be reflected in the frequency on the P
 
 For the majority of NFE Pokémon, the stat boosts provided by a ribbon are not sufficient to outperform their final evolution. For the few exceptions to this, it is important to keep in mind that getting a 2k ribbon requires ~235 nights with 100 Sleep Score, which is a massive investment of time and sleep EXP that should be considered when determining the practicality of these Pokémon.
 
-:pikachu: **Pikachu** with a 2k ribbon has a respectable performance as an Electric Berry Specialist, though still inferior to Raichu. It has niche use as another Electric Berry Specialist species on a Raikou team.
+:pikachu: **Pikachu** with a 2k ribbon has a respectable performance as an Electric Berry Specialist, though still inferior to Raichu. It has niche use as another Electric Berry Specialist species on a Raikou team. However, Halloween Pikachu and Captain Pikachu are not much weaker than Pikachu while requiring far less investment.
 
 :onix: **Onix** with a 2k ribbon is the strongest Rock Berry Specialist, which would otherwise be Tyrantrum. Steelix is a Steel Berry Specialist, so Onix does not need to outperform it. However, Tyrantrum is not much weaker than Onix while being much easier to hunt, requiring far less investment, and having a strong skill.
 
-:chansey: **Chansey** with a 2k ribbon has similar performance to Blissey with a 2k ribbon. It can very rarely outperform Blissey but only by an insignificant amount. During the time it takes to get the ribbon, it will underperform Blissey.
+:chansey: **Chansey** with a 2k ribbon has similar performance to Blissey with a 2k ribbon as an Ingredient Specialist for Egg. It can very rarely outperform Blissey but only by an insignificant amount. During the time it takes to get the ribbon, it will underperform Blissey.
 
-:vigoroth: **Vigoroth** with a 2k ribbon is far superior to Slaking. Slaking is slower and has a much higher ingredient rate, with 2k ribbon widening the speed gap further. However, Vigoroth is not a strong Berry Specialist even with the ribbon and is not much stronger than Raticate, which requires far less investment.
+:vigoroth: **Vigoroth** with a 2k ribbon is far superior to Slaking as a Normal Berry Specialist. Slaking is slower and has a much higher ingredient rate, with 2k ribbon widening the speed gap further. However, Vigoroth is not a strong Berry Specialist even with the ribbon and is not much stronger than Raticate, which requires far less investment.
 
 :prinplup: **Prinplup** with a 2k ribbon is the second strongest Water Berry Specialist. Empoleon is a Steel Berry Specialist, so Prinplup does not need to outperform it. It has niche use as another Water Berry Specialist species on a Suicune team.
 
@@ -64,7 +65,6 @@ If you have a favorite Pokémon that is NFE, the ribbon can at least make their 
 ## Smiling Profile Icon
 
 The 1k ribbon also unlocks a special smiling profile icon in a gold frame with a 1k ribbon on it.
-
 |Normal Icon/Frame|1k Ribbon Icon/Frame|
 |:-:|:-:|
 |![Spheal Icon](./images/spheal-pfp.png)|![Spheal 1k Ribbon Icon](./images/spheal-pfp-1k.png)|
