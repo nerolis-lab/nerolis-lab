@@ -127,6 +127,9 @@ export default defineComponent({
       return isPaired ? aSlotIngs + magnetIngs : magnetIngs
     },
     averageMagnetAmount() {
+      const sampled = this.memberWithProduction.production.advanced?.ingredientMagnetProduction
+      if (sampled !== undefined)
+        return sampled.reduce((sum, { amount }) => sum + amount, 0) / ingredient.TOTAL_NUMBER_OF_INGREDIENTS
       const amountsIgnoringA = this.memberWithProduction.production.produceFromSkill.ingredients
         .filter((ing) => ing.ingredient.name !== this.memberWithProduction.member.ingredients[0].ingredient.name)
         .map((ingSet) => ingSet.amount)
@@ -143,7 +146,14 @@ export default defineComponent({
         this.memberWithProduction.production.produceFromSkill.ingredients.find(
           (ing) => ing.ingredient.name === this.memberWithProduction.member.ingredients[0].ingredient.name
         )?.amount ?? 0
-      const amount = Math.max(amountIncludingMagnet - this.averageMagnetAmount, 0)
+      const sampled = this.memberWithProduction.production.advanced?.ingredientMagnetProduction
+      const magnetA =
+        sampled === undefined
+          ? this.averageMagnetAmount
+          : (sampled.find(
+              ({ ingredient }) => ingredient.name === this.memberWithProduction.member.ingredients[0].ingredient.name
+            )?.amount ?? 0)
+      const amount = Math.max(amountIncludingMagnet - magnetA, 0)
       return compactNumber(amount * this.timeWindowFactor)
     },
     amountOfEachIngredient() {

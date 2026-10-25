@@ -6,6 +6,23 @@ export interface ProductionDisplayItem {
   isMagnet?: boolean
 }
 
+/** Keep significant totals intact and combine all other output into one daily total. */
+export function processSignificantIngredientsForDisplay(
+  ingredients: IngredientSet[],
+  significantNames: Iterable<string>
+): ProductionDisplayItem[] {
+  const significant = new Set(significantNames)
+  const amounts = new Map<string, number>()
+  for (const { ingredient, amount } of ingredients) {
+    const name = significant.has(ingredient.name) ? ingredient.name : 'magnet'
+    amounts.set(name, (amounts.get(name) ?? 0) + amount)
+  }
+  return [...amounts]
+    .filter(([, amount]) => amount > 0)
+    .map(([name, amount]) => ({ name, amount }))
+    .sort((a, b) => b.amount - a.amount)
+}
+
 /**
  * Processes ingredients for display, handling ingredient magnet logic.
  * When a Pokemon produces all 17 ingredients (ingredient magnet), it groups

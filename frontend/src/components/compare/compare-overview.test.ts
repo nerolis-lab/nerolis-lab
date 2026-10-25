@@ -4,7 +4,7 @@ import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { mount } from '@vue/test-utils'
-import { MathUtils, type MemberProduction } from 'sleepapi-common'
+import { MathUtils, ingredient, type MemberProduction } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -25,6 +25,34 @@ describe('CompareOverview', () => {
     if (wrapper) {
       wrapper.unmount()
     }
+  })
+
+  it('shows significant full totals and groups sampled Magnet-only ingredients', async () => {
+    const comparisonStore = useComparisonStore()
+    comparisonStore.timeWindow = '8H'
+    comparisonStore.addMember(
+      mocks.createMockMemberProduction({
+        produceTotal: {
+          berries: [],
+          ingredients: [
+            { ingredient: ingredient.FANCY_EGG, amount: 12 },
+            { ingredient: ingredient.MOOMOO_MILK, amount: 7 },
+            { ingredient: ingredient.WARMING_GINGER, amount: 2 }
+          ]
+        },
+        advanced: { ...mockMemberProduction.advanced, ingredientDistributions: { Egg: { 12: 100 } } }
+      })
+    )
+    await nextTick()
+    expect(wrapper.vm.members[0].ingredientList).toEqual([
+      { name: 'Egg', amount: 4 },
+      { name: 'magnet', amount: 3 }
+    ])
+    const images = wrapper.findAll('[data-testid="ingredient-image"]')
+    expect(images.map((image) => image.attributes('src'))).toEqual([
+      '/images/ingredient/egg.png',
+      '/images/ingredient/ingredients.png'
+    ])
   })
 
   it('renders correctly with initial data', () => {

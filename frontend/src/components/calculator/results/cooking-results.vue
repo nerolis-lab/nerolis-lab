@@ -270,6 +270,7 @@
 </template>
 
 <script lang="ts">
+import { processSignificantIngredientsForDisplay } from '@/services/utils/ingredient-display-utils'
 import { defineComponent } from 'vue'
 
 import Divider from '@/components/custom-components/divider/divider.vue'
@@ -389,6 +390,15 @@ export default defineComponent({
       const ingredients = combineSameIngredientsInDrop(
         this.teamStore.getCurrentTeam.production?.team.ingredients ?? []
       ).sort((a, b) => b.amount - a.amount)
+
+      const members = this.teamStore.getCurrentTeam.production?.members ?? []
+      const significantNames = members.flatMap((member) => Object.keys(member.advanced?.ingredientDistributions ?? {}))
+      if (significantNames.length > 0) {
+        return processSignificantIngredientsForDisplay(ingredients, significantNames).map(({ name, amount }) => ({
+          amount: MathUtils.round(amount, 1),
+          image: ingredientImage(name)
+        }))
+      }
 
       if (ingredients.length >= ingredient.INGREDIENTS.length) {
         const ingMagnetAmount = ingredients.reduce(
