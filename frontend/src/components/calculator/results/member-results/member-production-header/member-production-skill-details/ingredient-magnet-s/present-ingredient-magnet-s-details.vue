@@ -108,7 +108,7 @@ export default defineComponent({
       return IngredientMagnetSPresent.candyAmount
     },
     totalIngredientsNumber() {
-      return this.memberWithProduction.production.skillValue['ingredients']?.amountToSelf * this.timeWindowFactor
+      return (this.memberWithProduction.production.skillValue['ingredients']?.amountToSelf ?? 0) * this.timeWindowFactor
     },
     totalIngredients() {
       return compactNumber(this.totalIngredientsNumber)
