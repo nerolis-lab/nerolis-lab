@@ -7,7 +7,7 @@ import { UserAreaDAO } from '@src/database/dao/user/user-area/user-area-dao.js';
 import { UserDAO } from '@src/database/dao/user/user/user-dao.js';
 import { DaoFixture } from '@src/utils/test-utils/dao-fixture.js';
 import { mocks } from '@src/vitest/index.js';
-import { getPokemon, uuid } from 'sleepapi-common';
+import { defaultMealPlan, getPokemon, uuid } from 'sleepapi-common';
 import { vimic } from 'vimic';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -60,6 +60,7 @@ describe('TeamDAO insert', () => {
           "fk_team_area_id": 1,
           "fk_user_id": 1,
           "id": 1,
+          "meal_plan": undefined,
           "name": "Team A",
           "recipe_type": "curry",
           "stockpiled_berries": undefined,
@@ -169,6 +170,7 @@ describe('TeamDAO update', () => {
           "fk_team_area_id": 1,
           "fk_user_id": 1,
           "id": 1,
+          "meal_plan": undefined,
           "name": "Updated Team A",
           "recipe_type": "curry",
           "stockpiled_berries": undefined,
@@ -231,6 +233,25 @@ describe('TeamDAO delete', () => {
 });
 
 describe('findTeamsWithMembers', () => {
+  it('persists independent meal fallback preferences', async () => {
+    const mealPlan = defaultMealPlan();
+    mealPlan.breakfast = { kind: 'recipe', recipe: 'planned breakfast', fallbackToBest: false };
+    mealPlan.sunday!.breakfast = { kind: 'recipe', recipe: 'Sunday breakfast', fallbackToBest: true };
+    await TeamDAO.insert({
+      fk_team_area_id: teamAreaId,
+      fk_user_id: 1,
+      team_index: 0,
+      name: 'Meal plan',
+      camp: false,
+      bedtime: '21:30',
+      wakeup: '06:00',
+      recipe_type: 'curry',
+      meal_plan: TeamDAO.mealPlanToString(mealPlan)
+    });
+    const teams = await TeamDAO.findTeamsWithMembers(1);
+    expect(teams[0].mealPlan).toEqual(mealPlan);
+  });
+
   it('shall get team with members', async () => {
     await TeamDAO.insert({
       fk_team_area_id: teamAreaId,

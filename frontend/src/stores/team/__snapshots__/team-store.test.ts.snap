@@ -49,6 +49,28 @@ exports[`Team Store > deleteTeam shall reset current team 1`] = `
     ],
     "shortName": "greengrass",
   },
+  "mealPlan": {
+    "breakfast": {
+      "kind": "best",
+    },
+    "dinner": {
+      "kind": "best",
+    },
+    "lunch": {
+      "kind": "best",
+    },
+    "sunday": {
+      "breakfast": {
+        "kind": "best",
+      },
+      "dinner": {
+        "kind": "best",
+      },
+      "lunch": {
+        "kind": "best",
+      },
+    },
+  },
   "memberIndex": 0,
   "memberIvs": {},
   "members": [
@@ -130,6 +152,28 @@ exports[`Team Store > should have expected default state 1`] = `
           3245795,
         ],
         "shortName": "greengrass",
+      },
+      "mealPlan": {
+        "breakfast": {
+          "kind": "best",
+        },
+        "dinner": {
+          "kind": "best",
+        },
+        "lunch": {
+          "kind": "best",
+        },
+        "sunday": {
+          "breakfast": {
+            "kind": "best",
+          },
+          "dinner": {
+            "kind": "best",
+          },
+          "lunch": {
+            "kind": "best",
+          },
+        },
       },
       "memberIndex": 0,
       "memberIvs": {},
@@ -215,6 +259,28 @@ exports[`Team Store > should reset the state correctly 1`] = `
           3245795,
         ],
         "shortName": "greengrass",
+      },
+      "mealPlan": {
+        "breakfast": {
+          "kind": "best",
+        },
+        "dinner": {
+          "kind": "best",
+        },
+        "lunch": {
+          "kind": "best",
+        },
+        "sunday": {
+          "breakfast": {
+            "kind": "best",
+          },
+          "dinner": {
+            "kind": "best",
+          },
+          "lunch": {
+            "kind": "best",
+          },
+        },
       },
       "memberIndex": 0,
       "memberIvs": {},
