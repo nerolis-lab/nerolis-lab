@@ -132,6 +132,8 @@ export default {
   MIME_JR: 'Mime Jr.',
   MIMIKYU: 'Mimikyu',
   MINUN: 'Minun',
+  MISDREAVUS: 'Misdreavus',
+  MISMAGIUS: 'Mismagius',
   MONFERNO: 'Monferno',
   MR_MIME: 'Mr. Mime',
   MUDKIP: 'Mudkip',

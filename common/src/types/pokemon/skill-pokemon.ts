@@ -63,6 +63,7 @@ import {
   ChargeStrengthM,
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
+  CookingAdvanceSMysticalFire,
   CookingAssistSBulkUp,
   CookingPowerUpS,
   CookingPowerUpSMinus,
@@ -535,6 +536,25 @@ export const SLOWKING: Pokemon = evolvedPokemon(SLOWPOKE, {
   carrySize: 17
 });
 
+export const MISDREAVUS: Pokemon = createSkillSpecialist({
+  name: 'MISDREAVUS',
+  pokedexNumber: 200,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 15,
+  skillPercentage: 4.7,
+  berry: BLUK,
+  genders: BALANCED_GENDER,
+  carrySize: 13,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: SOFT_POTATO,
+    b: ROUSING_COFFEE,
+    c: SNOOZY_TOMATO
+  },
+  skill: CookingPowerUpS
+});
+
 export const WOBBUFFET: Pokemon = createSkillSpecialist({
   name: 'WOBBUFFET',
   pokedexNumber: 202,
@@ -985,6 +1005,16 @@ export const DRIFBLIM: Pokemon = evolvedPokemon(DRIFLOON, {
   ingredientPercentage: 12.8,
   skillPercentage: 6.3,
   carrySize: 17
+});
+
+export const MISMAGIUS: Pokemon = evolvedPokemon(MISDREAVUS, {
+  name: 'MISMAGIUS',
+  pokedexNumber: 429,
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 14.2,
+  skillPercentage: 3.6,
+  carrySize: 17,
+  skill: CookingAdvanceSMysticalFire
 });
 
 export const HONCHKROW: Pokemon = evolvedPokemon(MURKROW, {
