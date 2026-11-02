@@ -69,3 +69,6 @@ The 1k ribbon also unlocks a special smiling profile icon in a gold frame with a
 |Normal Icon/Frame|1k Ribbon Icon/Frame|
 |:-:|:-:|
 |![Spheal Icon](./images/spheal-pfp.png)|![Spheal 1k Ribbon Icon](./images/spheal-pfp-1k.png)|
+
+> [!NOTE]
+> Evolving a Pokémon that has a 1k ribbon will unlock the profile icon for its evolution as well. However, getting a 1k ribbon on an evolved Pokémon will not unlock the profile icon for its previous evolutions.
