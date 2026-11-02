@@ -58,11 +58,11 @@ This will leave you with 2,700 Sleep Points each month. Some options you can con
 
 ### What about Master Biscuits?
 
-Master Biscuits cost 4,000 Sleep Points, which is a *significant* portion of your monthly income. They are *inefficient* when it comes to Sleep Points spent per catch, regardless of the Pokémon's required friendship points, but have the advantage of not needing multiple encounters. For the vast majority of players, buying them is **highly discouraged**.
+Master Biscuits cost 4,000 Sleep Points, which is a *significant* portion of your monthly income. They are *inefficient* when it comes to Sleep Points spent per catch, regardless of the Pokémon's required pips, but have the advantage of not needing multiple encounters. For the vast majority of players, buying them is **highly discouraged**.
 
 If you wish to buy Master Biscuits, it is recommended that you:
 1. Limit your Poké Biscuit purchases each month, otherwise you will limit your Main Skill Seed purchasing frequency
-2. Only use them to catch Legendary Pokémon as they have the highest friendship points (30) and least frequently spawn
+2. Only use them to catch Legendary Pokémon as they have the highest pips (30) and least frequently spawn
    * Limit yourself to catching one or two Legendary Pokémon species, do not try to catch every Legendary that you see
 
 ## :diamond: Diamonds
