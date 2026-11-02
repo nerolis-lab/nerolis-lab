@@ -7,8 +7,6 @@ order: 20
 
 Resources are less abundant than the main series Pokémon games or Pokémon GO, so it is important to spend any accrued currencies **effectively** and **efficiently**!
 
-<SubjectiveInfoBanner />
-
 ## Quick Navigation
 
 * **Sleep Research Items**
@@ -32,6 +30,8 @@ Resources are less abundant than the main series Pokémon games or Pokémon GO, 
 * **Resource Items**
    * :clusterS: [Dream Shard Clusters](#dream-shard-clusters)
    * :ingticketS: [Ingredient Tickets](#ingredient-tickets)
+
+<SubjectiveInfoBanner />
 
 ## :pokebiscuit: Biscuits
 
