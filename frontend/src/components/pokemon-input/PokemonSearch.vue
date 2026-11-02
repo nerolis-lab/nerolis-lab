@@ -263,8 +263,10 @@ const pokemonCollection: ComputedRef<PokemonWithPath[]> = computed(() => {
   return pokemonSearchStore.showPokebox ? savedPokemon.value : completePokedex.value
 })
 
-const hasExactIngredientMatch = (pokemon: Pokemon, query: string): boolean => {
-  const allIngredients = [...pokemon.ingredient0, ...pokemon.ingredient30, ...pokemon.ingredient60]
+const hasExactIngredientMatch = (instance: PokemonInstance, query: string): boolean => {
+  const allIngredients = pokemonSearchStore.showPokebox
+    ? instance.ingredients
+    : [...instance.pokemon.ingredient0, ...instance.pokemon.ingredient30, ...instance.pokemon.ingredient60]
   return allIngredients.some(
     (ingredientSet) =>
       ingredientSet.ingredient.name.toLowerCase() === query || ingredientSet.ingredient.longName.toLowerCase() === query
@@ -281,7 +283,7 @@ const filteredPokemon: ComputedRef<PokemonWithPath[]> = computed(() => {
 
     const instanceNameMatches = pokemonSearchStore.showPokebox && p.instance.name.toLowerCase().includes(query)
 
-    const ingredientMatches = hasExactIngredientMatch(p.pokemon, query)
+    const ingredientMatches = hasExactIngredientMatch(p.instance, query)
 
     return pokemonNameMatches || instanceNameMatches || ingredientMatches
   }
