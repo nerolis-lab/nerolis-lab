@@ -251,7 +251,7 @@ All evolution items can be purchased for *1,400 Sleep Points* from the Regular E
 |Item|Details|
 |:-:|:-|
 |:dawnstone:<br>**Dawn Stone**|Used for: :gallade: Gallade|
-|:duskstone:<br>**Dusk Stone**|Used for: :honchkrow: Honchkrow|
+|:duskstone:<br>**Dusk Stone**|Used for: :mismagius: Mismagius, :honchkrow: Honchkrow|
 |:firestone:<br>**Fire Stone**|Used for: :ninetales: Ninetales, :arcanine: Arcanine, :flareon: Flareon<br>Can also be acquired by:<br>- Raising 10 Pokémon to level 25|
 |:icestone:<br>**Ice Stone**|Used for: :ninetales_alolan: Alolan Ninetales, :glaceon: Glaceon, :cetitan: Cetitan<br>Can also be acquired by:<br>- Raising 10 Pokémon to level 5|
 |:kingsrock:<br>**King's Rock**|Used for: :slowking: Slowking (in addition to Linking Cord)<br>Can also be acquired by:<br>- Doing sleep research with a team RP of 46,000 or greater|
