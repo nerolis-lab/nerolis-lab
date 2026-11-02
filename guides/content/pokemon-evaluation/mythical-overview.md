@@ -29,7 +29,7 @@ While NMD does also boost shiny rate, Mythical Pokémon cannot be shiny.
 
 They cost 25 pips but get 3 free pips each time you see them. Your first catch of each Mythical Pokémon will get you the Pokémon and one Eureka Seed for that Pokémon. Subsequent catches will get you only a Eureka Seed for that Pokémon.
 
-Mythical Pokémon start out with most stats blank. Each Mythical Pokémon will have the same starting stats for all players. For example, Darkrai will have a Bashful Nature and Sausage in its first ingredient slot.
+Mythical Pokémon start out with most stats blank. Each Mythical Pokémon will have the same starting stats for all players. For example, Darkrai will have a Bashful nature and Sausage in its first ingredient slot.
 
 Eureka Seeds allow you alter a single stat of your choosing, with the limitation that stat slots must be filled in the order they appear. When you choose a stat to alter, a new option will be rolled at random, with all potential options being weighted equally. If you were altering a stat that already had a value, you will be given the choice to either accept the new option or keep the current value. Rejecting the new option and staying with your current value will give 40 candy for that Pokémon as compensation.
 
