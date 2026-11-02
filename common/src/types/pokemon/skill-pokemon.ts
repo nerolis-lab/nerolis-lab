@@ -99,7 +99,7 @@ export const PIKACHU_HOLIDAY: Pokemon = createSkillSpecialist({
   skillPercentage: 4.2,
   berry: GREPA,
   genders: BALANCED_GENDER, // unverified for Sleep
-  carrySize: 16,
+  carrySize: 20,
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
