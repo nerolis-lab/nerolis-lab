@@ -23880,7 +23880,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HOLIDAY unexpectedly 1`] = 
     "type": "electric",
     "value": 25,
   },
-  "carrySize": 16,
+  "carrySize": 20,
   "displayName": "Pikachu (Holiday)",
   "evolvesFrom": undefined,
   "evolvesInto": [],
