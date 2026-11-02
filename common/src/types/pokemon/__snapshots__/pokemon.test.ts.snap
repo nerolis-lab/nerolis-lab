@@ -13422,7 +13422,7 @@ exports[`COMPLETE_POKEDEX > shall not change GENGAR unexpectedly 1`] = `
       },
     },
   ],
-  "ingredientPercentage": 16.1,
+  "ingredientPercentage": 16.6,
   "name": "GENGAR",
   "pityProcThreshold": 78,
   "pokedexNumber": 94,
