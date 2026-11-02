@@ -1,4 +1,5 @@
 import serverAxios from '@/router/server-axios'
+import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { TeamService } from '@/services/team/team-service'
 import { usePokemonStore } from '@/stores/pokemon/pokemon-store'
 import { useTeamStore } from '@/stores/team/team-store'
@@ -63,6 +64,34 @@ describe('createOrUpdateTeam', () => {
 })
 
 describe('getTeams', () => {
+  it('loads a scheduled-only Pokemon on a fresh device without filling a primary slot', async () => {
+    const pokemon = mocks.createMockPokemon({ externalId: 'scheduled-only', saved: false })
+    const scheduledMember = PokemonInstanceUtils.toUpsertTeamMemberRequest(pokemon)
+    mockedServerAxios.onGet('/team').replyOnce(200, {
+      teams: [
+        {
+          index: 0,
+          name: 'Team',
+          camp: false,
+          bedtime: '21:30',
+          wakeup: '06:00',
+          recipeType: 'curry',
+          version: 1,
+          island: { islandName: 'greengrass', favoredBerries: '' },
+          members: [],
+          scheduledMembers: [scheduledMember],
+          schedule: [{ slotIndex: 0, externalId: pokemon.externalId, startTime: '12:00' }]
+        }
+      ]
+    })
+    const teams = await TeamService.getTeams()
+    expect(teams[0].members.filter(Boolean)).toEqual([])
+    expect(usePokemonStore().getPokemon(pokemon.externalId)).toMatchObject({
+      externalId: pokemon.externalId,
+      saved: false
+    })
+  })
+
   it('should call server to get teams', async () => {
     const mockTeamStore = useTeamStore()
     mockedServerAxios.onGet('/team').replyOnce(200, { teams: [] })
@@ -98,7 +127,9 @@ describe('getTeams', () => {
         stockpiledIngredients: [],
         version: 0,
         members: new Array(MAX_TEAM_SIZE).fill(undefined),
-        memberIvs: {}
+        memberIvs: {},
+        schedule: [],
+        production: undefined
       })
     })
   })
@@ -160,7 +191,9 @@ describe('getTeams', () => {
       stockpiledIngredients: [],
       version: 1,
       members: [existingTeams[0].members[0].externalId, undefined, undefined, undefined, undefined],
-      memberIvs: {}
+      memberIvs: {},
+      schedule: [],
+      production: undefined
     })
   })
 
@@ -215,7 +248,9 @@ describe('getTeams', () => {
           '000000000000000000000000000000000000',
           '000000000000000000000000000000000000'
         ],
-        memberIvs: {}
+        memberIvs: {},
+        schedule: [],
+        production: undefined
       })
     })
     const pokemonStore = usePokemonStore()
@@ -479,6 +514,66 @@ describe('calculateProduction', () => {
 })
 
 describe('calculateIv', () => {
+  it('includes rotation partners and unchanged slots when checking a scheduled member', async () => {
+    const team = useTeamStore(),
+      pokemon = usePokemonStore()
+    for (const externalId of ['primary', 'static', 'partner'])
+      pokemon.upsertLocalPokemon(mocks.createMockPokemon({ externalId }))
+    team.teams = createMockTeams(1, {
+      members: ['primary', 'static'],
+      selectedMemberId: 'partner',
+      schedule: [
+        { slotIndex: 0, externalId: 'primary', startTime: '06:00' },
+        { slotIndex: 0, externalId: 'partner', startTime: '12:00' }
+      ]
+    })
+    mockedServerAxios
+      .onPost('/calculator/iv')
+      .replyOnce(200, { variants: [mocks.createMockMemberProduction({ externalId: uuid.v4() })] })
+    await TeamService.calculateCurrentMemberIv()
+    const body = JSON.parse(mockedServerAxios.history.post[0].data)
+    expect(body.replacedMemberId).toBe('partner')
+    expect(body.members.map((member: { externalId: string }) => member.externalId)).toEqual(['primary', 'static'])
+    expect(body.settings.schedule).toEqual([
+      { slotIndex: 0, externalId: 'primary', startTime: '06:00' },
+      { slotIndex: 0, externalId: 'partner', startTime: '12:00' },
+      { slotIndex: 1, externalId: 'static', startTime: '06:00' }
+    ])
+  })
+
+  it('sends the actual build and returns its reference production for conditional comparisons', async () => {
+    const team = useTeamStore()
+    const current = mocks.createMockPokemon({ externalId: 'original' })
+    usePokemonStore().upsertLocalPokemon(current)
+    team.teams = createMockTeams(1, {
+      members: [current.externalId],
+      schedule: [
+        { slotIndex: 0, externalId: current.externalId, startTime: '06:00', type: 'pot-size', potSizeTarget: 150 }
+      ]
+    })
+    const reference = mocks.createMockMemberProduction({ externalId: current.externalId })
+    mockedServerAxios.onPost('/calculator/iv').replyOnce((request) => {
+      const body = JSON.parse(request.data)
+      return [
+        200,
+        {
+          reference,
+          variants: body.variants.map((variant: { externalId: string }) =>
+            mocks.createMockMemberProduction({ externalId: variant.externalId })
+          )
+        }
+      ]
+    })
+    const result = await TeamService.calculateCurrentMemberIv()
+    const body = JSON.parse(mockedServerAxios.history.post[0].data)
+    expect(body.referenceMember).toMatchObject({
+      externalId: current.externalId,
+      level: current.level,
+      nature: current.nature.name
+    })
+    expect(result?.reference).toEqual(JSON.parse(JSON.stringify(reference)))
+  })
+
   it.each([
     { label: 'regular', island: mocks.islandInstance({ areaBonus: 35 }) },
     {
@@ -528,6 +623,7 @@ describe('calculateIv', () => {
 
     const requestData = JSON.parse(lastPostCall.data)
     expect(requestData).toEqual({
+      replacedMemberId: currentMember.externalId,
       members: [
         {
           externalId: 'member2',
@@ -561,7 +657,9 @@ describe('calculateIv', () => {
           areaBonus: island.areaBonus,
           berries: island.berries,
           ...(island.expertMode ? { expertMode: island.expertMode } : {})
-        }
+        },
+        recipeType: 'curry',
+        schedule: []
       }
     })
 

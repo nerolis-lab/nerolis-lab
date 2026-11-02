@@ -8,9 +8,18 @@ import type {
   CookingResult,
   IngredientIndexToFloatAmount,
   MealTimes,
+  RecipeType,
   TeamSettings
 } from 'sleepapi-common';
-import { curry, dessert, emptyIngredientInventoryFloat, flatToIngredientSet, ingredient, salad } from 'sleepapi-common';
+import {
+  curry,
+  dessert,
+  emptyIngredientInventoryFloat,
+  flatToIngredientSet,
+  ingredient,
+  ING_ID_LOOKUP,
+  salad
+} from 'sleepapi-common';
 
 interface CookedRecipe extends UserRecipeFlat {
   name: string;
@@ -83,6 +92,19 @@ export class CookingState {
       this.currentCurryInventory[i] += ingredients[i];
       this.currentSaladInventory[i] += ingredients[i];
       this.currentDessertInventory[i] += ingredients[i];
+    }
+  }
+
+  public ingredientAmount(name: string, recipeType: RecipeType): number {
+    const index = ING_ID_LOOKUP[name];
+    if (index === undefined) return 0;
+    switch (recipeType) {
+      case 'curry':
+        return this.currentCurryInventory[index] + this.currentCurryStockpile[index];
+      case 'salad':
+        return this.currentSaladInventory[index] + this.currentSaladStockpile[index];
+      case 'dessert':
+        return this.currentDessertInventory[index] + this.currentDessertStockpile[index];
     }
   }
 
@@ -163,6 +185,10 @@ export class CookingState {
 
   public addPotSize(amount: number) {
     this.bonusPotSize = Math.min(200, this.bonusPotSize + amount);
+  }
+
+  public extraTastyChancePercentage(): number {
+    return this.bonusCritChance * 100;
   }
 
   private cookRecipeType(params: {
@@ -273,7 +299,7 @@ export class CookingState {
     return (sunday ? 0.3 : 0.1) + this.bonusCritChance;
   }
 
-  private currentPotSize(sunday: boolean): number {
+  public currentPotSize(sunday: boolean): number {
     const basePotSize = this.userPotSize * (sunday ? 2 : 1);
     const potSizeWithCPU = basePotSize + this.bonusPotSize;
     return Math.round(this.camp ? potSizeWithCPU * 1.5 : potSizeWithCPU);

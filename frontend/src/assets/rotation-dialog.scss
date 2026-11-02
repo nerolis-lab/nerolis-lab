@@ -1,0 +1,26 @@
+.rotation-dialog {
+  --rotation-font-size: clamp(0.75rem, 3.4vw, 1rem);
+
+  :deep(.v-card-title) {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    white-space: normal;
+  }
+  :deep(.v-card-text) {
+    padding: 12px 16px;
+  }
+  .rotation-description {
+    font-size: var(--rotation-font-size);
+  }
+  .rotation-field {
+    :deep(.v-field__input),
+    :deep(.v-field-label) {
+      font-size: var(--rotation-font-size);
+    }
+    :deep(.v-field-label--floating) {
+      font-size: calc(var(--rotation-font-size) * 0.75);
+    }
+    :deep(.v-field__input) {
+      min-width: 0;
+    }
+  }
+}

@@ -23,6 +23,8 @@ export interface CalculateTeamRequest {
 
 export interface CalculateIvRequest {
   settings: TeamSettingsDto;
+  referenceMember?: PokemonInstanceIdentity;
+  replacedMemberId?: string;
   members: PokemonInstanceIdentity[];
   variants: PokemonInstanceIdentity[];
 }
@@ -141,6 +143,7 @@ export interface CalculateTeamResponse {
 }
 
 export interface CalculateIvResponse {
+  reference?: MemberProductionBase;
   variants: MemberProductionBase[];
 }
 
