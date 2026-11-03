@@ -1,3 +1,16 @@
+# [2.72.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.7...v2.72.0) (2026-11-02)
+
+
+### Bug Fixes
+
+* **gengar:** update ing% ([8cd45f4](https://github.com/nerolis-lab/nerolis-lab/commit/8cd45f4dd1264c49097e95e6c49022048431f7b7))
+
+
+### Features
+
+* **common:** apply santachu carry size buff to 20 ([b67be60](https://github.com/nerolis-lab/nerolis-lab/commit/b67be605ae0be4a86505f38ccaffd87568d2e9d0))
+* misdreavus ([bb046c0](https://github.com/nerolis-lab/nerolis-lab/commit/bb046c09f19ca9ff27593a0fedb3ae078d9d295e))
+
 ## [2.71.7](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.6...v2.71.7) (2026-10-25)
 
 ## [2.71.6](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.5...v2.71.6) (2026-10-12)

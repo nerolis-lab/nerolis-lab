@@ -330,7 +330,7 @@ export const GENGAR: Pokemon = evolvedPokemon(HAUNTER, {
   name: 'GENGAR',
   pokedexNumber: 94,
   frequency: toSeconds(0, 36, 40),
-  ingredientPercentage: 16.1,
+  ingredientPercentage: 16.6,
   skillPercentage: 2.4,
   carrySize: 18
 });
