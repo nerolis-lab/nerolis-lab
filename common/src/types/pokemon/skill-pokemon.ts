@@ -63,6 +63,7 @@ import {
   ChargeStrengthM,
   ChargeStrengthSRange,
   ChargeStrengthSStockpile,
+  CookingAdvanceSMysticalFire,
   CookingAssistSBulkUp,
   CookingPowerUpS,
   CookingPowerUpSMinus,
@@ -98,7 +99,7 @@ export const PIKACHU_HOLIDAY: Pokemon = createSkillSpecialist({
   skillPercentage: 4.2,
   berry: GREPA,
   genders: BALANCED_GENDER, // unverified for Sleep
-  carrySize: 16,
+  carrySize: 20,
   previousEvolutions: 0,
   remainingEvolutions: 0,
   ingredients: {
@@ -535,6 +536,25 @@ export const SLOWKING: Pokemon = evolvedPokemon(SLOWPOKE, {
   carrySize: 17
 });
 
+export const MISDREAVUS: Pokemon = createSkillSpecialist({
+  name: 'MISDREAVUS',
+  pokedexNumber: 200,
+  frequency: toSeconds(0, 46, 40),
+  ingredientPercentage: 15.0,
+  skillPercentage: 4.7,
+  berry: BLUK,
+  genders: BALANCED_GENDER,
+  carrySize: 13,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: SOFT_POTATO,
+    b: ROUSING_COFFEE,
+    c: SNOOZY_TOMATO
+  },
+  skill: CookingPowerUpS
+});
+
 export const WOBBUFFET: Pokemon = createSkillSpecialist({
   name: 'WOBBUFFET',
   pokedexNumber: 202,
@@ -948,6 +968,16 @@ export const INFERNAPE: Pokemon = evolvedPokemon(MONFERNO, {
   ingredientPercentage: 10.6,
   skillPercentage: 3.3,
   carrySize: 18
+});
+
+export const MISMAGIUS: Pokemon = evolvedPokemon(MISDREAVUS, {
+  name: 'MISMAGIUS',
+  pokedexNumber: 429,
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 14.2,
+  skillPercentage: 3.6,
+  carrySize: 17,
+  skill: CookingAdvanceSMysticalFire
 });
 
 export const BONSLY: Pokemon = preEvolvedPokemon(SUDOWOODO, {
