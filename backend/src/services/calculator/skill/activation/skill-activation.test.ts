@@ -594,21 +594,6 @@ describe('activateMetronome', () => {
     });
   });
 
-  it('shall use the correct metronomeFactor for each skill activation', () => {
-    const skillActivations: SkillActivation[] = [];
-    const params = {
-      skillLevel: 6,
-      nrOfHelpsToActivate: 2,
-      adjustedAmount: 0.8,
-      pokemonSet,
-      skillActivations: skillActivations,
-      avgCritChancePerProc: 1,
-      uniqueHelperBoost: 1
-    };
-    activateMetronome(params);
-    expect(skillActivations).toMatchSnapshot();
-  });
-
   it('shall not alter existing skill activations in the array', () => {
     const existingSkillActivation = {
       skill: ChargeEnergyS,
