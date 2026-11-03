@@ -3,6 +3,7 @@ export * from './berry-zone';
 export * from './charge-energy-s';
 export * from './charge-strength-m';
 export * from './charge-strength-s';
+export * from './cooking-advance-s';
 export * from './cooking-assist-s';
 export * from './cooking-power-up-s';
 export * from './dream-shard-magnet-s';
