@@ -13422,7 +13422,7 @@ exports[`COMPLETE_POKEDEX > shall not change GENGAR unexpectedly 1`] = `
       },
     },
   ],
-  "ingredientPercentage": 16.1,
+  "ingredientPercentage": 16.6,
   "name": "GENGAR",
   "pityProcThreshold": 78,
   "pokedexNumber": 94,
@@ -21016,6 +21016,266 @@ exports[`COMPLETE_POKEDEX > shall not change MINUN unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change MISDREAVUS unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "BLUK",
+    "type": "ghost",
+    "value": 26,
+  },
+  "carrySize": 13,
+  "displayName": "Misdreavus",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "MISMAGIUS",
+  ],
+  "frequency": 2800,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredientPercentage": 15,
+  "name": "MISDREAVUS",
+  "pityProcThreshold": 51,
+  "pokedexNumber": 200,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      880,
+      1251,
+      1726,
+      2383,
+      3290,
+      4546,
+      5843,
+    ],
+    "activations": {
+      "potSize": {
+        "amount": [Function],
+        "unit": "pot size",
+      },
+    },
+    "description": [Function],
+    "frontendComponentName": undefined,
+    "image": "pot",
+    "name": "Cooking Power-Up S",
+    "potSizeAmounts": [
+      7,
+      10,
+      12,
+      17,
+      22,
+      27,
+      31,
+    ],
+  },
+  "skillPercentage": 4.7,
+  "specialty": "skill",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change MISMAGIUS unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "BLUK",
+    "type": "ghost",
+    "value": 26,
+  },
+  "carrySize": 17,
+  "displayName": "Mismagius",
+  "evolvesFrom": "MISDREAVUS",
+  "evolvesInto": [],
+  "frequency": 2400,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 1,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Soft Potato",
+        "name": "Potato",
+        "taxedValue": 45,
+        "value": 124,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Rousing Coffee",
+        "name": "Coffee",
+        "taxedValue": 68.4,
+        "value": 153,
+      },
+    },
+    {
+      "amount": 4,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredientPercentage": 14.2,
+  "name": "MISMAGIUS",
+  "pityProcThreshold": 60,
+  "pokedexNumber": 429,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "shinyLocked": undefined,
+  "skill": {
+    "RP": [
+      1144,
+      1626,
+      2244,
+      3098,
+      4277,
+      5910,
+      7596,
+    ],
+    "activations": {
+      "potSize": {
+        "amount": [Function],
+        "unit": "pot size",
+      },
+      "tastyChance": {
+        "amount": [Function],
+        "unit": "crit chance",
+      },
+    },
+    "baseSkill": {
+      "RP": [
+        0,
+      ],
+      "activations": {},
+      "description": [Function],
+      "frontendComponentName": undefined,
+      "image": "ingredients",
+      "name": "Cooking Advance S",
+    },
+    "description": [Function],
+    "frontendComponentName": undefined,
+    "image": "cookingadvance",
+    "modifierName": "Mystical Fire",
+    "potAmounts": [
+      7,
+      10,
+      12,
+      17,
+      22,
+      27,
+      31,
+    ],
+    "tastyAmounts": [
+      1,
+      2,
+      2,
+      3,
+      3,
+      4,
+      5,
+    ],
+  },
+  "skillPercentage": 3.6,
+  "specialty": "skill",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change MONFERNO unexpectedly 1`] = `
 {
   "berry": {
@@ -23880,7 +24140,7 @@ exports[`COMPLETE_POKEDEX > shall not change PIKACHU_HOLIDAY unexpectedly 1`] = 
     "type": "electric",
     "value": 25,
   },
-  "carrySize": 16,
+  "carrySize": 20,
   "displayName": "Pikachu (Holiday)",
   "evolvesFrom": undefined,
   "evolvesInto": [],
