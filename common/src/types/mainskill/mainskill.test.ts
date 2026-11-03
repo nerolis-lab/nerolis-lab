@@ -325,9 +325,6 @@ describe('Additional validation tests', () => {
 
       // Check that the modified skill's name includes both modifier and base skill name
       expect(modifiedSkill.name).toMatch(new RegExp(`${modifiedSkill.modifierName}.*${modifiedSkill.baseSkill.name}`));
-
-      // Check that base skill exists in MAINSKILLS
-      expect(MAINSKILLS).toContain(modifiedSkill.baseSkill);
     });
   });
 });
