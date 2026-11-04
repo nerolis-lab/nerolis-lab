@@ -1,3 +1,4 @@
+import { ingredientSkillAccess } from './significant-ingredients.js';
 import type { SleepInfo } from '@src/domain/sleep/sleep-info.js';
 import { calculateSleepEnergyRecovery } from '@src/services/calculator/energy/energy-calculator.js';
 import type { CookingState } from '@src/services/simulation-service/team-simulator/cooking-state/cooking-state.js';
@@ -17,7 +18,6 @@ import type {
   BerrySet,
   ExpertModeSettings,
   IngredientIndexToFloatAmount,
-  IngredientIndexToIntAmount,
   IngredientSet,
   MemberProduction,
   MemberProductionBase,
@@ -40,7 +40,6 @@ import {
   calculateNrOfBerriesPerDrop,
   emptyBerryInventoryFloat,
   emptyIngredientInventoryFloat,
-  emptyIngredientInventoryInt,
   flatToIngredientSet,
   hasSpecialty,
   ingredientSetToFloatFlat,
@@ -85,7 +84,8 @@ export class MemberState {
   private voidIngredientsDay: IngredientIndexToFloatAmount = emptyIngredientInventoryFloat();
 
   private berryProductionPerDay: Int16Array;
-  private ingredientProductionPerDay: IngredientIndexToIntAmount[];
+  private ingredientProductionPerDay: IngredientIndexToFloatAmount[];
+  private ingredientMagnetProduction = emptyIngredientInventoryFloat();
   private currentDay = 0;
   private totalDays: number;
 
@@ -171,7 +171,7 @@ export class MemberState {
     // Each iteration is one day
     this.totalDays = iterations;
     this.berryProductionPerDay = new Int16Array(iterations);
-    this.ingredientProductionPerDay = Array.from({ length: iterations }, emptyIngredientInventoryInt);
+    this.ingredientProductionPerDay = Array.from({ length: iterations }, emptyIngredientInventoryFloat);
 
     this.settings = settings;
     this.camp = settings.camp;
@@ -386,7 +386,14 @@ export class MemberState {
     };
   }
 
+  public recordIngredientMagnet(ingredients: IngredientIndexToFloatAmount) {
+    for (let id = 0; id < ingredients.length; id++) this.ingredientMagnetProduction[id] += ingredients[id];
+  }
+
   public addSkillProduce(produce: Produce) {
+    for (const { ingredient, amount } of produce.ingredients) {
+      this.ingredientProductionPerDay[this.currentDay][ING_ID_LOOKUP[ingredient.name]] += amount;
+    }
     this.skillProduce = CarrySizeUtils.addToInventory(this.skillProduce, {
       ...produce,
       berries: produce.berries.map((set) => this.berryZoneState.applyBonus(set))
@@ -700,6 +707,18 @@ export class MemberState {
     if (this.level30IngredientSet) usedIngredients.add(this.level30IngredientSet.ingredient.name);
     if (this.level60IngredientSet) usedIngredients.add(this.level60IngredientSet.ingredient.name);
 
+    const access = ingredientSkillAccess(
+      this.skill,
+      this.otherMembers.map((member) => member.skill)
+    );
+    for (const ingredient of access.ingredients) usedIngredients.add(ingredient.name);
+    const nonSignificantIngredientAverage = access.hasMagnet
+      ? totalSkillProduce.ingredients.reduce(
+          (sum, { ingredient, amount }) => sum + (usedIngredients.has(ingredient.name) ? 0 : amount),
+          0
+        )
+      : undefined;
+
     for (const ingredientName of usedIngredients) {
       const ingredientId = ING_ID_LOOKUP[ingredientName];
       // Extract daily values for this ingredient from the Float32Arrays
@@ -744,6 +763,14 @@ export class MemberState {
         skillProcDistribution,
         berryProductionDistribution,
         ingredientDistributions,
+        ...(access.hasMagnet
+          ? {
+              nonSignificantIngredientAverage,
+              ingredientMagnetProduction: flatToIngredientSet(
+                this.ingredientMagnetProduction.map((amount) => amount / iterations)
+              )
+            }
+          : {}),
         dayPeriod: {
           averageEnergy: this.energyIntervalsDay / fiveMinIntervalsTotalDay,
           averageFrequency: this.frequencyIntervalsDay / fiveMinIntervalsTotalDay,

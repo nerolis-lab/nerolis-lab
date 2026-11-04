@@ -215,10 +215,10 @@ describe('MemberStats.vue - Mobile Viewport', () => {
     vi.resetModules() // Reset the module registry to remove our mock
   })
 
-  it('applies mobile class to SkillDistribution component', () => {
+  it('centers the distribution buttons on mobile', () => {
     const wrapper = mount(MemberStats, { props: { pokemonProduction } })
     const skillDistribution = wrapper.findComponent(SkillDistribution)
     expect(skillDistribution.exists()).toBe(true)
-    expect(skillDistribution.classes()).toContain('mx-auto')
+    expect(skillDistribution.element.parentElement?.classList.contains('justify-center')).toBe(true)
   })
 })

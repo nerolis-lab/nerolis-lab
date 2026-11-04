@@ -1,12 +1,11 @@
+import { sampleIngredientMagnet } from './sample-ingredient-magnet.js';
 import type { SkillEffect } from '@src/services/simulation-service/team-simulator/skill-state/skill-effect.js';
 import type { SkillActivation } from '@src/services/simulation-service/team-simulator/skill-state/skill-state-types.js';
 import type { SkillState } from '@src/services/simulation-service/team-simulator/skill-state/skill-state.js';
 import type { Mainskill } from 'sleepapi-common';
 import {
-  emptyIngredientInventoryFloat,
   flatToIngredientSet,
   ING_ID_LOOKUP,
-  ingredient,
   IngredientMagnetSPlusPlusle,
   IngredientMagnetSPlusToxtricity,
   isPlusOrMinus
@@ -17,9 +16,8 @@ abstract class IngredientMagnetSPlusEffect implements SkillEffect {
   activate(skillState: SkillState): SkillActivation {
     const ingMagnetAmount = skillState.skillAmount(this.skill.activations.solo);
 
-    const flatIngredients = emptyIngredientInventoryFloat().fill(
-      ingMagnetAmount / ingredient.TOTAL_NUMBER_OF_INGREDIENTS
-    );
+    const flatIngredients = sampleIngredientMagnet(ingMagnetAmount, skillState.rng);
+    skillState.memberState.recordIngredientMagnet(flatIngredients);
 
     const bonusAmount =
       skillState.memberState.otherMembers.filter((member) => isPlusOrMinus(member.skill)).length === 0

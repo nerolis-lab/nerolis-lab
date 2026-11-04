@@ -1,9 +1,24 @@
 import { ingredient, type IngredientSet } from 'sleepapi-common'
 import { describe, expect, it } from 'vitest'
-import { getIngredientImageUrl, processIngredientsForDisplay } from './ingredient-display-utils'
+import {
+  getIngredientImageUrl,
+  processIngredientsForDisplay,
+  processSignificantIngredientsForDisplay
+} from './ingredient-display-utils'
 
 describe('ingredient-display-utils', () => {
   describe('processIngredientsForDisplay', () => {
+    it('keeps significant totals including Magnet and groups unequal insignificant amounts', () => {
+      const total = [
+        { ingredient: ingredient.FANCY_APPLE, amount: 9 },
+        { ingredient: ingredient.MOOMOO_MILK, amount: 7 },
+        { ingredient: ingredient.WARMING_GINGER, amount: 2 }
+      ]
+      expect(processSignificantIngredientsForDisplay(total, ['Apple'])).toEqual([
+        { name: 'Apple', amount: 9 },
+        { name: 'magnet', amount: 9 }
+      ])
+    })
     it('processes normal ingredients without grouping', () => {
       const ingredients: IngredientSet[] = [
         { amount: 10, ingredient: ingredient.FANCY_APPLE },

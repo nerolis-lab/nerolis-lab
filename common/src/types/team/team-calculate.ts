@@ -52,6 +52,10 @@ export interface MemberProductionAdvanced {
   skillProcDistribution: Record<number, number>;
   berryProductionDistribution: Record<number, number>;
   ingredientDistributions: { [ingredientName: string]: Record<number, number> };
+  /** Average daily Magnet output outside the significant ingredient list; absent without Magnet access. */
+  nonSignificantIngredientAverage?: number;
+  /** Sampled daily Magnet output, excluding fixed Plus bonuses. */
+  ingredientMagnetProduction?: IngredientSet[];
   dayPeriod: PeriodInfo;
   nightPeriod: PeriodInfo;
   frequencySplit: {
