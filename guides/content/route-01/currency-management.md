@@ -37,7 +37,7 @@ While you may not currently need some of these items, you will in the future. Wh
 ### Recommended Order of F2P Priorities
 
 * E-Zzz Travel Ticket (100 Sleep Points)
-* Poké Biscuits x20 (150 x 20 = 3,000 Sleep Points)
+* Poké Biscuit x20 (150 x 20 = 3,000 Sleep Points)
 
 This will leave you with 1,900 Sleep Points each month, enabling a Main Skill Seed (3,600 Sleep Points) purchase every other month. Purchasing fewer Poké Biscuits will allow for more frequent Main Skill Seed purchases.
 
