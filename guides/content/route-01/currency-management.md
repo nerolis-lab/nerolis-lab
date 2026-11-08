@@ -112,6 +112,8 @@ Probability based on data from @rint_ps (Twitter), translated by Bropenings.
   * Completing both "Bedtime X times" and "Use X candies" (10/21 have only one mission and 10/21 have both) averages to 21.429 Diamonds per week, which is **1,114.308 Diamonds** in 52 weeks.
 
 ::: details Weekly Mission List
+Transcribed from Serebii, cross-referenced with RaenonX.
+
 Unspecified quantities depend on Research Rank.
 |Mission|Reward|Note|
 |:-:|:-:|:-:|
