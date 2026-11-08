@@ -187,7 +187,7 @@ Bundle contents are based on the last iteration of each bundle. The important it
 |(Premium Pass) One of each seed, **highest biscuit value**, requires saving additional diamonds|
 
 > [!NOTE]
-> These bundle recommendations aim to maximize the number of important items you get **through bundles**. If you only want to maximize the number of a particular item, then buying it directly from the General Store is the best option. However, this is not recommended for most players as it is better to get more value from your diamonds.
+> These bundle recommendations aim to maximize the *number* of important items you get **through bundles**. If you only want to maximize the number of a particular item, then buying it directly from the General Store is the best option. However, this is not recommended for most players as it is better to get more value from your diamonds.
 
 ## Dream Shards
 
