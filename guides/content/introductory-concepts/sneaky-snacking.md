@@ -1,8 +1,7 @@
 ---
 title: Sneaky Snacking
-fullTitle: Sneaky Snacking Explained
+fullTitle: Sneaky Snacking
 author: Snackson5, Mawile, Tindo
-order: 20
 ---
 
 Sneaky Snacking occurs when your Pokémon's inventory is full. During Sneaky Snacking, every help is guaranteed to be a berry-only help which is fed directly to Snorlax.
