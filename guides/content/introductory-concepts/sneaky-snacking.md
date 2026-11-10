@@ -33,4 +33,3 @@ Not necessarily.
    - If you are able to use ingredients for cooking strong recipes, doing so will provide more strength than Sneaky Snacking.
    - Berry strength scales with level. At lower levels, berries provide less strength than using whatever ingredients your Berry Specialist finds, even if only for filler. The level at which berries become stronger than filler ingredients varies by species.
    - You may want to save up ingredients that are hard for you to get, in order to unlock new dishes or cook stronger meals later.
-
