@@ -277,7 +277,7 @@ Consider saving **Handy Candy M and L** to use on species whose candy are uncomm
 
 Consider saving **Type Candy M and L** to use on species whose candy are uncommon or rare (e.g. Legendaries, Mythicals, 16 pips, Pseudo-Legendaries, etc.).
 
-## :ezzz E-Zzz Travel Tickets
+## :ezzz: E-Zzz Travel Tickets
 
 E-Zzz Travel Ticket allows you to change sites immediately rather than at the start of each week. It can be used to go to the same map you are currently on but with a new Snorlax.
 
