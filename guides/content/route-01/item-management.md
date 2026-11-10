@@ -286,7 +286,7 @@ This will reset:
   * During event weeks that start with a fixed Snorlax strength (referred to as "big Snorlax"), strength will reset to that value instead
 * Snorlax's preferred meal type
 * Snorlax's non-fixed favorite berries
-*  Uncompleted Snorlax rating-based Weekly Missions.
+*  Uncompleted Snorlax rating-based Weekly Missions
    * Completed but unclaimed missions will not be reset
 
 The two main uses for these tickets are:
