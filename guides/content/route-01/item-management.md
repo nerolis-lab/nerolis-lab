@@ -262,6 +262,7 @@ All evolution items can be purchased for *1,400 Sleep Points* from the Regular E
 |:ovalstone:<br>**Oval Stone**|Used for: :chansey: Chansey|
 |:razorclaw:<br>**Razor Claw**|Used for: :weavile: Weavile|
 |:shinystone:<br>**Shiny Stone**|Used for: :togekiss: Togekiss<br>Can also be acquired by:<br>- Doing sleep research with a team RP of 11,400 or greater|
+|:sunstone:<br>**Sun Stone**|Used for: :whimsicott: Whimsicott|
 |:thunderstone:<br>**Thunder Stone**|Used for: :raichu: Raichu, :jolteon: Jolteon, :magnezone: Magnezone, :vikavolt: Vikavolt<br>Can also be acquired by:<br>- Registering 110 Sleep Styles<br>- Raising 10 Pokémon to level 45|
 |:waterstone:<br>**Water Stone**|Used for: :vaporeon: Vaporeon<br>Can also be acquired by:<br>- Raising 10 Pokémon to level 35|
 
