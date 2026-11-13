@@ -174,7 +174,7 @@ Bundle contents are based on the last iteration of each bundle. The important it
 |:mainseed:x2 :subseed:x2<br>:greatbiscuit:x35 :ultrabiscuit:x11 (160 pips)|
 |**Two of each seed**, requires saving additional diamonds|
 
-|Anniversary Prelude Event Bundle M + Anniversary Bundle L + New Year Bundle Vol. 1 M|
+|Anniversary Prelude Event Bundle L + Anniversary Bundle L + New Year Bundle Vol. 1 M|
 |:-:|
 |8,000 Diamonds<br>(3,000 + 3,000 + 2,000)|
 |:mainseed:x3 :subseed:x1<br>:greatbiscuit:x36 :ultrabiscuit:x6 (138 pips)|
