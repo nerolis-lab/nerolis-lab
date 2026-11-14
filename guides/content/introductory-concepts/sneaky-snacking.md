@@ -1,15 +1,14 @@
 ---
 title: Sneaky Snacking
-fullTitle: Sneaky Snacking Explained
+fullTitle: Sneaky Snacking
 author: Snackson5, Mawile, Tindo
-order: 20
 ---
 
 Sneaky Snacking occurs when your Pokémon's inventory is full. During Sneaky Snacking, every help is guaranteed to be a berry-only help which is fed directly to Snorlax.
 
 ## What is Sneaky Snacking?
 
-When your Pokémon performs a help, it will find either berries or ingredients and put them in its inventory. Every help also has a chance to activate the Pokémon's main skill. When you tap a Pokémon, it will drop its inventory onto the ground and use any stored skill procs. Berry Specialists and Ingredient Specialists can store one skill proc, Skill Specialists can store two.
+To understand what Sneaky Snacking is, we must first have basic understanding of how helps work. When your Pokémon performs a help, it will find either berries or ingredients and put them in its inventory. Every help also has a chance to activate the Pokémon's main skill. When you tap a Pokémon, it will drop its inventory onto the ground and use any stored skill procs. Berry Specialists and Ingredient Specialists can store one skill proc, Skill Specialists can store two.
 
 Each Pokémon's inventory has a certain capacity, called the Carry Limit, and you can see this number on the Pokémon's summary screen. Once your Pokémon has reached its Carry Limit, it stops finding ingredients and checking for skill procs. Instead, every help is guaranteed to be a berry help that is fed directly to Snorlax. **This is called Sneaky Snacking.**
 
