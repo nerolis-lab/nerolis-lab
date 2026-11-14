@@ -14,7 +14,7 @@ export const MAX_STOCKPILED_BERRIES = 999;
 
 // cooking
 export const MIN_POT_SIZE = 21;
-export const MAX_POT_SIZE = 81;
+export const MAX_POT_SIZE = 87;
 export const POT_GROWTH_LOW = 2;
 export const POT_GROWTH_HIGH = 3;
 export const POT_GROWTH_THRESHOLD = 33;
@@ -26,7 +26,7 @@ export const SUNDAY_CRIT_MULTIPLIER = 3;
 export const AVERAGE_WEEKLY_CRIT_MULTIPLIER = 1.171428571;
 
 // island
-export const MAX_ISLAND_BONUS = 85;
+export const MAX_ISLAND_BONUS = 95;
 
 // expert island buffs and nerfs
 export const GGEX_MAIN_FREQUENCY_BUFF = 10; // 10% faster

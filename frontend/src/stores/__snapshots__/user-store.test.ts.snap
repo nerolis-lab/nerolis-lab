@@ -605,7 +605,7 @@ exports[`User Store > should have expected default state 1`] = `
     },
   },
   "name": "Guest",
-  "potSize": 81,
+  "potSize": 87,
   "randomizeNicknames": true,
   "role": "default",
   "supporterSince": null,
