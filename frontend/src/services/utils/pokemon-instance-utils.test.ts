@@ -266,11 +266,17 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
     expect(result.skillLevel).toBe(3)
   })
 
-  it('should update ingredients to match new Pokemon species', () => {
+  it('should carry over an ingredient the new species still offers at that level', () => {
+    const sharedIngredient = RAICHU.ingredient0.find((option) =>
+      PIKACHU.ingredient0.some((pikachuOption) => pikachuOption.ingredient.name === option.ingredient.name)
+    )
+    if (!sharedIngredient) {
+      throw new Error('Expected PIKACHU and RAICHU to share an ingredient0 option for this test to be meaningful')
+    }
     const existingInstance: PokemonInstance = mocks.createMockPokemon({
       pokemon: PIKACHU,
       ingredients: [
-        { level: 0, ingredient: ingredient.FANCY_APPLE, amount: 2 },
+        { level: 0, ingredient: sharedIngredient.ingredient, amount: sharedIngredient.amount },
         { level: 30, ingredient: ingredient.FANCY_APPLE, amount: 5 },
         { level: 60, ingredient: ingredient.FANCY_APPLE, amount: 7 }
       ]
@@ -278,13 +284,22 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
 
     const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(RAICHU, existingInstance)
 
-    // Should have Raichu's ingredients, not Pikachu's
-    expect(result.ingredients).toEqual([
-      { ...RAICHU.ingredient0[0], level: 0 },
-      { ...RAICHU.ingredient30[0], level: 30 },
-      { ...RAICHU.ingredient60[0], level: 60 }
-    ])
-    expect(result.ingredients).not.toEqual(existingInstance.ingredients)
+    expect(result.ingredients[0].ingredient.name).toBe(sharedIngredient.ingredient.name)
+  })
+
+  it('should fall back to the new species default ingredient when it does not offer the previous one', () => {
+    const existingInstance: PokemonInstance = mocks.createMockPokemon({
+      pokemon: PIKACHU,
+      ingredients: [
+        { level: 0, ingredient: { name: 'NotARealIngredient', value: 0, taxedValue: 0, longName: '' }, amount: 1 },
+        { level: 30, ingredient: ingredient.FANCY_APPLE, amount: 5 },
+        { level: 60, ingredient: ingredient.FANCY_APPLE, amount: 7 }
+      ]
+    })
+
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(RAICHU, existingInstance)
+
+    expect(result.ingredients[0]).toEqual({ ...RAICHU.ingredient0[0], level: 0 })
   })
 
   it('should update carry size to match new Pokemon species', () => {
@@ -328,15 +343,26 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
     expect(result.shiny).toBe(true)
   })
 
-  it('should generate new gender for new Pokemon species', () => {
-    const existingInstance: PokemonInstance = mocks.createMockPokemon({
-      gender: 'male'
-    })
+  it('should keep the current gender when the new species allows it', () => {
+    const existingInstance: PokemonInstance = mocks.createMockPokemon({ gender: 'female' })
 
-    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(RAICHU, existingInstance)
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(
+      commonMocks.mockPokemon({ genders: { male: 1, female: 1 } }),
+      existingInstance
+    )
 
-    // Should have a valid gender (either male or female)
-    expect(['male', 'female']).toContain(result.gender)
+    expect(result.gender).toBe('female')
+  })
+
+  it('should roll a new gender when the new species does not allow the current one', () => {
+    const existingInstance: PokemonInstance = mocks.createMockPokemon({ gender: 'female' })
+
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(
+      commonMocks.mockPokemon({ genders: { male: 1, female: 0 } }),
+      existingInstance
+    )
+
+    expect(result.gender).toBe('male')
   })
 
   it('should preserve complex subskills configuration', () => {

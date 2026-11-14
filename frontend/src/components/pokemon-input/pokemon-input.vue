@@ -41,7 +41,9 @@
 
     <v-row no-gutters class="py-0">
       <v-col class="flex-center">
+        <EvolutionControl direction="previous" :pokemon-instance="pokemonInstance" @evolve="updatePokemon" />
         <PokemonButton :pokemon-instance="pokemonInstance" @update-pokemon="updatePokemon" />
+        <EvolutionControl direction="next" :pokemon-instance="pokemonInstance" @evolve="updatePokemon" />
       </v-col>
     </v-row>
 
@@ -150,6 +152,7 @@
 
 <script lang="ts">
 import CarrySizeDisplay from '@/components/pokemon-input/carry-size-display.vue'
+import EvolutionControl from '@/components/pokemon-input/evolution-control.vue'
 import GenderButton from '@/components/pokemon-input/gender-button.vue'
 import IngredientButton from '@/components/pokemon-input/ingredient-button.vue'
 import LevelButton from '@/components/pokemon-input/level-button.vue'
@@ -182,6 +185,7 @@ export default defineComponent({
     PokemonName,
     LevelButton,
     CarrySizeDisplay,
+    EvolutionControl,
     IngredientButton,
     MainskillButton,
     NatureButton,
