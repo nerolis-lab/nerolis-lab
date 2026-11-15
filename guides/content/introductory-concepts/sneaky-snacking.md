@@ -27,8 +27,8 @@ For Berry Specialists, this **can be useful**. Instead of sometimes finding berr
 Not necessarily.
 
 1. **You may want the skill procs.**
-   - Strength-producing skills (such as Charge Strength and Extra Helpful) may produce more strength than you gain through Sneaky Snacking.
-   - Other skills may be situationally valuable to your team, such as cooking or support skills, to cook stronger meals, maintain energy, or gather resources.
+   - Strength-producing main skills (such as Charge Strength and Extra Helpful) may produce more strength than you gain through Sneaky Snacking.
+   - Other main skills may be situationally valuable to your team, such as cooking or support skills, to cook stronger meals, maintain energy, or gather resources.
 2. **You may want the ingredients it finds.**
    - If you are able to use ingredients for cooking strong recipes, doing so will provide more strength than Sneaky Snacking.
    - Berry strength scales with level. At lower levels, berries provide less strength than using whatever ingredients your Berry Specialist finds, even if only for filler. The level at which berries become stronger than filler ingredients varies by species.
