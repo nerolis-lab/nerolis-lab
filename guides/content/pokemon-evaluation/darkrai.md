@@ -2,6 +2,7 @@
 title: Darkrai
 fullTitle: Darkrai
 author: Example, Contributor
+order: 20
 ---
 
 Darkrai is a Mythical Pokémon that functions best when built as a Strength Pokémon.
