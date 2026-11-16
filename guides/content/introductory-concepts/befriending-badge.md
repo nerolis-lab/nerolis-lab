@@ -12,7 +12,8 @@ Each time you catch a Pokémon, your Friendship Level (FL) for that Pokémon spe
 
 You can see your FL progress and earned badges for all registered Pokémon species in your Sleep Style Dex.
 
-![Sleep Style Tab](./images/sleep-style-tabs.jpg)
+<img src="./images/sleep-style-tabs.jpg" alt="Sleep Style Tab" width="400" />
+
 ## Badge Bonuses
 
 Bonuses can be divided into three groups.
