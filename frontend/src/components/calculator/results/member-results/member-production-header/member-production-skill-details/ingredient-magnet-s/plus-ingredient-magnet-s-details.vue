@@ -131,8 +131,7 @@ export default defineComponent({
         .filter((ing) => ing.ingredient.name !== this.memberWithProduction.member.ingredients[0].ingredient.name)
         .map((ingSet) => ingSet.amount)
       const totalIgnoringA = amountsIgnoringA.reduce((sum, amount) => sum + amount, 0)
-      const averageAmount = totalIgnoringA / amountsIgnoringA.length
-      return averageAmount
+      return amountsIgnoringA.length ? totalIgnoringA / amountsIgnoringA.length : 0
     },
     magnetIngCountTotal() {
       const amount = this.averageMagnetAmount * ingredient.TOTAL_NUMBER_OF_INGREDIENTS

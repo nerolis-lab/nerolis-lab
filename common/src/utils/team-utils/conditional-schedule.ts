@@ -1,0 +1,95 @@
+import type { Berry } from '../../types/berry/berry';
+import { capitalize } from '../string-utils/string-utils';
+import { BerryZonePsystrike } from '../../types/mainskill';
+import type { TeamScheduleShift, TeamScheduleType } from '../../types/team/team';
+
+export type ConditionalScheduleType = Exclude<TeamScheduleType, 'time'>;
+export type BonusScheduleType = Exclude<ConditionalScheduleType, 'ingredients'>;
+
+interface ConditionalScheduleDefinition {
+  title: string;
+  description: string | ((berry?: Berry) => string);
+  targetLabel: string;
+  targetField: 'tastyChanceTarget' | 'potSizeTarget' | 'berryZoneTarget';
+  defaultTarget: number;
+  maximumTarget?: number;
+  inputmode: 'decimal' | 'numeric';
+  requiresCooking: boolean;
+  validateTarget: (target: number) => string;
+}
+
+/** Type-specific rules for the two-member, accumulate-then-return rotation policy.
+ * Keep persisted target keys here so existing schedules do not need a migration.
+ * Backend bonus readers are separately exhaustive over BonusScheduleType.
+ */
+export const conditionalScheduleDefinitions: Record<BonusScheduleType, ConditionalScheduleDefinition> = {
+  'berry-zone': {
+    title: 'Berry zone',
+    description: (berry) =>
+      `Rotate after the ${berry ? capitalize(berry.type) + ' ' : ''}berry strength bonus reaches the target. The zone lasts until moving sites.`,
+    targetLabel: 'Bonus %',
+    targetField: 'berryZoneTarget',
+    defaultTarget: BerryZonePsystrike.maximumBonus,
+    maximumTarget: BerryZonePsystrike.maximumBonus,
+    inputmode: 'decimal',
+    requiresCooking: false,
+    validateTarget: (target) => (target > BerryZonePsystrike.maximumBonus ? 'Enter a bonus of 24% or less.' : '')
+  },
+  'tasty-chance': {
+    title: 'Extra tasty chance',
+    description: 'Rotate after accumulated Extra Tasty chance reaches the target.',
+    targetLabel: 'Extra Tasty chance %',
+    targetField: 'tastyChanceTarget',
+    defaultTarget: 30,
+    maximumTarget: 70,
+    inputmode: 'decimal',
+    requiresCooking: true,
+    validateTarget: (target) => (target > 70 ? 'Enter a chance of 70% or less.' : '')
+  },
+  'pot-size': {
+    title: 'Pot size',
+    description: 'Rotate after cooking pot size reaches the target.',
+    targetLabel: 'Pot size',
+    targetField: 'potSizeTarget',
+    defaultTarget: 1,
+    inputmode: 'numeric',
+    requiresCooking: true,
+    validateTarget: (target) => (Number.isSafeInteger(target) ? '' : 'Enter a whole number for pot size.')
+  }
+};
+
+export function isConditionalSchedule(type: TeamScheduleType | undefined): type is ConditionalScheduleType {
+  return type === 'ingredients' || (type !== undefined && Object.hasOwn(conditionalScheduleDefinitions, type));
+}
+
+export function getConditionalScheduleDefinition(type: TeamScheduleType | undefined) {
+  return type !== 'ingredients' && isConditionalSchedule(type) ? conditionalScheduleDefinitions[type] : undefined;
+}
+
+export function getScheduleTarget(shift: TeamScheduleShift): number | undefined {
+  const definition = getConditionalScheduleDefinition(shift.type);
+  return definition ? shift[definition.targetField] : undefined;
+}
+
+export function withScheduleTarget(
+  shift: TeamScheduleShift,
+  type: TeamScheduleType,
+  target?: number
+): TeamScheduleShift {
+  const next = { ...shift, type };
+  if (type !== 'berry-zone' || target === undefined) delete next.berryZoneBerry;
+  if (type !== 'ingredients') {
+    delete next.ingredientThresholds;
+  }
+  for (const definition of Object.values(conditionalScheduleDefinitions)) delete next[definition.targetField];
+  const definition = getConditionalScheduleDefinition(type);
+  if (definition && target !== undefined) next[definition.targetField] = target;
+  return next;
+}
+
+export function validateScheduleTarget(type: TeamScheduleType, target: number): string {
+  const definition = getConditionalScheduleDefinition(type);
+  if (!definition) return '';
+  if (!Number.isFinite(target) || target < 1) return 'Enter a number of at least 1.';
+  return definition.validateTarget(target);
+}

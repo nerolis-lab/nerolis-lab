@@ -3,7 +3,7 @@ import { timeWindowFactor } from '@/types/time/time-window'
 import { mocks } from '@/vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import { flushPromises, mount } from '@vue/test-utils'
-import { MathUtils, VAPOREON } from 'sleepapi-common'
+import { MathUtils, VAPOREON, VENUSAUR, DELIBIRD, PLUSLE, type MemberSkillValue } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 const mockMember = mocks.createMockMemberWithProduction({
@@ -28,6 +28,31 @@ describe('MemberProductionSkill', () => {
       wrapper.unmount()
     }
   })
+
+  it.each([VENUSAUR, DELIBIRD, PLUSLE])(
+    'shows zero ingredient totals for $name without a skill trigger',
+    async (pokemon) => {
+      const member = mocks.createMockPokemon({ pokemon })
+      await wrapper.setProps({
+        memberWithProduction: mocks.createMockMemberWithProduction({
+          member,
+          production: mocks.createMockMemberProduction(
+            {
+              skillProcs: 0,
+              skillValue: {} as MemberSkillValue,
+              produceFromSkill: { berries: [], ingredients: [] }
+            },
+            member
+          )
+        })
+      })
+      await flushPromises()
+      await vi.dynamicImportSettled()
+      expect(wrapper.text()).toContain('0 of each ing')
+      expect(wrapper.text()).toContain(pokemon === PLUSLE ? '0 random' : '0 total')
+      expect(wrapper.text()).not.toContain('NaN')
+    }
+  )
 
   it('renders correctly with the provided member data', () => {
     expect(wrapper.exists()).toBe(true)
