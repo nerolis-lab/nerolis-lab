@@ -1,3 +1,10 @@
+# [2.74.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.73.0...v2.74.0) (2026-11-16)
+
+
+### Features
+
+* add evolve and devolve buttons to pokemon input ([578dbd9](https://github.com/nerolis-lab/nerolis-lab/commit/578dbd99d4126bc7bb84268255f78437d9d4edf7))
+
 # [2.73.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.72.1...v2.73.0) (2026-11-16)
 
 
