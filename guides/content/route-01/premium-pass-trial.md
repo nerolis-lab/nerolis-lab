@@ -12,13 +12,14 @@ All players receive a free 14-day no-cost trial for Premium Pass. With proper pl
 Premium Pass is a monthly subscription service.
 
 Its benefits include:
-* Upgrading your daily Bonus Biscuit (3 pip) to a Premium Bonus Biscuit (4 pip)
-* Additional 100 Sleep Points after your first sleep session each day
-* Monthly gift of 1,000 Sleep Points and a Good-Camp Ticket
-* Access to the Premium Exchange alongside the Regular Exchange
-  * Contains some items not available in the Regular Exchange (notably Sub Skill Seed and Great Biscuits) and others that are discounted (notably Main Skill Seed and Poké Biscuits)
-* Full Sleep Data records instead of only the last 30 days
-* A diary to write notes
+
+- Upgrading your daily Bonus Biscuit (3 pip) to a Premium Bonus Biscuit (4 pip)
+- Additional 100 Sleep Points after your first sleep session each day
+- Monthly gift of 1,000 Sleep Points and a Good-Camp Ticket
+- Access to the Premium Exchange alongside the Regular Exchange
+  - Contains some items not available in the Regular Exchange (notably Sub Skill Seed and Great Biscuits) and others that are discounted (notably Main Skill Seed and Poké Biscuits)
+- Full Sleep Data records instead of only the last 30 days
+- A diary to write notes
 
 After 3 uninterrupted months of active Premium Pass, Handy Candy L x1, Sub Skill Seed x1, and Dream Cluster M x1 are given as Loyalty Rewards.
 
@@ -35,11 +36,12 @@ No matter when you use your trial, the benefits you receive will be the same. Ho
 > If you plan on subscribing to Premium Pass for 1 month, the same principles can be applied to your timing and savings.
 
 The items to save up for are:
-* Poké Biscuit x10 (100 x 10 = 1,000 Sleep Points)
-* Great Biscuit x5 (400 x 5 = 2,000 Sleep Points)
-* Sub Skill Seed (1,400 Sleep Points)
-* Main Skill Seed (1,800 Sleep Points)
-* (Optional) Handy Candy M x3 (500 x 3 = 1,500 Sleep Points)
+
+- Poké Biscuit x10 (100 x 10 = 1,000 Sleep Points)
+- Great Biscuit x5 (400 x 5 = 2,000 Sleep Points)
+- Sub Skill Seed (1,400 Sleep Points)
+- Main Skill Seed (1,800 Sleep Points)
+- (Optional) Handy Candy M x3 (500 x 3 = 1,500 Sleep Points)
 
 This is 6,200 (+1,500 optional) Sleep Points total for one stock, meaning you need **12,400 (+3,000 optional) Sleep Points** to buy it twice.
 
