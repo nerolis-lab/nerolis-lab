@@ -11,7 +11,7 @@ Darkrai is a Mythical Pok√©mon that functions best when built as a Strength Pok√
 
 When you first get Darkrai, it will only have Bad Dreams (Charge Strength M) as its main skill, Sausage as its first ingredient, and Bashful as its nature.
 
-![Base Darkrai](./images/base-darkrai.jpg)
+<img src="./images/base-darkrai.jpg" alt="Base Darkrai" width="400" />
 
 Eureka Seed (Darkrai) allows you to choose either an ingredient slot or a sub skill slot to roll. You will be given the option to switch to a random ingredient out of a pool or a random sub skill in that slot, respectively. Sub skill rarity is ignored, so all sub skills have an equal chance of being rolled. Choosing to stay with your current roll rather than switch to the new one gives you 40 Darkrai candy as compensation.
 
