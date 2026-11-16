@@ -2,6 +2,7 @@
 title: Mew
 fullTitle: Mew
 author: Example, Contributor
+order: 10
 ---
 
 Mew is a Mythical Pokémon that can be built for many different roles, though it functions best when built for strength or as a cooking supplement.
