@@ -39,20 +39,20 @@ Silver Badge unlocks a special profile icon that is very similar to the Pokémon
 
 Gold Badge unlocks a gold frame with a badge for the Pokémon's Silver Badge icon.
 
-|Normal Icon/Frame|Silver Badge Icon|Gold Badge Frame|
-|:-:|:-:|:-:|
-|![Spheal Icon](./images/spheal-pfp.png)|![Spheal Silver Badge Icon](./images/spheal-pfp-silver.png)|![Spheal Gold Badge Icon](./images/spheal-pfp-gold.png)|
+|            Normal Icon/Frame            |                      Silver Badge Icon                      |                    Gold Badge Frame                     |
+| :-------------------------------------: | :---------------------------------------------------------: | :-----------------------------------------------------: |
+| ![Spheal Icon](./images/spheal-pfp.png) | ![Spheal Silver Badge Icon](./images/spheal-pfp-silver.png) | ![Spheal Gold Badge Icon](./images/spheal-pfp-gold.png) |
 
 ## FL Milestones
 
 To account for the differences in difficulty of catching multiple of a Pokémon due to varying pip costs, the FL milestones for badges are not the same for all Pokémon. Instead, there are four groups and each have their own set of milestone.
 
-|Pip Cost|Bronze|Silver|Gold|
-|:-:|:-:|:-:|:-:|
-|5-7|10|40|100|
-|10-12|10|30|60|
-|15-16|10|25|50|
-|18+|10|20|40|
+| Pip Cost | Bronze | Silver | Gold |
+| :------: | :----: | :----: | :--: |
+|   5-7    |   10   |   40   | 100  |
+|  10-12   |   10   |   30   |  60  |
+|  15-16   |   10   |   25   |  50  |
+|   18+    |   10   |   20   |  40  |
 
 > [!NOTE]
 > All Pokémon start with FL1, meaning their first catch takes them to FL2. Badge effects are applied to the Pokémon that reaches the threshold, not the one after that. For example, if FL10 is the milestone, then the 9th catch will reach FL10 and have a guaranteed gold sub skill in its first sub skill slot (lv. 10).
@@ -69,9 +69,9 @@ BFS is practically mandatory on Berry Specialists. Guaranteed gold in the first 
 
 HB by itself is not considered as important as BFS. While it is possible to stack multiple speed stats and match the production boost provided BFS, BFS alone is rarely enough and speed stacking cannot go further than that. BFS HB, however, is a highly sought-after roll, especially as you progress in the game and can afford longer hunts.
 
-* Bronze Badge is considered a massive boost to Berry Specialist hunting as BFS becomes far more likely.
-* Silver Badge is another large boost as it further increases the likelihood of getting BFS and also makes BFS HB easier to hunt. It comes with a trade-off though, decreasing the likelihood of rolling BFS with non-HB speed sub skills and making it impossible to get BFS with both of the non-HB speed sub skills in the first three slots. This trade-off is generally considered to be worthwhile and it is recommended to leave both guaranteed gold sub skills on.
-* Gold Badge takes the Silver Badge improvement a step further, making both BFS and BFS HB much more common. It also takes the trade-off further, leaving no space for non-HB speed sub skills in the first three slots. Unless you are unsatisfied with BFS HB alone, the trade-off is still worthwhile as rolling BFS HB has more than doubled in likelihood. So it is recommended to leave all guaranteed gold sub skills on.
+- Bronze Badge is considered a massive boost to Berry Specialist hunting as BFS becomes far more likely.
+- Silver Badge is another large boost as it further increases the likelihood of getting BFS and also makes BFS HB easier to hunt. It comes with a trade-off though, decreasing the likelihood of rolling BFS with non-HB speed sub skills and making it impossible to get BFS with both of the non-HB speed sub skills in the first three slots. This trade-off is generally considered to be worthwhile and it is recommended to leave both guaranteed gold sub skills on.
+- Gold Badge takes the Silver Badge improvement a step further, making both BFS and BFS HB much more common. It also takes the trade-off further, leaving no space for non-HB speed sub skills in the first three slots. Unless you are unsatisfied with BFS HB alone, the trade-off is still worthwhile as rolling BFS HB has more than doubled in likelihood. So it is recommended to leave all guaranteed gold sub skills on.
 
 > [!IMPORTANT] Further reading
 > Check out [Berry Specialists > Overview]() to learn why BFS is such an important sub skill for Berry Specialists.
@@ -82,9 +82,9 @@ BFS does not benefit Ingredient Specialists in their primary function, ingredien
 
 HB is good in the sense that it is a generally powerful sub skill and speed is a desired stat. Its benefit to ingredient production is less than Helping Speed S, but the benefit to the team does generally outweigh that.
 
-* Bronze Badge increases the likelihood of getting a good HB roll but decreases the overall likelihood of getting a usable roll as there are only two slots available for rolling an Ingredient Finder sub skill. Ingredient Specialists are more difficult to hunt than other specialties because they need to get the right ingredient list on top of usable sub skills. Because of this, opinions on the value of one guaranteed gold sub skill are mixed, with many people being more interested in getting something usable than getting something great, like a good HB roll.
-* Silver Badge's only real benefit is adding the ability to turn off the first guaranteed gold sub skill if you would rather focus on getting a usable roll than an HB roll. The second guaranteed gold sub skill has no use outside of hunting BFS HB on every Pokémon, which is a very late game optimization and not recommended before that, if at all.
-* Gold Badge provides no extra benefit and its guaranteed gold sub skill should be turned off.
+- Bronze Badge increases the likelihood of getting a good HB roll but decreases the overall likelihood of getting a usable roll as there are only two slots available for rolling an Ingredient Finder sub skill. Ingredient Specialists are more difficult to hunt than other specialties because they need to get the right ingredient list on top of usable sub skills. Because of this, opinions on the value of one guaranteed gold sub skill are mixed, with many people being more interested in getting something usable than getting something great, like a good HB roll.
+- Silver Badge's only real benefit is adding the ability to turn off the first guaranteed gold sub skill if you would rather focus on getting a usable roll than an HB roll. The second guaranteed gold sub skill has no use outside of hunting BFS HB on every Pokémon, which is a very late game optimization and not recommended before that, if at all.
+- Gold Badge provides no extra benefit and its guaranteed gold sub skill should be turned off.
 
 > [!IMPORTANT] Further reading
 > Check out [BFS on Non-Strength Pokémon]() to learn why BFS is not as detrimental despite filling inventory faster.
@@ -95,9 +95,9 @@ BFS does not benefit Support Skill Specialists in their primary function, skill 
 
 HB is good in the sense that it is a generally powerful sub skill and speed is a desired stat. Its benefit to skill procs is less than Helping Speed S, but the benefit to the team does generally outweigh that. Skill Specialists that stay on the team for a long period of time, most notably healers, especially benefit from HB.
 
-* Bronze Badge increases the likelihood of getting a good HB roll but decreases the overall likelihood of getting a usable roll as there are only two slots available for rolling a Skill Trigger sub skill. How much this matters depends on how high of a roll a particular Skill Specialist needs to have a satisfactory performance and how much time they spend on the team. Those that do not need a very high roll are not as affected by the trade-off. Those that stay on the team for a long time might prefer the increased HB chance. Overall, this trade-off is, at worst, neutral but more often positive.
-* Silver Badge's only real benefit is adding the ability to turn off the first guaranteed gold sub skill if you would rather focus on getting a usable roll than an HB roll. The second guaranteed gold sub skill has no use outside of hunting BFS HB on every Pokémon, which is a very late game optimization and not recommended before that, if at all.
-* Gold Badge provides no extra benefit and its guaranteed gold sub skill should be turned off.
+- Bronze Badge increases the likelihood of getting a good HB roll but decreases the overall likelihood of getting a usable roll as there are only two slots available for rolling a Skill Trigger sub skill. How much this matters depends on how high of a roll a particular Skill Specialist needs to have a satisfactory performance and how much time they spend on the team. Those that do not need a very high roll are not as affected by the trade-off. Those that stay on the team for a long time might prefer the increased HB chance. Overall, this trade-off is, at worst, neutral but more often positive.
+- Silver Badge's only real benefit is adding the ability to turn off the first guaranteed gold sub skill if you would rather focus on getting a usable roll than an HB roll. The second guaranteed gold sub skill has no use outside of hunting BFS HB on every Pokémon, which is a very late game optimization and not recommended before that, if at all.
+- Gold Badge provides no extra benefit and its guaranteed gold sub skill should be turned off.
 
 > [!IMPORTANT] Further reading
 > Check out [BFS on Non-Strength Pokémon]() to learn why BFS is not as detrimental despite filling inventory faster.
