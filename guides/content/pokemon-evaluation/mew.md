@@ -11,7 +11,7 @@ Mew is a Mythical Pokémon that can be built for many different roles, though it
 
 When you first get Mew, it will have Versatile (Metronome) as its main skill, Egg and Herb as its first two ingredients, Skill Level Up M as its only sub skill, and Quirky as its nature.
 
-![Base Mew](./images/base-mew.jpg)
+<img src="./images/base-mew.jpg" alt="Base Mew" width="400" />
 
 Eureka Seed (Mew) allows you to choose either the main skill, an ingredient slot or a sub skill slot to roll.
 
