@@ -10,7 +10,7 @@
     "lint-fix": "npm run eslint-fix && npm run prettier-fix",
     "eslint-check": "eslint .",
     "eslint-fix": "npm run eslint-check -- --fix",
-    "prettier-check": "prettier --check .",
+    "prettier-check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore --ignore-path .prettierignore-check",
     "prettier-fix": "prettier --write .",
     "commitlint": "commitlint",
     "browser-tools": "concurrently \"npx @agentdeskai/browser-tools-server@1.2.0\" \"npx @agentdeskai/browser-tools-mcp@latest\""

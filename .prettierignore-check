@@ -1,0 +1,2 @@
+# Excluded from prettier-check only (not prettier-fix) so non-technical GitHub-web-UI edits aren't blocked on formatting.
+guides/content/**/*.md
