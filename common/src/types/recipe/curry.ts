@@ -14,6 +14,7 @@ import {
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
+  SNACKABLE_NUTS,
   SNOOZY_TOMATO,
   SOFT_POTATO,
   SOOTHING_CACAO,
@@ -293,6 +294,17 @@ export const BOUNCE_CURRY_UDON = createCurry({
   bonus: 78
 });
 
+export const SEED_BOMB_NAAN_CURRY = createCurry({
+  name: 'SEED_BOMB_NAAN_CURRY',
+  displayName: '"Seed Bomb" Naan and Curry',
+  ingredients: [
+    { amount: 15, ingredient: SNACKABLE_NUTS },
+    { amount: 12, ingredient: PLUMP_PUMPKIN },
+    { amount: 12, ingredient: GREENGRASS_CORN }
+  ],
+  bonus: 25
+});
+
 export const CURRIES: Recipe[] = [
   FANCY_APPLE_CURRY,
   SIMPLE_CHOWDER,
@@ -318,7 +330,8 @@ export const CURRIES: Recipe[] = [
   ROLE_PLAY_PUMPKABOO_STEW,
   OVERGROW_AVOCADO_GRATIN,
   GREENGRASS_CURRY_BUN,
-  BOUNCE_CURRY_UDON
+  BOUNCE_CURRY_UDON,
+  SEED_BOMB_NAAN_CURRY
 ];
 
 export const MIXED_CURRY_FLAT: RecipeFlat = recipesToFlat(MIXED_CURRY);

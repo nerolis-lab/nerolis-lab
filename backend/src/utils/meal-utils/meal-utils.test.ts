@@ -90,6 +90,7 @@ describe('getMealsForFilter', () => {
         "LUSCIOUS_AVOCADO_SALAD",
         "BULLDOZE_GUACAMOLE_AND_CHIPS",
         "SCALD_CHUNKY_SALAD",
+        "GRASS_KNOT_SALAD_WRAP",
         "HUGE_POWER_SOY_DONUTS",
         "EXPLOSION_POPCORN",
         "EARLY_BIRD_COFFEE_JELLY",
@@ -102,6 +103,7 @@ describe('getMealsForFilter', () => {
         "HONEY_GATHER_CHOCOLATE_WAFFLES",
         "SCARY_FACE_PANCAKES",
         "LEAF_TORNADO_SMOOTHIE",
+        "SLOWPOKE_TAIL_ROLL_CAKE",
       ]
     `);
   });
@@ -134,6 +136,7 @@ describe('getMealsForFilter', () => {
         "NINJA_CURRY",
         "GRILLED_TAIL_CURRY",
         "DREAM_EATER_BUTTER_CURRY",
+        "SEED_BOMB_NAAN_CURRY",
         "FANCY_APPLE_SALAD",
         "BEAN_HAM_SALAD",
         "SNOOZY_TOMATO_SALAD",
