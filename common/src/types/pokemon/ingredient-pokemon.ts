@@ -40,6 +40,7 @@ import {
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
+  SNACKABLE_NUTS,
   SNOOZY_TOMATO,
   SOFT_POTATO,
   SOOTHING_CACAO,
@@ -815,6 +816,34 @@ export const ABOMASNOW: Pokemon = evolvedPokemon(SNOVER, {
   ingredientPercentage: 25.0,
   skillPercentage: 4.4,
   carrySize: 21
+});
+
+export const COTTONEE: Pokemon = createIngredientSpecialist({
+  name: 'COTTONEE',
+  pokedexNumber: 546,
+  frequency: toSeconds(1, 16, 40),
+  ingredientPercentage: 20.0,
+  skillPercentage: 3.5,
+  berry: PECHA,
+  genders: BALANCED_GENDER,
+  carrySize: 10,
+  previousEvolutions: 0,
+  remainingEvolutions: 1,
+  ingredients: {
+    a: SNACKABLE_NUTS,
+    b: GLOSSY_AVOCADO,
+    c: SNOOZY_TOMATO
+  },
+  skill: ChargeEnergyS
+});
+
+export const WHIMSICOTT: Pokemon = evolvedPokemon(COTTONEE, {
+  name: 'WHIMSICOTT',
+  pokedexNumber: 547,
+  frequency: toSeconds(0, 40, 0),
+  ingredientPercentage: 19.9,
+  skillPercentage: 3.8,
+  carrySize: 17
 });
 
 export const FOONGUS: Pokemon = createIngredientSpecialist({
