@@ -2,7 +2,6 @@
 title: Mythical Pokémon
 fullTitle: Mythical Pokémon (All Specialists)
 author: Example, Contributor
-index: 40
 ---
 
 Mythical Pokémon have the benefits of all specialties. You can only catch one of each species, so they have unique mechanics for customizations.
