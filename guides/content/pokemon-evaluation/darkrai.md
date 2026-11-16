@@ -16,16 +16,18 @@ When you first get Darkrai, it will only have Bad Dreams (Charge Strength M) as 
 Eureka Seed (Darkrai) allows you to choose either an ingredient slot or a sub skill slot to roll. You will be given the option to switch to a random ingredient out of a pool or a random sub skill in that slot, respectively. Sub skill rarity is ignored, so all sub skills have an equal chance of being rolled. Choosing to stay with your current roll rather than switch to the new one gives you 40 Darkrai candy as compensation.
 
 :::details Ingredient Pool and Quantities<br>:apple: :milk: :soybean: :honey: :sausage: :herb: :corn::coffee:
-|Ingredient|Lv. 1|Lv. 30|Lv. 60|
-|:-:|:-:|:-:|:-:|
-|:apple:<br>Fancy Apple|x2|x5|x7|
-|:milk:<br>Moomoo Milk|x2|x4|x6|
-|:soybean:<br>Greengrass Soybeans|x2|x4|x6|
-|:honey:<br>Honey|x2|x4|x6|
-|:sausage:<br>Bean Sausage|x2|x4|x6|
-|:herb:<br>Fiery Herb|x2|x3|x5|
-|:corn:<br>Greengrass Corn|x2|x3|x4|
-|:coffee:<br>Rousing Coffee|x2|x3|x4|
+
+|            Ingredient            | Lv. 1 | Lv. 30 | Lv. 60 |
+| :------------------------------: | :---: | :----: | :----: |
+|      :apple:<br>Fancy Apple      |  x2   |   x5   |   x7   |
+|      :milk:<br>Moomoo Milk       |  x2   |   x4   |   x6   |
+| :soybean:<br>Greengrass Soybeans |  x2   |   x4   |   x6   |
+|         :honey:<br>Honey         |  x2   |   x4   |   x6   |
+|    :sausage:<br>Bean Sausage     |  x2   |   x4   |   x6   |
+|       :herb:<br>Fiery Herb       |  x2   |   x3   |   x5   |
+|    :corn:<br>Greengrass Corn     |  x2   |   x3   |   x4   |
+|    :coffee:<br>Rousing Coffee    |  x2   |   x3   |   x4   |
+
 :::
 
 <SubjectiveInfoBanner />
@@ -54,12 +56,14 @@ Additionally, it is not worth spending Main Skill Seeds on Darkrai when using it
 ## How should I use Eureka Seeds?
 
 These steps prioritize getting Darkrai online by lv. 50 over making it perfect at lv. 70.
+
 1. Roll each of the first 3 sub skill slots (lv. 10, 25, 50) once.
 2. Reroll each of these sub skill slots until you get any of **Berry Finding S**, **Helping Bonus**, **Helping Speed M**, or **Skill Trigger M**.
-   * If you roll the **S** version of an **M** sub skill, keep it. A Sub Skill Seed is cheaper than a Eureka Seed (for Premium Pass) and it would likely take multiple Eureka Seeds to roll the upgraded **M** versions in its place. However, do not Sub Skil Seed it until you have finished rolling the other slots as you may roll the **M** version in one of them.
+   - If you roll the **S** version of an **M** sub skill, keep it. A Sub Skill Seed is cheaper than a Eureka Seed (for Premium Pass) and it would likely take multiple Eureka Seeds to roll the upgraded **M** versions in its place. However, do not Sub Skil Seed it until you have finished rolling the other slots as you may roll the **M** version in one of them.
 3. Roll each of the empty ingredient slots once.
 4. Reroll each ingredient slot until you have a list that works well for you.
 5. Roll and reroll the 4th sub skill slot (lv. 70) until you get one of the above sub skills.
+
 If you wish to aim for a perfect build by lv. 70, potentially taking longer to be usable at lv. 50, roll and reroll the 4th sub skill slot at the same time as the first 3 slots. Keep in mind that taking Darkrai to lv. 70 takes over twice as much EXP as it does for normal Pokémon.
 
 > [!NOTE]
