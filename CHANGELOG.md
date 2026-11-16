@@ -1,3 +1,18 @@
+# [2.74.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.73.0...v2.74.0) (2026-11-16)
+
+
+### Features
+
+* add evolve and devolve buttons to pokemon input ([578dbd9](https://github.com/nerolis-lab/nerolis-lab/commit/578dbd99d4126bc7bb84268255f78437d9d4edf7))
+
+# [2.73.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.72.1...v2.73.0) (2026-11-16)
+
+
+### Features
+
+* add cottonee and whimsicott ([8f030dc](https://github.com/nerolis-lab/nerolis-lab/commit/8f030dc49a3465844723b75d69e9e98a5f0a2035))
+* **recipe:** add Snackable Nuts ingredient and three new recipes ([25d2d28](https://github.com/nerolis-lab/nerolis-lab/commit/25d2d28108df6ce5f79950f64b74f5d4b09ef5d0))
+
 ## [2.72.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.72.0...v2.72.1) (2026-11-14)
 
 # [2.72.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.71.7...v2.72.0) (2026-11-02)
