@@ -93,7 +93,7 @@ Both are good options, you can even do a mix if you want.
 
 ## Checking Your Pokémon
 
-This section will provide an overview of what you want when rerolling, but there is some nuance that is not covered here and it is better to let experienced players check your Pokémon for you. It is recommended that you join the [r/PokémonSleep Discord server](https://discord.gg/S836eMxgzY) and send your Pokémon in **#route-01-questions-and-answers** to have them checked. Screenshot them according to the pinned guide in that channel to ensure all important information is included. Be sure to mention that you are rerolling and the standards given below are what you need. Ideally wait for someone with a **Professor Neroli's Aide** role to check for you.
+This section will provide an overview of what you want when rerolling, but there is some nuance that is not covered here and it is better to let experienced players check your Pokémon for you. It is recommended that you join the [r/PokémonSleep Discord server](https://discord.gg/S836eMxgzY) and send your Pokémon in **#route-01-questions-and-answers** to have them checked. Screenshot them according to the pinned guide in that channel to ensure all important information is included. Be sure to mention that you are rerolling and the standards given below are what you need. Ideally wait for someone with a **Professor Neroli's Aide** :nerolisaide: role to check for you.
 
 ### Relevant Terminology and Abbreviations
 
@@ -144,7 +144,7 @@ Goal is **one S tier** OR **2 A tiers including at least one Berry or Strength S
 
 ## After You Finish Rerolling
 	
-If you joined the Discord server, ask in **#route-01-questions-and-answers** for help doing the following. Ideally wait for someone with a **Professor Neroli's Aide** role to answer.
+If you joined the Discord server, ask in **#route-01-questions-and-answers** for help doing the following. Ideally wait for someone with a **Professor Neroli's Aide** :nerolisaide: role to answer.
 1. Manually input a sleep session for the day before to get an extra Bonus Biscuit for your first sleep session.
    * If you plan on getting Premium Pass, do that first. Then, before manually inputting a sleep session for the day before, input one for two days ago, if you can do so, so that you get an extra 100 Sleep Points.
 2. If there is a global DP event going on currently and the global DP from yesterday and today is enough to get a guaranteed 5* spawn, manually input a 1.5 hr sleep session for earlier in the day today.
