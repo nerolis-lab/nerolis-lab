@@ -1,7 +1,11 @@
-// "On this page" local nav (VPLocalNav + outline dropdown)
-// sticky outline strip and flyout for in-page headings
+// "On this page" local nav (VPLocalNav + outline dropdown) and the desktop aside outline (VPDocAsideOutline).
 @use './breakpoints' as *;
 @use './typography' as *;
+
+// Keeps the scrolled-to link clear of .aside-curtain's fixed 32px fade overlay at the bottom.
+.VPDocAsideOutline .outline-link {
+  scroll-margin-bottom: 32px;
+}
 
 .guides-shell {
   .VPLocalNav {
