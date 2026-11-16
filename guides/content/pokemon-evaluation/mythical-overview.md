@@ -2,6 +2,7 @@
 title: Mythical Pokémon
 fullTitle: Mythical Pokémon (All Specialists)
 author: Example, Contributor
+index: 40
 ---
 
 Mythical Pokémon have the benefits of all specialties. You can only catch one of each species, so they have unique mechanics for customizations.
@@ -9,17 +10,19 @@ Mythical Pokémon have the benefits of all specialties. You can only catch one o
 ## What are Mythicals?
 
 Mythical Pokémon are the only All Specialists. That means:
-* like Berry Specialists, they find 2 berries per berry help at baseline
-* like Ingredient Specialists, they find higher numbers of ingredients per ingredient help
-* like Skill Specialists, they can store 2 skill procs
+
+- like Berry Specialists, they find 2 berries per berry help at baseline
+- like Ingredient Specialists, they find higher numbers of ingredients per ingredient help
+- like Skill Specialists, they can store 2 skill procs
 
 There are currently two Mythical Pokémon in the game: Darkrai and Mew.
 
 ## When can I see Mythicals?
+
 Mythical Pokémon only appear during their respective events.
 
-* :mew: Mew: Good Sleep Day
-* :darkrai: Darkrai: New Moon Day
+- :mew: Mew: Good Sleep Day
+- :darkrai: Darkrai: New Moon Day
 
 These are monthly 3-day events where Mythical Pokémon can appear as a bonus spawn during your first sleep session each day. If you don't see a Mythical Pokémon one day, it will be more likely to appear the next. You can expect to see about 1 each per event, but it is possible to see more.
 
