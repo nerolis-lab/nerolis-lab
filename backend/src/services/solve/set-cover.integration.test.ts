@@ -3,15 +3,25 @@ import type {
   ProducersByIngredientIndex,
   SetCoverPokemonSetupWithSettings
 } from '@src/services/solve/types/set-cover-pokemon-setup-types.js';
+import { groupProducersByIngredient } from '@src/services/solve/utils/solve-utils.js';
 import { mocks } from '@src/vitest/index.js';
-import { commonMocks, ingredient, ingredientSetToIntFlat } from 'sleepapi-common';
+import {
+  commonMocks,
+  COMPLETE_POKEDEX,
+  dessert,
+  getAllIngredientLists,
+  ingredient,
+  ingredientSetToIntFlat,
+  MAX_POKEMON_LEVEL,
+  MAX_TEAM_SIZE
+} from 'sleepapi-common';
 import { describe, expect, it } from 'vitest';
 
 describe('Set Cover Integration', () => {
   it('should purge sub-optimal solutions when smaller team is found', () => {
     const { ingredientProducers, producersByIngredientIndex } = setupGreengrassProducers();
 
-    const cachedSubRecipeSolves = new Map();
+    const cachedSubRecipeSolves = new Map<number, number[][]>();
     const setCover = new SetCover(ingredientProducers, producersByIngredientIndex, cachedSubRecipeSolves);
 
     const maxTeamSize = 5;
@@ -30,6 +40,32 @@ describe('Set Cover Integration', () => {
     const firstTeam = solutions.teams[0];
 
     expect(firstTeam.members).toHaveLength(3); // team requires three members
+
+    // Once a 3-member team is found, sub-recipes (which already include >= 1 member) must not solve for >= 3 more members
+    const cachedSolvesWithThreeOrMoreMembers = [...cachedSubRecipeSolves.values()].filter((teams) =>
+      teams.some((team) => team.length >= firstTeam.members.length)
+    );
+    expect(cachedSolvesWithThreeOrMoreMembers).toHaveLength(1);
+  });
+
+  it('should solve Huge Power Soy Donuts exhaustively across COMPLETE_POKEDEX without timing out', () => {
+    const producers = COMPLETE_POKEDEX.flatMap((pokemon) =>
+      getAllIngredientLists(pokemon, MAX_POKEMON_LEVEL).map((ingredientList) => {
+        const flat = ingredientSetToIntFlat(ingredientList);
+        return mocks.setCoverPokemonWithSettings({
+          pokemonSet: { pokemon: pokemon.name, ingredients: flat },
+          totalIngredients: flat
+        });
+      })
+    );
+
+    const setCover = new SetCover(producers, groupProducersByIngredient(producers), new Map());
+    const solutions = setCover.solveRecipe(
+      ingredientSetToIntFlat(dessert.HUGE_POWER_SOY_DONUTS.ingredients),
+      MAX_TEAM_SIZE
+    );
+
+    expect(solutions.exhaustive).toBe(true);
   });
 });
 
