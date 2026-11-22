@@ -61,13 +61,18 @@ x
     expect(sections[1]?.titles).toEqual(['See also']);
   });
 
-  it('does not yield a preamble when the first element is a heading', () => {
+  it('still yields an (empty-text) preamble for its title when the first element is a heading', () => {
     const file = writeMd('page.md', '---\ntitle: Only\n---\n');
     const html = `${h(2, 'first', 'First')}<p>Only under heading</p>`;
     const sections = collect(file, html);
 
-    expect(sections).toHaveLength(1);
-    expect(sections[0]).toMatchObject({
+    expect(sections).toHaveLength(2);
+    expect(sections[0]).toEqual({
+      anchor: LOCAL_SEARCH_PREAMBLE_ANCHOR,
+      titles: ['Only'],
+      text: ''
+    });
+    expect(sections[1]).toMatchObject({
       anchor: 'first',
       text: 'Only under heading'
     });
@@ -170,13 +175,18 @@ x
     });
   });
 
-  it('parses an h1 section', () => {
+  it('parses an h1 section (after the title preamble)', () => {
     const file = writeMd('page.md', '---\ntitle: Doc\n---\n');
     const html = `${h(1, 'page-top', 'Page title')}<p>Under h1</p>`;
     const sections = collect(file, html);
 
-    expect(sections).toHaveLength(1);
-    expect(sections[0]).toMatchObject({
+    expect(sections).toHaveLength(2);
+    expect(sections[0]).toEqual({
+      anchor: LOCAL_SEARCH_PREAMBLE_ANCHOR,
+      titles: ['Doc'],
+      text: ''
+    });
+    expect(sections[1]).toMatchObject({
       anchor: 'page-top',
       text: 'Under h1',
       titles: ['Page title']

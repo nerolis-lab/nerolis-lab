@@ -17,9 +17,10 @@ import {
   useLayout
 } from 'vitepress/dist/client/theme-default/composables/layout.js';
 import { useSidebarControl } from 'vitepress/dist/client/theme-default/composables/sidebar.js';
-import { computed, provide, ref, useSlots, watch } from 'vue';
+import { computed, onMounted, onUnmounted, provide, ref, useSlots, watch } from 'vue';
 import GuidesDocHeading from './components/GuidesDocHeading.vue';
 import GuidesSiteHeader from './components/GuidesSiteHeader.vue';
+import { watchActiveOutlineLink } from './scroll-active-outline-link';
 
 const { isOpen: isSidebarOpen, open: openSidebar, close: closeSidebar, toggle: toggleSidebar } = useSidebarControl();
 
@@ -61,6 +62,14 @@ function onOpenDocSidebar() {
   siteNavOpen.value = false;
   openSidebar();
 }
+
+let stopWatchingActiveOutlineLink: (() => void) | undefined;
+onMounted(() => {
+  stopWatchingActiveOutlineLink = watchActiveOutlineLink();
+});
+onUnmounted(() => {
+  stopWatchingActiveOutlineLink?.();
+});
 </script>
 
 <template>

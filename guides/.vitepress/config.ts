@@ -38,7 +38,11 @@ export default defineConfig({
       provider: 'local',
       options: {
         miniSearch: {
-          _splitIntoSections: splitIntoSectionsForLocalSearch
+          _splitIntoSections: splitIntoSectionsForLocalSearch,
+          // Raised title weight (default 4) so an exact title match outranks a heading sharing the same words.
+          searchOptions: {
+            boost: { title: 6, text: 2, titles: 1 }
+          }
         }
       }
     },

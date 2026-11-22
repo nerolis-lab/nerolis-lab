@@ -44,7 +44,7 @@ function readMarkdownTitle(filePath: string): string | undefined {
   }
 }
 
-/** Yields search sections; adds a synthetic preamble section when body text precedes the first heading (see file comment). */
+/** Yields search sections; always includes a title-only preamble section so the page title is indexed even without body text (see file comment). */
 export function* splitIntoSectionsForLocalSearch(
   file: string,
   html: string
@@ -56,8 +56,8 @@ export function* splitIntoSectionsForLocalSearch(
   const result = html.split(headingRegex);
   const preambleHtml = result[0] ?? '';
   const preambleText = getSearchableText(preambleHtml).trim();
-  if (preambleText.length > 0) {
-    const docTitle = readMarkdownTitle(file);
+  const docTitle = readMarkdownTitle(file);
+  if (preambleText.length > 0 || docTitle) {
     yield {
       anchor: LOCAL_SEARCH_PREAMBLE_ANCHOR,
       titles: docTitle ? [docTitle] : [],

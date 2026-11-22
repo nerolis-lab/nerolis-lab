@@ -176,6 +176,16 @@ Use standard Markdown (store files under a sensible folder, e.g. next to your gu
 ![Short description of the image](images/example.png)
 ```
 
+### Image size
+
+By default, an image renders at its native size, shrinking to fit if it's wider than the guide's content column.
+
+If you want an image to display smaller than that, use an HTML `<img>` tag with a `width` in pixels instead of the Markdown syntax above:
+
+```markdown
+<img src="images/example.png" alt="Short description of the image" width="300" />
+```
+
 ## Horizontal rule
 
 `---` when used outside of the frontmatter creates a dividing line like the following.
