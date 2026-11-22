@@ -26,6 +26,9 @@ const carryOverIngredient = (options: IngredientSet[], level: 0 | 30 | 60, previ
   return { ...(matching ?? options[0]), level }
 }
 
+const evolvedName = (newPokemon: Pokemon, previousPokemon: Pokemon, previousName: string) =>
+  previousName === previousPokemon.displayName ? newPokemon.displayName : previousName
+
 class PokemonInstanceUtilsImpl {
   public createDefaultPokemonInstance(pokemon: Pokemon, attrs?: Partial<PokemonInstance>): PokemonInstance {
     const gender = attrs?.gender ?? getRandomGender(pokemon)
@@ -67,6 +70,7 @@ class PokemonInstanceUtilsImpl {
     const instance = {
       ...existingInstance,
       pokemon: newPokemon,
+      name: evolvedName(newPokemon, existingInstance.pokemon, existingInstance.name),
       shiny: newPokemon.shinyLocked ? false : existingInstance.shiny,
       gender: keepGenderIfAllowed(newPokemon, existingInstance.gender),
       ingredients: [

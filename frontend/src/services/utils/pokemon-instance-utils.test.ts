@@ -392,4 +392,26 @@ describe('createPokemonInstanceWithPreservedAttributes', () => {
 
     expect(result.subskills).toEqual([])
   })
+
+  it('should update the name to match the new species when the previous name just mirrored the previous species', () => {
+    const existingInstance: PokemonInstance = mocks.createMockPokemon({
+      pokemon: PIKACHU,
+      name: PIKACHU.displayName
+    })
+
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(RAICHU, existingInstance)
+
+    expect(result.name).toBe(RAICHU.displayName)
+  })
+
+  it('should carry over a given nickname across evolution', () => {
+    const existingInstance: PokemonInstance = mocks.createMockPokemon({
+      pokemon: PIKACHU,
+      name: 'Sparky'
+    })
+
+    const result = PokemonInstanceUtils.createPokemonInstanceWithPreservedAttributes(RAICHU, existingInstance)
+
+    expect(result.name).toBe('Sparky')
+  })
 })
