@@ -1,10 +1,12 @@
 import PokemonSearch from '@/components/pokemon-input/PokemonSearch.vue'
+import { UserService } from '@/services/user/user-service'
 import { PokemonInstanceUtils } from '@/services/utils/pokemon-instance-utils'
 import { useDialogStore } from '@/stores/dialog-store/dialog-store'
 import { usePokemonSearchStore } from '@/stores/pokemon-search-store'
+import { useUserStore } from '@/stores/user-store'
 import type { VueWrapper } from '@vue/test-utils'
-import { mount } from '@vue/test-utils'
-import { BULBASAUR, COMPLETE_POKEDEX, DARKRAI, ingredient } from 'sleepapi-common'
+import { flushPromises, mount } from '@vue/test-utils'
+import { BULBASAUR, CHARIZARD, commonMocks, COMPLETE_POKEDEX, DARKRAI, ingredient } from 'sleepapi-common'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 
@@ -431,6 +433,42 @@ describe('PokemonSearch', () => {
       const longNameResults = wrapper.findAll('.v-avatar')
 
       expect(longNameResults.length).toBe(shortNameResults.length)
+    })
+
+    it('should match Pokebox Pokemon by rolled instance ingredients rather than base species pool', async () => {
+      const sausageCharizard = PokemonInstanceUtils.createDefaultPokemonInstance(CHARIZARD, {
+        name: 'Sausagezard',
+        ingredients: [
+          { ...CHARIZARD.ingredient0[0], level: 0 }, // Bean Sausage
+          { ...CHARIZARD.ingredient30[0], level: 30 }, // Bean Sausage
+          { ...CHARIZARD.ingredient60[0], level: 60 } // Bean Sausage
+        ]
+      })
+      const gingerCharizard = PokemonInstanceUtils.createDefaultPokemonInstance(CHARIZARD, {
+        name: 'Gingerzard',
+        ingredients: [
+          { ...CHARIZARD.ingredient0[0], level: 0 }, // Bean Sausage
+          { ...CHARIZARD.ingredient30[1], level: 30 }, // Warming Ginger
+          { ...CHARIZARD.ingredient60[1], level: 60 } // Warming Ginger
+        ]
+      })
+
+      vi.mocked(UserService.getUserPokemon).mockResolvedValueOnce([sausageCharizard, gingerCharizard])
+      const userStore = useUserStore()
+      userStore.auth = commonMocks.loginResponse().auth
+      pokemonSearchStore.showPokebox = true
+
+      const localWrapper = mount(PokemonSearch)
+      await flushPromises()
+
+      const searchInput = localWrapper.find('input[type="text"]')
+      await searchInput.setValue(ingredient.WARMING_GINGER.name.toLowerCase())
+      await nextTick()
+
+      const renderedNames = localWrapper.findAll('.pokemon-name').map((el) => el.text())
+      expect(renderedNames).toEqual(['Gingerzard'])
+
+      localWrapper.unmount()
     })
   })
 })
