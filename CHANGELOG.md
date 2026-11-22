@@ -1,3 +1,10 @@
+## [2.74.2](https://github.com/nerolis-lab/nerolis-lab/compare/v2.74.1...v2.74.2) (2026-11-22)
+
+
+### Bug Fixes
+
+* update name when evolving/devolving with nicknames off ([0dba611](https://github.com/nerolis-lab/nerolis-lab/commit/0dba611c71075a5f87501f0603aa22eddc1e41f4))
+
 ## [2.74.1](https://github.com/nerolis-lab/nerolis-lab/compare/v2.74.0...v2.74.1) (2026-11-16)
 
 # [2.74.0](https://github.com/nerolis-lab/nerolis-lab/compare/v2.73.0...v2.74.0) (2026-11-16)
