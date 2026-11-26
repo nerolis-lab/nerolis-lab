@@ -13,7 +13,7 @@ Rerolling is starting a fresh account, playing through the tutorial, checking yo
 
 It can take months before you find a permanent Pokémon through normal gameplay. Starting out, many days you won't even encounter 6 Pokémon and there will be no guarantee that any of the ones you do encounter will be viable species let alone good catches. By rerolling, you can see 6 Pokémon ever ~10 minutes, with 2 guaranteed to be viable species (Pikachu and Kanto starter). Starting the game with a permanent Pokémon can save you months later and boost your progress early on.
 
-If you either are just starting or already have an account but no permanent Pokémon and don't mind starting over, then rerolling may be worth considering.
+If you either are just starting or already have an account but no permanent Pokémon (or not enough saved resources to be worth holding onto) and don't mind starting over, then rerolling may be worth considering.
 
 ## How to Reroll
 
