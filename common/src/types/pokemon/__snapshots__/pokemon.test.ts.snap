@@ -7387,6 +7387,123 @@ exports[`COMPLETE_POKEDEX > shall not change COMFEY unexpectedly 1`] = `
 }
 `;
 
+exports[`COMPLETE_POKEDEX > shall not change COTTONEE unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 10,
+  "displayName": "Cottonee",
+  "evolvesFrom": undefined,
+  "evolvesInto": [
+    "WHIMSICOTT",
+  ],
+  "frequency": 4600,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snackable Nuts",
+        "name": "Nut",
+        "taxedValue": 36.7,
+        "value": 112,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Snackable Nuts",
+        "name": "Nut",
+        "taxedValue": 36.7,
+        "value": 112,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Snackable Nuts",
+        "name": "Nut",
+        "taxedValue": 36.7,
+        "value": 112,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredientPercentage": 20,
+  "name": "COTTONEE",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 546,
+  "previousEvolutions": 0,
+  "remainingEvolutions": 1,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      12,
+      16.2,
+      21.2,
+      26.6,
+      33.6,
+      43.4,
+    ],
+    "frontendComponentName": undefined,
+    "image": "energy",
+    "name": "Charge Energy S",
+  },
+  "skillPercentage": 3.5,
+  "specialty": "ingredient",
+}
+`;
+
 exports[`COMPLETE_POKEDEX > shall not change CRAMORANT unexpectedly 1`] = `
 {
   "berry": {
@@ -38290,6 +38407,122 @@ exports[`COMPLETE_POKEDEX > shall not change WEEPINBELL unexpectedly 1`] = `
     "name": "Charge Energy S",
   },
   "skillPercentage": 4,
+  "specialty": "ingredient",
+}
+`;
+
+exports[`COMPLETE_POKEDEX > shall not change WHIMSICOTT unexpectedly 1`] = `
+{
+  "berry": {
+    "name": "PECHA",
+    "type": "fairy",
+    "value": 26,
+  },
+  "carrySize": 17,
+  "displayName": "Whimsicott",
+  "evolvesFrom": "COTTONEE",
+  "evolvesInto": [],
+  "frequency": 2400,
+  "genders": {
+    "female": 0.5,
+    "male": 0.5,
+  },
+  "ingredient0": [
+    {
+      "amount": 2,
+      "ingredient": {
+        "longName": "Snackable Nuts",
+        "name": "Nut",
+        "taxedValue": 36.7,
+        "value": 112,
+      },
+    },
+  ],
+  "ingredient30": [
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Snackable Nuts",
+        "name": "Nut",
+        "taxedValue": 36.7,
+        "value": 112,
+      },
+    },
+    {
+      "amount": 3,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+  ],
+  "ingredient60": [
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Snackable Nuts",
+        "name": "Nut",
+        "taxedValue": 36.7,
+        "value": 112,
+      },
+    },
+    {
+      "amount": 5,
+      "ingredient": {
+        "longName": "Glossy Avocado",
+        "name": "Avocado",
+        "taxedValue": 76.7,
+        "value": 162,
+      },
+    },
+    {
+      "amount": 7,
+      "ingredient": {
+        "longName": "Snoozy Tomato",
+        "name": "Tomato",
+        "taxedValue": 35.4,
+        "value": 110,
+      },
+    },
+  ],
+  "ingredientPercentage": 19.9,
+  "name": "WHIMSICOTT",
+  "pityProcThreshold": 78,
+  "pokedexNumber": 547,
+  "previousEvolutions": 1,
+  "remainingEvolutions": 0,
+  "shinyLocked": undefined,
+  "skill": {
+    "RP": [
+      400,
+      569,
+      785,
+      1083,
+      1496,
+      2066,
+    ],
+    "activations": {
+      "energy": {
+        "amount": [Function],
+        "unit": "energy",
+      },
+    },
+    "description": [Function],
+    "energyAmounts": [
+      12,
+      16.2,
+      21.2,
+      26.6,
+      33.6,
+      43.4,
+    ],
+    "frontendComponentName": undefined,
+    "image": "energy",
+    "name": "Charge Energy S",
+  },
+  "skillPercentage": 3.8,
   "specialty": "ingredient",
 }
 `;

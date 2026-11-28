@@ -560,7 +560,9 @@ Set {
         { amount: 5, ingredient: ingredient.MOOMOO_MILK }
       ];
       const member = mocks.pokemonWithIngredientsIndexed({ ingredients: ingredientSetToIntFlat(ings) });
-      expect(hashPokemonSetIndexed(member)).toMatchInlineSnapshot(`"MOCKEMON:10,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"`);
+      expect(hashPokemonSetIndexed(member)).toMatchInlineSnapshot(
+        `"MOCKEMON:10,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0"`
+      );
     });
   });
 

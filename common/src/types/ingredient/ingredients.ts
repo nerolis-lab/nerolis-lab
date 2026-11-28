@@ -123,6 +123,12 @@ export const SLOWPOKE_TAIL: Ingredient = createIngredient({
   longName: 'Slowpoke Tail'
 });
 
+export const SNACKABLE_NUTS: Ingredient = createIngredient({
+  name: 'Nut',
+  value: 112,
+  longName: 'Snackable Nuts'
+});
+
 export const INGREDIENTS: Ingredient[] = [
   FANCY_APPLE,
   MOOMOO_MILK,
@@ -142,7 +148,8 @@ export const INGREDIENTS: Ingredient[] = [
   TASTY_MUSHROOM,
   LARGE_LEEK,
   PLUMP_PUMPKIN,
-  SLOWPOKE_TAIL
+  SLOWPOKE_TAIL,
+  SNACKABLE_NUTS
 ];
 export const INGREDIENTS_WITH_LOCKED = [...INGREDIENTS, LOCKED_INGREDIENT];
 
