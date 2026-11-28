@@ -74,6 +74,7 @@ describe('getIngredientNames', () => {
         "Leek",
         "Pumpkin",
         "Tail",
+        "Nut",
         "Locked",
       ]
     `);
@@ -184,13 +185,13 @@ describe('prettifyIngredientDrop', () => {
     ];
     INGREDIENTS.map((ingredient) => rawCombination.push({ amount: 0.83761, ingredient }));
     expect(prettifyIngredientDrop(rawCombination)).toMatchInlineSnapshot(
-      `"2 Honey, 5 Apple, 7 Honey and 0.84 of all 17 other ingredients"`
+      `"2 Honey, 5 Apple, 7 Honey and 0.84 of all 18 other ingredients"`
     );
   });
 
   it('shall prettify an isolated ingredient magnet proc', () => {
     const ings = INGREDIENTS.map((ingredient) => ({ amount: 0.83761, ingredient }));
-    expect(prettifyIngredientDrop(ings)).toMatchInlineSnapshot(`"0.84 of all 19 ingredients"`);
+    expect(prettifyIngredientDrop(ings)).toMatchInlineSnapshot(`"0.84 of all 20 ingredients"`);
   });
 
   it('shall support custom separator', () => {
@@ -209,7 +210,7 @@ describe('prettifyIngredientDrop', () => {
 
   it('shall prettify an ingredient drop + ingredient magnet proc from Float32Array', () => {
     const floatArray = new Float32Array(INGREDIENTS.length).fill(0.83761);
-    expect(prettifyIngredientDrop(floatArray)).toMatchInlineSnapshot(`"0.84 of all 19 ingredients"`);
+    expect(prettifyIngredientDrop(floatArray)).toMatchInlineSnapshot(`"0.84 of all 20 ingredients"`);
   });
 
   it('shall support custom separator with Float32Array', () => {
@@ -224,7 +225,7 @@ describe('prettifyIngredientDrop', () => {
 
   it('shall prettify an ingredient drop + ingredient magnet proc from Int16Array', () => {
     const intArray = new Int16Array(INGREDIENTS.length).fill(1);
-    expect(prettifyIngredientDrop(intArray)).toMatchInlineSnapshot(`"1 of all 19 ingredients"`);
+    expect(prettifyIngredientDrop(intArray)).toMatchInlineSnapshot(`"1 of all 20 ingredients"`);
   });
 
   it('shall support custom separator with Int16Array', () => {
@@ -504,6 +505,7 @@ describe('calculateAveragePokemonIngredientSet', () => {
         0,
         0,
         0,
+        0,
       ]
     `);
   });
@@ -537,6 +539,7 @@ describe('calculateAveragePokemonIngredientSet', () => {
         0,
         0,
         1,
+        0,
         0,
         0,
         0,
@@ -589,6 +592,7 @@ describe('calculateAveragePokemonIngredientSet', () => {
         0,
         0,
         0,
+        0,
       ]
     `);
   });
@@ -611,6 +615,7 @@ describe('calculateAveragePokemonIngredientSet', () => {
         0,
         0,
         2,
+        0,
         0,
         0,
         0,
@@ -657,6 +662,7 @@ describe('ingredientSetToFloatFlat', () => {
         0,
         0,
         0,
+        0,
       ]
     `);
   });
@@ -678,6 +684,7 @@ describe('ingredientSetToIntFlat', () => {
         0,
         0,
         5,
+        0,
         0,
         0,
         0,
@@ -856,7 +863,7 @@ describe('updateIngredientBonus', () => {
       Potato: 300,
       Seaweed: 15.77,
       Coffee: 61, // ingredientBonusCache is populated upon startup
-      Tail: 25, // ingredientBonusCache is populated upon startup
+      Tail: 61, // ingredientBonusCache is populated upon startup
       Cheese: 0 // default to 0 if not in cache
     };
 
