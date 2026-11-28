@@ -73,7 +73,7 @@ Probability based on data from @rint_ps (Twitter), translated by Bropenings.
 - **F2P** players can expect to catch Pokémon **every other day** on average, using their daily 3 pip Bonus Biscuit and purchased Biscuits.
 - **Premium Pass** players can expect to catch Pokémon **every day** on average, using their daily 4 pip Premium Biscuit and purchased Biscuits.
 
-Pay attention to your Biscuit expenditure! Consider any upcoming events with increased spawn rates that may need Biscuits allocated. Spending too many Biscuits at the start of the month can make it difficult to manage Sleep Points later in the month.
+Pay attention to your Biscuit expenditure! Consider saving your Biscuits and/or allocating a portion of regular expenditure for any upcoming events with increased spawn rates or new Pokémon debuts.
 
 If a player logs two sleep sessions in a day, the daily Bonus/Premium Biscuit **must be used in the first session** and will not be available in the second session.
 
@@ -169,7 +169,7 @@ If you wish to buy Master Biscuits, it is recommended that you:
 
 ### Catching Shiny Pokémon
 
-Shinies are **GUARANTEED** to full crit on the first Biscuit they are fed. **Only feed them a SINGLE Poké Biscuit.**
+Shinies are **GUARANTEED** to full crit on the first Biscuit they are fed. **Only feed them a SINGLE Poké Biscuit.** If you have a Master Biscuit, **DO NOT USE YOUR MASTER BISCUIT ON SHINIES.**
 
 ## :recoveryincense: Incense
 
@@ -224,7 +224,7 @@ F2P players should only seed **permanent** Pokémon with a **strong** preference
 3. Berry specialists: Helping Speed S → M
 4. Ingredient/Skill specialists: Helping Speed S → M
 
-Premium Pass players can afford to seed temporary Pokémon if the output improvement is worthwhile.
+Premium Pass players can afford to seed temporary Pokémon if the output improvement is worthwhile. However, this is not the most efficient use of resources and should be done sparingly.
 
 ## :eurekaseed: Eureka Seeds
 
