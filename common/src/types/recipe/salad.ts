@@ -14,6 +14,7 @@ import {
   PURE_OIL,
   ROUSING_COFFEE,
   SLOWPOKE_TAIL,
+  SNACKABLE_NUTS,
   SNOOZY_TOMATO,
   SOFT_POTATO,
   SOOTHING_CACAO,
@@ -307,6 +308,18 @@ export const SCALD_CHUNKY_SALAD = createSalad({
   bonus: 61
 });
 
+export const GRASS_KNOT_SALAD_WRAP = createSalad({
+  name: 'GRASS_KNOT_SALAD_WRAP',
+  displayName: '"Grass Knot" Salad Wrap',
+  ingredients: [
+    { amount: 30, ingredient: SNACKABLE_NUTS },
+    { amount: 22, ingredient: GLOSSY_AVOCADO },
+    { amount: 36, ingredient: WARMING_GINGER },
+    { amount: 33, ingredient: SNOOZY_TOMATO }
+  ],
+  bonus: 82
+});
+
 export const SALADS: Recipe[] = [
   FANCY_APPLE_SALAD,
   BEAN_HAM_SALAD,
@@ -333,7 +346,8 @@ export const SALADS: Recipe[] = [
   DEFIANT_COFFEE_DRESSED_SALAD,
   LUSCIOUS_AVOCADO_SALAD,
   BULLDOZE_GUACAMOLE_AND_CHIPS,
-  SCALD_CHUNKY_SALAD
+  SCALD_CHUNKY_SALAD,
+  GRASS_KNOT_SALAD_WRAP
 ];
 
 export const MIXED_SALAD_FLAT: RecipeFlat = recipesToFlat(MIXED_SALAD);

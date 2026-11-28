@@ -11,6 +11,8 @@ import {
   PLUMP_PUMPKIN,
   PURE_OIL,
   ROUSING_COFFEE,
+  SLOWPOKE_TAIL,
+  SNACKABLE_NUTS,
   SNOOZY_TOMATO,
   SOFT_POTATO,
   SOOTHING_CACAO,
@@ -313,6 +315,18 @@ export const LEAF_TORNADO_SMOOTHIE = createDessert({
   bonus: 35
 });
 
+export const SLOWPOKE_TAIL_ROLL_CAKE = createDessert({
+  name: 'SLOWPOKE_TAIL_ROLL_CAKE',
+  displayName: 'Slowpoke Tail Roll Cake',
+  ingredients: [
+    { amount: 26, ingredient: SNACKABLE_NUTS },
+    { amount: 10, ingredient: SLOWPOKE_TAIL },
+    { amount: 22, ingredient: GREENGRASS_SOYBEANS },
+    { amount: 33, ingredient: FANCY_EGG }
+  ],
+  bonus: 61
+});
+
 export const DESSERTS: Recipe[] = [
   WARM_MOOMOO_MILK,
   FANCY_APPLE_JUICE,
@@ -340,7 +354,8 @@ export const DESSERTS: Recipe[] = [
   CLODSIRE_ECLAIR,
   HONEY_GATHER_CHOCOLATE_WAFFLES,
   SCARY_FACE_PANCAKES,
-  LEAF_TORNADO_SMOOTHIE
+  LEAF_TORNADO_SMOOTHIE,
+  SLOWPOKE_TAIL_ROLL_CAKE
 ];
 
 export const MIXED_JUICE_FLAT: RecipeFlat = recipesToFlat(MIXED_JUICE);
