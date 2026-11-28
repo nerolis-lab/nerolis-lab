@@ -29,7 +29,7 @@ While NMD does also boost shiny rate, Mythical Pokémon cannot be shiny.
 
 ## How do Mythicals work?
 
-They cost 25 pips but get 3 free pips each time you see them. Your first catch of each Mythical Pokémon will get you the Pokémon and one Eureka Seed for that Pokémon. Subsequent catches will get you only a Eureka Seed for that Pokémon.
+Each Mythical Pokémon costs 25 pips and every time you encounter them, they gain 3 free pips. Upon your first catch, you will obtain the Mythical and one Eureka Seed specific for that Mythical. You will not obtain additional copies of the Mythical upon subsequent catches. Rather, each catch is converted into one Eureka Seed.
 
 Mythical Pokémon start out with most stats blank. Each Mythical Pokémon will have the same starting stats for all players. For example, Darkrai will have a Bashful nature and Sausage in its first ingredient slot.
 
