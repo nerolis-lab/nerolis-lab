@@ -31,7 +31,7 @@ Gold Badge adds the option to have a guaranteed gold sub skill in the third sub 
 
 ### Shiny Chance
 
-The likelihood of a Pokémon of that species being shiny increases with each badge tier.
+The likelihood of a Pokémon of that species being shiny increases with each badge tier. Exactly how much the shiny chance is increased is currently unknown.
 
 ### Profile Icons
 
